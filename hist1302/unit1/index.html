@@ -316,6 +316,44 @@ h1 { font-size:clamp(26px,5vw,42px); font-weight:700; letter-spacing:-0.02em; li
 }
 .notes-tip strong { color:var(--yellow); }
 
+/* Fill in the blank */
+.fitb-input {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px;
+  padding: 8px 12px;
+  width: 100%;
+  margin-top: 12px;
+  transition: border-color 0.2s;
+  outline: none;
+}
+.fitb-input:focus { border-color: var(--accent); }
+.fitb-input.correct-input { border-color: var(--green); background: rgba(34,197,94,0.08); color: var(--green); }
+.fitb-input.wrong-input { border-color: var(--red); background: rgba(239,68,68,0.08); }
+.fitb-correct-answer {
+  font-size: 12px; margin-top: 6px;
+  color: var(--green); font-family: 'IBM Plex Mono', monospace;
+  display: none;
+}
+.q-type-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 2px 7px;
+  border-radius: 3px; margin-left: 8px;
+  vertical-align: middle;
+}
+.q-type-mc { background: rgba(59,130,246,0.12); color: var(--accent); }
+.q-type-fitb { background: rgba(167,139,250,0.12); color: var(--accent2); }
+.q-ch-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px; padding: 2px 7px;
+  border-radius: 3px; margin-left: 6px;
+  vertical-align: middle;
+}
+
 /* Timeline */
 .timeline { position:relative; padding-left:24px; }
 .timeline::before { content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background:var(--border); }
@@ -363,9 +401,13 @@ footer a { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ac
   <div class="exam-pill">⏰ Exam: Saturday, June 20, 2026 · 12 noon–midnight</div>
   <div class="textbook-links">
     <span class="tb-label">📚 Textbook</span>
-    <a href="https://openstax.org/details/books/us-history" target="_blank" class="tb-link">OpenStax US History ↗</a>
+    <a href="https://openstax.org/books/us-history/pages/17-introduction" target="_blank" class="tb-link">Ch.17 ↗</a>
     <span class="tb-sep">·</span>
-    <a href="https://assets.openstax.org/oscms-prodcms/media/documents/AmericanHistory-WEB_7Zesaon.pdf" target="_blank" class="tb-link">Download PDF ↗</a>
+    <a href="https://openstax.org/books/us-history/pages/18-introduction" target="_blank" class="tb-link">Ch.18 ↗</a>
+    <span class="tb-sep">·</span>
+    <a href="https://openstax.org/books/us-history/pages/19-introduction" target="_blank" class="tb-link">Ch.19 ↗</a>
+    <span class="tb-sep">·</span>
+    <a href="https://openstax.org/books/us-history/pages/20-introduction" target="_blank" class="tb-link">Ch.20 ↗</a>
     <span class="tb-sep">·</span>
     <span class="tb-note">Free · CC BY 4.0 · Rice University / OpenStax</span>
   </div>
@@ -623,9 +665,19 @@ footer a { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ac
 
 <!-- ===== QUIZ PANEL ===== -->
 <div id="panel-quiz" class="panel">
+  <div class="filter-row" id="quiz-filters">
+    <button class="filter-btn active-filter" onclick="setQuizFilter('all',this)">All Chapters</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch17',this)">Ch.17</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch18',this)">Ch.18</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch19',this)">Ch.19</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch20',this)">Ch.20</button>
+    <span style="flex:1"></span>
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)" id="quiz-count"></span>
+  </div>
   <div class="quiz-score" id="quiz-score">
-    <div class="score-num" id="score-display">0/15</div>
-    <div class="score-label">PRACTICE QUIZ COMPLETE</div>
+    <div class="score-num" id="score-display">0</div>
+    <div class="score-label">QUIZ COMPLETE</div>
+    <div id="score-breakdown" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px"></div>
     <br>
     <button class="btn primary" onclick="resetQuiz()">Retake Quiz</button>
   </div>
@@ -836,78 +888,135 @@ function filterCards(ch, btn) {
 }
 
 // ===== QUIZ =====
-const quizData = [
-  {q:"What phrase did John O'Sullivan coin in 1845 to describe America's divine right to expand westward?",opts:["American Exceptionalism","Manifest Destiny","Westward Spirit","Continental Destiny"],ans:1,exp:"Manifest Destiny — coined by O'Sullivan in 1845 in the United States Magazine and Democratic Review."},
-  {q:"The Homestead Act (1862) granted settlers how many acres of public land?",opts:["80 acres","120 acres","160 acres","320 acres"],ans:2,exp:"160 acres — to any head of household or individual over 21, after 5 years of residence."},
-  {q:"The Dawes Severalty Act (1887) was designed to:",opts:["Grant citizenship to all Native Americans immediately","Break up tribal lands into individual plots to force assimilation","Create new reservations in Oklahoma","Allow Native Americans to vote in federal elections"],ans:1,exp:"The Dawes Act broke communal tribal lands into 160-acre individual plots. Full citizenship wasn't granted until 1924."},
-  {q:"The Battle of Little Bighorn (1876) was significant because:",opts:["It was the last major Native American victory over U.S. forces","It established the reservation system","General Custer negotiated a peace treaty","It led directly to the Dawes Act"],ans:0,exp:"Sioux and Cheyenne forces defeated General Custer's 7th Cavalry — the last major Native American military victory."},
-  {q:"Which industrialist is associated with 'vertical integration' in the steel industry?",opts:["John D. Rockefeller","J.P. Morgan","Andrew Carnegie","Cornelius Vanderbilt"],ans:2,exp:"Andrew Carnegie used vertical integration — owning everything from iron ore mines to finished steel, eliminating middlemen."},
-  {q:"Rockefeller's Standard Oil is an example of:",opts:["Vertical integration","Horizontal integration","A labor union","A government monopoly"],ans:1,exp:"Horizontal integration — buying out all competitors in the same industry. Standard Oil controlled ~90% of U.S. oil refining."},
-  {q:"The transcontinental railroad was completed in what year and location?",opts:["1865, Kansas City, Missouri","1867, Denver, Colorado","1869, Promontory Summit, Utah","1872, Sacramento, California"],ans:2,exp:"1869 at Promontory Summit, Utah — Central Pacific met Union Pacific."},
-  {q:"The Haymarket Riot (1886) most directly damaged the reputation of:",opts:["The American Federation of Labor","The Knights of Labor","The Populist Party","The Homestead Steel workers"],ans:1,exp:"The Knights of Labor was blamed despite no involvement. Combined with the Homestead strike, it destroyed the KOL."},
-  {q:"Samuel Gompers founded which labor organization in 1886?",opts:["Knights of Labor","Industrial Workers of the World","American Federation of Labor","National Labor Union"],ans:2,exp:"The AFL focused on skilled workers and practical bread-and-butter issues: wages, hours, and working conditions."},
-  {q:"Jane Addams is best known for:",opts:["Leading the Populist Party","Founding Hull House settlement in Chicago (1889)","Organizing the Pullman Strike","Writing the Gospel of Wealth"],ans:1,exp:"Hull House (1889) was the model settlement house — providing education and social services to urban immigrants and poor."},
-  {q:"Mark Twain used the term 'Gilded Age' to suggest that the era was:",opts:["A golden period of American prosperity","Gold-covered on the outside but corrupt underneath","Dominated by the gold standard","An age of golden opportunity for immigrants"],ans:1,exp:"Twain's 1873 novel satirized the era's corruption. 'Gilded' means covered in gold but hollow/corrupt inside."},
-  {q:"The Pendleton Civil Service Act (1883) was passed primarily in response to:",opts:["The Haymarket Riot","The Great Railroad Strike","The assassination of President Garfield","The formation of the Populist Party"],ans:2,exp:"Garfield was killed by Charles Guiteau, a disappointed office-seeker. This galvanized support for merit-based civil service."},
-  {q:"William Jennings Bryan's 'Cross of Gold' speech (1896) argued for:",opts:["The gold standard to stabilize the currency","Free coinage of silver to help indebted farmers","Higher tariffs on imported goods","Government ownership of railroads"],ans:1,exp:"Bryan argued free silver would inflate the money supply, making it easier for farmers to repay debts. Opposed the gold standard."},
-  {q:"Why did the Populist Party decline after the 1896 election?",opts:["Bryan was arrested after the election","Fusion with Democrats alienated urban workers; gold discoveries naturally inflated money supply","The party was declared illegal by the Supreme Court","All Populist leaders retired from politics"],ans:1,exp:"Fusing with Democrats alienated urban workers who feared inflation. Gold discoveries in Alaska/S. Africa also reduced farmer grievances naturally."},
-  {q:"The 'Great Migration' refers to:",opts:["European immigrants arriving at Ellis Island","The movement of settlers westward via the Oregon Trail","African Americans moving from the rural South to northern cities","The migration of Plains Indians to reservations"],ans:2,exp:"African Americans fled Jim Crow laws and racial violence in the South, seeking industrial jobs and greater freedoms in northern cities."},
+const allQuizData = [
+  {ch:'ch17',type:'mc',q:"What phrase did John O'Sullivan coin in 1845 to describe America's divine right to expand westward?",opts:["American Exceptionalism","Manifest Destiny","Westward Spirit","Continental Destiny"],ans:1,exp:"Manifest Destiny — coined by O'Sullivan in 1845 in the United States Magazine and Democratic Review."},
+  {ch:'ch17',type:'mc',q:"The Homestead Act (1862) granted settlers how many acres of public land?",opts:["80 acres","120 acres","160 acres","320 acres"],ans:2,exp:"160 acres to any head of household or individual over 21, after 5 years of residence."},
+  {ch:'ch17',type:'mc',q:"The Battle of Little Bighorn (1876) was significant because:",opts:["It was the last major Native American victory over U.S. forces","It established the reservation system","General Custer negotiated a peace treaty","It led directly to the Dawes Act"],ans:0,exp:"Sioux and Cheyenne forces defeated General Custer's 7th Cavalry — the last major Native American military victory."},
+  {ch:'ch17',type:'mc',q:"The Dawes Severalty Act (1887) was designed to:",opts:["Grant immediate citizenship to all Native Americans","Break up tribal lands into individual plots to force assimilation","Create new reservations in Oklahoma","Allow Native Americans to vote in federal elections"],ans:1,exp:"The Dawes Act broke communal tribal lands into 160-acre individual plots. Full citizenship not granted until 1924."},
+  {ch:'ch17',type:'fitb',q:"The concept of Manifest Destiny was coined by magazine editor ___________ in 1845.",ans:["john o'sullivan","o'sullivan","osullivan"],display:"John O'Sullivan",exp:"O'Sullivan wrote that it was America's manifest destiny to overspread the continent allotted by Providence."},
+  {ch:'ch17',type:'fitb',q:"The ___________ Act of 1862 allowed settlers to claim 160 acres of public land after living on it for 5 years.",ans:["homestead"],display:"Homestead",exp:"The Homestead Act of 1862 was a key federal incentive for westward migration."},
+  {ch:'ch17',type:'fitb',q:"The ___________ Severalty Act (1887) broke up tribal communal lands into individual 160-acre plots.",ans:["dawes"],display:"Dawes",exp:"The Dawes Act devastated tribal culture. Native citizenship not granted until 1924."},
+  {ch:'ch17',type:'fitb',q:"The famous silver deposit discovered in Nevada in 1859 was called the ___________ Lode.",ans:["comstock"],display:"Comstock",exp:"The Comstock Lode triggered a massive silver mining boom in Nevada."},
+  {ch:'ch18',type:'mc',q:"Which industrialist is associated with vertical integration in the steel industry?",opts:["John D. Rockefeller","J.P. Morgan","Andrew Carnegie","Cornelius Vanderbilt"],ans:2,exp:"Carnegie used vertical integration — owning everything from iron ore mines to finished steel."},
+  {ch:'ch18',type:'mc',q:"Rockefeller's Standard Oil is an example of:",opts:["Vertical integration","Horizontal integration","A labor union","A government monopoly"],ans:1,exp:"Horizontal integration — buying out all competitors. Standard Oil controlled about 90% of U.S. oil refining."},
+  {ch:'ch18',type:'mc',q:"The transcontinental railroad was completed in what year and location?",opts:["1865, Kansas City","1867, Denver, Colorado","1869, Promontory Summit, Utah","1872, Sacramento, California"],ans:2,exp:"1869 at Promontory Summit, Utah — Central Pacific met Union Pacific."},
+  {ch:'ch18',type:'mc',q:"The Haymarket Riot (1886) most directly damaged the reputation of:",opts:["The American Federation of Labor","The Knights of Labor","The Populist Party","The Homestead Steel workers"],ans:1,exp:"The Knights of Labor was blamed despite no involvement. The Haymarket affair destroyed the KOL's reputation."},
+  {ch:'ch18',type:'fitb',q:"Andrew Carnegie's famous essay, the ___________ of Wealth, argued the rich had a duty to give back to society.",ans:["gospel"],display:"Gospel",exp:"The Gospel of Wealth argued wealthy industrialists should use their fortunes for public benefit."},
+  {ch:'ch18',type:'fitb',q:"Samuel Gompers founded the American ___________ of Labor in 1886.",ans:["federation"],display:"Federation",exp:"The AFL focused on skilled workers and practical goals: wages, hours, and working conditions."},
+  {ch:'ch18',type:'fitb',q:"The ___________ Strike of 1894 was led by Eugene V. Debs and broken when President Cleveland sent federal troops.",ans:["pullman"],display:"Pullman",exp:"The Pullman Strike shut down rail traffic nationally. Debs was jailed and the strike was crushed."},
+  {ch:'ch18',type:'fitb',q:"The transcontinental railroad was completed at ___________ Summit, Utah in 1869.",ans:["promontory"],display:"Promontory",exp:"Central Pacific met Union Pacific at Promontory Summit on May 10, 1869."},
+  {ch:'ch19',type:'mc',q:"Jane Addams is best known for:",opts:["Leading the Populist Party","Founding Hull House settlement in Chicago (1889)","Organizing the Pullman Strike","Writing the Gospel of Wealth"],ans:1,exp:"Hull House (1889) was the model settlement house providing education and social services to the urban poor."},
+  {ch:'ch19',type:'mc',q:"The Great Migration refers to:",opts:["European immigrants arriving at Ellis Island","The movement of settlers westward via the Oregon Trail","African Americans moving from the rural South to northern cities","The migration of Plains Indians to reservations"],ans:2,exp:"African Americans fled Jim Crow laws and racial violence, seeking industrial jobs and greater freedoms in northern cities."},
+  {ch:'ch19',type:'mc',q:"The Chinese Exclusion Act (1882) was significant because it was:",opts:["The first law granting citizenship to immigrants","The first major law restricting immigration by nationality","A law protecting Chinese workers' rights","A treaty with China about trade"],ans:1,exp:"The Chinese Exclusion Act was the first major federal law restricting immigration based on nationality. Reflected rising nativism."},
+  {ch:'ch19',type:'fitb',q:"Jane Addams founded ___________ House in Chicago in 1889, a model settlement house for the urban poor.",ans:["hull"],display:"Hull",exp:"Hull House became the national model for the settlement house movement."},
+  {ch:'ch19',type:'fitb',q:"___________ refers to anti-immigrant sentiment among native-born Americans, which rose sharply in the 1880s-1900s.",ans:["nativism"],display:"Nativism",exp:"Nativists used Social Darwinism to argue new immigrants from Southern and Eastern Europe were inferior."},
+  {ch:'ch19',type:'fitb',q:"The large movement of African Americans from the rural South to northern industrial cities is known as the Great ___________.",ans:["migration"],display:"Migration",exp:"The Great Migration was driven by Jim Crow laws, racial violence, and the promise of industrial jobs in the North."},
+  {ch:'ch20',type:'mc',q:"Mark Twain used the term Gilded Age to suggest that the era was:",opts:["A golden period of American prosperity","Gold-covered on the outside but corrupt underneath","Dominated by the gold standard","An age of golden opportunity for immigrants"],ans:1,exp:"Twain's 1873 novel satirized the era's corruption. Gilded means covered in gold but hollow and corrupt inside."},
+  {ch:'ch20',type:'mc',q:"The Pendleton Civil Service Act (1883) was passed primarily in response to:",opts:["The Haymarket Riot","The Great Railroad Strike","The assassination of President Garfield","The formation of the Populist Party"],ans:2,exp:"Garfield was killed by Charles Guiteau, a disappointed office-seeker. This galvanized support for merit-based civil service."},
+  {ch:'ch20',type:'mc',q:"William Jennings Bryan's Cross of Gold speech (1896) argued for:",opts:["The gold standard to stabilize the currency","Free coinage of silver to help indebted farmers","Higher tariffs on imported goods","Government ownership of railroads"],ans:1,exp:"Bryan argued free silver would inflate the money supply, making it easier for farmers to repay debts."},
+  {ch:'ch20',type:'mc',q:"Why did the Populist Party decline after the 1896 election?",opts:["Bryan was arrested after the election","Fusion with Democrats alienated urban workers and gold discoveries reduced farmer grievances","The party was declared illegal by the Supreme Court","All Populist leaders retired from politics"],ans:1,exp:"Fusing with Democrats alienated urban workers. Gold discoveries in Alaska and South Africa also reduced farmer grievances naturally."},
+  {ch:'ch20',type:'fitb',q:"Mark Twain coined the term '___________ Age' in his 1873 novel to describe the era's corruption beneath its surface prosperity.",ans:["gilded"],display:"Gilded",exp:"Gilded means covered in gold on the outside but corrupt and hollow underneath."},
+  {ch:'ch20',type:'fitb',q:"The ___________ Civil Service Act (1883) replaced the spoils system with merit-based federal hiring.",ans:["pendleton"],display:"Pendleton",exp:"Passed after Garfield's assassination, the Pendleton Act was a major step toward professional government."},
+  {ch:'ch20',type:'fitb',q:"William Jennings Bryan's famous speech declared: 'You shall not crucify mankind upon a cross of ___________.'",ans:["gold"],display:"Gold",exp:"The Cross of Gold speech (1896) argued against the gold standard and for free silver to help indebted farmers."},
+  {ch:'ch20',type:'fitb',q:"The ___________ Party, founded in 1892, represented farmers demanding free silver, railroad regulation, and a graduated income tax.",ans:["populist","people's","peoples"],display:"Populist",exp:"The People's Party (Populists) was the most successful third party of the Gilded Age."},
+  {ch:'ch20',type:'fitb',q:"Grover Cleveland is notable for being the only U.S. president to serve two non-___________ terms.",ans:["consecutive"],display:"consecutive",exp:"Cleveland served 1885-1889 and 1893-1897, losing to Benjamin Harrison in between."},
 ];
 
+let currentQuizFilter = 'all';
+let activeQuizData = [...allQuizData];
 let userAnswers = {};
 let quizSubmitted = false;
 
-function renderQuiz() {
-  if(quizSubmitted) return;
-  const area = document.getElementById('quiz-area');
-  area.innerHTML = quizData.map((q,i)=>`
-    <div class="question-block" id="qblock-${i}">
-      <div class="q-num">Question ${i+1} of ${quizData.length}</div>
-      <div class="q-text">${q.q}</div>
-      <div class="options">
-        ${q.opts.map((o,j)=>`
-          <div class="option" id="opt-${i}-${j}" onclick="selectAnswer(${i},${j})">
-            <span class="opt-letter">${['A','B','C','D'][j]}</span>
-            <span>${o}</span>
-          </div>
-        `).join('')}
-      </div>
-      <div class="explanation" id="exp-${i}">${q.exp}</div>
-    </div>
-  `).join('');
-  document.getElementById('submit-btn').style.display='block';
+function setQuizFilter(ch, btn) {
+  document.querySelectorAll('#quiz-filters .filter-btn').forEach(b=>b.classList.remove('active-filter'));
+  btn.classList.add('active-filter');
+  currentQuizFilter = ch;
+  resetQuiz();
 }
 
-function selectAnswer(qi,oi) {
+function renderQuiz() {
+  activeQuizData = currentQuizFilter === 'all'
+    ? [...allQuizData]
+    : allQuizData.filter(q => q.ch === currentQuizFilter);
+  const chColors = {ch17:'#3b82f6',ch18:'#a78bfa',ch19:'#22c55e',ch20:'#f97316'};
+  const chLabels = {ch17:'CH.17',ch18:'CH.18',ch19:'CH.19',ch20:'CH.20'};
+  document.getElementById('quiz-count').textContent = activeQuizData.length + ' questions';
   if(quizSubmitted) return;
-  document.querySelectorAll(`#qblock-${qi} .option`).forEach(o=>o.classList.remove('selected'));
+  const area = document.getElementById('quiz-area');
+  area.innerHTML = activeQuizData.map((q,i) => {
+    const chBadge = `<span class="q-ch-badge" style="background:${chColors[q.ch]}20;color:${chColors[q.ch]}">${chLabels[q.ch]}</span>`;
+    const typeBadge = q.type === 'mc'
+      ? `<span class="q-type-badge q-type-mc">Multiple Choice</span>`
+      : `<span class="q-type-badge q-type-fitb">Fill in the Blank</span>`;
+    if(q.type === 'mc') {
+      return `<div class="question-block" id="qblock-${i}">
+        <div class="q-num">Question ${i+1} of ${activeQuizData.length} ${chBadge} ${typeBadge}</div>
+        <div class="q-text">${q.q}</div>
+        <div class="options">${q.opts.map((o,j)=>`
+          <div class="option" id="opt-${i}-${j}" onclick="selectMC(${i},${j})">
+            <span class="opt-letter">${['A','B','C','D'][j]}</span><span>${o}</span>
+          </div>`).join('')}
+        </div>
+        <div class="explanation" id="exp-${i}">${q.exp}</div>
+      </div>`;
+    } else {
+      return `<div class="question-block" id="qblock-${i}">
+        <div class="q-num">Question ${i+1} of ${activeQuizData.length} ${chBadge} ${typeBadge}</div>
+        <div class="q-text">${q.q}</div>
+        <input type="text" class="fitb-input" id="fitb-${i}" placeholder="Type your answer..."
+          oninput="storeFITB(${i})" autocomplete="off" autocorrect="off" spellcheck="false">
+        <div class="fitb-correct-answer" id="fitb-ans-${i}">Correct answer: ${q.display}</div>
+        <div class="explanation" id="exp-${i}">${q.exp}</div>
+      </div>`;
+    }
+  }).join('');
+  document.getElementById('submit-btn').style.display = 'block';
+}
+
+function selectMC(qi, oi) {
+  if(quizSubmitted) return;
+  document.querySelectorAll(`#qblock-${qi} .option`).forEach(o=>{o.style.borderColor='';o.style.background='';});
   document.getElementById(`opt-${qi}-${oi}`).style.borderColor='var(--accent)';
   document.getElementById(`opt-${qi}-${oi}`).style.background='var(--accent-dim)';
-  userAnswers[qi]=oi;
+  userAnswers[qi]={type:'mc',val:oi};
+}
+
+function storeFITB(qi) {
+  const val = document.getElementById(`fitb-${qi}`).value;
+  userAnswers[qi]={type:'fitb',val:val.trim().toLowerCase()};
 }
 
 function submitQuiz() {
-  if(Object.keys(userAnswers).length < quizData.length) {
-    alert('Please answer all '+quizData.length+' questions before submitting.');
-    return;
+  for(let i=0;i<activeQuizData.length;i++){
+    const q=activeQuizData[i];
+    if(!userAnswers[i]){
+      if(q.type==='mc'){alert(`Please answer question ${i+1}.`);return;}
+      else{const v=document.getElementById(`fitb-${i}`).value.trim();if(!v){alert(`Please answer question ${i+1}.`);return;}userAnswers[i]={type:'fitb',val:v.toLowerCase()};}
+    }
   }
   quizSubmitted=true;
-  let score=0;
-  quizData.forEach((q,i)=>{
-    const chosen=userAnswers[i];
-    q.opts.forEach((_,j)=>{
-      const el=document.getElementById(`opt-${i}-${j}`);
-      el.style.borderColor='';el.style.background='';
-      el.classList.add('answered');
-    });
-    if(chosen===q.ans){score++;document.getElementById(`opt-${i}-${chosen}`).classList.add('correct');}
-    else{
-      document.getElementById(`opt-${i}-${chosen}`).classList.add('wrong');
-      document.getElementById(`opt-${i}-${q.ans}`).classList.add('reveal');
+  let score=0,mcCorrect=0,fitbCorrect=0,mcTotal=0,fitbTotal=0;
+  activeQuizData.forEach((q,i)=>{
+    const ans=userAnswers[i];
+    if(q.type==='mc'){
+      mcTotal++;
+      document.querySelectorAll(`#qblock-${i} .option`).forEach(o=>{o.style.borderColor='';o.style.background='';o.classList.add('answered');});
+      if(ans.val===q.ans){score++;mcCorrect++;document.getElementById(`opt-${i}-${ans.val}`).classList.add('correct');}
+      else{document.getElementById(`opt-${i}-${ans.val}`).classList.add('wrong');document.getElementById(`opt-${i}-${q.ans}`).classList.add('reveal');}
+    } else {
+      fitbTotal++;
+      const input=document.getElementById(`fitb-${i}`);
+      const userVal=ans.val;
+      const correct=q.ans.some(a=>userVal===a||userVal.includes(a)||a.includes(userVal));
+      if(correct){score++;fitbCorrect++;input.classList.add('correct-input');}
+      else{input.classList.add('wrong-input');document.getElementById(`fitb-ans-${i}`).style.display='block';}
     }
     document.getElementById(`exp-${i}`).style.display='block';
   });
-  document.getElementById('score-display').textContent=score+'/'+quizData.length;
+  const pct=Math.round((score/activeQuizData.length)*100);
+  const grade=pct>=90?'A':pct>=80?'B':pct>=70?'C':'Keep studying!';
+  document.getElementById('score-display').textContent=score+' / '+activeQuizData.length;
+  document.getElementById('score-breakdown').innerHTML=`${pct}% &nbsp;·&nbsp; ${grade} &nbsp;·&nbsp; MC: ${mcCorrect}/${mcTotal} &nbsp;·&nbsp; Fill-in: ${fitbCorrect}/${fitbTotal}`;
   document.getElementById('quiz-score').style.display='block';
   document.getElementById('submit-btn').style.display='none';
   document.getElementById('quiz-score').scrollIntoView({behavior:'smooth'});
