@@ -1,33 +1,439 @@
-<!--
-  ROOT INDEX.HTML — ASTR-1304 UNIT LINK SNIPPET
-  ================================================
-  Find the ASTR-1304 course card in your index.html.
-  Replace/update the unit link to activate Module 1
-  and keep future modules dimmed. Example structure:
--->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Hub — m1chaelv</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --border: #1e1e2e;
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --hist: #3b82f6;
+    --hist-dim: rgba(59,130,246,0.12);
+    --astr: #22c55e;
+    --astr-dim: rgba(34,197,94,0.12);
+    --govt: #f97316;
+    --govt-dim: rgba(249,115,22,0.12);
+    --fall: #4b4b5e;
+    --fall-dim: rgba(75,75,94,0.08);
+  }
 
-<!-- ACTIVE MODULE 1 LINK -->
-<a href="astr1304/unit1/index.html" class="unit-link">
-  Module 1 · Chapters 1, 2, 6
-  <span class="unit-meta">Jun 1 – Jun 27</span>
-</a>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-<!-- FUTURE MODULES — DIMMED -->
-<a href="#" class="unit-link" style="opacity:0.4;pointer-events:none;">
-  Module 2 · Chapters 7–10
-</a>
-<a href="#" class="unit-link" style="opacity:0.4;pointer-events:none;">
-  Module 3 · Chapters 11–15
-</a>
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-<!--
-  FILE PLACEMENT REMINDER:
-  Save the study page as:  astr1304/unit1/index.html
-  (relative to your repo root, e.g. study-site/astr1304/unit1/index.html)
-  
-  Deploy:
-    cd ~/Documents/GitHub/study-site
-    git add astr1304/unit1/index.html index.html
-    git commit -m "feat: add ASTR-1304 Module 1 study page"
-    git push origin main
--->
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  header {
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+  }
+
+  h1 span {
+    background: linear-gradient(135deg, var(--hist), var(--astr));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .semester-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* Section labels */
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Course cards */
+  .course-section {
+    margin-bottom: 48px;
+  }
+
+  .course-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .course-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+  }
+
+  .course-card.hist::before { background: var(--hist); }
+  .course-card.astr::before { background: var(--astr); }
+  .course-card.govt::before { background: var(--govt); }
+  .course-card.fall-course::before { background: var(--fall); }
+
+  .course-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .course-card.hist:hover { border-color: rgba(59,130,246,0.4); }
+  .course-card.astr:hover { border-color: rgba(34,197,94,0.4); }
+  .course-card.govt:hover { border-color: rgba(249,115,22,0.4); }
+
+  .course-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .course-code {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+
+  .hist .course-code { color: var(--hist); background: var(--hist-dim); }
+  .astr .course-code { color: var(--astr); background: var(--astr-dim); }
+  .govt .course-code { color: var(--govt); background: var(--govt-dim); }
+  .fall-course .course-code { color: var(--muted); background: var(--fall-dim); }
+
+  .course-title {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .fall-course .course-title { color: var(--muted); }
+
+  .course-dates {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+    margin-top: 4px;
+  }
+
+  /* Unit grid */
+  .unit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+  }
+
+  .unit-link {
+    display: flex;
+    flex-direction: column;
+    padding: 14px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .unit-link:hover {
+    border-color: currentColor;
+    transform: translateY(-1px);
+  }
+
+  .hist .unit-link { --accent: var(--hist); }
+  .hist .unit-link:hover { color: var(--hist); background: var(--hist-dim); }
+
+  .astr .unit-link { --accent: var(--astr); }
+  .astr .unit-link:hover { color: var(--astr); background: var(--astr-dim); }
+
+  .govt .unit-link { --accent: var(--govt); }
+  .govt .unit-link:hover { color: var(--govt); background: var(--govt-dim); }
+
+  .unit-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .unit-name {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .unit-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* Coming soon badge */
+  .coming-soon {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    text-align: center;
+    letter-spacing: 0.1em;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0;
+    margin-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  footer p {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* Animations */
+  .course-card {
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .course-card:nth-child(1) { animation-delay: 0.05s; }
+  .course-card:nth-child(2) { animation-delay: 0.1s; }
+  .course-card:nth-child(3) { animation-delay: 0.15s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    header { padding: 32px 0 24px; }
+    .unit-grid { grid-template-columns: repeat(2, 1fr); }
+    .course-card { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="header-inner">
+      <div>
+        <div class="logo">m1chaelv / study hub</div>
+        <h1>Study<br><span>Materials</span></h1>
+      </div>
+      <div class="semester-badge">Summer 2026 · ACC</div>
+    </div>
+  </header>
+
+  <!-- Summer 2026 -->
+  <div class="course-section">
+    <div class="section-label">Summer 2026 — Active</div>
+
+    <!-- HIST 1302 -->
+    <div class="course-card hist">
+      <div class="course-header">
+        <div>
+          <div class="course-code">HIST-1302-050</div>
+          <div class="course-title">U.S. History II</div>
+        </div>
+        <div class="course-dates">6/1 – 8/9/2026</div>
+      </div>
+      <div class="unit-grid">
+        <a href="hist1302/unit1/index.html" class="unit-link">
+          <div class="unit-number">Unit 01</div>
+          <div class="unit-name">Reconstruction & Gilded Age</div>
+          <div class="unit-date">Exam: Jun 20</div>
+        </a>
+        <a href="hist1302/unit2/index.html" class="unit-link">
+          <div class="unit-number">Unit 02</div>
+          <div class="unit-name">Progressive Era & WWI</div>
+          <div class="unit-date">Exam: Jul 7</div>
+        </a>
+        <a href="hist1302/unit3/index.html" class="unit-link">
+          <div class="unit-number">Unit 03</div>
+          <div class="unit-name">WWII & Cold War</div>
+          <div class="unit-date">Exam: Jul 23</div>
+        </a>
+        <a href="hist1302/unit4/index.html" class="unit-link">
+          <div class="unit-number">Unit 04</div>
+          <div class="unit-name">Modern America</div>
+          <div class="unit-date">Exam: Aug 7</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ASTR 1304 -->
+    <div class="course-card astr">
+      <div class="course-header">
+        <div>
+          <div class="course-code">ASTR-1304-004</div>
+          <div class="course-title">Solar System Astronomy</div>
+        </div>
+        <div class="course-dates">6/1 – 8/9/2026</div>
+      </div>
+      <div class="coming-soon">Study materials coming soon</div>
+    </div>
+
+    <!-- GOVT 2306 -->
+    <div class="course-card govt">
+      <div class="course-header">
+        <div>
+          <div class="course-code">GOVT-2306-007</div>
+          <div class="course-title">Texas & Local Government</div>
+        </div>
+        <div class="course-dates">6/1 – 8/9/2026</div>
+      </div>
+      <div class="unit-grid">
+        <a href="govt2306/unit1/index.html" class="unit-link">
+          <div class="unit-number">Unit 01</div>
+          <div class="unit-name">Texas Politics &amp; Federalism</div>
+          <div class="unit-date">Exam: Jun 19–21</div>
+        </a>
+        <a href="govt2306/unit2/index.html" class="unit-link" style="opacity:0.4;pointer-events:none">
+          <div class="unit-number">Unit 02</div>
+          <div class="unit-name">Local Govt &amp; Political Parties</div>
+          <div class="unit-date">Exam: Jul 1–3, 5</div>
+        </a>
+        <a href="govt2306/unit3/index.html" class="unit-link" style="opacity:0.4;pointer-events:none">
+          <div class="unit-number">Unit 03</div>
+          <div class="unit-name">Voting, Elections &amp; Media</div>
+          <div class="unit-date">Exam: Jul 17–19</div>
+        </a>
+        <a href="govt2306/unit4/index.html" class="unit-link" style="opacity:0.4;pointer-events:none">
+          <div class="unit-number">Unit 04</div>
+          <div class="unit-name">Interest Groups &amp; Legislature</div>
+          <div class="unit-date">Exam: Jul 24–26</div>
+        </a>
+        <a href="govt2306/unit5/index.html" class="unit-link" style="opacity:0.4;pointer-events:none">
+          <div class="unit-number">Unit 05</div>
+          <div class="unit-name">Executive, Judicial &amp; Criminal Justice</div>
+          <div class="unit-date">Final: Aug 6–8</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fall 2026 -->
+  <div class="course-section">
+    <div class="section-label">Fall 2026 — Upcoming</div>
+
+    <div class="course-card fall-course">
+      <div class="course-code">CSIS-3352</div>
+      <div class="course-title">Artificial Intelligence</div>
+      <div class="course-dates" style="margin-top:8px">8/24 – 12/13/2026</div>
+    </div>
+
+    <div class="course-card fall-course">
+      <div class="course-code">CSIS-3353</div>
+      <div class="course-title">Cyber Law & Legal System</div>
+      <div class="course-dates" style="margin-top:8px">8/24 – 12/13/2026</div>
+    </div>
+
+    <div class="course-card fall-course">
+      <div class="course-code">CSIS-3385</div>
+      <div class="course-title">Database / Web Vulnerability & Security</div>
+      <div class="course-dates" style="margin-top:8px">8/24 – 12/13/2026</div>
+    </div>
+  </div>
+
+  <footer>
+    <p>study.imichaelv.com</p>
+    <p>Deployed via GitHub Actions → AWS S3 + CloudFront</p>
+  </footer>
+</div>
+</body>
+</html>
