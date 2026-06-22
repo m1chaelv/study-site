@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COURSE — Unit N Study Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   STEP 1: Set accent color for this course.
+   HIST-1302 = #3b82f6 / rgba(59,130,246,...)
+   GOVT-2306 = #f97316 / rgba(249,115,22,...)
+   ASTR-1304 = #22c55e / rgba(34,197,94,...)
+   ============================================================ */
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #16161f;
+  --border: #1e1e2e;
+  --text: #e8e8f0;
+  --muted: #6b6b80;
+  --accent: #22c55e;                    /* CHANGE THIS per course */
+  --accent-dim: rgba(34,197,94,0.12);   /* CHANGE THIS per course */
+  --accent2: #4ade80;                   /* lighter shade of accent */
+  --green: #22c55e;
+  --blue: #3b82f6;
+  --red: #ef4444;
+  --yellow: #eab308;
+  --purple: #a78bfa;
+  --orange: #f97316;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans', sans-serif;
+  min-height: 100vh;
+}
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  /* CHANGE rgba color below to match --accent at 0.025 opacity */
+  background-image:
+    linear-gradient(rgba(34,197,94,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,197,94,0.025) 1px, transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;
+  z-index:0;
+}
+.container { max-width:960px; margin:0 auto; padding:0 20px; position:relative; z-index:1; }
+
+/* ===== NAV ===== */
+.topnav {
+  display:flex; gap:8px; padding:16px 0;
+  border-bottom:1px solid var(--border);
+  margin-bottom:32px; flex-wrap:wrap;
+}
+.nav-btn {
+  font-family:'IBM Plex Mono',monospace; font-size:11px;
+  padding:8px 16px; border-radius:6px; border:1px solid var(--border);
+  background:transparent; color:var(--muted); cursor:pointer;
+  transition:all 0.2s; letter-spacing:0.05em;
+}
+.nav-btn:hover, .nav-btn.active {
+  background:var(--accent-dim); border-color:var(--accent); color:var(--accent);
+}
+
+/* ===== HEADER ===== */
+header { padding:24px 0 32px; }
+.breadcrumb { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); margin-bottom:12px; }
+.breadcrumb a { color:var(--accent); text-decoration:none; }
+.unit-badge { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent); background:var(--accent-dim); padding:4px 10px; border-radius:4px; display:inline-block; margin-bottom:12px; }
+h1 { font-size:clamp(26px,5vw,42px); font-weight:700; letter-spacing:-0.02em; line-height:1.1; margin-bottom:12px; }
+.exam-pill {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:'IBM Plex Mono',monospace; font-size:11px;
+  border:1px solid var(--yellow); color:var(--yellow);
+  padding:6px 14px; border-radius:20px; background:rgba(234,179,8,0.08);
+}
+.textbook-links {
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:14px;
+  padding:10px 16px; border-radius:8px;
+  background:rgba(34,197,94,0.06);       /* CHANGE to match accent */
+  border:1px solid rgba(34,197,94,0.15); /* CHANGE to match accent */
+}
+.tb-label { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); font-weight:700; }
+.tb-link { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent); text-decoration:none; }
+.tb-link:hover { text-decoration:underline; }
+.tb-sep { color:var(--border); font-size:14px; }
+.tb-note { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); }
+
+/* ===== PANELS ===== */
+.panel { display:none; }
+.panel.active { display:block; }
+.section-label {
+  font-family:'IBM Plex Mono',monospace; font-size:10px;
+  letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--muted); margin-bottom:16px;
+  display:flex; align-items:center; gap:12px;
+}
+.section-label::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* ===== OBJECTIVES ===== */
+.obj-grid { display:grid; gap:12px; margin-bottom:32px; }
+.obj-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:10px; padding:16px 20px;
+  display:grid; grid-template-columns:32px 1fr;
+  gap:12px; align-items:start;
+  cursor:pointer; transition:background 0.2s;
+}
+.obj-card:hover { background:var(--surface2); }
+.obj-num {
+  font-family:'IBM Plex Mono',monospace; font-size:11px;
+  width:28px; height:28px; border-radius:6px;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:700; flex-shrink:0;
+  /* Set color per chapter class below */
+}
+.obj-text { font-size:13px; line-height:1.6; }
+.obj-chapter { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); margin-top:4px; }
+/* Expandable detail — shown when card is clicked */
+.obj-detail {
+  display:none; font-size:12px; line-height:1.7;
+  color:#c8c8d8; margin-top:10px;
+  padding-top:10px; border-top:1px solid var(--border);
+}
+.obj-card.expanded .obj-detail { display:block; }
+.obj-expand-hint {
+  font-family:'IBM Plex Mono',monospace; font-size:9px;
+  color:var(--muted); margin-top:6px; letter-spacing:0.1em;
+}
+/* STEP 2: Add chapter color classes to match your chapters.
+   Rename ch1/ch2 to match your actual chapter keys (e.g. ch17, ch18). */
+.ch1 .obj-num { color:#22c55e; background:rgba(34,197,94,0.12); }
+.ch2 .obj-num { color:#3b82f6; background:rgba(59,130,246,0.12); }
+
+/* ===== STUDY GUIDE ===== */
+.chapter-block {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; overflow:hidden; margin-bottom:20px;
+}
+.chapter-header {
+  padding:16px 20px; display:flex; justify-content:space-between;
+  align-items:center; cursor:pointer; transition:background 0.2s;
+  border-bottom:1px solid var(--border);
+}
+.chapter-header:hover { background:var(--surface2); }
+.chapter-title { font-size:16px; font-weight:700; }
+.chapter-subtitle { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); margin-top:2px; }
+.chevron { color:var(--muted); font-size:14px; transition:transform 0.2s; }
+.chapter-header.open .chevron { transform:rotate(180deg); }
+.chapter-body { padding:20px; display:none; }
+.chapter-body.open { display:block; }
+.concept-title {
+  font-size:14px; font-weight:700; color:var(--accent);
+  margin:20px 0 8px; display:flex; align-items:center; gap:8px;
+}
+.concept-title:first-child { margin-top:0; }
+.concept-title::before { content:'▸'; font-size:10px; }
+.concept-body { font-size:13px; line-height:1.8; color:#c8c8d8; }
+.concept-body strong { color:var(--text); }
+.key-term {
+  display:inline-block; font-family:'IBM Plex Mono',monospace;
+  font-size:11px; background:var(--accent-dim);
+  color:var(--accent); padding:2px 8px; border-radius:4px; margin:2px;
+}
+.key-term.blue   { background:rgba(59,130,246,0.12);  color:var(--blue); }
+.key-term.green  { background:rgba(34,197,94,0.12);   color:var(--green); }
+.key-term.purple { background:rgba(167,139,250,0.12); color:var(--purple); }
+.key-term.orange { background:rgba(249,115,22,0.12);  color:var(--orange); }
+.people-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; margin-top:12px; }
+.person-card { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px; }
+.person-name { font-size:13px; font-weight:700; margin-bottom:4px; }
+.person-role { font-size:12px; color:var(--muted); line-height:1.5; }
+
+/* ===== FLASHCARDS ===== */
+.fc-controls { display:flex; gap:10px; align-items:center; margin-bottom:20px; flex-wrap:wrap; }
+.fc-stat { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); }
+.btn {
+  font-family:'IBM Plex Mono',monospace; font-size:11px;
+  padding:8px 16px; border-radius:6px; border:1px solid var(--border);
+  background:transparent; color:var(--text); cursor:pointer;
+  transition:all 0.2s; letter-spacing:0.05em;
+}
+.btn:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-dim); }
+.btn.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+.btn.primary:hover { opacity:0.85; }
+.flashcard-area { perspective:1000px; margin-bottom:20px; }
+.flashcard {
+  width:100%; min-height:220px; position:relative; cursor:pointer;
+  transform-style:preserve-3d; transition:transform 0.5s;
+}
+.flashcard.flipped { transform:rotateY(180deg); }
+.fc-front, .fc-back {
+  position:absolute; inset:0;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:14px; padding:32px;
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:center;
+  text-align:center; backface-visibility:hidden;
+}
+.fc-back { transform:rotateY(180deg); background:var(--surface2); border-color:var(--accent); }
+.fc-label { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:16px; }
+.fc-question { font-size:18px; font-weight:700; line-height:1.4; }
+.fc-answer { font-size:14px; line-height:1.7; color:#c8c8d8; }
+.fc-hint { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); margin-top:12px; }
+.fc-chapter-tag { font-family:'IBM Plex Mono',monospace; font-size:10px; padding:3px 8px; border-radius:4px; margin-bottom:8px; }
+.fc-nav { display:flex; gap:10px; justify-content:center; align-items:center; }
+.fc-counter { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); min-width:80px; text-align:center; }
+.filter-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+.filter-btn {
+  font-family:'IBM Plex Mono',monospace; font-size:10px;
+  padding:5px 12px; border-radius:4px; border:1px solid var(--border);
+  background:transparent; color:var(--muted); cursor:pointer; transition:all 0.2s;
+}
+.filter-btn.active-filter { border-color:var(--accent); color:var(--accent); background:var(--accent-dim); }
+
+/* ===== QUIZ ===== */
+.quiz-area { max-width:700px; }
+.question-block {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:24px; margin-bottom:16px;
+}
+.q-num { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); margin-bottom:8px; }
+.q-text { font-size:15px; font-weight:600; line-height:1.5; margin-bottom:16px; }
+.options { display:grid; gap:8px; }
+.option {
+  padding:12px 16px; border-radius:8px; border:1px solid var(--border); cursor:pointer;
+  font-size:13px; line-height:1.5; transition:all 0.2s; background:var(--surface2);
+  display:flex; gap:12px; align-items:flex-start;
+}
+.option:hover:not(.answered) { border-color:var(--accent); background:var(--accent-dim); }
+.option.correct { border-color:var(--green); background:rgba(34,197,94,0.1); color:var(--green); }
+.option.wrong { border-color:var(--red); background:rgba(239,68,68,0.1); color:var(--red); }
+.option.reveal { border-color:var(--green); background:rgba(34,197,94,0.05); }
+.opt-letter { font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:700; min-width:20px; color:var(--muted); }
+.explanation {
+  margin-top:12px; padding:12px 16px; border-radius:8px;
+  background:var(--accent-dim); border:1px solid rgba(34,197,94,0.2); /* CHANGE border to match accent */
+  font-size:12px; line-height:1.6; color:#a8c8b8; display:none;       /* CHANGE color to match accent */
+}
+.quiz-score {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:32px; text-align:center;
+  margin-bottom:20px; display:none;
+}
+.score-num { font-size:48px; font-weight:700; color:var(--accent); }
+.score-label { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); margin-top:8px; }
+.fitb-input {
+  background:var(--surface2); border:1px solid var(--border); border-radius:6px;
+  color:var(--text); font-family:'IBM Plex Sans',sans-serif; font-size:14px;
+  padding:8px 12px; width:100%; margin-top:12px; transition:border-color 0.2s; outline:none;
+}
+.fitb-input:focus { border-color:var(--accent); }
+.fitb-input.correct-input { border-color:var(--green); background:rgba(34,197,94,0.08); color:var(--green); }
+.fitb-input.wrong-input { border-color:var(--red); background:rgba(239,68,68,0.08); }
+.fitb-correct-answer { font-size:12px; margin-top:6px; color:var(--green); font-family:'IBM Plex Mono',monospace; display:none; }
+.q-type-badge {
+  font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.1em;
+  text-transform:uppercase; padding:2px 7px; border-radius:3px;
+  margin-left:8px; vertical-align:middle;
+}
+.q-type-mc   { background:var(--accent-dim); color:var(--accent); }
+.q-type-fitb { background:rgba(59,130,246,0.12); color:var(--blue); }
+.q-ch-badge  { font-family:'IBM Plex Mono',monospace; font-size:9px; padding:2px 7px; border-radius:3px; margin-left:6px; vertical-align:middle; }
+
+/* ===== NOTES ===== */
+.notes-template {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; overflow:hidden; margin-bottom:20px;
+}
+.notes-header {
+  /* Adjust gradient colors to match course accent */
+  background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(59,130,246,0.1));
+  border-bottom:1px solid var(--border); padding:20px 24px;
+  display:flex; justify-content:space-between; align-items:center;
+  flex-wrap:wrap; gap:12px;
+}
+.notes-title { font-size:16px; font-weight:700; }
+.notes-subtitle { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); margin-top:2px; }
+.notes-body { padding:24px; }
+.notes-col-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.notes-col-title {
+  font-family:'IBM Plex Mono',monospace; font-size:10px;
+  letter-spacing:0.15em; text-transform:uppercase; color:var(--accent);
+  margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid var(--border);
+}
+.notes-item {
+  font-size:12px; line-height:1.8; padding:6px 0;
+  border-bottom:1px dashed rgba(255,255,255,0.04);
+  display:flex; gap:8px; align-items:flex-start;
+}
+.notes-item::before { content:'›'; color:var(--muted); flex-shrink:0; margin-top:1px; }
+.notes-tip {
+  background:rgba(234,179,8,0.08); border:1px solid rgba(234,179,8,0.2);
+  border-radius:8px; padding:12px 16px; margin-top:16px;
+  font-size:12px; line-height:1.7; color:#d4b84a;
+}
+.notes-tip strong { color:var(--yellow); }
+
+footer {
+  border-top:1px solid var(--border); padding:24px 0; margin-top:40px;
+  display:flex; justify-content:space-between; align-items:center;
+  flex-wrap:wrap; gap:12px;
+}
+footer a { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent); text-decoration:none; }
+
+@media(max-width:600px){
+  .notes-col-grid { grid-template-columns:1fr; }
+  .fc-question { font-size:15px; }
+  .topnav { gap:6px; }
+  .nav-btn { font-size:10px; padding:7px 12px; }
+  h1 { font-size:24px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ===== NAV ===== -->
+<div class="topnav">
+  <button class="nav-btn active" onclick="showPanel('overview',this)">&#128203; Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)">&#128214; Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)">&#127183; Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)">&#9999;&#65039; Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)">&#128221; Notes Template</button>
+</div>
+
+<!-- ===== HEADER ===== -->
+<!-- STEP 3: Fill in course details -->
+<header>
+  <div class="breadcrumb"><a href="../../index.html">Study Hub</a> / COURSE-CODE / Unit N</div>
+  <div class="unit-badge">COURSE-CODE &middot; Unit NN &middot; Ch. X&ndash;Y</div>
+  <h1>Unit Title Here</h1>
+  <div class="exam-pill">&#9200; Exam N: Month DD&ndash;DD, YYYY</div>
+  <div class="textbook-links">
+    <span class="tb-label">&#128218; Textbook</span>
+    <a href="#" class="tb-link" target="_blank">Ch. X</a>
+    <span class="tb-sep">|</span>
+    <a href="#" class="tb-link" target="_blank">Ch. Y</a>
+    <span class="tb-note">Textbook title &middot; Publisher / Platform</span>
+  </div>
+</header>
+
+<!-- ===== OBJECTIVES PANEL ===== -->
+<!-- STEP 4: Add learning objectives. Each card expands on click. -->
+<div id="panel-overview" class="panel active">
+  <div class="section-label">Unit N Learning Objectives</div>
+  <div class="obj-grid">
+
+    <!-- Repeat this block for each objective -->
+    <div class="obj-card ch1" onclick="toggleObj(this)">
+      <div class="obj-num">1</div>
+      <div>
+        <div class="obj-text">Short objective statement — what students should be able to do or explain.</div>
+        <div class="obj-chapter">CH. X &middot; LO X.X</div>
+        <div class="obj-detail">
+          Full explanation that expands on click. Include key terms, context, examples,
+          and connections to other concepts. This is the "why it matters" section.
+          <br><br>
+          Key terms: <strong>Term One</strong>, <strong>Term Two</strong>.
+        </div>
+        <div class="obj-expand-hint">&#9660; tap to expand</div>
+      </div>
+    </div>
+
+    <div class="obj-card ch2" onclick="toggleObj(this)">
+      <div class="obj-num">2</div>
+      <div>
+        <div class="obj-text">Second objective statement here.</div>
+        <div class="obj-chapter">CH. Y &middot; LO Y.Y</div>
+        <div class="obj-detail">
+          Explanation for objective 2. Replace with actual content.
+        </div>
+        <div class="obj-expand-hint">&#9660; tap to expand</div>
+      </div>
+    </div>
+
+    <!-- Add more obj-card blocks as needed -->
+
+  </div>
+</div>
+
+<!-- ===== STUDY GUIDE PANEL ===== -->
+<!-- STEP 5: Fill in chapter blocks. Add as many concept sections as needed. -->
+<div id="panel-guide" class="panel">
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)">
+      <div>
+        <div class="chapter-title" style="color:var(--accent)">Chapter X &mdash; Chapter Title</div>
+        <div class="chapter-subtitle">Topics covered in this chapter</div>
+      </div>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="chapter-body">
+
+      <div class="concept-title">Section Heading</div>
+      <div class="concept-body">
+        Concept explanation here. Use <strong>bold for key terms</strong>.
+        Keep paragraphs short and scannable.
+        <br><br>
+        <span class="key-term">term 1</span>
+        <span class="key-term">term 2</span>
+        <span class="key-term blue">blue term</span>
+        <span class="key-term green">green term</span>
+      </div>
+
+      <div class="concept-title">Another Section</div>
+      <div class="concept-body">
+        More content here.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)">
+      <div>
+        <div class="chapter-title" style="color:var(--blue)">Chapter Y &mdash; Chapter Title</div>
+        <div class="chapter-subtitle">Topics covered in this chapter</div>
+      </div>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="chapter-body">
+
+      <div class="concept-title">Section Heading</div>
+      <div class="concept-body">Content here.</div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== FLASHCARDS PANEL ===== -->
+<!-- STEP 6: Replace filter buttons and allCards data with actual chapter keys. -->
+<div id="panel-flashcards" class="panel">
+  <div class="filter-row">
+    <button class="filter-btn active-filter" onclick="filterCards('all',this)">All (0)</button>
+    <button class="filter-btn" onclick="filterCards('ch1',this)">Ch. X</button>
+    <button class="filter-btn" onclick="filterCards('ch2',this)">Ch. Y</button>
+  </div>
+  <div class="fc-controls">
+    <button class="btn" onclick="shuffleCards()">&#8644; Shuffle</button>
+    <span class="fc-stat" id="fc-stat">Card 1 of 0</span>
+  </div>
+  <div class="flashcard-area">
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="fc-front">
+        <div id="fc-chapter-tag" class="fc-chapter-tag"></div>
+        <div class="fc-label">Term / Concept</div>
+        <div class="fc-question" id="fc-question">Loading...</div>
+        <div class="fc-hint">Tap to reveal answer</div>
+      </div>
+      <div class="fc-back">
+        <div class="fc-label">Answer</div>
+        <div class="fc-answer" id="fc-answer">Loading...</div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-nav">
+    <button class="btn" onclick="prevCard()">&larr; Prev</button>
+    <span class="fc-counter" id="fc-counter">1 / 0</span>
+    <button class="btn" onclick="nextCard()">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- ===== QUIZ PANEL ===== -->
+<!-- STEP 7: Replace filter buttons and allQuizData with actual content. -->
+<div id="panel-quiz" class="panel">
+  <div class="filter-row" id="quiz-filter-row">
+    <button class="filter-btn active-filter" onclick="setQuizFilter('all',this)">All Chapters</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch1',this)">Ch. X Only</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch2',this)">Ch. Y Only</button>
+  </div>
+  <div class="quiz-score" id="quiz-score">
+    <div class="score-num" id="score-display">0</div>
+    <div class="score-label">QUIZ COMPLETE</div>
+    <div id="score-breakdown" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px"></div>
+    <br>
+    <button class="btn primary" onclick="resetQuiz()">Retake Quiz</button>
+  </div>
+  <div class="quiz-area" id="quiz-area"></div>
+  <button class="btn primary" id="submit-btn" onclick="submitQuiz()" style="margin-top:20px;display:none">Submit Quiz</button>
+</div>
+
+<!-- ===== NOTES PANEL ===== -->
+<!-- STEP 8: Fill in notes content. -->
+<div id="panel-notes" class="panel">
+  <div class="notes-template">
+    <div class="notes-header">
+      <div>
+        <div class="notes-title">Unit N Notes Framework</div>
+        <div class="notes-subtitle">COURSE-CODE &middot; Unit N &middot; Ch. X&ndash;Y &middot; Prof. Name</div>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)">Exam: Month DD&ndash;DD</div>
+    </div>
+    <div class="notes-body">
+      <div class="notes-col-grid">
+        <div>
+          <div class="notes-col-title">Ch. X &mdash; Chapter Title</div>
+          <div class="notes-item">Key fact or concept here</div>
+          <div class="notes-item">Another key point</div>
+          <div class="notes-item">And another</div>
+          <!-- Add more notes-item divs as needed -->
+        </div>
+        <div>
+          <div class="notes-col-title">Ch. Y &mdash; Chapter Title</div>
+          <div class="notes-item">Key fact or concept here</div>
+          <div class="notes-item">Another key point</div>
+          <!-- Add more notes-item divs as needed -->
+        </div>
+      </div>
+      <div class="notes-tip"><strong>Exam tip:</strong> Add exam format details and tips here.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="../../index.html">&larr; Back to Study Hub</a>
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)">COURSE-CODE &middot; Unit N &middot; Prof. Name &middot; ACC Summer 2026</span>
+</footer>
+</div>
+
+<script>
+// ===== PANEL NAVIGATION =====
+// DO NOT MODIFY this function.
+function showPanel(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'flashcards') renderCard();
+  if (id === 'quiz') renderQuiz();
+}
+
+// ===== OBJECTIVES EXPAND =====
+// DO NOT MODIFY this function.
+function toggleObj(card) {
+  card.classList.toggle('expanded');
+  const hint = card.querySelector('.obj-expand-hint');
+  if (hint) hint.textContent = card.classList.contains('expanded') ? '▲ tap to collapse' : '▼ tap to expand';
+}
+
+// ===== STUDY GUIDE ACCORDION =====
+// DO NOT MODIFY this function.
+function toggleChapter(header) {
+  const body = header.nextElementSibling;
+  header.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+// ===== FLASHCARDS =====
+// STEP 9: Replace placeholder data with real flashcards.
+// ch value must match your filter buttons (e.g. 'ch1', 'ch2', 'ch17', 'ch18').
+const allCards = [
+  {ch:'ch1', q:'Sample question for chapter X?', a:'Sample answer here.'},
+  {ch:'ch1', q:'Another chapter X question?',    a:'Another answer.'},
+  {ch:'ch2', q:'Sample question for chapter Y?', a:'Sample answer here.'},
+  {ch:'ch2', q:'Another chapter Y question?',    a:'Another answer.'},
+  // Add 30-50 total cards
+];
+
+let currentCards = [...allCards];
+let currentIndex = 0;
+
+// DO NOT MODIFY functions below this line.
+function renderCard() {
+  const card = currentCards[currentIndex];
+  if (!card) return;
+  const tag = document.getElementById('fc-chapter-tag');
+  // STEP 10: Update colors and labels to match your chapter keys.
+  const colors = {ch1:'#22c55e', ch2:'#3b82f6'};
+  const labels = {ch1:'CH.X',    ch2:'CH.Y'};
+  tag.textContent = labels[card.ch] || card.ch;
+  tag.style.color = colors[card.ch] || 'var(--accent)';
+  tag.style.background = (colors[card.ch] || '#22c55e') + '20';
+  document.getElementById('fc-question').textContent = card.q;
+  document.getElementById('fc-answer').textContent = card.a;
+  document.getElementById('fc-counter').textContent = (currentIndex+1) + ' / ' + currentCards.length;
+  document.getElementById('fc-stat').textContent = 'Card ' + (currentIndex+1) + ' of ' + currentCards.length;
+  document.getElementById('flashcard').classList.remove('flipped');
+}
+function flipCard()    { document.getElementById('flashcard').classList.toggle('flipped'); }
+function nextCard()    { currentIndex = (currentIndex+1) % currentCards.length; renderCard(); }
+function prevCard()    { currentIndex = (currentIndex-1+currentCards.length) % currentCards.length; renderCard(); }
+function shuffleCards() {
+  for (let i=currentCards.length-1; i>0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [currentCards[i],currentCards[j]] = [currentCards[j],currentCards[i]];
+  }
+  currentIndex = 0; renderCard();
+}
+function filterCards(ch, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active-filter'));
+  btn.classList.add('active-filter');
+  currentCards = ch === 'all' ? [...allCards] : allCards.filter(c => c.ch === ch);
+  currentIndex = 0; renderCard();
+}
+
+// ===== QUIZ =====
+// STEP 11: Replace placeholder data with real questions.
+const allQuizData = [
+  // Multiple choice example:
+  {
+    ch:'ch1', type:'mc',
+    q:"Sample multiple choice question?",
+    opts:["Option A","Option B","Option C","Option D"],
+    ans:0,   // index of correct answer (0 = A, 1 = B, etc.)
+    exp:"Explanation shown after answering."
+  },
+  // Fill in the blank example:
+  {
+    ch:'ch2', type:'fitb',
+    q:"The ___________ is an example of fill-in-the-blank.",
+    ans:["answer","accepted answer two"],  // array — all accepted (lowercase)
+    display:"answer / accepted answer two",
+    exp:"Explanation shown after answering."
+  },
+  // Add 20-30 total questions
+];
+
+let currentQuizFilter = 'all';
+let activeQuizData    = [...allQuizData];
+let userAnswers       = {};
+let quizSubmitted     = false;
+
+// DO NOT MODIFY functions below this line.
+function setQuizFilter(ch, btn) {
+  document.querySelectorAll('#quiz-filter-row .filter-btn').forEach(b => b.classList.remove('active-filter'));
+  btn.classList.add('active-filter');
+  currentQuizFilter = ch;
+  resetQuiz();
+}
+
+function renderQuiz() {
+  activeQuizData = currentQuizFilter === 'all' ? [...allQuizData] : allQuizData.filter(q => q.ch === currentQuizFilter);
+  // STEP 12: Update colors and labels to match your chapter keys.
+  const chColors = {ch1:'#22c55e', ch2:'#3b82f6'};
+  const chLabels = {ch1:'CH.X',    ch2:'CH.Y'};
+  if (quizSubmitted) return;
+  const area = document.getElementById('quiz-area');
+  area.innerHTML = activeQuizData.map((q, i) => {
+    const chColor  = chColors[q.ch] || 'var(--accent)';
+    const chLabel  = chLabels[q.ch] || q.ch;
+    const chBadge  = `<span class="q-ch-badge" style="background:${chColor}20;color:${chColor}">${chLabel}</span>`;
+    const typeBadge = q.type === 'mc'
+      ? '<span class="q-type-badge q-type-mc">Multiple Choice</span>'
+      : '<span class="q-type-badge q-type-fitb">Fill in the Blank</span>';
+    if (q.type === 'mc') {
+      return `<div class="question-block" id="qblock-${i}">
+        <div class="q-num">Question ${i+1} of ${activeQuizData.length} ${chBadge} ${typeBadge}</div>
+        <div class="q-text">${q.q}</div>
+        <div class="options">${q.opts.map((o,j) =>
+          `<div class="option" id="opt-${i}-${j}" onclick="selectMC(${i},${j})">
+            <span class="opt-letter">${['A','B','C','D'][j]}</span><span>${o}</span>
+          </div>`).join('')}
+        </div>
+        <div class="explanation" id="exp-${i}">${q.exp}</div>
+      </div>`;
+    } else {
+      return `<div class="question-block" id="qblock-${i}">
+        <div class="q-num">Question ${i+1} of ${activeQuizData.length} ${chBadge} ${typeBadge}</div>
+        <div class="q-text">${q.q}</div>
+        <input type="text" class="fitb-input" id="fitb-${i}" placeholder="Type your answer..."
+          oninput="storeFITB(${i})" autocomplete="off" autocorrect="off" spellcheck="false">
+        <div class="fitb-correct-answer" id="fitb-ans-${i}">Correct answer: ${q.display}</div>
+        <div class="explanation" id="exp-${i}">${q.exp}</div>
+      </div>`;
+    }
+  }).join('');
+  document.getElementById('submit-btn').style.display = 'block';
+}
+
+function selectMC(qi, oi) {
+  if (quizSubmitted) return;
+  document.querySelectorAll(`#qblock-${qi} .option`).forEach(o => { o.style.borderColor=''; o.style.background=''; });
+  document.getElementById(`opt-${qi}-${oi}`).style.borderColor = 'var(--accent)';
+  document.getElementById(`opt-${qi}-${oi}`).style.background  = 'var(--accent-dim)';
+  userAnswers[qi] = {type:'mc', val:oi};
+}
+
+function storeFITB(qi) {
+  userAnswers[qi] = {type:'fitb', val:document.getElementById(`fitb-${qi}`).value.trim().toLowerCase()};
+}
+
+function submitQuiz() {
+  for (let i=0; i<activeQuizData.length; i++) {
+    const q = activeQuizData[i];
+    if (!userAnswers[i]) {
+      if (q.type === 'mc') { alert(`Please answer question ${i+1}.`); return; }
+      else {
+        const v = document.getElementById(`fitb-${i}`).value.trim();
+        if (!v) { alert(`Please answer question ${i+1}.`); return; }
+        userAnswers[i] = {type:'fitb', val:v.toLowerCase()};
+      }
+    }
+  }
+  quizSubmitted = true;
+  let score=0, mcCorrect=0, fitbCorrect=0, mcTotal=0, fitbTotal=0;
+  activeQuizData.forEach((q, i) => {
+    const ans = userAnswers[i];
+    if (q.type === 'mc') {
+      mcTotal++;
+      document.querySelectorAll(`#qblock-${i} .option`).forEach(o => { o.style.borderColor=''; o.style.background=''; o.classList.add('answered'); });
+      if (ans.val === q.ans) { score++; mcCorrect++; document.getElementById(`opt-${i}-${ans.val}`).classList.add('correct'); }
+      else { document.getElementById(`opt-${i}-${ans.val}`).classList.add('wrong'); document.getElementById(`opt-${i}-${q.ans}`).classList.add('reveal'); }
+    } else {
+      fitbTotal++;
+      const input   = document.getElementById(`fitb-${i}`);
+      const correct = q.ans.some(a => ans.val===a || ans.val.includes(a) || a.includes(ans.val));
+      if (correct) { score++; fitbCorrect++; input.classList.add('correct-input'); }
+      else { input.classList.add('wrong-input'); document.getElementById(`fitb-ans-${i}`).style.display='block'; }
+    }
+    document.getElementById(`exp-${i}`).style.display = 'block';
+  });
+  const pct   = Math.round((score/activeQuizData.length)*100);
+  const grade = pct>=90?'A':pct>=80?'B':pct>=70?'C':'Keep studying!';
+  document.getElementById('score-display').textContent   = score + ' / ' + activeQuizData.length;
+  document.getElementById('score-breakdown').innerHTML   = `${pct}% &nbsp;&middot;&nbsp; ${grade} &nbsp;&middot;&nbsp; MC: ${mcCorrect}/${mcTotal} &nbsp;&middot;&nbsp; Fill-in: ${fitbCorrect}/${fitbTotal}`;
+  document.getElementById('quiz-score').style.display    = 'block';
+  document.getElementById('submit-btn').style.display    = 'none';
+  document.getElementById('quiz-score').scrollIntoView({behavior:'smooth'});
+}
+
+function resetQuiz() {
+  userAnswers = {}; quizSubmitted = false;
+  document.getElementById('quiz-score').style.display = 'none';
+  document.getElementById('quiz-area').innerHTML = '';
+  renderQuiz();
+}
+</script>
+</body>
+</html>
