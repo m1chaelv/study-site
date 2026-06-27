@@ -432,10 +432,118 @@
     .header { padding: 28px 28px 24px; }
     .tabs-wrap { padding: 0 28px; }
   }
+  /* ── DISCUSSION PREP ── */
+  .disc-q {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .disc-q-header {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .disc-q-num {
+    font-size: 11px; font-weight: 700; color: var(--accent);
+    background: var(--accent-dim); border-radius: 4px;
+    padding: 2px 8px; flex-shrink: 0; font-family: monospace;
+    margin-top: 2px;
+  }
+  .disc-q-text { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.45; }
+  .disc-q-body { padding: 14px 16px; }
+  .disc-textarea {
+    width: 100%; min-height: 120px;
+    background: var(--bg-card2); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text);
+    font-size: 13px; line-height: 1.6;
+    padding: 12px 14px; resize: vertical;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    transition: border-color .2s;
+  }
+  .disc-textarea:focus { outline: none; border-color: var(--accent); }
+  .disc-textarea.submitted { opacity: .75; }
+  .disc-btn-row { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
+  .disc-rubric {
+    display: none; margin-top: 14px;
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px;
+  }
+  .disc-rubric.show { display: block; }
+  .disc-rubric-title {
+    font-size: 11px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .disc-point {
+    display: flex; gap: 10px; align-items: flex-start;
+    margin-bottom: 8px; font-size: 13px;
+  }
+  .disc-point:last-child { margin-bottom: 0; }
+  .disc-check {
+    width: 18px; height: 18px; border-radius: 4px;
+    border: 2px solid var(--border); flex-shrink: 0;
+    cursor: pointer; appearance: none; -webkit-appearance: none;
+    background: var(--bg-card); margin-top: 1px;
+    transition: all .15s;
+  }
+  .disc-check:checked {
+    background: var(--accent); border-color: var(--accent);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='%23000' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: center; background-size: 10px;
+  }
+  .disc-point-text { color: var(--muted); line-height: 1.5; }
+  .disc-point-text strong { color: var(--text); }
+  .disc-self-score {
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+    font-size: 13px;
+  }
+  .disc-score-display {
+    font-size: 18px; font-weight: 800; color: var(--accent);
+  }
+  .disc-model {
+    display: none; margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 13px; color: var(--muted); line-height: 1.65;
+  }
+  .disc-model.show { display: block; }
+  .disc-model-title {
+    font-size: 11px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+  }
+  .disc-nav {
+    display: flex; gap: 10px; margin-top: 16px; align-items: center;
+  }
+  .disc-filter {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;
+  }
+
   @media print {
-    .tabs-wrap, .header, .fc-controls, .quiz-nav, .btn { display: none !important; }
-    .panel { display: block !important; }
-    body { background: white; color: black; }
+    .tabs-wrap, .header, .exam-alert, .fc-controls, .fc-nav,
+    .quiz-nav, .quiz-header, .btn, .print-btn-wrap,
+    .filter-btn, .back-link, .fc-chapter-filter { display: none !important; }
+    .panel { display: none !important; }
+    #panel-4 { display: block !important; }
+    *, *::before, *::after {
+      background: white !important;
+      background-color: white !important;
+      background-image: none !important;
+      color: black !important;
+      border-color: #bbb !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+      -webkit-text-fill-color: black !important;
+    }
+    body { font-size: 12pt; }
+    .note-box { border: 1px solid #aaa !important; margin-bottom: 16pt; break-inside: avoid; }
+    .note-box-header { background: #efefef !important; padding: 8pt 12pt; font-weight: bold; border-bottom: 1px solid #aaa !important; }
+    .note-line { border-bottom: 1px solid #ddd !important; padding: 6pt 0; font-size: 11pt; }
+    .note-blank { background: white !important; border-bottom: 1px solid black !important; display: inline-block; width: 100pt; }
+    @page { margin: 0.75in; }
   }
 </style>
 </head>
@@ -471,6 +579,7 @@
     <button class="tab-btn" onclick="switchTab(2)" role="tab">🃏 Flashcards</button>
     <button class="tab-btn" onclick="switchTab(3)" role="tab">🧪 Practice Quiz</button>
     <button class="tab-btn" onclick="switchTab(4)" role="tab">📝 Notes Template</button>
+    <button class="tab-btn" onclick="switchTab(5)" role="tab">💬 Discussion Prep</button>
   </div>
 </div>
 
@@ -1190,16 +1299,19 @@
 </div><!-- /panel-4 -->
 
 <!-- ═══════════════════════════════════════════════════════ -->
-<!-- JAVASCRIPT                                              -->
+<!-- TAB 5: DISCUSSION PREP                                  -->
 <!-- ═══════════════════════════════════════════════════════ -->
+<div id="panel-5" class="panel">
+  <p style="font-size:13px;color:var(--muted);margin-bottom:6px;">Practice writing discussion responses. After submitting, compare your answer to the required content points and score yourself.</p>
+  <div class="exam-alert" style="margin:0 0 18px;">
+    <div class="dot"></div>
+    <span>Module 1 exam was ~45% discussion questions. Use this tab to practice written responses before Module 2.</span>
+  </div>
+
+  <div id="disc-container"></div>
+</div><!-- /panel-5 -->
 <script>
-/* ── TAB SWITCHING ── */
-function switchTab(idx) {
-  document.querySelectorAll('.panel').forEach((p,i) => p.classList.toggle('active', i===idx));
-  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
-  if (idx===2 && !fcInit) initFlashcards();
-  if (idx===3 && !qInit)  initQuiz();
-}
+/* ── TAB SWITCHING — extended at bottom of script ── */
 
 /* ── OBJECTIVES ── */
 function toggleObj(btn) {
@@ -1645,6 +1757,245 @@ function showResults() {
       <button class="btn btn-solid" onclick="resetQuiz()">Retake Quiz</button>
     </div>`;
   document.getElementById('quiz-nav').style.display='none';
+}
+
+/* ══════════════════════════════════════════════════════════
+   DISCUSSION PREP
+═══════════════════════════════════════════════════════════ */
+const DISC_QUESTIONS = [
+  {
+    ch:'ch1',
+    q:"Explain in your own words how the scientific method works. Use the discovery of Neptune as an example to illustrate each step.",
+    points:[
+      {text:"<strong>Observation:</strong> Identifies that Uranus deviated from its predicted orbit"},
+      {text:"<strong>Hypothesis:</strong> An undiscovered planet's gravity perturbs Uranus's orbit"},
+      {text:"<strong>Prediction:</strong> Le Verrier and/or Adams used Newton's gravity to calculate where the planet should be"},
+      {text:"<strong>Experiment/Test:</strong> Telescopes pointed to that position; Neptune found within 1° on September 23, 1846"},
+      {text:"<strong>Framework:</strong> Newton's Law of Gravity was the theoretical framework used"},
+      {text:"Explains that evidence confirmed the hypothesis, elevating it toward theory"},
+    ],
+    model:"The scientific method begins with an observation of a natural phenomenon, followed by forming a testable hypothesis. In 1846, astronomers noticed Uranus deviated from its predicted orbit (observation). They hypothesized that an unseen outer planet's gravity was perturbing it (hypothesis). Using Newton's Law of Gravity as a framework, Le Verrier and Adams independently calculated where this planet must be (prediction). On September 23, 1846, astronomers pointed their telescope there and found Neptune within 1° of the predicted position (experiment/confirmation). This is a textbook example of the scientific method producing a successful prediction from a theoretical framework."
+  },
+  {
+    ch:'ch1',
+    q:"What is the difference between a scientific hypothesis and a scientific theory? Why is the phrase 'it's just a theory' misleading when talking about science?",
+    points:[
+      {text:"<strong>Hypothesis</strong> = an educated guess that has not yet been rigorously tested"},
+      {text:"<strong>Theory</strong> = the END product of the scientific method; supported by extensive testing and independent reproduction"},
+      {text:"A theory is our current best explanation — not a guess"},
+      {text:"'Just a theory' in everyday language implies uncertainty; in science it implies the highest level of evidential support"},
+      {text:"Example given: Darwin's theory of evolution, Newton's theory of gravity, or similar"},
+      {text:"A theory can still be revised or replaced if new evidence emerges"},
+    ],
+    model:"A hypothesis is an educated guess about a phenomenon that has not yet been rigorously tested. A scientific theory, by contrast, is the end product of the scientific method — a hypothesis that has survived repeated testing and independent reproduction and now represents our best current understanding of a natural phenomenon. Calling something 'just a theory' misuses the word: in everyday language, 'theory' suggests uncertainty or guessing. In science, a theory is the strongest form of scientific knowledge. Darwin's theory of evolution and Newton's theory of gravity are 'just theories' in this sense — supported by overwhelming evidence accumulated over centuries."
+  },
+  {
+    ch:'ch1',
+    q:"Explain why the Earth has seasons. Be sure to address the most common misconception and explain why it is wrong.",
+    points:[
+      {text:"Seasons are caused by Earth's <strong>axial tilt of ~23.5°</strong>"},
+      {text:"Tilt causes sunlight to strike at different <strong>angles</strong> at different times of year"},
+      {text:"More direct angle = more energy per unit area = warmer"},
+      {text:"Tilt also affects the <strong>number of daylight hours</strong>"},
+      {text:"Common misconception: seasons caused by <strong>changing distance</strong> to Sun"},
+      {text:"Why misconception is wrong: Earth is actually slightly <strong>closer</strong> to the Sun in Northern Hemisphere winter"},
+    ],
+    model:"Earth's seasons are caused by its axial tilt of approximately 23.5° relative to the plane of its orbit. This tilt means different parts of Earth receive sunlight at different angles throughout the year. When the Northern Hemisphere is tilted toward the Sun, sunlight strikes more directly — concentrated over a smaller area — producing summer. When tilted away, sunlight is spread over a larger area and day length is shorter, producing winter. The most common misconception is that seasons are caused by Earth's changing distance from the Sun. This is incorrect for two reasons: first, the difference in Earth-Sun distance over the year is small (only ~3%); second, Earth is actually slightly closer to the Sun in January — during Northern Hemisphere winter — which is the opposite of what the distance hypothesis would predict."
+  },
+  {
+    ch:'ch1',
+    q:"Describe the cause of lunar phases and explain why they are NOT caused by Earth's shadow. Then explain what actually causes a lunar eclipse.",
+    points:[
+      {text:"Lunar phases caused by the Moon's <strong>changing position</strong> relative to Earth and the Sun"},
+      {text:"Moon completes one orbit in <strong>29.5 days</strong>; we see different portions of its sunlit side"},
+      {text:"Moon's brightness comes from <strong>reflected sunlight</strong>"},
+      {text:"Phases are NOT Earth's shadow — half the Moon is always in sunlight regardless of phase"},
+      {text:"A <strong>lunar eclipse</strong> occurs when Earth's shadow falls on the Full Moon"},
+      {text:"Eclipses don't happen monthly because the Moon's orbit is tilted <strong>~5.2°</strong> from the ecliptic"},
+    ],
+    model:"Lunar phases are caused by the Moon's changing position relative to Earth and the Sun as it orbits Earth every 29.5 days. As the Moon orbits, we see different proportions of its sunlit half — this is what creates the cycle of phases from New Moon to Full Moon and back. At all times, exactly half the Moon is illuminated by the Sun — phases simply reflect how much of that illuminated half is facing us. A common misconception is that phases are caused by Earth's shadow on the Moon. This is incorrect; Earth's shadow causes a lunar eclipse, which is an entirely different event. A lunar eclipse occurs only at Full Moon when Earth is precisely between the Sun and Moon and its shadow falls on the lunar surface. Eclipses don't happen every Full Moon because the Moon's orbit is tilted ~5.2° from the ecliptic — alignment is rare."
+  },
+  {
+    ch:'ch2',
+    q:"Compare and contrast the geocentric and heliocentric models of the solar system. What evidence did Galileo provide that supported the heliocentric model and contradicted the geocentric model?",
+    points:[
+      {text:"<strong>Geocentric (Ptolemy):</strong> Earth at center; all bodies orbit Earth in circles + epicycles"},
+      {text:"<strong>Heliocentric (Copernicus):</strong> Sun at center; Earth is one of 6 known planets; simpler model"},
+      {text:"Galileo: <strong>phases of Venus</strong> — Venus shows gibbous phases impossible in geocentric model"},
+      {text:"Galileo: <strong>moons of Jupiter</strong> — proved not everything orbits Earth"},
+      {text:"Galileo: <strong>sunspots</strong> — Sun is not perfect and rotates"},
+      {text:"Galileo: <strong>craters on the Moon</strong> — heavenly bodies are not perfect spheres"},
+    ],
+    model:"The geocentric model, codified by Ptolemy in the Almagest, placed Earth at the center of the universe with all celestial bodies orbiting in circles. To explain retrograde motion, Ptolemy added epicycles — small circles within circles. The heliocentric model proposed by Copernicus placed the Sun at the center, with Earth as one of six known orbiting planets. It was simpler and explained retrograde motion naturally as Earth overtaking outer planets. Galileo provided the key telescopic evidence: (1) Phases of Venus — Venus showed gibbous and full phases, impossible if Venus always stayed between Earth and the Sun as the geocentric model required. (2) Moons of Jupiter — four moons clearly orbiting Jupiter, not Earth, proving not everything orbits Earth. (3) Sunspots — the Sun was not perfect and rotated. (4) Craters on the Moon — heavenly bodies were not perfect spheres as previously assumed."
+  },
+  {
+    ch:'ch2',
+    q:"State and explain Kepler's three laws of planetary motion. For each law, describe what it tells us about how planets move.",
+    points:[
+      {text:"<strong>1st Law:</strong> Orbits are ellipses with the Sun at one focus — not the center; explains perihelion/aphelion"},
+      {text:"<strong>2nd Law:</strong> Equal areas in equal times — planet moves faster at perihelion, slower at aphelion"},
+      {text:"2nd Law due to <strong>conservation of angular momentum</strong>"},
+      {text:"<strong>3rd Law:</strong> P² = a³ (P in years, a in AU) — farther planets have longer orbital periods"},
+      {text:"3rd Law: relationship between <strong>orbital size and period</strong>"},
+      {text:"Laws derived from <strong>Tycho Brahe's</strong> observational data"},
+    ],
+    model:"Kepler derived three laws of planetary motion from Tycho Brahe's precise observational data. The First Law states that planetary orbits are ellipses with the Sun at one focus — not the center. This means planets are sometimes closer to the Sun (perihelion) and sometimes farther (aphelion). The Second Law states that a line from the Sun to a planet sweeps equal areas in equal time — meaning planets move faster when close to the Sun and slower when far away. This is a consequence of conservation of angular momentum. The Third Law states that the square of a planet's orbital period equals the cube of its semi-major axis: P²=a³ (with P in years and a in AU). This means the farther a planet is from the Sun, the longer it takes to complete one orbit. Together these laws precisely describe planetary motion and were later explained by Newton's gravity."
+  },
+  {
+    ch:'ch2',
+    q:"Explain Newton's Law of Universal Gravitation. How does it explain Kepler's laws and why was it considered a 'gigantic leap forward' in understanding the universe?",
+    points:[
+      {text:"<strong>F = G·M₁·M₂/r²</strong> — gravity proportional to product of masses, inversely proportional to square of distance"},
+      {text:"Gravity is <strong>always attractive</strong> and <strong>universal</strong> — same law everywhere"},
+      {text:"Explains Kepler's 2nd law via <strong>conservation of angular momentum</strong>"},
+      {text:"Explains Kepler's 3rd law mathematically from first principles"},
+      {text:"Explains Kepler's 1st law — elliptical orbits follow naturally from inverse-square gravity"},
+      {text:"'Gigantic leap': same forces on Earth (apple falling) also govern celestial bodies (Moon orbiting)"},
+    ],
+    model:"Newton's Law of Universal Gravitation states that every particle of matter attracts every other particle with a force F = G·M₁·M₂/r² — proportional to the product of both masses and inversely proportional to the square of the distance between them. This law is universal: the same gravity that pulls an apple to Earth keeps the Moon in orbit and the planets orbiting the Sun. This was the 'gigantic leap' — Newton unified terrestrial and celestial physics. Before Newton, the heavens were thought to operate by different rules than Earth. Newton showed the same inverse-square gravity explains all three of Kepler's laws: the elliptical orbits follow mathematically from inverse-square attraction; the equal-areas law reflects conservation of angular momentum; and the P²=a³ relationship emerges naturally from the force equation. This gave science predictive power over the entire solar system."
+  },
+  {
+    ch:'ch6',
+    q:"Describe the leading theory for the formation of the solar system (the nebular hypothesis). What key observations must the theory explain, and how does the condensation sequence explain the difference between inner and outer planets?",
+    points:[
+      {text:"Interstellar gas/dust cloud collapsed under <strong>gravity</strong>"},
+      {text:"Conservation of <strong>angular momentum</strong> caused cloud to spin and flatten into a disc"},
+      {text:"Must explain: same orbital plane, same direction, circular orbits, rocky inner vs. gas outer planets"},
+      {text:"<strong>Condensation sequence:</strong> temperature decreases with distance from young Sun"},
+      {text:"Inner disc (hot): only metals and rocks condense → rocky/metallic terrestrial planets"},
+      {text:"Outer disc (cool, beyond frost line): ices also condense → more material → large cores → gas/ice giants"},
+    ],
+    model:"The nebular hypothesis proposes that our solar system formed from a giant interstellar cloud of gas and dust that collapsed under its own gravity approximately 4.56 billion years ago. As it collapsed, conservation of angular momentum caused the cloud to spin faster and flatten into a rotating protoplanetary disc around the young Sun — the same process we observe around other young stars today. A successful model must explain: why all planets orbit in the same plane, in the same direction as the Sun rotates, on nearly circular orbits, and why the inner planets are rocky while the outer planets are gas and ice giants. The condensation sequence explains the last point: temperature in the disc decreased with distance from the Sun. Near the hot young Sun, only metals and rocks could condense into solid particles. Farther out, beyond the frost line, water and other ices also condensed — providing far more raw material and allowing giant planetary cores to form, which then accreted H/He gas to become gas and ice giants."
+  },
+  {
+    ch:'ch6',
+    q:"Explain the difference between the core accretion model and the disk instability model for gas giant formation. Which is favored, and why do gas giants have a limited time window to form?",
+    points:[
+      {text:"<strong>Core accretion (favored):</strong> solid rock/ice core forms beyond ice line first via planetesimal accretion"},
+      {text:"Core reaches ~10 Earth masses → gravity triggers <strong>runaway gas accretion</strong> of H/He"},
+      {text:"<strong>Disk instability:</strong> dense region of disc collapses directly like a star forming — no core needed first"},
+      {text:"Core accretion favored: Saturn has detected dense core; exoplanet evidence supports it"},
+      {text:"Time limit: young Sun's <strong>stellar wind (T-Tauri phase)</strong> expels disc gas within ~5 million years"},
+      {text:"After gas is gone, no more gas giants can form — window closes permanently"},
+    ],
+    model:"Two competing models exist for gas giant formation. In the core accretion model (the favored theory), solid planetesimals beyond the frost line accrete into a rock/ice core. Once this core reaches roughly 10 Earth masses, its gravity becomes strong enough to rapidly pull in H/He gas from the disc in a runaway process — forming a gas giant. In the disk instability model, a dense region of the protoplanetary disc collapses directly under gravity — analogous to how a star forms — without needing a solid core first. Core accretion is favored because Saturn has a detected dense core consistent with this model, and exoplanet surveys show a distribution of planet masses matching core accretion predictions. Gas giants face a strict time limit: the young Sun goes through an intense T-Tauri phase in which radiation and stellar wind physically expel all remaining gas from the disc within a few million years. Once the gas is gone, there is no H/He to accrete, so gas giants must form before this window closes — explaining why gas giants had only ~5 million years while terrestrial planets could take up to ~100 million years."
+  },
+];
+
+let discInit = false;
+
+function initDisc() {
+  discInit = true;
+  renderAllDisc();
+}
+
+function renderAllDisc() {
+  const container = document.getElementById('disc-container');
+  if (!container) return;
+
+  const filterHTML = `
+    <div class="disc-filter">
+      <button class="filter-btn active" onclick="filterDisc('all',this)">All</button>
+      <button class="filter-btn" onclick="filterDisc('ch1',this)">Ch 1</button>
+      <button class="filter-btn" onclick="filterDisc('ch2',this)">Ch 2</button>
+      <button class="filter-btn" onclick="filterDisc('ch6',this)">Ch 6</button>
+    </div>`;
+
+  let html = filterHTML;
+  DISC_QUESTIONS.forEach((dq, idx) => {
+    html += renderDiscQ(dq, idx);
+  });
+  container.innerHTML = html;
+}
+
+function renderDiscQ(dq, idx) {
+  const chLabel = dq.ch === 'ch1' ? 'Ch 1' : dq.ch === 'ch2' ? 'Ch 2' : 'Ch 6';
+  let pointsHTML = dq.points.map((p, pi) => `
+    <div class="disc-point">
+      <input type="checkbox" class="disc-check" id="chk-${idx}-${pi}" onchange="updateScore(${idx})">
+      <label class="disc-point-text" for="chk-${idx}-${pi}">${p.text}</label>
+    </div>`).join('');
+
+  return `
+  <div class="disc-q" id="disc-${idx}" data-ch="${dq.ch}">
+    <div class="disc-q-header">
+      <span class="disc-q-num">${chLabel} · Q${idx+1}</span>
+      <div class="disc-q-text">${dq.q}</div>
+    </div>
+    <div class="disc-q-body">
+      <textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Write your response here…" rows="5"></textarea>
+      <div class="disc-btn-row">
+        <button class="btn btn-solid" onclick="submitDisc(${idx})">Submit & Grade</button>
+        <button class="btn" onclick="resetDisc(${idx})">↺ Reset</button>
+      </div>
+      <div class="disc-rubric" id="disc-rubric-${idx}">
+        <div class="disc-rubric-title">✅ Content Checklist — check each point you covered</div>
+        ${pointsHTML}
+        <div class="disc-self-score">
+          <span>Your score:</span>
+          <span class="disc-score-display" id="disc-score-${idx}">0 / ${dq.points.length}</span>
+          <span style="color:var(--muted);font-size:12px" id="disc-grade-${idx}"></span>
+        </div>
+        <div class="disc-model" id="disc-model-${idx}">
+          <div class="disc-model-title">📋 Model Answer</div>
+          <p style="color:var(--muted);font-size:13px;line-height:1.7">${dq.model}</p>
+        </div>
+        <button class="btn" style="margin-top:10px;font-size:12px" onclick="toggleModel(${idx})">
+          Show / Hide Model Answer
+        </button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function submitDisc(idx) {
+  const ta = document.getElementById(`disc-ta-${idx}`);
+  if (!ta.value.trim()) { ta.style.borderColor='#ef4444'; return; }
+  ta.classList.add('submitted');
+  ta.readOnly = true;
+  document.getElementById(`disc-rubric-${idx}`).classList.add('show');
+}
+
+function resetDisc(idx) {
+  const ta = document.getElementById(`disc-ta-${idx}`);
+  ta.value = ''; ta.readOnly = false; ta.style.borderColor = '';
+  ta.classList.remove('submitted');
+  document.getElementById(`disc-rubric-${idx}`).classList.remove('show');
+  document.getElementById(`disc-model-${idx}`).classList.remove('show');
+  document.querySelectorAll(`[id^="chk-${idx}-"]`).forEach(c => c.checked = false);
+  updateScore(idx);
+}
+
+function updateScore(idx) {
+  const dq = DISC_QUESTIONS[idx];
+  const checked = document.querySelectorAll(`[id^="chk-${idx}-"]:checked`).length;
+  const total = dq.points.length;
+  const pct = Math.round(checked/total*100);
+  document.getElementById(`disc-score-${idx}`).textContent = `${checked} / ${total}`;
+  const grade = pct >= 90 ? '🌟 Excellent' : pct >= 70 ? '👍 Good' : pct >= 50 ? '📚 Needs work' : '🔄 Review material';
+  document.getElementById(`disc-grade-${idx}`).textContent = grade;
+}
+
+function toggleModel(idx) {
+  document.getElementById(`disc-model-${idx}`).classList.toggle('show');
+}
+
+function filterDisc(ch, btn) {
+  document.querySelectorAll('.disc-filter .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.disc-q').forEach(el => {
+    el.style.display = (ch === 'all' || el.dataset.ch === ch) ? 'block' : 'none';
+  });
+}
+
+// extend switchTab to init discussion
+const _origSwitch = switchTab;
+function switchTab(idx) {
+  document.querySelectorAll('.panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  if (idx===2 && !fcInit) initFlashcards();
+  if (idx===3 && !qInit)  initQuiz();
+  if (idx===5 && !discInit) initDisc();
 }
 </script>
 </body>
