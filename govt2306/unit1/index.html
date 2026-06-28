@@ -3,472 +3,226 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GOVT 2306 -- Unit 1 Study Hub</title>
+<title>GOVT 2306 — Unit 1 Study Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0a0a0f;
-  --surface: #12121a;
-  --surface2: #16161f;
-  --border: #1e1e2e;
-  --text: #e8e8f0;
-  --muted: #6b6b80;
-  --accent: #f97316;
-  --accent-dim: rgba(249,115,22,0.12);
-  --accent2: #fb923c;
-  --green: #22c55e;
-  --blue: #3b82f6;
-  --red: #ef4444;
-  --yellow: #eab308;
-  --purple: #a78bfa;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'IBM Plex Sans', sans-serif;
-  min-height: 100vh;
-}
-body::before {
-  content:'';
-  position:fixed;
-  inset:0;
-  background-image:
-    linear-gradient(rgba(249,115,22,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(249,115,22,0.025) 1px, transparent 1px);
-  background-size:40px 40px;
-  pointer-events:none;
-  z-index:0;
-}
-.container { max-width:960px; margin:0 auto; padding:0 20px; position:relative; z-index:1; }
-
-/* Nav */
-.topnav {
-  display:flex; gap:8px; padding:16px 0;
-  border-bottom:1px solid var(--border);
-  margin-bottom:32px; flex-wrap:wrap;
-}
-.nav-btn {
-  font-family:'IBM Plex Mono',monospace; font-size:11px;
-  padding:8px 16px; border-radius:6px; border:1px solid var(--border);
-  background:transparent; color:var(--muted); cursor:pointer;
-  transition:all 0.2s; letter-spacing:0.05em;
-}
-.nav-btn:hover, .nav-btn.active {
-  background:var(--accent-dim); border-color:var(--accent); color:var(--accent);
-}
-
-/* Header */
-header { padding:24px 0 32px; }
-.breadcrumb { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); margin-bottom:12px; }
-.breadcrumb a { color:var(--accent); text-decoration:none; }
-.unit-badge { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent); background:var(--accent-dim); padding:4px 10px; border-radius:4px; display:inline-block; margin-bottom:12px; }
-h1 { font-size:clamp(26px,5vw,42px); font-weight:700; letter-spacing:-0.02em; line-height:1.1; margin-bottom:12px; }
-.exam-pill {
-  display:inline-flex; align-items:center; gap:8px;
-  font-family:'IBM Plex Mono',monospace; font-size:11px;
-  border:1px solid var(--yellow); color:var(--yellow);
-  padding:6px 14px; border-radius:20px;
-  background:rgba(234,179,8,0.08);
-}
-.textbook-links {
-  display:flex; align-items:center; gap:10px;
-  flex-wrap:wrap; margin-top:14px;
-  padding:10px 16px; border-radius:8px;
-  background:rgba(249,115,22,0.06);
-  border:1px solid rgba(249,115,22,0.15);
-}
-.tb-label { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); font-weight:700; }
-.tb-note { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); }
-
-/* Section label */
-.section-label {
-  font-family:'IBM Plex Mono',monospace; font-size:10px;
-  letter-spacing:0.2em; text-transform:uppercase;
-  color:var(--muted); margin-bottom:16px;
-  display:flex; align-items:center; gap:12px;
-}
-.section-label::after { content:''; flex:1; height:1px; background:var(--border); }
-
-/* Panels */
-.panel { display:none; }
-.panel.active { display:block; }
-
-/* ===== OBJECTIVES ===== */
-.obj-grid { display:grid; gap:12px; margin-bottom:32px; }
-.obj-card {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:10px; padding:16px 20px;
-  display:grid; grid-template-columns:32px 1fr;
-  gap:12px; align-items:start;
-}
-.obj-num {
-  font-family:'IBM Plex Mono',monospace; font-size:11px;
-  color:var(--accent); background:var(--accent-dim);
-  width:28px; height:28px; border-radius:6px;
-  display:flex; align-items:center; justify-content:center;
-  font-weight:700; flex-shrink:0;
-}
-.obj-text { font-size:13px; line-height:1.6; }
-.obj-chapter { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); margin-top:4px; }
-.ch1 .obj-num { color:#f97316; background:rgba(249,115,22,0.12); }
-.ch2 .obj-num { color:#3b82f6; background:rgba(59,130,246,0.12); }
-
-/* ===== STUDY GUIDE ===== */
-.chapter-block {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:12px; overflow:hidden; margin-bottom:20px;
-}
-.chapter-header {
-  padding:16px 20px; display:flex;
-  justify-content:space-between; align-items:center;
-  cursor:pointer; transition:background 0.2s;
-  border-bottom:1px solid var(--border);
-}
-.chapter-header:hover { background:var(--surface2); }
-.chapter-title { font-size:16px; font-weight:700; }
-.chapter-subtitle { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); margin-top:2px; }
-.chevron { color:var(--muted); font-size:14px; transition:transform 0.2s; }
-.chapter-header.open .chevron { transform:rotate(180deg); }
-.chapter-body { padding:20px; display:none; }
-.chapter-body.open { display:block; }
-.concept-title {
-  font-size:14px; font-weight:700; color:var(--accent);
-  margin:20px 0 8px; display:flex; align-items:center; gap:8px;
-}
-.concept-title:first-child { margin-top:0; }
-.concept-title::before { content:'\25B8'; font-size:10px; }
-.concept-body { font-size:13px; line-height:1.8; color:#c8c8d8; }
-.concept-body strong { color:var(--text); }
-.key-term {
-  display:inline-block; font-family:'IBM Plex Mono',monospace;
-  font-size:11px; background:var(--accent-dim);
-  color:var(--accent); padding:2px 8px; border-radius:4px; margin:2px;
-}
-.key-term.blue { background:rgba(59,130,246,0.12); color:var(--blue); }
-.key-term.green { background:rgba(34,197,94,0.12); color:var(--green); }
-.key-term.purple { background:rgba(167,139,250,0.12); color:var(--purple); }
-
-/* ===== FLASHCARDS ===== */
-.fc-controls { display:flex; gap:10px; align-items:center; margin-bottom:20px; flex-wrap:wrap; }
-.fc-stat { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); }
-.btn {
-  font-family:'IBM Plex Mono',monospace; font-size:11px;
-  padding:8px 16px; border-radius:6px; border:1px solid var(--border);
-  background:transparent; color:var(--text); cursor:pointer;
-  transition:all 0.2s; letter-spacing:0.05em;
-}
-.btn:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-dim); }
-.btn.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
-.btn.primary:hover { opacity:0.85; }
-.flashcard-area { perspective:1000px; margin-bottom:20px; }
-.flashcard {
-  width:100%; min-height:220px; position:relative; cursor:pointer;
-  transform-style:preserve-3d; transition:transform 0.5s;
-}
-.flashcard.flipped { transform:rotateY(180deg); }
-.fc-front, .fc-back {
-  position:absolute; inset:0;
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:14px; padding:32px;
-  display:flex; flex-direction:column;
-  justify-content:center; align-items:center;
-  text-align:center; backface-visibility:hidden;
-}
-.fc-back { transform:rotateY(180deg); background:var(--surface2); border-color:var(--accent); }
-.fc-label { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:16px; }
-.fc-question { font-size:18px; font-weight:700; line-height:1.4; }
-.fc-answer { font-size:14px; line-height:1.7; color:#c8c8d8; }
-.fc-hint { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); margin-top:12px; }
-.fc-chapter-tag { font-family:'IBM Plex Mono',monospace; font-size:10px; padding:3px 8px; border-radius:4px; margin-bottom:8px; }
-.fc-nav { display:flex; gap:10px; justify-content:center; align-items:center; }
-.fc-counter { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); min-width:80px; text-align:center; }
-.filter-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
-.filter-btn {
-  font-family:'IBM Plex Mono',monospace; font-size:10px;
-  padding:5px 12px; border-radius:4px; border:1px solid var(--border);
-  background:transparent; color:var(--muted); cursor:pointer; transition:all 0.2s;
-}
-.filter-btn.active-filter { border-color:var(--accent); color:var(--accent); background:var(--accent-dim); }
-
-/* ===== QUIZ ===== */
-.quiz-area { max-width:700px; }
-.question-block {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:12px; padding:24px; margin-bottom:16px;
-}
-.q-num { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); margin-bottom:8px; }
-.q-text { font-size:15px; font-weight:600; line-height:1.5; margin-bottom:16px; }
-.options { display:grid; gap:8px; }
-.option {
-  padding:12px 16px; border-radius:8px;
-  border:1px solid var(--border); cursor:pointer;
-  font-size:13px; line-height:1.5;
-  transition:all 0.2s; background:var(--surface2);
-  display:flex; gap:12px; align-items:flex-start;
-}
-.option:hover:not(.answered) { border-color:var(--accent); background:var(--accent-dim); }
-.option.correct { border-color:var(--green); background:rgba(34,197,94,0.1); color:var(--green); }
-.option.wrong { border-color:var(--red); background:rgba(239,68,68,0.1); color:var(--red); }
-.option.reveal { border-color:var(--green); background:rgba(34,197,94,0.05); }
-.opt-letter { font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:700; min-width:20px; color:var(--muted); }
-.explanation {
-  margin-top:12px; padding:12px 16px; border-radius:8px;
-  background:rgba(249,115,22,0.08); border:1px solid rgba(249,115,22,0.2);
-  font-size:12px; line-height:1.6; color:#d4a87a; display:none;
-}
-.quiz-score {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:12px; padding:32px; text-align:center;
-  margin-bottom:20px; display:none;
-}
-.score-num { font-size:48px; font-weight:700; color:var(--accent); }
-.score-label { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); margin-top:8px; }
-
-/* Fill in blank */
-.fitb-input {
-  background:var(--surface2); border:1px solid var(--border);
-  border-radius:6px; color:var(--text);
-  font-family:'IBM Plex Sans',sans-serif; font-size:14px;
-  padding:8px 12px; width:100%; margin-top:12px;
-  transition:border-color 0.2s; outline:none;
-}
-.fitb-input:focus { border-color:var(--accent); }
-.fitb-input.correct-input { border-color:var(--green); background:rgba(34,197,94,0.08); color:var(--green); }
-.fitb-input.wrong-input { border-color:var(--red); background:rgba(239,68,68,0.08); }
-.fitb-correct-answer { font-size:12px; margin-top:6px; color:var(--green); font-family:'IBM Plex Mono',monospace; display:none; }
-.q-type-badge {
-  font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.1em;
-  text-transform:uppercase; padding:2px 7px; border-radius:3px;
-  margin-left:8px; vertical-align:middle;
-}
-.q-type-mc { background:rgba(249,115,22,0.12); color:var(--accent); }
-.q-type-fitb { background:rgba(59,130,246,0.12); color:var(--blue); }
-.q-ch-badge { font-family:'IBM Plex Mono',monospace; font-size:9px; padding:2px 7px; border-radius:3px; margin-left:6px; vertical-align:middle; }
-
-/* ===== NOTES ===== */
-.notes-template {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:12px; overflow:hidden; margin-bottom:20px;
-}
-.notes-header {
-  background:linear-gradient(135deg,rgba(249,115,22,0.15),rgba(59,130,246,0.1));
-  border-bottom:1px solid var(--border); padding:20px 24px;
-  display:flex; justify-content:space-between; align-items:center;
-  flex-wrap:wrap; gap:12px;
-}
-.notes-title { font-size:16px; font-weight:700; }
-.notes-subtitle { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); margin-top:2px; }
-.notes-body { padding:24px; }
-.notes-col-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-.notes-col-title {
-  font-family:'IBM Plex Mono',monospace; font-size:10px;
-  letter-spacing:0.15em; text-transform:uppercase;
-  color:var(--accent); margin-bottom:12px;
-  padding-bottom:8px; border-bottom:1px solid var(--border);
-}
-.notes-item {
-  font-size:12px; line-height:1.8; padding:6px 0;
-  border-bottom:1px dashed rgba(255,255,255,0.04);
-  display:flex; gap:8px; align-items:flex-start;
-}
-.notes-item::before { content:'\203A'; color:var(--muted); flex-shrink:0; margin-top:1px; }
-.notes-tip {
-  background:rgba(234,179,8,0.08); border:1px solid rgba(234,179,8,0.2);
-  border-radius:8px; padding:12px 16px; margin-top:16px;
-  font-size:12px; line-height:1.7; color:#d4b84a;
-}
-.notes-tip strong { color:var(--yellow); }
-
-footer { border-top:1px solid var(--border); padding:24px 0; margin-top:40px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
-footer a { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent); text-decoration:none; }
-
-@media(max-width:600px){
-  .notes-col-grid { grid-template-columns:1fr; }
-  .fc-question { font-size:15px; }
-  .topnav { gap:6px; }
-  .nav-btn { font-size:10px; padding:7px 12px; }
-  h1 { font-size:24px; }
-}
+:root{--bg:#0a0a0f;--surface:#12121a;--surface2:#16161f;--border:#1e1e2e;--text:#e8e8f0;--muted:#6b6b80;--accent:#f97316;--accent-dim:rgba(249,115,22,0.12);--green:#22c55e;--red:#ef4444;--yellow:#eab308;--blue:#3b82f6;--purple:#a78bfa;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(249,115,22,0.025)1px,transparent 1px),linear-gradient(90deg,rgba(249,115,22,0.025)1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+.container{max-width:960px;margin:0 auto;padding:0 20px;position:relative;z-index:1;}
+.topnav{display:flex;gap:8px;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:32px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.topnav::-webkit-scrollbar{display:none;}
+.nav-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;letter-spacing:0.05em;white-space:nowrap;flex-shrink:0;}
+.nav-btn:hover,.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+header{padding:24px 0 32px;}
+.breadcrumb{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:12px;}
+.breadcrumb a{color:var(--accent);text-decoration:none;}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);background:var(--accent-dim);padding:4px 10px;border-radius:4px;display:inline-block;margin-bottom:12px;}
+h1{font-size:clamp(26px,5vw,42px);font-weight:700;letter-spacing:-0.02em;line-height:1.1;margin-bottom:12px;}
+.exam-pill{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid var(--yellow);color:var(--yellow);padding:6px 14px;border-radius:20px;background:rgba(234,179,8,0.08);}
+.textbook-links{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;padding:10px 16px;border-radius:8px;background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.15);}
+.tb-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);font-weight:700;}
+.tb-note{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.mastery-bar-wrap{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+.mastery-bar-track{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.mastery-bar-fill{height:100%;background:var(--green);border-radius:3px;transition:width 0.4s;}
+.mastery-bar-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
+.btn-reset{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;}
+.btn-reset:hover{border-color:var(--red);color:var(--red);}
+.panel{display:none;}.panel.active{display:block;}
+.obj-grid{display:grid;gap:12px;margin-bottom:32px;}
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:grid;grid-template-columns:32px 1fr auto;gap:12px;align-items:start;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
+.obj-text{font-size:13px;line-height:1.6;}
+.obj-chapter{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:4px;}
+.ch1 .obj-num{color:#f97316;background:rgba(249,115,22,0.12);}
+.ch2 .obj-num{color:#3b82f6;background:rgba(59,130,246,0.12);}
+.mastery-btn{width:24px;height:24px;border-radius:4px;border:1px solid var(--border);background:transparent;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all 0.2s;}
+.mastery-btn.mastered{background:rgba(34,197,94,0.15);border-color:var(--green);color:var(--green);}
+.mastery-btn:not(.mastered){color:var(--muted);}
+.chapter-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;}
+.chapter-header{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background 0.2s;border-bottom:1px solid var(--border);}
+.chapter-header:hover{background:var(--surface2);}
+.chapter-title{font-size:16px;font-weight:700;}
+.chapter-subtitle{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:2px;}
+.chevron{color:var(--muted);font-size:14px;transition:transform 0.2s;}
+.chapter-header.open .chevron{transform:rotate(180deg);}
+.chapter-body{padding:20px;display:none;}
+.chapter-body.open{display:block;}
+.concept-title{font-size:14px;font-weight:700;color:var(--accent);margin:20px 0 8px;display:flex;align-items:center;gap:8px;}
+.concept-title:first-child{margin-top:0;}
+.concept-title::before{content:'▸';font-size:10px;}
+.concept-body{font-size:13px;line-height:1.8;color:#c8c8d8;}
+.concept-body strong{color:var(--text);}
+.key-term{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--accent-dim);color:var(--accent);padding:2px 8px;border-radius:4px;margin:2px 2px;}
+.key-term.blue{background:rgba(59,130,246,0.12);color:var(--blue);}
+.filter-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.filter-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;}
+.filter-btn.active-filter{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.fc-controls{display:flex;gap:10px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+.fc-stat{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);}
+.btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:8px 16px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;transition:all 0.2s;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.btn.primary{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.flashcard-area{perspective:1000px;margin-bottom:20px;}
+.flashcard{width:100%;min-height:200px;cursor:pointer;transform-style:preserve-3d;transition:transform 0.4s;position:relative;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;width:100%;min-height:200px;backface-visibility:hidden;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;display:flex;flex-direction:column;justify-content:center;}
+.fc-back{transform:rotateY(180deg);}
+.fc-chapter-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;display:inline-block;margin-bottom:12px;width:fit-content;}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;}
+.fc-question{font-size:17px;font-weight:600;line-height:1.4;}
+.fc-answer{font-size:15px;line-height:1.6;color:#c8c8d8;}
+.fc-hint{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:16px;}
+.fc-nav{display:flex;align-items:center;gap:16px;justify-content:center;}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);}
+.quiz-score{background:var(--surface);border:1px solid var(--green);border-radius:12px;padding:24px;text-align:center;margin-bottom:20px;display:none;}
+.score-num{font-size:48px;font-weight:700;color:var(--green);}
+.score-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:4px;}
+.q-block{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px;}
+.q-ch-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:10px;}
+.q-text{font-size:14px;font-weight:600;line-height:1.5;margin-bottom:14px;}
+.option{font-size:13px;padding:10px 14px;border-radius:6px;border:1px solid var(--border);margin-bottom:8px;cursor:pointer;transition:all 0.15s;line-height:1.4;}
+.option:hover:not(.answered){background:var(--surface2);}
+.option.correct{border-color:var(--green);background:rgba(34,197,94,0.1);color:var(--green);}
+.option.wrong{border-color:var(--red);background:rgba(239,68,68,0.1);color:var(--red);}
+.option.reveal{border-color:var(--green);background:rgba(34,197,94,0.05);}
+.fitb-input{width:100%;padding:10px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:14px;margin-bottom:8px;}
+.fitb-input:focus{outline:none;border-color:var(--accent);}
+.fitb-input.correct-input{border-color:var(--green);}
+.fitb-input.wrong-input{border-color:var(--red);}
+.fitb-correct-answer{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);display:none;margin-bottom:6px;}
+.explanation{font-size:12px;color:var(--muted);border-top:1px solid var(--border);padding-top:10px;margin-top:10px;display:none;line-height:1.6;}
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;}
+.disc-ch-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:10px;}
+.disc-prompt{font-size:14px;font-weight:600;line-height:1.5;margin-bottom:14px;}
+.disc-textarea{width:100%;min-height:120px;padding:12px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:14px;resize:vertical;margin-bottom:12px;}
+.disc-textarea:focus{outline:none;border-color:var(--accent);}
+.disc-checklist{display:none;margin-top:12px;}
+.disc-checklist.visible{display:block;}
+.disc-check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;line-height:1.5;cursor:pointer;}
+.disc-check-item:last-child{border-bottom:none;}
+.disc-check-item input[type=checkbox]{width:16px;height:16px;flex-shrink:0;margin-top:2px;accent-color:var(--green);}
+.disc-score-display{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--green);margin-top:12px;font-weight:700;}
+.disc-model{display:none;margin-top:12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:13px;line-height:1.7;color:#c8c8d8;}
+.disc-model.visible{display:block;}
+.btn-model-toggle{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;margin-top:8px;}
+.disc-placeholder{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.8;}
+.notes-template{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.notes-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.notes-title{font-size:15px;font-weight:700;}
+.notes-subtitle{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:4px;}
+.notes-body{padding:20px;}
+.notes-col-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.notes-col-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.notes-item{font-size:12px;line-height:1.6;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);color:#c8c8d8;}
+.notes-tip{margin-top:16px;padding:12px;background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.2);border-radius:6px;font-size:12px;color:var(--muted);line-height:1.6;}
+footer{border-top:1px solid var(--border);padding:24px 0;margin-top:40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+footer a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);text-decoration:none;}
+@media print{.topnav,.mastery-bar-wrap,footer{display:none!important;}.panel{display:none!important;}.panel.active{display:block!important;}body{background:#fff;color:#000;}}
+@media(max-width:600px){.notes-col-grid{grid-template-columns:1fr;}.fc-question{font-size:15px;}.topnav{gap:6px;}.nav-btn{font-size:10px;padding:7px 12px;}h1{font-size:24px;}}
 </style>
 </head>
 <body>
 <div class="container">
-
-<div class="topnav">
-  <button class="nav-btn active" onclick="showPanel('overview',this)">&#128203; Objectives</button>
-  <button class="nav-btn" onclick="showPanel('guide',this)">&#128214; Study Guide</button>
-  <button class="nav-btn" onclick="showPanel('flashcards',this)">&#127183; Flashcards</button>
-  <button class="nav-btn" onclick="showPanel('quiz',this)">&#9999;&#65039; Practice Quiz</button>
-  <button class="nav-btn" onclick="showPanel('notes',this)">&#128221; Notes Template</button>
-</div>
-
+<nav class="topnav" role="navigation" aria-label="Study tabs">
+  <button class="nav-btn active" onclick="showPanel('overview',this)" aria-selected="true">📋 Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)" aria-selected="false">📖 Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)" aria-selected="false">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)" aria-selected="false">✏️ Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('discussion',this)" aria-selected="false">💬 Discussion</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)" aria-selected="false">📝 Notes</button>
+</nav>
 <header>
   <div class="breadcrumb"><a href="../../index.html">Study Hub</a> / GOVT-2306 / Unit 1</div>
-  <div class="unit-badge">GOVT-2306 &middot; Unit 01 &middot; Ch. 1&ndash;2</div>
+  <div class="unit-badge">GOVT-2306 · Unit 01 · Ch. 1–2</div>
   <h1>Texas Politics &amp;<br>Federalism</h1>
-  <div class="exam-pill">&#9200; Exam 1: June 19&ndash;21, 2026 &middot; Lockdown Browser + Camera Required</div>
-  <div class="textbook-links">
-    <span class="tb-label">&#128218; Textbook</span>
-    <span class="tb-note">Practicing Texas Politics, 18th Ed. &middot; Access via Blackboard &rarr; Cengage MindTap &middot; Included in tuition &middot; MindTap Ch.1&amp;2 Activities due June 20</span>
+  <div class="exam-pill" aria-label="Exam date">⏰ Exam 1: June 19–21, 2026 · Lockdown Browser + Camera Required</div>
+  <div class="textbook-links" aria-label="Textbook information">
+    <span class="tb-label">📚 Textbook</span>
+    <span class="tb-note">Practicing Texas Politics, 18th Ed. · Access via Blackboard → Cengage MindTap · Included in tuition · MindTap Ch.1&amp;2 Activities due June 20</span>
   </div>
 </header>
-
-<!-- ===== OBJECTIVES PANEL ===== -->
-<div id="panel-overview" class="panel active">
+<div class="mastery-bar-wrap" aria-label="Mastery progress">
+  <span class="mastery-bar-label" id="mastery-label">Mastery: 0%</span>
+  <div class="mastery-bar-track" aria-hidden="true"><div class="mastery-bar-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="btn-reset" onclick="resetAllMastery()" aria-label="Reset all mastery for this unit">Reset</button>
+</div>
+<!-- OBJECTIVES -->
+<div id="panel-overview" class="panel active" role="tabpanel" aria-label="Learning objectives">
   <div class="section-label">Module 1 Learning Objectives</div>
-  <div class="obj-grid">
-    <div class="obj-card ch1"><div class="obj-num">1</div><div><div class="obj-text">Define political culture and explain how it has influenced politics in Texas. Identify the three political cultures and which one Elazar assigns to Texas.</div><div class="obj-chapter">CH. 1 &middot; LO 1.2</div></div></div>
-    <div class="obj-card ch1"><div class="obj-num">2</div><div><div class="obj-text">Describe how the frontier experience helped shape political culture in Texas (individualistic and traditionalistic cultures).</div><div class="obj-chapter">CH. 1 &middot; LO 1.2</div></div></div>
-    <div class="obj-card ch1"><div class="obj-num">3</div><div><div class="obj-text">Discuss the political implications of Texas's size and rank in both geography and population. Identify the four geographic regions and where Houston is located.</div><div class="obj-chapter">CH. 1 &middot; LO 1.3</div></div></div>
-    <div class="obj-card ch1"><div class="obj-num">4</div><div><div class="obj-text">Identify the four land-based industries that formed the historical basis for the Texas economy. Trace the origin of Texas cattle ranching.</div><div class="obj-chapter">CH. 1 &middot; LO 1.4</div></div></div>
-    <div class="obj-card ch1"><div class="obj-num">5</div><div><div class="obj-text">Identify five major policy challenges Texas faces in the 21st century including poverty, education, water, environment, and immigration.</div><div class="obj-chapter">CH. 1 &middot; LO 1.5</div></div></div>
-    <div class="obj-card ch1"><div class="obj-num">6</div><div><div class="obj-text">Describe the demographic makeup of Texas including urbanization (85% urban), fastest-growing groups, and the four most populous counties.</div><div class="obj-chapter">CH. 1 &middot; LO 1.3</div></div></div>
-    <div class="obj-card ch2"><div class="obj-num">7</div><div><div class="obj-text">Analyze federalism and the distribution of powers: delegated, implied (elastic clause), and reserved powers (10th Amendment). Identify the Supremacy Clause.</div><div class="obj-chapter">CH. 2 &middot; LO 2.1</div></div></div>
-    <div class="obj-card ch2"><div class="obj-num">8</div><div><div class="obj-text">Identify provisions of the U.S. Constitution concerning limitations on the states (Art. I Sec. 10) and guarantees to the states.</div><div class="obj-chapter">CH. 2 &middot; LO 2.1</div></div></div>
-    <div class="obj-card ch2"><div class="obj-num">9</div><div><div class="obj-text">Identify provisions concerning interstate relations: Privileges and Immunities Clause, Full Faith and Credit Clause, and state immunity (11th Amendment).</div><div class="obj-chapter">CH. 2 &middot; LO 2.1</div></div></div>
-    <div class="obj-card ch2"><div class="obj-num">10</div><div><div class="obj-text">Identify some of the reserved powers of the states (police power, taxing power, proprietary power, eminent domain).</div><div class="obj-chapter">CH. 2 &middot; LO 2.1</div></div></div>
-    <div class="obj-card ch2"><div class="obj-num">11</div><div><div class="obj-text">Describe federal-state relations as an evolving process: grants-in-aid, devolution, and block grants. Identify the trend since the 1980s.</div><div class="obj-chapter">CH. 2 &middot; LO 2.1</div></div></div>
-    <div class="obj-card ch2"><div class="obj-num">12</div><div><div class="obj-text">Explain the origins and development of the Texas Constitution. Identify all seven constitutions. Know the current constitution, how it is amended, and key features (weak governor).</div><div class="obj-chapter">CH. 2 &middot; LO 2.2&ndash;2.3</div></div></div>
+  <div class="obj-grid" id="obj-grid">
+    <div class="obj-card ch1"><div class="obj-num">1</div><div><div class="obj-text">Define political culture and explain how it has influenced politics in Texas. Identify the three political cultures and which one Elazar assigns to Texas.</div><div class="obj-chapter">CH. 1 · LO 1.2</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,1)">☐</button></div>
+    <div class="obj-card ch1"><div class="obj-num">2</div><div><div class="obj-text">Describe how the frontier experience helped shape political culture in Texas (individualistic and traditionalistic cultures).</div><div class="obj-chapter">CH. 1 · LO 1.2</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,2)">☐</button></div>
+    <div class="obj-card ch1"><div class="obj-num">3</div><div><div class="obj-text">Discuss the political implications of Texas's size and rank in both geography and population. Identify the four geographic regions and where Houston is located.</div><div class="obj-chapter">CH. 1 · LO 1.3</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,3)">☐</button></div>
+    <div class="obj-card ch1"><div class="obj-num">4</div><div><div class="obj-text">Identify the four land-based industries that formed the historical basis for the Texas economy. Trace the origin of Texas cattle ranching.</div><div class="obj-chapter">CH. 1 · LO 1.4</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,4)">☐</button></div>
+    <div class="obj-card ch1"><div class="obj-num">5</div><div><div class="obj-text">Identify five major policy challenges Texas faces in the 21st century including poverty, education, water, environment, and immigration.</div><div class="obj-chapter">CH. 1 · LO 1.5</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,5)">☐</button></div>
+    <div class="obj-card ch1"><div class="obj-num">6</div><div><div class="obj-text">Describe the demographic makeup of Texas including urbanization (85% urban), fastest-growing groups, and the four most populous counties.</div><div class="obj-chapter">CH. 1 · LO 1.3</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,6)">☐</button></div>
+    <div class="obj-card ch2"><div class="obj-num">7</div><div><div class="obj-text">Analyze federalism and the distribution of powers: delegated, implied (elastic clause), and reserved powers (10th Amendment). Identify the Supremacy Clause.</div><div class="obj-chapter">CH. 2 · LO 2.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,7)">☐</button></div>
+    <div class="obj-card ch2"><div class="obj-num">8</div><div><div class="obj-text">Identify provisions of the U.S. Constitution concerning limitations on the states (Art. I Sec. 10) and guarantees to the states.</div><div class="obj-chapter">CH. 2 · LO 2.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,8)">☐</button></div>
+    <div class="obj-card ch2"><div class="obj-num">9</div><div><div class="obj-text">Identify provisions concerning interstate relations: Privileges and Immunities Clause, Full Faith and Credit Clause, and state immunity (11th Amendment).</div><div class="obj-chapter">CH. 2 · LO 2.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,9)">☐</button></div>
+    <div class="obj-card ch2"><div class="obj-num">10</div><div><div class="obj-text">Identify some of the reserved powers of the states (police power, taxing power, proprietary power, eminent domain).</div><div class="obj-chapter">CH. 2 · LO 2.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,10)">☐</button></div>
+    <div class="obj-card ch2"><div class="obj-num">11</div><div><div class="obj-text">Describe federal-state relations as an evolving process: grants-in-aid, devolution, and block grants. Identify the trend since the 1980s.</div><div class="obj-chapter">CH. 2 · LO 2.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,11)">☐</button></div>
+    <div class="obj-card ch2"><div class="obj-num">12</div><div><div class="obj-text">Explain the origins and development of the Texas Constitution. Identify all seven constitutions. Know the current constitution, how it is amended, and key features (weak governor).</div><div class="obj-chapter">CH. 2 · LO 2.2–2.3</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,12)">☐</button></div>
   </div>
 </div>
 
-<!-- ===== STUDY GUIDE PANEL ===== -->
-<div id="panel-guide" class="panel">
-
+<!-- STUDY GUIDE -->
+<div id="panel-guide" class="panel" role="tabpanel" aria-label="Study guide">
   <div class="chapter-block">
     <div class="chapter-header" onclick="toggleChapter(this)">
-      <div><div class="chapter-title" style="color:#f97316">Chapter 1 &mdash; The Environment of Texas Politics</div><div class="chapter-subtitle">Political Culture, Geography, Economy &amp; Policy Challenges</div></div>
-      <span class="chevron">&#9660;</span>
+      <div><div class="chapter-title" style="color:#f97316">Chapter 1 — The Environment of Texas Politics</div><div class="chapter-subtitle">Political Culture, Geography, Economy &amp; Policy Challenges</div></div>
+      <span class="chevron">▼</span>
     </div>
     <div class="chapter-body">
-
-      <div class="concept-title">Political Culture &mdash; Elazar's Three Types</div>
-      <div class="concept-body">
-        <strong>Political culture</strong> = attitudes, habits, and general behavior patterns that develop over time and affect the political life of a state and region.<br><br>
-        <strong>Moralistic</strong>: New England Puritan roots. Political participation = civic <em>duty</em>. Government = public service for the common good. <em>Least common in Texas.</em><br><br>
-        <strong>Individualistic</strong>: Shaped by the <strong>frontier experience</strong>. Limited government, rugged self-reliance, pro-business, anti-regulation, distrust of government. Government should only maintain order. <strong>Daniel Elazar identifies Texas as strongly individualistic.</strong><br><br>
-        <strong>Traditionalistic</strong>: Rooted in the <strong>Old South plantation/patron system</strong>. Government maintains the status quo for a few elite citizens. Historically excluded poor and minorities. Influenced by Jim Crow laws, elitism, racism, conservatism. Features: right to work, eminent domain, favorable business climate.
-        <br><br>
-        <span class="key-term">Elazar: TX = Individualistic</span> <span class="key-term">moralistic</span> <span class="key-term">individualistic</span> <span class="key-term">traditionalistic</span> <span class="key-term">frontier experience</span> <span class="key-term">patron system</span>
-      </div>
-
-      <div class="concept-title">Geography &mdash; 4 Regions &amp; Key Facts</div>
-      <div class="concept-body">
-        Texas: <strong>2nd largest state</strong> (267,000+ sq mi, behind Alaska) and <strong>2nd in population</strong> (29M+, behind California).<br><br>
-        Four geographic regions:<br>
-        1. <strong>Texas Great Plains</strong> (West Texas) &mdash; agriculture, Ogallala Aquifer, Republican, Protestant fundamentalism<br>
-        2. <strong>Gulf Coastal Plains</strong> &mdash; <strong>Houston</strong> is here; petrochemicals, mixed political base<br>
-        3. <strong>Interior Lowlands</strong> &mdash; Central/North Texas; Austin (govt, universities, high-tech); Dallas-Fort Worth (Republican)<br>
-        4. <strong>Basin and Range Province</strong> &mdash; Trans-Pecos; <strong>ONLY mountainous region in Texas</strong><br><br>
-        <span class="key-term">Basin &amp; Range = ONLY mountains</span> <span class="key-term">Houston = Gulf Coastal Plains</span> <span class="key-term">2nd in size and population</span>
-      </div>
-
+      <div class="concept-title">Political Culture — Elazar's Three Types</div>
+      <div class="concept-body"><strong>Political culture</strong> = attitudes, habits, and general behavior patterns that develop over time and affect the political life of a state.<br><br><strong>Moralistic</strong>: New England Puritan roots. Political participation = civic duty. Government = public service for the common good. Least common in Texas.<br><strong>Individualistic</strong>: Shaped by the frontier experience. Limited government, rugged self-reliance, pro-business, anti-regulation. <strong>Daniel Elazar identifies Texas as strongly individualistic.</strong><br><strong>Traditionalistic</strong>: Rooted in the Old South plantation/patron system. Government maintains the status quo for elite citizens. Historically excluded poor and minorities. Features: right to work, eminent domain, favorable business climate.<br><br><span class="key-term">Elazar: TX = Individualistic</span> <span class="key-term">moralistic</span> <span class="key-term">individualistic</span> <span class="key-term">traditionalistic</span> <span class="key-term">frontier experience</span> <span class="key-term">patron system</span></div>
+      <div class="concept-title">Geography — 4 Regions &amp; Key Facts</div>
+      <div class="concept-body">Texas: <strong>2nd largest state</strong> (267,000+ sq mi, behind Alaska) and <strong>2nd in population</strong> (29M+, behind California).<br><br>1. <strong>Texas Great Plains</strong> (West Texas) — agriculture, Ogallala Aquifer, Republican<br>2. <strong>Gulf Coastal Plains</strong> — <strong>Houston is here</strong>; petrochemicals<br>3. <strong>Interior Lowlands</strong> — Central/North Texas; Austin (govt, universities); Dallas-Fort Worth<br>4. <strong>Basin and Range Province</strong> — Trans-Pecos; <strong>ONLY mountainous region in Texas</strong><br><br><span class="key-term">Basin &amp; Range = ONLY mountains</span> <span class="key-term">Houston = Gulf Coastal Plains</span> <span class="key-term">2nd in size and population</span></div>
       <div class="concept-title">Demographics</div>
-      <div class="concept-body">
-        <strong>85% urban</strong> today (vs. 80% rural in 1900). Most populous counties: Harris, Dallas, Bexar, Tarrant (combined = 40%+ of state population).<br>
-        <strong>Latinos (~39%)</strong> = fastest-growing ethnic group. Anglo population has fallen below 50%. African Americans growing slowly. Government policies historically enforced residential segregation via <strong>redlining</strong> (discriminatory loan rating), <strong>urban renewal</strong> (taking property for public projects), and <strong>gentrification</strong> (higher-income displacing lower-income residents).
-        <br><br>
-        <span class="key-term">Latinos = fastest growing</span> <span class="key-term">85% urban</span> <span class="key-term">redlining</span> <span class="key-term">gentrification</span>
-      </div>
-
+      <div class="concept-body"><strong>85% urban</strong> today (vs. 80% rural in 1900). Most populous counties: Harris, Dallas, Bexar, Tarrant (combined = 40%+ of state population).<br><strong>Latinos (~39%)</strong> = fastest-growing ethnic group. Anglo population has fallen below 50%.<br>Policy tools enforcing residential segregation: <strong>redlining</strong> (discriminatory loan rating), <strong>urban renewal</strong> (taking property for public projects), <strong>gentrification</strong> (higher-income displacing lower-income residents).<br><br><span class="key-term">Latinos = fastest growing</span> <span class="key-term">85% urban</span> <span class="key-term">redlining</span> <span class="key-term">gentrification</span></div>
       <div class="concept-title">Four Land-Based Industries</div>
-      <div class="concept-body">
-        1. <strong>Cattle</strong> &mdash; traced from Spain &rarr; Mexico &rarr; Texas longhorn; Texas still leads the nation<br>
-        2. <strong>Cotton</strong> &mdash; backbone of economy 1900s; Texas yields ~50% of U.S. supply, ~10% of world<br>
-        3. <strong>Timber</strong> &mdash; Gulf Coastal plains; bonanza era mid-1800s&ndash;1920s; declined from clear-cutting, oil exploration, drought<br>
-        4. <strong>Oil</strong> &mdash; Spindletop Field first major wells; <strong>Railroad Commission of Texas</strong> has regulatory jurisdiction; Texas accounts for 40% of U.S. oil production<br><br>
-        Modern economy: Energy, High Technology, Biotechnology, Services (<em>fastest-growing but lowest wages</em>), Agriculture (2nd in U.S. production), Trade (USMCA replaced NAFTA 2020).
-        <br><br>
-        <span class="key-term">cattle</span> <span class="key-term">cotton</span> <span class="key-term">timber</span> <span class="key-term">oil</span> <span class="key-term">Spindletop</span> <span class="key-term">Railroad Commission</span>
-      </div>
-
+      <div class="concept-body">1. <strong>Cattle</strong> — traced from Spain → Mexico → Texas longhorn; Texas still leads the nation<br>2. <strong>Cotton</strong> — backbone of economy 1900s; Texas yields ~50% of U.S. supply<br>3. <strong>Timber</strong> — Gulf Coastal plains; bonanza era mid-1800s–1920s; declined from clear-cutting<br>4. <strong>Oil</strong> — Spindletop Field first major wells; <strong>Railroad Commission of Texas</strong> has regulatory jurisdiction; Texas = 40% of U.S. oil production<br><br>Modern: Services = fastest-growing but <em>lowest wages</em>. USMCA replaced NAFTA 2020.<br><br><span class="key-term">cattle</span> <span class="key-term">cotton</span> <span class="key-term">timber</span> <span class="key-term">oil</span> <span class="key-term">Spindletop</span> <span class="key-term">Railroad Commission</span></div>
       <div class="concept-title">21st Century Policy Challenges</div>
-      <div class="concept-body">
-        <strong>Poverty</strong>: 1 in 4 children live in poverty; 18.5% below federal poverty line; Texas ranks near the bottom of states in government response; highest uninsured %; refused Medicaid expansion.<br>
-        <strong>Education</strong>: Ranks 38th in high school graduation rate; C- in achievement; 10%+ of 358,000 teachers quit each year.<br>
-        <strong>Water</strong>: Texas Water Development Board &mdash; demand will rise 22% by 2060; water use per fracking well increased 770%.<br>
-        <strong>Environment</strong>: Texas leads nation in many types of pollution; challenges federal EPA enforcement.<br>
-        <strong>Immigration/Diversity</strong>: Undocumented immigrants cost local govts ~$1.44B in healthcare and law enforcement.
-      </div>
-
+      <div class="concept-body"><strong>Poverty</strong>: 1 in 4 children; 18.5% below poverty line; highest uninsured %; refused Medicaid expansion.<br><strong>Education</strong>: Ranks 38th in high school graduation rate; 10%+ of teachers quit each year.<br><strong>Water</strong>: Texas Water Development Board — demand will rise 22% by 2060.<br><strong>Environment</strong>: Texas leads nation in many types of pollution; challenges federal EPA.<br><strong>Immigration</strong>: Undocumented immigrants cost local govts ~$1.44B.</div>
     </div>
   </div>
-
   <div class="chapter-block">
     <div class="chapter-header" onclick="toggleChapter(this)">
-      <div><div class="chapter-title" style="color:#3b82f6">Chapter 2 &mdash; Federalism &amp; the Texas Constitution</div><div class="chapter-subtitle">Powers, Interstate Relations &amp; Texas Constitution of 1876</div></div>
-      <span class="chevron">&#9660;</span>
+      <div><div class="chapter-title" style="color:#3b82f6">Chapter 2 — Federalism &amp; the Texas Constitution</div><div class="chapter-subtitle">Powers, Interstate Relations &amp; Texas Constitution of 1876</div></div>
+      <span class="chevron">▼</span>
     </div>
     <div class="chapter-body">
-
       <div class="concept-title">Distribution of Powers</div>
-      <div class="concept-body">
-        <strong>Federalism</strong> = division of power between national and state governments. Balance constantly evolves.<br><br>
-        <strong>Delegated (enumerated/expressed) powers</strong>: Article I, Section 8 &mdash; specifically listed (coin money, declare war, regulate interstate commerce).<br>
-        <strong>Implied powers</strong>: Necessary and Proper (elastic) Clause &mdash; allows Congress to expand authority to carry out delegated powers.<br>
-        <strong>Commerce Clause</strong>: Article I, Section 8 &mdash; regulation of interstate commerce; major tool for expanding federal power.<br>
-        <strong>Reserved powers</strong> (10th Amendment): Powers not delegated to the federal government belong to states &mdash; police power, taxing power, proprietary power, eminent domain.
-        <br><br>
-        <span class="key-term blue">delegated = Art I Sec 8</span> <span class="key-term blue">implied = elastic clause</span> <span class="key-term blue">Commerce Clause</span> <span class="key-term blue">reserved = 10th Amend</span>
-      </div>
-
+      <div class="concept-body"><strong>Delegated (enumerated/expressed) powers</strong>: Article I, Section 8 — specifically listed (coin money, declare war, regulate interstate commerce).<br><strong>Implied powers</strong>: Necessary and Proper (elastic) Clause — allows Congress to expand authority.<br><strong>Commerce Clause</strong>: Article I, Section 8 — regulation of interstate commerce; major tool for expanding federal power.<br><strong>Reserved powers</strong> (10th Amendment): Powers not delegated to the federal government belong to states — police power, taxing power, proprietary power, eminent domain.<br><br><span class="key-term blue">delegated = Art I Sec 8</span> <span class="key-term blue">implied = elastic clause</span> <span class="key-term blue">Commerce Clause</span> <span class="key-term blue">reserved = 10th Amend</span></div>
       <div class="concept-title">Supremacy Clause &amp; State Limitations</div>
-      <div class="concept-body">
-        <strong>Supremacy Clause (Article VI)</strong>: The Constitution and laws made under its authority are the <em>supreme law of the land</em>; all state officials are bound by it.<br><br>
-        <strong>Limitations on states</strong> (Article I, Section 10 + amendments): Cannot enter foreign treaties; cannot secede (<em>Texas v. White</em>); cannot coin money; cannot deny voting rights; cannot deprive citizens of due process (14th Amendment); cannot deny equal protection.<br><br>
-        <span class="key-term blue">Supremacy Clause = Art VI</span> <span class="key-term blue">Art I Sec 10</span> <span class="key-term blue">Texas v. White = no secession</span> <span class="key-term blue">14th Amendment</span>
-      </div>
-
+      <div class="concept-body"><strong>Supremacy Clause (Article VI)</strong>: The Constitution and laws made under its authority are the supreme law of the land; all state officials are bound by it.<br><strong>Limitations on states</strong> (Article I, Section 10): Cannot enter foreign treaties; cannot secede (<em>Texas v. White</em>); cannot coin money; 14th Amendment: cannot deny due process or equal protection.<br><br><span class="key-term blue">Supremacy Clause = Art VI</span> <span class="key-term blue">Art I Sec 10</span> <span class="key-term blue">Texas v. White = no secession</span> <span class="key-term blue">14th Amendment</span></div>
       <div class="concept-title">Guarantees to States &amp; Interstate Relations</div>
-      <div class="concept-body">
-        <strong>Guarantees</strong>: Protection from invasion/domestic violence; cannot be combined or divided without consent; 2 senators per state; at least 1 House member; equal participation in amendment process.<br><br>
-        <strong>Privileges and Immunities</strong> (Article IV): Citizens of each state entitled to same rights in all other states.<br>
-        <strong>Full Faith and Credit</strong> (Article IV): Civil government actions of one state must be recognized in all states. Does <em>not</em> apply to criminal cases (extradition).<br>
-        <strong>11th Amendment &mdash; Sovereign Immunity</strong>: States generally cannot be sued in federal court.
-        <br><br>
-        <span class="key-term blue">Privileges &amp; Immunities = Art IV</span> <span class="key-term blue">Full Faith &amp; Credit</span> <span class="key-term blue">11th Amend = sovereign immunity</span>
-      </div>
-
+      <div class="concept-body"><strong>Guarantees</strong>: Protection from invasion/domestic violence; cannot be combined or divided without consent; 2 senators per state; at least 1 House member.<br><strong>Privileges and Immunities</strong> (Article IV): Citizens of each state entitled to same rights in all other states.<br><strong>Full Faith and Credit</strong> (Article IV): Civil government actions of one state must be recognized in all states. Does NOT apply to criminal cases (extradition).<br><strong>11th Amendment — Sovereign Immunity</strong>: States generally cannot be sued in federal court.<br><br><span class="key-term blue">Privileges &amp; Immunities = Art IV</span> <span class="key-term blue">Full Faith &amp; Credit</span> <span class="key-term blue">11th Amend = sovereign immunity</span></div>
       <div class="concept-title">Federal-State Relations &amp; Evolution</div>
-      <div class="concept-body">
-        <strong>Grants-in-aid</strong>: Federal money with conditions attached &mdash; the primary 20th-century tool for extending federal jurisdiction into state/local areas.<br>
-        <strong>Devolution</strong>: Shifting of expenditures and responsibilities from federal to state governments (trend since 1980s/Reagan). Texas supports this; has filed 60+ lawsuits against the federal government since 2008 asserting 10th Amendment rights.<br>
-        <strong>Block grants</strong>: Fixed sums of money on automatic formula &mdash; give states more flexibility than categorical grants.
-        <br><br>
-        <span class="key-term blue">grants-in-aid</span> <span class="key-term blue">devolution (since 1980s)</span> <span class="key-term blue">block grants</span>
-      </div>
-
-      <div class="concept-title">Texas Constitution of 1876 &mdash; Key Facts</div>
-      <div class="concept-body">
-        Texas's <strong>7th and current constitution</strong>. Drafted in reaction to Reconstruction/Davis administration.<br>
-        Composition: 75 Democrats, 15 Republicans; 40%+ Texas Grange members. Slogan: <strong>"retrenchment and reform."</strong><br>
-        Creates a <strong>weak governor</strong> (one of the weakest gubernatorial offices in the nation). Restricts all three branches.<br>
-        ~92,000 words; amended 500+ times (491 approved, 182 defeated as of 2019). Less than 10% voter turnout in amendment elections.<br><br>
-        <strong>Amendment process</strong>: Joint resolution passed by <strong>2/3 vote in each legislative chamber</strong> &rarr; published and distributed &rarr; <strong>simple majority of voters</strong> in regular or special election &rarr; governor proclaims.<br><br>
-        <strong>Texas's 7 constitutions</strong>: 1827 (Coahuila y Tejas) &rarr; 1836 (Republic) &rarr; 1845 (Statehood) &rarr; 1861 (Secession) &rarr; 1866 (Reconstruction) &rarr; 1869 &rarr; <strong>1876 (current)</strong><br><br>
-        Texas annexed: <strong>1845</strong>. Unique right under annexation: may divide into up to <strong>five states</strong> with consent of legislature and Congress.
-        <br><br>
-        <span class="key-term blue">7 constitutions</span> <span class="key-term blue">1876 = current</span> <span class="key-term blue">weak governor</span> <span class="key-term blue">Grange</span> <span class="key-term blue">2/3 each chamber + simple majority voters</span> <span class="key-term blue">annexed 1845</span>
-      </div>
-
+      <div class="concept-body"><strong>Grants-in-aid</strong>: Federal money with conditions attached — primary 20th-century tool for extending federal jurisdiction.<br><strong>Devolution</strong>: Shifting of expenditures and responsibilities from federal to state governments (trend since 1980s/Reagan). Texas supports this; has filed 60+ lawsuits against the federal government since 2008 asserting 10th Amendment rights.<br><strong>Block grants</strong>: Fixed sums of money on automatic formula — give states more flexibility than categorical grants.<br><br><span class="key-term blue">grants-in-aid</span> <span class="key-term blue">devolution (since 1980s)</span> <span class="key-term blue">block grants</span></div>
+      <div class="concept-title">Texas Constitution of 1876 — Key Facts</div>
+      <div class="concept-body">Texas's <strong>7th and current constitution</strong>. Drafted in reaction to Reconstruction/Davis administration.<br>Composition: 75 Democrats, 15 Republicans; 40%+ Texas Grange members. Slogan: <strong>"retrenchment and reform."</strong><br>Creates a <strong>weak governor</strong> (one of the weakest gubernatorial offices in the nation). ~92,000 words; amended 500+ times. Less than 10% voter turnout in amendment elections.<br><br><strong>Amendment process</strong>: Joint resolution passed by <strong>2/3 vote in each legislative chamber</strong> → published → <strong>simple majority of voters</strong> in regular or special election → governor proclaims.<br><br><strong>Texas's 7 constitutions</strong>: 1827 (Coahuila y Tejas) → 1836 (Republic) → 1845 (Statehood) → 1861 (Secession) → 1866 (Reconstruction) → 1869 → <strong>1876 (current)</strong><br>Texas annexed <strong>1845</strong>. Unique right: may divide into up to <strong>five states</strong> with consent of legislature and Congress.<br><br><span class="key-term blue">7 constitutions</span> <span class="key-term blue">1876 = current</span> <span class="key-term blue">weak governor</span> <span class="key-term blue">2/3 each chamber + simple majority voters</span> <span class="key-term blue">annexed 1845</span></div>
     </div>
   </div>
 </div>
 
-<!-- ===== FLASHCARDS PANEL ===== -->
-<div id="panel-flashcards" class="panel">
+<!-- FLASHCARDS -->
+<div id="panel-flashcards" class="panel" role="tabpanel" aria-label="Flashcards">
   <div class="filter-row">
-    <button class="filter-btn active-filter" onclick="filterCards('all',this)">All (44)</button>
+    <button class="filter-btn active-filter" onclick="filterCards('all',this)">All Cards</button>
     <button class="filter-btn" onclick="filterCards('ch1',this)">Ch.1</button>
     <button class="filter-btn" onclick="filterCards('ch2',this)">Ch.2</button>
   </div>
   <div class="fc-controls">
-    <button class="btn" onclick="shuffleCards()">&#8644; Shuffle</button>
-    <span class="fc-stat" id="fc-stat">Card 1 of 44</span>
+    <button class="btn" onclick="shuffleCards()">⇄ Shuffle</button>
+    <span class="fc-stat" id="fc-stat" aria-live="polite">Card 1 of 44</span>
   </div>
   <div class="flashcard-area">
-    <div class="flashcard" id="flashcard" onclick="flipCard()">
+    <div class="flashcard" id="flashcard" onclick="flipCard()" role="button" aria-label="Flip flashcard" tabindex="0">
       <div class="fc-front">
         <div id="fc-chapter-tag" class="fc-chapter-tag"></div>
         <div class="fc-label">Term / Concept</div>
@@ -482,44 +236,50 @@ footer a { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ac
     </div>
   </div>
   <div class="fc-nav">
-    <button class="btn" onclick="prevCard()">&larr; Prev</button>
-    <span class="fc-counter" id="fc-counter">1 / 44</span>
-    <button class="btn" onclick="nextCard()">Next &rarr;</button>
+    <button class="btn" onclick="prevCard()">← Prev</button>
+    <span class="fc-counter" id="fc-counter" aria-live="polite">1 / 44</span>
+    <button class="btn" onclick="nextCard()">Next →</button>
   </div>
 </div>
 
-<!-- ===== QUIZ PANEL ===== -->
-<div id="panel-quiz" class="panel">
+<!-- QUIZ -->
+<div id="panel-quiz" class="panel" role="tabpanel" aria-label="Practice quiz">
   <div class="filter-row" id="quiz-filter-row">
     <button class="filter-btn active-filter" onclick="setQuizFilter('all',this)">All Chapters</button>
     <button class="filter-btn" onclick="setQuizFilter('ch1',this)">Ch.1 Only</button>
     <button class="filter-btn" onclick="setQuizFilter('ch2',this)">Ch.2 Only</button>
   </div>
-  <div class="quiz-score" id="quiz-score">
+  <div class="quiz-score" id="quiz-score" role="status" aria-live="polite">
     <div class="score-num" id="score-display">0</div>
     <div class="score-label">QUIZ COMPLETE</div>
     <div id="score-breakdown" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px"></div>
-    <br>
-    <button class="btn primary" onclick="resetQuiz()">Retake Quiz</button>
+    <br><button class="btn primary" onclick="resetQuiz()">Retake Quiz</button>
   </div>
-  <div class="quiz-area" id="quiz-area"></div>
+  <div id="quiz-area" role="list"></div>
   <button class="btn primary" id="submit-btn" onclick="submitQuiz()" style="margin-top:20px;display:none">Submit Quiz</button>
 </div>
 
-<!-- ===== NOTES PANEL ===== -->
-<div id="panel-notes" class="panel">
+<!-- DISCUSSION -->
+<div id="panel-discussion" class="panel" role="tabpanel" aria-label="Discussion">
+  <div class="section-label">Discussion Practice</div>
+  <div class="disc-placeholder">
+    <div style="font-size:32px;margin-bottom:12px">📋</div>
+    <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px">Exam 1 has been completed.</div>
+    <div>Discussion questions will be added here when Unit 2 materials become available,<br>or when preparing for the final exam review.</div>
+  </div>
+</div>
+
+<!-- NOTES -->
+<div id="panel-notes" class="panel" role="tabpanel" aria-label="Notes">
   <div class="notes-template">
     <div class="notes-header">
-      <div>
-        <div class="notes-title">Exam 1 Notes Framework</div>
-        <div class="notes-subtitle">GOVT 2306 &middot; Unit 1 &middot; Ch. 1&ndash;2 &middot; Prof. Chapa</div>
-      </div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)">Exam: June 19&ndash;21 &middot; Lockdown Browser</div>
+      <div><div class="notes-title">Exam 1 Notes Framework</div><div class="notes-subtitle">GOVT 2306 · Unit 1 · Ch. 1–2 · Prof. Chapa</div></div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)">Exam: June 19–21 · Lockdown Browser</div>
     </div>
     <div class="notes-body">
       <div class="notes-col-grid">
         <div>
-          <div class="notes-col-title">Ch. 1 &mdash; Texas Politics Environment</div>
+          <div class="notes-col-title">Ch. 1 — Texas Politics Environment</div>
           <div class="notes-item">Government = public institution with authority to allocate values through laws</div>
           <div class="notes-item">Politics = process of making policies; who gets power and what they do with it</div>
           <div class="notes-item">Public Policy = government action to meet a public need or goal</div>
@@ -533,7 +293,7 @@ footer a { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ac
           <div class="notes-item">4 most populous counties: Harris, Dallas, Bexar, Tarrant</div>
           <div class="notes-item">Fastest growing: Latinos (~39%); Anglos now below 50%</div>
           <div class="notes-item">4 land industries: Cattle, Cotton, Timber, Oil</div>
-          <div class="notes-item">Cattle: Spain &rarr; Mexico &rarr; Texas longhorn; TX leads nation</div>
+          <div class="notes-item">Cattle: Spain → Mexico → Texas longhorn; TX leads nation</div>
           <div class="notes-item">Oil: Spindletop; Railroad Commission of Texas regulates</div>
           <div class="notes-item">Service industry = fastest growing but LOWER wages</div>
           <div class="notes-item">Redlining = discriminatory loan rating (residential segregation)</div>
@@ -542,7 +302,7 @@ footer a { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ac
           <div class="notes-item">Policy challenges: poverty, healthcare (highest uninsured %), education (38th graduation), water, environment, immigration</div>
         </div>
         <div>
-          <div class="notes-col-title">Ch. 2 &mdash; Federalism &amp; TX Constitution</div>
+          <div class="notes-col-title">Ch. 2 — Federalism &amp; TX Constitution</div>
           <div class="notes-item">Federalism = division of power between national and state govts</div>
           <div class="notes-item">10th Amendment = powers not given to feds reserved to states</div>
           <div class="notes-item">Supremacy Clause (Art. VI) = federal law is supreme law of land</div>
@@ -562,262 +322,221 @@ footer a { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ac
           <div class="notes-item">Texas: 7 constitutions; CURRENT = Constitution of 1876</div>
           <div class="notes-item">1876: 75 Dem + 15 Rep; 40%+ Grange; "retrenchment and reform"</div>
           <div class="notes-item">WEAK GOVERNOR = one of weakest in nation</div>
-          <div class="notes-item">Amendment: 2/3 EACH chamber &rarr; simple majority voters; &lt;10% turnout</div>
+          <div class="notes-item">Amendment: 2/3 EACH chamber → simple majority voters; &lt;10% turnout</div>
           <div class="notes-item">Texas annexed 1845; right to divide into up to 5 states</div>
           <div class="notes-item">Separation of powers = Legislative, Executive, Judicial (Art. II TX Const.)</div>
         </div>
       </div>
-      <div class="notes-tip"><strong>Exam tip:</strong> Exam format may include multiple choice, true/false, and short essay. Lockdown browser and camera are required. The lowest of your four regular exam scores will be dropped. Final exam is required and cannot be dropped. Complete MindTap Ch.1&amp;2 Activities by June 20.</div>
+      <div class="notes-tip"><strong>Exam tip:</strong> Exam format may include multiple choice, true/false, and short essay. Lockdown browser and camera are required. The lowest of your four regular exam scores will be dropped. Final exam is required and cannot be dropped.</div>
     </div>
   </div>
 </div>
 
 <footer>
-  <a href="../../index.html">&larr; Back to Study Hub</a>
-  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)">GOVT 2306 &middot; Unit 1 &middot; Prof. Chapa &middot; ACC Summer 2026</span>
+  <a href="../../index.html">← Back to Study Hub</a>
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)">GOVT 2306 · Unit 1 · Prof. Chapa · ACC Summer 2026</span>
 </footer>
 </div>
 
 <script>
-function showPanel(id, btn) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('panel-' + id).classList.add('active');
-  btn.classList.add('active');
-  if (id === 'flashcards') renderCard();
-  if (id === 'quiz') renderQuiz();
+const getMasteryKey=()=>'mastery_govt2306_unit1_';
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+  if(id==='flashcards')renderCard();
+  if(id==='quiz')renderQuiz();
 }
-
-function toggleChapter(header) {
-  const body = header.nextElementSibling;
-  header.classList.toggle('open');
-  body.classList.toggle('open');
+function toggleChapter(header){const body=header.nextElementSibling;header.classList.toggle('open');body.classList.toggle('open');}
+function getMasteredSet(){try{return new Set(JSON.parse(localStorage.getItem(getMasteryKey()+'obj')||'[]'));}catch(e){return new Set();}}
+function saveMasteredSet(s){localStorage.setItem(getMasteryKey()+'obj',JSON.stringify([...s]));}
+function loadObjMastery(){
+  const s=getMasteredSet();
+  document.querySelectorAll('.mastery-btn').forEach(btn=>{
+    const id=parseInt(btn.getAttribute('onclick').match(/\d+/)[0]);
+    if(s.has(id)){btn.classList.add('mastered');btn.textContent='✓';}
+  });
+  updateMasteryBar();
 }
-
-// ===== FLASHCARDS =====
-const allCards = [
-  {ch:'ch1',q:'What does Daniel Elazar say about Texas political culture?',a:'Texas is STRONGLY INDIVIDUALISTIC -- wants little government intervention, only to maintain order. Developed under six flags. Only state that was its own independent republic (president, congress, military, currency).'},
-  {ch:'ch1',q:'What are the three political cultures in Texas?',a:'1) Moralistic -- civic duty, government serves the public good (New England Puritanism). 2) Individualistic -- limited govt, frontier experience, pro-business. 3) Traditionalistic -- elite control, Old South/patron system, maintains status quo.'},
-  {ch:'ch1',q:'What is political culture?',a:'Attitudes, habits, and general behavior patterns that develop over time and affect the political life of a state or region. Gives each state its unique character.'},
-  {ch:'ch1',q:'Texas ranks ___ in population and ___ in land area among the 50 states.',a:'2nd in population (behind California, 29M+ residents) and 2nd in land area (behind Alaska, 267,000+ sq miles).'},
-  {ch:'ch1',q:'What is the ONLY mountainous region in Texas?',a:'The Basin and Range Province (Trans-Pecos/West Texas). Contains the Guadalupe Mountains and Big Bend area.'},
-  {ch:'ch1',q:'In what geographic region is Houston located?',a:'The Gulf Coastal Plains region of Texas (Harris County).'},
-  {ch:'ch1',q:'What is the origin of Texas cattle ranching?',a:'Cattle transported from Spain to Mexico to Texas, resulting in the Texas longhorn. Texas still leads the nation in cattle production.'},
-  {ch:'ch1',q:'Name the four land-based industries that shaped Texas development.',a:'1) Cattle 2) Cotton (~50% of U.S. supply) 3) Timber (peaked mid-1800s to 1920s) 4) Oil (Spindletop; Railroad Commission regulates)'},
-  {ch:'ch1',q:'Approximately what percent of Texans live in metropolitan areas today?',a:'Approximately 85% urban (up from 80% rural in 1900).'},
-  {ch:'ch1',q:'Which ethnic group is growing most rapidly in Texas?',a:'Latinos -- approximately 39% of the population and the fastest-growing group. Anglo population has fallen below 50%.'},
-  {ch:'ch1',q:'Does the service industry pay higher or lower wages than manufacturing in Texas?',a:'LOWER wages. Services is the fastest-growing sector but most jobs lack benefits and pay less than manufacturing.'},
-  {ch:'ch1',q:'What is redlining?',a:'A discriminatory rating system for loan risks used to deny mortgages to residents of minority neighborhoods. A key tool for enforcing residential segregation.'},
-  {ch:'ch1',q:'What is gentrification?',a:'Higher-income residents moving into urban neighborhoods, displacing lower-income residents and driving up property prices and ad valorem taxes.'},
-  {ch:'ch1',q:'What is metropolitization?',a:'Concentration of people in urban centers linked as a single geographic entity. Includes metropolitan statistical areas (50,000+) and micropolitan areas (10,000-50,000).'},
-  {ch:'ch1',q:'What is the Texas Water Development Board?',a:'State agency for water planning and management. Demand will rise 22% by 2060. Water use per fracking well increased 770%. A major 21st-century policy challenge.'},
-  {ch:'ch1',q:'What is the traditionalistic political culture?',a:'Old South plantation/patron system roots. Government maintains the status quo for a few elite citizens. Historically excluded poor and minorities. Jim Crow laws, elitism, racism, conservatism.'},
-  {ch:'ch1',q:'What is the Railroad Commission of Texas?',a:'State agency with regulatory jurisdiction over the oil and gas industry. Originally created to regulate railroads. One of the oldest and most powerful regulatory agencies in Texas.'},
-  {ch:'ch1',q:'What are the major 21st-century policy challenges for Texas?',a:'Poverty (1 in 4 children; highest uninsured %), Education (38th in graduation rate; teacher shortage), Water (22% demand rise by 2060), Environment (leads in pollution), Immigration ($1.44B local govt costs).'},
-  {ch:'ch1',q:'What is urban renewal?',a:'Government taking of private property for public projects. Used historically as a discriminatory tool to enforce residential segregation, often displacing minority and lower-income communities.'},
-  {ch:'ch1',q:'What is eminent domain?',a:'Government power to take private property for public use with compensation. A reserved state power. Associated with traditionalistic culture in Texas.'},
-  {ch:'ch1',q:'What is public policy?',a:'Government action designed to meet a public need or goal. In Texas: enacted by legislature, approved by governor, implemented by executive departments, interpreted by courts.'},
-  {ch:'ch1',q:'What is politics?',a:'The process of making policies (laws). Involves conflict between parties and groups but requires cooperation. About who gets power, how they get it, and what they do with it.'},
-  {ch:'ch2',q:'What is federalism?',a:'Division of power between the national and state governments. The heart of the system is the relationship between the two. Sharing powers creates tension. The balance constantly evolves.'},
-  {ch:'ch2',q:'What does the 10th Amendment say?',a:'"Powers not specifically given to the National government by the Constitution, nor prohibited by it to the States, are reserved to the States respectively, or to the people." Basis for state reserved powers.'},
-  {ch:'ch2',q:'What is the Supremacy Clause?',a:'Article VI: The Constitution and laws made under its authority are the supreme law of the land. All state officials are bound by it. Federal law overrides conflicting state law.'},
-  {ch:'ch2',q:'What are delegated (enumerated) powers?',a:'Powers specifically listed in Article I, Section 8: regulate interstate commerce, coin money, declare war. Also called expressed or enumerated powers.'},
-  {ch:'ch2',q:'What are implied powers?',a:'Powers from the Necessary and Proper (elastic) Clause in Article I, Section 8. Allows Congress to expand authority beyond what is specifically listed to carry out its delegated powers.'},
-  {ch:'ch2',q:'What are the constitutional limitations on the states?',a:'Art. I Sec. 10: Cannot enter foreign treaties; cannot secede (Texas v. White); cannot coin money. 14th Amendment: Cannot deny due process or equal protection. Cannot deny voting rights.'},
-  {ch:'ch2',q:'What are the constitutional guarantees to the states?',a:'Protection from invasion/domestic violence; cannot be combined or divided without consent; 2 senators per state; at least 1 House member; equal participation in the constitutional amendment process.'},
-  {ch:'ch2',q:'What is the Privileges and Immunities Clause?',a:'Article IV: Citizens of each state are entitled to the same privileges and immunities in all other states -- protection of life, liberty, and property.'},
-  {ch:'ch2',q:'What is Full Faith and Credit?',a:'Article IV: Civil government actions and legal documents of one state must be recognized in all other states. Does NOT apply to criminal cases (handled through extradition).'},
-  {ch:'ch2',q:'What are the reserved powers of the states?',a:'NOT defined in the U.S. Constitution -- retained via 10th Amendment: Police power (public safety/order), Taxing power, Proprietary power (own public property), Eminent domain.'},
-  {ch:'ch2',q:'What are grants-in-aid?',a:'Federal money given to states to influence state policymaking. The primary 20th-century federal tool to extend jurisdiction into areas traditionally managed by state and local governments.'},
-  {ch:'ch2',q:'What is devolution?',a:'Reduction in federal government size and shifting of expenditures and responsibilities to the states. Trend since the 1980s (Reagan). Gives states more freedom. Texas generally supports this.'},
-  {ch:'ch2',q:'What are block grants?',a:'Fixed sums of money awarded to states on an automatic formula. Give states MORE flexibility in spending than categorical grants. A feature of the devolution trend.'},
-  {ch:'ch2',q:'How many constitutions has Texas had?',a:'Seven (7): 1827 (Coahuila y Tejas), 1836 (Republic), 1845 (Statehood), 1861 (Secession), 1866 (Reconstruction), 1869, and 1876 (current).'},
-  {ch:'ch2',q:'When was Texas annexed and what unique right did it retain?',a:'1845. Texas was an independent republic 1836-1845. Under the Joint Resolution of Annexation, Texas retained the right to divide into up to FIVE states with consent of the Texas legislature and Congress.'},
-  {ch:'ch2',q:'How is the Texas Constitution amended?',a:'1) Joint resolution adopted by 2/3 vote in EACH legislative chamber. 2) Simple majority of voters in a regular or special election. Governor only proclaims. Less than 10% voter turnout typical.'},
-  {ch:'ch2',q:'What is the Texas Constitution of 1876?',a:"Texas's current 7th constitution. Drafted by 75 Democrats, 15 Republicans; 40%+ Grange members. Slogan: 'retrenchment and reform.' Creates a WEAK governor. ~92,000 words, amended 500+ times."},
-  {ch:'ch2',q:'What is separation of powers?',a:'Division of power among three branches: Legislative, Executive, and Judicial. Article II of the Texas Constitution. Prevents any one branch from accumulating too much power.'},
-  {ch:'ch2',q:'What did Texas v. White establish?',a:'States CANNOT secede from the union. A key constitutional limitation on states affirmed by the U.S. Supreme Court after the Civil War.'},
-  {ch:'ch2',q:'What is the Commerce Clause?',a:'Article I, Section 8: Gives Congress power to regulate commerce among the states. One of the most powerful tools Congress has used to expand federal authority into areas traditionally managed by states.'},
-  {ch:'ch2',q:'What are the two sources of power governing Texas government?',a:'1) The U.S. Constitution -- delegates powers, sets guarantees and limitations. 2) The Texas Constitution of 1876 -- primary source of state policymaking power; defines structure of Texas government.'},
-  {ch:'ch2',q:'What did the Necessary and Proper (elastic) Clause enable?',a:'Allowed Congress to make laws needed to carry out its delegated powers. This is the source of IMPLIED POWERS and enabled significant expansion of federal authority.'},
+function toggleObjMastery(btn,id){
+  const s=getMasteredSet();
+  if(s.has(id)){s.delete(id);btn.classList.remove('mastered');btn.textContent='☐';}
+  else{s.add(id);btn.classList.add('mastered');btn.textContent='✓';}
+  saveMasteredSet(s);updateMasteryBar();
+}
+function updateMasteryBar(){
+  const total=12;const done=getMasteredSet().size;const pct=Math.round(done/total*100);
+  document.getElementById('mastery-fill').style.width=pct+'%';
+  document.getElementById('mastery-label').textContent='Mastery: '+pct+'% ('+done+'/'+total+')';
+}
+function resetAllMastery(){
+  if(!confirm('Reset all mastery for GOVT Unit 1?'))return;
+  localStorage.removeItem(getMasteryKey()+'obj');
+  document.querySelectorAll('.mastery-btn').forEach(b=>{b.classList.remove('mastered');b.textContent='☐';});
+  updateMasteryBar();
+}
+const allCards=[
+  {ch:'ch1',q:"What does Daniel Elazar say about Texas political culture?",a:"Texas is STRONGLY INDIVIDUALISTIC -- wants little government intervention, only to maintain order. Developed under six flags. Only state that was its own independent republic (president, congress, military, currency)."},
+  {ch:'ch1',q:"What are the three political cultures in Texas?",a:"1) Moralistic -- civic duty, government serves the public good (New England Puritanism). 2) Individualistic -- limited govt, frontier experience, pro-business. 3) Traditionalistic -- elite control, Old South/patron system, maintains status quo."},
+  {ch:'ch1',q:"What is political culture?",a:"Attitudes, habits, and general behavior patterns that develop over time and affect the political life of a state or region. Gives each state its unique character."},
+  {ch:'ch1',q:"Texas ranks ___ in population and ___ in land area among the 50 states.",a:"2nd in population (behind California, 29M+ residents) and 2nd in land area (behind Alaska, 267,000+ sq miles)."},
+  {ch:'ch1',q:"What is the ONLY mountainous region in Texas?",a:"The Basin and Range Province (Trans-Pecos/West Texas). Contains the Guadalupe Mountains and Big Bend area."},
+  {ch:'ch1',q:"In what geographic region is Houston located?",a:"The Gulf Coastal Plains region of Texas (Harris County)."},
+  {ch:'ch1',q:"What is the origin of Texas cattle ranching?",a:"Cattle transported from Spain to Mexico to Texas, resulting in the Texas longhorn. Texas still leads the nation in cattle production."},
+  {ch:'ch1',q:"Name the four land-based industries that shaped Texas development.",a:"1) Cattle 2) Cotton (~50% of U.S. supply) 3) Timber (peaked mid-1800s to 1920s) 4) Oil (Spindletop; Railroad Commission regulates)"},
+  {ch:'ch1',q:"Approximately what percent of Texans live in metropolitan areas today?",a:"Approximately 85% urban (up from 80% rural in 1900)."},
+  {ch:'ch1',q:"Which ethnic group is growing most rapidly in Texas?",a:"Latinos -- approximately 39% of the population and the fastest-growing group. Anglo population has fallen below 50%."},
+  {ch:'ch1',q:"Does the service industry pay higher or lower wages than manufacturing in Texas?",a:"LOWER wages. Services is the fastest-growing sector but most jobs lack benefits and pay less than manufacturing."},
+  {ch:'ch1',q:"What is redlining?",a:"A discriminatory rating system for loan risks used to deny mortgages to residents of minority neighborhoods. A key tool for enforcing residential segregation."},
+  {ch:'ch1',q:"What is gentrification?",a:"Higher-income residents moving into urban neighborhoods, displacing lower-income residents and driving up property prices and ad valorem taxes."},
+  {ch:'ch1',q:"What is metropolitization?",a:"Concentration of people in urban centers linked as a single geographic entity. Includes metropolitan statistical areas (50,000+) and micropolitan areas (10,000-50,000)."},
+  {ch:'ch1',q:"What is the Texas Water Development Board?",a:"State agency for water planning and management. Demand will rise 22% by 2060. Water use per fracking well increased 770%. A major 21st-century policy challenge."},
+  {ch:'ch1',q:"What is the traditionalistic political culture?",a:"Old South plantation/patron system roots. Government maintains the status quo for a few elite citizens. Historically excluded poor and minorities. Jim Crow laws, elitism, racism, conservatism."},
+  {ch:'ch1',q:"What is the Railroad Commission of Texas?",a:"State agency with regulatory jurisdiction over the oil and gas industry. Originally created to regulate railroads. One of the oldest and most powerful regulatory agencies in Texas."},
+  {ch:'ch1',q:"What are the major 21st-century policy challenges for Texas?",a:"Poverty (1 in 4 children; highest uninsured %), Education (38th in graduation rate; teacher shortage), Water (22% demand rise by 2060), Environment (leads in pollution), Immigration ($1.44B local govt costs)."},
+  {ch:'ch1',q:"What is urban renewal?",a:"Government taking of private property for public projects. Used historically as a discriminatory tool to enforce residential segregation, often displacing minority and lower-income communities."},
+  {ch:'ch1',q:"What is eminent domain?",a:"Government power to take private property for public use with compensation. A reserved state power. Associated with traditionalistic culture in Texas."},
+  {ch:'ch1',q:"What is public policy?",a:"Government action designed to meet a public need or goal. In Texas: enacted by legislature, approved by governor, implemented by executive departments, interpreted by courts."},
+  {ch:'ch1',q:"What is politics?",a:"The process of making policies (laws). Involves conflict between parties and groups but requires cooperation. About who gets power, how they get it, and what they do with it."},
+  {ch:'ch2',q:"What is federalism?",a:"Division of power between the national and state governments. The heart of the system is the relationship between the two. Sharing powers creates tension. The balance constantly evolves."},
+  {ch:'ch2',q:"What does the 10th Amendment say?",a:"'Powers not specifically given to the National government by the Constitution, nor prohibited by it to the States, are reserved to the States respectively, or to the people.' Basis for state reserved powers."},
+  {ch:'ch2',q:"What is the Supremacy Clause?",a:"Article VI: The Constitution and laws made under its authority are the supreme law of the land. All state officials are bound by it. Federal law overrides conflicting state law."},
+  {ch:'ch2',q:"What are delegated (enumerated) powers?",a:"Powers specifically listed in Article I, Section 8: regulate interstate commerce, coin money, declare war. Also called expressed or enumerated powers."},
+  {ch:'ch2',q:"What are implied powers?",a:"Powers from the Necessary and Proper (elastic) Clause in Article I, Section 8. Allows Congress to expand authority beyond what is specifically listed."},
+  {ch:'ch2',q:"What are the constitutional limitations on the states?",a:"Art. I Sec. 10: Cannot enter foreign treaties; cannot secede (Texas v. White); cannot coin money. 14th Amendment: Cannot deny due process or equal protection. Cannot deny voting rights."},
+  {ch:'ch2',q:"What are the constitutional guarantees to the states?",a:"Protection from invasion/domestic violence; cannot be combined or divided without consent; 2 senators per state; at least 1 House member; equal participation in the constitutional amendment process."},
+  {ch:'ch2',q:"What is the Privileges and Immunities Clause?",a:"Article IV: Citizens of each state are entitled to the same privileges and immunities in all other states -- protection of life, liberty, and property."},
+  {ch:'ch2',q:"What is Full Faith and Credit?",a:"Article IV: Civil government actions and legal documents of one state must be recognized in all other states. Does NOT apply to criminal cases (handled through extradition)."},
+  {ch:'ch2',q:"What are the reserved powers of the states?",a:"NOT defined in the U.S. Constitution -- retained via 10th Amendment: Police power (public safety/order), Taxing power, Proprietary power (own public property), Eminent domain."},
+  {ch:'ch2',q:"What are grants-in-aid?",a:"Federal money given to states to influence state policymaking. The primary 20th-century federal tool to extend jurisdiction into areas traditionally managed by state and local governments."},
+  {ch:'ch2',q:"What is devolution?",a:"Reduction in federal government size and shifting of expenditures and responsibilities to the states. Trend since the 1980s (Reagan). Gives states more freedom. Texas generally supports this."},
+  {ch:'ch2',q:"What are block grants?",a:"Fixed sums of money awarded to states on an automatic formula. Give states MORE flexibility in spending than categorical grants. A feature of the devolution trend."},
+  {ch:'ch2',q:"How many constitutions has Texas had?",a:"Seven (7): 1827 (Coahuila y Tejas), 1836 (Republic), 1845 (Statehood), 1861 (Secession), 1866 (Reconstruction), 1869, and 1876 (current)."},
+  {ch:'ch2',q:"When was Texas annexed and what unique right did it retain?",a:"1845. Texas was an independent republic 1836-1845. Under the Joint Resolution of Annexation, Texas retained the right to divide into up to FIVE states with consent of the Texas legislature and Congress."},
+  {ch:'ch2',q:"How is the Texas Constitution amended?",a:"1) Joint resolution adopted by 2/3 vote in EACH legislative chamber. 2) Simple majority of voters in a regular or special election. Governor only proclaims. Less than 10% voter turnout typical."},
+  {ch:'ch2',q:"What is the Texas Constitution of 1876?",a:"Texas's current 7th constitution. Drafted by 75 Democrats, 15 Republicans; 40%+ Grange members. Slogan: 'retrenchment and reform.' Creates a WEAK governor. ~92,000 words, amended 500+ times."},
+  {ch:'ch2',q:"What is separation of powers?",a:"Division of power among three branches: Legislative, Executive, and Judicial. Article II of the Texas Constitution. Prevents any one branch from accumulating too much power."},
+  {ch:'ch2',q:"What did Texas v. White establish?",a:"States CANNOT secede from the union. A key constitutional limitation on states affirmed by the U.S. Supreme Court after the Civil War."},
+  {ch:'ch2',q:"What is the Commerce Clause?",a:"Article I, Section 8: Gives Congress power to regulate commerce among the states. One of the most powerful tools Congress has used to expand federal authority."},
+  {ch:'ch2',q:"What are the two sources of power governing Texas government?",a:"1) The U.S. Constitution -- delegates powers, sets guarantees and limitations. 2) The Texas Constitution of 1876 -- primary source of state policymaking power; defines structure of Texas government."},
+  {ch:'ch2',q:"What did the Necessary and Proper (elastic) Clause enable?",a:"Allowed Congress to make laws needed to carry out its delegated powers. This is the source of IMPLIED POWERS and enabled significant expansion of federal authority."},
 ];
-
-let currentCards = [...allCards];
-let currentIndex = 0;
-
-function renderCard() {
-  const card = currentCards[currentIndex];
-  if (!card) return;
-  const tag = document.getElementById('fc-chapter-tag');
-  const colors = {ch1:'#f97316', ch2:'#3b82f6'};
-  const labels = {ch1:'CH.1', ch2:'CH.2'};
-  tag.textContent = labels[card.ch];
-  tag.style.color = colors[card.ch];
-  tag.style.background = colors[card.ch] + '20';
-  document.getElementById('fc-question').textContent = card.q;
-  document.getElementById('fc-answer').textContent = card.a;
-  document.getElementById('fc-counter').textContent = (currentIndex+1) + ' / ' + currentCards.length;
-  document.getElementById('fc-stat').textContent = 'Card ' + (currentIndex+1) + ' of ' + currentCards.length;
+let currentCards=[...allCards];let currentIndex=0;
+function renderCard(){
+  const card=currentCards[currentIndex];if(!card)return;
+  const colors={ch1:'#f97316',ch2:'#3b82f6'};const labels={ch1:'CH.1',ch2:'CH.2'};
+  const tag=document.getElementById('fc-chapter-tag');
+  tag.textContent=labels[card.ch];tag.style.color=colors[card.ch];tag.style.background=colors[card.ch]+'20';
+  document.getElementById('fc-question').textContent=card.q;
+  document.getElementById('fc-answer').textContent=card.a;
+  document.getElementById('fc-counter').textContent=(currentIndex+1)+' / '+currentCards.length;
+  document.getElementById('fc-stat').textContent='Card '+(currentIndex+1)+' of '+currentCards.length;
   document.getElementById('flashcard').classList.remove('flipped');
 }
-
-function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
-function nextCard() { currentIndex = (currentIndex+1) % currentCards.length; renderCard(); }
-function prevCard() { currentIndex = (currentIndex-1+currentCards.length) % currentCards.length; renderCard(); }
-function shuffleCards() {
-  for (let i=currentCards.length-1; i>0; i--) {
-    const j = Math.floor(Math.random()*(i+1));
-    [currentCards[i],currentCards[j]] = [currentCards[j],currentCards[i]];
-  }
-  currentIndex = 0; renderCard();
-}
-function filterCards(ch, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active-filter'));
+function flipCard(){document.getElementById('flashcard').classList.toggle('flipped');}
+function nextCard(){currentIndex=(currentIndex+1)%currentCards.length;renderCard();}
+function prevCard(){currentIndex=(currentIndex-1+currentCards.length)%currentCards.length;renderCard();}
+function shuffleCards(){for(let i=currentCards.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[currentCards[i],currentCards[j]]=[currentCards[j],currentCards[i]];}currentIndex=0;renderCard();}
+function filterCards(ch,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active-filter'));
   btn.classList.add('active-filter');
-  currentCards = ch === 'all' ? [...allCards] : allCards.filter(c => c.ch === ch);
-  currentIndex = 0; renderCard();
+  currentCards=ch==='all'?[...allCards]:allCards.filter(c=>c.ch===ch);
+  currentIndex=0;renderCard();
 }
-
-// ===== QUIZ =====
-const allQuizData = [
+const allQuizData=[
   {ch:'ch1',type:'mc',q:"According to Daniel Elazar, Texas political culture is best described as:",opts:["Moralistic","Individualistic","Traditionalistic","Progressive"],ans:1,exp:"Elazar identifies Texas as STRONGLY INDIVIDUALISTIC -- wanting little government intervention, only to maintain order."},
-  {ch:'ch1',type:'mc',q:"The traditionalistic political culture in Texas is most closely associated with:",opts:["New England Puritanism and civic duty","Frontier individualism and limited government","The Old South plantation and patron system","Progressive reform movements"],ans:2,exp:"Traditionalistic culture roots in the Old South plantation/patron system. Government maintains the status quo for elite citizens. Historically excluded poor and minorities."},
+  {ch:'ch1',type:'mc',q:"The traditionalistic political culture in Texas is most closely associated with:",opts:["New England Puritanism and civic duty","Frontier individualism and limited government","The Old South plantation and patron system","Progressive reform movements"],ans:2,exp:"Traditionalistic culture roots in the Old South plantation/patron system. Government maintains the status quo for elite citizens."},
   {ch:'ch1',type:'mc',q:"Texas ranks ___ in both population AND land area among the 50 states.",opts:["1st and 1st","2nd and 2nd","3rd and 2nd","2nd and 3rd"],ans:1,exp:"Texas is 2nd in population (behind California) and 2nd in land area (behind Alaska, 267,000+ square miles)."},
   {ch:'ch1',type:'mc',q:"The ONLY mountainous region in Texas is:",opts:["The Gulf Coastal Plains","The Interior Lowlands","The Texas Great Plains","The Basin and Range Province"],ans:3,exp:"The Basin and Range Province (Trans-Pecos/West Texas) is the only mountainous region, containing the Guadalupe Mountains and Big Bend."},
   {ch:'ch1',type:'mc',q:"Texas cattle ranching originated from:",opts:["English settlers in East Texas","Cattle transported from Spain to Mexico to Texas","Native American tribes on the plains","German immigrants in Central Texas"],ans:1,exp:"Texas cattle ranching traces to cattle transported from Spain to Mexico to Texas, resulting in the Texas longhorn."},
   {ch:'ch1',type:'mc',q:"The fastest-growing ethnic group in Texas is:",opts:["Anglo Americans","African Americans","Asian Americans","Latinos"],ans:3,exp:"Latinos are the fastest-growing group at approximately 39% of the population. Anglo population has fallen below 50%."},
   {ch:'ch1',type:'mc',q:"The service industry in Texas pays ___ wages compared to manufacturing.",opts:["Higher","Lower","Equal","It depends on the city"],ans:1,exp:"Service industry pays LOWER wages than manufacturing. Most service jobs lack benefits. Services is the fastest-growing but lowest-paying sector."},
   {ch:'ch1',type:'mc',q:"Redlining was a practice that:",opts:["Drew district lines to favor incumbents","Was a discriminatory rating system that denied loans to minority neighborhoods","Required minorities to live in separate neighborhoods by law","Zoned certain areas exclusively for commercial use"],ans:1,exp:"Redlining = discriminatory rating system for loan risks. Banks denied mortgages to residents of minority neighborhoods, enforcing residential segregation."},
-  {ch:'ch1',type:'mc',q:"Houston is located in which geographic region of Texas?",opts:["The Texas Great Plains","The Interior Lowlands","The Gulf Coastal Plains","The Basin and Range Province"],ans:2,exp:"Houston is in the Gulf Coastal Plains region of Texas, in Harris County -- one of the four most populous counties in Texas."},
+  {ch:'ch1',type:'mc',q:"Houston is located in which geographic region of Texas?",opts:["The Texas Great Plains","The Interior Lowlands","The Gulf Coastal Plains","The Basin and Range Province"],ans:2,exp:"Houston is in the Gulf Coastal Plains region of Texas, in Harris County."},
   {ch:'ch1',type:'fitb',q:"Political ___________ refers to the attitudes, habits, and general behavior patterns that shape a state's political life over time.",ans:["culture"],display:"culture",exp:"Political culture gives each state its character. Texas has three cultures: moralistic, individualistic, and traditionalistic."},
   {ch:'ch1',type:'fitb',q:"The ___________ culture, originating with New England Puritanism, views political participation as a civic duty.",ans:["moralistic"],display:"moralistic",exp:"Moralistic culture sees government as a public service used to advance the public good. It is the least common culture in Texas."},
   {ch:'ch1',type:'fitb',q:"Approximately ___% of Texans currently live in metropolitan areas (as opposed to ~80% rural in 1900).",ans:["85"],display:"85",exp:"Texas has undergone dramatic urbanization. Today approximately 85% of Texans are urban."},
   {ch:'ch1',type:'fitb',q:"The ___________ Commission of Texas has regulatory jurisdiction over the oil and gas industry.",ans:["railroad"],display:"Railroad",exp:"The Railroad Commission of Texas was originally created to regulate railroads but now primarily regulates oil and gas."},
   {ch:'ch1',type:'fitb',q:"The process by which higher-income residents move into a neighborhood and displace lower-income residents is called ___________.",ans:["gentrification"],display:"gentrification",exp:"Gentrification has displaced lower-income residents in Texas cities and driven up property prices and ad valorem taxes."},
-  {ch:'ch2',type:'mc',q:"The 'necessary and proper' clause in Article I, Section 8 is the source of which type of federal power?",opts:["Delegated powers","Implied powers","Reserved powers","Concurrent powers"],ans:1,exp:"Implied powers come from the necessary and proper (elastic) clause -- allows Congress to expand its authority beyond what is specifically listed in the Constitution."},
-  {ch:'ch2',type:'mc',q:"Congress's power to regulate commerce among the states is an example of which type of power?",opts:["Implied powers","Reserved powers","Delegated (enumerated) powers","State police power"],ans:2,exp:"Regulating interstate commerce is a delegated/enumerated power specifically listed in Article I, Section 8 of the U.S. Constitution."},
-  {ch:'ch2',type:'mc',q:"The Supremacy Clause is found in which Article of the U.S. Constitution?",opts:["Article I","Article IV","Article VI","The 10th Amendment"],ans:2,exp:"Article VI contains the Supremacy Clause -- the Constitution and federal laws are the supreme law of the land; all state officials are bound by it."},
-  {ch:'ch2',type:'mc',q:"Powers not specifically given to the federal government are reserved to the states by the:",opts:["Supremacy Clause","Commerce Clause","Tenth Amendment","Fourteenth Amendment"],ans:2,exp:"The Tenth Amendment reserves all powers not delegated to the federal government to the states or to the people. It is the constitutional basis for state reserved powers."},
-  {ch:'ch2',type:'mc',q:"Full Faith and Credit requires that:",opts:["States give citizens of other states the same rights as their own citizens","Civil government actions of one state are recognized in all other states","States cannot be sued in federal court","The federal government provide grants to all states equally"],ans:1,exp:"Full Faith and Credit (Article IV) requires civil government actions and legal documents of one state to be recognized in all other states. It does NOT apply to criminal cases (those are handled through extradition)."},
+  {ch:'ch2',type:'mc',q:"The 'necessary and proper' clause in Article I, Section 8 is the source of which type of federal power?",opts:["Delegated powers","Implied powers","Reserved powers","Concurrent powers"],ans:1,exp:"Implied powers come from the necessary and proper (elastic) clause -- allows Congress to expand its authority beyond what is specifically listed."},
+  {ch:'ch2',type:'mc',q:"Congress's power to regulate commerce among the states is an example of which type of power?",opts:["Implied powers","Reserved powers","Delegated (enumerated) powers","State police power"],ans:2,exp:"Regulating interstate commerce is a delegated/enumerated power specifically listed in Article I, Section 8."},
+  {ch:'ch2',type:'mc',q:"The Supremacy Clause is found in which Article of the U.S. Constitution?",opts:["Article I","Article IV","Article VI","The 10th Amendment"],ans:2,exp:"Article VI contains the Supremacy Clause -- the Constitution and federal laws are the supreme law of the land."},
+  {ch:'ch2',type:'mc',q:"Powers not specifically given to the federal government are reserved to the states by the:",opts:["Supremacy Clause","Commerce Clause","Tenth Amendment","Fourteenth Amendment"],ans:2,exp:"The Tenth Amendment reserves all powers not delegated to the federal government to the states or to the people."},
+  {ch:'ch2',type:'mc',q:"Full Faith and Credit requires that:",opts:["States give citizens of other states the same rights as their own citizens","Civil government actions of one state are recognized in all other states","States cannot be sued in federal court","The federal government provide grants to all states equally"],ans:1,exp:"Full Faith and Credit (Article IV) requires civil government actions and legal documents of one state to be recognized in all other states. NOT for criminal cases."},
   {ch:'ch2',type:'mc',q:"Texas has had how many constitutions in total?",opts:["3","5","7","9"],ans:2,exp:"Texas has had 7 constitutions: 1827 (Coahuila y Tejas), 1836 (Republic), 1845 (Statehood), 1861 (Secession), 1866 (Reconstruction), 1869, and 1876 (current)."},
   {ch:'ch2',type:'mc',q:"Amendments to the Texas Constitution are proposed by:",opts:["A petition signed by voters","A two-thirds vote in each chamber of the legislature","The governor and lieutenant governor jointly","A state constitutional convention"],ans:1,exp:"A joint resolution must be adopted by a 2/3 vote in EACH chamber of the Texas legislature before it goes to voters for a simple majority approval."},
-  {ch:'ch2',type:'mc',q:"The overall trend in federal-state relations since the 1980s has been toward:",opts:["Centralization of power in Washington D.C.","Devolution -- shifting responsibilities to states","Elimination of grants-in-aid","Stronger use of the Commerce Clause"],ans:1,exp:"Devolution (beginning under Reagan in the 1980s) shifted expenditures and responsibilities from the federal government to the states. Texas generally supports this trend and resists national control."},
-  {ch:'ch2',type:'mc',q:"The Supreme Court case Texas v. White established that:",opts:["Texas can legally divide into five states","States cannot secede from the union","Texas has the right to regulate its own oil industry","States cannot be sued in federal court"],ans:1,exp:"Texas v. White: The Supreme Court ruled that states CANNOT secede from the union. This is a key constitutional limitation on states."},
+  {ch:'ch2',type:'mc',q:"The overall trend in federal-state relations since the 1980s has been toward:",opts:["Centralization of power in Washington D.C.","Devolution -- shifting responsibilities to states","Elimination of grants-in-aid","Stronger use of the Commerce Clause"],ans:1,exp:"Devolution (beginning under Reagan in the 1980s) shifted expenditures and responsibilities from the federal government to the states."},
+  {ch:'ch2',type:'mc',q:"The Supreme Court case Texas v. White established that:",opts:["Texas can legally divide into five states","States cannot secede from the union","Texas has the right to regulate its own oil industry","States cannot be sued in federal court"],ans:1,exp:"Texas v. White: The Supreme Court ruled that states CANNOT secede from the union."},
   {ch:'ch2',type:'mc',q:"The Texas Constitution of 1876 was drafted primarily in reaction to:",opts:["The era of the Texas Republic","The Civil War battles in Texas","The Reconstruction period and the Davis administration","Spanish colonial rule"],ans:2,exp:"The 1876 Constitution dismantled the Reconstruction (Davis) administration. Its slogan was 'retrenchment and reform.' It restricted all three branches and created a weak governor."},
-  {ch:'ch2',type:'fitb',q:"The ___________ Clause (Article VI) states that the Constitution and federal laws are the supreme law of the land.",ans:["supremacy","national supremacy"],display:"Supremacy",exp:"The Supremacy Clause means that when state and federal law conflict, federal law prevails and all state officials are bound by the Constitution."},
-  {ch:'ch2',type:'fitb',q:"The ___________ Amendment reserves all powers not delegated to the federal government to the states or to the people.",ans:["tenth","10th"],display:"Tenth (10th)",exp:"The Tenth Amendment is the constitutional basis for state reserved powers and is frequently cited by Texas in its lawsuits against the federal government."},
+  {ch:'ch2',type:'fitb',q:"The ___________ Clause (Article VI) states that the Constitution and federal laws are the supreme law of the land.",ans:["supremacy","national supremacy"],display:"Supremacy",exp:"The Supremacy Clause means that when state and federal law conflict, federal law prevails."},
+  {ch:'ch2',type:'fitb',q:"The ___________ Amendment reserves all powers not delegated to the federal government to the states or to the people.",ans:["tenth","10th"],display:"Tenth (10th)",exp:"The Tenth Amendment is the constitutional basis for state reserved powers."},
   {ch:'ch2',type:'fitb',q:"Texas's current constitution was adopted in ___________.",ans:["1876"],display:"1876",exp:"The Texas Constitution of 1876 is Texas's 7th and current constitution. It creates a weak governor and has been amended over 500 times."},
-  {ch:'ch2',type:'fitb',q:"The Necessary and ___________ Clause (elastic clause) is the source of Congress's implied powers.",ans:["proper"],display:"Proper",exp:"The Necessary and Proper Clause allows Congress to make laws needed to carry out its delegated powers, enabling significant expansion of federal authority."},
-  {ch:'ch2',type:'fitb',q:"Federal money given to states to influence their policymaking is called ___________.",ans:["grants-in-aid","grants in aid"],display:"grants-in-aid",exp:"Grants-in-aid were the primary 20th-century federal tool to extend federal jurisdiction into areas traditionally managed by state and local governments."},
-  {ch:'ch2',type:'fitb',q:"The trend of reducing the size of the federal government and shifting responsibilities to states, beginning in the 1980s, is called ___________.",ans:["devolution"],display:"devolution",exp:"Devolution (since Reagan in the 1980s) shifted expenditures and responsibilities from the federal government to the states. Texas generally supports devolution."},
+  {ch:'ch2',type:'fitb',q:"The Necessary and ___________ Clause (elastic clause) is the source of Congress's implied powers.",ans:["proper"],display:"Proper",exp:"The Necessary and Proper Clause allows Congress to make laws needed to carry out its delegated powers."},
+  {ch:'ch2',type:'fitb',q:"Federal money given to states to influence their policymaking is called ___________.",ans:["grants-in-aid","grants in aid"],display:"grants-in-aid",exp:"Grants-in-aid were the primary 20th-century federal tool to extend federal jurisdiction into areas managed by state and local governments."},
+  {ch:'ch2',type:'fitb',q:"The trend of reducing the size of the federal government and shifting responsibilities to states, beginning in the 1980s, is called ___________.",ans:["devolution"],display:"devolution",exp:"Devolution (since Reagan in the 1980s) shifted expenditures and responsibilities from the federal government to the states."},
 ];
-
-let currentQuizFilter = 'all';
-let activeQuizData = [...allQuizData];
-let userAnswers = {};
-let quizSubmitted = false;
-
-function setQuizFilter(ch, btn) {
-  document.querySelectorAll('#quiz-filter-row .filter-btn').forEach(b => b.classList.remove('active-filter'));
-  btn.classList.add('active-filter');
-  currentQuizFilter = ch;
-  resetQuiz();
+let currentQuizFilter='all';let activeQuizData=[...allQuizData];let userAnswers={};let quizSubmitted=false;
+function setQuizFilter(ch,btn){
+  document.querySelectorAll('#quiz-filter-row .filter-btn').forEach(b=>b.classList.remove('active-filter'));
+  btn.classList.add('active-filter');currentQuizFilter=ch;resetQuiz();
 }
-
-function renderQuiz() {
-  activeQuizData = currentQuizFilter === 'all' ? [...allQuizData] : allQuizData.filter(q => q.ch === currentQuizFilter);
-  const chColors = {ch1:'#f97316', ch2:'#3b82f6'};
-  const chLabels = {ch1:'CH.1', ch2:'CH.2'};
-  if (quizSubmitted) return;
-  const area = document.getElementById('quiz-area');
-  area.innerHTML = activeQuizData.map((q, i) => {
-    const chBadge = `<span class="q-ch-badge" style="background:${chColors[q.ch]}20;color:${chColors[q.ch]}">${chLabels[q.ch]}</span>`;
-    const typeBadge = q.type === 'mc'
-      ? '<span class="q-type-badge q-type-mc">Multiple Choice</span>'
-      : '<span class="q-type-badge q-type-fitb">Fill in the Blank</span>';
-    if (q.type === 'mc') {
-      return `<div class="question-block" id="qblock-${i}">
-        <div class="q-num">Question ${i+1} of ${activeQuizData.length} ${chBadge} ${typeBadge}</div>
-        <div class="q-text">${q.q}</div>
-        <div class="options">${q.opts.map((o,j) =>
-          `<div class="option" id="opt-${i}-${j}" onclick="selectMC(${i},${j})">
-            <span class="opt-letter">${['A','B','C','D'][j]}</span><span>${o}</span>
-          </div>`).join('')}
-        </div>
-        <div class="explanation" id="exp-${i}">${q.exp}</div>
-      </div>`;
-    } else {
-      return `<div class="question-block" id="qblock-${i}">
-        <div class="q-num">Question ${i+1} of ${activeQuizData.length} ${chBadge} ${typeBadge}</div>
-        <div class="q-text">${q.q}</div>
-        <input type="text" class="fitb-input" id="fitb-${i}" placeholder="Type your answer..."
-          oninput="storeFITB(${i})" autocomplete="off" autocorrect="off" spellcheck="false">
-        <div class="fitb-correct-answer" id="fitb-ans-${i}">Correct answer: ${q.display}</div>
-        <div class="explanation" id="exp-${i}">${q.exp}</div>
-      </div>`;
+function renderQuiz(){
+  activeQuizData=currentQuizFilter==='all'?[...allQuizData]:allQuizData.filter(q=>q.ch===currentQuizFilter);
+  const chColors={ch1:'#f97316',ch2:'#3b82f6'};const chLabels={ch1:'CH.1',ch2:'CH.2'};
+  const area=document.getElementById('quiz-area');
+  area.innerHTML=activeQuizData.map((q,qi)=>{
+    const badge=`<span class="q-ch-badge" style="background:${chColors[q.ch]}20;color:${chColors[q.ch]}">${chLabels[q.ch]}</span>`;
+    if(q.type==='mc'){
+      const opts=q.opts.map((o,oi)=>`<div class="option" id="opt-${qi}-${oi}" onclick="selectMC(${qi},${oi})">${o}</div>`).join('');
+      return `<div class="q-block" id="qblock-${qi}">${badge}<div class="q-text">${q.q}</div>${opts}<div class="explanation" id="exp-${qi}">${q.exp}</div></div>`;
+    }else{
+      return `<div class="q-block" id="qblock-${qi}">${badge}<div class="q-text">${q.q}</div><input type="text" class="fitb-input" id="fitb-${qi}" placeholder="Type your answer..." oninput="storeFITB(${qi})" autocomplete="off" autocorrect="off" spellcheck="false"><div class="fitb-correct-answer" id="fitb-ans-${qi}">Correct answer: ${q.display}</div><div class="explanation" id="exp-${qi}">${q.exp}</div></div>`;
     }
   }).join('');
-  document.getElementById('submit-btn').style.display = 'block';
+  document.getElementById('submit-btn').style.display='block';
 }
-
-function selectMC(qi, oi) {
-  if (quizSubmitted) return;
-  document.querySelectorAll(`#qblock-${qi} .option`).forEach(o => { o.style.borderColor=''; o.style.background=''; });
-  document.getElementById(`opt-${qi}-${oi}`).style.borderColor = 'var(--accent)';
-  document.getElementById(`opt-${qi}-${oi}`).style.background = 'var(--accent-dim)';
-  userAnswers[qi] = {type:'mc', val:oi};
+function selectMC(qi,oi){
+  if(quizSubmitted)return;
+  document.querySelectorAll(`#qblock-${qi} .option`).forEach(o=>{o.style.borderColor='';o.style.background='';});
+  document.getElementById(`opt-${qi}-${oi}`).style.borderColor='var(--accent)';
+  document.getElementById(`opt-${qi}-${oi}`).style.background='var(--accent-dim)';
+  userAnswers[qi]={type:'mc',val:oi};
 }
-
-function storeFITB(qi) {
-  userAnswers[qi] = {type:'fitb', val:document.getElementById(`fitb-${qi}`).value.trim().toLowerCase()};
-}
-
-function submitQuiz() {
-  for (let i=0; i<activeQuizData.length; i++) {
-    const q = activeQuizData[i];
-    if (!userAnswers[i]) {
-      if (q.type === 'mc') { alert(`Please answer question ${i+1}.`); return; }
-      else {
-        const v = document.getElementById(`fitb-${i}`).value.trim();
-        if (!v) { alert(`Please answer question ${i+1}.`); return; }
-        userAnswers[i] = {type:'fitb', val:v.toLowerCase()};
-      }
+function storeFITB(qi){userAnswers[qi]={type:'fitb',val:document.getElementById(`fitb-${qi}`).value.trim().toLowerCase()};}
+function submitQuiz(){
+  for(let i=0;i<activeQuizData.length;i++){
+    const q=activeQuizData[i];if(!userAnswers[i]){
+      if(q.type==='mc'){alert(`Please answer question ${i+1}.`);return;}
+      else{const v=document.getElementById(`fitb-${i}`).value.trim();if(!v){alert(`Please answer question ${i+1}.`);return;}userAnswers[i]={type:'fitb',val:v.toLowerCase()};}
     }
   }
-  quizSubmitted = true;
-  let score=0, mcCorrect=0, fitbCorrect=0, mcTotal=0, fitbTotal=0;
-  activeQuizData.forEach((q, i) => {
-    const ans = userAnswers[i];
-    if (q.type === 'mc') {
-      mcTotal++;
-      document.querySelectorAll(`#qblock-${i} .option`).forEach(o => { o.style.borderColor=''; o.style.background=''; o.classList.add('answered'); });
-      if (ans.val === q.ans) { score++; mcCorrect++; document.getElementById(`opt-${i}-${ans.val}`).classList.add('correct'); }
-      else { document.getElementById(`opt-${i}-${ans.val}`).classList.add('wrong'); document.getElementById(`opt-${i}-${q.ans}`).classList.add('reveal'); }
-    } else {
-      fitbTotal++;
-      const input = document.getElementById(`fitb-${i}`);
-      const userVal = ans.val;
-      const correct = q.ans.some(a => userVal===a || userVal.includes(a) || a.includes(userVal));
-      if (correct) { score++; fitbCorrect++; input.classList.add('correct-input'); }
-      else { input.classList.add('wrong-input'); document.getElementById(`fitb-ans-${i}`).style.display='block'; }
+  quizSubmitted=true;let score=0,mcC=0,fitbC=0,mcT=0,fitbT=0;
+  activeQuizData.forEach((q,i)=>{
+    const ans=userAnswers[i];
+    if(q.type==='mc'){
+      mcT++;document.querySelectorAll(`#qblock-${i} .option`).forEach(o=>{o.style.borderColor='';o.style.background='';o.classList.add('answered');});
+      if(ans.val===q.ans){score++;mcC++;document.getElementById(`opt-${i}-${ans.val}`).classList.add('correct');}
+      else{document.getElementById(`opt-${i}-${ans.val}`).classList.add('wrong');document.getElementById(`opt-${i}-${q.ans}`).classList.add('reveal');}
+    }else{
+      fitbT++;const input=document.getElementById(`fitb-${i}`);
+      const correct=q.ans.some(a=>ans.val===a||ans.val.includes(a)||a.includes(ans.val));
+      if(correct){score++;fitbC++;input.classList.add('correct-input');}
+      else{input.classList.add('wrong-input');document.getElementById(`fitb-ans-${i}`).style.display='block';}
     }
-    document.getElementById(`exp-${i}`).style.display = 'block';
+    document.getElementById(`exp-${i}`).style.display='block';
   });
-  const pct = Math.round((score/activeQuizData.length)*100);
-  const grade = pct>=90?'A':pct>=80?'B':pct>=70?'C':'Keep studying!';
-  document.getElementById('score-display').textContent = score + ' / ' + activeQuizData.length;
-  document.getElementById('score-breakdown').innerHTML = `${pct}% &nbsp;&middot;&nbsp; ${grade} &nbsp;&middot;&nbsp; MC: ${mcCorrect}/${mcTotal} &nbsp;&middot;&nbsp; Fill-in: ${fitbCorrect}/${fitbTotal}`;
-  document.getElementById('quiz-score').style.display = 'block';
-  document.getElementById('submit-btn').style.display = 'none';
+  const pct=Math.round((score/activeQuizData.length)*100);
+  const grade=pct>=90?'A':pct>=80?'B':pct>=70?'C':'Keep studying!';
+  document.getElementById('score-display').textContent=score+' / '+activeQuizData.length;
+  document.getElementById('score-breakdown').innerHTML=`${pct}% &nbsp;·&nbsp; ${grade} &nbsp;·&nbsp; MC: ${mcC}/${mcT} &nbsp;·&nbsp; Fill-in: ${fitbC}/${fitbT}`;
+  document.getElementById('quiz-score').style.display='block';
+  document.getElementById('submit-btn').style.display='none';
   document.getElementById('quiz-score').scrollIntoView({behavior:'smooth'});
 }
-
-function resetQuiz() {
-  userAnswers = {}; quizSubmitted = false;
-  document.getElementById('quiz-score').style.display = 'none';
-  document.getElementById('quiz-area').innerHTML = '';
-  renderQuiz();
-}
+function resetQuiz(){userAnswers={};quizSubmitted=false;document.getElementById('quiz-score').style.display='none';document.getElementById('quiz-area').innerHTML='';renderQuiz();}
+document.addEventListener('DOMContentLoaded',()=>{loadObjMastery();renderCard();});
+document.getElementById('flashcard').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')flipCard();});
 </script>
 </body>
 </html>

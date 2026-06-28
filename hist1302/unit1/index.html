@@ -6,894 +6,669 @@
 <title>HIST 1302 — Unit 1 Study Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0a0a0f;
-  --surface: #12121a;
-  --surface2: #16161f;
-  --border: #1e1e2e;
-  --text: #e8e8f0;
-  --muted: #6b6b80;
-  --accent: #3b82f6;
-  --accent-dim: rgba(59,130,246,0.12);
-  --accent2: #a78bfa;
-  --green: #22c55e;
-  --orange: #f97316;
-  --red: #ef4444;
-  --yellow: #eab308;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'IBM Plex Sans', sans-serif;
-  min-height: 100vh;
-}
-body::before {
-  content:'';
-  position:fixed;
-  inset:0;
-  background-image:
-    linear-gradient(rgba(59,130,246,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(59,130,246,0.025) 1px, transparent 1px);
-  background-size:40px 40px;
-  pointer-events:none;
-  z-index:0;
-}
-.container { max-width:960px; margin:0 auto; padding:0 20px; position:relative; z-index:1; }
-
+:root{--bg:#0a0a0f;--surface:#12121a;--surface2:#16161f;--border:#1e1e2e;--text:#e8e8f0;--muted:#6b6b80;--accent:#3b82f6;--accent-dim:rgba(59,130,246,0.12);--green:#22c55e;--red:#ef4444;--yellow:#eab308;--purple:#a78bfa;--orange:#f97316;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(59,130,246,0.025)1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.025)1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+.container{max-width:960px;margin:0 auto;padding:0 20px;position:relative;z-index:1;}
 /* Nav */
-.topnav {
-  display:flex;
-  gap:8px;
-  padding:16px 0;
-  border-bottom:1px solid var(--border);
-  margin-bottom:32px;
-  flex-wrap:wrap;
-}
-.nav-btn {
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px;
-  padding:8px 16px;
-  border-radius:6px;
-  border:1px solid var(--border);
-  background:transparent;
-  color:var(--muted);
-  cursor:pointer;
-  transition:all 0.2s;
-  letter-spacing:0.05em;
-}
-.nav-btn:hover, .nav-btn.active {
-  background:var(--accent-dim);
-  border-color:var(--accent);
-  color:var(--accent);
-}
-
+.topnav{display:flex;gap:8px;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:32px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.topnav::-webkit-scrollbar{display:none;}
+.nav-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;letter-spacing:0.05em;white-space:nowrap;flex-shrink:0;}
+.nav-btn:hover,.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
 /* Header */
-header { padding:24px 0 32px; }
-.breadcrumb { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); margin-bottom:12px; }
-.breadcrumb a { color:var(--accent); text-decoration:none; }
-.unit-badge { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent); background:var(--accent-dim); padding:4px 10px; border-radius:4px; display:inline-block; margin-bottom:12px; }
-h1 { font-size:clamp(26px,5vw,42px); font-weight:700; letter-spacing:-0.02em; line-height:1.1; margin-bottom:12px; }
-.exam-pill {
-  display:inline-flex; align-items:center; gap:8px;
-  font-family:'IBM Plex Mono',monospace; font-size:11px;
-  border:1px solid var(--orange); color:var(--orange);
-  padding:6px 14px; border-radius:20px;
-  background:rgba(249,115,22,0.08);
-}
-
-/* Textbook links */
-.textbook-links {
-  display:flex; align-items:center; gap:10px;
-  flex-wrap:wrap; margin-top:14px;
-  padding:10px 16px; border-radius:8px;
-  background:rgba(59,130,246,0.06);
-  border:1px solid rgba(59,130,246,0.15);
-}
-.tb-label {
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px; color:var(--muted);
-  font-weight:700; letter-spacing:0.05em;
-}
-.tb-link {
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px; color:var(--accent);
-  text-decoration:none; 
-  transition:opacity 0.2s;
-}
-.tb-link:hover { opacity:0.75; text-decoration:underline; }
-.tb-sep { color:var(--border); font-size:14px; }
-.tb-note {
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10px; color:var(--muted);
-}
-
+header{padding:24px 0 32px;}
+.breadcrumb{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:12px;}
+.breadcrumb a{color:var(--accent);text-decoration:none;}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);background:var(--accent-dim);padding:4px 10px;border-radius:4px;display:inline-block;margin-bottom:12px;}
+h1{font-size:clamp(26px,5vw,42px);font-weight:700;letter-spacing:-0.02em;line-height:1.1;margin-bottom:12px;}
+.exam-pill{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid var(--orange);color:var(--orange);padding:6px 14px;border-radius:20px;background:rgba(249,115,22,0.08);}
+.textbook-links{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;padding:10px 16px;border-radius:8px;background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.15);}
+.tb-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:0.05em;}
+.tb-link{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);text-decoration:none;transition:opacity 0.2s;}
+.tb-link:hover{opacity:0.75;text-decoration:underline;}
+.tb-sep{color:var(--border);font-size:14px;}
+.tb-note{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);}
 /* Section label */
-.section-label {
-  font-family:'IBM Plex Mono',monospace; font-size:10px;
-  letter-spacing:0.2em; text-transform:uppercase;
-  color:var(--muted); margin-bottom:16px;
-  display:flex; align-items:center; gap:12px;
-}
-.section-label::after { content:''; flex:1; height:1px; background:var(--border); }
-
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+/* Mastery bar */
+.mastery-bar-wrap{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+.mastery-bar-track{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.mastery-bar-fill{height:100%;background:var(--green);border-radius:3px;transition:width 0.4s;}
+.mastery-bar-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
+.btn-reset{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;}
+.btn-reset:hover{border-color:var(--red);color:var(--red);}
 /* Panels */
-.panel { display:none; }
-.panel.active { display:block; }
-
-/* ===== OVERVIEW ===== */
-.obj-grid { display:grid; gap:12px; margin-bottom:32px; }
-.obj-card {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:10px; padding:16px 20px;
-  display:grid; grid-template-columns:32px 1fr;
-  gap:12px; align-items:start;
-}
-.obj-num {
-  font-family:'IBM Plex Mono',monospace; font-size:11px;
-  color:var(--accent); background:var(--accent-dim);
-  width:28px; height:28px; border-radius:6px;
-  display:flex; align-items:center; justify-content:center;
-  font-weight:700; flex-shrink:0;
-}
-.obj-text { font-size:13px; line-height:1.6; }
-.obj-chapter {
-  font-family:'IBM Plex Mono',monospace; font-size:10px;
-  color:var(--muted); margin-top:4px;
-}
-
-/* Chapter color bars */
-.ch17 .obj-num { color:#3b82f6; background:rgba(59,130,246,0.12); }
-.ch18 .obj-num { color:#a78bfa; background:rgba(167,139,250,0.12); }
-.ch19 .obj-num { color:#22c55e; background:rgba(34,197,94,0.12); }
-.ch20 .obj-num { color:#f97316; background:rgba(249,115,22,0.12); }
-
-/* ===== STUDY GUIDE ===== */
-.chapter-block {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:12px; overflow:hidden; margin-bottom:20px;
-}
-.chapter-header {
-  padding:16px 20px; display:flex;
-  justify-content:space-between; align-items:center;
-  cursor:pointer; transition:background 0.2s;
-  border-bottom:1px solid var(--border);
-}
-.chapter-header:hover { background:var(--surface2); }
-.chapter-title { font-size:16px; font-weight:700; }
-.chapter-subtitle { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); margin-top:2px; }
-.chevron { color:var(--muted); font-size:14px; transition:transform 0.2s; }
-.chapter-header.open .chevron { transform:rotate(180deg); }
-.chapter-body { padding:20px; display:none; }
-.chapter-body.open { display:block; }
-
-.concept-title {
-  font-size:14px; font-weight:700; color:var(--accent);
-  margin:20px 0 8px; display:flex; align-items:center; gap:8px;
-}
-.concept-title:first-child { margin-top:0; }
-.concept-title::before { content:'▸'; font-size:10px; }
-.concept-body { font-size:13px; line-height:1.8; color:#c8c8d8; }
-.concept-body strong { color:var(--text); }
-.key-term {
-  display:inline-block; font-family:'IBM Plex Mono',monospace;
-  font-size:11px; background:var(--accent-dim);
-  color:var(--accent); padding:2px 8px; border-radius:4px;
-  margin:2px 2px;
-}
-.key-term.purple { background:rgba(167,139,250,0.12); color:var(--accent2); }
-.key-term.green { background:rgba(34,197,94,0.12); color:var(--green); }
-.key-term.orange { background:rgba(249,115,22,0.12); color:var(--orange); }
-
-/* People table */
-.people-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; margin-top:12px; }
-.person-card {
-  background:var(--surface2); border:1px solid var(--border);
-  border-radius:8px; padding:12px;
-}
-.person-name { font-size:13px; font-weight:700; margin-bottom:4px; }
-.person-role { font-size:12px; color:var(--muted); line-height:1.5; }
-
-/* ===== FLASHCARDS ===== */
-.fc-controls { display:flex; gap:10px; align-items:center; margin-bottom:20px; flex-wrap:wrap; }
-.fc-stat { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); }
-.btn {
-  font-family:'IBM Plex Mono',monospace; font-size:11px;
-  padding:8px 16px; border-radius:6px; border:1px solid var(--border);
-  background:transparent; color:var(--text); cursor:pointer;
-  transition:all 0.2s; letter-spacing:0.05em;
-}
-.btn:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-dim); }
-.btn.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
-.btn.primary:hover { opacity:0.85; }
-
-.flashcard-area { perspective:1000px; margin-bottom:20px; }
-.flashcard {
-  width:100%; min-height:220px;
-  position:relative; cursor:pointer;
-  transform-style:preserve-3d;
-  transition:transform 0.5s;
-}
-.flashcard.flipped { transform:rotateY(180deg); }
-.fc-front, .fc-back {
-  position:absolute; inset:0;
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:14px; padding:32px;
-  display:flex; flex-direction:column;
-  justify-content:center; align-items:center;
-  text-align:center; backface-visibility:hidden;
-}
-.fc-back { transform:rotateY(180deg); background:var(--surface2); border-color:var(--accent); }
-.fc-label { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:16px; }
-.fc-question { font-size:18px; font-weight:700; line-height:1.4; }
-.fc-answer { font-size:14px; line-height:1.7; color:#c8c8d8; }
-.fc-hint { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); margin-top:12px; }
-.fc-chapter-tag { font-family:'IBM Plex Mono',monospace; font-size:10px; padding:3px 8px; border-radius:4px; margin-bottom:8px; }
-
-.fc-nav { display:flex; gap:10px; justify-content:center; align-items:center; }
-.fc-counter { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); min-width:80px; text-align:center; }
-
-.filter-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
-.filter-btn {
-  font-family:'IBM Plex Mono',monospace; font-size:10px;
-  padding:5px 12px; border-radius:4px; border:1px solid var(--border);
-  background:transparent; color:var(--muted); cursor:pointer;
-  transition:all 0.2s;
-}
-.filter-btn.active-filter { border-color:var(--accent); color:var(--accent); background:var(--accent-dim); }
-
-/* ===== QUIZ ===== */
-.quiz-area { max-width:700px; }
-.question-block {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:12px; padding:24px; margin-bottom:16px;
-}
-.q-num { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--muted); margin-bottom:8px; }
-.q-text { font-size:15px; font-weight:600; line-height:1.5; margin-bottom:16px; }
-.options { display:grid; gap:8px; }
-.option {
-  padding:12px 16px; border-radius:8px;
-  border:1px solid var(--border); cursor:pointer;
-  font-size:13px; line-height:1.5;
-  transition:all 0.2s; background:var(--surface2);
-  display:flex; gap:12px; align-items:flex-start;
-}
-.option:hover:not(.answered) { border-color:var(--accent); background:var(--accent-dim); }
-.option.correct { border-color:var(--green); background:rgba(34,197,94,0.1); color:var(--green); }
-.option.wrong { border-color:var(--red); background:rgba(239,68,68,0.1); color:var(--red); }
-.option.reveal { border-color:var(--green); background:rgba(34,197,94,0.05); }
-.opt-letter {
-  font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:700;
-  min-width:20px; color:var(--muted);
-}
-.explanation {
-  margin-top:12px; padding:12px 16px; border-radius:8px;
-  background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.2);
-  font-size:12px; line-height:1.6; color:#a8b8d8; display:none;
-}
-.quiz-score {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:12px; padding:32px; text-align:center;
-  margin-bottom:20px; display:none;
-}
-.score-num { font-size:48px; font-weight:700; color:var(--accent); }
-.score-label { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); margin-top:8px; }
-
-/* ===== NOTES TEMPLATE ===== */
-.notes-template {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:12px; overflow:hidden; margin-bottom:20px;
-}
-.notes-header {
-  background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(167,139,250,0.1));
-  border-bottom:1px solid var(--border); padding:20px 24px;
-  display:flex; justify-content:space-between; align-items:center;
-  flex-wrap:wrap; gap:12px;
-}
-.notes-title { font-size:16px; font-weight:700; }
-.notes-subtitle { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); margin-top:2px; }
-.notes-body { padding:24px; }
-.notes-col-grid {
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:20px;
-}
-.notes-col-title {
-  font-family:'IBM Plex Mono',monospace; font-size:10px;
-  letter-spacing:0.15em; text-transform:uppercase;
-  color:var(--accent); margin-bottom:12px;
-  padding-bottom:8px; border-bottom:1px solid var(--border);
-}
-.notes-item {
-  font-size:12px; line-height:1.8; padding:6px 0;
-  border-bottom:1px dashed rgba(255,255,255,0.04);
-  display:flex; gap:8px; align-items:flex-start;
-}
-.notes-item::before { content:'›'; color:var(--muted); flex-shrink:0; margin-top:1px; }
-.notes-tip {
-  background:rgba(234,179,8,0.08); border:1px solid rgba(234,179,8,0.2);
-  border-radius:8px; padding:12px 16px; margin-top:16px;
-  font-size:12px; line-height:1.7; color:#d4b84a;
-}
-.notes-tip strong { color:var(--yellow); }
-
-/* Fill in the blank */
-.fitb-input {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  color: var(--text);
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 14px;
-  padding: 8px 12px;
-  width: 100%;
-  margin-top: 12px;
-  transition: border-color 0.2s;
-  outline: none;
-}
-.fitb-input:focus { border-color: var(--accent); }
-.fitb-input.correct-input { border-color: var(--green); background: rgba(34,197,94,0.08); color: var(--green); }
-.fitb-input.wrong-input { border-color: var(--red); background: rgba(239,68,68,0.08); }
-.fitb-correct-answer {
-  font-size: 12px; margin-top: 6px;
-  color: var(--green); font-family: 'IBM Plex Mono', monospace;
-  display: none;
-}
-.q-type-badge {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 9px; letter-spacing: 0.1em;
-  text-transform: uppercase; padding: 2px 7px;
-  border-radius: 3px; margin-left: 8px;
-  vertical-align: middle;
-}
-.q-type-mc { background: rgba(59,130,246,0.12); color: var(--accent); }
-.q-type-fitb { background: rgba(167,139,250,0.12); color: var(--accent2); }
-.q-ch-badge {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 9px; padding: 2px 7px;
-  border-radius: 3px; margin-left: 6px;
-  vertical-align: middle;
-}
-
+.panel{display:none;}.panel.active{display:block;}
+/* Objectives */
+.obj-grid{display:grid;gap:12px;margin-bottom:32px;}
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:grid;grid-template-columns:32px 1fr auto;gap:12px;align-items:start;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
+.obj-text{font-size:13px;line-height:1.6;}
+.obj-chapter{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:4px;}
+.ch17 .obj-num{color:#3b82f6;background:rgba(59,130,246,0.12);}
+.ch18 .obj-num{color:#a78bfa;background:rgba(167,139,250,0.12);}
+.ch19 .obj-num{color:#22c55e;background:rgba(34,197,94,0.12);}
+.ch20 .obj-num{color:#f97316;background:rgba(249,115,22,0.12);}
+.mastery-btn{width:24px;height:24px;border-radius:4px;border:1px solid var(--border);background:transparent;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all 0.2s;}
+.mastery-btn.mastered{background:rgba(34,197,94,0.15);border-color:var(--green);color:var(--green);}
+.mastery-btn:not(.mastered){color:var(--muted);}
+/* Study Guide */
+.chapter-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;}
+.chapter-header{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background 0.2s;border-bottom:1px solid var(--border);}
+.chapter-header:hover{background:var(--surface2);}
+.chapter-title{font-size:16px;font-weight:700;}
+.chapter-subtitle{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:2px;}
+.chevron{color:var(--muted);font-size:14px;transition:transform 0.2s;}
+.chapter-header.open .chevron{transform:rotate(180deg);}
+.chapter-body{padding:20px;display:none;}
+.chapter-body.open{display:block;}
+.concept-title{font-size:14px;font-weight:700;color:var(--accent);margin:20px 0 8px;display:flex;align-items:center;gap:8px;}
+.concept-title:first-child{margin-top:0;}
+.concept-title::before{content:'▸';font-size:10px;}
+.concept-body{font-size:13px;line-height:1.8;color:#c8c8d8;}
+.concept-body strong{color:var(--text);}
+.key-term{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--accent-dim);color:var(--accent);padding:2px 8px;border-radius:4px;margin:2px 2px;}
+.key-term.purple{background:rgba(167,139,250,0.12);color:var(--purple);}
+.key-term.green{background:rgba(34,197,94,0.12);color:var(--green);}
+.key-term.orange{background:rgba(249,115,22,0.12);color:var(--orange);}
+.people-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:12px;}
+.person-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;}
+.person-name{font-size:13px;font-weight:700;margin-bottom:4px;}
+.person-role{font-size:12px;color:var(--muted);line-height:1.5;}
+/* Flashcards */
+.filter-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.filter-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;}
+.filter-btn.active-filter{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.fc-controls{display:flex;gap:10px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+.fc-stat{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);}
+.btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:8px 16px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;transition:all 0.2s;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.btn.primary{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.flashcard-area{perspective:1000px;margin-bottom:20px;}
+.flashcard{width:100%;min-height:200px;cursor:pointer;transform-style:preserve-3d;transition:transform 0.4s;position:relative;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;width:100%;min-height:200px;backface-visibility:hidden;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;display:flex;flex-direction:column;justify-content:center;}
+.fc-back{transform:rotateY(180deg);}
+.fc-chapter-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;display:inline-block;margin-bottom:12px;width:fit-content;}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;}
+.fc-question{font-size:17px;font-weight:600;line-height:1.4;}
+.fc-answer{font-size:15px;line-height:1.6;color:#c8c8d8;}
+.fc-hint{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:16px;}
+.fc-nav{display:flex;align-items:center;gap:16px;justify-content:center;}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);}
+/* Quiz */
+.quiz-score{background:var(--surface);border:1px solid var(--green);border-radius:12px;padding:24px;text-align:center;margin-bottom:20px;display:none;}
+.score-num{font-size:48px;font-weight:700;color:var(--green);}
+.score-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:4px;}
+.q-block{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px;}
+.q-ch-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:10px;}
+.q-text{font-size:14px;font-weight:600;line-height:1.5;margin-bottom:14px;}
+.option{font-size:13px;padding:10px 14px;border-radius:6px;border:1px solid var(--border);margin-bottom:8px;cursor:pointer;transition:all 0.15s;line-height:1.4;}
+.option:hover:not(.answered){background:var(--surface2);}
+.option.correct{border-color:var(--green);background:rgba(34,197,94,0.1);color:var(--green);}
+.option.wrong{border-color:var(--red);background:rgba(239,68,68,0.1);color:var(--red);}
+.option.reveal{border-color:var(--green);background:rgba(34,197,94,0.05);}
+.fitb-input{width:100%;padding:10px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:14px;margin-bottom:8px;}
+.fitb-input:focus{outline:none;border-color:var(--accent);}
+.fitb-input.correct-input{border-color:var(--green);}
+.fitb-input.wrong-input{border-color:var(--red);}
+.fitb-correct-answer{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);display:none;margin-bottom:6px;}
+.explanation{font-size:12px;color:var(--muted);border-top:1px solid var(--border);padding-top:10px;margin-top:10px;display:none;line-height:1.6;}
+/* Discussion */
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;}
+.disc-ch-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:10px;}
+.disc-prompt{font-size:14px;font-weight:600;line-height:1.5;margin-bottom:14px;}
+.disc-textarea{width:100%;min-height:120px;padding:12px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:14px;resize:vertical;margin-bottom:12px;}
+.disc-textarea:focus{outline:none;border-color:var(--accent);}
+.disc-checklist{display:none;margin-top:12px;}
+.disc-checklist.visible{display:block;}
+.disc-check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;line-height:1.5;cursor:pointer;}
+.disc-check-item:last-child{border-bottom:none;}
+.disc-check-item input[type=checkbox]{width:16px;height:16px;flex-shrink:0;margin-top:2px;accent-color:var(--green);}
+.disc-score-display{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--green);margin-top:12px;font-weight:700;}
+.disc-model{display:none;margin-top:12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:13px;line-height:1.7;color:#c8c8d8;}
+.disc-model.visible{display:block;}
+.btn-model-toggle{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;margin-top:8px;}
+/* Notes */
+.notes-template{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.notes-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.notes-title{font-size:15px;font-weight:700;}
+.notes-subtitle{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:4px;}
+.notes-body{padding:20px;}
+.notes-col-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.notes-col-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.notes-item{font-size:12px;line-height:1.6;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);color:#c8c8d8;}
+.notes-tip{margin-top:16px;padding:12px;background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.2);border-radius:6px;font-size:12px;color:var(--muted);line-height:1.6;}
 /* Timeline */
-.timeline { position:relative; padding-left:24px; }
-.timeline::before { content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background:var(--border); }
-.tl-item { position:relative; margin-bottom:20px; }
-.tl-dot { position:absolute; left:-20px; top:4px; width:10px; height:10px; border-radius:50%; background:var(--accent); border:2px solid var(--bg); }
-.tl-year { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent); font-weight:700; margin-bottom:2px; }
-.tl-event { font-size:13px; line-height:1.5; }
-.tl-detail { font-size:12px; color:var(--muted); margin-top:2px; line-height:1.5; }
-
+.timeline{padding-left:24px;border-left:2px solid var(--border);margin-left:8px;}
+.tl-item{position:relative;margin-bottom:20px;}
+.tl-dot{position:absolute;left:-20px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);}
+.tl-year{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);font-weight:700;margin-bottom:2px;}
+.tl-event{font-size:13px;line-height:1.5;}
+.tl-detail{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.5;}
 /* Footer */
-footer { border-top:1px solid var(--border); padding:24px 0; margin-top:40px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
-footer a { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent); text-decoration:none; }
-
+footer{border-top:1px solid var(--border);padding:24px 0;margin-top:40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+footer a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);text-decoration:none;}
+/* Print */
+@media print{
+  .topnav,.mastery-bar-wrap,footer{display:none!important;}
+  .panel{display:none!important;}
+  .panel.active{display:block!important;}
+  body{background:#fff;color:#000;}
+  .section-label{color:#666;}
+}
 @media(max-width:600px){
-  .notes-col-grid { grid-template-columns:1fr; }
-  .people-grid { grid-template-columns:1fr 1fr; }
-  .fc-question { font-size:15px; }
-  .topnav { gap:6px; }
-  .nav-btn { font-size:10px; padding:7px 12px; }
-  .textbook-links { gap:8px; }
-  .tb-note { display:none; }
-  h1 { font-size:24px; }
-  .concept-body { font-size:13px; }
-  .obj-text { font-size:13px; }
-  .option { font-size:13px; }
+  .notes-col-grid{grid-template-columns:1fr;}
+  .people-grid{grid-template-columns:1fr 1fr;}
+  .fc-question{font-size:15px;}
+  .topnav{gap:6px;}
+  .nav-btn{font-size:10px;padding:7px 12px;}
+  .tb-note{display:none;}
+  h1{font-size:24px;}
+  .concept-body{font-size:13px;}
+  .obj-text{font-size:13px;}
+  .option{font-size:13px;}
 }
 </style>
 </head>
 <body>
 <div class="container">
 
-<div class="topnav">
-  <button class="nav-btn active" onclick="showPanel('overview',this)">📋 Objectives</button>
-  <button class="nav-btn" onclick="showPanel('guide',this)">📖 Study Guide</button>
-  <button class="nav-btn" onclick="showPanel('flashcards',this)">🃏 Flashcards</button>
-  <button class="nav-btn" onclick="showPanel('quiz',this)">✏️ Practice Quiz</button>
-  <button class="nav-btn" onclick="showPanel('notes',this)">📝 Notes Template</button>
-  <button class="nav-btn" onclick="showPanel('timeline',this)">📅 Timeline</button>
-</div>
+<nav class="topnav" role="navigation" aria-label="Study tabs">
+  <button class="nav-btn active" onclick="showPanel('overview',this)" aria-selected="true">📋 Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)" aria-selected="false">📖 Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)" aria-selected="false">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)" aria-selected="false">✏️ Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('discussion',this)" aria-selected="false">💬 Discussion</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)" aria-selected="false">📝 Notes</button>
+  <button class="nav-btn" onclick="showPanel('timeline',this)" aria-selected="false">📅 Timeline</button>
+</nav>
 
 <header>
   <div class="breadcrumb"><a href="../../index.html">Study Hub</a> / HIST-1302 / Unit 1</div>
   <div class="unit-badge">HIST-1302 · Unit 01 · Ch. 17–20</div>
-  <h1>Westward Expansion,<br>Industrialization & the Gilded Age</h1>
-  <div class="exam-pill">⏰ Exam: Saturday, June 20, 2026 · 12 noon–midnight</div>
-  <div class="textbook-links">
+  <h1>Westward Expansion,<br>Industrialization &amp; the Gilded Age</h1>
+  <div class="exam-pill" aria-label="Exam date">⏰ Exam: Saturday, June 20, 2026 · 12 noon–midnight</div>
+  <div class="textbook-links" aria-label="Textbook links">
     <span class="tb-label">📚 Textbook</span>
-    <a href="https://openstax.org/books/us-history/pages/17-introduction" target="_blank" class="tb-link">Ch.17 ↗</a>
+    <a href="https://openstax.org/books/us-history/pages/17-introduction" target="_blank" class="tb-link" aria-label="Chapter 17 on OpenStax">Ch.17 ↗</a>
     <span class="tb-sep">·</span>
-    <a href="https://openstax.org/books/us-history/pages/18-introduction" target="_blank" class="tb-link">Ch.18 ↗</a>
+    <a href="https://openstax.org/books/us-history/pages/18-introduction" target="_blank" class="tb-link" aria-label="Chapter 18 on OpenStax">Ch.18 ↗</a>
     <span class="tb-sep">·</span>
-    <a href="https://openstax.org/books/us-history/pages/19-introduction" target="_blank" class="tb-link">Ch.19 ↗</a>
+    <a href="https://openstax.org/books/us-history/pages/19-introduction" target="_blank" class="tb-link" aria-label="Chapter 19 on OpenStax">Ch.19 ↗</a>
     <span class="tb-sep">·</span>
-    <a href="https://openstax.org/books/us-history/pages/20-introduction" target="_blank" class="tb-link">Ch.20 ↗</a>
+    <a href="https://openstax.org/books/us-history/pages/20-introduction" target="_blank" class="tb-link" aria-label="Chapter 20 on OpenStax">Ch.20 ↗</a>
     <span class="tb-sep">·</span>
     <span class="tb-note">Free · CC BY 4.0 · Rice University / OpenStax</span>
   </div>
 </header>
 
+<!-- Mastery Bar -->
+<div class="mastery-bar-wrap" aria-label="Mastery progress">
+  <span class="mastery-bar-label" id="mastery-label">Mastery: 0%</span>
+  <div class="mastery-bar-track" aria-hidden="true"><div class="mastery-bar-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="btn-reset" onclick="resetAllMastery()" aria-label="Reset all mastery for this unit">Reset</button>
+</div>
+
 <!-- ===== OBJECTIVES PANEL ===== -->
-<div id="panel-overview" class="panel active">
+<div id="panel-overview" class="panel active" role="tabpanel" aria-label="Learning objectives">
   <div class="section-label">18 Learning Objectives</div>
-  <div class="obj-grid">
-    <div class="obj-card ch17"><div class="obj-num">1</div><div><div class="obj-text">Identify the factors that made the Great Plains the last area of the mainland U.S. to be settled.</div><div class="obj-chapter">CH. 17 · Sec 17.1</div></div></div>
-    <div class="obj-card ch17"><div class="obj-num">2</div><div><div class="obj-text">Explain "Manifest Destiny" and how it shaped American policy toward settlement of the Far West.</div><div class="obj-chapter">CH. 17 · Sec 17.1</div></div></div>
-    <div class="obj-card ch17"><div class="obj-num">3</div><div><div class="obj-text">Identify the 3 major economic opportunities in the Far West: <strong>Farming</strong> (Homestead Act, challenges, innovations), <strong>Mining</strong> (gold/silver strikes, boomtowns), <strong>Ranching</strong> (railroad ties, cowboy myths vs. reality).</div><div class="obj-chapter">CH. 17 · Sec 17.2–17.3</div></div></div>
-    <div class="obj-card ch17"><div class="obj-num">4</div><div><div class="obj-text">Describe Plains Indian lifestyles. Discuss the Dawes Severalty Act and how it undermined tribal life. Describe famous armed battles between the U.S. Army and Plains tribes.</div><div class="obj-chapter">CH. 17 · Sec 17.4</div></div></div>
-    <div class="obj-card ch18"><div class="obj-num">5</div><div><div class="obj-text">Describe innovation & inventions in the U.S. during the late 1800s.</div><div class="obj-chapter">CH. 18 · Sec 18.1</div></div></div>
-    <div class="obj-card ch18"><div class="obj-num">6</div><div><div class="obj-text">Describe how the railroad industry became America's "First Big Business" and explain government's role in helping railroad growth.</div><div class="obj-chapter">CH. 18 · Sec 18.2</div></div></div>
-    <div class="obj-card ch18"><div class="obj-num">7</div><div><div class="obj-text">Discuss industrial growth effects on business management. Discuss the styles of business leaders such as Andrew Carnegie, John D. Rockefeller, and J.P. Morgan.</div><div class="obj-chapter">CH. 18 · Sec 18.2</div></div></div>
-    <div class="obj-card ch18"><div class="obj-num">8</div><div><div class="obj-text">Discuss industrial growth effects on workers/laborers. Describe working conditions for most factory workers in the late 1800s.</div><div class="obj-chapter">CH. 18 · Sec 18.3</div></div></div>
-    <div class="obj-card ch18"><div class="obj-num">9</div><div><div class="obj-text">Identify the unions associated with Terrence Powderly & Samuel Gompers. Describe the events of the Great Railroad Strike of 1877, the Haymarket Riot, the Homestead Steel and the Pullman strikes.</div><div class="obj-chapter">CH. 18 · Sec 18.3</div></div></div>
-    <div class="obj-card ch19"><div class="obj-num">10</div><div><div class="obj-text">Explain the growth of American cities in the late 19th century. Identify key challenges from urbanization, and possible solutions.</div><div class="obj-chapter">CH. 19 · Sec 19.1</div></div></div>
-    <div class="obj-card ch19"><div class="obj-num">11</div><div><div class="obj-text">Describe the "Great Migration." Discuss the changing nature of European immigration, and the rise of nativism.</div><div class="obj-chapter">CH. 19 · Sec 19.2</div></div></div>
-    <div class="obj-card ch19"><div class="obj-num">12</div><div><div class="obj-text">Discuss the social reform movements that sprung up in cities. Describe new attitudes toward leisure, gender roles, and education.</div><div class="obj-chapter">CH. 19 · Sec 19.3</div></div></div>
-    <div class="obj-card ch20"><div class="obj-num">13</div><div><div class="obj-text">What did Mark Twain mean when he referred to this period as the "Gilded Age?"</div><div class="obj-chapter">CH. 20 · Sec 20.1</div></div></div>
-    <div class="obj-card ch20"><div class="obj-num">14</div><div><div class="obj-text">Discuss the political movement to reform tariffs and civil service.</div><div class="obj-chapter">CH. 20 · Sec 20.2</div></div></div>
-    <div class="obj-card ch20"><div class="obj-num">15</div><div><div class="obj-text">Name and describe the "weak" presidents who were elected from 1877 to 1896.</div><div class="obj-chapter">CH. 20 · Sec 20.2</div></div></div>
-    <div class="obj-card ch20"><div class="obj-num">16</div><div><div class="obj-text">Describe the origins of the Populist movement. Identify the major aims of the Populist Party.</div><div class="obj-chapter">CH. 20 · Sec 20.3</div></div></div>
-    <div class="obj-card ch20"><div class="obj-num">17</div><div><div class="obj-text">Identify the major candidates of the presidential election of 1896, and the viewpoints of each candidate. What was the "Cross of Gold" speech?</div><div class="obj-chapter">CH. 20 · Sec 20.3</div></div></div>
-    <div class="obj-card ch20"><div class="obj-num">18</div><div><div class="obj-text">Discuss the dilemma faced by the Populists in 1896, and what candidate they ultimately decided to support. How did this decision affect the outcome? Why did the party decline following the election?</div><div class="obj-chapter">CH. 20 · Sec 20.3</div></div></div>
+  <div class="obj-grid" id="obj-grid">
+    <div class="obj-card ch17"><div class="obj-num" aria-label="Objective 1">1</div><div><div class="obj-text">Identify the factors that made the Great Plains the last area of the mainland U.S. to be settled.</div><div class="obj-chapter">CH. 17 · Sec 17.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,1)" aria-label="Mark objective 1 as mastered">☐</button></div>
+    <div class="obj-card ch17"><div class="obj-num" aria-label="Objective 2">2</div><div><div class="obj-text">Explain "Manifest Destiny" and how it shaped American policy toward settlement of the Far West.</div><div class="obj-chapter">CH. 17 · Sec 17.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,2)" aria-label="Mark objective 2 as mastered">☐</button></div>
+    <div class="obj-card ch17"><div class="obj-num" aria-label="Objective 3">3</div><div><div class="obj-text">Identify the 3 major economic opportunities in the Far West: <strong>Farming</strong> (Homestead Act, challenges, innovations), <strong>Mining</strong> (gold/silver strikes, boomtowns), <strong>Ranching</strong> (railroad ties, cowboy myths vs. reality).</div><div class="obj-chapter">CH. 17 · Sec 17.2–17.3</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,3)" aria-label="Mark objective 3 as mastered">☐</button></div>
+    <div class="obj-card ch17"><div class="obj-num" aria-label="Objective 4">4</div><div><div class="obj-text">Describe Plains Indian lifestyles. Discuss the Dawes Severalty Act and how it undermined tribal life. Describe famous armed battles between the U.S. Army and Plains tribes.</div><div class="obj-chapter">CH. 17 · Sec 17.4</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,4)" aria-label="Mark objective 4 as mastered">☐</button></div>
+    <div class="obj-card ch18"><div class="obj-num" aria-label="Objective 5">5</div><div><div class="obj-text">Describe innovation &amp; inventions in the U.S. during the late 1800s.</div><div class="obj-chapter">CH. 18 · Sec 18.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,5)" aria-label="Mark objective 5 as mastered">☐</button></div>
+    <div class="obj-card ch18"><div class="obj-num" aria-label="Objective 6">6</div><div><div class="obj-text">Describe how the railroad industry became America's "First Big Business" and explain government's role in helping railroad growth.</div><div class="obj-chapter">CH. 18 · Sec 18.2</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,6)" aria-label="Mark objective 6 as mastered">☐</button></div>
+    <div class="obj-card ch18"><div class="obj-num" aria-label="Objective 7">7</div><div><div class="obj-text">Discuss industrial growth effects on business management. Discuss the styles of business leaders such as Andrew Carnegie, John D. Rockefeller, and J.P. Morgan.</div><div class="obj-chapter">CH. 18 · Sec 18.2</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,7)" aria-label="Mark objective 7 as mastered">☐</button></div>
+    <div class="obj-card ch18"><div class="obj-num" aria-label="Objective 8">8</div><div><div class="obj-text">Discuss industrial growth effects on workers/laborers. Describe working conditions for most factory workers in the late 1800s.</div><div class="obj-chapter">CH. 18 · Sec 18.3</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,8)" aria-label="Mark objective 8 as mastered">☐</button></div>
+    <div class="obj-card ch18"><div class="obj-num" aria-label="Objective 9">9</div><div><div class="obj-text">Identify the unions associated with Terrence Powderly &amp; Samuel Gompers. Describe the events of the Great Railroad Strike of 1877, the Haymarket Riot, the Homestead Steel and the Pullman strikes.</div><div class="obj-chapter">CH. 18 · Sec 18.3</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,9)" aria-label="Mark objective 9 as mastered">☐</button></div>
+    <div class="obj-card ch19"><div class="obj-num" aria-label="Objective 10">10</div><div><div class="obj-text">Explain the growth of American cities in the late 19th century. Identify key challenges from urbanization, and possible solutions.</div><div class="obj-chapter">CH. 19 · Sec 19.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,10)" aria-label="Mark objective 10 as mastered">☐</button></div>
+    <div class="obj-card ch19"><div class="obj-num" aria-label="Objective 11">11</div><div><div class="obj-text">Describe the "Great Migration." Discuss the changing nature of European immigration, and the rise of nativism.</div><div class="obj-chapter">CH. 19 · Sec 19.2</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,11)" aria-label="Mark objective 11 as mastered">☐</button></div>
+    <div class="obj-card ch19"><div class="obj-num" aria-label="Objective 12">12</div><div><div class="obj-text">Discuss the social reform movements that sprung up in cities. Describe new attitudes toward leisure, gender roles, and education.</div><div class="obj-chapter">CH. 19 · Sec 19.3</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,12)" aria-label="Mark objective 12 as mastered">☐</button></div>
+    <div class="obj-card ch20"><div class="obj-num" aria-label="Objective 13">13</div><div><div class="obj-text">What did Mark Twain mean when he referred to this period as the "Gilded Age?"</div><div class="obj-chapter">CH. 20 · Sec 20.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,13)" aria-label="Mark objective 13 as mastered">☐</button></div>
+    <div class="obj-card ch20"><div class="obj-num" aria-label="Objective 14">14</div><div><div class="obj-text">Discuss the political movement to reform tariffs and civil service.</div><div class="obj-chapter">CH. 20 · Sec 20.2</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,14)" aria-label="Mark objective 14 as mastered">☐</button></div>
+    <div class="obj-card ch20"><div class="obj-num" aria-label="Objective 15">15</div><div><div class="obj-text">Name and describe the "weak" presidents who were elected from 1877 to 1896.</div><div class="obj-chapter">CH. 20 · Sec 20.2</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,15)" aria-label="Mark objective 15 as mastered">☐</button></div>
+    <div class="obj-card ch20"><div class="obj-num" aria-label="Objective 16">16</div><div><div class="obj-text">Describe the origins of the Populist movement. Identify the major aims of the Populist Party.</div><div class="obj-chapter">CH. 20 · Sec 20.3</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,16)" aria-label="Mark objective 16 as mastered">☐</button></div>
+    <div class="obj-card ch20"><div class="obj-num" aria-label="Objective 17">17</div><div><div class="obj-text">Identify the major candidates of the presidential election of 1896, and the viewpoints of each candidate. What was the "Cross of Gold" speech?</div><div class="obj-chapter">CH. 20 · Sec 20.3</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,17)" aria-label="Mark objective 17 as mastered">☐</button></div>
+    <div class="obj-card ch20"><div class="obj-num" aria-label="Objective 18">18</div><div><div class="obj-text">Discuss the dilemma faced by the Populists in 1896, and what candidate they ultimately decided to support. How did this decision affect the outcome? Why did the party decline following the election?</div><div class="obj-chapter">CH. 20 · Sec 20.3</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,18)" aria-label="Mark objective 18 as mastered">☐</button></div>
   </div>
 </div>
 
 <!-- ===== STUDY GUIDE PANEL ===== -->
-<div id="panel-guide" class="panel">
-
+<div id="panel-guide" class="panel" role="tabpanel" aria-label="Study guide">
   <!-- CH 17 -->
   <div class="chapter-block">
-    <div class="chapter-header" onclick="toggleChapter(this)">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
       <div><div class="chapter-title" style="color:#3b82f6">Chapter 17 — Go West Young Man (Sec 17.1–17.4)</div><div class="chapter-subtitle">Westward Expansion, 1840–1900</div></div>
-      <span class="chevron">▼</span>
+      <span class="chevron" aria-hidden="true">▼</span>
     </div>
     <div class="chapter-body">
-      <div class="concept-title">Obj 1–2: Great Plains & Manifest Destiny</div>
-      <div class="concept-body">
-        The Great Plains were the <strong>last settled area</strong> because early explorers like Major Stephen Long called it a "Great American Desert" — hostile climate, few trees, and perceived as unfit for farming. By the 1840s, economic opportunity and ideology shifted American thinking. <br><br>
-        <strong>Manifest Destiny</strong> was coined by magazine editor <strong>John O'Sullivan in 1845</strong> — the belief that Americans were <em>divinely ordained</em> to expand democratic institutions across the continent, exposing Native peoples to Protestant values and "civilizing" development. The federal government used it to justify westward expansion, especially during the Civil War.
-        <br><br>
-        <span class="key-term">Manifest Destiny</span> <span class="key-term">John O'Sullivan</span> <span class="key-term">Great Plains</span>
-      </div>
-
+      <div class="concept-title">Obj 1–2: Great Plains &amp; Manifest Destiny</div>
+      <div class="concept-body">The Great Plains were the <strong>last settled area</strong> because early explorers like Major Stephen Long called it a "Great American Desert" — hostile climate, few trees, and perceived as unfit for farming. By the 1840s, economic opportunity and ideology shifted American thinking.<br><br><strong>Manifest Destiny</strong> was coined by magazine editor <strong>John O'Sullivan in 1845</strong> — the belief that Americans were <em>divinely ordained</em> to expand democratic institutions across the continent, exposing Native peoples to Protestant values and "civilizing" development.<br><br><span class="key-term">Manifest Destiny</span> <span class="key-term">John O'Sullivan</span> <span class="key-term">Great Plains</span></div>
       <div class="concept-title">Obj 3a: Farming — Homestead Act</div>
-      <div class="concept-body">
-        Congress passed the <strong>Homestead Act (1862)</strong> — any head of household or individual over 21 (including women and African Americans) could claim <strong>160 acres</strong> of public land, live on it for 5 years, and own it. The <strong>Pacific Railway Act (1862)</strong> was passed the same year, enabling a transcontinental railroad.<br><br>
-        <strong>Challenges:</strong> Harsh weather, droughts, insects (grasshopper plagues), isolation, and debt. Eastern farming techniques did not work on the dry plains.<br><br>
-        <strong>Innovations:</strong> Steel plow (broke tough sod), windmill (water access), dry farming techniques, and barbed wire (cheap fencing without trees).
-        <br><br>
-        <span class="key-term">Homestead Act 1862</span> <span class="key-term">Pacific Railway Act</span> <span class="key-term">barbed wire</span> <span class="key-term">steel plow</span>
-      </div>
-
-      <div class="concept-title">Obj 3b: Mining — Gold & Silver</div>
-      <div class="concept-body">
-        Major strikes: <strong>Comstock Lode (Nevada, 1859)</strong> — massive silver deposit; <strong>Pike's Peak, Colorado (1859)</strong> — gold rush. Mining towns were rough boomtowns that grew explosively and often collapsed just as fast. Life was dangerous, transient, and male-dominated. "Wildcatting" — risky exploratory drilling — was the norm.
-        <br><br>
-        <span class="key-term">Comstock Lode</span> <span class="key-term">Pike's Peak</span> <span class="key-term">boomtown</span>
-      </div>
-
-      <div class="concept-title">Obj 3c: Ranching — Cowboys & Railroads</div>
-      <div class="concept-body">
-        The cattle industry exploded after the Civil War. Cowboys drove herds north on the <strong>Chisholm Trail</strong> to railroad towns (Abilene, Dodge City). The railroad was essential — it connected ranchers to eastern markets. The <strong>myth</strong>: romantic, free, heroic cowboy. The <strong>reality</strong>: dangerous, low-paid, often minority (many cowboys were Black or Hispanic), seasonal labor with grueling long drives.
-        <br><br>
-        <span class="key-term">Chisholm Trail</span> <span class="key-term">Abilene</span> <span class="key-term">open range</span>
-      </div>
-
-      <div class="concept-title">Obj 4: Plains Indians & the Dawes Act</div>
-      <div class="concept-body">
-        Plains Indians (Sioux, Cheyenne, Comanche) were nomadic, centered on <strong>buffalo hunting</strong>. The U.S. government systematically destroyed the buffalo herds to undermine Native life. Conflicts included the <strong>Sand Creek Massacre (1864)</strong>, the <strong>Battle of Little Bighorn (1876)</strong> — Custer's Last Stand, where Sioux and Cheyenne defeated the 7th Cavalry — and the <strong>Wounded Knee Massacre (1890)</strong>.<br><br>
-        The <strong>Dawes Severalty Act (1887)</strong>: broke up tribal communal lands into individual 160-acre plots to force assimilation. "Surplus" land sold to white settlers. Devastated tribal culture and self-governance. Native Americans not granted formal citizenship until <strong>1924</strong>.
-        <br><br>
-        <span class="key-term">Dawes Severalty Act 1887</span> <span class="key-term">Little Bighorn 1876</span> <span class="key-term">Wounded Knee 1890</span> <span class="key-term">Sand Creek 1864</span>
-      </div>
+      <div class="concept-body">Congress passed the <strong>Homestead Act (1862)</strong> — any head of household or individual over 21 (including women and African Americans) could claim <strong>160 acres</strong> of public land, live on it for 5 years, and own it. The <strong>Pacific Railway Act (1862)</strong> was passed the same year, enabling a transcontinental railroad.<br><br><strong>Challenges:</strong> Harsh weather, droughts, insects (grasshopper plagues), isolation, and debt.<br><strong>Innovations:</strong> Steel plow (broke tough sod), windmill (water access), dry farming techniques, and barbed wire (cheap fencing without trees).<br><br><span class="key-term">Homestead Act 1862</span> <span class="key-term">Pacific Railway Act</span> <span class="key-term">barbed wire</span> <span class="key-term">steel plow</span></div>
+      <div class="concept-title">Obj 3b: Mining — Gold &amp; Silver</div>
+      <div class="concept-body">Major strikes: <strong>Comstock Lode (Nevada, 1859)</strong> — massive silver deposit; <strong>Pike's Peak, Colorado (1859)</strong> — gold rush. Mining towns were rough boomtowns that grew explosively and often collapsed just as fast.<br><br><span class="key-term">Comstock Lode</span> <span class="key-term">Pike's Peak</span> <span class="key-term">boomtown</span></div>
+      <div class="concept-title">Obj 3c: Ranching — Cowboys &amp; Railroads</div>
+      <div class="concept-body">The cattle industry exploded after the Civil War. Cowboys drove herds north on the <strong>Chisholm Trail</strong> to railroad towns (Abilene, Dodge City). The <strong>myth</strong>: romantic, free, heroic cowboy. The <strong>reality</strong>: dangerous, low-paid, often minority (many cowboys were Black or Hispanic), seasonal labor.<br><br><span class="key-term">Chisholm Trail</span> <span class="key-term">Abilene</span> <span class="key-term">open range</span></div>
+      <div class="concept-title">Obj 4: Plains Indians &amp; the Dawes Act</div>
+      <div class="concept-body">Plains Indians (Sioux, Cheyenne, Comanche) were nomadic, centered on <strong>buffalo hunting</strong>. The U.S. government systematically destroyed the buffalo herds to undermine Native life. Conflicts: <strong>Sand Creek Massacre (1864)</strong>, the <strong>Battle of Little Bighorn (1876)</strong> — Custer's Last Stand, and the <strong>Wounded Knee Massacre (1890)</strong>.<br><br>The <strong>Dawes Severalty Act (1887)</strong>: broke up tribal communal lands into individual 160-acre plots to force assimilation. "Surplus" land sold to white settlers. Native Americans not granted formal citizenship until <strong>1924</strong>.<br><br><span class="key-term">Dawes Severalty Act 1887</span> <span class="key-term">Little Bighorn 1876</span> <span class="key-term">Wounded Knee 1890</span> <span class="key-term">Sand Creek 1864</span></div>
     </div>
   </div>
-
   <!-- CH 18 -->
   <div class="chapter-block">
-    <div class="chapter-header" onclick="toggleChapter(this)">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
       <div><div class="chapter-title" style="color:#a78bfa">Chapter 18 — Industrialization (Sec 18.1–18.3)</div><div class="chapter-subtitle">The Gilded Age Economy</div></div>
-      <span class="chevron">▼</span>
+      <span class="chevron" aria-hidden="true">▼</span>
     </div>
     <div class="chapter-body">
       <div class="concept-title">Obj 5: Inventions of the Late 1800s</div>
-      <div class="concept-body">
-        The U.S. Patent Office issued nearly <strong>450,000 patents between 1860–1890</strong> — an invention explosion.<br><br>
-        <strong>Thomas Edison</strong> — incandescent light bulb (1879), phonograph, first commercial electric power station (NYC, 1882). Used <strong>direct current (DC)</strong>.<br>
-        <strong>George Westinghouse</strong> promoted <strong>alternating current (AC)</strong> which could travel farther — enabling large-scale electrical distribution to homes and factories.<br>
-        <strong>Alexander Graham Bell</strong> — telephone (1876). By 1900 over 1.35 million telephones in use.<br>
-        <strong>Bessemer &amp; open-hearth processes</strong> — cheap mass steel. U.S. steel output grew from 13,000 tons (1860) to 10 million tons (1900).<br>
-        Other key innovations: refrigerated rail cars, typewriters, cash registers, sewing machines — all enabled mass production and national markets.
-        <br><br>
-        <span class="key-term">Thomas Edison</span> <span class="key-term">DC power</span> <span class="key-term">George Westinghouse</span> <span class="key-term">AC power</span> <span class="key-term">Alexander Graham Bell</span> <span class="key-term">Bessemer process</span> <span class="key-term">telephone 1876</span>
-      </div>
-
+      <div class="concept-body">The U.S. Patent Office issued nearly <strong>450,000 patents between 1860–1890</strong>.<br><br><strong>Thomas Edison</strong> — incandescent light bulb (1879), phonograph, first commercial electric power station (NYC, 1882). Used <strong>direct current (DC)</strong>.<br><strong>George Westinghouse</strong> promoted <strong>alternating current (AC)</strong> which could travel farther.<br><strong>Alexander Graham Bell</strong> — telephone (1876). By 1900 over 1.35 million telephones in use.<br><strong>Bessemer &amp; open-hearth processes</strong> — cheap mass steel. U.S. steel output grew from 13,000 tons (1860) to 10 million tons (1900).<br><br><span class="key-term">Thomas Edison</span> <span class="key-term">DC power</span> <span class="key-term">George Westinghouse</span> <span class="key-term">AC power</span> <span class="key-term">Alexander Graham Bell</span> <span class="key-term">Bessemer process</span> <span class="key-term">telephone 1876</span></div>
       <div class="concept-title">Obj 6: Railroads — America's First Big Business</div>
-      <div class="concept-body">
-        Railroads were the first industry to require massive capital, complex management, and nationwide coordination — making them the model for modern corporations. The government supported growth with <strong>land grants</strong> (millions of acres) and <strong>loans</strong>. The <strong>transcontinental railroad</strong> was completed at <strong>Promontory Summit, Utah (1869)</strong> — Central Pacific (west) met Union Pacific (east). Railroad growth connected national markets but also created dangerous monopolies.
-        <br><br>
-        <span class="key-term">Transcontinental RR 1869</span> <span class="key-term">land grants</span> <span class="key-term">Promontory Summit</span>
-      </div>
-
+      <div class="concept-body">Railroads were the first industry to require massive capital, complex management, and nationwide coordination. The government supported growth with <strong>land grants</strong> and <strong>loans</strong>. The <strong>transcontinental railroad</strong> was completed at <strong>Promontory Summit, Utah (1869)</strong> — Central Pacific (west) met Union Pacific (east).<br><br><span class="key-term">Transcontinental RR 1869</span> <span class="key-term">land grants</span> <span class="key-term">Promontory Summit</span></div>
       <div class="concept-title">Obj 7: Business Leaders — Carnegie, Rockefeller, Morgan</div>
       <div class="people-grid">
-        <div class="person-card">
-          <div class="person-name" style="color:#a78bfa">Andrew Carnegie</div>
-          <div class="person-role">Steel magnate. Born in Scotland, classic rags-to-riches story. Used <strong>vertical integration</strong> — owned everything from iron ore mines to steel mills. Wrote <em>The Gospel of Wealth</em> — argued the wealthy had a duty to give back. Sold Carnegie Steel to J.P. Morgan in 1901 for $480M.</div>
-        </div>
-        <div class="person-card">
-          <div class="person-name" style="color:#a78bfa">John D. Rockefeller</div>
-          <div class="person-role">Oil tycoon. Founded Standard Oil (1870). Used <strong>horizontal integration</strong> — bought out all competitors. Created the <strong>trust</strong> — new legal structure to control multiple companies. Controlled 90% of U.S. oil refining at peak.</div>
-        </div>
-        <div class="person-card">
-          <div class="person-name" style="color:#a78bfa">J.P. Morgan</div>
-          <div class="person-role">Banker/financier. Bought Carnegie Steel and created <strong>U.S. Steel</strong> (1901) — first billion-dollar corporation. Used finance to consolidate industries. Represented the power of <strong>investment banking</strong> over industrial empires.</div>
-        </div>
+        <div class="person-card"><div class="person-name" style="color:#a78bfa">Andrew Carnegie</div><div class="person-role">Steel magnate. Classic rags-to-riches story. Used <strong>vertical integration</strong> — owned everything from iron ore mines to steel mills. Wrote <em>The Gospel of Wealth</em>. Sold Carnegie Steel to J.P. Morgan in 1901 for $480M.</div></div>
+        <div class="person-card"><div class="person-name" style="color:#a78bfa">John D. Rockefeller</div><div class="person-role">Oil tycoon. Founded Standard Oil (1870). Used <strong>horizontal integration</strong> — bought out all competitors. Created the <strong>trust</strong>. Controlled 90% of U.S. oil refining at peak.</div></div>
+        <div class="person-card"><div class="person-name" style="color:#a78bfa">J.P. Morgan</div><div class="person-role">Banker/financier. Bought Carnegie Steel and created <strong>U.S. Steel</strong> (1901) — first billion-dollar corporation. Represented the power of <strong>investment banking</strong>.</div></div>
       </div>
-      <br>
-      <span class="key-term purple">vertical integration</span> <span class="key-term purple">horizontal integration</span> <span class="key-term purple">trust</span> <span class="key-term purple">Gospel of Wealth</span> <span class="key-term purple">robber barons</span>
-
-      <div class="concept-title">Obj 8: Workers & Labor Conditions</div>
-      <div class="concept-body">
-        Factory workers faced <strong>12–14 hour days, 6–7 days/week</strong>, dangerous conditions, child labor, and no job security. Wages were low and often cut during downturns. Women and immigrants were paid even less. No workers' compensation, no safety regulations. The factory system replaced skilled craftsmen with unskilled machine operators.
-      </div>
-
-      <div class="concept-title">Obj 9: Labor Unions & Major Strikes</div>
-      <div class="concept-body">
-        <strong>Terrence Powderly</strong> led the <strong>Knights of Labor (KOL)</strong> — open to all workers regardless of skill, race, or gender. Peak: 700,000 members. Opposed strikes in theory but claimed credit for railroad wins.<br><br>
-        <strong>Samuel Gompers</strong> founded the <strong>American Federation of Labor (AFL, 1886)</strong> — focused on skilled workers, bread-and-butter issues (wages, hours), and practical strikes.<br><br>
-        <strong>Key Strikes:</strong><br>
-        • <strong>Great Railroad Strike (1877)</strong> — first national strike; workers protested wage cuts; Hayes sent federal troops; ~100 killed; workers returned but public sympathy shifted.<br>
-        • <strong>Haymarket Riot (1886, Chicago)</strong> — KOL-adjacent rally for 8-hour day; bomb thrown at police; 8 anarchists convicted (most hanged); devastated KOL's reputation.<br>
-        • <strong>Homestead Steel Strike (1892)</strong> — Carnegie Steel/Henry Frick locked out workers; Pinkerton agents hired; violent clash; strike broken; union crushed.<br>
-        • <strong>Pullman Strike (1894)</strong> — workers struck against Pullman Palace Car Co.; Eugene V. Debs led; Cleveland sent federal troops over Debs' objection; Debs jailed; strike broken.
-        <br><br>
-        <span class="key-term green">Knights of Labor</span> <span class="key-term green">AFL</span> <span class="key-term green">Terrence Powderly</span> <span class="key-term green">Samuel Gompers</span> <span class="key-term green">Haymarket 1886</span> <span class="key-term green">Homestead 1892</span> <span class="key-term green">Pullman 1894</span>
-      </div>
+      <br><span class="key-term purple">vertical integration</span> <span class="key-term purple">horizontal integration</span> <span class="key-term purple">trust</span> <span class="key-term purple">Gospel of Wealth</span> <span class="key-term purple">robber barons</span>
+      <div class="concept-title">Obj 8: Workers &amp; Labor Conditions</div>
+      <div class="concept-body">Factory workers faced <strong>12–14 hour days, 6–7 days/week</strong>, dangerous conditions, child labor, and no job security. No workers' compensation, no safety regulations. The factory system replaced skilled craftsmen with unskilled machine operators.</div>
+      <div class="concept-title">Obj 9: Labor Unions &amp; Major Strikes</div>
+      <div class="concept-body"><strong>Terrence Powderly</strong> led the <strong>Knights of Labor (KOL)</strong> — open to all workers regardless of skill, race, or gender. Peak: 700,000 members.<br><strong>Samuel Gompers</strong> founded the <strong>American Federation of Labor (AFL, 1886)</strong> — focused on skilled workers, bread-and-butter issues.<br><br><strong>Key Strikes:</strong><br>• <strong>Great Railroad Strike (1877)</strong> — first national strike; Hayes sent federal troops; ~100 killed.<br>• <strong>Haymarket Riot (1886, Chicago)</strong> — KOL-adjacent rally; bomb thrown; 8 anarchists convicted; devastated KOL.<br>• <strong>Homestead Steel Strike (1892)</strong> — Frick hired Pinkertons; violent clash; strike broken; union crushed.<br>• <strong>Pullman Strike (1894)</strong> — Eugene V. Debs led; Cleveland sent federal troops; Debs jailed; strike broken.<br><br><span class="key-term green">Knights of Labor</span> <span class="key-term green">AFL</span> <span class="key-term green">Terrence Powderly</span> <span class="key-term green">Samuel Gompers</span> <span class="key-term green">Haymarket 1886</span> <span class="key-term green">Homestead 1892</span> <span class="key-term green">Pullman 1894</span></div>
     </div>
   </div>
-
   <!-- CH 19 -->
   <div class="chapter-block">
-    <div class="chapter-header" onclick="toggleChapter(this)">
-      <div><div class="chapter-title" style="color:#22c55e">Chapter 19 — City Life (Sec 19.1–19.3)</div><div class="chapter-subtitle">Urbanization, Immigration & Social Reform</div></div>
-      <span class="chevron">▼</span>
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <div><div class="chapter-title" style="color:#22c55e">Chapter 19 — City Life (Sec 19.1–19.3)</div><div class="chapter-subtitle">Urbanization, Immigration &amp; Social Reform</div></div>
+      <span class="chevron" aria-hidden="true">▼</span>
     </div>
     <div class="chapter-body">
-      <div class="concept-title">Obj 10: Urbanization & Challenges</div>
-      <div class="concept-body">
-        U.S. cities exploded in size after the Civil War. Key innovations enabling urbanization: <strong>electric streetcars, steel-frame skyscrapers, electric elevators,</strong> and <strong>indoor plumbing</strong>. Challenges included <strong>overcrowding, tenement slums, disease, poor sanitation, crime, fire hazards,</strong> and corrupt political machines (e.g., Tammany Hall in NYC).<br><br>
-        Solutions: <strong>Settlement houses</strong> (Jane Addams' Hull House, Chicago, 1889), sanitation reforms, urban parks (Frederick Law Olmsted), and political reform movements.
-        <br><br>
-        <span class="key-term green">Hull House</span> <span class="key-term green">Jane Addams</span> <span class="key-term green">tenements</span> <span class="key-term green">Tammany Hall</span>
-      </div>
-
-      <div class="concept-title">Obj 11: Great Migration & New Immigration</div>
-      <div class="concept-body">
-        <strong>Great Migration</strong>: Large movement of African Americans from the rural South to northern industrial cities, driven by Jim Crow laws, racial violence, and the promise of jobs and education. They faced discrimination in the North too — segregated into low-wage jobs and poor neighborhoods.<br><br>
-        <strong>New Immigration (1880s–1900s)</strong>: Shifted from Northern/Western Europe (Germany, Ireland) to <strong>Southern/Eastern Europe</strong> (Italy, Poland, Russia, Jewish immigrants). <strong>Nativism</strong> — anti-immigrant sentiment — rose in response. The <strong>Chinese Exclusion Act (1882)</strong> had already banned Chinese immigration. Social Darwinism was used to justify discrimination.
-        <br><br>
-        <span class="key-term green">Great Migration</span> <span class="key-term green">nativism</span> <span class="key-term green">Chinese Exclusion Act 1882</span> <span class="key-term green">Ellis Island</span>
-      </div>
-
-      <div class="concept-title">Obj 12: Social Reform, Leisure & Gender</div>
-      <div class="concept-body">
-        <strong>Settlement House Movement</strong>: Jane Addams (Hull House) and Lillian Wald — college-educated women living among the poor to provide education, childcare, and social services. Became basis for Progressive political agenda.<br><br>
-        <strong>Social Gospel</strong>: Protestant clergy applied Christian ethics to social problems — poverty, child labor, inequality.<br><br>
-        <strong>New attitudes toward leisure</strong>: Baseball became the national pastime; amusement parks, vaudeville, and bicycling grew. <strong>New Woman</strong>: Growing female independence — more women in colleges and workforce. Women's suffrage movement accelerated.
-        <br><br>
-        <span class="key-term green">Social Gospel</span> <span class="key-term green">settlement house</span> <span class="key-term green">New Woman</span> <span class="key-term green">suffrage</span>
-      </div>
+      <div class="concept-title">Obj 10: Urbanization &amp; Challenges</div>
+      <div class="concept-body">U.S. cities exploded after the Civil War. Key innovations: <strong>electric streetcars, steel-frame skyscrapers, electric elevators,</strong> and <strong>indoor plumbing</strong>. Challenges: <strong>overcrowding, tenement slums, disease, poor sanitation, crime, fire hazards,</strong> and corrupt political machines (e.g., Tammany Hall).<br>Solutions: <strong>Settlement houses</strong> (Jane Addams' Hull House, Chicago, 1889), sanitation reforms.<br><br><span class="key-term green">Hull House</span> <span class="key-term green">Jane Addams</span> <span class="key-term green">tenements</span> <span class="key-term green">Tammany Hall</span></div>
+      <div class="concept-title">Obj 11: Great Migration &amp; New Immigration</div>
+      <div class="concept-body"><strong>Great Migration</strong>: Large movement of African Americans from the rural South to northern industrial cities, driven by Jim Crow laws, racial violence, and the promise of jobs.<br><br>Immigration shifted from Northern/Western Europe (Germany, Ireland) to Southern/Eastern Europe (Italy, Poland, Russia). <strong>Nativism</strong> rose in response. <strong>Chinese Exclusion Act (1882)</strong> — first major immigration restriction law.<br><br><span class="key-term green">Great Migration</span> <span class="key-term green">nativism</span> <span class="key-term green">Chinese Exclusion Act 1882</span></div>
+      <div class="concept-title">Obj 12: Social Reform Movements</div>
+      <div class="concept-body"><strong>Social Gospel Movement</strong>: Protestant clergy argued Christian ethics demanded addressing social problems — poverty, child labor, inequality.<br><strong>The "New Woman"</strong>: Growing female independence — more women attending college, entering workforce, and pushing for suffrage.</div>
     </div>
   </div>
-
   <!-- CH 20 -->
   <div class="chapter-block">
-    <div class="chapter-header" onclick="toggleChapter(this)">
-      <div><div class="chapter-title" style="color:#f97316">Chapter 20 — Politics in the Gilded Age (All Sections)</div><div class="chapter-subtitle">1870–1900</div></div>
-      <span class="chevron">▼</span>
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <div><div class="chapter-title" style="color:#f97316">Chapter 20 — Politics of the Gilded Age (Sec 20.1–20.3)</div><div class="chapter-subtitle">Corruption, Reform &amp; the Populist Movement</div></div>
+      <span class="chevron" aria-hidden="true">▼</span>
     </div>
     <div class="chapter-body">
       <div class="concept-title">Obj 13: The "Gilded Age"</div>
-      <div class="concept-body">
-        <strong>Mark Twain</strong> coined "Gilded Age" in his 1873 novel <em>The Gilded Age: A Tale of Today</em> (co-written with Charles Dudley Warner). <strong>"Gilded"</strong> = covered in gold on the outside but corrupt and hollow underneath. The era was characterized by massive wealth inequality, political corruption (spoils system, bribery), and weak federal leadership despite rapid economic growth.
-        <br><br>
-        <span class="key-term orange">Mark Twain</span> <span class="key-term orange">Gilded Age 1873</span>
-      </div>
-
-      <div class="concept-title">Obj 14–15: Tariffs, Civil Service & Weak Presidents</div>
-      <div class="concept-body">
-        <strong>Spoils system</strong>: political patronage — giving government jobs to party loyalists regardless of qualification. Crédit Mobilier scandal showed depth of corruption.<br><br>
-        <strong>Civil Service Reform</strong>: Pendleton Civil Service Act (1883) — created merit-based federal hiring after President Garfield was assassinated by a disappointed office-seeker.<br><br>
-        <strong>Weak Presidents (1877–1896):</strong>
-        <div class="people-grid" style="margin-top:12px">
-          <div class="person-card"><div class="person-name" style="color:#f97316">Rutherford B. Hayes</div><div class="person-role">1877–1881. Ended Reconstruction. Disputed 1876 election — "Corrupt Bargain." Sent troops in 1877 Railroad Strike.</div></div>
-          <div class="person-card"><div class="person-name" style="color:#f97316">James Garfield</div><div class="person-role">1881. Assassinated after only months in office by Charles Guiteau — a disappointed office-seeker. Triggered civil service reform.</div></div>
-          <div class="person-card"><div class="person-name" style="color:#f97316">Chester Arthur</div><div class="person-role">1881–1885. Surprised reformers by supporting Pendleton Act despite being a spoils politician.</div></div>
-          <div class="person-card"><div class="person-name" style="color:#f97316">Grover Cleveland</div><div class="person-role">1885–1889 & 1893–1897. Only president to serve non-consecutive terms. Vetoed many bills; opposed high tariffs.</div></div>
-          <div class="person-card"><div class="person-name" style="color:#f97316">Benjamin Harrison</div><div class="person-role">1889–1893. Lost popular vote but won Electoral College over Cleveland. Sherman Antitrust Act (1890) passed during his term.</div></div>
-        </div>
-        <br>
-        <span class="key-term orange">Pendleton Act 1883</span> <span class="key-term orange">spoils system</span> <span class="key-term orange">civil service</span> <span class="key-term orange">Sherman Antitrust 1890</span>
-      </div>
-
-      <div class="concept-title">Obj 16–18: The Populist Movement & 1896 Election</div>
-      <div class="concept-body">
-        <strong>Origins</strong>: Farmers were squeezed by railroad monopolies (high freight rates), falling crop prices, tight money supply (gold standard), and high debt. They formed the <strong>Farmers' Alliance</strong>, which evolved into the <strong>People's Party (Populists, 1892)</strong>.<br><br>
-        <strong>Populist Platform</strong>: Government ownership of railroads, graduated income tax, direct election of senators, 8-hour workday, <strong>free coinage of silver</strong> (inflate money supply to help debtors).<br><br>
-        <strong>Election of 1896</strong>:<br>
-        • <strong>William Jennings Bryan (Democrat/Populist)</strong> — "free silver" candidate; gave the famous <strong>"Cross of Gold" speech</strong> — "You shall not crucify mankind upon a cross of gold." Represented farmers and debtors; won 46.7% of popular vote.<br>
-        • <strong>William McKinley (Republican)</strong> — backed by industry; supported gold standard; won 51% popular vote and 271 electoral votes.<br><br>
-        <strong>Populist dilemma</strong>: They fused with Democrats behind Bryan. This alienated urban workers who feared inflation. McKinley won. Bryan's urban-rural coalition failed. <strong>Why Populists declined</strong>: Discovery of gold in Alaska/South Africa increased money supply naturally, reducing farmer grievances; Bryan's loss discredited the party; urban-rural coalition never gelled.
-        <br><br>
-        <span class="key-term orange">People's Party</span> <span class="key-term orange">William Jennings Bryan</span> <span class="key-term orange">Cross of Gold</span> <span class="key-term orange">William McKinley</span> <span class="key-term orange">free silver</span> <span class="key-term orange">gold standard</span>
-      </div>
+      <div class="concept-body">Mark Twain coined "The Gilded Age" in his 1873 novel: <strong>gilded = gold-covered on the outside but corrupt underneath</strong>. Era of massive wealth inequality and political corruption despite rapid economic growth.</div>
+      <div class="concept-title">Obj 14: Civil Service Reform</div>
+      <div class="concept-body"><strong>Spoils system</strong>: giving government jobs to political party loyalists regardless of qualifications. President Garfield was assassinated by a disappointed office-seeker in 1881. The <strong>Pendleton Civil Service Act (1883)</strong> created merit-based federal hiring through competitive exams.<br><br><span class="key-term orange">Pendleton Act 1883</span> <span class="key-term orange">spoils system</span> <span class="key-term orange">civil service reform</span></div>
+      <div class="concept-title">Obj 15: The "Weak" Presidents (1877–1896)</div>
+      <div class="concept-body">Rutherford B. Hayes · James Garfield (assassinated 1881) · Chester Arthur · Grover Cleveland (2 non-consecutive terms) · Benjamin Harrison. None asserted significant executive authority.</div>
+      <div class="concept-title">Obj 16–18: Populist Movement &amp; the 1896 Election</div>
+      <div class="concept-body"><strong>Farmers' grievances</strong>: falling crop prices, high railroad rates, deflation (gold standard made debts harder to pay). <strong>Grange</strong> (1867) and <strong>Farmers' Alliance</strong> organized farmers.<br><br><strong>People's Party (Populists, 1892)</strong> demanded: free coinage of silver, government ownership of railroads, graduated income tax, direct election of senators.<br><br><strong>Election of 1896</strong>: William Jennings Bryan (Democrat/Populist) — "Cross of Gold" speech: "You shall not crucify mankind upon a cross of gold." William McKinley (Republican) — gold standard, industry. McKinley won.<br><br><strong>Populist decline</strong>: Fusion with Democrats alienated urban workers who feared inflation. Gold discovered in Alaska/South Africa naturally inflated money supply. Party faded.<br><br><span class="key-term orange">Populist Party 1892</span> <span class="key-term orange">free silver</span> <span class="key-term orange">Cross of Gold 1896</span> <span class="key-term orange">McKinley</span> <span class="key-term orange">Bryan</span></div>
     </div>
   </div>
 </div>
 
 <!-- ===== FLASHCARDS PANEL ===== -->
-<div id="panel-flashcards" class="panel">
-  <div class="filter-row">
-    <button class="filter-btn active-filter" onclick="filterCards('all',this)">All (40)</button>
+<div id="panel-flashcards" class="panel" role="tabpanel" aria-label="Flashcards">
+  <div class="filter-row" role="group" aria-label="Filter flashcards by chapter">
+    <button class="filter-btn active-filter" onclick="filterCards('all',this)">All Cards</button>
     <button class="filter-btn" onclick="filterCards('ch17',this)">Ch.17</button>
     <button class="filter-btn" onclick="filterCards('ch18',this)">Ch.18</button>
     <button class="filter-btn" onclick="filterCards('ch19',this)">Ch.19</button>
     <button class="filter-btn" onclick="filterCards('ch20',this)">Ch.20</button>
   </div>
   <div class="fc-controls">
-    <button class="btn" onclick="shuffleCards()">⇄ Shuffle</button>
-    <span class="fc-stat" id="fc-stat">Card 1 of 40</span>
+    <button class="btn" onclick="shuffleCards()" aria-label="Shuffle flashcards">⇄ Shuffle</button>
+    <span class="fc-stat" id="fc-stat" aria-live="polite">Card 1 of 40</span>
   </div>
-
   <div class="flashcard-area">
-    <div class="flashcard" id="flashcard" onclick="flipCard()">
+    <div class="flashcard" id="flashcard" onclick="flipCard()" role="button" aria-label="Flip flashcard to see answer" tabindex="0">
       <div class="fc-front">
-        <div id="fc-chapter-tag" class="fc-chapter-tag"></div>
-        <div class="fc-label">TERM / CONCEPT</div>
+        <div id="fc-chapter-tag" class="fc-chapter-tag" aria-hidden="true"></div>
+        <div class="fc-label">Term / Concept</div>
         <div class="fc-question" id="fc-question">Loading...</div>
-        <div class="fc-hint">Click to reveal answer</div>
+        <div class="fc-hint">Tap to reveal answer</div>
       </div>
-      <div class="fc-back">
-        <div class="fc-label">ANSWER</div>
+      <div class="fc-back" aria-label="Answer">
+        <div class="fc-label">Answer</div>
         <div class="fc-answer" id="fc-answer">Loading...</div>
       </div>
     </div>
   </div>
-
   <div class="fc-nav">
-    <button class="btn" onclick="prevCard()">← Prev</button>
-    <span class="fc-counter" id="fc-counter">1 / 40</span>
-    <button class="btn" onclick="nextCard()">Next →</button>
+    <button class="btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
+    <span class="fc-counter" id="fc-counter" aria-live="polite">1 / 40</span>
+    <button class="btn" onclick="nextCard()" aria-label="Next card">Next →</button>
   </div>
 </div>
 
 <!-- ===== QUIZ PANEL ===== -->
-<div id="panel-quiz" class="panel">
-  <div class="filter-row" id="quiz-filters">
+<div id="panel-quiz" class="panel" role="tabpanel" aria-label="Practice quiz">
+  <div class="filter-row" id="quiz-filters" role="group" aria-label="Filter quiz by chapter">
     <button class="filter-btn active-filter" onclick="setQuizFilter('all',this)">All Chapters</button>
     <button class="filter-btn" onclick="setQuizFilter('ch17',this)">Ch.17</button>
     <button class="filter-btn" onclick="setQuizFilter('ch18',this)">Ch.18</button>
     <button class="filter-btn" onclick="setQuizFilter('ch19',this)">Ch.19</button>
     <button class="filter-btn" onclick="setQuizFilter('ch20',this)">Ch.20</button>
-    <span style="flex:1"></span>
-    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)" id="quiz-count"></span>
   </div>
-  <div class="quiz-score" id="quiz-score">
+  <div class="quiz-score" id="quiz-score" role="status" aria-live="polite">
     <div class="score-num" id="score-display">0</div>
     <div class="score-label">QUIZ COMPLETE</div>
     <div id="score-breakdown" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px"></div>
-    <br>
-    <button class="btn primary" onclick="resetQuiz()">Retake Quiz</button>
+    <br><button class="btn primary" onclick="resetQuiz()">Retake Quiz</button>
   </div>
-  <div class="quiz-area" id="quiz-area"></div>
-  <button class="btn primary" id="submit-btn" onclick="submitQuiz()" style="margin-top:20px;display:none">Submit Quiz</button>
+  <div id="quiz-area" role="list"></div>
+  <button class="btn primary" id="submit-btn" onclick="submitQuiz()" style="margin-top:20px;display:none" aria-label="Submit quiz answers">Submit Quiz</button>
 </div>
 
-<!-- ===== NOTES TEMPLATE PANEL ===== -->
-<div id="panel-notes" class="panel">
+<!-- ===== DISCUSSION PANEL ===== -->
+<div id="panel-discussion" class="panel" role="tabpanel" aria-label="Discussion questions">
+  <div class="section-label">Self-Graded Discussion Practice</div>
+
+  <div class="disc-q" id="disc-0">
+    <div class="disc-ch-badge" style="color:#3b82f6;background:rgba(59,130,246,0.12)">CH.17</div>
+    <div class="disc-prompt" id="disc-prompt-0">Discuss the impact of westward expansion on Native American peoples. How did U.S. government policies like the Dawes Severalty Act of 1887 affect tribal life and sovereignty?</div>
+    <textarea class="disc-textarea" id="disc-ta-0" aria-label="Write your response here" placeholder="Write your response here…"></textarea>
+    <button class="btn primary" onclick="submitDisc(0)" aria-label="Submit discussion response">Submit &amp; Self-Grade</button>
+    <div class="disc-checklist" id="disc-check-0" aria-live="polite">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:8px;letter-spacing:0.1em;text-transform:uppercase;">Check what you covered:</div>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(0)"> Plains Indians were nomadic, centered on buffalo hunting — buffalo deliberately destroyed by U.S. government</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(0)"> Sand Creek Massacre (1864), Battle of Little Bighorn (1876), Wounded Knee Massacre (1890)</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(0)"> Dawes Severalty Act (1887) broke up communal lands into individual 160-acre plots</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(0)"> "Surplus" land sold to white settlers — tribes lost millions of acres</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(0)"> Forced assimilation: boarding schools like Carlisle ("Kill the Indian, save the man")</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(0)"> Native Americans not granted formal U.S. citizenship until 1924</label>
+      <div class="disc-score-display" id="disc-score-0" aria-live="polite"></div>
+      <button class="btn-model-toggle" onclick="toggleModel(0)" aria-expanded="false">Show Model Answer</button>
+      <div class="disc-model" id="disc-model-0" aria-label="Model answer">Westward expansion devastated Native American peoples through a combination of military violence, deliberate destruction of their food supply, and federal policy designed to eliminate tribal culture. The U.S. Army conducted a campaign of conquest marked by atrocities including the Sand Creek Massacre (1864), where Colorado militia killed ~150 Cheyenne and Arapaho, and the Wounded Knee Massacre (1890), where ~250 Lakota Sioux were killed. The Battle of Little Bighorn (1876) — Custer's Last Stand — was the last major Native military victory, but it prompted intensified U.S. military campaigns. The Dawes Severalty Act (1887) was perhaps the most damaging policy: it broke up tribal communal lands into individual 160-acre plots to force assimilation into white agrarian society. The "surplus" land left over was sold to white settlers, and tribes lost millions of acres. Children were sent to boarding schools like the Carlisle Indian Industrial School to strip away language, clothing, religion, and customs. Native Americans were not granted formal U.S. citizenship until 1924 — decades after the destruction of their way of life.</div>
+    </div>
+  </div>
+
+  <div class="disc-q" id="disc-1">
+    <div class="disc-ch-badge" style="color:#a78bfa;background:rgba(167,139,250,0.12)">CH.18</div>
+    <div class="disc-prompt" id="disc-prompt-1">Compare and contrast the business strategies of Andrew Carnegie and John D. Rockefeller. How did each use their respective integration strategies to build industrial empires, and what were the social consequences?</div>
+    <textarea class="disc-textarea" id="disc-ta-1" aria-label="Write your response here" placeholder="Write your response here…"></textarea>
+    <button class="btn primary" onclick="submitDisc(1)" aria-label="Submit discussion response">Submit &amp; Self-Grade</button>
+    <div class="disc-checklist" id="disc-check-1" aria-live="polite">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:8px;letter-spacing:0.1em;text-transform:uppercase;">Check what you covered:</div>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(1)"> Carnegie used vertical integration — owned everything from iron ore mines to steel mills to distribution</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(1)"> Rockefeller used horizontal integration — bought out all competitors; Standard Oil controlled ~90% of U.S. oil refining</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(1)"> Rockefeller created the "trust" — a new legal structure to control multiple companies through shared directors</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(1)"> Carnegie wrote the Gospel of Wealth — argued wealthy had a duty to give back through philanthropy</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(1)"> Social consequences: monopolies crushed competition, workers faced dangerous conditions and low pay, wealth concentrated at top</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(1)"> Sherman Antitrust Act (1890) — first federal attempt to limit monopolies (largely unenforced initially)</label>
+      <div class="disc-score-display" id="disc-score-1" aria-live="polite"></div>
+      <button class="btn-model-toggle" onclick="toggleModel(1)" aria-expanded="false">Show Model Answer</button>
+      <div class="disc-model" id="disc-model-1" aria-label="Model answer">Andrew Carnegie and John D. Rockefeller both built industrial empires using different integration strategies. Carnegie dominated steel through vertical integration — he owned every stage of production, from iron ore mines and coal fields to railroads and steel mills to distribution channels. This allowed him to cut costs at every stage. His Carnegie Steel Company sold to J.P. Morgan in 1901 for $480 million, becoming U.S. Steel — the first billion-dollar corporation. Rockefeller dominated oil through horizontal integration — he systematically bought out every competitor in oil refining until Standard Oil controlled approximately 90% of U.S. oil refining. He also pioneered the "trust" — a legal structure where competing companies transferred their stock to a board of trustees, allowing centralized control while maintaining the appearance of separate companies. The social consequences of both strategies were profound: monopoly power eliminated competition and artificially controlled prices; workers in these industries faced dangerous conditions, 12–14 hour days, and poverty wages; the concentration of wealth in a few hands created the stark inequality that defined the Gilded Age. The Sherman Antitrust Act (1890) represented the first federal attempt to limit monopolistic practices, though it was largely unenforced at first.</div>
+    </div>
+  </div>
+
+  <div class="disc-q" id="disc-2">
+    <div class="disc-ch-badge" style="color:#22c55e;background:rgba(34,197,94,0.12)">CH.19</div>
+    <div class="disc-prompt" id="disc-prompt-2">Describe the major challenges created by rapid urbanization in late 19th century America. What reform efforts emerged in response, and how successful were they?</div>
+    <textarea class="disc-textarea" id="disc-ta-2" aria-label="Write your response here" placeholder="Write your response here…"></textarea>
+    <button class="btn primary" onclick="submitDisc(2)" aria-label="Submit discussion response">Submit &amp; Self-Grade</button>
+    <div class="disc-checklist" id="disc-check-2" aria-live="polite">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:8px;letter-spacing:0.1em;text-transform:uppercase;">Check what you covered:</div>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(2)"> Urbanization challenges: overcrowding, tenement slums, disease, poor sanitation, crime, fire hazards</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(2)"> Political corruption: machine politics like Tammany Hall exploited poor and immigrant communities</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(2)"> Settlement house movement: Jane Addams founded Hull House (1889, Chicago) — education, childcare, social services for urban poor</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(2)"> Muckrakers: Jacob Riis's How the Other Half Lives (1890) exposed tenement conditions to middle-class audiences</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(2)"> Great Migration: African Americans moved north from Jim Crow South seeking industrial jobs, but faced discrimination in the North</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(2)"> New immigration wave from Southern/Eastern Europe created cultural tensions and rise of nativism; Chinese Exclusion Act (1882)</label>
+      <div class="disc-score-display" id="disc-score-2" aria-live="polite"></div>
+      <button class="btn-model-toggle" onclick="toggleModel(2)" aria-expanded="false">Show Model Answer</button>
+      <div class="disc-model" id="disc-model-2" aria-label="Model answer">Rapid urbanization in the late 19th century created severe social crises. American cities grew faster than infrastructure could accommodate, producing dangerous overcrowding, tenement slums, inadequate sanitation, rampant disease, crime, and fire hazards. Corrupt political machines like Tammany Hall in New York exploited these conditions, trading services like jobs and housing help for the votes of desperate immigrants and the poor. Reformers responded on multiple fronts. Jane Addams founded Hull House in Chicago in 1889, creating the model settlement house — a community center providing education, childcare, job training, and social services directly in poor neighborhoods. Muckraking journalists like Jacob Riis, whose How the Other Half Lives (1890) documented NYC tenement conditions with photographs, shocked middle-class audiences and built political will for reform. The Social Gospel movement mobilized Protestant churches to address poverty and inequality. The period also saw demographic transformation: the Great Migration brought hundreds of thousands of African Americans north from Jim Crow laws and racial violence, though they found discrimination in northern cities too. A new wave of immigrants arrived from Southern and Eastern Europe, fueling nativist backlash and eventually the Chinese Exclusion Act (1882) — the first major law restricting immigration by nationality.</div>
+    </div>
+  </div>
+
+  <div class="disc-q" id="disc-3">
+    <div class="disc-ch-badge" style="color:#f97316;background:rgba(249,115,22,0.12)">CH.20</div>
+    <div class="disc-prompt" id="disc-prompt-3">Explain the rise and fall of the Populist Party. What were the major grievances of farmers, what solutions did Populists propose, and why did the party decline after the Election of 1896?</div>
+    <textarea class="disc-textarea" id="disc-ta-3" aria-label="Write your response here" placeholder="Write your response here…"></textarea>
+    <button class="btn primary" onclick="submitDisc(3)" aria-label="Submit discussion response">Submit &amp; Self-Grade</button>
+    <div class="disc-checklist" id="disc-check-3" aria-live="polite">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:8px;letter-spacing:0.1em;text-transform:uppercase;">Check what you covered:</div>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(3)"> Farmer grievances: falling crop prices, high railroad freight rates, deflation (gold standard made debts harder to repay)</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(3)"> Grange (1867) and Farmers' Alliance — precursor organizations to the Populist Party</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(3)"> Populist (People's) Party founded 1892 — Omaha Platform: free silver, government ownership of railroads, graduated income tax, direct election of senators</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(3)"> Election of 1896: Bryan's Cross of Gold speech; Populists fused with Democrats and supported Bryan</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(3)"> McKinley (Republican/gold standard) defeated Bryan — urban workers and Eastern business interests prevailed</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(3)"> Populist decline: fusion alienated urban workers who feared inflation; new gold discoveries (Alaska, South Africa) naturally eased deflation</label>
+      <div class="disc-score-display" id="disc-score-3" aria-live="polite"></div>
+      <button class="btn-model-toggle" onclick="toggleModel(3)" aria-expanded="false">Show Model Answer</button>
+      <div class="disc-model" id="disc-model-3" aria-label="Model answer">The Populist Party rose from the genuine economic distress of American farmers in the late 19th century. Falling crop prices, exploitative railroad freight rates, and a deflationary gold standard combined to trap farmers in cycles of debt — prices for their crops fell while their fixed debt obligations stayed the same, in real terms. The Grange (1867) and Farmers' Alliance organized farmers politically, eventually forming the People's (Populist) Party in 1892. The Omaha Platform was their bold agenda: free coinage of silver (to inflate the money supply and ease debt), government ownership of railroads and telegraph lines, a graduated income tax, and direct election of senators. In the crucial Election of 1896, Populists fused with the Democratic Party and supported William Jennings Bryan, who delivered the famous "Cross of Gold" speech: "You shall not crucify mankind upon a cross of gold." But Republican William McKinley, backed by business interests, won decisively. The coalition failed: urban workers in the North feared inflation that would raise their cost of living, and business interests had the money to outspend Bryan. After the election, new gold discoveries in Alaska and South Africa naturally increased the money supply, easing the deflation that farmers had complained about. Without their core issue, the Populist coalition dissolved, and the party declined rapidly after 1896.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NOTES PANEL ===== -->
+<div id="panel-notes" class="panel" role="tabpanel" aria-label="Notes">
   <div class="notes-template">
     <div class="notes-header">
-      <div>
-        <div class="notes-title">2-Page Exam Notes Template</div>
-        <div class="notes-subtitle">HIST 1302 · Unit 1 · Exam: June 20</div>
-      </div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)">Front & Back = 2 pages ✓</div>
+      <div><div class="notes-title">Exam 1 Notes Framework</div><div class="notes-subtitle">HIST 1302 · Unit 1 · Ch. 17–20 · Prof. Walter</div></div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)">Exam: June 20, 2026</div>
     </div>
     <div class="notes-body">
-      <div class="notes-tip"><strong>⚡ Prof. Walter's rules:</strong> Handwritten only · Your own handwriting · 2 pages max (front+back of 1 sheet OR 2 single-sided sheets) · Must upload photo/scan with exam submission · First AND last names required for full credit</div>
-      <br>
       <div class="notes-col-grid">
         <div>
-          <div class="notes-col-title">Page 1 — Ch. 17 & 18</div>
-          <div class="notes-item">Manifest Destiny — O'Sullivan, 1845, divine right to expand</div>
-          <div class="notes-item">Homestead Act 1862 — 160 acres, 5 years, head of household</div>
-          <div class="notes-item">Dawes Severalty Act 1887 — broke up tribal lands, 160 acres, citizenship 1924</div>
-          <div class="notes-item">Key battles: Sand Creek 1864, Little Bighorn 1876 (Custer), Wounded Knee 1890</div>
-          <div class="notes-item">Mining: Comstock Lode (silver, NV, 1859), Pike's Peak (gold, CO, 1859)</div>
-          <div class="notes-item">Ranching: Chisholm Trail → railroad towns (Abilene, Dodge City)</div>
-          <div class="notes-item">Edison: light bulb 1879, power station 1882</div>
-          <div class="notes-item">Bell: telephone 1876</div>
-          <div class="notes-item">Transcontinental RR: Promontory Summit, Utah, 1869</div>
-          <div class="notes-item">Carnegie: steel, vertical integration, Gospel of Wealth</div>
-          <div class="notes-item">Rockefeller: oil, Standard Oil 1870, horizontal integration, trust</div>
-          <div class="notes-item">J.P. Morgan: banker, U.S. Steel 1901 ($1B corp)</div>
-          <div class="notes-item">Knights of Labor — Powderly, all workers welcome</div>
-          <div class="notes-item">AFL — Samuel Gompers, skilled workers, founded 1886</div>
-        </div>
-        <div>
-          <div class="notes-col-title">Page 2 — Ch. 18 Strikes, Ch. 19 & 20</div>
-          <div class="notes-item">RR Strike 1877 — wage cuts, Hayes sent troops, ~100 killed</div>
-          <div class="notes-item">Haymarket 1886 — bomb at 8-hr day rally, KOL blamed, anarchists hanged</div>
+          <div class="notes-col-title">Ch. 17 &amp; 18 — West &amp; Industry</div>
+          <div class="notes-item">Manifest Destiny — John O'Sullivan 1845; divine right to expand</div>
+          <div class="notes-item">Homestead Act 1862 — 160 acres, 5 year residence; women/Black Americans eligible</div>
+          <div class="notes-item">Innovations: steel plow, windmill, barbed wire (Glidden 1873)</div>
+          <div class="notes-item">Mining: Comstock Lode (NV, silver 1859), Pike's Peak (CO, gold 1859)</div>
+          <div class="notes-item">Cowboys: Chisholm Trail to Abilene/Dodge City; ~1/3 were Black or Hispanic</div>
+          <div class="notes-item">Dawes Act 1887 — 160 acre individual plots; surplus sold; citizenship 1924</div>
+          <div class="notes-item">Sand Creek 1864, Little Bighorn 1876 (Custer), Wounded Knee 1890</div>
+          <div class="notes-item">Transcontinental RR 1869 — Promontory Summit, UT; CP + UP</div>
+          <div class="notes-item">Edison: light bulb 1879, DC power; Bell: telephone 1876</div>
+          <div class="notes-item">Westinghouse: AC power (travels farther)</div>
+          <div class="notes-item">Carnegie: steel, vertical integration; Gospel of Wealth; sold $480M 1901</div>
+          <div class="notes-item">Rockefeller: oil, horizontal integration; Standard Oil ~90% of refining; trust structure</div>
+          <div class="notes-item">J.P. Morgan: finance; U.S. Steel 1901 — first $1B corporation</div>
+          <div class="notes-item">Factory conditions: 12–14 hr days, 6–7 days/week; child labor; no safety regs</div>
+          <div class="notes-item">KOL (Powderly) — all workers, peak 700K; Haymarket 1886 destroyed it</div>
+          <div class="notes-item">AFL (Gompers 1886) — skilled workers, practical goals</div>
+          <div class="notes-item">Great RR Strike 1877 — first national; Hayes sent troops; ~100 killed</div>
           <div class="notes-item">Homestead Steel 1892 — Frick/Carnegie, Pinkertons, union crushed</div>
           <div class="notes-item">Pullman 1894 — Debs led, Cleveland sent troops, Debs jailed</div>
+        </div>
+        <div>
+          <div class="notes-col-title">Ch. 19 &amp; 20 — City &amp; Gilded Age Politics</div>
           <div class="notes-item">Urbanization challenges: tenements, disease, crime, Tammany Hall</div>
           <div class="notes-item">Hull House 1889 — Jane Addams, Chicago, settlement house</div>
+          <div class="notes-item">Jacob Riis — How the Other Half Lives (1890) — exposed slum conditions</div>
           <div class="notes-item">Great Migration — Black Americans north, Jim Crow escape</div>
           <div class="notes-item">New Immigration: S/E Europe (Italy, Russia, Poland); nativism rose</div>
-          <div class="notes-item">Chinese Exclusion Act 1882</div>
-          <div class="notes-item">Gilded Age — Mark Twain 1873, gold on outside, corrupt inside</div>
-          <div class="notes-item">Pendleton Act 1883 — merit-based civil service (after Garfield assassination)</div>
+          <div class="notes-item">Chinese Exclusion Act 1882 — first major immigration restriction</div>
+          <div class="notes-item">Social Gospel — Protestant churches address poverty</div>
+          <div class="notes-item">New Woman — college, workforce, suffrage push</div>
+          <div class="notes-item">Gilded Age — Mark Twain 1873; gold on outside, corrupt inside</div>
+          <div class="notes-item">Spoils system → Pendleton Act 1883 (merit hiring, after Garfield assassination)</div>
           <div class="notes-item">Weak presidents 1877–96: Hayes, Garfield, Arthur, Cleveland, Harrison</div>
-          <div class="notes-item">Populist Party 1892 — farmers, free silver, railroad regulation</div>
-          <div class="notes-item">1896 election: Bryan (Cross of Gold, free silver) vs. McKinley (gold). McKinley won. Populists declined.</div>
+          <div class="notes-item">Grange 1867 (Kelley) → Farmers' Alliance → Populist Party 1892</div>
+          <div class="notes-item">Omaha Platform: free silver, govt RR ownership, income tax, direct senator elections</div>
+          <div class="notes-item">1896 election: Bryan (Cross of Gold, free silver) vs. McKinley (gold). McKinley won.</div>
+          <div class="notes-item">Populists fused with Democrats → alienated urban workers → party declined</div>
+          <div class="notes-item">Gold discovered Alaska/S. Africa → money supply rose naturally → populism died</div>
+          <div class="notes-item">Sherman Antitrust Act 1890 — first federal anti-monopoly law (unenforced at first)</div>
+          <div class="notes-item">Prof. Walter's rule: handwritten notes on vellum paper only — no loose-leaf</div>
         </div>
       </div>
+      <div class="notes-tip"><strong>Exam tip:</strong> Exam included more short-answer/discussion than multiple choice. Focus on being able to explain causes, effects, and connections between events — not just dates.</div>
     </div>
   </div>
 </div>
 
 <!-- ===== TIMELINE PANEL ===== -->
-<div id="panel-timeline" class="panel">
-  <div class="section-label">Key Events — Unit 1 (1845–1900)</div>
-  <div class="timeline">
-    <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1845</div><div class="tl-event">John O'Sullivan coins "Manifest Destiny"</div><div class="tl-detail">Justifies westward expansion as divine right</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#a78bfa"></div><div class="tl-year">1859</div><div class="tl-event">Comstock Lode (NV) & Pike's Peak (CO) gold/silver strikes</div><div class="tl-detail">Triggers mining booms and boomtown culture</div></div>
-    <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1862</div><div class="tl-event">Homestead Act & Pacific Railway Act passed</div><div class="tl-detail">160 acres free; government funds transcontinental railroad</div></div>
-    <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1864</div><div class="tl-event">Sand Creek Massacre</div><div class="tl-detail">Colorado militia kills ~150 Cheyenne/Arapaho</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#a78bfa"></div><div class="tl-year">1869</div><div class="tl-event">Transcontinental Railroad completed at Promontory Summit, Utah</div><div class="tl-detail">Central Pacific meets Union Pacific</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#a78bfa"></div><div class="tl-year">1873</div><div class="tl-event">Mark Twain publishes "The Gilded Age"</div><div class="tl-detail">Names the era; satirizes political corruption</div></div>
-    <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1876</div><div class="tl-event">Battle of Little Bighorn — Custer's Last Stand</div><div class="tl-detail">Sioux/Cheyenne defeat 7th Cavalry; last major Native victory</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#a78bfa"></div><div class="tl-year">1876</div><div class="tl-event">Alexander Graham Bell patents the telephone</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#ef4444"></div><div class="tl-year">1877</div><div class="tl-event">Great Railroad Strike — first national strike</div><div class="tl-detail">Hayes sends federal troops; ~100 workers killed</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#a78bfa"></div><div class="tl-year">1879</div><div class="tl-event">Edison develops incandescent light bulb</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#a78bfa"></div><div class="tl-year">1870</div><div class="tl-event">Rockefeller founds Standard Oil</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#f97316"></div><div class="tl-year">1881</div><div class="tl-event">Garfield assassinated by office-seeker Charles Guiteau</div><div class="tl-detail">Triggers civil service reform movement</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#f97316"></div><div class="tl-year">1882</div><div class="tl-event">Chinese Exclusion Act</div><div class="tl-detail">Bars Chinese immigration; nativist peak</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#f97316"></div><div class="tl-year">1883</div><div class="tl-event">Pendleton Civil Service Act</div><div class="tl-detail">Merit-based federal hiring replaces spoils system</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#ef4444"></div><div class="tl-year">1886</div><div class="tl-event">Haymarket Riot, Chicago</div><div class="tl-detail">Bomb at labor rally; KOL reputation destroyed; Gompers founds AFL</div></div>
-    <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1887</div><div class="tl-event">Dawes Severalty Act</div><div class="tl-detail">Breaks up tribal lands into individual plots; undermines Native culture</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#22c55e"></div><div class="tl-year">1889</div><div class="tl-event">Jane Addams founds Hull House, Chicago</div><div class="tl-detail">Model settlement house for urban poor</div></div>
-    <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1890</div><div class="tl-event">Wounded Knee Massacre</div><div class="tl-detail">U.S. Army kills ~250 Lakota Sioux; end of Indian Wars</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#f97316"></div><div class="tl-year">1890</div><div class="tl-event">Sherman Antitrust Act</div><div class="tl-detail">First federal law to limit monopolies</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#ef4444"></div><div class="tl-year">1892</div><div class="tl-event">Homestead Steel Strike</div><div class="tl-detail">Frick hires Pinkertons; union broken; Carnegie's reputation damaged</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#f97316"></div><div class="tl-year">1892</div><div class="tl-event">People's Party (Populists) founded</div><div class="tl-detail">Farmers demand free silver, railroad regulation, income tax</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#ef4444"></div><div class="tl-year">1894</div><div class="tl-event">Pullman Strike</div><div class="tl-detail">Debs leads; Cleveland sends troops; Debs jailed; strike broken</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#f97316"></div><div class="tl-year">1896</div><div class="tl-event">Election of 1896 — McKinley defeats Bryan</div><div class="tl-detail">Bryan's "Cross of Gold" speech; Populist Party fuses with Democrats and loses; party declines</div></div>
-    <div class="tl-item"><div class="tl-dot" style="background:#a78bfa"></div><div class="tl-year">1901</div><div class="tl-event">J.P. Morgan creates U.S. Steel — first $1 billion corporation</div></div>
+<div id="panel-timeline" class="panel" role="tabpanel" aria-label="Timeline">
+  <div class="section-label">Key Events — Unit 1 (1845–1901)</div>
+  <div class="timeline" aria-label="Historical timeline">
+    <div class="tl-item"><div class="tl-dot" aria-hidden="true"></div><div class="tl-year">1845</div><div class="tl-event">John O'Sullivan coins "Manifest Destiny"</div><div class="tl-detail">Justifies westward expansion as divine right</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#a78bfa" aria-hidden="true"></div><div class="tl-year">1859</div><div class="tl-event">Comstock Lode (NV) &amp; Pike's Peak (CO) gold/silver strikes</div><div class="tl-detail">Triggers mining booms and boomtown culture</div></div>
+    <div class="tl-item"><div class="tl-dot" aria-hidden="true"></div><div class="tl-year">1862</div><div class="tl-event">Homestead Act &amp; Pacific Railway Act passed</div><div class="tl-detail">160 acres free; government funds transcontinental railroad</div></div>
+    <div class="tl-item"><div class="tl-dot" aria-hidden="true"></div><div class="tl-year">1864</div><div class="tl-event">Sand Creek Massacre</div><div class="tl-detail">Colorado militia kills ~150 Cheyenne/Arapaho</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#a78bfa" aria-hidden="true"></div><div class="tl-year">1869</div><div class="tl-event">Transcontinental Railroad completed at Promontory Summit, Utah</div><div class="tl-detail">Central Pacific meets Union Pacific</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#a78bfa" aria-hidden="true"></div><div class="tl-year">1870</div><div class="tl-event">Rockefeller founds Standard Oil</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#a78bfa" aria-hidden="true"></div><div class="tl-year">1873</div><div class="tl-event">Mark Twain publishes "The Gilded Age"</div><div class="tl-detail">Names the era; satirizes political corruption</div></div>
+    <div class="tl-item"><div class="tl-dot" aria-hidden="true"></div><div class="tl-year">1876</div><div class="tl-event">Battle of Little Bighorn — Custer's Last Stand</div><div class="tl-detail">Sioux/Cheyenne defeat 7th Cavalry; last major Native victory</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#a78bfa" aria-hidden="true"></div><div class="tl-year">1876</div><div class="tl-event">Alexander Graham Bell patents the telephone</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#ef4444" aria-hidden="true"></div><div class="tl-year">1877</div><div class="tl-event">Great Railroad Strike — first national strike</div><div class="tl-detail">Hayes sends federal troops; ~100 workers killed</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#a78bfa" aria-hidden="true"></div><div class="tl-year">1879</div><div class="tl-event">Edison develops incandescent light bulb</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#f97316" aria-hidden="true"></div><div class="tl-year">1881</div><div class="tl-event">Garfield assassinated by office-seeker Charles Guiteau</div><div class="tl-detail">Triggers civil service reform movement</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#f97316" aria-hidden="true"></div><div class="tl-year">1882</div><div class="tl-event">Chinese Exclusion Act</div><div class="tl-detail">Bars Chinese immigration; nativist peak</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#f97316" aria-hidden="true"></div><div class="tl-year">1883</div><div class="tl-event">Pendleton Civil Service Act</div><div class="tl-detail">Merit-based federal hiring replaces spoils system</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#ef4444" aria-hidden="true"></div><div class="tl-year">1886</div><div class="tl-event">Haymarket Riot, Chicago</div><div class="tl-detail">Bomb at labor rally; KOL reputation destroyed; Gompers founds AFL</div></div>
+    <div class="tl-item"><div class="tl-dot" aria-hidden="true"></div><div class="tl-year">1887</div><div class="tl-event">Dawes Severalty Act</div><div class="tl-detail">Breaks up tribal lands into individual plots; undermines Native culture</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#22c55e" aria-hidden="true"></div><div class="tl-year">1889</div><div class="tl-event">Jane Addams founds Hull House, Chicago</div><div class="tl-detail">Model settlement house for urban poor</div></div>
+    <div class="tl-item"><div class="tl-dot" aria-hidden="true"></div><div class="tl-year">1890</div><div class="tl-event">Wounded Knee Massacre</div><div class="tl-detail">U.S. Army kills ~250 Lakota Sioux; end of Indian Wars</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#f97316" aria-hidden="true"></div><div class="tl-year">1890</div><div class="tl-event">Sherman Antitrust Act</div><div class="tl-detail">First federal law to limit monopolies</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#ef4444" aria-hidden="true"></div><div class="tl-year">1892</div><div class="tl-event">Homestead Steel Strike</div><div class="tl-detail">Frick hires Pinkertons; union broken; Carnegie's reputation damaged</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#f97316" aria-hidden="true"></div><div class="tl-year">1892</div><div class="tl-event">People's Party (Populists) founded</div><div class="tl-detail">Farmers demand free silver, railroad regulation, income tax</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#ef4444" aria-hidden="true"></div><div class="tl-year">1894</div><div class="tl-event">Pullman Strike</div><div class="tl-detail">Debs leads; Cleveland sends troops; Debs jailed; strike broken</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#f97316" aria-hidden="true"></div><div class="tl-year">1896</div><div class="tl-event">Election of 1896 — McKinley defeats Bryan</div><div class="tl-detail">Bryan's "Cross of Gold" speech; Populist Party fuses with Democrats and loses; party declines</div></div>
+    <div class="tl-item"><div class="tl-dot" style="background:#a78bfa" aria-hidden="true"></div><div class="tl-year">1901</div><div class="tl-event">J.P. Morgan creates U.S. Steel — first $1 billion corporation</div></div>
   </div>
 </div>
 
 <footer>
-  <a href="../../index.html">← Back to Study Hub</a>
+  <a href="../../index.html" aria-label="Back to Study Hub">← Back to Study Hub</a>
   <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)">HIST 1302 · Unit 1 · Prof. Walter · ACC Summer 2026</span>
 </footer>
 </div>
 
 <script>
-// Panel switching
-function showPanel(id, btn) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+const getMasteryKey=()=>'mastery_hist1302_unit1_';
+
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
   document.getElementById('panel-'+id).classList.add('active');
-  btn.classList.add('active');
-  if(id==='flashcards') renderCard();
-  if(id==='quiz') renderQuiz();
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+  if(id==='flashcards')renderCard();
+  if(id==='quiz')renderQuiz();
 }
 
-// Chapter accordion
-function toggleChapter(header) {
-  const body = header.nextElementSibling;
-  header.classList.toggle('open');
+function toggleChapter(header){
+  const body=header.nextElementSibling;
+  const open=header.classList.toggle('open');
   body.classList.toggle('open');
+  header.setAttribute('aria-expanded',open);
 }
 
-// ===== FLASHCARDS =====
-const allCards = [
-  {ch:'ch17',q:'What is "Manifest Destiny" and who coined the term?',a:'The belief that Americans were divinely ordained to expand across the continent. Coined by magazine editor John O\'Sullivan in 1845.'},
-  {ch:'ch17',q:'What did the Homestead Act (1862) provide?',a:'160 acres of public land to any head of household or individual over 21. Must live on it for 5 years to own it.'},
-  {ch:'ch17',q:'Why were the Great Plains considered the "last area" to be settled?',a:'Early explorers called it the "Great American Desert." Harsh climate, no trees, poor farming conditions by eastern standards. Changed with steel plow, windmill, barbed wire.'},
-  {ch:'ch17',q:'What was the Dawes Severalty Act (1887)?',a:'Broke up tribal communal lands into individual 160-acre plots. "Surplus" land sold to whites. Devastated Native tribal culture. Full citizenship not granted until 1924.'},
-  {ch:'ch17',q:'Name the 3 major economic opportunities in the Far West.',a:'1) Farming (Homestead Act, innovations) 2) Mining (gold/silver strikes, boomtowns) 3) Ranching (cattle drives, railroad ties)'},
-  {ch:'ch17',q:'What were the two most famous gold/silver mining strikes?',a:'Comstock Lode (silver, Nevada, 1859) and Pike\'s Peak (gold, Colorado, 1859)'},
-  {ch:'ch17',q:'What was the Chisholm Trail and why did it matter?',a:'Cattle drive route from Texas to railroad towns (Abilene, Dodge City, Kansas). Connected ranchers to eastern markets via railroad.'},
-  {ch:'ch17',q:'Name the three famous battles between the U.S. Army and Plains tribes.',a:'Sand Creek Massacre (1864), Battle of Little Bighorn (1876) — Custer\'s Last Stand, Wounded Knee Massacre (1890)'},
-  {ch:'ch17',q:'What was the myth vs. reality of the cowboy?',a:'Myth: romantic, heroic, free. Reality: dangerous, low-paid seasonal labor. Many cowboys were Black or Hispanic.'},
-  {ch:'ch17',q:'What was the Battle of Little Bighorn (1876)?',a:'Sioux and Cheyenne defeated General Custer and the 7th Cavalry. Last major Native American military victory. Led to intensified U.S. military campaigns.'},
-  {ch:'ch18',q:'Who invented the telephone and in what year?',a:'Alexander Graham Bell, 1876.'},
-  {ch:'ch18',q:'What were Thomas Edison\'s key contributions?',a:'Incandescent light bulb (1879), phonograph, first commercial electric power station (NYC, 1882).'},
-  {ch:'ch18',q:'When and where was the Transcontinental Railroad completed?',a:'1869 at Promontory Summit, Utah. Central Pacific (west) met Union Pacific (east).'},
-  {ch:'ch18',q:'What is vertical integration? Who used it?',a:'Owning all stages of production from raw material to finished product. Andrew Carnegie used it in steel — owned iron ore mines, railroads, steel mills.'},
-  {ch:'ch18',q:'What is horizontal integration? Who used it?',a:'Buying out all competitors in the same industry. John D. Rockefeller used it — Standard Oil controlled 90% of U.S. oil refining.'},
-  {ch:'ch18',q:'What was Carnegie\'s "Gospel of Wealth"?',a:'Essay arguing that wealthy industrialists had a moral duty to use their fortunes for the public good — philanthropy over inheritance.'},
-  {ch:'ch18',q:'What was the Great Railroad Strike of 1877?',a:'First national strike. Workers struck over wage cuts. President Hayes sent federal troops. ~100 workers killed. Strike ended but public sympathy was divided.'},
-  {ch:'ch18',q:'What was the Haymarket Riot (1886)?',a:'Rally in Chicago\'s Haymarket Square for 8-hour workday. Bomb thrown at police. 8 anarchists convicted (most hanged). Destroyed the Knights of Labor\'s reputation.'},
-  {ch:'ch18',q:'Who led the Knights of Labor and what made it unique?',a:'Terence V. Powderly. Open to ALL workers regardless of skill, race, or gender. Peak membership: 700,000. Generally opposed strikes.'},
-  {ch:'ch18',q:'Who founded the AFL and what was its focus?',a:'Samuel Gompers, 1886. Focused on skilled workers and practical goals: wages, hours, working conditions. More conservative than KOL.'},
-  {ch:'ch18',q:'What was the Homestead Steel Strike (1892)?',a:'Carnegie Steel workers struck against wage cuts by manager Henry Frick. Pinkerton agents hired — violent clash. Strike broken, union crushed.'},
-  {ch:'ch18',q:'What was the Pullman Strike (1894)?',a:'Workers at Pullman Palace Car Company struck over wage cuts/rent increases. Eugene V. Debs led nationwide boycott. President Cleveland sent federal troops. Debs jailed.'},
-  {ch:'ch19',q:'What was the "Great Migration"?',a:'Large movement of African Americans from the rural South to northern industrial cities, escaping Jim Crow laws and racial violence, seeking jobs and education.'},
-  {ch:'ch19',q:'What was Hull House and who founded it?',a:'Settlement house in Chicago founded by Jane Addams in 1889. Provided education, childcare, social services to urban poor. Model for the settlement house movement.'},
-  {ch:'ch19',q:'What challenges did urbanization create?',a:'Overcrowding, tenement slums, disease, poor sanitation, crime, fire hazards, political corruption (Tammany Hall).'},
-  {ch:'ch19',q:'What changed about immigration patterns in the 1880s–1900s?',a:'Shifted from Northern/Western Europe (Germany, Ireland) to Southern/Eastern Europe (Italy, Poland, Russia, Jewish immigrants). Nativism rose in response.'},
-  {ch:'ch19',q:'What was the Chinese Exclusion Act (1882)?',a:'First major law restricting immigration. Banned Chinese laborers from entering the U.S. Reflected nativist anti-immigrant sentiment.'},
-  {ch:'ch19',q:'What was the Social Gospel movement?',a:'Protestant clergy argued that Christian ethics demanded addressing social problems — poverty, child labor, inequality. Inspired urban reform.'},
-  {ch:'ch19',q:'What was the "New Woman" of the late 1800s?',a:'Growing female independence — more women attending college, entering workforce, riding bicycles, and pushing for suffrage. Challenged traditional gender roles.'},
-  {ch:'ch19',q:'What was nativism in the late 1800s?',a:'Anti-immigrant sentiment among native-born Americans. Used Social Darwinism to claim new immigrants from Southern/Eastern Europe were inferior.'},
-  {ch:'ch20',q:'What did Mark Twain mean by "The Gilded Age"?',a:'Gilded = gold-covered on outside but corrupt underneath. Era of massive wealth inequality, political corruption, weak presidents, despite rapid economic growth. Coined in his 1873 novel.'},
-  {ch:'ch20',q:'What was the spoils system?',a:'Giving government jobs to political party loyalists regardless of qualifications ("to the victor go the spoils"). Rampant during the Gilded Age.'},
-  {ch:'ch20',q:'What was the Pendleton Civil Service Act (1883)?',a:'Created merit-based federal hiring through competitive exams. Passed after President Garfield was assassinated by a disappointed office-seeker.'},
-  {ch:'ch20',q:'Name the "weak" presidents from 1877–1896.',a:'Rutherford B. Hayes, James Garfield (assassinated), Chester Arthur, Grover Cleveland (2 non-consecutive terms), Benjamin Harrison.'},
-  {ch:'ch20',q:'Who were the Populists and what did they want?',a:'People\'s Party (1892) representing farmers. Wanted: free coinage of silver, government ownership of railroads, graduated income tax, direct election of senators.'},
-  {ch:'ch20',q:'What was the "Cross of Gold" speech?',a:'1896 speech by William Jennings Bryan: "You shall not crucify mankind upon a cross of gold." Argued for free silver (inflation) to help indebted farmers vs. the gold standard.'},
-  {ch:'ch20',q:'Who were the candidates in the 1896 election and what did each represent?',a:'William Jennings Bryan (Democrat/Populist) — free silver, farmers, debtors. William McKinley (Republican) — gold standard, industry, business. McKinley won.'},
-  {ch:'ch20',q:'Why did the Populist Party decline after 1896?',a:'1) Fused with Democrats — alienated urban workers who feared inflation. 2) McKinley won. 3) Gold discovered in Alaska/S. Africa naturally inflated money supply. 4) Urban-rural coalition failed.'},
-  {ch:'ch20',q:'What was the Sherman Antitrust Act (1890)?',a:'First federal law attempting to break up monopolies and trusts. Passed during Harrison administration. Largely unenforced at first.'},
-  {ch:'ch20',q:'What was the gold standard debate about?',a:'Farmers/debtors wanted "free silver" — mint silver into coins to expand money supply and cause inflation (easier to pay debts). Bankers/creditors wanted gold standard — stable, deflationary currency.'},
+// Mastery
+function getMasteredSet(){
+  try{return new Set(JSON.parse(localStorage.getItem(getMasteryKey()+'obj')||'[]'));}
+  catch(e){return new Set();}
+}
+function saveMasteredSet(s){localStorage.setItem(getMasteryKey()+'obj',JSON.stringify([...s]));}
+function loadObjMastery(){
+  const s=getMasteredSet();
+  document.querySelectorAll('.mastery-btn').forEach(btn=>{
+    const id=parseInt(btn.getAttribute('onclick').match(/\d+/)[0]);
+    if(s.has(id)){btn.classList.add('mastered');btn.textContent='✓';}
+  });
+  updateMasteryBar();
+}
+function toggleObjMastery(btn,id){
+  const s=getMasteredSet();
+  if(s.has(id)){s.delete(id);btn.classList.remove('mastered');btn.textContent='☐';}
+  else{s.add(id);btn.classList.add('mastered');btn.textContent='✓';}
+  saveMasteredSet(s);updateMasteryBar();
+}
+function updateMasteryBar(){
+  const total=18;const done=getMasteredSet().size;
+  const pct=Math.round(done/total*100);
+  document.getElementById('mastery-fill').style.width=pct+'%';
+  document.getElementById('mastery-label').textContent='Mastery: '+pct+'% ('+done+'/'+total+')';
+}
+function resetAllMastery(){
+  if(!confirm('Reset all mastery for HIST Unit 1?'))return;
+  localStorage.removeItem(getMasteryKey()+'obj');
+  document.querySelectorAll('.mastery-btn').forEach(b=>{b.classList.remove('mastered');b.textContent='☐';});
+  updateMasteryBar();
+}
+
+// Flashcards
+const allCards=[
+  {ch:'ch17',q:"What is \"Manifest Destiny\" and who coined the term?",a:"The belief that Americans were divinely ordained to expand across the continent. Coined by magazine editor John O'Sullivan in 1845."},
+  {ch:'ch17',q:"What did the Homestead Act (1862) provide?",a:"160 acres of public land to any head of household or individual over 21. Must live on it for 5 years to own it."},
+  {ch:'ch17',q:"Why were the Great Plains considered the \"last area\" to be settled?",a:"Early explorers called it the \"Great American Desert.\" Harsh climate, no trees, poor farming conditions by eastern standards. Changed with steel plow, windmill, barbed wire."},
+  {ch:'ch17',q:"What was the Dawes Severalty Act (1887)?",a:"Broke up tribal communal lands into individual 160-acre plots. \"Surplus\" land sold to whites. Devastated Native tribal culture. Full citizenship not granted until 1924."},
+  {ch:'ch17',q:"Name the 3 major economic opportunities in the Far West.",a:"1) Farming (Homestead Act, innovations) 2) Mining (gold/silver strikes, boomtowns) 3) Ranching (cattle drives, railroad ties)"},
+  {ch:'ch17',q:"What were the two most famous gold/silver mining strikes?",a:"Comstock Lode (silver, Nevada, 1859) and Pike's Peak (gold, Colorado, 1859)"},
+  {ch:'ch17',q:"What was the Chisholm Trail and why did it matter?",a:"Cattle drive route from Texas to railroad towns (Abilene, Dodge City, Kansas). Connected ranchers to eastern markets via railroad."},
+  {ch:'ch17',q:"Name the three famous battles between the U.S. Army and Plains tribes.",a:"Sand Creek Massacre (1864), Battle of Little Bighorn (1876) — Custer's Last Stand, Wounded Knee Massacre (1890)"},
+  {ch:'ch17',q:"What was the myth vs. reality of the cowboy?",a:"Myth: romantic, heroic, free. Reality: dangerous, low-paid seasonal labor. Many cowboys were Black or Hispanic."},
+  {ch:'ch17',q:"What was the Battle of Little Bighorn (1876)?",a:"Sioux and Cheyenne defeated General Custer and the 7th Cavalry. Last major Native American military victory."},
+  {ch:'ch18',q:"Who invented the telephone and in what year?",a:"Alexander Graham Bell, 1876."},
+  {ch:'ch18',q:"What were Thomas Edison's key contributions?",a:"Incandescent light bulb (1879), phonograph, first commercial electric power station (NYC, 1882)."},
+  {ch:'ch18',q:"When and where was the Transcontinental Railroad completed?",a:"1869 at Promontory Summit, Utah. Central Pacific (west) met Union Pacific (east)."},
+  {ch:'ch18',q:"What is vertical integration? Who used it?",a:"Owning all stages of production from raw material to finished product. Andrew Carnegie used it in steel — owned iron ore mines, railroads, steel mills."},
+  {ch:'ch18',q:"What is horizontal integration? Who used it?",a:"Buying out all competitors in the same industry. John D. Rockefeller used it — Standard Oil controlled 90% of U.S. oil refining."},
+  {ch:'ch18',q:"What was Carnegie's \"Gospel of Wealth\"?",a:"Essay arguing that wealthy industrialists had a moral duty to use their fortunes for the public good — philanthropy over inheritance."},
+  {ch:'ch18',q:"What was the Great Railroad Strike of 1877?",a:"First national strike. Workers struck over wage cuts. President Hayes sent federal troops. ~100 workers killed."},
+  {ch:'ch18',q:"What was the Haymarket Riot (1886)?",a:"Rally in Chicago's Haymarket Square for 8-hour workday. Bomb thrown at police. 8 anarchists convicted. Destroyed the Knights of Labor's reputation."},
+  {ch:'ch18',q:"Who led the Knights of Labor and what made it unique?",a:"Terence V. Powderly. Open to ALL workers regardless of skill, race, or gender. Peak membership: 700,000. Generally opposed strikes."},
+  {ch:'ch18',q:"Who founded the AFL and what was its focus?",a:"Samuel Gompers, 1886. Focused on skilled workers and practical goals: wages, hours, working conditions."},
+  {ch:'ch18',q:"What was the Homestead Steel Strike (1892)?",a:"Carnegie Steel workers struck against wage cuts by manager Henry Frick. Pinkerton agents hired — violent clash. Strike broken, union crushed."},
+  {ch:'ch18',q:"What was the Pullman Strike (1894)?",a:"Workers at Pullman Palace Car Company struck over wage cuts/rent increases. Eugene V. Debs led nationwide boycott. President Cleveland sent federal troops. Debs jailed."},
+  {ch:'ch19',q:"What was the \"Great Migration\"?",a:"Large movement of African Americans from the rural South to northern industrial cities, escaping Jim Crow laws and racial violence, seeking jobs and education."},
+  {ch:'ch19',q:"What was Hull House and who founded it?",a:"Settlement house in Chicago founded by Jane Addams in 1889. Provided education, childcare, social services to urban poor."},
+  {ch:'ch19',q:"What challenges did urbanization create?",a:"Overcrowding, tenement slums, disease, poor sanitation, crime, fire hazards, political corruption (Tammany Hall)."},
+  {ch:'ch19',q:"What changed about immigration patterns in the 1880s–1900s?",a:"Shifted from Northern/Western Europe (Germany, Ireland) to Southern/Eastern Europe (Italy, Poland, Russia, Jewish immigrants). Nativism rose in response."},
+  {ch:'ch19',q:"What was the Chinese Exclusion Act (1882)?",a:"First major law restricting immigration. Banned Chinese laborers from entering the U.S. Reflected nativist anti-immigrant sentiment."},
+  {ch:'ch19',q:"What was the Social Gospel movement?",a:"Protestant clergy argued that Christian ethics demanded addressing social problems — poverty, child labor, inequality. Inspired urban reform."},
+  {ch:'ch19',q:"What was the \"New Woman\" of the late 1800s?",a:"Growing female independence — more women attending college, entering workforce, riding bicycles, and pushing for suffrage."},
+  {ch:'ch19',q:"What was nativism in the late 1800s?",a:"Anti-immigrant sentiment among native-born Americans. Used Social Darwinism to claim new immigrants from Southern/Eastern Europe were inferior."},
+  {ch:'ch20',q:"What did Mark Twain mean by \"The Gilded Age\"?",a:"Gilded = gold-covered on outside but corrupt underneath. Era of massive wealth inequality, political corruption, weak presidents, despite rapid economic growth. Coined in his 1873 novel."},
+  {ch:'ch20',q:"What was the spoils system?",a:"Giving government jobs to political party loyalists regardless of qualifications (\"to the victor go the spoils\"). Rampant during the Gilded Age."},
+  {ch:'ch20',q:"What was the Pendleton Civil Service Act (1883)?",a:"Created merit-based federal hiring through competitive exams. Passed after President Garfield was assassinated by a disappointed office-seeker."},
+  {ch:'ch20',q:"Name the \"weak\" presidents from 1877–1896.",a:"Rutherford B. Hayes, James Garfield (assassinated), Chester Arthur, Grover Cleveland (2 non-consecutive terms), Benjamin Harrison."},
+  {ch:'ch20',q:"Who were the Populists and what did they want?",a:"People's Party (1892) representing farmers. Wanted: free coinage of silver, government ownership of railroads, graduated income tax, direct election of senators."},
+  {ch:'ch20',q:"What was the \"Cross of Gold\" speech?",a:"1896 speech by William Jennings Bryan: argued for free silver (inflation) to help indebted farmers vs. the gold standard."},
+  {ch:'ch20',q:"Who were the candidates in the 1896 election and what did each represent?",a:"William Jennings Bryan (Democrat/Populist) — free silver, farmers, debtors. William McKinley (Republican) — gold standard, industry, business. McKinley won."},
+  {ch:'ch20',q:"Why did the Populist Party decline after 1896?",a:"1) Fused with Democrats — alienated urban workers who feared inflation. 2) McKinley won. 3) Gold discovered in Alaska/S. Africa. 4) Urban-rural coalition failed."},
+  {ch:'ch20',q:"What was the Sherman Antitrust Act (1890)?",a:"First federal law attempting to break up monopolies and trusts. Passed during Harrison administration. Largely unenforced at first."},
+  {ch:'ch20',q:"What was the gold standard debate about?",a:"Farmers/debtors wanted \"free silver\" — mint silver to expand money supply and cause inflation (easier to pay debts). Bankers/creditors wanted gold standard — stable, deflationary currency."},
 ];
 
-let currentCards = [...allCards];
-let currentIndex = 0;
-
-function renderCard() {
-  const card = currentCards[currentIndex];
-  if(!card) return;
-  const tag = document.getElementById('fc-chapter-tag');
-  const colors = {ch17:'#3b82f6',ch18:'#a78bfa',ch19:'#22c55e',ch20:'#f97316'};
-  const labels = {ch17:'CH.17',ch18:'CH.18',ch19:'CH.19',ch20:'CH.20'};
-  tag.textContent = labels[card.ch];
-  tag.style.color = colors[card.ch];
-  tag.style.background = colors[card.ch]+'20';
-  document.getElementById('fc-question').textContent = card.q;
-  document.getElementById('fc-answer').textContent = card.a;
-  document.getElementById('fc-counter').textContent = (currentIndex+1)+' / '+currentCards.length;
-  document.getElementById('fc-stat').textContent = 'Card '+(currentIndex+1)+' of '+currentCards.length;
+let currentCards=[...allCards];
+let currentIndex=0;
+function renderCard(){
+  const card=currentCards[currentIndex];
+  if(!card)return;
+  const colors={ch17:'#3b82f6',ch18:'#a78bfa',ch19:'#22c55e',ch20:'#f97316'};
+  const labels={ch17:'CH.17',ch18:'CH.18',ch19:'CH.19',ch20:'CH.20'};
+  const tag=document.getElementById('fc-chapter-tag');
+  tag.textContent=labels[card.ch];tag.style.color=colors[card.ch];tag.style.background=colors[card.ch]+'20';
+  document.getElementById('fc-question').textContent=card.q;
+  document.getElementById('fc-answer').textContent=card.a;
+  document.getElementById('fc-counter').textContent=(currentIndex+1)+' / '+currentCards.length;
+  document.getElementById('fc-stat').textContent='Card '+(currentIndex+1)+' of '+currentCards.length;
   document.getElementById('flashcard').classList.remove('flipped');
 }
-
-function flipCard() {
-  document.getElementById('flashcard').classList.toggle('flipped');
-}
-
-function nextCard() {
-  currentIndex = (currentIndex+1) % currentCards.length;
-  renderCard();
-}
-
-function prevCard() {
-  currentIndex = (currentIndex-1+currentCards.length) % currentCards.length;
-  renderCard();
-}
-
-function shuffleCards() {
-  for(let i=currentCards.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [currentCards[i],currentCards[j]]=[currentCards[j],currentCards[i]];
-  }
-  currentIndex=0;
-  renderCard();
-}
-
-function filterCards(ch, btn) {
+function flipCard(){document.getElementById('flashcard').classList.toggle('flipped');}
+function nextCard(){currentIndex=(currentIndex+1)%currentCards.length;renderCard();}
+function prevCard(){currentIndex=(currentIndex-1+currentCards.length)%currentCards.length;renderCard();}
+function shuffleCards(){for(let i=currentCards.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[currentCards[i],currentCards[j]]=[currentCards[j],currentCards[i]];}currentIndex=0;renderCard();}
+function filterCards(ch,btn){
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active-filter'));
   btn.classList.add('active-filter');
-  currentCards = ch==='all' ? [...allCards] : allCards.filter(c=>c.ch===ch);
-  currentIndex=0;
-  renderCard();
+  currentCards=ch==='all'?[...allCards]:allCards.filter(c=>c.ch===ch);
+  currentIndex=0;renderCard();
 }
 
-// ===== QUIZ =====
-const allQuizData = [
+// Quiz
+const allQuizData=[
   {ch:'ch17',type:'mc',q:"What phrase did John O'Sullivan coin in 1845 to describe America's divine right to expand westward?",opts:["American Exceptionalism","Manifest Destiny","Westward Spirit","Continental Destiny"],ans:1,exp:"Manifest Destiny — coined by O'Sullivan in 1845 in the United States Magazine and Democratic Review."},
   {ch:'ch17',type:'mc',q:"The Homestead Act (1862) granted settlers how many acres of public land?",opts:["80 acres","120 acres","160 acres","320 acres"],ans:2,exp:"160 acres to any head of household or individual over 21, after 5 years of residence."},
   {ch:'ch17',type:'mc',q:"The Battle of Little Bighorn (1876) was significant because:",opts:["It was the last major Native American victory over U.S. forces","It established the reservation system","General Custer negotiated a peace treaty","It led directly to the Dawes Act"],ans:0,exp:"Sioux and Cheyenne forces defeated General Custer's 7th Cavalry — the last major Native American military victory."},
@@ -902,6 +677,8 @@ const allQuizData = [
   {ch:'ch17',type:'fitb',q:"The ___________ Act of 1862 allowed settlers to claim 160 acres of public land after living on it for 5 years.",ans:["homestead"],display:"Homestead",exp:"The Homestead Act of 1862 was a key federal incentive for westward migration."},
   {ch:'ch17',type:'fitb',q:"The ___________ Severalty Act (1887) broke up tribal communal lands into individual 160-acre plots.",ans:["dawes"],display:"Dawes",exp:"The Dawes Act devastated tribal culture. Native citizenship not granted until 1924."},
   {ch:'ch17',type:'fitb',q:"The famous silver deposit discovered in Nevada in 1859 was called the ___________ Lode.",ans:["comstock"],display:"Comstock",exp:"The Comstock Lode triggered a massive silver mining boom in Nevada."},
+  {ch:'ch17',type:'mc',q:"Gold was first discovered at ___ in California, triggering the famous Gold Rush of 1849.",opts:["Comstock Lode","Sutter's Mill","Promontory Summit","Chisholm Ranch"],ans:1,exp:"Gold was discovered at Sutter's Mill in Coloma, California in 1848. The Forty-Niners rushed west in 1849."},
+  {ch:'ch17',type:'fitb',q:"Cowboy culture borrowed heavily from Mexican ___________ traditions, including saddles, lassos, chaps, and lariats.",ans:["vaquero","vaqueros"],display:"vaquero",exp:"About one-third of cowboys were Hispanic or African American, and vaquero traditions shaped the entire cowboy culture."},
   {ch:'ch18',type:'mc',q:"Which industrialist is associated with vertical integration in the steel industry?",opts:["John D. Rockefeller","J.P. Morgan","Andrew Carnegie","Cornelius Vanderbilt"],ans:2,exp:"Carnegie used vertical integration — owning everything from iron ore mines to finished steel."},
   {ch:'ch18',type:'mc',q:"Rockefeller's Standard Oil is an example of:",opts:["Vertical integration","Horizontal integration","A labor union","A government monopoly"],ans:1,exp:"Horizontal integration — buying out all competitors. Standard Oil controlled about 90% of U.S. oil refining."},
   {ch:'ch18',type:'mc',q:"The transcontinental railroad was completed in what year and location?",opts:["1865, Kansas City","1867, Denver, Colorado","1869, Promontory Summit, Utah","1872, Sacramento, California"],ans:2,exp:"1869 at Promontory Summit, Utah — Central Pacific met Union Pacific."},
@@ -910,11 +687,14 @@ const allQuizData = [
   {ch:'ch18',type:'fitb',q:"Samuel Gompers founded the American ___________ of Labor in 1886.",ans:["federation"],display:"Federation",exp:"The AFL focused on skilled workers and practical goals: wages, hours, and working conditions."},
   {ch:'ch18',type:'fitb',q:"The ___________ Strike of 1894 was led by Eugene V. Debs and broken when President Cleveland sent federal troops.",ans:["pullman"],display:"Pullman",exp:"The Pullman Strike shut down rail traffic nationally. Debs was jailed and the strike was crushed."},
   {ch:'ch18',type:'fitb',q:"The transcontinental railroad was completed at ___________ Summit, Utah in 1869.",ans:["promontory"],display:"Promontory",exp:"Central Pacific met Union Pacific at Promontory Summit on May 10, 1869."},
+  {ch:'ch18',type:'mc',q:"George Westinghouse's contribution to industrialization was promoting:",opts:["Direct current (DC) power","Alternating current (AC) power that could travel long distances","The Bessemer steel process","The first telephone network"],ans:1,exp:"AC power could travel much farther from the source than Edison's DC, enabling widespread electrical distribution."},
+  {ch:'ch18',type:'fitb',q:"___________ management, associated with Frederick Taylor, broke factory work into timed repetitive tasks to maximize efficiency.",ans:["scientific"],display:"Scientific",exp:"Taylor's scientific management increased output but made workers feel like replaceable machine parts."},
   {ch:'ch19',type:'mc',q:"Jane Addams is best known for:",opts:["Leading the Populist Party","Founding Hull House settlement in Chicago (1889)","Organizing the Pullman Strike","Writing the Gospel of Wealth"],ans:1,exp:"Hull House (1889) was the model settlement house providing education and social services to the urban poor."},
   {ch:'ch19',type:'mc',q:"The Great Migration refers to:",opts:["European immigrants arriving at Ellis Island","The movement of settlers westward via the Oregon Trail","African Americans moving from the rural South to northern cities","The migration of Plains Indians to reservations"],ans:2,exp:"African Americans fled Jim Crow laws and racial violence, seeking industrial jobs and greater freedoms in northern cities."},
   {ch:'ch19',type:'mc',q:"The Chinese Exclusion Act (1882) was significant because it was:",opts:["The first law granting citizenship to immigrants","The first major law restricting immigration by nationality","A law protecting Chinese workers' rights","A treaty with China about trade"],ans:1,exp:"The Chinese Exclusion Act was the first major federal law restricting immigration based on nationality. Reflected rising nativism."},
   {ch:'ch19',type:'fitb',q:"Jane Addams founded ___________ House in Chicago in 1889, a model settlement house for the urban poor.",ans:["hull"],display:"Hull",exp:"Hull House became the national model for the settlement house movement."},
   {ch:'ch19',type:'fitb',q:"___________ refers to anti-immigrant sentiment among native-born Americans, which rose sharply in the 1880s-1900s.",ans:["nativism"],display:"Nativism",exp:"Nativists used Social Darwinism to argue new immigrants from Southern and Eastern Europe were inferior."},
+  {ch:'ch19',type:'mc',q:"Jacob Riis is best known for his 1890 work documenting urban poverty:",opts:["The Jungle","How the Other Half Lives","The Gospel of Wealth","Looking Backward"],ans:1,exp:"Riis used photographs and writing to document NYC tenement slum conditions. Shocked middle-class audiences."},
   {ch:'ch19',type:'fitb',q:"The large movement of African Americans from the rural South to northern industrial cities is known as the Great ___________.",ans:["migration"],display:"Migration",exp:"The Great Migration was driven by Jim Crow laws, racial violence, and the promise of industrial jobs in the North."},
   {ch:'ch20',type:'mc',q:"Mark Twain used the term Gilded Age to suggest that the era was:",opts:["A golden period of American prosperity","Gold-covered on the outside but corrupt underneath","Dominated by the gold standard","An age of golden opportunity for immigrants"],ans:1,exp:"Twain's 1873 novel satirized the era's corruption. Gilded means covered in gold but hollow and corrupt inside."},
   {ch:'ch20',type:'mc',q:"The Pendleton Civil Service Act (1883) was passed primarily in response to:",opts:["The Haymarket Riot","The Great Railroad Strike","The assassination of President Garfield","The formation of the Populist Party"],ans:2,exp:"Garfield was killed by Charles Guiteau, a disappointed office-seeker. This galvanized support for merit-based civil service."},
@@ -924,94 +704,53 @@ const allQuizData = [
   {ch:'ch20',type:'fitb',q:"The ___________ Civil Service Act (1883) replaced the spoils system with merit-based federal hiring.",ans:["pendleton"],display:"Pendleton",exp:"Passed after Garfield's assassination, the Pendleton Act was a major step toward professional government."},
   {ch:'ch20',type:'fitb',q:"William Jennings Bryan's famous speech declared: 'You shall not crucify mankind upon a cross of ___________.'",ans:["gold"],display:"Gold",exp:"The Cross of Gold speech (1896) argued against the gold standard and for free silver to help indebted farmers."},
   {ch:'ch20',type:'fitb',q:"The ___________ Party, founded in 1892, represented farmers demanding free silver, railroad regulation, and a graduated income tax.",ans:["populist","people's","peoples"],display:"Populist",exp:"The People's Party (Populists) was the most successful third party of the Gilded Age."},
-  {ch:'ch20',type:'fitb',q:"Grover Cleveland is notable for being the only U.S. president to serve two non-___________ terms.",ans:["consecutive"],display:"consecutive",exp:"Cleveland served 1885-1889 and 1893-1897, losing to Benjamin Harrison in between."},
-  // NEW CH17 questions
-  {ch:'ch17',type:'mc',q:"Gold was first discovered at ___ in California, triggering the famous Gold Rush of 1849.",opts:["Comstock Lode","Sutter's Mill","Promontory Summit","Chisholm Ranch"],ans:1,exp:"Gold was discovered at Sutter's Mill in Coloma, California in 1848. The Forty-Niners rushed west in 1849."},
-  {ch:'ch17',type:'mc',q:"Barbed wire, patented by Joseph Glidden in 1873, was historically significant because it:",opts:["Made cattle drives faster","Ended the open range and created land conflicts","Improved farming irrigation","Helped build the transcontinental railroad"],ans:1,exp:"Cheap fencing ended the open range. Caused range wars including the Fence Cutting War and Johnson County conflict."},
-  {ch:'ch17',type:'fitb',q:"Cowboy culture borrowed heavily from Mexican ___________ traditions, including saddles, lassos, chaps, and lariats.",ans:["vaquero","vaqueros"],display:"vaquero",exp:"About one-third of cowboys were Hispanic or African American, and vaquero traditions shaped the entire cowboy culture."},
-  {ch:'ch17',type:'fitb',q:"Native American children were sent to boarding schools like ___________ to force them to abandon their language, clothing, and customs.",ans:["carlisle"],display:"Carlisle",exp:"Carlisle Indian Industrial School (Pennsylvania) was the most famous assimilation boarding school. 'Kill the Indian, save the man.'"},
-  // NEW CH18 questions
-  {ch:'ch18',type:'mc',q:"George Westinghouse's contribution to industrialization was promoting:",opts:["Direct current (DC) power","Alternating current (AC) power that could travel long distances","The Bessemer steel process","The first telephone network"],ans:1,exp:"AC power could travel much farther from the source than Edison's DC, enabling widespread electrical distribution to cities and factories."},
-  {ch:'ch18',type:'fitb',q:"___________ management, associated with Frederick Taylor, broke factory work into timed repetitive tasks to maximize efficiency.",ans:["scientific"],display:"Scientific",exp:"Taylor's scientific management increased output but made workers feel like replaceable machine parts. Called 'Taylorism.'"},
-  // NEW CH19 questions
-  {ch:'ch19',type:'mc',q:"Jacob Riis is best known for his 1890 work documenting urban poverty:",opts:["The Jungle","How the Other Half Lives","The Gospel of Wealth","Looking Backward"],ans:1,exp:"Riis used photographs and writing to document NYC tenement slum conditions. Shocked middle-class audiences and helped push urban reform."},
-  {ch:'ch19',type:'mc',q:"Machine politics, like Tammany Hall in New York, worked by:",opts:["Providing merit-based government jobs","Exchanging services and favors for votes","Promoting civil service reform","Organizing labor strikes"],ans:1,exp:"Ward bosses provided services (jobs, sanitation, housing help) to immigrants and the working poor in exchange for political loyalty. Corrupt but effective."},
-  {ch:'ch19',type:'fitb',q:"Lillian Wald founded the Henry ___________ Settlement in New York City, a model settlement house like Hull House.",ans:["street"],display:"Street",exp:"The Henry Street Settlement (1895) provided health care, education, and social services to NYC's Lower East Side immigrants."},
-  {ch:'ch19',type:'fitb',q:"The ___________ Acts of 1862 and 1890 used public land and federal funds to create land-grant colleges across the country.",ans:["morrill"],display:"Morrill",exp:"The Morrill Acts created state universities focused on agriculture and mechanical arts, making higher education more accessible to the middle class."},
-  // NEW CH20 questions
   {ch:'ch20',type:'mc',q:"The Stalwarts and Half-Breeds were factions within which political party during the Gilded Age?",opts:["Democratic Party","Populist Party","Republican Party","Greenback Party"],ans:2,exp:"Stalwarts (Roscoe Conkling) defended patronage; Half-Breeds (James G. Blaine) supported some reform. Both were Republican factions."},
   {ch:'ch20',type:'mc',q:"The Omaha Platform (1892) was the founding document of which party?",opts:["The Republican Party","The Democratic Party","The People's (Populist) Party","The Greenback Party"],ans:2,exp:"The Omaha Platform called for government ownership of railroads, a graduated income tax, direct election of senators, free silver, and the subtreasury plan."},
-  {ch:'ch20',type:'mc',q:"Coxey's Army (1894) was significant because it:",opts:["Won major labor reforms from Congress","Was the first organized march to Washington D.C. demanding federal economic relief","Overthrew Tammany Hall","Led directly to the formation of the Populist Party"],ans:1,exp:"Jacob Coxey led unemployed workers to D.C. demanding public works jobs. They were arrested for trespassing. Symbolized the federal government's failure to address economic suffering."},
   {ch:'ch20',type:'fitb',q:"The ___________ plan proposed government warehouses where farmers could store crops and take loans worth up to 80% of the crop value.",ans:["subtreasury"],display:"subtreasury",exp:"The subtreasury plan was a key Populist idea — farmers could hold crops until prices rose rather than selling at harvest lows."},
-  {ch:'ch20',type:'fitb',q:"The Populists endorsed Bryan in 1896 but chose ___________ Watson as their own Vice Presidential candidate to maintain a separate party identity.",ans:["tom","thomas"],display:"Tom",exp:"Tom Watson of Georgia was the Populist VP nominee instead of the Democratic VP Arthur Sewall. The strategy failed to maintain party identity after Bryan's loss."},
-  {ch:'ch20',type:'fitb',q:"The ___________ and Farmers' Alliance were farmer organizations that preceded and helped create the Populist Party.",ans:["grange"],display:"Grange",exp:"The Grange (1867, Oliver Kelley) was the first major farmer organization. The Farmers' Alliance followed and eventually became the Populist Party."},
+  {ch:'ch20',type:'fitb',q:"The ___________ and Farmers' Alliance were farmer organizations that preceded and helped create the Populist Party.",ans:["grange"],display:"Grange",exp:"The Grange (1867, Oliver Kelley) was the first major farmer organization. The Farmers' Alliance followed."},
+  {ch:'ch17',type:'mc',q:"Barbed wire, patented by Joseph Glidden in 1873, was historically significant because it:",opts:["Made cattle drives faster","Ended the open range and created land conflicts","Improved farming irrigation","Helped build the transcontinental railroad"],ans:1,exp:"Cheap fencing ended the open range. Caused range wars including the Fence Cutting War and Johnson County conflict."},
+  {ch:'ch17',type:'fitb',q:"Native American children were sent to boarding schools like ___________ to force them to abandon their language, clothing, and customs.",ans:["carlisle"],display:"Carlisle",exp:"Carlisle Indian Industrial School (Pennsylvania) was the most famous assimilation boarding school. 'Kill the Indian, save the man.'"},
 ];
 
-let currentQuizFilter = 'all';
-let activeQuizData = [...allQuizData];
-let userAnswers = {};
-let quizSubmitted = false;
+let currentQuizFilter='all';
+let activeQuizData=[...allQuizData];
+let userAnswers={};
+let quizSubmitted=false;
 
-function setQuizFilter(ch, btn) {
+function setQuizFilter(ch,btn){
   document.querySelectorAll('#quiz-filters .filter-btn').forEach(b=>b.classList.remove('active-filter'));
   btn.classList.add('active-filter');
-  currentQuizFilter = ch;
-  resetQuiz();
+  currentQuizFilter=ch;resetQuiz();
 }
 
-function renderQuiz() {
-  activeQuizData = currentQuizFilter === 'all'
-    ? [...allQuizData]
-    : allQuizData.filter(q => q.ch === currentQuizFilter);
-  const chColors = {ch17:'#3b82f6',ch18:'#a78bfa',ch19:'#22c55e',ch20:'#f97316'};
-  const chLabels = {ch17:'CH.17',ch18:'CH.18',ch19:'CH.19',ch20:'CH.20'};
-  document.getElementById('quiz-count').textContent = activeQuizData.length + ' questions';
-  if(quizSubmitted) return;
-  const area = document.getElementById('quiz-area');
-  area.innerHTML = activeQuizData.map((q,i) => {
-    const chBadge = `<span class="q-ch-badge" style="background:${chColors[q.ch]}20;color:${chColors[q.ch]}">${chLabels[q.ch]}</span>`;
-    const typeBadge = q.type === 'mc'
-      ? `<span class="q-type-badge q-type-mc">Multiple Choice</span>`
-      : `<span class="q-type-badge q-type-fitb">Fill in the Blank</span>`;
-    if(q.type === 'mc') {
-      return `<div class="question-block" id="qblock-${i}">
-        <div class="q-num">Question ${i+1} of ${activeQuizData.length} ${chBadge} ${typeBadge}</div>
-        <div class="q-text">${q.q}</div>
-        <div class="options">${q.opts.map((o,j)=>`
-          <div class="option" id="opt-${i}-${j}" onclick="selectMC(${i},${j})">
-            <span class="opt-letter">${['A','B','C','D'][j]}</span><span>${o}</span>
-          </div>`).join('')}
-        </div>
-        <div class="explanation" id="exp-${i}">${q.exp}</div>
-      </div>`;
-    } else {
-      return `<div class="question-block" id="qblock-${i}">
-        <div class="q-num">Question ${i+1} of ${activeQuizData.length} ${chBadge} ${typeBadge}</div>
-        <div class="q-text">${q.q}</div>
-        <input type="text" class="fitb-input" id="fitb-${i}" placeholder="Type your answer..."
-          oninput="storeFITB(${i})" autocomplete="off" autocorrect="off" spellcheck="false">
-        <div class="fitb-correct-answer" id="fitb-ans-${i}">Correct answer: ${q.display}</div>
-        <div class="explanation" id="exp-${i}">${q.exp}</div>
-      </div>`;
+function renderQuiz(){
+  activeQuizData=currentQuizFilter==='all'?[...allQuizData]:allQuizData.filter(q=>q.ch===currentQuizFilter);
+  const chColors={ch17:'#3b82f6',ch18:'#a78bfa',ch19:'#22c55e',ch20:'#f97316'};
+  const chLabels={ch17:'CH.17',ch18:'CH.18',ch19:'CH.19',ch20:'CH.20'};
+  const area=document.getElementById('quiz-area');
+  area.innerHTML=activeQuizData.map((q,qi)=>{
+    const badge=`<span class="q-ch-badge" style="background:${chColors[q.ch]}20;color:${chColors[q.ch]}">${chLabels[q.ch]}</span>`;
+    if(q.type==='mc'){
+      const opts=q.opts.map((o,oi)=>`<div class="option" id="opt-${qi}-${oi}" onclick="selectMC(${qi},${oi})" role="button" tabindex="0" aria-label="Option ${oi+1}: ${o}">${o}</div>`).join('');
+      return `<div class="q-block" id="qblock-${qi}" role="listitem">${badge}<div class="q-text">${q.q}</div>${opts}<div class="explanation" id="exp-${qi}">${q.exp}</div></div>`;
+    }else{
+      return `<div class="q-block" id="qblock-${qi}" role="listitem">${badge}<div class="q-text">${q.q}</div><input type="text" class="fitb-input" id="fitb-${qi}" placeholder="Type your answer..." oninput="storeFITB(${qi})" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Fill in the blank answer"><div class="fitb-correct-answer" id="fitb-ans-${qi}">Correct answer: ${q.display}</div><div class="explanation" id="exp-${qi}">${q.exp}</div></div>`;
     }
   }).join('');
-  document.getElementById('submit-btn').style.display = 'block';
+  document.getElementById('submit-btn').style.display='block';
 }
 
-function selectMC(qi, oi) {
-  if(quizSubmitted) return;
+function selectMC(qi,oi){
+  if(quizSubmitted)return;
   document.querySelectorAll(`#qblock-${qi} .option`).forEach(o=>{o.style.borderColor='';o.style.background='';});
   document.getElementById(`opt-${qi}-${oi}`).style.borderColor='var(--accent)';
   document.getElementById(`opt-${qi}-${oi}`).style.background='var(--accent-dim)';
   userAnswers[qi]={type:'mc',val:oi};
 }
 
-function storeFITB(qi) {
-  const val = document.getElementById(`fitb-${qi}`).value;
-  userAnswers[qi]={type:'fitb',val:val.trim().toLowerCase()};
-}
+function storeFITB(qi){userAnswers[qi]={type:'fitb',val:document.getElementById(`fitb-${qi}`).value.trim().toLowerCase()};}
 
-function submitQuiz() {
+function submitQuiz(){
   for(let i=0;i<activeQuizData.length;i++){
     const q=activeQuizData[i];
     if(!userAnswers[i]){
@@ -1020,20 +759,19 @@ function submitQuiz() {
     }
   }
   quizSubmitted=true;
-  let score=0,mcCorrect=0,fitbCorrect=0,mcTotal=0,fitbTotal=0;
+  let score=0,mcC=0,fitbC=0,mcT=0,fitbT=0;
   activeQuizData.forEach((q,i)=>{
     const ans=userAnswers[i];
     if(q.type==='mc'){
-      mcTotal++;
+      mcT++;
       document.querySelectorAll(`#qblock-${i} .option`).forEach(o=>{o.style.borderColor='';o.style.background='';o.classList.add('answered');});
-      if(ans.val===q.ans){score++;mcCorrect++;document.getElementById(`opt-${i}-${ans.val}`).classList.add('correct');}
+      if(ans.val===q.ans){score++;mcC++;document.getElementById(`opt-${i}-${ans.val}`).classList.add('correct');}
       else{document.getElementById(`opt-${i}-${ans.val}`).classList.add('wrong');document.getElementById(`opt-${i}-${q.ans}`).classList.add('reveal');}
-    } else {
-      fitbTotal++;
+    }else{
+      fitbT++;
       const input=document.getElementById(`fitb-${i}`);
-      const userVal=ans.val;
-      const correct=q.ans.some(a=>userVal===a||userVal.includes(a)||a.includes(userVal));
-      if(correct){score++;fitbCorrect++;input.classList.add('correct-input');}
+      const correct=q.ans.some(a=>ans.val===a||ans.val.includes(a)||a.includes(ans.val));
+      if(correct){score++;fitbC++;input.classList.add('correct-input');}
       else{input.classList.add('wrong-input');document.getElementById(`fitb-ans-${i}`).style.display='block';}
     }
     document.getElementById(`exp-${i}`).style.display='block';
@@ -1041,18 +779,41 @@ function submitQuiz() {
   const pct=Math.round((score/activeQuizData.length)*100);
   const grade=pct>=90?'A':pct>=80?'B':pct>=70?'C':'Keep studying!';
   document.getElementById('score-display').textContent=score+' / '+activeQuizData.length;
-  document.getElementById('score-breakdown').innerHTML=`${pct}% &nbsp;·&nbsp; ${grade} &nbsp;·&nbsp; MC: ${mcCorrect}/${mcTotal} &nbsp;·&nbsp; Fill-in: ${fitbCorrect}/${fitbTotal}`;
+  document.getElementById('score-breakdown').innerHTML=`${pct}% &nbsp;·&nbsp; ${grade} &nbsp;·&nbsp; MC: ${mcC}/${mcT} &nbsp;·&nbsp; Fill-in: ${fitbC}/${fitbT}`;
   document.getElementById('quiz-score').style.display='block';
   document.getElementById('submit-btn').style.display='none';
   document.getElementById('quiz-score').scrollIntoView({behavior:'smooth'});
 }
 
-function resetQuiz() {
-  userAnswers={};quizSubmitted=false;
-  document.getElementById('quiz-score').style.display='none';
-  document.getElementById('quiz-area').innerHTML='';
-  renderQuiz();
+function resetQuiz(){userAnswers={};quizSubmitted=false;document.getElementById('quiz-score').style.display='none';document.getElementById('quiz-area').innerHTML='';renderQuiz();}
+
+// Discussion
+function submitDisc(idx){
+  const ta=document.getElementById(`disc-ta-${idx}`);
+  if(!ta.value.trim()){alert('Please write a response before submitting.');return;}
+  document.getElementById(`disc-check-${idx}`).classList.add('visible');
+  ta.disabled=true;
+  document.querySelector(`#disc-${idx} .btn.primary`).style.display='none';
+  updateDiscScore(idx);
 }
+function updateDiscScore(idx){
+  const checks=document.querySelectorAll(`#disc-check-${idx} input[type=checkbox]`);
+  const total=checks.length;
+  const done=[...checks].filter(c=>c.checked).length;
+  const pct=Math.round(done/total*100);
+  document.getElementById(`disc-score-${idx}`).textContent=`Self-score: ${done}/${total} points (${pct}%)`;
+}
+function toggleModel(idx){
+  const model=document.getElementById(`disc-model-${idx}`);
+  const btn=document.querySelector(`#disc-check-${idx} .btn-model-toggle`);
+  const visible=model.classList.toggle('visible');
+  btn.textContent=visible?'Hide Model Answer':'Show Model Answer';
+  btn.setAttribute('aria-expanded',visible);
+}
+
+// Init
+document.addEventListener('DOMContentLoaded',()=>{loadObjMastery();renderCard();});
+document.getElementById('flashcard').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')flipCard();});
 </script>
 </body>
 </html>
