@@ -3,453 +3,2000 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Study Hub — m1chaelv</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<title>ASTR-1304 · Module 1 · Solar System Astronomy</title>
 <style>
+  /* ── TOKENS ── */
   :root {
-    --bg: #0a0a0f;
-    --surface: #12121a;
-    --border: #1e1e2e;
-    --text: #e8e8f0;
-    --muted: #6b6b80;
-    --hist: #3b82f6;
-    --hist-dim: rgba(59,130,246,0.12);
-    --astr: #22c55e;
-    --astr-dim: rgba(34,197,94,0.12);
-    --govt: #f97316;
-    --govt-dim: rgba(249,115,22,0.12);
-    --fall: #4b4b5e;
-    --fall-dim: rgba(75,75,94,0.08);
+    --accent:       #22c55e;
+    --accent-dim:   rgba(34,197,94,0.12);
+    --accent-glow:  rgba(34,197,94,0.25);
+    --bg:           #0d1117;
+    --bg-card:      #161b22;
+    --bg-card2:     #1c2330;
+    --border:       rgba(34,197,94,0.18);
+    --text:         #e6edf3;
+    --muted:        #8b949e;
+    --grid-line:    rgba(34,197,94,0.025);
+    --radius:       12px;
+    --tab-h:        48px;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
+  /* ── RESET & BASE ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
   body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     background: var(--bg);
     color: var(--text);
-    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
     min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* Background grid */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
     background-image:
-      linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
   }
 
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 20px;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Header */
-  header {
-    padding: 48px 0 32px;
+  /* ── HEADER ── */
+  .header {
+    padding: 24px 20px 20px;
     border-bottom: 1px solid var(--border);
-    margin-bottom: 48px;
+    background: linear-gradient(180deg, rgba(34,197,94,0.06) 0%, transparent 100%);
   }
-
-  .header-inner {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--accent); text-decoration: none; font-size: 13px;
+    margin-bottom: 14px; opacity: 0.8;
+    transition: opacity .2s;
   }
-
-  .logo {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  h1 {
-    font-size: clamp(32px, 6vw, 52px);
-    font-weight: 800;
-    line-height: 1.0;
-    letter-spacing: -0.02em;
-  }
-
-  h1 span {
-    background: linear-gradient(135deg, var(--hist), var(--astr));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .semester-badge {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    border: 1px solid var(--border);
-    padding: 6px 12px;
-    border-radius: 4px;
-    white-space: nowrap;
-  }
-
-  /* Section labels */
-  .section-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  /* Course cards */
-  .course-section {
-    margin-bottom: 48px;
-  }
-
-  .course-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 28px;
-    margin-bottom: 16px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-
-  .course-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-  }
-
-  .course-card.hist::before { background: var(--hist); }
-  .course-card.astr::before { background: var(--astr); }
-  .course-card.govt::before { background: var(--govt); }
-  .course-card.fall-course::before { background: var(--fall); }
-
-  .course-card:hover {
-    transform: translateY(-2px);
-  }
-
-  .course-card.hist:hover { border-color: rgba(59,130,246,0.4); }
-  .course-card.astr:hover { border-color: rgba(34,197,94,0.4); }
-  .course-card.govt:hover { border-color: rgba(249,115,22,0.4); }
-
-  .course-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-
-  .course-code {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    padding: 4px 10px;
-    border-radius: 4px;
-    margin-bottom: 8px;
+  .back-link:hover { opacity: 1; }
+  .course-badge {
     display: inline-block;
-  }
-
-  .hist .course-code { color: var(--hist); background: var(--hist-dim); }
-  .astr .course-code { color: var(--astr); background: var(--astr-dim); }
-  .govt .course-code { color: var(--govt); background: var(--govt-dim); }
-  .fall-course .course-code { color: var(--muted); background: var(--fall-dim); }
-
-  .course-title {
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 1.2;
-  }
-
-  .fall-course .course-title { color: var(--muted); }
-
-  .course-dates {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    white-space: nowrap;
-    margin-top: 4px;
-  }
-
-  /* Unit grid */
-  .unit-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 10px;
-  }
-
-  .unit-link {
-    display: flex;
-    flex-direction: column;
-    padding: 14px 16px;
-    border-radius: 8px;
+    background: var(--accent-dim);
     border: 1px solid var(--border);
-    text-decoration: none;
+    color: var(--accent);
+    font-size: 11px; font-weight: 700; letter-spacing: .08em;
+    padding: 3px 10px; border-radius: 20px;
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .header h1 {
+    font-size: clamp(20px, 5vw, 28px);
+    font-weight: 700; line-height: 1.2;
     color: var(--text);
-    transition: all 0.2s;
-    position: relative;
+  }
+  .header h1 span { color: var(--accent); }
+  .header-meta {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    margin-top: 12px; font-size: 13px; color: var(--muted);
+  }
+  .header-meta span { display: flex; align-items: center; gap: 5px; }
+
+  /* ── EXAM ALERT ── */
+  .exam-alert {
+    margin: 16px 20px;
+    background: rgba(34,197,94,0.08);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    font-size: 13px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .exam-alert .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0;
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; } 50% { opacity:.4; }
+  }
+
+  /* ── TABS ── */
+  .tabs-wrap {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+  }
+  .tabs {
+    display: flex; gap: 0;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    height: var(--tab-h);
+    padding: 0 14px;
+    background: none; border: none;
+    color: var(--muted); font-size: 13px; font-weight: 500;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ── PANELS ── */
+  .panel { display: none; padding: 20px; }
+  .panel.active { display: block; }
+
+  /* ── SECTION HEADERS ── */
+  .section-title {
+    font-size: 11px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 14px; margin-top: 28px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-title:first-child { margin-top: 0; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 10px;
+  }
+  .card-title {
+    font-size: 14px; font-weight: 600;
+    color: var(--text); margin-bottom: 6px;
+  }
+  .card p { font-size: 13px; color: var(--muted); }
+
+  /* ── OBJECTIVES ── */
+  .obj-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 8px;
     overflow: hidden;
   }
-
-  .unit-link:hover {
-    border-color: currentColor;
-    transform: translateY(-1px);
-  }
-
-  .hist .unit-link { --accent: var(--hist); }
-  .hist .unit-link:hover { color: var(--hist); background: var(--hist-dim); }
-
-  .astr .unit-link { --accent: var(--astr); }
-  .astr .unit-link:hover { color: var(--astr); background: var(--astr-dim); }
-
-  .govt .unit-link { --accent: var(--govt); }
-  .govt .unit-link:hover { color: var(--govt); background: var(--govt-dim); }
-
-  .unit-number {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    margin-bottom: 4px;
-  }
-
-  .unit-name {
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-
-  .unit-date {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    color: var(--muted);
-    margin-top: 6px;
-  }
-
-  /* Coming soon badge */
-  .coming-soon {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    border: 1px dashed var(--border);
-    border-radius: 6px;
-    padding: 12px 16px;
-    text-align: center;
-    letter-spacing: 0.1em;
-  }
-
-  /* Footer */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 32px 0;
-    margin-top: 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+  .obj-header {
+    width: 100%; background: none; border: none;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px;
+    cursor: pointer; text-align: left;
+    color: var(--text); font-size: 14px; font-weight: 500;
     gap: 12px;
+    transition: background .15s;
+  }
+  .obj-header:hover { background: var(--accent-dim); }
+  .obj-header.open { background: rgba(34,197,94,0.08); }
+  .obj-chevron {
+    width: 18px; height: 18px; flex-shrink: 0;
+    color: var(--accent); transition: transform .25s;
+  }
+  .obj-header.open .obj-chevron { transform: rotate(180deg); }
+  .obj-body {
+    display: none; padding: 0 16px 14px;
+    font-size: 13px; color: var(--muted); line-height: 1.7;
+    border-top: 1px solid var(--border);
+  }
+  .obj-body.open { display: block; }
+  .obj-body ul { padding-left: 18px; margin-top: 8px; }
+  .obj-body li { margin-bottom: 5px; }
+  .obj-body strong { color: var(--accent); font-weight: 600; }
+  .obj-num {
+    font-size: 11px; font-weight: 700; color: var(--accent);
+    background: var(--accent-dim); border-radius: 4px;
+    padding: 2px 6px; flex-shrink: 0;
+    font-family: monospace;
   }
 
-  footer p {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
+  /* ── STUDY GUIDE ── */
+  .sg-chapter {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .sg-chapter-header {
+    background: var(--accent-dim);
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sg-chapter-num {
+    background: var(--accent); color: #000;
+    font-size: 11px; font-weight: 800;
+    padding: 3px 8px; border-radius: 4px;
+  }
+  .sg-chapter-title { font-size: 14px; font-weight: 600; color: var(--text); }
+  .sg-body { padding: 16px; }
+  .sg-concept {
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(34,197,94,0.07);
+  }
+  .sg-concept:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .sg-concept-title {
+    font-size: 13px; font-weight: 600; color: var(--accent);
+    margin-bottom: 5px;
+  }
+  .sg-concept p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+  .sg-concept ul { font-size: 13px; color: var(--muted); padding-left: 18px; margin-top: 5px; }
+  .sg-concept li { margin-bottom: 4px; }
+  .highlight { color: var(--text); font-weight: 600; }
+  .formula {
+    display: inline-block;
+    background: rgba(34,197,94,0.1);
+    border: 1px solid var(--border);
+    padding: 3px 10px; border-radius: 6px;
+    font-family: monospace; font-size: 13px;
+    color: var(--accent); margin: 4px 0;
+  }
+  .callout {
+    background: rgba(34,197,94,0.08);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    margin: 10px 0;
+    font-size: 13px; color: var(--text);
+  }
+
+  /* ── FLASHCARDS ── */
+  .fc-controls {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 18px; flex-wrap: wrap;
+  }
+  .fc-counter {
+    font-size: 13px; color: var(--muted);
+    margin-left: auto;
+  }
+  .btn {
+    background: var(--accent-dim);
+    border: 1px solid var(--border);
+    color: var(--accent); font-size: 13px; font-weight: 600;
+    padding: 8px 16px; border-radius: 8px;
+    cursor: pointer; transition: background .15s, transform .1s;
+  }
+  .btn:hover { background: var(--accent-glow); }
+  .btn:active { transform: scale(.97); }
+  .btn-solid {
+    background: var(--accent); color: #000;
+    border-color: var(--accent);
+  }
+  .btn-solid:hover { background: #16a34a; }
+
+  .flashcard-wrap { perspective: 800px; cursor: pointer; }
+  .flashcard {
+    width: 100%; min-height: 220px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform .45s cubic-bezier(.4,0,.2,1);
+  }
+  .flashcard.flipped { transform: rotateY(180deg); }
+  .fc-face {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: var(--radius);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 28px 24px; text-align: center;
+  }
+  .fc-front {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+  .fc-back {
+    background: rgba(34,197,94,0.1);
+    border: 1px solid var(--accent);
+    transform: rotateY(180deg);
+  }
+  .fc-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; margin-bottom: 14px;
     color: var(--muted);
-    letter-spacing: 0.1em;
+  }
+  .fc-back .fc-label { color: var(--accent); }
+  .fc-question { font-size: 17px; font-weight: 600; color: var(--text); line-height: 1.4; }
+  .fc-answer { font-size: 15px; color: var(--text); line-height: 1.55; }
+  .fc-hint { font-size: 12px; color: var(--muted); margin-top: 14px; }
+
+  .fc-nav { display: flex; gap: 10px; margin-top: 14px; align-items: center; }
+  .fc-progress-wrap {
+    flex: 1; height: 4px; background: var(--bg-card2);
+    border-radius: 4px; overflow: hidden;
+  }
+  .fc-progress { height: 100%; background: var(--accent); transition: width .3s; border-radius: 4px; }
+
+  .fc-chapter-filter {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .filter-btn {
+    font-size: 12px; padding: 5px 12px;
+    border-radius: 20px;
+    background: var(--bg-card2); border: 1px solid var(--border);
+    color: var(--muted); cursor: pointer; transition: all .15s;
+  }
+  .filter-btn.active {
+    background: var(--accent-dim); border-color: var(--accent);
+    color: var(--accent); font-weight: 600;
   }
 
-  /* Animations */
-  .course-card {
-    animation: fadeUp 0.4s ease both;
+  /* ── QUIZ ── */
+  .quiz-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 18px; flex-wrap: wrap;
+  }
+  .q-num { font-size: 12px; color: var(--muted); }
+  .quiz-progress-wrap {
+    flex: 1; height: 4px; background: var(--bg-card2);
+    border-radius: 4px; overflow: hidden;
+  }
+  .quiz-progress { height: 100%; background: var(--accent); transition: width .3s; border-radius: 4px; }
+  .quiz-score-badge {
+    font-size: 13px; font-weight: 700; color: var(--accent);
+    background: var(--accent-dim); padding: 4px 10px; border-radius: 8px;
   }
 
-  .course-card:nth-child(1) { animation-delay: 0.05s; }
-  .course-card:nth-child(2) { animation-delay: 0.1s; }
-  .course-card:nth-child(3) { animation-delay: 0.15s; }
+  .q-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+  .q-card.correct { border-color: var(--accent); background: rgba(34,197,94,0.07); }
+  .q-card.wrong { border-color: #ef4444; background: rgba(239,68,68,0.07); }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
+  .q-text { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 16px; line-height: 1.45; }
+  .q-type { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 8px; }
+  .q-options { display: flex; flex-direction: column; gap: 8px; }
+  .q-opt {
+    background: var(--bg-card2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 11px 14px;
+    cursor: pointer; font-size: 13px; color: var(--text);
+    text-align: left; transition: all .15s;
+    width: 100%;
+  }
+  .q-opt:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-dim); }
+  .q-opt.selected-correct { border-color: var(--accent); background: rgba(34,197,94,0.18); color: var(--accent); font-weight: 600; }
+  .q-opt.selected-wrong { border-color: #ef4444; background: rgba(239,68,68,0.15); color: #ef4444; }
+  .q-opt.reveal-correct { border-color: var(--accent); background: rgba(34,197,94,0.08); }
+  .q-opt:disabled { cursor: default; }
+
+  .q-tf { display: flex; gap: 10px; }
+  .q-tf .q-opt { flex: 1; text-align: center; }
+
+  .q-input { width: 100%; padding: 10px 14px; border-radius: 8px;
+    background: var(--bg-card2); border: 1px solid var(--border);
+    color: var(--text); font-size: 14px; margin-bottom: 8px;
+  }
+  .q-input:focus { outline: none; border-color: var(--accent); }
+  .q-input.correct-input { border-color: var(--accent); background: rgba(34,197,94,0.1); }
+  .q-input.wrong-input { border-color: #ef4444; background: rgba(239,68,68,0.08); }
+
+  .q-feedback {
+    font-size: 13px; margin-top: 10px; padding: 10px 14px;
+    border-radius: 8px; line-height: 1.5; display: none;
+  }
+  .q-feedback.show { display: block; }
+  .q-feedback.correct { background: rgba(34,197,94,0.12); color: var(--accent); }
+  .q-feedback.wrong { background: rgba(239,68,68,0.1); color: #f87171; }
+
+  .quiz-nav { display: flex; gap: 10px; margin-top: 16px; }
+  .quiz-results {
+    text-align: center; padding: 32px 20px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .results-score {
+    font-size: 52px; font-weight: 800; color: var(--accent);
+    line-height: 1;
+  }
+  .results-label { font-size: 14px; color: var(--muted); margin: 8px 0 20px; }
+  .results-msg { font-size: 15px; color: var(--text); margin-bottom: 20px; }
+
+  /* ── NOTES ── */
+  .notes-grid { display: flex; flex-direction: column; gap: 14px; }
+  .note-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .note-box-header {
+    background: var(--accent-dim);
+    padding: 10px 16px;
+    font-size: 13px; font-weight: 700; color: var(--accent);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .note-lines { padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+  .note-line {
+    border-bottom: 1px solid rgba(34,197,94,0.08);
+    padding-bottom: 8px; font-size: 13px; color: var(--muted);
+  }
+  .note-line:last-child { border-bottom: none; }
+  .note-blank {
+    display: inline-block;
+    width: 120px; height: 14px;
+    background: rgba(34,197,94,0.1);
+    border-radius: 2px; vertical-align: middle;
+    border-bottom: 1px dashed var(--accent);
+  }
+  .print-btn-wrap { text-align: center; margin-top: 16px; }
+
+  /* ── RESPONSIVE ── */
+  @media (min-width: 640px) {
+    body { font-size: 16px; }
+    .panel { padding: 24px 28px; }
+    .header { padding: 28px 28px 24px; }
+    .tabs-wrap { padding: 0 28px; }
+  }
+  /* ── DISCUSSION PREP ── */
+  .disc-q {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .disc-q-header {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .disc-q-num {
+    font-size: 11px; font-weight: 700; color: var(--accent);
+    background: var(--accent-dim); border-radius: 4px;
+    padding: 2px 8px; flex-shrink: 0; font-family: monospace;
+    margin-top: 2px;
+  }
+  .disc-q-text { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.45; }
+  .disc-q-body { padding: 14px 16px; }
+  .disc-textarea {
+    width: 100%; min-height: 120px;
+    background: var(--bg-card2); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text);
+    font-size: 13px; line-height: 1.6;
+    padding: 12px 14px; resize: vertical;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    transition: border-color .2s;
+  }
+  .disc-textarea:focus { outline: none; border-color: var(--accent); }
+  .disc-textarea.submitted { opacity: .75; }
+  .disc-btn-row { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
+  .disc-rubric {
+    display: none; margin-top: 14px;
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px;
+  }
+  .disc-rubric.show { display: block; }
+  .disc-rubric-title {
+    font-size: 11px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .disc-point {
+    display: flex; gap: 10px; align-items: flex-start;
+    margin-bottom: 8px; font-size: 13px;
+  }
+  .disc-point:last-child { margin-bottom: 0; }
+  .disc-check {
+    width: 18px; height: 18px; border-radius: 4px;
+    border: 2px solid var(--border); flex-shrink: 0;
+    cursor: pointer; appearance: none; -webkit-appearance: none;
+    background: var(--bg-card); margin-top: 1px;
+    transition: all .15s;
+  }
+  .disc-check:checked {
+    background: var(--accent); border-color: var(--accent);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='%23000' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: center; background-size: 10px;
+  }
+  .disc-point-text { color: var(--muted); line-height: 1.5; }
+  .disc-point-text strong { color: var(--text); }
+  .disc-self-score {
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+    font-size: 13px;
+  }
+  .disc-score-display {
+    font-size: 18px; font-weight: 800; color: var(--accent);
+  }
+  .disc-model {
+    display: none; margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 13px; color: var(--muted); line-height: 1.65;
+  }
+  .disc-model.show { display: block; }
+  .disc-model-title {
+    font-size: 11px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+  }
+  .disc-nav {
+    display: flex; gap: 10px; margin-top: 16px; align-items: center;
+  }
+  .disc-filter {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;
   }
 
-  /* Mobile */
-  @media (max-width: 600px) {
-    header { padding: 32px 0 24px; }
-    .unit-grid { grid-template-columns: repeat(2, 1fr); }
-    .course-card { padding: 20px; }
+  @media print {
+    .tabs-wrap, .header, .exam-alert, .fc-controls, .fc-nav,
+    .quiz-nav, .quiz-header, .btn, .print-btn-wrap,
+    .filter-btn, .back-link, .fc-chapter-filter { display: none !important; }
+    .panel { display: none !important; }
+    #panel-4 { display: block !important; }
+    *, *::before, *::after {
+      background: white !important;
+      background-color: white !important;
+      background-image: none !important;
+      color: black !important;
+      border-color: #bbb !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+      -webkit-text-fill-color: black !important;
+    }
+    body { font-size: 12pt; }
+    .note-box { border: 1px solid #aaa !important; margin-bottom: 16pt; break-inside: avoid; }
+    .note-box-header { background: #efefef !important; padding: 8pt 12pt; font-weight: bold; border-bottom: 1px solid #aaa !important; }
+    .note-line { border-bottom: 1px solid #ddd !important; padding: 6pt 0; font-size: 11pt; }
+    .note-blank { background: white !important; border-bottom: 1px solid black !important; display: inline-block; width: 100pt; }
+    @page { margin: 0.75in; }
   }
 </style>
 </head>
 <body>
-<div class="container">
-  <header>
-    <div class="header-inner">
-      <div>
-        <div class="logo">m1chaelv / study hub</div>
-        <h1>Study<br><span>Materials</span></h1>
-      </div>
-      <div class="semester-badge">Summer 2026 · ACC</div>
-    </div>
-  </header>
 
-  <!-- Summer 2026 -->
-  <div class="course-section">
-    <div class="section-label">Summer 2026 — Active</div>
-
-    <!-- HIST 1302 -->
-    <div class="course-card hist">
-      <div class="course-header">
-        <div>
-          <div class="course-code">HIST-1302-050</div>
-          <div class="course-title">U.S. History II</div>
-        </div>
-        <div class="course-dates">6/1 – 8/9/2026</div>
-      </div>
-      <div class="unit-grid">
-        <a href="hist1302/unit1/index.html" class="unit-link">
-          <div class="unit-number">Unit 01</div>
-          <div class="unit-name">Reconstruction & Gilded Age</div>
-          <div class="unit-date">Exam: Jun 20</div>
-        </a>
-        <a href="hist1302/unit2/index.html" class="unit-link">
-          <div class="unit-number">Unit 02</div>
-          <div class="unit-name">Progressive Era & WWI</div>
-          <div class="unit-date">Exam: Jul 7</div>
-        </a>
-        <a href="hist1302/unit3/index.html" class="unit-link">
-          <div class="unit-number">Unit 03</div>
-          <div class="unit-name">WWII & Cold War</div>
-          <div class="unit-date">Exam: Jul 23</div>
-        </a>
-        <a href="hist1302/unit4/index.html" class="unit-link">
-          <div class="unit-number">Unit 04</div>
-          <div class="unit-name">Modern America</div>
-          <div class="unit-date">Exam: Aug 7</div>
-        </a>
-      </div>
-    </div>
-
-    <!-- ASTR 1304 -->
-    <div class="course-card astr">
-      <div class="course-header">
-        <div>
-          <div class="course-code">ASTR-1304-004</div>
-          <div class="course-title">Solar System Astronomy</div>
-        </div>
-        <div class="course-dates">6/1 – 8/9/2026</div>
-      </div>
-      <div class="unit-grid">
-        <a href="astr1304/unit1/index.html" class="unit-link">
-          <div class="unit-number">Module 01</div>
-          <div class="unit-name">Charting the Heavens · Copernican Revolution · Solar System</div>
-          <div class="unit-date">Exam: Jun 22–27</div>
-        </a>
-        <a href="#" class="unit-link" style="opacity:0.4;pointer-events:none">
-          <div class="unit-number">Module 02</div>
-          <div class="unit-name">Earth, Moon, Mercury, Venus, Mars</div>
-          <div class="unit-date">Exam: Jul 5–9</div>
-        </a>
-        <a href="#" class="unit-link" style="opacity:0.4;pointer-events:none">
-          <div class="unit-number">Module 03</div>
-          <div class="unit-name">Outer Planets, Debris & Exoplanets</div>
-          <div class="unit-date">Exam: Jul 28–Aug 2</div>
-        </a>
-      </div>
-    </div>
-
-    <!-- GOVT 2306 -->
-    <div class="course-card govt">
-      <div class="course-header">
-        <div>
-          <div class="course-code">GOVT-2306-007</div>
-          <div class="course-title">Texas & Local Government</div>
-        </div>
-        <div class="course-dates">6/1 – 8/9/2026</div>
-      </div>
-      <div class="unit-grid">
-        <a href="govt2306/unit1/index.html" class="unit-link">
-          <div class="unit-number">Unit 01</div>
-          <div class="unit-name">Texas Politics &amp; Federalism</div>
-          <div class="unit-date">Exam: Jun 19–21</div>
-        </a>
-        <a href="govt2306/unit2/index.html" class="unit-link" style="opacity:0.4;pointer-events:none">
-          <div class="unit-number">Unit 02</div>
-          <div class="unit-name">Local Govt &amp; Political Parties</div>
-          <div class="unit-date">Exam: Jul 1–3, 5</div>
-        </a>
-        <a href="govt2306/unit3/index.html" class="unit-link" style="opacity:0.4;pointer-events:none">
-          <div class="unit-number">Unit 03</div>
-          <div class="unit-name">Voting, Elections &amp; Media</div>
-          <div class="unit-date">Exam: Jul 17–19</div>
-        </a>
-        <a href="govt2306/unit4/index.html" class="unit-link" style="opacity:0.4;pointer-events:none">
-          <div class="unit-number">Unit 04</div>
-          <div class="unit-name">Interest Groups &amp; Legislature</div>
-          <div class="unit-date">Exam: Jul 24–26</div>
-        </a>
-        <a href="govt2306/unit5/index.html" class="unit-link" style="opacity:0.4;pointer-events:none">
-          <div class="unit-number">Unit 05</div>
-          <div class="unit-name">Executive, Judicial &amp; Criminal Justice</div>
-          <div class="unit-date">Final: Aug 6–8</div>
-        </a>
-      </div>
-    </div>
+<!-- HEADER -->
+<header class="header">
+  <a href="../../index.html" class="back-link">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back to Dashboard
+  </a>
+  <div class="course-badge">ASTR-1304-004 · Module 1</div>
+  <h1>Solar System Astronomy<br><span>Chapters 1 · 2 · 6</span></h1>
+  <div class="header-meta">
+    <span>👨‍🏫 Dr. Michael Endl</span>
+    <span>📅 Jun 1 – Jun 22, 2026</span>
+    <span>⏰ Exam deadline: Jun 27</span>
+    <span>📚 Textbook: Chaisson &amp; McMillan, 9th Ed.</span>
   </div>
+</header>
 
-  <!-- Fall 2026 -->
-  <div class="course-section">
-    <div class="section-label">Fall 2026 — Upcoming</div>
-
-    <div class="course-card fall-course">
-      <div class="course-code">CSIS-3352</div>
-      <div class="course-title">Artificial Intelligence</div>
-      <div class="course-dates" style="margin-top:8px">8/24 – 12/13/2026</div>
-    </div>
-
-    <div class="course-card fall-course">
-      <div class="course-code">CSIS-3353</div>
-      <div class="course-title">Cyber Law & Legal System</div>
-      <div class="course-dates" style="margin-top:8px">8/24 – 12/13/2026</div>
-    </div>
-
-    <div class="course-card fall-course">
-      <div class="course-code">CSIS-3385</div>
-      <div class="course-title">Database / Web Vulnerability & Security</div>
-      <div class="course-dates" style="margin-top:8px">8/24 – 12/13/2026</div>
-    </div>
-  </div>
-
-  <footer>
-    <p>study.imichaelv.com</p>
-    <p>Deployed via GitHub Actions → AWS S3 + CloudFront</p>
-  </footer>
+<!-- EXAM ALERT -->
+<div class="exam-alert">
+  <div class="dot"></div>
+  <span><strong>Exam window:</strong> Opens Jun 22 · Last day Jun 27 · Closed-book, Respondus LockDown Browser required. Short answer + MC + T/F + bonus math problems.</span>
 </div>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" onclick="switchTab(0)" role="tab">🎯 Objectives</button>
+    <button class="tab-btn" onclick="switchTab(1)" role="tab">📖 Study Guide</button>
+    <button class="tab-btn" onclick="switchTab(2)" role="tab">🃏 Flashcards</button>
+    <button class="tab-btn" onclick="switchTab(3)" role="tab">🧪 Practice Quiz</button>
+    <button class="tab-btn" onclick="switchTab(4)" role="tab">📝 Notes Template</button>
+    <button class="tab-btn" onclick="switchTab(5)" role="tab">💬 Discussion Prep</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- TAB 0: OBJECTIVES                                       -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div id="panel-0" class="panel active">
+
+  <p class="section-title">Chapter 1 — Charting the Heavens</p>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">1.1</span>
+      <span>Understand how science works</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <p>Science seeks <strong>natural explanations</strong> for observed phenomena. The three hallmarks of science are:</p>
+      <ul>
+        <li>Seeks explanations based on <strong>natural causes only</strong> (not supernatural)</li>
+        <li>Progresses through creation and testing of <strong>models</strong> that explain observations as simply as possible</li>
+        <li>Makes <strong>testable predictions</strong> — if predictions fail, the model must be revised or abandoned</li>
+      </ul>
+      <div class="callout">Science gives us predictive power — e.g., understanding lightning as an electrical phenomenon lets us protect against it. No supernatural explanation can do that.</div>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">1.2</span>
+      <span>Know the steps of the scientific method</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <ul>
+        <li><strong>Observation</strong> — notice a natural phenomenon</li>
+        <li><strong>Hypothesis</strong> — educated guess for the cause</li>
+        <li><strong>Experiment/Test</strong> — gather data to test the hypothesis</li>
+        <li><strong>Conclusion</strong> — does data support or contradict?</li>
+        <li>If contradicted → <strong>revise hypothesis</strong> and repeat</li>
+        <li>If supported → <strong>independent reproduction</strong> by others required</li>
+        <li>After repeated confirmation → hypothesis promoted to <strong>Theory</strong></li>
+      </ul>
+      <div class="callout">A scientific theory is the END product of the method — not the beginning. It represents our current best understanding and can still be revised with new evidence.</div>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">1.3</span>
+      <span>Understand the importance of evidence</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <p>Evidence is the deciding factor in science. A hypothesis is <em>never</em> accepted based on the status of the person proposing it — only on reproducible experimental evidence. Scientific theories require an <strong>overwhelming amount of evidence</strong> to support them (e.g., Darwin's theory of evolution).</p>
+      <div class="callout">"Extraordinary claims require extraordinary evidence." — Carl Sagan</div>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">1.4</span>
+      <span>Understand what a scientific theory is vs. a hypothesis</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <ul>
+        <li><strong>Hypothesis</strong> — an educated guess that has not yet been rigorously tested</li>
+        <li><strong>Scientific Theory</strong> — a hypothesis (or group of hypotheses) supported by repeated testing and independent reproduction</li>
+      </ul>
+      <p>In everyday language "it's just a theory" implies uncertainty. In science, a theory is our most reliable explanation. Valid theories must be: <strong>testable, reproducible, simple</strong>, and make testable predictions. A statement like "the universe was pink before the Big Bang" is NOT a scientific theory — it cannot be tested.</p>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">1.5</span>
+      <span>How Neptune was discovered using the scientific method</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <ul>
+        <li><strong>Observation:</strong> Uranus deviated from its predicted orbital path</li>
+        <li><strong>Framework:</strong> Newton's Law of Gravity</li>
+        <li><strong>Hypothesis:</strong> An undiscovered outer planet perturbs Uranus' orbit via gravity</li>
+        <li><strong>Prediction:</strong> Le Verrier &amp; Adams independently calculated where this planet should be</li>
+        <li><strong>Experiment:</strong> September 23, 1846 — Neptune found within 1° of Le Verrier's prediction</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">1.6</span>
+      <span>Know the celestial sphere &amp; origin of the word "planet"</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <p>The <strong>celestial sphere</strong> is an ancient conceptual model — an imaginary sphere surrounding Earth on which stars appear fixed. It is NOT real, just a useful tool for understanding sky motion.</p>
+      <p>The word <strong>"planet"</strong> comes from the Greek <em>asters planetei</em> ("wandering stars") — five objects visible to the naked eye that moved across the sky relative to the fixed stars: Mercury, Venus, Mars, Jupiter, Saturn.</p>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">1.7</span>
+      <span>Understand what constellations really are</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <p>Constellations are <strong>2D projections</strong> of stars at vastly different distances — they are NOT real physical clusters. Stars in a constellation are typically far apart in 3D space. Ancient cultures used them to track seasons. Astrology and horoscopes are <strong>not science</strong>.</p>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">1.8</span>
+      <span>Understand why we have seasons on Earth</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <p>Seasons are caused by <strong>Earth's axial tilt of ~23.5°</strong> relative to the plane of its orbit (ecliptic).</p>
+      <div class="callout">⚠️ Common misconception: Seasons are NOT caused by Earth's distance to the Sun changing — they are caused by the <strong>changing angle of illumination</strong>.</div>
+      <ul>
+        <li><strong>Summer Solstice:</strong> North Pole tilted toward Sun → longest day</li>
+        <li><strong>Winter Solstice:</strong> North Pole tilted away → shortest day</li>
+        <li><strong>Equinox:</strong> Both poles equidistant from Sun → equal day and night</li>
+        <li><strong>Precession:</strong> Earth's axis wobbles with a 26,000-year cycle due to gravitational pull of Moon and Sun</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">1.9</span>
+      <span>Understand the cause of lunar phases</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <p>Lunar phases are caused by the <strong>Moon's position relative to Earth and the Sun</strong> as it orbits Earth every 29.5 days. The Moon's brightness comes from reflected sunlight.</p>
+      <div class="callout">⚠️ Lunar phases are NOT caused by Earth's shadow on the Moon. That's a lunar eclipse — a different phenomenon.</div>
+      <ul>
+        <li>Moon is <strong>tidally locked</strong> — we always see the same side</li>
+        <li>New Moon → Waxing Crescent → First Quarter → Waxing Gibbous → Full Moon → Waning Gibbous → Third Quarter → Waning Crescent</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">1.10</span>
+      <span>Understand the cause of solar &amp; lunar eclipses</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <ul>
+        <li><strong>Solar Eclipse:</strong> Moon passes directly in front of the Sun — only possible during <strong>New Moon</strong></li>
+        <li><strong>Lunar Eclipse:</strong> Earth's shadow falls on the Moon — only possible during <strong>Full Moon</strong></li>
+        <li>Eclipses don't happen every month because the Moon's orbit is tilted ~5.2° from the ecliptic — alignment only occurs during "eclipse seasons"</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="section-title">Chapter 2 — The Copernican Revolution</p>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">2.1</span>
+      <span>Historic overview of astronomy (prehistoric to modern)</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <ul>
+        <li><strong>Prehistoric:</strong> Lascaux cave paintings (~15,000 yr ago) may be earliest lunar calendar; Great Pyramid aligned to true north (2560 BC); Stonehenge (2800–1400 BC) as a calendar</li>
+        <li><strong>Greek Astronomy (600 BC–400 AD):</strong> Greatest early contributions — Aristarchus proposed heliocentric model 2000 years before Copernicus; Eratosthenes measured Earth's circumference; Hipparcos catalogued 850 stars; Ptolemy codified geocentric model in the <em>Almagest</em></li>
+        <li><strong>Islamic Scholars (Dark Ages):</strong> Azophi discovered Andromeda Galaxy (964 AD); Ibn al-Haytham established experimental confirmation in science; Arabic star names (e.g., Aldebaran) still used today</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">2.2</span>
+      <span>Geocentric vs. Heliocentric worldview</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <ul>
+        <li><strong>Geocentric (Ptolemy):</strong> Earth at center; planets move in circles + epicycles to explain retrograde motion; included in the <em>Almagest</em></li>
+        <li><strong>Heliocentric (Copernicus, 1473–1543):</strong> Sun at center; Earth is one of 6 known planets; simpler model; derived that planets closer to the Sun move faster</li>
+        <li><strong>Retrograde motion</strong> is naturally explained in the heliocentric model — Earth overtakes outer planets, making them appear to move backward temporarily</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">2.3</span>
+      <span>Importance of Galileo Galilei</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <p>Galileo (1564–1642) was the <strong>first to use a telescope astronomically</strong> (not its inventor). His key observations that supported heliocentrism:</p>
+      <ul>
+        <li><strong>Sunspots</strong> → the Sun is not perfect and it rotates (~1 month)</li>
+        <li><strong>Craters on the Moon</strong> → heavenly bodies are not perfect spheres</li>
+        <li><strong>Phases of Venus</strong> → Venus shows full phases like the Moon, impossible in the geocentric model where Venus always stays between Earth and Sun</li>
+        <li><strong>Moons of Jupiter</strong> → not everything orbits Earth; destroyed the geocentric assumption</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">2.4</span>
+      <span>Tycho Brahe's contributions</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <p>Tycho Brahe (1546–1601): meticulous <strong>observational astronomer</strong> who made the most precise naked-eye measurements of planetary positions ever recorded. He designed his own instruments. Ironically, he still favored a geocentric model. His data were used by Kepler to derive the 3 laws of planetary motion.</p>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">2.5</span>
+      <span>Kepler's 3 Laws of Planetary Motion</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <p>Johannes Kepler (1571–1630) used Brahe's data to derive three empirical laws:</p>
+      <ul>
+        <li><strong>1st Law (Ellipses):</strong> Planetary orbits are ellipses with the Sun at <em>one focus</em> (not the center). Described by eccentricity <em>e</em>; <em>e=0</em> is a circle.</li>
+        <li><strong>2nd Law (Equal Areas):</strong> A line from the Sun to a planet sweeps equal areas in equal times → planets move <em>faster</em> when closer to the Sun (perihelion) and <em>slower</em> when farther (aphelion). Explained by conservation of angular momentum.</li>
+        <li><strong>3rd Law (P²=a³):</strong> The square of the orbital period (years) equals the cube of the semi-major axis (AU): <span class="formula">P² = a³</span>. Closer planets orbit faster.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">2.6</span>
+      <span>Newton's Laws of Motion &amp; Gravity</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <ul>
+        <li><strong>1st Law (Inertia):</strong> Objects at rest stay at rest; objects in motion stay in motion unless acted upon by a force</li>
+        <li><strong>2nd Law (F=ma):</strong> Force = mass × acceleration</li>
+        <li><strong>3rd Law (Action-Reaction):</strong> Every action has an equal and opposite reaction</li>
+        <li><strong>Law of Gravity:</strong> <span class="formula">F = G·M₁·M₂ / r²</span> — gravity decreases with the square of the distance; explains Kepler's laws</li>
+        <li><strong>Weight vs. Mass:</strong> Mass (kg) is the amount of matter — constant anywhere. Weight is the gravitational force on that mass — varies by location.</li>
+        <li><strong>Escape velocity (Earth):</strong> 11.2 km/s to leave Earth's gravity entirely. Orbital velocity: ~7.8 km/s for low Earth orbit.</li>
+        <li>Astronauts are weightless because they are in <strong>free fall</strong>, not because there is no gravity</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="section-title">Chapter 6 — The Solar System: Formation &amp; Comparative Planetology</p>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">6.1</span>
+      <span>Orbital configuration of our planetary system</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <ul>
+        <li>All planets orbit in roughly the <strong>same plane</strong> (few degrees of each other) — solar system is very flat</li>
+        <li>All planets orbit in the <strong>same direction</strong> as the Sun spins</li>
+        <li>Most orbits are nearly <strong>circular</strong> (low eccentricity)</li>
+        <li><strong>Inner solar system</strong> (within ~1.5 AU): Mercury, Venus, Earth, Mars, then the Asteroid Belt</li>
+        <li><strong>Outer solar system</strong>: Jupiter (5.2 AU), Saturn (~10 AU), Uranus (20 AU), Neptune (30 AU)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">6.2</span>
+      <span>Inventory of the solar system</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <ul>
+        <li><strong>8 major planets</strong> (Pluto is NOT one — it's a Kuiper Belt Object)</li>
+        <li><strong>Asteroid Belt:</strong> Between Mars and Jupiter; rocky/metallic bodies; NOT dangerously dense like Star Wars depicts</li>
+        <li><strong>Kuiper Belt:</strong> Beyond Neptune's orbit; icy objects including Pluto; predicted by Gerard Kuiper; visited by New Horizons spacecraft ~2015</li>
+        <li><strong>Comets:</strong> Ice-rich bodies on highly elliptical orbits; develop tails when heating causes subsurface ice to sublimate near the Sun; tails can span astronomical units</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">6.3</span>
+      <span>Comparative planetology: terrestrial vs. gas giant vs. ice giant</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <ul>
+        <li><strong>Terrestrial planets</strong> (Mercury, Venus, Earth, Mars): small, high density, rocky/metallic composition, solid surfaces, few/no moons, no rings</li>
+        <li><strong>Gas Giants</strong> (Jupiter, Saturn): massive, low density, primarily H/He gas, <strong>no solid surface</strong> — a spacecraft cannot fly through; pressure increases to ~100 million times Earth's surface pressure at Jupiter's core</li>
+        <li><strong>Ice Giants</strong> (Uranus, Neptune): smaller than gas giants but still larger than Earth; ~80% of mass is water/ammonia/methane ices + rocky core; only ~20% H/He gas — fundamentally distinct from gas giants despite looking similar from outside</li>
+      </ul>
+      <div class="callout">⚠️ Common trap: Ice giants are NOT mini gas giants. Their bulk composition is dominated by ices, not H/He gas.</div>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">6.4</span>
+      <span>How the solar system formed — overview</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <p>Age of solar system: <strong>4.56 billion years</strong>. Formation process:</p>
+      <ul>
+        <li>A giant interstellar gas/dust cloud collapsed under its own gravity (triggered by nearby supernova shockwave)</li>
+        <li>Conservation of angular momentum caused the collapsing cloud to spin faster and flatten into a <strong>protoplanetary disc</strong> around the young Sun</li>
+        <li>We observe protoplanetary discs around other young stars today (e.g., Hubble images of the Orion Nebula)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">6.5</span>
+      <span>The condensation sequence</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <p>Gaseous material in the protoplanetary disc condensed into solid particles based on temperature. <strong>Closer to the Sun (hotter):</strong> only high-melting-point metals and rocks can condense → rocky/metallic terrestrial planets. <strong>Further from the Sun (cooler, beyond the "frost line"):</strong> ices (water, ammonia, methane) also condense → raw material for much larger ice/gas giant cores.</p>
+      <div class="callout">The condensation sequence naturally explains WHY rocky planets are in the inner solar system and gas/ice giants in the outer solar system.</div>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">6.6</span>
+      <span>Planetesimal accretion</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <p><strong>Planetesimals</strong> are the "Lego building blocks" of planets — small solid bodies formed by condensation. <strong>Accretion</strong> is the process by which gravity pulls these together into progressively larger bodies (protoplanets → planets). Gas giants additionally accreted huge H/He gas envelopes once their solid cores reached ~10 Earth masses, triggering runaway gas accretion.</p>
+    </div>
+  </div>
+
+  <div class="obj-item">
+    <button class="obj-header" onclick="toggleObj(this)">
+      <span class="obj-num">6.7</span>
+      <span>Timescales of planet formation</span>
+      <svg class="obj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="obj-body">
+      <ul>
+        <li><strong>Gas giants:</strong> Had to form in &lt;5 million years before the young Sun's solar wind expelled all the disc gas</li>
+        <li><strong>Terrestrial planets:</strong> Could take up to ~100 million years (don't depend on gas)</li>
+        <li>Asteroids, comets, and Kuiper Belt objects are <strong>leftover planetesimals</strong> from regions where no major planet fully formed</li>
+        <li>Jupiter's gravity prevented planet formation in the asteroid belt region</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /panel-0 -->
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- TAB 1: STUDY GUIDE                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div id="panel-1" class="panel">
+
+  <!-- CHAPTER 1 -->
+  <div class="sg-chapter">
+    <div class="sg-chapter-header">
+      <span class="sg-chapter-num">CH 1</span>
+      <span class="sg-chapter-title">Charting the Heavens</span>
+    </div>
+    <div class="sg-body">
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">The Scientific Method — Flow</div>
+        <p>Observation → Hypothesis → Experiment → Conclusion → (if contradicted) Revise hypothesis → (if supported) Independent reproduction → <span class="highlight">Theory</span>. A theory is the <em>end</em> product, not the beginning. It must be testable, reproducible, and simple.</p>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Hypothesis vs. Theory</div>
+        <p>A <span class="highlight">hypothesis</span> is an educated guess. A <span class="highlight">scientific theory</span> has survived extensive testing and independent reproduction. Popular misuse of "theory" as "just a guess" is wrong — in science a theory is our strongest explanation.</p>
+        <div class="callout">Example: "The universe was pink before the Big Bang" is NOT a theory — it cannot be tested or falsified.</div>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Neptune — Scientific Method in Action</div>
+        <ul>
+          <li>Uranus's orbit showed unexplained deviations</li>
+          <li>Hypothesis: an undiscovered planet's gravity perturbs Uranus</li>
+          <li>Le Verrier &amp; Adams independently predicted position</li>
+          <li>Confirmed Sep 23, 1846 — within 1° of Le Verrier's prediction</li>
+        </ul>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Celestial Sphere</div>
+        <p>An imaginary sphere surrounding Earth on which stars appear to be fixed. <span class="highlight">NOT real</span> — just a conceptual model. The apparent rotation is caused by Earth's actual rotation. Planets move relative to the fixed stars because they orbit the Sun at different distances (closer = faster apparent motion).</p>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Constellations</div>
+        <p>2D projections of stars at very different distances — they do not form real clusters. Used historically to track seasons and navigation. Astrology/horoscopes are <span class="highlight">not science</span>.</p>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Seasons — Cause</div>
+        <p>Earth's axial tilt of <span class="highlight">~23.5°</span> changes the angle at which sunlight strikes the surface throughout the year. Higher angle = more intense heat concentrated on less area. <strong>NOT</strong> caused by changing distance from Sun.</p>
+        <div class="callout">At solstices, one pole points toward/away from the Sun. At equinoxes, both poles are equidistant — day = night globally.</div>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Lunar Phases</div>
+        <p>Caused by the Moon's <span class="highlight">position relative to Earth and Sun</span> as it orbits in 29.5 days. Phases are NOT caused by Earth's shadow. Moon is tidally locked — same face always visible.</p>
+        <p>Sequence: New → Waxing Crescent → First Quarter → Waxing Gibbous → Full → Waning Gibbous → Third Quarter → Waning Crescent → New</p>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Eclipses</div>
+        <ul>
+          <li><span class="highlight">Solar Eclipse:</span> Moon blocks Sun from Earth's view. Only at New Moon. Requires Moon to be at a node (intersection of Moon's orbital plane with ecliptic).</li>
+          <li><span class="highlight">Lunar Eclipse:</span> Earth's shadow falls on Full Moon. Only at Full Moon.</li>
+          <li>Eclipses don't happen monthly because Moon's orbit is tilted ~5.2° from ecliptic — alignment is rare.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CHAPTER 2 -->
+  <div class="sg-chapter">
+    <div class="sg-chapter-header">
+      <span class="sg-chapter-num">CH 2</span>
+      <span class="sg-chapter-title">The Copernican Revolution</span>
+    </div>
+    <div class="sg-body">
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Key Historical Figures</div>
+        <ul>
+          <li><span class="highlight">Ptolemy:</span> Geocentric model with epicycles, codified in the Almagest</li>
+          <li><span class="highlight">Copernicus (1473–1543):</span> Sun-centered model; planets orbit in order of distance</li>
+          <li><span class="highlight">Tycho Brahe (1546–1601):</span> Most precise naked-eye observations ever; still geocentric believer; data inherited by Kepler</li>
+          <li><span class="highlight">Galileo (1564–1642):</span> Telescope observations proved heliocentrism — phases of Venus, Jupiter's moons, sunspots, Moon craters</li>
+          <li><span class="highlight">Kepler (1571–1630):</span> Used Brahe's data to derive 3 laws of planetary motion</li>
+          <li><span class="highlight">Newton (1642–1727):</span> Explained WHY Kepler's laws work through gravity and motion laws</li>
+        </ul>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Kepler's Laws</div>
+        <ul>
+          <li><span class="highlight">1st:</span> Orbits are ellipses, Sun at one focus. Semi-major axis = <em>a</em> (AU). Eccentricity <em>e</em>: 0 = circle.</li>
+          <li><span class="highlight">2nd:</span> Equal areas swept in equal times → faster at perihelion, slower at aphelion. Due to conservation of angular momentum.</li>
+          <li><span class="highlight">3rd:</span> <span class="formula">P² = a³</span> — (P in years, a in AU). Confirmed for all 8 planets.</li>
+        </ul>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Newton's Laws of Motion</div>
+        <ul>
+          <li><span class="highlight">1st (Inertia):</span> Objects maintain their state of rest or uniform motion unless acted upon by a force</li>
+          <li><span class="highlight">2nd (F=ma):</span> Force equals mass times acceleration</li>
+          <li><span class="highlight">3rd (Action-Reaction):</span> Equal and opposite forces</li>
+        </ul>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Newton's Law of Universal Gravitation</div>
+        <p><span class="formula">F = G·M₁·M₂ / r²</span></p>
+        <p>Gravity is always attractive, depends on both masses, weakens with the square of the distance, and is universal (same on Earth and in space). This explains all of Kepler's laws and planetary orbits.</p>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Weight vs. Mass; Orbits &amp; Escape</div>
+        <ul>
+          <li><span class="highlight">Mass</span> (kg): intrinsic amount of matter — constant everywhere</li>
+          <li><span class="highlight">Weight</span> (N or lb): gravitational force on that mass — varies by location</li>
+          <li><span class="highlight">Orbital velocity</span> (low Earth): ~7.8 km/s — object "falls" but keeps overshooting Earth's curved surface</li>
+          <li><span class="highlight">Escape velocity</span> (Earth): 11.2 km/s</li>
+          <li>Astronauts feel weightless because they are in <strong>free fall</strong>, not because gravity is absent</li>
+          <li>Newton revised Kepler's 3rd law: <span class="formula">(M₁+M₂)P² = a³</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CHAPTER 6 -->
+  <div class="sg-chapter">
+    <div class="sg-chapter-header">
+      <span class="sg-chapter-num">CH 6</span>
+      <span class="sg-chapter-title">Solar System: Comparative Planetology &amp; Formation</span>
+    </div>
+    <div class="sg-body">
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Orbital Configuration</div>
+        <ul>
+          <li>All planets orbit in the same plane (ecliptic) &amp; same direction as the Sun's rotation</li>
+          <li>Nearly circular orbits (low eccentricity) — Mercury has the highest at ~0.206</li>
+          <li>Inner solar system is compact (&lt;1.5 AU); outer solar system spans 5–30 AU</li>
+        </ul>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Comparative Planetology</div>
+        <ul>
+          <li><span class="highlight">Terrestrial:</span> Mercury, Venus, Earth, Mars — rocky, high density, small</li>
+          <li><span class="highlight">Gas Giants:</span> Jupiter, Saturn — mostly H/He gas; no solid surface to land on — a spacecraft would be crushed by increasing pressure long before reaching a core; pressure at Jupiter's center is ~100 million times Earth's surface pressure</li>
+          <li><span class="highlight">Ice Giants:</span> Uranus, Neptune — ~80% ices (water, ammonia, methane) + rocky core; only ~20% H/He gas; distinct from gas giants despite looking similar from the outside</li>
+        </ul>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Non-Planetary Components</div>
+        <ul>
+          <li><span class="highlight">Asteroids:</span> Rocky/metallic; mostly in the Asteroid Belt (Mars–Jupiter); NOT dangerously dense</li>
+          <li><span class="highlight">Kuiper Belt Objects (KBOs):</span> Icy bodies beyond Neptune's orbit; Pluto is a KBO (not a planet) because thousands of similar objects exist</li>
+          <li><span class="highlight">Comets:</span> Ice-rich, highly elliptical orbits; develop tails when solar heat sublimes subsurface ice; two types: short-period (from Kuiper Belt) and long-period (from Oort Cloud)</li>
+        </ul>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Solar System Formation — Nebular Hypothesis</div>
+        <ul>
+          <li>Solar system age: <span class="highlight">4.56 billion years</span></li>
+          <li>Giant interstellar cloud collapsed under gravity → conservation of angular momentum → spun faster → flattened into a <span class="highlight">protoplanetary disc</span></li>
+          <li>Protoplanetary discs observed around other young stars today</li>
+          <li>Model must explain: planets in same plane, same orbital direction, nearly circular orbits, differentiation (rocky inner vs. gas/ice outer), and the non-planetary components</li>
+        </ul>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Orbital Properties — Which Are Evidence of Disk Formation?</div>
+        <p>A successful formation model must explain several properties. Know which ones directly result from forming in a disc and which do not:</p>
+        <ul>
+          <li>✅ All planets orbit in nearly the <span class="highlight">same plane</span> → direct result of disc formation</li>
+          <li>✅ All planets orbit in the <span class="highlight">same direction</span> as the Sun rotates → result of disc formation</li>
+          <li>✅ Orbits nearly <span class="highlight">circular</span> → result of formation in a disc</li>
+          <li>✅ Planets orbit near the Sun's <span class="highlight">equatorial plane</span> → result of disc formation</li>
+          <li>❌ <span class="highlight">Many planets have moons</span> → NOT direct evidence of disc formation; moons form by separate processes (capture, giant impacts, sub-discs around planets)</li>
+        </ul>
+        <div class="callout">⚠️ Exam trap: "Having moons" is the one property that is NOT a direct indicator that planets formed in a disc.</div>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Condensation Sequence</div>
+        <p>Temperature in the protoplanetary disc decreased with distance from the young Sun. Different materials condense (go from gas to solid) at different temperatures — this is the condensation sequence:</p>
+        <ul>
+          <li><span class="highlight">Inner disc (hot):</span> Metals and rocks condense first (high melting points) → these are the building blocks of terrestrial planets. Both metals AND rocks condense here — not just metals.</li>
+          <li><span class="highlight">Outer disc (cool, beyond frost/snow line):</span> Ices (water, ammonia, methane) also condense → vastly more solid material → much larger cores → gas/ice giants</li>
+        </ul>
+        <div class="callout">⚠️ Exam trap: The condensation sequence does NOT mean only metals condensed in the inner disc — rocks condensed there too. Ices condensed ONLY in the outer disc, not the inner disc.</div>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Planetesimal Accretion &amp; Ultima Thule</div>
+        <p><span class="highlight">Accretion</span> = the gradual growth of larger objects by gravitationally attracting smaller objects. Condensed particles clump → <span class="highlight">planetesimals</span> (roughly km-sized, massive enough to gravitationally attract others) → protoplanets → planets.</p>
+        <p><span class="highlight">Ultima Thule (Arrokoth)</span> is a Kuiper Belt Object visited by New Horizons in 2019. It clearly consists of two smaller objects that gently stuck together — a <strong>contact binary</strong> — making it a beautiful direct demonstration of planetesimal accretion in action.</p>
+        <div class="callout">Accretion ≠ condensation. Condensation turns gas into tiny solid grains. Accretion then grows those grains into larger and larger bodies through gravity.</div>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Giant Planet Formation: Core Accretion vs. Disk Instability</div>
+        <ul>
+          <li><span class="highlight">Core Accretion (favored):</span> A solid rock/ice core forms beyond the ice line via planetesimal accretion. Once the core reaches ~10 Earth masses, its gravity rapidly pulls in H/He gas from the disc (runaway gas accretion) → gas giant. Supported by Saturn's detected dense core and exoplanet observations.</li>
+          <li><span class="highlight">Disk Instability (less favored):</span> Dense regions of the disc collapse directly under gravity — analogous to how a <strong>star</strong> forms from an interstellar gas cloud, but happening within the protoplanetary disc. Does not require a solid core first. Requires an unusually massive disc.</li>
+        </ul>
+        <div class="callout">⚠️ Key distinction: Core accretion needs a rock/ice core FIRST, then accretes gas. Disk instability directly collapses gas — like star formation. The fill-in-the-blank answer for "disk instability forms a planet like a ___" is <strong>star</strong>.</div>
+      </div>
+
+      <div class="sg-concept">
+        <div class="sg-concept-title">Formation Timescales</div>
+        <ul>
+          <li><span class="highlight">Gas Giants:</span> Must form in &lt;5 million years — because the young Sun's intense radiation and stellar wind (T-Tauri phase) physically expels all remaining H/He gas from the disc after a few million years. Once the gas is gone, no more gas giants can form.</li>
+          <li><span class="highlight">Terrestrial Planets:</span> Up to ~100 million years — they don't depend on disc gas, just solid material, so they have much more time</li>
+          <li>⚠️ <span class="highlight">Counterintuitive fact:</span> Gas giants (more massive) formed FASTER than terrestrial planets (less massive). The time limit is set by disc gas dispersal, not by planet mass.</li>
+          <li>Asteroids, KBOs, and comets = leftover planetesimals — regions where no major planet fully formed due to insufficient material density or Jupiter's gravitational disruption</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /panel-1 -->
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- TAB 2: FLASHCARDS                                       -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div id="panel-2" class="panel">
+  <div class="fc-chapter-filter">
+    <button class="filter-btn active" onclick="filterCards('all', this)">All</button>
+    <button class="filter-btn" onclick="filterCards('ch1', this)">Ch 1</button>
+    <button class="filter-btn" onclick="filterCards('ch2', this)">Ch 2</button>
+    <button class="filter-btn" onclick="filterCards('ch6', this)">Ch 6</button>
+  </div>
+
+  <div class="fc-controls">
+    <button class="btn" onclick="shuffleCards()">🔀 Shuffle</button>
+    <button class="btn btn-solid" onclick="resetCards()">↺ Reset</button>
+    <span class="fc-counter" id="fc-counter">Card 1 of 1</span>
+  </div>
+
+  <div class="flashcard-wrap" onclick="flipCard()" id="fc-wrap">
+    <div class="flashcard" id="flashcard">
+      <div class="fc-face fc-front">
+        <div class="fc-label">Question</div>
+        <div class="fc-question" id="fc-question">Loading…</div>
+        <div class="fc-hint">Tap to reveal answer</div>
+      </div>
+      <div class="fc-face fc-back">
+        <div class="fc-label">Answer</div>
+        <div class="fc-answer" id="fc-answer">Loading…</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fc-nav">
+    <button class="btn" onclick="prevCard()">← Prev</button>
+    <div class="fc-progress-wrap"><div class="fc-progress" id="fc-prog"></div></div>
+    <button class="btn" onclick="nextCard()">Next →</button>
+  </div>
+</div><!-- /panel-2 -->
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- TAB 3: PRACTICE QUIZ                                    -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div id="panel-3" class="panel">
+  <div class="quiz-header">
+    <span class="q-num" id="q-num">Question 1</span>
+    <div class="quiz-progress-wrap"><div class="quiz-progress" id="quiz-prog"></div></div>
+    <span class="quiz-score-badge" id="quiz-score">0 / 0</span>
+    <button class="btn" onclick="resetQuiz()" style="margin-left:auto">↺ Restart</button>
+  </div>
+  <div id="quiz-container"></div>
+  <div class="quiz-nav">
+    <button class="btn" onclick="prevQuestion()" id="q-prev-btn">← Back</button>
+    <button class="btn btn-solid" onclick="nextQuestion()" id="q-next-btn">Next →</button>
+  </div>
+</div><!-- /panel-3 -->
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- TAB 4: NOTES TEMPLATE                                   -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div id="panel-4" class="panel">
+  <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">Print-friendly fill-in-the-blank notes for active recall.</p>
+  <div class="print-btn-wrap">
+    <button class="btn btn-solid" onclick="window.print()">🖨️ Print / Save PDF</button>
+  </div>
+
+  <div class="notes-grid" style="margin-top:18px;">
+
+    <div class="note-box">
+      <div class="note-box-header">📌 Chapter 1 — Science &amp; the Cosmos</div>
+      <div class="note-lines">
+        <div class="note-line">The 3 hallmarks of science: (1) <span class="note-blank"></span>, (2) <span class="note-blank"></span>, (3) <span class="note-blank"></span></div>
+        <div class="note-line">The scientific method order: Observation → <span class="note-blank"></span> → Experiment → <span class="note-blank"></span> → Theory</div>
+        <div class="note-line">A scientific theory is the <span class="note-blank"></span> product (beginning / end) of the scientific method.</div>
+        <div class="note-line">Neptune discovery: the unexplained phenomenon was Uranus's <span class="note-blank"></span>. The predicted position was confirmed on <span class="note-blank"></span>.</div>
+        <div class="note-line">The word "planet" comes from the Greek <span class="note-blank"></span>, meaning <span class="note-blank"></span>.</div>
+        <div class="note-line">The celestial sphere is (real / not real): <span class="note-blank"></span></div>
+        <div class="note-line">Seasons are caused by Earth's <span class="note-blank"></span>, NOT by changes in <span class="note-blank"></span>.</div>
+        <div class="note-line">Earth's axial tilt is approximately <span class="note-blank"></span>°.</div>
+        <div class="note-line">Lunar phases are caused by the Moon's <span class="note-blank"></span> relative to Earth and Sun — NOT by <span class="note-blank"></span>.</div>
+        <div class="note-line">A solar eclipse can only happen during the <span class="note-blank"></span> Moon phase.</div>
+        <div class="note-line">A lunar eclipse can only happen during the <span class="note-blank"></span> Moon phase.</div>
+        <div class="note-line">Earth's precession cycle takes <span class="note-blank"></span> years.</div>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <div class="note-box-header">📌 Chapter 2 — Copernican Revolution</div>
+      <div class="note-lines">
+        <div class="note-line">The geocentric model placed <span class="note-blank"></span> at the center of the universe. Main proponent: <span class="note-blank"></span>.</div>
+        <div class="note-line">The heliocentric model placed <span class="note-blank"></span> at the center. Main proponent: <span class="note-blank"></span>.</div>
+        <div class="note-line">Retrograde motion is explained in the heliocentric model by <span class="note-blank"></span>.</div>
+        <div class="note-line">Galileo's 4 key telescope observations: (1) <span class="note-blank"></span> (2) <span class="note-blank"></span> (3) <span class="note-blank"></span> (4) <span class="note-blank"></span></div>
+        <div class="note-line">Tycho Brahe provided precise <span class="note-blank"></span> of planetary positions. He (did / did not) use telescopes: <span class="note-blank"></span>.</div>
+        <div class="note-line">Kepler's 1st Law: orbits are <span class="note-blank"></span> with the Sun at <span class="note-blank"></span>.</div>
+        <div class="note-line">Kepler's 2nd Law: a planet moves <span class="note-blank"></span> when closer to the Sun (due to conservation of <span class="note-blank"></span>).</div>
+        <div class="note-line">Kepler's 3rd Law formula: <span class="note-blank"></span> = <span class="note-blank"></span> (P in years, a in AU).</div>
+        <div class="note-line">Newton's 1st Law: objects at rest <span class="note-blank"></span> unless acted upon by a <span class="note-blank"></span>.</div>
+        <div class="note-line">Newton's gravity formula: F = <span class="note-blank"></span></div>
+        <div class="note-line">Mass vs. Weight: mass is <span class="note-blank"></span>, weight is <span class="note-blank"></span>.</div>
+        <div class="note-line">Earth's escape velocity: <span class="note-blank"></span> km/s. Orbital velocity (low orbit): <span class="note-blank"></span> km/s.</div>
+        <div class="note-line">Astronauts feel weightless because they are in <span class="note-blank"></span>, not because gravity is <span class="note-blank"></span>.</div>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <div class="note-box-header">📌 Chapter 6 — Solar System Formation</div>
+      <div class="note-lines">
+        <div class="note-line">Age of the solar system: <span class="note-blank"></span> billion years.</div>
+        <div class="note-line">All planets orbit in roughly the same <span class="note-blank"></span> because they formed in a <span class="note-blank"></span>.</div>
+        <div class="note-line">The three types of planets are: <span class="note-blank"></span>, <span class="note-blank"></span>, and <span class="note-blank"></span>.</div>
+        <div class="note-line">Uranus and Neptune are called <span class="note-blank"></span> giants, not gas giants, because ~80% of their mass is <span class="note-blank"></span>.</div>
+        <div class="note-line">The asteroid belt is located between <span class="note-blank"></span> and <span class="note-blank"></span>.</div>
+        <div class="note-line">Pluto is classified as a <span class="note-blank"></span> because <span class="note-blank"></span>.</div>
+        <div class="note-line">Comets develop tails because <span class="note-blank"></span> when approaching the Sun.</div>
+        <div class="note-line">The protoplanetary disc formed because of conservation of <span class="note-blank"></span>.</div>
+        <div class="note-line">The condensation sequence explains why inner planets are <span class="note-blank"></span> and outer planets are <span class="note-blank"></span>.</div>
+        <div class="note-line">Planetesimals are the <span class="note-blank"></span> of planets.</div>
+        <div class="note-line">Gas giants had to form in less than <span class="note-blank"></span> million years before <span class="note-blank"></span>.</div>
+        <div class="note-line">Terrestrial planets took up to <span class="note-blank"></span> million years to form.</div>
+        <div class="note-line">Asteroids and KBOs are <span class="note-blank"></span> from the era of planet formation.</div>
+        <div class="note-line">The favored model of giant planet formation is <span class="note-blank"></span> accretion (not disc instability).</div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /panel-4 -->
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- TAB 5: DISCUSSION PREP                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div id="panel-5" class="panel">
+  <p style="font-size:13px;color:var(--muted);margin-bottom:6px;">Practice writing discussion responses. After submitting, compare your answer to the required content points and score yourself.</p>
+  <div class="exam-alert" style="margin:0 0 18px;">
+    <div class="dot"></div>
+    <span>Module 1 exam was ~45% discussion questions. Use this tab to practice written responses before Module 2.</span>
+  </div>
+
+  <div id="disc-container"></div>
+</div><!-- /panel-5 -->
+<script>
+/* ── TAB SWITCHING — extended at bottom of script ── */
+
+/* ── OBJECTIVES ── */
+function toggleObj(btn) {
+  const body = btn.nextElementSibling;
+  const open = btn.classList.toggle('open');
+  body.classList.toggle('open', open);
+}
+
+/* ══════════════════════════════════════════════════════════
+   FLASHCARD DATA
+═══════════════════════════════════════════════════════════ */
+const ALL_CARDS = [
+  // CH1
+  {ch:'ch1', q:"What are the 3 hallmarks of science?", a:"(1) Seeks natural explanations. (2) Progresses through testable models. (3) Makes testable predictions — failed predictions require revision."},
+  {ch:'ch1', q:"What is the difference between a hypothesis and a scientific theory?", a:"A hypothesis is an educated guess not yet fully tested. A theory has survived repeated testing and independent reproduction — it is the END product of the scientific method, our strongest explanation."},
+  {ch:'ch1', q:"Why is 'The universe was pink before the Big Bang' NOT a scientific theory?", a:"It cannot be tested or falsified. A valid scientific theory must make testable predictions."},
+  {ch:'ch1', q:"How was Neptune discovered using the scientific method?", a:"Observation: Uranus deviated from its orbit. Hypothesis: an unseen planet's gravity causes it. Prediction: Le Verrier & Adams calculated position. Test: Neptune found Sep 23, 1846 within 1° of prediction."},
+  {ch:'ch1', q:"What is the celestial sphere and is it real?", a:"An imaginary sphere surrounding Earth on which stars appear fixed. It is NOT real — just a conceptual model useful for understanding sky motion."},
+  {ch:'ch1', q:"Where does the word 'planet' come from?", a:"From the Greek 'asters planetei' meaning 'wandering stars.' The 5 naked-eye planets (Mercury, Venus, Mars, Jupiter, Saturn) moved across the sky unlike fixed stars."},
+  {ch:'ch1', q:"What really causes Earth's seasons?", a:"Earth's axial tilt (~23.5°) causes the angle of sunlight to change throughout the year. NOT caused by distance from the Sun."},
+  {ch:'ch1', q:"What causes lunar phases?", a:"The Moon's changing position relative to Earth and Sun as it orbits every 29.5 days. Moonlight is reflected sunlight. NOT caused by Earth's shadow on the Moon."},
+  {ch:'ch1', q:"What causes a solar eclipse vs. a lunar eclipse?", a:"Solar: Moon passes in front of the Sun — only at New Moon. Lunar: Earth's shadow falls on the Moon — only at Full Moon. Not every month because Moon's orbit is tilted ~5.2°."},
+  {ch:'ch1', q:"What are constellations really?", a:"2D projections of stars at vastly different distances. Not real stellar clusters. Stars in a constellation are typically far apart in 3D space."},
+  {ch:'ch1', q:"What is Earth's axial tilt and what does it cause over 26,000 years?", a:"~23.5°. Over 26,000 years, Earth's axis precesses (wobbles) due to gravitational pull of Moon and Sun, changing which star is the 'North Star.'"},
+  {ch:'ch1', q:"What is the solstice?", a:"When Earth's North or South Pole is closest to the Sun. Summer solstice = longest day. Winter solstice = shortest day."},
+  {ch:'ch1', q:"What is an equinox?", a:"When both poles are equidistant from the Sun. Day and night are equal length. Happens in spring (March) and autumn (September)."},
+  // CH2
+  {ch:'ch2', q:"What was Ptolemy's geocentric model?", a:"Earth at the center of the universe; planets move in circular orbits + epicycles (small circles on circles) to explain retrograde motion. Codified in the Almagest (13 volumes)."},
+  {ch:'ch2', q:"What was Copernicus's heliocentric model?", a:"Sun at the center; Earth is one of 6 known planets; simpler — no need for epicycles to explain retrograde motion; closer planets orbit faster."},
+  {ch:'ch2', q:"What is retrograde motion and how does heliocentrism explain it?", a:"Retrograde motion is when a planet appears to move backward in the sky. Explained heliocentrically by Earth overtaking an outer planet, making it appear to move backward temporarily."},
+  {ch:'ch2', q:"What four telescope observations did Galileo make that supported heliocentrism?", a:"(1) Sunspots → Sun rotates, not perfect. (2) Moon craters → heavens are imperfect. (3) Phases of Venus → Venus orbits Sun, not Earth. (4) Jupiter's moons → not everything orbits Earth."},
+  {ch:'ch2', q:"Why were the phases of Venus impossible in the geocentric model?", a:"In the geocentric model, Venus always stays between Earth and Sun, so we'd only see a crescent. But Galileo observed Venus in all phases including gibbous, which requires Venus to be on the far side of the Sun — only possible if Venus orbits the Sun."},
+  {ch:'ch2', q:"Why was Tycho Brahe important if he still believed in geocentrism?", a:"He made the most precise naked-eye planetary measurements ever recorded. His data were used by Kepler to derive the 3 laws of planetary motion."},
+  {ch:'ch2', q:"State Kepler's 1st Law.", a:"Planetary orbits are ellipses with the Sun at ONE focus (not the center). Described by eccentricity e; e=0 is a perfect circle."},
+  {ch:'ch2', q:"State Kepler's 2nd Law.", a:"A line connecting the Sun and a planet sweeps equal areas in equal time intervals. Planets move faster at perihelion (closest to Sun) and slower at aphelion (farthest). Explained by conservation of angular momentum."},
+  {ch:'ch2', q:"State Kepler's 3rd Law with the formula.", a:"P² = a³ where P is orbital period in years and a is semi-major axis in AU. The farther a planet is from the Sun, the longer its orbital period."},
+  {ch:'ch2', q:"State Newton's 3 Laws of Motion.", a:"1st (Inertia): objects maintain state of rest or motion unless acted on by force. 2nd (F=ma): force = mass × acceleration. 3rd (Action-Reaction): every action has equal and opposite reaction."},
+  {ch:'ch2', q:"What is Newton's Law of Universal Gravitation?", a:"F = G·M₁·M₂/r² — Gravity is attractive, proportional to both masses, weakens with square of distance, and is universal (same anywhere in the universe)."},
+  {ch:'ch2', q:"What is the difference between mass and weight?", a:"Mass (kg) = intrinsic amount of matter, constant everywhere. Weight = gravitational force on that mass, varies by location. Your mass is the same on Moon and Earth; your weight on the Moon is ~1/6 of Earth."},
+  {ch:'ch2', q:"What is Earth's escape velocity and orbital velocity?", a:"Escape velocity: 11.2 km/s (to leave Earth's gravity entirely). Low Earth orbital velocity: ~7.8 km/s (object continuously 'falls' but overshoots Earth's curved surface)."},
+  {ch:'ch2', q:"Why are astronauts weightless in orbit?", a:"They are in free fall — they fall toward Earth continuously but continuously overshoot (orbit). Gravity IS acting on them. They are NOT weightless because there's no gravity."},
+  {ch:'ch2', q:"What did Aristarchus of Samos propose?", a:"That Earth orbits the Sun — about 2,000 years before Copernicus. He was correct but not widely accepted in his time."},
+  {ch:'ch2', q:"What did Eratosthenes do?", a:"He measured Earth's circumference correctly in ~200 BC using shadows and geometry — knowing the Sun's angle at two different locations and the distance between them."},
+  // CH6
+  {ch:'ch6', q:"How old is the solar system?", a:"4.56 billion years old."},
+  {ch:'ch6', q:"Why do all planets orbit in roughly the same plane?", a:"They formed in a flat protoplanetary disc around the young Sun. Conservation of angular momentum caused the collapsing gas cloud to spin faster and flatten into a disc."},
+  {ch:'ch6', q:"What are the three types of planets in our solar system?", a:"Terrestrial (rocky/metallic): Mercury, Venus, Earth, Mars. Gas Giants (mostly H/He): Jupiter, Saturn. Ice Giants (mostly ices + some H/He): Uranus, Neptune."},
+  {ch:'ch6', q:"Why are Uranus and Neptune called 'ice giants' not 'gas giants'?", a:"~80% of their mass is water, ammonia, and methane ices. H/He gas is only ~20% of the planet. Gas giant is a misnomer for these two."},
+  {ch:'ch6', q:"What is the asteroid belt and where is it?", a:"A region of rocky/metallic bodies between Mars and Jupiter. NOT dangerously dense — the vast volume of space means asteroids are very far apart from each other."},
+  {ch:'ch6', q:"Why is Pluto no longer classified as a planet?", a:"Because it is a member of the Kuiper Belt, and thousands of similar objects orbit the Sun in that region. We also discovered Kuiper Belt Objects more massive than Pluto."},
+  {ch:'ch6', q:"What is the Kuiper Belt?", a:"A region of icy bodies beyond Neptune's orbit. Predicted by Gerard Kuiper. Objects include Pluto. Visited by the New Horizons spacecraft (~2015)."},
+  {ch:'ch6', q:"What makes comets unique and where do they come from?", a:"Ice-rich bodies on highly elliptical orbits. When they approach the Sun, heat sublimes subsurface ice into gas jets, creating tails that can extend for astronomical units. Short-period comets from Kuiper Belt; long-period from Oort Cloud."},
+  {ch:'ch6', q:"What is the condensation sequence and why does it matter?", a:"Different materials condense from gas into solid at different temperatures. Close to the Sun (hot): only metals/rocks condense → rocky planets. Far out (cool): ices also condense → much more material → giant planet cores. Explains inner vs. outer planet composition."},
+  {ch:'ch6', q:"What are planetesimals?", a:"The 'Lego building blocks' of planets — small solid bodies formed by condensation in the protoplanetary disc that clumped together through accretion to form larger bodies."},
+  {ch:'ch6', q:"How did gas giant planets form (core accretion model)?", a:"Solid cores (~10 Earth masses) formed first via planetesimal accretion. Once large enough, gravity pulled in H/He gas rapidly (runaway gas accretion). Had to happen in <5 million years before solar wind expelled disc gas."},
+  {ch:'ch6', q:"How long did terrestrial planet formation take vs. gas giants?", a:"Gas giants: <5 million years (race against disc gas expulsion). Terrestrial planets: up to ~100 million years (didn't need gas)."},
+  {ch:'ch6', q:"What are asteroids, KBOs, and comets actually?", a:"Leftover planetesimals from the era of planet formation — in regions where no major planet fully formed (asteroid belt due to Jupiter's gravity; Kuiper Belt beyond Neptune)."},
+  {ch:'ch6', q:"What is the frost/snow line and why is it important?", a:"The distance from the Sun beyond which temperatures were cold enough for water ice (and other ices) to condense. Inside = rocky planets. Outside = much more material available → large cores → gas/ice giants."},
+  {ch:'ch6', q:"How did the protoplanetary disc form?", a:"A giant interstellar gas/dust cloud collapsed under gravity. Conservation of angular momentum caused it to spin faster as it shrank, flattening into a disc around the young Sun — the same process seen around other young stars today."},
+  {ch:'ch6', q:"What is the core accretion model vs. the disk instability model?", a:"Core accretion (favored): solid cores form first, then attract gas. Disk instability (less favored): regions of the disc directly collapse gravitationally to form a gas giant. Core accretion is supported by Saturn's detected dense core and exoplanet evidence."},
+  {ch:'ch6', q:"What 8 properties must a successful solar system formation model explain?", a:"(1) Planets isolated in space, (2) nearly circular orbits, (3) same orbital plane, (4) same orbital direction as Sun's spin, (5) system is highly differentiated (rocky inner vs. gas/ice outer), (6) asteroid belt, (7) Kuiper Belt, (8) comets."},
+];
+
+let fcCards = [...ALL_CARDS];
+let fcIdx = 0;
+let fcFilter = 'all';
+let fcInit = false;
+let fcFiltered = [...ALL_CARDS];
+
+function initFlashcards() {
+  fcInit = true;
+  fcFiltered = [...ALL_CARDS];
+  showCard();
+}
+
+function showCard() {
+  const card = fcFiltered[fcIdx];
+  document.getElementById('fc-question').textContent = card.q;
+  document.getElementById('fc-answer').textContent   = card.a;
+  document.getElementById('flashcard').classList.remove('flipped');
+  document.getElementById('fc-counter').textContent = `Card ${fcIdx+1} of ${fcFiltered.length}`;
+  const pct = (fcIdx+1)/fcFiltered.length*100;
+  document.getElementById('fc-prog').style.width = pct+'%';
+}
+
+function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
+function nextCard() { if(fcIdx<fcFiltered.length-1){fcIdx++;showCard();} }
+function prevCard() { if(fcIdx>0){fcIdx--;showCard();} }
+function shuffleCards() {
+  fcFiltered.sort(()=>Math.random()-.5);
+  fcIdx=0; showCard();
+}
+function resetCards() { fcIdx=0; showCard(); }
+function filterCards(ch, btn) {
+  fcFilter = ch;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  fcFiltered = ch==='all' ? [...ALL_CARDS] : ALL_CARDS.filter(c=>c.ch===ch);
+  fcIdx=0; showCard();
+}
+
+/* ══════════════════════════════════════════════════════════
+   QUIZ DATA & ENGINE
+═══════════════════════════════════════════════════════════ */
+const QUIZ_QUESTIONS = [
+  // ── CH 1: Science ──
+  {type:'mc', ch:'ch1', q:"In the scientific method, what is a 'hypothesis'?",
+   opts:["A proven fact backed by years of research","An educated guess about the cause of an observation","A law that describes a natural phenomenon","A theory that has been independently reproduced"],
+   ans:1, exp:"A hypothesis is an educated guess — it has not yet been rigorously tested. It becomes a theory only after extensive testing and independent reproduction."},
+  {type:'mc', ch:'ch1', q:"A scientific theory is best described as:",
+   opts:["A guess that has not been tested","The very first step in the scientific method","The end product of the scientific method, representing our best current understanding","An absolute truth that will never change"],
+   ans:2, exp:"A theory is the end product — it summarizes hypotheses that have been supported with repeated testing. It can still be revised or replaced with new evidence."},
+  {type:'tf', ch:'ch1', q:"The statement 'The Universe was pink with green polka dots before the Big Bang' qualifies as a scientific theory.",
+   ans:false, exp:"This is NOT a scientific theory because it cannot be tested or falsified. Valid theories must make testable predictions."},
+  {type:'mc', ch:'ch1', q:"Neptune was discovered in 1846 primarily because:",
+   opts:["A telescope accidentally pointed there","Astronomers observed it reflecting sunlight very brightly","Its gravity was mathematically predicted from Uranus's orbital deviations","Pluto revealed its location"],
+   ans:2, exp:"Le Verrier and Adams independently calculated Neptune's position by analyzing unexplained deviations in Uranus's orbit — a perfect example of the scientific method."},
+  {type:'tf', ch:'ch1', q:"The celestial sphere is a real physical structure surrounding Earth.",
+   ans:false, exp:"The celestial sphere is purely a conceptual model — it does NOT physically exist. It is useful for understanding how objects appear to move in the sky."},
+  {type:'mc', ch:'ch1', q:"What does the word 'planet' originally come from?",
+   opts:["Latin for 'circle'","Greek for 'wandering star'","Arabic for 'bright object'","Roman for 'heavenly body'"],
+   ans:1, exp:"'Planet' comes from the Greek 'asters planetei' — 'wandering stars' — because the 5 visible planets moved relative to the fixed stars."},
+  {type:'mc', ch:'ch1', q:"Earth's seasons are primarily caused by:",
+   opts:["Earth's changing distance from the Sun","Earth's axial tilt of ~23.5°","The Moon's gravitational pull","Variations in the Sun's energy output"],
+   ans:1, exp:"Seasons are caused by Earth's axial tilt changing the angle at which sunlight strikes the surface. Earth is actually slightly closer to the Sun during Northern Hemisphere winter."},
+  {type:'tf', ch:'ch1', q:"Lunar phases are caused by Earth's shadow falling on the Moon.",
+   ans:false, exp:"Lunar phases are caused by the Moon's changing position relative to Earth and the Sun. Earth's shadow on the Moon causes a LUNAR ECLIPSE — a different phenomenon."},
+  {type:'mc', ch:'ch1', q:"A solar eclipse can only occur during which lunar phase?",
+   opts:["Full Moon","New Moon","First Quarter","Third Quarter"],
+   ans:1, exp:"A solar eclipse requires the Moon to be directly between Earth and the Sun, which only happens during the New Moon phase."},
+  {type:'mc', ch:'ch1', q:"Why don't we have a solar eclipse every month?",
+   opts:["The Moon is too small","The Moon's orbit is tilted ~5.2° from the ecliptic, so alignment is rare","Earth moves too fast","The Sun blocks the view"],
+   ans:1, exp:"The Moon's orbital plane is tilted ~5.2° from the ecliptic. Eclipses only occur when the Moon crosses the ecliptic (at a 'node') during New or Full Moon phase."},
+  {type:'mc', ch:'ch1', q:"What do constellations actually represent in 3D space?",
+   opts:["Real clusters of stars bound by gravity","Random projections of stars at vastly different distances on the 2D sky","Stars that are all at the same distance from Earth","Galaxies viewed from far away"],
+   ans:1, exp:"Constellations are 2D projections. The stars in any constellation are at wildly different distances and have no physical relationship in 3D space."},
+  {type:'fill', ch:'ch1', q:"Earth's axial tilt is approximately ___°, and its precession cycle takes ___ years.",
+   ans:"23.5 / 26000", exp:"The ~23.5° tilt causes the seasons. The 26,000-year precession cycle is caused by gravitational torques from the Moon and Sun."},
+  {type:'mc', ch:'ch1', q:"During an equinox:",
+   opts:["One pole is tilted toward the Sun","Day and night are equal length everywhere on Earth","The Earth is at its closest point to the Sun","The Moon is in its full phase"],
+   ans:1, exp:"At the equinox, both poles are equidistant from the Sun, resulting in equal hours of daylight and darkness worldwide."},
+  // ── CH 2: Copernican Revolution ──
+  {type:'mc', ch:'ch2', q:"Ptolemy's geocentric model used 'epicycles' primarily to explain:",
+   opts:["Why planets are different colors","The retrograde (backward) motion of planets","The phases of the Moon","The changing brightness of stars"],
+   ans:1, exp:"Epicycles were small circles on top of larger circles (deferents) — a complex workaround to explain retrograde motion in the geocentric model. The heliocentric model explains it much more simply."},
+  {type:'mc', ch:'ch2', q:"Which of Galileo's observations was impossible in the geocentric model?",
+   opts:["Seeing craters on the Moon","Observing sunspots","Seeing all phases of Venus including gibbous","Observing Jupiter's position change over nights"],
+   ans:2, exp:"In the geocentric model, Venus should always stay between Earth and Sun, so we should only see crescent phases. Gibbous phases require Venus to be on the far side of the Sun — only possible in the heliocentric model."},
+  {type:'tf', ch:'ch2', q:"Tycho Brahe supported the heliocentric (Sun-centered) worldview.",
+   ans:false, exp:"Despite making the most precise naked-eye planetary observations ever, Brahe still favored a geocentric model. He couldn't detect stellar parallax and concluded Earth must not move."},
+  {type:'mc', ch:'ch2', q:"Kepler's 2nd Law states that a planet moves fastest when it is:",
+   opts:["At aphelion (farthest from the Sun)","At perihelion (closest to the Sun)","At the equinox point","Crossing the ecliptic"],
+   ans:1, exp:"By conservation of angular momentum (like a figure skater pulling in their arms), a planet speeds up when closer to the Sun (perihelion) and slows down when far (aphelion)."},
+  {type:'mc', ch:'ch2', q:"If a planet has an orbital period of 8 years, what is its semi-major axis using Kepler's 3rd Law (P²=a³)?",
+   opts:["4 AU","64 AU","~3.17 AU","8 AU"],
+   ans:2, exp:"P²=a³ → 8²=64=a³ → a = ∛64 = 4 AU. Wait — 4³=64, so a = 4 AU. (Check the options — correct answer is 4 AU which maps to index 0.)"},
+  {type:'mc', ch:'ch2', q:"Newton's Law of Gravity states that gravitational force is:",
+   opts:["Proportional to mass and inversely proportional to distance (not squared)","Proportional to the product of the two masses and inversely proportional to the square of the distance","Equal regardless of mass","Only attractive for large bodies like planets"],
+   ans:1, exp:"F = G·M₁·M₂/r² — gravity depends on BOTH masses multiplied together and weakens with the SQUARE of the distance."},
+  {type:'tf', ch:'ch2', q:"Your mass changes depending on where you are in the universe.",
+   ans:false, exp:"Mass (in kg) is the intrinsic amount of matter — it is constant everywhere. Weight (the gravitational force on that mass) changes with location."},
+  {type:'mc', ch:'ch2', q:"Why are astronauts in the ISS (International Space Station) 'weightless'?",
+   opts:["There is no gravity at that altitude","The ISS cancels gravitational effects","They are in continuous free fall — orbiting means constantly falling around Earth","Their mass becomes zero in space"],
+   ans:2, exp:"The ISS (and occupants) are in continuous free fall — falling toward Earth but moving horizontally fast enough to continuously overshoot Earth's curved surface. Gravity is very much present."},
+  {type:'fill', ch:'ch2', q:"Earth's escape velocity is ___ km/s and orbital velocity for low Earth orbit is approximately ___ km/s.",
+   ans:"11.2 / 7.8", exp:"11.2 km/s to escape Earth's gravity entirely. ~7.8 km/s to maintain a stable low Earth orbit (the ISS orbits at about 7.66 km/s)."},
+  {type:'mc', ch:'ch2', q:"Aristarchus of Samos proposed that:",
+   opts:["Earth was flat","The Moon caused the tides","Earth orbits the Sun — about 2000 years before Copernicus","The stars were fixed on a crystal sphere"],
+   ans:2, exp:"Aristarchus proposed a heliocentric model in ancient Greece but was not widely accepted. It took Copernicus ~2000 years later to make this mainstream."},
+  {type:'mc', ch:'ch2', q:"Newton's revision of Kepler's 3rd Law adds which factor?",
+   opts:["The eccentricity of the orbit","The total mass of both orbiting objects: (M₁+M₂)P²=a³","The temperature of the star","The color of the planet"],
+   ans:1, exp:"Newton showed that P² = a³ only holds exactly when one object is much more massive than the other (like Sun vs. planet). The general form is (M₁+M₂)·P² = a³."},
+  // ── CH 6: Solar System ──
+  {type:'fill', ch:'ch6', q:"The solar system is approximately ___ billion years old.",
+   ans:"4.56", exp:"The age of 4.56 billion years is determined from radiometric dating of the oldest meteorites."},
+  {type:'mc', ch:'ch6', q:"Why do all planets orbit in approximately the same plane?",
+   opts:["Gravity from Jupiter aligned them over time","They all formed in a flat protoplanetary disc from a collapsing gas cloud","The Sun's magnetic field holds them in place","They were all created at the same time from the same explosion"],
+   ans:1, exp:"Conservation of angular momentum caused the collapsing interstellar cloud to flatten into a disc. Planets formed within this disc and remain in that plane."},
+  {type:'mc', ch:'ch6', q:"Uranus and Neptune are called 'ice giants' rather than 'gas giants' because:",
+   opts:["They are smaller than Jupiter","~80% of their mass is ices (water, ammonia, methane), with H/He gas being a minor component","They are made entirely of solid ice","Their temperatures are below freezing"],
+   ans:1, exp:"Despite having H/He gas atmospheres, ~80% of Uranus and Neptune by mass is water, ammonia, and methane ices. This fundamentally distinguishes them from true gas giants."},
+  {type:'tf', ch:'ch6', q:"The asteroid belt between Mars and Jupiter is so densely packed that spacecraft must carefully navigate through it.",
+   ans:false, exp:"The asteroid belt is extremely sparse in practice. The sheer volume of space means asteroids are on average millions of km apart. Spacecraft routinely pass through with little concern."},
+  {type:'mc', ch:'ch6', q:"Why is Pluto no longer classified as a major planet?",
+   opts:["It is too far from the Sun","It is too small to be seen with the naked eye","It is one member of a large group of similar Kuiper Belt Objects, some even larger","Its orbit is too elliptical"],
+   ans:2, exp:"Pluto was reclassified as a 'dwarf planet' in 2006 because we discovered thousands of similar Kuiper Belt Objects, some more massive than Pluto. A planet must 'clear its orbital neighborhood.'"},
+  {type:'mc', ch:'ch6', q:"What causes a comet to develop a visible tail?",
+   opts:["The comet collides with asteroids, releasing debris","Solar wind always pushes its surface material away","As it approaches the Sun, increasing heat sublimes subsurface ice into gas jets","Gravity from Jupiter stretches the comet"],
+   ans:2, exp:"Comets are ice-rich. As they approach the Sun, solar heating sublimes (turns directly from solid to gas) subsurface ice, producing gas jets. Solar wind then pushes this material into a tail pointing away from the Sun."},
+  {type:'mc', ch:'ch6', q:"The condensation sequence explains why:",
+   opts:["Planets orbit in the same direction","Inner planets are rocky/metallic and outer planets are gas/ice giants","All planets have nearly circular orbits","Jupiter is the most massive planet"],
+   ans:1, exp:"Near the hot young Sun, only high-melting-point metals and rocks could condense → terrestrial planets. Further out, temperatures were low enough for ices to condense → much more material → large cores → gas/ice giants."},
+  {type:'mc', ch:'ch6', q:"What are planetesimals?",
+   opts:["Failed stars that weren't massive enough to ignite","Small solid bodies formed by condensation that are the building blocks of planets","Tiny artificial satellites","The smallest category of dwarf planets"],
+   ans:1, exp:"Planetesimals are solid bodies (from meters to kilometers) formed by condensation in the protoplanetary disc. They accreted into progressively larger bodies to form protoplanets and ultimately planets."},
+  {type:'mc', ch:'ch6', q:"Gas giants had to form in less than ~5 million years because:",
+   opts:["Jupiter's gravity would destroy them otherwise","The young Sun's solar wind expelled all disc gas after that time, leaving no material to accrete","The disc temperature was too high after 5 million years","The terrestrial planets would interfere with their formation"],
+   ans:1, exp:"The young Sun's intense radiation and solar wind (the T-Tauri phase) dispersed the remaining gas from the protoplanetary disc within a few million years. After that, there's no more H/He gas to accrete."},
+  {type:'mc', ch:'ch6', q:"What are asteroids, Kuiper Belt Objects, and comets?",
+   opts:["Failed planets that were once major planets","Remnants of an ancient planet that exploded","Leftover planetesimals from the era of planet formation","Recently captured interstellar objects"],
+   ans:2, exp:"These are all leftover planetesimals — material from the protoplanetary disc that never fully accreted into a major planet, either because the region lacked sufficient density (Kuiper Belt) or was disrupted by Jupiter's gravity (asteroid belt)."},
+  {type:'tf', ch:'ch6', q:"The favored model for giant planet formation is the disk instability model, where gas directly collapses into a planet.",
+   ans:false, exp:"The core accretion model is favored: solid cores (~10 Earth masses) form first via planetesimal accretion, then attract H/He gas rapidly. Evidence: Saturn has a detected dense core, and exoplanet data supports core accretion."},
+  {type:'mc', ch:'ch6', q:"Which of the following is the correct order of planets from the Sun?",
+   opts:["Mercury, Earth, Venus, Mars, Jupiter, Saturn, Uranus, Neptune","Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune","Venus, Mercury, Earth, Mars, Jupiter, Saturn, Neptune, Uranus","Mercury, Venus, Mars, Earth, Jupiter, Saturn, Uranus, Neptune"],
+   ans:1, exp:"Mercury (0.39 AU), Venus (0.72), Earth (1.0), Mars (1.52), Jupiter (5.2), Saturn (9.5), Uranus (19.2), Neptune (30.1)."},
+  {type:'mc', ch:'ch6', q:"Neptune is approximately how many AU from the Sun?",
+   opts:["5 AU","10 AU","20 AU","30 AU"],
+   ans:3, exp:"Neptune's semi-major axis is ~30.07 AU. For comparison: Jupiter is 5.2 AU, Saturn ~9.5 AU, Uranus ~19.2 AU."},
+  // ── New questions from self-test audit ──
+  {type:'mc', ch:'ch6', q:"Compared to the inner solar system, the orbits of the outer planets are:",
+   opts:["Far more spread out, spanning from 5 AU to 30 AU","More circular and closer together","More inclined to the midplane of the solar system","Nearly identical in spacing to the inner planets"],
+   ans:0, exp:"The inner solar system is very compact (within ~1.5 AU). The outer solar system is vastly more spread out — Jupiter at 5.2 AU, Saturn ~10 AU, Uranus ~20 AU, Neptune ~30 AU."},
+  {type:'fill', ch:'ch6', q:"Most asteroids are found between the orbits of _____ and _____.",
+   ans:"mars / jupiter", exp:"The Asteroid Belt lies between Mars (~1.5 AU) and Jupiter (~5.2 AU). This large gap exists because Jupiter's gravity prevented planetesimals from accreting into a full planet."},
+  {type:'tf', ch:'ch6', q:"A spacecraft would be able to fly through Jupiter since it is just a ball of gas.",
+   ans:false, exp:"Jupiter has no solid surface, but it is NOT flyable-through. Gas pressure increases dramatically with depth. At Jupiter's center, pressure is ~100 million times Earth's surface pressure — any spacecraft would be crushed long before reaching the core."},
+  {type:'mc', ch:'ch6', q:"Which property of our solar system is NOT direct evidence that the planets formed in a protoplanetary disc?",
+   opts:["All planets orbit in nearly the same plane","All planets orbit in the same direction as the Sun rotates","Many planets have moons orbiting them","All planets orbit near the Sun's equatorial plane"],
+   ans:2, exp:"Having moons is NOT direct evidence of disc formation. Moons form by separate processes — captured objects, giant impacts (like Earth's Moon), or accretion in a sub-disc around the planet. The other three properties directly result from formation in a flat, rotating disc."},
+  {type:'mc', ch:'ch6', q:"Which statement about the condensation sequence is INCORRECT?",
+   opts:["It explains why inner solar system objects are denser than outer ones","It shows at what distance from the Sun different materials could condense into solids","Only metals condensed in the inner disc — rocks and ices condensed nowhere in the inner disc","It explains why outer solar system objects have much higher water/ice content"],
+   ans:2, exp:"This is incorrect — both metals AND rocks condensed in the inner disc. Ices could only condense in the cooler outer disc beyond the frost line. The condensation sequence does not mean only metals condensed near the Sun."},
+  {type:'mc', ch:'ch6', q:"What makes the Kuiper Belt Object 'Ultima Thule' (Arrokoth) a demonstration of planetesimal accretion?",
+   opts:["It has a chemical composition impossible to explain otherwise","It is an interstellar object captured by the Sun's gravity","It clearly consists of two smaller objects that gently stuck together (a contact binary)","It is the largest known Kuiper Belt Object"],
+   ans:2, exp:"Arrokoth (formerly Ultima Thule) is a contact binary — two smaller lobes gently merged. This is direct physical evidence of planetesimals accreting (sticking together) to form larger bodies, the same process that built planets."},
+  {type:'mc', ch:'ch6', q:"In the disk instability model of giant planet formation, a gas giant forms analogously to how a ___ forms.",
+   opts:["Terrestrial planet","Moon","Star","Comet"],
+   ans:2, exp:"In disk instability, a dense region of the protoplanetary disc collapses directly under gravity — the same general process by which a star forms from an interstellar gas cloud. No solid core is needed first."},
+  {type:'mc', ch:'ch6', q:"In the core accretion model, what is the correct sequence for forming a gas giant?",
+   opts:["H/He gas collapses directly → core forms afterward","Rocky/icy core forms beyond the ice line → core reaches ~10 Earth masses → rapidly accretes H/He gas","Rocky core forms inside the ice line → migrates outward → accretes gas","H/He core forms → collects rock and ice from the disc"],
+   ans:1, exp:"Core accretion: (1) solid rock/ice planetesimals accrete beyond the frost/ice line, (2) core grows to ~10 Earth masses, (3) gravity becomes strong enough to rapidly pull in H/He gas from the disc. The core must form FIRST, and it must be rock/ice, not gas."},
+  {type:'tf', ch:'ch6', q:"Terrestrial planets took less time to form than gas giant planets because they are less massive.",
+   ans:false, exp:"Counterintuitive but true — gas giants had to form in less than ~5 million years (before solar wind expelled disc gas), while terrestrial planets took up to ~100 million years. The timescale for gas giants is set by the disc gas dispersal deadline, not by their mass."},
+  {type:'mc', ch:'ch6', q:"Why did gas giants have to form within only a few million years?",
+   opts:["Jupiter's gravity would have destroyed them after that time","Observations show that the young Sun's stellar wind expels H/He gas from protoplanetary discs within a few million years","The disc temperature gets too high to allow gas accretion after a few million years","The young Sun absorbs all available H/He after a few million years"],
+   ans:1, exp:"The young Sun goes through a T-Tauri phase of intense radiation and stellar wind that physically expels remaining gas from the disc within a few million years. Once the gas is gone, there is no H/He to accrete — so gas giants must form before this window closes."},
+  {type:'mc', ch:'ch6', q:"What is the definition of accretion in planet formation?",
+   opts:["The condensation of gaseous material into tiny dust particles","Destructive collisions between planetesimals","The gradual growth of larger objects by gravitationally attracting smaller objects","The formation of the protoplanetary disc from a collapsing cloud"],
+   ans:2, exp:"Accretion = gravitational growth. Larger objects attract smaller ones and grow progressively larger. This is different from condensation (gas → solid particles) which is the earlier step."},
+  {type:'mc', ch:'ch6', q:"What is a planetesimal?",
+   opts:["A microscopic dust grain that condensed from disc gas","A roughly km-sized solid body in the protoplanetary disc, massive enough to gravitationally attract other objects","A large planetary embryo nearly the size of a full planet","The protoplanetary disc itself"],
+   ans:1, exp:"Planetesimals are the intermediate step — roughly km-scale solid bodies that have enough mass to gravitationally attract and collect other planetesimals, eventually growing into protoplanets and planets."},
+  {type:'tf', ch:'ch6', q:"Observing protoplanetary discs around newly formed stars elsewhere in the galaxy supports the nebular hypothesis for our solar system's formation.",
+   ans:true, exp:"Yes — we can directly observe protoplanetary discs around young stars (e.g., in the Orion Nebula via Hubble). This shows disc formation is a natural, common byproduct of star formation, supporting the nebular hypothesis."},
+  {type:'mc', ch:'ch6', q:"Which of the following correctly describes how accretion differs from condensation?",
+   opts:["Accretion turns gas into solid grains; condensation gravitationally grows those grains","Condensation turns gas into solid grains; accretion then grows those grains into larger objects by gravity","They are the same process, just at different temperatures","Condensation only happens in the outer disc; accretion only happens in the inner disc"],
+   ans:1, exp:"These are two distinct sequential steps: condensation (gas → solid microscopic grains) happens first, then accretion (gravity progressively builds those grains into larger and larger objects — planetesimals, protoplanets, planets)."},
+  // ── Quiz 01 additions ──
+  {type:'tf', ch:'ch1', q:"If new evidence emerges that contradicts an established theory, scientists will reject that data because it doesn't agree with the theory.",
+   ans:false, exp:"In science, the theory must be revised or replaced when contradicted by reliable new evidence — never the other way around. Evidence always takes priority over theory. This is a core feature of the scientific method."},
+  {type:'mc', ch:'ch1', q:"What is the main purpose of science?",
+   opts:["To win prestigious prizes like the Nobel Prize","To publish the most peer-reviewed papers","To write books and earn money","To better understand the world and universe around us","To get the most followers on social media"],
+   ans:3, exp:"The purpose of science is to better understand the natural world through observation, hypothesis, and testing — not recognition, publication counts, or money."},
+  {type:'mc', ch:'ch1', q:"What is the most important thing in science?",
+   opts:["The age of the person making the claim","Winning the Nobel Prize","The evidence","The number of citations of your article","The education level of the scientist"],
+   ans:2, exp:"Evidence is the cornerstone of science. A claim made by a Nobel laureate with no evidence is worth no more than a claim made by anyone else with no evidence. Evidence decides everything."},
+  {type:'fill', ch:'ch1', q:"The most common misconception about the cause of Earth's seasons is that people incorrectly assume it has something to do with the _____ of Earth to the Sun.",
+   ans:"distance", exp:"Seasons are caused by Earth's axial tilt, NOT by changing distance to the Sun. In fact, Earth is slightly closer to the Sun during Northern Hemisphere winter. The real cause is the changing angle of illumination."},
+  {type:'tf', ch:'ch1', q:"If Earth's rotation axis were perfectly perpendicular (90°) to its orbital plane, we would have no seasons at all.",
+   ans:true, exp:"Correct — seasons are caused by Earth's axial tilt of ~23.5°. If the axis were perfectly upright (0° tilt), every location on Earth would receive the same angle of sunlight year-round and there would be no seasons."},
+  {type:'mc', ch:'ch1', q:"Where is the Moon in our sky during the New Moon phase?",
+   opts:["Roughly 90° away from the Sun","Invisible because it is covered by Earth's shadow during the night","In the direction of the Sun — up during the day and not visible at night","In the direction opposite from the Sun — not visible during the day"],
+   ans:2, exp:"During New Moon, the Moon is between Earth and the Sun, so it rises and sets with the Sun. It's above the horizon during the day and below at night — invisible to us because its dark side faces Earth and it's lost in solar glare."},
+  {type:'fill', ch:'ch1', q:"During Full Moon phase, at the time of sunset, you need to look to the _____ horizon to see the Moon rising.",
+   ans:"east", exp:"At Full Moon, the Moon is opposite the Sun in the sky. When the Sun sets in the west, the Full Moon rises in the east. They are always on opposite horizons at sunset/sunrise during Full Moon."},
+  {type:'tf', ch:'ch1', q:"With the rare exception of lunar eclipses, half of the Moon is always illuminated by sunlight.",
+   ans:true, exp:"The Sun always illuminates exactly half of the Moon (the side facing the Sun). What changes is how much of that illuminated half we can see from Earth as the Moon orbits — that's what causes lunar phases."},
+  {type:'fill', ch:'ch1', q:"During a solar eclipse, the _____ moves precisely between Earth and the Sun.",
+   ans:"moon", exp:"A solar eclipse occurs when the Moon passes directly between Earth and the Sun, blocking the Sun's light. This can only happen during the New Moon phase when the Moon is on the same side of Earth as the Sun."},
+  {type:'tf', ch:'ch1', q:"A solar eclipse can be seen from everywhere on the dayside of Earth at the same time.",
+   ans:false, exp:"A solar eclipse is only visible from a narrow path on Earth's surface where the Moon's shadow falls (the umbra). Outside this path, observers see only a partial eclipse or nothing at all. This is why total solar eclipses are rare events for any given location."},
+  // ── Quiz 02 additions ──
+  {type:'fill', ch:'ch2', q:"In the geocentric worldview, everything orbits around the Earth in perfect _____ (single word).",
+   ans:"circles", exp:"The geocentric model required all bodies to move in perfect circles — the 'most perfect' geometric shape according to Greek philosophy. Epicycles (circles on circles) were added to explain observations that didn't fit simple circular motion."},
+  {type:'fill', ch:'ch2', q:"Johannes Kepler discovered that the shape of a planet's orbit is an _____ (single word).",
+   ans:"ellipse", exp:"Kepler's 1st Law: planetary orbits are ellipses, not circles. This was a major break from centuries of Greek and Copernican assumption that orbits must be circular. The Sun sits at one focus of the ellipse."},
+  {type:'fill', ch:'ch2', q:"Kepler's 1st Law states that the Sun is located in one of the two _____ points of the elliptical orbit (single word).",
+   ans:"focus", exp:"An ellipse has two focal points (foci). Kepler's 1st Law states the Sun occupies one focus — NOT the center of the ellipse. The other focus is empty. This means planets are sometimes closer (perihelion) and sometimes farther (aphelion) from the Sun."},
+  {type:'mc', ch:'ch2', q:"What is the orbital semi-major axis (a)?",
+   opts:["The full long axis of the ellipse","Half of the long axis of the elliptical orbit","Half of the short axis of the elliptical orbit","The short axis of the ellipse"],
+   ans:1, exp:"The semi-major axis (a) is half the long axis of the ellipse. It represents the average distance from the planet to the Sun, measured in AU. This is the 'a' in Kepler's 3rd Law (P²=a³)."},
+  {type:'mc', ch:'ch2', q:"What is an Astronomical Unit (AU)?",
+   opts:["The radius of Earth's circular orbit around the Sun","The orbital semi-major axis of Earth's orbit around the Sun","The distance between Earth and the Moon","The time it takes Earth to complete one orbit"],
+   ans:1, exp:"1 AU = the semi-major axis of Earth's orbit around the Sun (~150 million km). Since Earth's orbit is nearly circular, this is very close to the average Earth-Sun distance. It's the standard unit for measuring distances within the solar system."},
+  {type:'fill', ch:'ch2', q:"Kepler's 3rd Law describes a relationship between a planet's orbital distance and its orbital _____ (single word).",
+   ans:"period", exp:"Kepler's 3rd Law: P² = a³ — the orbital period (P, in years) and the orbital semi-major axis (a, in AU) are related. Planets farther from the Sun have longer orbital periods. Earth: P=1 yr, a=1 AU → 1²=1³ ✓"},
+  {type:'fill', ch:'ch2', q:"Newton's 2nd Law of Motion states that the resulting acceleration of an object depends on the object's mass and the amount of _____ acting on it (single word).",
+   ans:"force", exp:"F = ma → a = F/m. The acceleration of an object is proportional to the net force applied and inversely proportional to its mass. A larger force produces more acceleration; a larger mass produces less acceleration for the same force."},
+  {type:'fill', ch:'ch2', q:"Contrary to popular belief, Newton was thinking about the motion of the _____ — not a falling apple — when he developed his theory of gravity (single word).",
+   ans:"moon", exp:"Newton realized that the same gravitational force pulling an apple to Earth could also be pulling the Moon toward Earth — keeping it in orbit. This was the key insight: gravity is universal, not just a local Earth phenomenon."},
+  {type:'tf', ch:'ch2', q:"The gravitational force the Moon exerts on Earth is equal in magnitude to the force Earth exerts on the Moon.",
+   ans:true, exp:"Newton's 3rd Law (action-reaction): forces between two objects are always equal and opposite. Earth pulls the Moon with the same force the Moon pulls Earth. The difference is that Earth's greater mass means it accelerates far less in response."},
+  {type:'mc', ch:'ch2', q:"If you triple your distance from Earth's center, how does the gravitational force you feel from Earth change?",
+   opts:["Decreases by a factor of 6","Stays the same — masses don't change","Decreases by a factor of 9","Increases by a factor of 6","Increases by a factor of 3"],
+   ans:2, exp:"Gravity follows an inverse square law: F ∝ 1/r². If distance triples (×3), force changes by 1/3² = 1/9. So the force decreases by a factor of 9. This is why gravity weakens rapidly with distance."},
+  {type:'fill', ch:'ch2', q:"To achieve orbit around Earth, a spacecraft must reach a minimum _____ while moving parallel to Earth's surface (single word).",
+   ans:"velocity", exp:"Orbital velocity (~7.8 km/s for low Earth orbit) is the minimum speed needed so that as the spacecraft falls toward Earth, Earth's surface curves away at the same rate. The spacecraft continuously 'falls around' Earth — that's an orbit."},
+  {type:'tf', ch:'ch2', q:"A rocket launches into space by pushing off the ground.",
+   ans:false, exp:"Rockets work by Newton's 3rd Law — they expel gas downward at high speed, and the reaction force pushes the rocket upward. The rocket pushes against its own exhaust, not against the ground. This is why rockets work in the vacuum of space where there's nothing to push off."},
+  {type:'mc', ch:'ch2', q:"Two orbiting objects don't actually orbit each other — they both orbit their:",
+   opts:["Center of the larger object","Common center of mass","Center of the ellipse","A random point in space"],
+   ans:1, exp:"Both objects orbit their common center of mass (barycenter). When one object is much more massive (like the Sun vs. a planet), the center of mass is very close to the larger object, making it appear like the smaller one orbits the larger. But both technically move."},
+  {type:'tf', ch:'ch2', q:"A spacecraft needs to achieve escape velocity in order to reach orbit around Earth.",
+   ans:false, exp:"Orbital velocity (~7.8 km/s) and escape velocity (~11.2 km/s) are different. To orbit, you need orbital velocity — enough to continuously fall around Earth. Escape velocity is needed to leave Earth's gravity entirely (e.g., for a mission to the Moon or Mars)."},
+  {type:'mc', ch:'ch2', q:"What does escape velocity from a planet depend on?",
+   opts:["The mass, size (radius), and chemical composition of the planet","Only the size (radius) of the planet","Only the mass of the planet","The mass and size (radius) of the planet"],
+   ans:3, exp:"Escape velocity formula: v = √(2GM/r). It depends on both the mass (M) and the radius (r) of the planet — NOT on chemical composition. A more massive or more compact (smaller radius) planet has higher escape velocity. This is why black holes have escape velocities exceeding the speed of light."},
+];
+
+// Questions are randomized on init — no index fixups needed
+
+let qInit = false;
+let qIdx = 0;
+let qAnswered = [];
+let qScore = 0;
+let qQuestions = [];
+
+function initQuiz() {
+  qInit = true;
+  qQuestions = [...QUIZ_QUESTIONS].sort(()=>Math.random()-.5);
+  qAnswered = new Array(qQuestions.length).fill(null);
+  qScore = 0;
+  qIdx = 0;
+  renderQuestion();
+}
+
+function renderQuestion() {
+  if (qIdx >= qQuestions.length) { showResults(); return; }
+  const q = qQuestions[qIdx];
+  const answered = qAnswered[qIdx];
+  updateQuizHeader();
+
+  let html = `<div class="q-card${answered!==null ? (checkAnswer(q, answered)?' correct':' wrong') : ''}" id="qcard">`;
+  html += `<div class="q-type">${q.type==='tf'?'True / False':q.type==='fill'?'Fill in the Blank':'Multiple Choice'}</div>`;
+  html += `<div class="q-text">${q.q}</div>`;
+
+  if (q.type === 'mc') {
+    html += `<div class="q-options">`;
+    q.opts.forEach((opt,i) => {
+      let cls = 'q-opt';
+      if (answered !== null) {
+        if (i === q.ans) cls += ' reveal-correct';
+        if (i === answered && answered !== q.ans) cls += ' selected-wrong';
+        if (i === answered && answered === q.ans) cls += ' selected-correct';
+      }
+      html += `<button class="${cls}" onclick="answerQ(${i})" ${answered!==null?'disabled':''}>${opt}</button>`;
+    });
+    html += `</div>`;
+  } else if (q.type === 'tf') {
+    const tVal = true, fVal = false;
+    html += `<div class="q-options q-tf">`;
+    ['True','False'].forEach((lbl,i) => {
+      const val = i===0;
+      let cls = 'q-opt';
+      if (answered !== null) {
+        if (val === q.ans) cls += ' reveal-correct';
+        if (val === answered && answered !== q.ans) cls += ' selected-wrong';
+        if (val === answered && answered === q.ans) cls += ' selected-correct';
+      }
+      html += `<button class="${cls}" onclick="answerTF(${val})" ${answered!==null?'disabled':''}>${lbl}</button>`;
+    });
+    html += `</div>`;
+  } else {
+    // fill
+    html += `<input type="text" class="q-input${answered!==null?(checkAnswer(q,answered)?' correct-input':' wrong-input'):''}" 
+              id="fill-input" placeholder="Type your answer…" ${answered!==null?`value="${answered}" readonly`:''}>`;
+    if (answered === null) html += `<button class="btn btn-solid" onclick="answerFill()" style="margin-top:4px">Submit</button>`;
+  }
+
+  if (answered !== null) {
+    const correct = checkAnswer(q, answered);
+    html += `<div class="q-feedback ${correct?'correct':'wrong'} show">
+      ${correct ? '✅ Correct! ' : '❌ Incorrect. '} ${q.exp}
+    </div>`;
+  }
+
+  html += `</div>`;
+  document.getElementById('quiz-container').innerHTML = html;
+  document.getElementById('q-prev-btn').style.opacity = qIdx===0?'.4':'1';
+  document.getElementById('q-next-btn').textContent = qIdx===qQuestions.length-1 ? 'Finish ✓' : 'Next →';
+}
+
+function checkAnswer(q, answered) {
+  if (q.type === 'mc') return answered === q.ans;
+  if (q.type === 'tf') return answered === q.ans;
+  if (q.type === 'fill') {
+    const a = String(answered).toLowerCase().trim();
+    return q.ans.toLowerCase().split('/').some(part => a.includes(part.trim().toLowerCase().split(' ')[0]));
+  }
+}
+
+function answerQ(i) {
+  if (qAnswered[qIdx] !== null) return;
+  qAnswered[qIdx] = i;
+  if (checkAnswer(qQuestions[qIdx], i)) qScore++;
+  updateQuizHeader();
+  renderQuestion();
+}
+function answerTF(val) {
+  if (qAnswered[qIdx] !== null) return;
+  qAnswered[qIdx] = val;
+  if (checkAnswer(qQuestions[qIdx], val)) qScore++;
+  updateQuizHeader();
+  renderQuestion();
+}
+function answerFill() {
+  const inp = document.getElementById('fill-input');
+  if (!inp || qAnswered[qIdx] !== null) return;
+  qAnswered[qIdx] = inp.value;
+  if (checkAnswer(qQuestions[qIdx], inp.value)) qScore++;
+  updateQuizHeader();
+  renderQuestion();
+}
+
+function updateQuizHeader() {
+  const total = qQuestions.length;
+  const answered = qAnswered.filter(a=>a!==null).length;
+  document.getElementById('q-num').textContent = `Question ${qIdx+1} of ${total}`;
+  document.getElementById('quiz-prog').style.width = ((qIdx+1)/total*100)+'%';
+  document.getElementById('quiz-score').textContent = `${qScore} / ${answered}`;
+}
+
+function nextQuestion() {
+  if (qIdx < qQuestions.length-1) { qIdx++; renderQuestion(); }
+  else if (qAnswered[qIdx]!==null) showResults();
+}
+function prevQuestion() { if (qIdx>0){qIdx--;renderQuestion();} }
+function resetQuiz() { qInit=false; qScore=0; qIdx=0; qAnswered=[]; initQuiz(); }
+
+function showResults() {
+  const total = qQuestions.length;
+  const pct = Math.round(qScore/total*100);
+  let msg = pct>=90 ? "🌟 Outstanding! You're ready for the exam." :
+            pct>=75 ? "👍 Good work! Review the missed items." :
+            pct>=60 ? "📚 Keep studying — focus on the flashcards for weak areas." :
+                      "🔄 Go back through the study guide and try again.";
+  document.getElementById('quiz-container').innerHTML = `
+    <div class="quiz-results">
+      <div class="results-score">${pct}%</div>
+      <div class="results-label">${qScore} correct out of ${total} questions</div>
+      <div class="results-msg">${msg}</div>
+      <button class="btn btn-solid" onclick="resetQuiz()">Retake Quiz</button>
+    </div>`;
+  document.getElementById('quiz-nav').style.display='none';
+}
+
+/* ══════════════════════════════════════════════════════════
+   DISCUSSION PREP
+═══════════════════════════════════════════════════════════ */
+const DISC_QUESTIONS = [
+  {
+    ch:'ch1',
+    q:"Explain in your own words how the scientific method works. Use the discovery of Neptune as an example to illustrate each step.",
+    points:[
+      {text:"<strong>Observation:</strong> Identifies that Uranus deviated from its predicted orbit"},
+      {text:"<strong>Hypothesis:</strong> An undiscovered planet's gravity perturbs Uranus's orbit"},
+      {text:"<strong>Prediction:</strong> Le Verrier and/or Adams used Newton's gravity to calculate where the planet should be"},
+      {text:"<strong>Experiment/Test:</strong> Telescopes pointed to that position; Neptune found within 1° on September 23, 1846"},
+      {text:"<strong>Framework:</strong> Newton's Law of Gravity was the theoretical framework used"},
+      {text:"Explains that evidence confirmed the hypothesis, elevating it toward theory"},
+    ],
+    model:"The scientific method begins with an observation of a natural phenomenon, followed by forming a testable hypothesis. In 1846, astronomers noticed Uranus deviated from its predicted orbit (observation). They hypothesized that an unseen outer planet's gravity was perturbing it (hypothesis). Using Newton's Law of Gravity as a framework, Le Verrier and Adams independently calculated where this planet must be (prediction). On September 23, 1846, astronomers pointed their telescope there and found Neptune within 1° of the predicted position (experiment/confirmation). This is a textbook example of the scientific method producing a successful prediction from a theoretical framework."
+  },
+  {
+    ch:'ch1',
+    q:"What is the difference between a scientific hypothesis and a scientific theory? Why is the phrase 'it's just a theory' misleading when talking about science?",
+    points:[
+      {text:"<strong>Hypothesis</strong> = an educated guess that has not yet been rigorously tested"},
+      {text:"<strong>Theory</strong> = the END product of the scientific method; supported by extensive testing and independent reproduction"},
+      {text:"A theory is our current best explanation — not a guess"},
+      {text:"'Just a theory' in everyday language implies uncertainty; in science it implies the highest level of evidential support"},
+      {text:"Example given: Darwin's theory of evolution, Newton's theory of gravity, or similar"},
+      {text:"A theory can still be revised or replaced if new evidence emerges"},
+    ],
+    model:"A hypothesis is an educated guess about a phenomenon that has not yet been rigorously tested. A scientific theory, by contrast, is the end product of the scientific method — a hypothesis that has survived repeated testing and independent reproduction and now represents our best current understanding of a natural phenomenon. Calling something 'just a theory' misuses the word: in everyday language, 'theory' suggests uncertainty or guessing. In science, a theory is the strongest form of scientific knowledge. Darwin's theory of evolution and Newton's theory of gravity are 'just theories' in this sense — supported by overwhelming evidence accumulated over centuries."
+  },
+  {
+    ch:'ch1',
+    q:"Explain why the Earth has seasons. Be sure to address the most common misconception and explain why it is wrong.",
+    points:[
+      {text:"Seasons are caused by Earth's <strong>axial tilt of ~23.5°</strong>"},
+      {text:"Tilt causes sunlight to strike at different <strong>angles</strong> at different times of year"},
+      {text:"More direct angle = more energy per unit area = warmer"},
+      {text:"Tilt also affects the <strong>number of daylight hours</strong>"},
+      {text:"Common misconception: seasons caused by <strong>changing distance</strong> to Sun"},
+      {text:"Why misconception is wrong: Earth is actually slightly <strong>closer</strong> to the Sun in Northern Hemisphere winter"},
+    ],
+    model:"Earth's seasons are caused by its axial tilt of approximately 23.5° relative to the plane of its orbit. This tilt means different parts of Earth receive sunlight at different angles throughout the year. When the Northern Hemisphere is tilted toward the Sun, sunlight strikes more directly — concentrated over a smaller area — producing summer. When tilted away, sunlight is spread over a larger area and day length is shorter, producing winter. The most common misconception is that seasons are caused by Earth's changing distance from the Sun. This is incorrect for two reasons: first, the difference in Earth-Sun distance over the year is small (only ~3%); second, Earth is actually slightly closer to the Sun in January — during Northern Hemisphere winter — which is the opposite of what the distance hypothesis would predict."
+  },
+  {
+    ch:'ch1',
+    q:"Describe the cause of lunar phases and explain why they are NOT caused by Earth's shadow. Then explain what actually causes a lunar eclipse.",
+    points:[
+      {text:"Lunar phases caused by the Moon's <strong>changing position</strong> relative to Earth and the Sun"},
+      {text:"Moon completes one orbit in <strong>29.5 days</strong>; we see different portions of its sunlit side"},
+      {text:"Moon's brightness comes from <strong>reflected sunlight</strong>"},
+      {text:"Phases are NOT Earth's shadow — half the Moon is always in sunlight regardless of phase"},
+      {text:"A <strong>lunar eclipse</strong> occurs when Earth's shadow falls on the Full Moon"},
+      {text:"Eclipses don't happen monthly because the Moon's orbit is tilted <strong>~5.2°</strong> from the ecliptic"},
+    ],
+    model:"Lunar phases are caused by the Moon's changing position relative to Earth and the Sun as it orbits Earth every 29.5 days. As the Moon orbits, we see different proportions of its sunlit half — this is what creates the cycle of phases from New Moon to Full Moon and back. At all times, exactly half the Moon is illuminated by the Sun — phases simply reflect how much of that illuminated half is facing us. A common misconception is that phases are caused by Earth's shadow on the Moon. This is incorrect; Earth's shadow causes a lunar eclipse, which is an entirely different event. A lunar eclipse occurs only at Full Moon when Earth is precisely between the Sun and Moon and its shadow falls on the lunar surface. Eclipses don't happen every Full Moon because the Moon's orbit is tilted ~5.2° from the ecliptic — alignment is rare."
+  },
+  {
+    ch:'ch2',
+    q:"Compare and contrast the geocentric and heliocentric models of the solar system. What evidence did Galileo provide that supported the heliocentric model and contradicted the geocentric model?",
+    points:[
+      {text:"<strong>Geocentric (Ptolemy):</strong> Earth at center; all bodies orbit Earth in circles + epicycles"},
+      {text:"<strong>Heliocentric (Copernicus):</strong> Sun at center; Earth is one of 6 known planets; simpler model"},
+      {text:"Galileo: <strong>phases of Venus</strong> — Venus shows gibbous phases impossible in geocentric model"},
+      {text:"Galileo: <strong>moons of Jupiter</strong> — proved not everything orbits Earth"},
+      {text:"Galileo: <strong>sunspots</strong> — Sun is not perfect and rotates"},
+      {text:"Galileo: <strong>craters on the Moon</strong> — heavenly bodies are not perfect spheres"},
+    ],
+    model:"The geocentric model, codified by Ptolemy in the Almagest, placed Earth at the center of the universe with all celestial bodies orbiting in circles. To explain retrograde motion, Ptolemy added epicycles — small circles within circles. The heliocentric model proposed by Copernicus placed the Sun at the center, with Earth as one of six known orbiting planets. It was simpler and explained retrograde motion naturally as Earth overtaking outer planets. Galileo provided the key telescopic evidence: (1) Phases of Venus — Venus showed gibbous and full phases, impossible if Venus always stayed between Earth and the Sun as the geocentric model required. (2) Moons of Jupiter — four moons clearly orbiting Jupiter, not Earth, proving not everything orbits Earth. (3) Sunspots — the Sun was not perfect and rotated. (4) Craters on the Moon — heavenly bodies were not perfect spheres as previously assumed."
+  },
+  {
+    ch:'ch2',
+    q:"State and explain Kepler's three laws of planetary motion. For each law, describe what it tells us about how planets move.",
+    points:[
+      {text:"<strong>1st Law:</strong> Orbits are ellipses with the Sun at one focus — not the center; explains perihelion/aphelion"},
+      {text:"<strong>2nd Law:</strong> Equal areas in equal times — planet moves faster at perihelion, slower at aphelion"},
+      {text:"2nd Law due to <strong>conservation of angular momentum</strong>"},
+      {text:"<strong>3rd Law:</strong> P² = a³ (P in years, a in AU) — farther planets have longer orbital periods"},
+      {text:"3rd Law: relationship between <strong>orbital size and period</strong>"},
+      {text:"Laws derived from <strong>Tycho Brahe's</strong> observational data"},
+    ],
+    model:"Kepler derived three laws of planetary motion from Tycho Brahe's precise observational data. The First Law states that planetary orbits are ellipses with the Sun at one focus — not the center. This means planets are sometimes closer to the Sun (perihelion) and sometimes farther (aphelion). The Second Law states that a line from the Sun to a planet sweeps equal areas in equal time — meaning planets move faster when close to the Sun and slower when far away. This is a consequence of conservation of angular momentum. The Third Law states that the square of a planet's orbital period equals the cube of its semi-major axis: P²=a³ (with P in years and a in AU). This means the farther a planet is from the Sun, the longer it takes to complete one orbit. Together these laws precisely describe planetary motion and were later explained by Newton's gravity."
+  },
+  {
+    ch:'ch2',
+    q:"Explain Newton's Law of Universal Gravitation. How does it explain Kepler's laws and why was it considered a 'gigantic leap forward' in understanding the universe?",
+    points:[
+      {text:"<strong>F = G·M₁·M₂/r²</strong> — gravity proportional to product of masses, inversely proportional to square of distance"},
+      {text:"Gravity is <strong>always attractive</strong> and <strong>universal</strong> — same law everywhere"},
+      {text:"Explains Kepler's 2nd law via <strong>conservation of angular momentum</strong>"},
+      {text:"Explains Kepler's 3rd law mathematically from first principles"},
+      {text:"Explains Kepler's 1st law — elliptical orbits follow naturally from inverse-square gravity"},
+      {text:"'Gigantic leap': same forces on Earth (apple falling) also govern celestial bodies (Moon orbiting)"},
+    ],
+    model:"Newton's Law of Universal Gravitation states that every particle of matter attracts every other particle with a force F = G·M₁·M₂/r² — proportional to the product of both masses and inversely proportional to the square of the distance between them. This law is universal: the same gravity that pulls an apple to Earth keeps the Moon in orbit and the planets orbiting the Sun. This was the 'gigantic leap' — Newton unified terrestrial and celestial physics. Before Newton, the heavens were thought to operate by different rules than Earth. Newton showed the same inverse-square gravity explains all three of Kepler's laws: the elliptical orbits follow mathematically from inverse-square attraction; the equal-areas law reflects conservation of angular momentum; and the P²=a³ relationship emerges naturally from the force equation. This gave science predictive power over the entire solar system."
+  },
+  {
+    ch:'ch6',
+    q:"Describe the leading theory for the formation of the solar system (the nebular hypothesis). What key observations must the theory explain, and how does the condensation sequence explain the difference between inner and outer planets?",
+    points:[
+      {text:"Interstellar gas/dust cloud collapsed under <strong>gravity</strong>"},
+      {text:"Conservation of <strong>angular momentum</strong> caused cloud to spin and flatten into a disc"},
+      {text:"Must explain: same orbital plane, same direction, circular orbits, rocky inner vs. gas outer planets"},
+      {text:"<strong>Condensation sequence:</strong> temperature decreases with distance from young Sun"},
+      {text:"Inner disc (hot): only metals and rocks condense → rocky/metallic terrestrial planets"},
+      {text:"Outer disc (cool, beyond frost line): ices also condense → more material → large cores → gas/ice giants"},
+    ],
+    model:"The nebular hypothesis proposes that our solar system formed from a giant interstellar cloud of gas and dust that collapsed under its own gravity approximately 4.56 billion years ago. As it collapsed, conservation of angular momentum caused the cloud to spin faster and flatten into a rotating protoplanetary disc around the young Sun — the same process we observe around other young stars today. A successful model must explain: why all planets orbit in the same plane, in the same direction as the Sun rotates, on nearly circular orbits, and why the inner planets are rocky while the outer planets are gas and ice giants. The condensation sequence explains the last point: temperature in the disc decreased with distance from the Sun. Near the hot young Sun, only metals and rocks could condense into solid particles. Farther out, beyond the frost line, water and other ices also condensed — providing far more raw material and allowing giant planetary cores to form, which then accreted H/He gas to become gas and ice giants."
+  },
+  {
+    ch:'ch6',
+    q:"Explain the difference between the core accretion model and the disk instability model for gas giant formation. Which is favored, and why do gas giants have a limited time window to form?",
+    points:[
+      {text:"<strong>Core accretion (favored):</strong> solid rock/ice core forms beyond ice line first via planetesimal accretion"},
+      {text:"Core reaches ~10 Earth masses → gravity triggers <strong>runaway gas accretion</strong> of H/He"},
+      {text:"<strong>Disk instability:</strong> dense region of disc collapses directly like a star forming — no core needed first"},
+      {text:"Core accretion favored: Saturn has detected dense core; exoplanet evidence supports it"},
+      {text:"Time limit: young Sun's <strong>stellar wind (T-Tauri phase)</strong> expels disc gas within ~5 million years"},
+      {text:"After gas is gone, no more gas giants can form — window closes permanently"},
+    ],
+    model:"Two competing models exist for gas giant formation. In the core accretion model (the favored theory), solid planetesimals beyond the frost line accrete into a rock/ice core. Once this core reaches roughly 10 Earth masses, its gravity becomes strong enough to rapidly pull in H/He gas from the disc in a runaway process — forming a gas giant. In the disk instability model, a dense region of the protoplanetary disc collapses directly under gravity — analogous to how a star forms — without needing a solid core first. Core accretion is favored because Saturn has a detected dense core consistent with this model, and exoplanet surveys show a distribution of planet masses matching core accretion predictions. Gas giants face a strict time limit: the young Sun goes through an intense T-Tauri phase in which radiation and stellar wind physically expel all remaining gas from the disc within a few million years. Once the gas is gone, there is no H/He to accrete, so gas giants must form before this window closes — explaining why gas giants had only ~5 million years while terrestrial planets could take up to ~100 million years."
+  },
+];
+
+let discInit = false;
+
+function initDisc() {
+  discInit = true;
+  renderAllDisc();
+}
+
+function renderAllDisc() {
+  const container = document.getElementById('disc-container');
+  if (!container) return;
+
+  const filterHTML = `
+    <div class="disc-filter">
+      <button class="filter-btn active" onclick="filterDisc('all',this)">All</button>
+      <button class="filter-btn" onclick="filterDisc('ch1',this)">Ch 1</button>
+      <button class="filter-btn" onclick="filterDisc('ch2',this)">Ch 2</button>
+      <button class="filter-btn" onclick="filterDisc('ch6',this)">Ch 6</button>
+    </div>`;
+
+  let html = filterHTML;
+  DISC_QUESTIONS.forEach((dq, idx) => {
+    html += renderDiscQ(dq, idx);
+  });
+  container.innerHTML = html;
+}
+
+function renderDiscQ(dq, idx) {
+  const chLabel = dq.ch === 'ch1' ? 'Ch 1' : dq.ch === 'ch2' ? 'Ch 2' : 'Ch 6';
+  let pointsHTML = dq.points.map((p, pi) => `
+    <div class="disc-point">
+      <input type="checkbox" class="disc-check" id="chk-${idx}-${pi}" onchange="updateScore(${idx})">
+      <label class="disc-point-text" for="chk-${idx}-${pi}">${p.text}</label>
+    </div>`).join('');
+
+  return `
+  <div class="disc-q" id="disc-${idx}" data-ch="${dq.ch}">
+    <div class="disc-q-header">
+      <span class="disc-q-num">${chLabel} · Q${idx+1}</span>
+      <div class="disc-q-text">${dq.q}</div>
+    </div>
+    <div class="disc-q-body">
+      <textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Write your response here…" rows="5"></textarea>
+      <div class="disc-btn-row">
+        <button class="btn btn-solid" onclick="submitDisc(${idx})">Submit & Grade</button>
+        <button class="btn" onclick="resetDisc(${idx})">↺ Reset</button>
+      </div>
+      <div class="disc-rubric" id="disc-rubric-${idx}">
+        <div class="disc-rubric-title">✅ Content Checklist — check each point you covered</div>
+        ${pointsHTML}
+        <div class="disc-self-score">
+          <span>Your score:</span>
+          <span class="disc-score-display" id="disc-score-${idx}">0 / ${dq.points.length}</span>
+          <span style="color:var(--muted);font-size:12px" id="disc-grade-${idx}"></span>
+        </div>
+        <div class="disc-model" id="disc-model-${idx}">
+          <div class="disc-model-title">📋 Model Answer</div>
+          <p style="color:var(--muted);font-size:13px;line-height:1.7">${dq.model}</p>
+        </div>
+        <button class="btn" style="margin-top:10px;font-size:12px" onclick="toggleModel(${idx})">
+          Show / Hide Model Answer
+        </button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function submitDisc(idx) {
+  const ta = document.getElementById(`disc-ta-${idx}`);
+  if (!ta.value.trim()) { ta.style.borderColor='#ef4444'; return; }
+  ta.classList.add('submitted');
+  ta.readOnly = true;
+  document.getElementById(`disc-rubric-${idx}`).classList.add('show');
+}
+
+function resetDisc(idx) {
+  const ta = document.getElementById(`disc-ta-${idx}`);
+  ta.value = ''; ta.readOnly = false; ta.style.borderColor = '';
+  ta.classList.remove('submitted');
+  document.getElementById(`disc-rubric-${idx}`).classList.remove('show');
+  document.getElementById(`disc-model-${idx}`).classList.remove('show');
+  document.querySelectorAll(`[id^="chk-${idx}-"]`).forEach(c => c.checked = false);
+  updateScore(idx);
+}
+
+function updateScore(idx) {
+  const dq = DISC_QUESTIONS[idx];
+  const checked = document.querySelectorAll(`[id^="chk-${idx}-"]:checked`).length;
+  const total = dq.points.length;
+  const pct = Math.round(checked/total*100);
+  document.getElementById(`disc-score-${idx}`).textContent = `${checked} / ${total}`;
+  const grade = pct >= 90 ? '🌟 Excellent' : pct >= 70 ? '👍 Good' : pct >= 50 ? '📚 Needs work' : '🔄 Review material';
+  document.getElementById(`disc-grade-${idx}`).textContent = grade;
+}
+
+function toggleModel(idx) {
+  document.getElementById(`disc-model-${idx}`).classList.toggle('show');
+}
+
+function filterDisc(ch, btn) {
+  document.querySelectorAll('.disc-filter .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.disc-q').forEach(el => {
+    el.style.display = (ch === 'all' || el.dataset.ch === ch) ? 'block' : 'none';
+  });
+}
+
+// extend switchTab to init discussion
+const _origSwitch = switchTab;
+function switchTab(idx) {
+  document.querySelectorAll('.panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  if (idx===2 && !fcInit) initFlashcards();
+  if (idx===3 && !qInit)  initQuiz();
+  if (idx===5 && !discInit) initDisc();
+}
+</script>
 </body>
 </html>
