@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIST 1302 — Unit 2 Study Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0f;--surface:#12121a;--surface2:#16161f;--border:#1e1e2e;--text:#e8e8f0;--muted:#6b6b80;--accent:#3b82f6;--accent-dim:rgba(59,130,246,0.12);--green:#22c55e;--red:#ef4444;--yellow:#eab308;--purple:#a78bfa;--orange:#f97316;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(59,130,246,0.025)1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.025)1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+.container{max-width:960px;margin:0 auto;padding:0 20px;position:relative;z-index:1;}
+/* Nav */
+.topnav{display:flex;gap:8px;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:32px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.topnav::-webkit-scrollbar{display:none;}
+.nav-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;letter-spacing:0.05em;white-space:nowrap;flex-shrink:0;}
+.nav-btn:hover,.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+/* Header */
+header{padding:24px 0 32px;}
+.breadcrumb{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:12px;}
+.breadcrumb a{color:var(--accent);text-decoration:none;}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);background:var(--accent-dim);padding:4px 10px;border-radius:4px;display:inline-block;margin-bottom:12px;}
+h1{font-size:clamp(26px,5vw,42px);font-weight:700;letter-spacing:-0.02em;line-height:1.1;margin-bottom:12px;}
+.exam-pill{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid var(--orange);color:var(--orange);padding:6px 14px;border-radius:20px;background:rgba(249,115,22,0.08);}
+.textbook-links{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;padding:10px 16px;border-radius:8px;background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.15);}
+.tb-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:0.05em;}
+.tb-link{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);text-decoration:none;transition:opacity 0.2s;}
+.tb-link:hover{opacity:0.75;text-decoration:underline;}
+.tb-sep{color:var(--border);font-size:14px;}
+.tb-note{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);}
+/* Section label */
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+/* Mastery bar */
+.mastery-bar-wrap{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+.mastery-bar-track{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.mastery-bar-fill{height:100%;background:var(--green);border-radius:3px;transition:width 0.4s;}
+.mastery-bar-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
+.btn-reset{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;}
+.btn-reset:hover{border-color:var(--red);color:var(--red);}
+/* Panels */
+.panel{display:none;}.panel.active{display:block;}
+/* Objectives */
+.obj-grid{display:grid;gap:12px;margin-bottom:32px;}
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:grid;grid-template-columns:32px 1fr auto;gap:12px;align-items:start;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
+.obj-text{font-size:13px;line-height:1.6;}
+.obj-chapter{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:4px;}
+.ch21 .obj-num{color:#3b82f6;background:rgba(59,130,246,0.12);}
+.ch22 .obj-num{color:#a78bfa;background:rgba(167,139,250,0.12);}
+.ch23 .obj-num{color:#22c55e;background:rgba(34,197,94,0.12);}
+.mastery-btn{width:24px;height:24px;border-radius:4px;border:1px solid var(--border);background:transparent;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all 0.2s;}
+.mastery-btn.mastered{background:rgba(34,197,94,0.15);border-color:var(--green);color:var(--green);}
+.mastery-btn:not(.mastered){color:var(--muted);}
+/* Study Guide */
+.chapter-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;}
+.chapter-header{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background 0.2s;border-bottom:1px solid var(--border);}
+.chapter-header:hover{background:var(--surface2);}
+.chapter-title{font-size:16px;font-weight:700;}
+.chapter-subtitle{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:2px;}
+.chevron{color:var(--muted);font-size:14px;transition:transform 0.2s;}
+.chapter-header.open .chevron{transform:rotate(180deg);}
+.chapter-body{padding:20px;display:none;}
+.chapter-body.open{display:block;}
+.concept-title{font-size:14px;font-weight:700;color:var(--accent);margin:20px 0 8px;display:flex;align-items:center;gap:8px;}
+.concept-title:first-child{margin-top:0;}
+.concept-title::before{content:'▸';font-size:10px;}
+.concept-body{font-size:13px;line-height:1.8;color:#c8c8d8;}
+.concept-body strong{color:var(--text);}
+.key-term{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--accent-dim);color:var(--accent);padding:2px 8px;border-radius:4px;margin:2px 2px;}
+.key-term.purple{background:rgba(167,139,250,0.12);color:var(--purple);}
+.key-term.green{background:rgba(34,197,94,0.12);color:var(--green);}
+.key-term.orange{background:rgba(249,115,22,0.12);color:var(--orange);}
+.people-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:12px;}
+.person-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;}
+.person-name{font-size:13px;font-weight:700;margin-bottom:4px;}
+.person-role{font-size:12px;color:var(--muted);line-height:1.5;}
+/* Flashcards */
+.filter-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.filter-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;}
+.filter-btn.active-filter{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.fc-controls{display:flex;gap:10px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+.fc-stat{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);}
+.btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:8px 16px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;transition:all 0.2s;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.btn.primary{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.flashcard-area{perspective:1000px;margin-bottom:20px;}
+.flashcard{width:100%;min-height:200px;cursor:pointer;transform-style:preserve-3d;transition:transform 0.4s;position:relative;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;width:100%;min-height:200px;backface-visibility:hidden;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;display:flex;flex-direction:column;justify-content:center;}
+.fc-back{transform:rotateY(180deg);}
+.fc-chapter-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;display:inline-block;margin-bottom:12px;width:fit-content;}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;}
+.fc-question{font-size:17px;font-weight:600;line-height:1.4;}
+.fc-answer{font-size:15px;line-height:1.6;color:#c8c8d8;}
+.fc-hint{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:16px;}
+.fc-nav{display:flex;align-items:center;gap:16px;justify-content:center;}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);}
+/* Mastered card indicator */
+.fc-mastered-indicator{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);margin-top:8px;}
+/* Quiz */
+.quiz-score{background:var(--surface);border:1px solid var(--green);border-radius:12px;padding:24px;text-align:center;margin-bottom:20px;display:none;}
+.score-num{font-size:48px;font-weight:700;color:var(--green);}
+.score-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:4px;}
+.q-block{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px;}
+.q-ch-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:10px;}
+.q-text{font-size:14px;font-weight:600;line-height:1.5;margin-bottom:14px;}
+.option{font-size:13px;padding:10px 14px;border-radius:6px;border:1px solid var(--border);margin-bottom:8px;cursor:pointer;transition:all 0.15s;line-height:1.4;}
+.option:hover:not(.answered){background:var(--surface2);}
+.option.correct{border-color:var(--green);background:rgba(34,197,94,0.1);color:var(--green);}
+.option.wrong{border-color:var(--red);background:rgba(239,68,68,0.1);color:var(--red);}
+.option.reveal{border-color:var(--green);background:rgba(34,197,94,0.05);}
+.fitb-input{width:100%;padding:10px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:14px;margin-bottom:8px;}
+.fitb-input:focus{outline:none;border-color:var(--accent);}
+.fitb-input.correct-input{border-color:var(--green);}
+.fitb-input.wrong-input{border-color:var(--red);}
+.fitb-correct-answer{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);display:none;margin-bottom:6px;}
+.explanation{font-size:12px;color:var(--muted);border-top:1px solid var(--border);padding-top:10px;margin-top:10px;display:none;line-height:1.6;}
+/* Discussion */
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;}
+.disc-ch-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:10px;}
+.disc-prompt{font-size:14px;font-weight:600;line-height:1.5;margin-bottom:14px;}
+.disc-textarea{width:100%;min-height:120px;padding:12px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:14px;resize:vertical;margin-bottom:12px;}
+.disc-textarea:focus{outline:none;border-color:var(--accent);}
+.disc-checklist{display:none;margin-top:12px;}
+.disc-checklist.visible{display:block;}
+.disc-check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;line-height:1.5;cursor:pointer;}
+.disc-check-item:last-child{border-bottom:none;}
+.disc-check-item input[type=checkbox]{width:16px;height:16px;flex-shrink:0;margin-top:2px;accent-color:var(--green);}
+.disc-score-display{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--green);margin-top:12px;font-weight:700;}
+.disc-model{display:none;margin-top:12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:13px;line-height:1.7;color:#c8c8d8;}
+.disc-model.visible{display:block;}
+.btn-model-toggle{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;margin-top:8px;}
+/* Notes */
+.notes-template{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.notes-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.notes-title{font-size:15px;font-weight:700;}
+.notes-subtitle{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:4px;}
+.notes-body{padding:20px;}
+.notes-col-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.notes-col-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.notes-item{font-size:12px;line-height:1.6;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);color:#c8c8d8;}
+.notes-tip{margin-top:16px;padding:12px;background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.2);border-radius:6px;font-size:12px;color:var(--muted);line-height:1.6;}
+/* Footer */
+footer{border-top:1px solid var(--border);padding:24px 0;margin-top:40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+footer a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);text-decoration:none;}
+/* Print */
+@media print{
+  .topnav,.mastery-bar-wrap,footer{display:none!important;}
+  .panel{display:none!important;}
+  .panel.active{display:block!important;}
+  body{background:#fff;color:#000;}
+  .section-label{color:#666;}
+}
+@media(max-width:600px){
+  .notes-col-grid{grid-template-columns:1fr;}
+  .people-grid{grid-template-columns:1fr 1fr;}
+  .fc-question{font-size:15px;}
+  .topnav{gap:6px;}
+  .nav-btn{font-size:10px;padding:7px 12px;}
+  .tb-note{display:none;}
+  h1{font-size:24px;}
+  .concept-body{font-size:13px;}
+  .obj-text{font-size:13px;}
+  .option{font-size:13px;}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<nav class="topnav" role="navigation" aria-label="Study tabs">
+  <button class="nav-btn active" onclick="showPanel('overview',this)" aria-selected="true">📋 Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)" aria-selected="false">📖 Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)" aria-selected="false">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)" aria-selected="false">✏️ Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('discussion',this)" aria-selected="false">💬 Discussion</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)" aria-selected="false">📝 Notes</button>
+</nav>
+
+<header>
+  <div class="breadcrumb"><a href="../../index.html">← Study Hub</a> / HIST-1302 / Unit 2</div>
+  <div class="unit-badge">HIST-1302 · Unit 02 · Ch. 21–23</div>
+  <h1>Progressive Era,<br>Empire &amp; the Great War</h1>
+  <div class="exam-pill" aria-label="Exam date">⏰ Exam: Monday, July 7, 2026</div>
+  <div class="textbook-links" aria-label="Textbook links">
+    <span class="tb-label">📚 Textbook</span>
+    <a href="https://openstax.org/books/us-history/pages/21-introduction" target="_blank" class="tb-link" aria-label="Chapter 21 on OpenStax">Ch.21 ↗</a>
+    <span class="tb-sep">·</span>
+    <a href="https://openstax.org/books/us-history/pages/22-introduction" target="_blank" class="tb-link" aria-label="Chapter 22 on OpenStax">Ch.22 ↗</a>
+    <span class="tb-sep">·</span>
+    <a href="https://openstax.org/books/us-history/pages/23-introduction" target="_blank" class="tb-link" aria-label="Chapter 23 on OpenStax">Ch.23 ↗</a>
+    <span class="tb-sep">·</span>
+    <span class="tb-note">Free · CC BY 4.0 · Rice University / OpenStax</span>
+  </div>
+</header>
+
+<!-- Mastery Bar -->
+<div class="mastery-bar-wrap" aria-label="Mastery progress">
+  <span class="mastery-bar-label" id="mastery-label">Mastery: 0%</span>
+  <div class="mastery-bar-track" aria-hidden="true"><div class="mastery-bar-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="btn-reset" onclick="resetAllMastery()" aria-label="Reset all mastery for this unit">Reset</button>
+</div>
+
+<!-- ===== OBJECTIVES PANEL ===== -->
+<div id="panel-overview" class="panel active" role="tabpanel" aria-label="Learning objectives">
+  <div class="section-label">22 Learning Objectives</div>
+  <div class="obj-grid" id="obj-grid">
+    <!-- CH.21 -->
+    <div class="obj-card ch21"><div class="obj-num" aria-label="Objective 1">1</div><div><div class="obj-text">What was the Progressive Era? How did it impact American life, and what were its features? Who were the muckrakers?</div><div class="obj-chapter">CH. 21 · Sec 21.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,1)" aria-label="Mark objective 1 as mastered">☐</button></div>
+    <div class="obj-card ch21"><div class="obj-num" aria-label="Objective 2">2</div><div><div class="obj-text">Discuss Progressive movements at the local &amp; state levels: the direct primary, initiative, referendum, and recall. Describe Progressivism in social justice, labor, and women's rights movements.</div><div class="obj-chapter">CH. 21 · Sec 21.2</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,2)" aria-label="Mark objective 2 as mastered">☐</button></div>
+    <div class="obj-card ch21"><div class="obj-num" aria-label="Objective 3">3</div><div><div class="obj-text">What was the Progressive Era? How did it impact American life, especially politics? Identify key reforms achieved.</div><div class="obj-chapter">CH. 21 · Sec 21.2–21.3</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,3)" aria-label="Mark objective 3 as mastered">☐</button></div>
+    <div class="obj-card ch21"><div class="obj-num" aria-label="Objective 4">4</div><div><div class="obj-text">Explain how Theodore Roosevelt became President, even though he was not considered "conservative" by Republican Party leaders.</div><div class="obj-chapter">CH. 21 · Sec 21.4</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,4)" aria-label="Mark objective 4 as mastered">☐</button></div>
+    <div class="obj-card ch21"><div class="obj-num" aria-label="Objective 5">5</div><div><div class="obj-text">Evaluate T. Roosevelt as president: his handling of the trusts (Northern Securities, Standard Oil); the "Square Deal" regarding labor disputes (Anthracite Coal Strike); safer food &amp; drugs (Meat Inspection Act, Pure Food &amp; Drug Act); and land conservation.</div><div class="obj-chapter">CH. 21 · Sec 21.4</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,5)" aria-label="Mark objective 5 as mastered">☐</button></div>
+    <div class="obj-card ch21"><div class="obj-num" aria-label="Objective 6">6</div><div><div class="obj-text">Name the man T. Roosevelt personally selected as his successor. Describe how Taft's personality and leadership style differed from TR's, and how Taft's presidency went wrong.</div><div class="obj-chapter">CH. 21 · Sec 21.4</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,6)" aria-label="Mark objective 6 as mastered">☐</button></div>
+    <div class="obj-card ch21"><div class="obj-num" aria-label="Objective 7">7</div><div><div class="obj-text">Describe how the Republican Party split (conservatives vs. progressives) in the 1912 election, and the reemergence of TR. Name the major candidates, their platforms (New Nationalism vs. New Freedom), and the outcome.</div><div class="obj-chapter">CH. 21 · Sec 21.4</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,7)" aria-label="Mark objective 7 as mastered">☐</button></div>
+    <div class="obj-card ch21"><div class="obj-num" aria-label="Objective 8">8</div><div><div class="obj-text">Describe Wilson's career background. Identify his Progressive "New Freedom" agenda and key reforms (Federal Reserve, Underwood Tariff, Clayton Act). How did WWI cause his Progressive agenda to be sidelined?</div><div class="obj-chapter">CH. 21 · Sec 21.4</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,8)" aria-label="Mark objective 8 as mastered">☐</button></div>
+    <!-- CH.22 -->
+    <div class="obj-card ch22"><div class="obj-num" aria-label="Objective 9">9</div><div><div class="obj-text">Explain America's expansionist impulse of the 1890s. Discuss Turner's Frontier Thesis and Mahan's arguments for a strong navy, overseas bases, and a Central American canal.</div><div class="obj-chapter">CH. 22 · Sec 22.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,9)" aria-label="Mark objective 9 as mastered">☐</button></div>
+    <div class="obj-card ch22"><div class="obj-num" aria-label="Objective 10">10</div><div><div class="obj-text">Describe U.S. involvement in the Pacific and acquisition of Hawaii: the sugar industry, Queen Liliuokalani, the American-backed overthrow, and annexation in 1898.</div><div class="obj-chapter">CH. 22 · Sec 22.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,10)" aria-label="Mark objective 10 as mastered">☐</button></div>
+    <div class="obj-card ch22"><div class="obj-num" aria-label="Objective 11">11</div><div><div class="obj-text">Describe U.S. involvement in Cuba, the Spanish-American War, the Treaty of Paris (1898), and land acquired. Discuss the Philippine-American War, Emilio Aguinaldo, and the Taft Commission.</div><div class="obj-chapter">CH. 22 · Sec 22.2</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,11)" aria-label="Mark objective 11 as mastered">☐</button></div>
+    <div class="obj-card ch22"><div class="obj-num" aria-label="Objective 12">12</div><div><div class="obj-text">Discuss U.S. interest in Asia and the "Open Door" policy toward China. Explain Secretary Hay's Open Door notes and how they favored American trade. Describe the Boxer Rebellion and U.S. response.</div><div class="obj-chapter">CH. 22 · Sec 22.3</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,12)" aria-label="Mark objective 12 as mastered">☐</button></div>
+    <div class="obj-card ch22"><div class="obj-num" aria-label="Objective 13">13</div><div><div class="obj-text">Discuss foreign policy under T. Roosevelt: Latin America ("Big Stick" diplomacy and the Roosevelt Corollary to the Monroe Doctrine); the Panama Canal (Colombia, Panama revolution, construction); and other diplomatic initiatives including the Russo-Japanese War.</div><div class="obj-chapter">CH. 22 · Sec 22.4</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,13)" aria-label="Mark objective 13 as mastered">☐</button></div>
+    <div class="obj-card ch22"><div class="obj-num" aria-label="Objective 14">14</div><div><div class="obj-text">Describe Taft's "Dollar Diplomacy" — substituting dollars for bullets. Explain how it worked in Central America and Asia, and what problems it created long-term.</div><div class="obj-chapter">CH. 22 · Sec 22.5</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,14)" aria-label="Mark objective 14 as mastered">☐</button></div>
+    <div class="obj-card ch22"><div class="obj-num" aria-label="Objective 15">15</div><div><div class="obj-text">Discuss the political situation in Mexico and how Wilson tried to handle it. Explain Wilson's overall foreign policy philosophy vs. his actual interventionist actions.</div><div class="obj-chapter">CH. 22–23 · Sec 22.5 / 23.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,15)" aria-label="Mark objective 15 as mastered">☐</button></div>
+    <!-- CH.23 -->
+    <div class="obj-card ch23"><div class="obj-num" aria-label="Objective 16">16</div><div><div class="obj-text">Describe the conditions and events (~1900–1914) that led to WWI in Europe. Name the Central Powers (Germany, Austria-Hungary, Ottoman Empire) and Allied Powers (Britain, France, Russia, Italy) at the outset of war.</div><div class="obj-chapter">CH. 23 · Sec 23.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,16)" aria-label="Mark objective 16 as mastered">☐</button></div>
+    <div class="obj-card ch23"><div class="obj-num" aria-label="Objective 17">17</div><div><div class="obj-text">Why did the U.S. declare neutrality when WWI broke out, and why was this policy difficult to maintain? Explain Wilson's dilemma between free trade and neutrality.</div><div class="obj-chapter">CH. 23 · Sec 23.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,17)" aria-label="Mark objective 17 as mastered">☐</button></div>
+    <div class="obj-card ch23"><div class="obj-num" aria-label="Objective 18">18</div><div><div class="obj-text">Discuss the fighting in WWI in the years prior to U.S. involvement: trench warfare, stalemate on the Western Front, the scale of European casualties.</div><div class="obj-chapter">CH. 23 · Sec 23.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,18)" aria-label="Mark objective 18 as mastered">☐</button></div>
+    <div class="obj-card ch23"><div class="obj-num" aria-label="Objective 19">19</div><div><div class="obj-text">Explain the events that forced the U.S. into the war: German U-boat warfare; the sinking of the Lusitania (1915); the Zimmermann Telegram (1917); and the U.S. declaration of war in April 1917.</div><div class="obj-chapter">CH. 23 · Sec 23.1–23.2</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,19)" aria-label="Mark objective 19 as mastered">☐</button></div>
+    <div class="obj-card ch23"><div class="obj-num" aria-label="Objective 20">20</div><div><div class="obj-text">Describe the "home front" during WWI: Creel Committee propaganda, the Espionage Act (1917), Sedition Act (1918), anti-German sentiment, and Schenck v. United States ("clear and present danger").</div><div class="obj-chapter">CH. 23 · Sec 23.2–23.3</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,20)" aria-label="Mark objective 20 as mastered">☐</button></div>
+    <div class="obj-card ch23"><div class="obj-num" aria-label="Objective 21">21</div><div><div class="obj-text">Describe U.S. military activities during WWI: the AEF under Pershing, the Harlem Hellfighters, the Meuse-Argonne Offensive, and the armistice of November 11, 1918. What were American and Allied casualties?</div><div class="obj-chapter">CH. 23 · Sec 23.4</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,21)" aria-label="Mark objective 21 as mastered">☐</button></div>
+    <div class="obj-card ch23"><div class="obj-num" aria-label="Objective 22">22</div><div><div class="obj-text">Discuss Wilson's "14 Points" and the Treaty of Versailles: to what degree did the treaty include the 14 Points? How was the treaty punitive toward Germany (war guilt clause, reparations)? Why did the U.S. Senate not ratify it (Irreconcilables vs. Reservationists)? Discuss demobilization aftermath: Red Scare, Red Summer, flu pandemic, and Harding's election.</div><div class="obj-chapter">CH. 23 · Sec 23.4–23.5</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,22)" aria-label="Mark objective 22 as mastered">☐</button></div>
+  </div>
+</div>
+
+<!-- ===== STUDY GUIDE PANEL ===== -->
+<div id="panel-guide" class="panel" role="tabpanel" aria-label="Study guide">
+  <div class="section-label">Chapter Summaries — Click to expand</div>
+
+  <!-- CH.21 -->
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <div><div class="chapter-title">Chapter 21 — The Progressive Movement (1890–1920)</div><div class="chapter-subtitle">Muckrakers · Democracy · Women &amp; African Americans · TR, Taft, Wilson</div></div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="chapter-body">
+      <div class="concept-title">What Was Progressivism?</div>
+      <div class="concept-body">The Progressive Era was a response to the social ills of the Gilded Age — urban sprawl, corruption, dangerous working conditions, monopolies, and racial violence. Progressives shared three core goals: <strong>expanding democracy</strong>, <strong>improving efficiency</strong> in government and business, and promoting <strong>social justice</strong>. Most Progressives were educated, middle-class Americans, but the movement included women, African Americans, urban and rural dwellers.
+      <br><br>Key terms: <span class="key-term">muckrakers</span> <span class="key-term">grassroots Progressivism</span> <span class="key-term">social justice</span></div>
+
+      <div class="concept-title">The Muckrakers</div>
+      <div class="concept-body">Investigative journalists who exposed social problems and urged public action — unlike "yellow journalists" who merely sensationalized. <strong>Theodore Roosevelt</strong> coined the nickname "muckraker" (from a character in Pilgrim's Progress). Key figures:
+      <div class="people-grid" style="margin-top:10px">
+        <div class="person-card"><div class="person-name">Ida Tarbell</div><div class="person-role">Exposed Standard Oil's monopolistic practices; articles in <em>McClure's</em></div></div>
+        <div class="person-card"><div class="person-name">Upton Sinclair</div><div class="person-role"><em>The Jungle</em> (1905) — exposed meatpacking industry; led to Meat Inspection Act</div></div>
+        <div class="person-card"><div class="person-name">Lincoln Steffens</div><div class="person-role">Exposed corruption in city politics</div></div>
+        <div class="person-card"><div class="person-name">Jacob Riis</div><div class="person-role"><em>How the Other Half Lives</em> (1890) — photographed NYC slum conditions</div></div>
+      </div></div>
+
+      <div class="concept-title">Grassroots Democracy Reforms</div>
+      <div class="concept-body">Progressives pushed three key tools of <strong>direct democracy</strong>:
+      <br>• <strong>Direct primary</strong> — voters (not party bosses) select candidates; replaced convention delegate system. South Carolina first (1896).
+      <br>• <strong>Initiative</strong> — citizens petition to place legislation on the ballot. South Dakota first (1898).
+      <br>• <strong>Referendum</strong> — voters affirm or reject existing laws.
+      <br>• <strong>Recall</strong> — citizens remove an official via petition + vote. Oregon first (1910).
+      <br>• <strong>17th Amendment</strong> (1913) — direct election of U.S. Senators (previously chosen by state legislatures).
+      <br><br>Municipal reform: <strong>Galveston, TX commission system</strong> (1901) after the 1900 hurricane; <strong>city manager system</strong> (Staunton, VA, 1908).
+      <br><br>Key terms: <span class="key-term">direct primary</span> <span class="key-term">initiative</span> <span class="key-term">referendum</span> <span class="key-term">recall</span> <span class="key-term">17th Amendment</span></div>
+
+      <div class="concept-title">Social Justice: Labor, Children &amp; Prohibition</div>
+      <div class="concept-body">• <strong>Triangle Shirtwaist Factory Fire</strong> (March 25, 1911) — 146 garment workers (mostly young immigrant women) died; management had locked exits. Galvanized workplace safety laws.
+      <br>• <strong>National Child Labor Committee</strong> — pushed for Keating-Owen Act (1916) banning interstate sale of goods made with child labor; eventually the <strong>Fair Labor Standards Act</strong> (1938) made it permanent.
+      <br>• <strong>Florence Kelley</strong> (National Consumers League) — pushed for 8-hour workday and safer factories.
+      <br>• <strong>WCTU &amp; Anti-Saloon League</strong> — prohibition movement; led to <strong>18th Amendment</strong> (ratified 1919), prohibiting manufacture, sale, and transportation of alcohol.
+      <br>• <strong>IWW (Wobblies)</strong> — "Big Bill" Haywood's radical industrial union; favored general strike and direct action. Founded 1905.
+      <br>• <strong>SPA (Socialist Party of America)</strong> — Eugene Debs; ran for president 5 times; over 70 Socialist mayors elected 1901–1918.
+      <br><br>Key terms: <span class="key-term orange">Triangle Shirtwaist Fire 1911</span> <span class="key-term">18th Amendment</span> <span class="key-term orange">IWW / Wobblies</span> <span class="key-term orange">Eugene Debs</span></div>
+
+      <div class="concept-title">Women's Suffrage Movement</div>
+      <div class="concept-body">• Roots: <strong>Seneca Falls Convention</strong> (1848) — Declaration of Sentiments, first demand for women's vote.
+      <br>• <strong>NAWSA</strong> (National American Women's Suffrage Association, 1890) — led by Elizabeth Cady Stanton and Susan B. Anthony; later by <strong>Carrie Chapman Catt</strong> (from 1900).
+      <br>• <strong>Alice Paul</strong> — formed Congressional Union; organized "Silent Sentinels" who picketed the White House.
+      <br>• Western states granted women's suffrage first (Wyoming, Colorado, Idaho, Utah).
+      <br>• <strong>19th Amendment</strong> (1920) — guaranteed women's right to vote nationally.
+      <br><br>Key terms: <span class="key-term">NAWSA</span> <span class="key-term">Alice Paul</span> <span class="key-term">Silent Sentinels</span> <span class="key-term">19th Amendment</span></div>
+
+      <div class="concept-title">African American Rights: Washington vs. Du Bois</div>
+      <div class="concept-body">• <strong>Booker T. Washington</strong> — "Atlanta Compromise" (1895): self-help, vocational education, accommodate White racism in exchange for economic opportunity; founded Tuskegee Institute.
+      <br>• <strong>W.E.B. Du Bois</strong> — demanded immediate civil rights; founded <strong>Niagara Movement</strong> (1905), calling for full political and social equality.
+      <br>• <strong>NAACP</strong> (1909) — founded by Du Bois, Ida B. Wells-Barnett, Mary Church Terrell and others after the Springfield, IL race riot (1908). Du Bois edited <em>The Crisis</em> newspaper.
+      <br><br>Key terms: <span class="key-term">Tuskegee Institute</span> <span class="key-term purple">Niagara Movement</span> <span class="key-term purple">NAACP 1909</span></div>
+
+      <div class="concept-title">TR as President: The Square Deal</div>
+      <div class="concept-body">• Roosevelt became president when <strong>McKinley was assassinated</strong> (September 1901, Pan-American Exposition, Buffalo, NY) — youngest president at 42.
+      <br>• <strong>Trust-busting</strong>: filed suit against Northern Securities Trust (railroad monopoly, won 1904 5-4); over 44 antitrust suits total. Distinguished "good trusts" vs. "bad trusts."
+      <br>• <strong>Anthracite Coal Strike (1902)</strong>: TR invited both sides to White House to negotiate — first time a president sided with workers, not owners.
+      <br>• <strong>Square Deal legislation</strong>: Meat Inspection Act (1906); Pure Food and Drug Act (1906) — after reading Upton Sinclair's <em>The Jungle</em>.
+      <br>• <strong>Conservation</strong>: appointed Gifford Pinchot as first chief of U.S. Forestry Service; created 18 national monuments, 5 national parks, 150+ national forests (~230 million acres).
+      <br>• <strong>Elkins Act (1903) &amp; Hepburn Act (1906)</strong>: strengthened Interstate Commerce Commission to regulate railroad rates.
+      <br><br>Key terms: <span class="key-term">Square Deal</span> <span class="key-term">Northern Securities</span> <span class="key-term green">Meat Inspection Act 1906</span> <span class="key-term green">Pure Food &amp; Drug Act 1906</span></div>
+
+      <div class="concept-title">Taft's Presidency &amp; the 1912 Election</div>
+      <div class="concept-body">• TR hand-picked <strong>William Howard Taft</strong> (Secretary of War, former Philippine Governor-General) as his successor; Taft won 1908.
+      <br>• Taft initiated <em>twice as many</em> antitrust suits as TR, but lacked TR's political finesse. Signed <strong>Mann-Elkins Act (1910)</strong> extending ICC authority to telephones and telegraphs.
+      <br>• Problems: <strong>Payne-Aldrich Act (1909)</strong> raised tariffs; fired <strong>Gifford Pinchot</strong> (conservation scandal with Sec. Ballinger); supported conservative Republicans. TR felt betrayed.
+      <br>• <strong>1912 Election</strong>: TR bolted GOP to form the <strong>Progressive (Bull Moose) Party</strong>. Four candidates: TR (Progressive), Taft (Republican), <strong>Woodrow Wilson</strong> (Democrat), Eugene Debs (Socialist). TR survived assassination attempt in Milwaukee. Wilson won with 435 electoral votes; TR second; Taft third.
+      <br><br>Key terms: <span class="key-term purple">Payne-Aldrich Act</span> <span class="key-term orange">Bull Moose Party</span> <span class="key-term">New Nationalism (TR)</span> <span class="key-term">New Freedom (Wilson)</span></div>
+
+      <div class="concept-title">Wilson's New Freedom</div>
+      <div class="concept-body">• Wilson: former history professor and president of Princeton; Progressive governor of New Jersey.
+      <br>• <strong>New Freedom</strong> = smaller federal government protecting public from big business, vs. TR's "New Nationalism" (powerful federal government regulating big business).
+      <br>• Phase 1 (1913): <strong>Underwood Tariff Act</strong> — reduced tariffs significantly; established federal income tax (16th Amendment). <strong>Federal Reserve Act (1913)</strong> — created central banking system.
+      <br>• Phase 2 (1916, pre-reelection): <strong>Clayton Antitrust Act</strong>; federal child labor laws; 8-hour workday for railroad workers; Keating-Owen Act.
+      <br>• WWI (1917) effectively ended the domestic Progressive agenda — national security replaced social reform.
+      <br><br>Key terms: <span class="key-term">Federal Reserve Act 1913</span> <span class="key-term">Underwood Tariff</span> <span class="key-term">Clayton Antitrust Act</span> <span class="key-term">16th Amendment</span></div>
+    </div>
+  </div>
+
+  <!-- CH.22 -->
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <div><div class="chapter-title">Chapter 22 — Age of Empire: American Foreign Policy (1890–1914)</div><div class="chapter-subtitle">Turner &amp; Mahan · Spanish-American War · Open Door · Big Stick · Dollar Diplomacy</div></div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="chapter-body">
+      <div class="concept-title">The Roots of Empire: Turner &amp; Mahan</div>
+      <div class="concept-body">After the Civil War, the U.S. was isolationist — the State Dept. had barely 60 employees and no ambassadors (1865). Two thinkers changed the direction:
+      <br>• <strong>Frederick Jackson Turner</strong> — "Frontier Thesis" (1893): the frontier shaped American democracy and character, but <em>the frontier is now closed</em>. Raised the question: where does America expand next?
+      <br>• <strong>Alfred Thayer Mahan</strong> — <em>The Influence of Sea Power upon History</em>: America needed a large steel navy, overseas naval bases (coaling stations), and a Central American canal to become a world power. Naval Act of 1890 followed his advice.
+      <br>• <strong>Seward's Folly</strong> (1867): Secretary of State Seward purchased Alaska from Russia for $7.2 million — mocked at the time. Also annexed Midway Islands (crucial coaling station).
+      <br><br>Key terms: <span class="key-term">Frontier Thesis (Turner)</span> <span class="key-term purple">Mahan / Sea Power</span> <span class="key-term purple">Seward's Folly</span></div>
+
+      <div class="concept-title">Hawaii &amp; Pacific Expansion</div>
+      <div class="concept-body">• American sugar planters dominated Hawaiian economy; by 1890, Hawaii exported nearly all sugar to the U.S. tariff-free.
+      <br>• <strong>Queen Liliuokalani</strong> (1891–1893) tried to reassert Hawaiian sovereignty against American economic dominance. American businessmen worked with U.S. minister John Stevens to stage an armed revolt.
+      <br>• Hawaii annexed in <strong>1898</strong> during the Spanish-American War; became a territory in 1900.
+      <br><br>Key terms: <span class="key-term">Queen Liliuokalani</span> <span class="key-term">Hawaii annexation 1898</span></div>
+
+      <div class="concept-title">The Spanish-American War (1898)</div>
+      <div class="concept-body">• Causes: Cuba's fight for independence from Spain; <strong>yellow journalism</strong> (Hearst, Pulitzer) inflamed American public; the mysterious sinking of the USS Maine in Havana Harbor (Feb 1898) — "Remember the Maine!"
+      <br>• <strong>Teller Amendment</strong> — U.S. promised Cuba independence after the war (no annexation).
+      <br>• The war lasted ~4 months. TR's <strong>Rough Riders</strong> fought at San Juan Hill, Cuba. The U.S. Navy destroyed the Spanish fleet in both the Caribbean and the Pacific.
+      <br>• <strong>Treaty of Paris (December 10, 1898)</strong>: Spain recognized Cuba's independence; U.S. gained Puerto Rico, Guam, and Philippines ($20 million paid to Spain).
+      <br>• <strong>Anti-Imperialist League</strong> (1898): prominent opponents of empire — Jane Addams, Andrew Carnegie, Mark Twain, Samuel Gompers. Senate barely ratified the treaty (when Filipino uprising news arrived, undecided senators voted yes).
+      <br>• <strong>Platt Amendment</strong> — gave U.S. right to intervene in Cuban affairs; secured Guantanamo Bay naval base. Cuba was "independent" in name only.
+      <br><br>Key terms: <span class="key-term orange">Rough Riders</span> <span class="key-term">Treaty of Paris 1898</span> <span class="key-term">Teller Amendment</span> <span class="key-term orange">Platt Amendment</span> <span class="key-term">Anti-Imperialist League</span> <span class="key-term orange">yellow journalism</span></div>
+
+      <div class="concept-title">The Philippine-American War</div>
+      <div class="concept-body">• Filipinos, led by <strong>Emilio Aguinaldo</strong>, expected independence after the Spanish-American War — instead the U.S. kept the Philippines.
+      <br>• The Philippine-American War lasted 3 years: ~4,000 Americans killed, ~20,000 Filipino combatants, and an estimated 250,000 civilian deaths.
+      <br>• <strong>Taft Commission</strong>: William Howard Taft appointed civil governor; built infrastructure, hospitals, schools; offered political positions to former rebels. Aguinaldo captured in 1901 and forced to swear allegiance. Philippines remained under U.S. control until 1946.
+      <br><br>Key terms: <span class="key-term purple">Emilio Aguinaldo</span> <span class="key-term purple">Taft Commission</span></div>
+
+      <div class="concept-title">Open Door Policy in China</div>
+      <div class="concept-body">• European powers (Britain, France, Germany, Russia, Japan) carved out <strong>spheres of influence</strong> in China, giving each exclusive trade advantages in their zones.
+      <br>• Secretary of State <strong>John Hay</strong> issued <strong>Open Door notes</strong> (1899): circular notes demanding equal trade access to all Chinese ports for all nations, no special tariffs, no transportation controls.
+      <br>• This benefited the U.S. the most — American goods were higher quality and cheaper; "open doors" flooded China with U.S. products. Other nations gave half-hearted replies, but Hay declared it official U.S. policy.
+      <br>• <strong>Boxer Rebellion</strong> (1899–1901): Chinese insurgents (Righteous and Harmonious Fists) tried to expel all western influence. U.S., Britain, and Germany sent ~2,000 troops; crushed the rebellion; reinforced U.S. commitment to China's territorial integrity.
+      <br><br>Key terms: <span class="key-term purple">Open Door notes (Hay)</span> <span class="key-term purple">sphere of influence</span> <span class="key-term purple">Boxer Rebellion</span></div>
+
+      <div class="concept-title">Roosevelt's Big Stick Foreign Policy</div>
+      <div class="concept-body">• Based on an African proverb: <strong>"Speak softly and carry a big stick, and you will go far."</strong>
+      <br>• Threaten force rather than actually use it — keep opponents guessing. U.S. military credibility after Spanish-American War made threats believable.
+      <br>• <strong>Panama Canal</strong>: Colombia rejected TR's treaty offer ($10M + $250K/yr). TR secretly encouraged Panamanian revolution (1903) — sent battleships to block Colombia. Recognized Panama immediately; signed canal deal with new nation. Canal opened in 1914. TR became first sitting president to travel internationally (visited construction site).
+      <br>• <strong>Roosevelt Corollary (1904)</strong>: extension of Monroe Doctrine — U.S. would act as "international police power" in Latin America to correct any "chronic wrongdoing." Gave U.S. right to intervene in Latin American affairs to maintain stability (and protect American interests). Established protectorates over Cuba, Panama, Dominican Republic.
+      <br>• <strong>Russo-Japanese War</strong>: TR mediated (Portsmouth, NH, 1905); won Nobel Peace Prize — but Japanese felt cheated out of reparations; tensions with Japan began.
+      <br><br>Key terms: <span class="key-term">Big Stick diplomacy</span> <span class="key-term green">Panama Canal 1914</span> <span class="key-term green">Roosevelt Corollary 1904</span> <span class="key-term">Monroe Doctrine</span></div>
+
+      <div class="concept-title">Taft's Dollar Diplomacy</div>
+      <div class="concept-body">• Taft's approach: <strong>"substitute dollars for bullets"</strong> — use American economic power (not military threats) to achieve foreign policy goals.
+      <br>• Central America: paid off debts these nations owed European powers with U.S. dollars — making them indebted to the U.S. instead. When Nicaragua refused U.S. loans, Taft sent warships.
+      <br>• <strong>Lodge Corollary</strong>: addendum to Roosevelt Corollary — no foreign corporation (other than American) could acquire strategic lands in the Western Hemisphere. (Triggered by Japan's interest in Mexican territory.)
+      <br>• Asia: tried to bolster China against Japan; efforts backfired and heightened U.S.-Japan tensions — contributing to WWII.
+      <br>• Long-term damage: created resentment, economic instability, and nationalist movements in Central America; alienated Japan.
+      <br><br>Key terms: <span class="key-term purple">Dollar Diplomacy</span> <span class="key-term purple">Lodge Corollary</span></div>
+    </div>
+  </div>
+
+  <!-- CH.23 -->
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <div><div class="chapter-title">Chapter 23 — Americans and the Great War (1914–1919)</div><div class="chapter-subtitle">Isolationism · U-boats · Home Front · 14 Points · Versailles · Red Scare</div></div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="chapter-body">
+      <div class="concept-title">Origins of WWI &amp; American Neutrality</div>
+      <div class="concept-body">• WWI began in Europe in 1914 — sparked by the assassination of Archduke Franz Ferdinand (Austro-Hungarian heir) in Sarajevo, June 28, 1914.
+      <br>• <strong>Central Powers</strong>: Germany, Austria-Hungary, Ottoman Empire.
+      <br>• <strong>Allied Powers</strong>: Britain, France, Russia; later Italy and Japan.
+      <br>• Wilson declared <strong>neutrality</strong> — wanted to keep U.S. out; strong ethnic ties to both sides made public opinion divided; Wilson's SoS Bryan was a committed anti-imperialist.
+      <br>• Wilson proposed an idealistic moral foreign policy — he would intervene only when morally imperative. In practice, he still intervened in Mexico, Haiti, Dominican Republic.
+      <br>• Problem: <strong>free trade with the Allies</strong> conflicted with German submarine warfare, which targeted all shipping to Britain.
+      <br><br>Key terms: <span class="key-term">neutrality</span> <span class="key-term green">Central Powers</span> <span class="key-term green">Allied Powers</span></div>
+
+      <div class="concept-title">Events Forcing U.S. Into War</div>
+      <div class="concept-body">• <strong>German U-boats (submarines)</strong> — Germany declared a war zone around Britain; submarines attacked ships without warning, violating international law (ships were supposed to warn and allow evacuation).
+      <br>• <strong>Sinking of the Lusitania</strong> (May 7, 1915): British ocean liner torpedoed; 1,198 killed including 128 Americans. Public outrage, but Wilson still stayed out of war. Germany agreed to Sussex Pledge (1916) — limit submarine warfare.
+      <br>• <strong>Zimmermann Telegram</strong> (January 1917): German Foreign Minister Arthur Zimmermann secretly offered Mexico an alliance if U.S. entered war — Mexico could reclaim Texas, New Mexico, Arizona. British intercepted and shared it with the U.S. Public outrage.
+      <br>• Germany resumed <strong>unrestricted submarine warfare</strong> (February 1917), directly threatening American ships.
+      <br>• Wilson asked Congress for a declaration of war — <strong>April 6, 1917</strong>. 56 members of Congress voted against it.
+      <br><br>Key terms: <span class="key-term orange">Lusitania 1915</span> <span class="key-term orange">Zimmermann Telegram 1917</span> <span class="key-term orange">U-boats / unrestricted submarine warfare</span></div>
+
+      <div class="concept-title">Preparing for War</div>
+      <div class="concept-body">• <strong>Selective Service Act (1917)</strong>: military draft — eventually 4 million men served.
+      <br>• <strong>Committee on Public Information (Creel Committee)</strong>: George Creel directed massive propaganda campaign against Germany — posters, pamphlets, films depicting Germany as brutal; "Four-Minute Men" gave short pro-war speeches at movie theaters.
+      <br>• <strong>Liberty bonds</strong>: Americans urged to buy war bonds to finance the war.
+      <br>• War Industries Board, Food Administration, Fuel Administration: federal agencies coordinating wartime production and rationing.
+      <br><br>Key terms: <span class="key-term">Creel Committee / CPI</span> <span class="key-term">Selective Service Act</span> <span class="key-term">liberty bonds</span></div>
+
+      <div class="concept-title">The Home Front: Suppression of Dissent &amp; Anti-German Sentiment</div>
+      <div class="concept-body">• <strong>Espionage Act (1917)</strong>: prohibited aiding the enemy; banned public opposition to the war; up to 20-year prison sentences.
+      <br>• <strong>Sedition Act (1918)</strong>: prohibited any criticism of the government, military, Constitution, or American flag. Over 2,000 charged.
+      <br>• Eugene Debs sentenced to 10 years for encouraging draft resistance.
+      <br>• <strong>Anti-German hysteria</strong>: sauerkraut renamed "liberty cabbage"; German-Americans faced discrimination; breweries targeted (mostly German-owned) — accelerated Prohibition.
+      <br>• <strong>Schenck v. United States (1919)</strong>: Supreme Court (Justice Oliver Wendell Holmes) unanimously upheld Espionage/Sedition Acts — speech that presents a "clear and present danger" is not protected. (Holmes compared it to falsely shouting "fire!" in a crowded theater.)
+      <br>• <strong>American Protective League</strong>: private citizens aided DOJ in spying on suspected dissenters and draft evaders.
+      <br><br>Key terms: <span class="key-term orange">Espionage Act 1917</span> <span class="key-term orange">Sedition Act 1918</span> <span class="key-term orange">Schenck v. U.S.</span> <span class="key-term">"clear and present danger"</span></div>
+
+      <div class="concept-title">The Home Front: New Opportunities</div>
+      <div class="concept-body">• <strong>Labor</strong>: National Labor War Board (1918) — in exchange for AFL's "no-strike pledge," government protected workers' right to organize and bargain. Union membership jumped from 2.6M (1916) to 4.1M (1919). But wages were offset by 15–20% annual inflation.
+      <br>• <strong>Women</strong>: Over 1 million entered workforce for first time; 8M+ found higher-paying jobs in industry (railroads tripled). "Farmerettes" (Women's Land Army) ran farms. ~30,000 women served in military/humanitarian roles (Red Cross nurses; "Hello Girls" — bilingual telephone operators in France). Wartime service built case for 19th Amendment (1920).
+      <br>• <strong>African Americans</strong>: 350,000 Black men served; segregated units. <strong>Harlem Hellfighters</strong> (369th Infantry) served on French frontline for 6 months — longer than any other American unit; 171 received Legion of Merit. Great Migration accelerated: ~350,000 African Americans moved north from 1910–1920.
+      <br><br>Key terms: <span class="key-term green">Harlem Hellfighters / 369th Infantry</span> <span class="key-term">Great Migration</span> <span class="key-term">no-strike pledge</span></div>
+
+      <div class="concept-title">The War &amp; American Military</div>
+      <div class="concept-body">• <strong>American Expeditionary Forces (AEF)</strong> under General <strong>John "Black Jack" Pershing</strong> arrived in France 1917.
+      <br>• <strong>Meuse-Argonne Offensive</strong> (September 1918): over 1 million U.S. troops; 40 days of intense fighting; broke German lines.
+      <br>• Kaiser Wilhelm II abdicated November 9, 1918. <strong>Armistice: November 11, 1918</strong>.
+      <br>• American toll: 117,000 killed, 206,000 wounded. Allied total: 5.7 million military deaths. Central Powers: 4 million. War cost U.S. over $32 billion.
+      <br><br>Key terms: <span class="key-term green">AEF / Pershing</span> <span class="key-term green">Armistice November 11, 1918</span> <span class="key-term">Meuse-Argonne Offensive</span></div>
+
+      <div class="concept-title">Wilson's 14 Points &amp; the Treaty of Versailles</div>
+      <div class="concept-body">• Wilson announced his <strong>Fourteen Points</strong> (January 1918) — a vision for post-war peace: free trade, freedom of seas, no secret treaties, self-determination for nations, and a <strong>League of Nations</strong>.
+      <br>• Wilson attended Paris Peace Conference personally (Dec 1918–June 1919) — unprecedented; other nations followed. Britain, France, Italy sought German reparations and territorial gains. Japan sought concessions in Asia.
+      <br>• <strong>Treaty of Versailles (1919)</strong>: far from Wilson's 14 Points. Germany forced to accept <strong>"war guilt clause"</strong> (sole responsibility for WWI), pay over <strong>$33 billion</strong> in reparations, surrender territories, disarm military. League of Nations included but without U.S.
+      <br>• <strong>Senate battle</strong>: Republicans divided into <strong>Irreconcilables</strong> (opposed treaty entirely) and <strong>Reservationists</strong> (like Henry Cabot Lodge) who would support it with amendments removing Article X. Wilson refused to compromise; went on cross-country speaking tour; suffered debilitating stroke September 1919. His wife Edith Wilson effectively ran the presidency for ~6 months.
+      <br>• Senate voted down the treaty twice — U.S. never joined League of Nations; technically remained at war with Germany until Knox-Porter Resolution (July 1921).
+      <br><br>Key terms: <span class="key-term green">Fourteen Points</span> <span class="key-term green">League of Nations</span> <span class="key-term">war guilt clause</span> <span class="key-term">Treaty of Versailles</span> <span class="key-term">Irreconcilables</span> <span class="key-term">Reservationists</span></div>
+
+      <div class="concept-title">Difficult Aftermath: Red Scare, Red Summer &amp; Harding</div>
+      <div class="concept-body">• <strong>Flu Pandemic (1918–1919)</strong>: 675,000 Americans died; ~500 million infected worldwide; 50 million deaths globally. Added to postwar trauma.
+      <br>• <strong>Red Scare</strong>: fear of Communist/Bolshevik revolution in the U.S. after Russia's 1917 revolution. Letter bombs found (1919); "Palmer Raids" — Attorney General A. Mitchell Palmer and J. Edgar Hoover arrested ~4,000 alleged radicals; ~250 deported on "Soviet Ark."
+      <br>• <strong>Red Summer (1919)</strong>: 25+ bloody race riots in northern cities; 250+ killed. <strong>Chicago Race Riot</strong>: triggered when White mob stoned a Black teen who swam near "White beach" on Lake Michigan; police didn't arrest the killer. Week-long riot, 38 dead.
+      <br>• <strong>Tulsa Massacre (1921)</strong>: White mob destroyed Greenwood ("Black Wall Street") district; estimates of 50–300 Black deaths; omitted from history for decades.
+      <br>• <strong>Election of 1920</strong>: Warren G. Harding (Ohio Republican) ran on "return to normalcy" — won in landslide (404 electoral votes, 60% popular vote). Americans exhausted by Progressive mandates, war, flu, racial violence, economic anxiety, Red Scare.
+      <br><br>Key terms: <span class="key-term orange">Red Scare</span> <span class="key-term orange">Red Summer 1919</span> <span class="key-term">Palmer Raids / J. Edgar Hoover</span> <span class="key-term orange">Chicago Race Riot 1919</span> <span class="key-term">Tulsa Massacre 1921</span> <span class="key-term">"return to normalcy" (Harding)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FLASHCARDS PANEL ===== -->
+<div id="panel-flashcards" class="panel" role="tabpanel" aria-label="Flashcards">
+  <div class="filter-row" role="group" aria-label="Filter flashcards by chapter">
+    <button class="filter-btn active-filter" onclick="filterCards('all',this)">All Chapters</button>
+    <button class="filter-btn" onclick="filterCards('ch21',this)" style="color:#3b82f6;border-color:#3b82f6">Ch.21</button>
+    <button class="filter-btn" onclick="filterCards('ch22',this)" style="color:#a78bfa;border-color:#a78bfa">Ch.22</button>
+    <button class="filter-btn" onclick="filterCards('ch23',this)" style="color:#22c55e;border-color:#22c55e">Ch.23</button>
+  </div>
+  <div class="fc-controls">
+    <button class="btn primary" onclick="flipCard()">Flip Card</button>
+    <button class="btn" onclick="shuffleCards()" aria-label="Shuffle flashcards">⇄ Shuffle</button>
+    <button class="btn" onclick="toggleMastered(currentIndex)">☆ Mastered</button>
+    <span class="fc-stat" id="fc-stat" aria-live="polite">Card 1 of 75</span>
+  </div>
+  <div class="flashcard-area">
+    <div class="flashcard" id="flashcard" onclick="flipCard()" role="button" aria-label="Flip flashcard to see answer" tabindex="0">
+      <div class="fc-front">
+        <div id="fc-chapter-tag" class="fc-chapter-tag" aria-hidden="true"></div>
+        <div class="fc-label">Term / Concept</div>
+        <div class="fc-question" id="fc-question" aria-live="polite">Loading...</div>
+        <div class="fc-hint">Tap to reveal answer</div>
+      </div>
+      <div class="fc-back" aria-label="Answer">
+        <div class="fc-label">Answer</div>
+        <div class="fc-answer" id="fc-answer" aria-live="polite">Loading...</div>
+        <div class="fc-mastered-indicator" id="fc-mastered-indicator"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-nav">
+    <button class="btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
+    <span class="fc-counter" id="fc-counter" aria-live="polite">1 / 75</span>
+    <button class="btn" onclick="nextCard()" aria-label="Next card">Next →</button>
+  </div>
+</div>
+
+<!-- ===== QUIZ PANEL ===== -->
+<div id="panel-quiz" class="panel" role="tabpanel" aria-label="Practice quiz">
+  <div class="filter-row" id="quiz-filters" role="group" aria-label="Filter quiz by chapter">
+    <button class="filter-btn active-filter" onclick="setQuizFilter('all',this)">All Chapters</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch21',this)">Ch.21</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch22',this)">Ch.22</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch23',this)">Ch.23</button>
+  </div>
+  <div class="quiz-score" id="quiz-score" role="status" aria-live="polite">
+    <div class="score-num" id="score-display">0</div>
+    <div class="score-label">QUIZ COMPLETE</div>
+    <div id="score-breakdown" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px"></div>
+    <br><button class="btn primary" onclick="resetQuiz()">Retake Quiz</button>
+  </div>
+  <div id="quiz-area" role="list"></div>
+  <button class="btn primary" id="submit-btn" onclick="submitQuiz()" style="margin-top:20px;display:none" aria-label="Submit quiz answers">Submit Quiz</button>
+</div>
+
+<!-- ===== DISCUSSION PANEL ===== -->
+<div id="panel-discussion" class="panel" role="tabpanel" aria-label="Discussion questions">
+  <div class="section-label">Self-Graded Discussion Practice</div>
+
+  <div class="disc-q" id="disc-0">
+    <div class="disc-ch-badge" style="color:#3b82f6;background:rgba(59,130,246,0.12)">CH.21</div>
+    <div class="disc-prompt">What was the Progressive Era? Describe its key features and goals. Who were the muckrakers, and what role did they play in launching the movement?</div>
+    <textarea class="disc-textarea" id="disc-ta-0" placeholder="Write your response here…" aria-label="Write your response here"></textarea>
+    <button class="btn primary" onclick="submitDisc(0)">Submit &amp; Self-Grade</button>
+    <div class="disc-checklist" id="disc-check-0" aria-live="polite">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:8px;letter-spacing:0.1em;text-transform:uppercase;">Check what you covered:</div>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(0)"> Progressive Era (1890–1920) was a response to Gilded Age ills: corruption, monopolies, urban poverty, dangerous working conditions, racial violence</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(0)"> Three core Progressive goals: expand democracy, improve efficiency in government, promote social justice</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(0)"> Muckrakers were investigative journalists who exposed problems — unlike yellow journalists who sensationalized</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(0)"> Key muckrakers: Ida Tarbell (Standard Oil), Upton Sinclair (The Jungle / meatpacking), Lincoln Steffens (city corruption), Jacob Riis (NYC slums)</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(0)"> Muckrakers provoked public outrage and pressure for legislation — reform did not start at the federal level but from grassroots public pressure</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(0)"> Movement was dominated by middle-class, educated Americans but included women, African Americans, urban and rural dwellers</label>
+      <div class="disc-score-display" id="disc-score-0" aria-live="polite"></div>
+      <button class="btn-model-toggle" onclick="toggleModel(0)" aria-expanded="false">Show Model Answer</button>
+      <div class="disc-model" id="disc-model-0">The Progressive Era (approximately 1890–1920) was a broad reform movement that emerged in reaction to the social ills of the Gilded Age. As rapid industrialization created extreme wealth inequality, dangerous working conditions, corrupt machine politics, monopolistic corporations, and surging racial violence, a coalition of reformers coalesced around three core goals: expanding democracy (making government more directly accountable to citizens), improving efficiency (replacing corrupt political machines with expert management), and advancing social justice (addressing poverty, child labor, alcohol abuse, and workplace safety). Most Progressives were educated, middle-class Anglo-Saxon Protestants, but the movement was diverse, including women, African Americans, immigrants, and rural communities. At the center of the Progressive awakening were the muckrakers — investigative journalists who, unlike the sensationalist "yellow journalists," exposed specific social problems with the explicit goal of spurring public action. Ida Tarbell published a damning series on Standard Oil's monopolistic practices. Upton Sinclair's novel The Jungle depicted gruesome conditions in Chicago meatpacking plants. Lincoln Steffens documented corruption in city government. Jacob Riis photographed the squalid conditions in New York's tenement slums. By bringing these problems into middle-class living rooms, muckrakers created the public will for reform that politicians then acted upon.</div>
+    </div>
+  </div>
+
+  <div class="disc-q" id="disc-1">
+    <div class="disc-ch-badge" style="color:#3b82f6;background:rgba(59,130,246,0.12)">CH.21</div>
+    <div class="disc-prompt">Evaluate Theodore Roosevelt as a Progressive president. How did his "Square Deal" advance the Progressive agenda through trust-busting, labor disputes, food and drug safety, and land conservation?</div>
+    <textarea class="disc-textarea" id="disc-ta-1" placeholder="Write your response here…" aria-label="Write your response here"></textarea>
+    <button class="btn primary" onclick="submitDisc(1)">Submit &amp; Self-Grade</button>
+    <div class="disc-checklist" id="disc-check-1" aria-live="polite">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:8px;letter-spacing:0.1em;text-transform:uppercase;">Check what you covered:</div>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(1)"> TR became president by accident after McKinley's assassination (1901) — Republican bosses had pushed him to VP to limit his influence</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(1)"> Trust-busting: sued Northern Securities Trust (1902) → won 5-4 at Supreme Court (1904); 44+ total antitrust suits; distinguished "good" vs. "bad" trusts</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(1)"> Anthracite Coal Strike (1902): invited both labor and owners to White House — first president to side with workers, not automatically with business</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(1)"> Meat Inspection Act (1906) and Pure Food and Drug Act (1906) — prompted by reading The Jungle; required inspection labels on food/drugs</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(1)"> Conservation: appointed Gifford Pinchot as first Forestry Service chief; created 18 national monuments, 5 national parks, 150+ national forests (~230 million acres)</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(1)"> Used presidency as "bully pulpit" — TR transformed the role of the presidency into an active steward of the public good</label>
+      <div class="disc-score-display" id="disc-score-1" aria-live="polite"></div>
+      <button class="btn-model-toggle" onclick="toggleModel(1)" aria-expanded="false">Show Model Answer</button>
+      <div class="disc-model" id="disc-model-1">Theodore Roosevelt became the nation's youngest president at 42 not through election but through the assassination of William McKinley in September 1901. Republican Party bosses had placed him on the ticket as vice president specifically to neutralize his progressive influence — a plan that dramatically backfired. Roosevelt's "Square Deal" represented a transformative vision of the federal government as an active steward of the public good, in stark contrast to the hands-off Gilded Age precedent. On trust-busting, Roosevelt filed suit against the Northern Securities Trust in 1902 — a railroad conglomerate controlled by Rockefeller and J.P. Morgan — and won a 5-4 Supreme Court ruling in 1904. He ultimately filed over 44 antitrust suits, though he distinguished "good trusts" (efficient, benefiting consumers) from "bad trusts" (exploitative monopolies) rather than opposing all large corporations. During the Anthracite Coal Strike of 1902, Roosevelt invited both the mine owners and union to the White House and pressed for a compromise — the first time a president sided with workers rather than automatically deploying troops against them. Responding to public outrage over Upton Sinclair's exposé of the meatpacking industry, TR pushed through both the Meat Inspection Act and Pure Food and Drug Act (1906), establishing federal oversight of food safety and mandatory labeling. Finally, his conservation legacy was unprecedented: 230 million acres of public land protected through national parks, monuments, and forests, overseen by his appointed Forestry Service chief, Gifford Pinchot.</div>
+    </div>
+  </div>
+
+  <div class="disc-q" id="disc-2">
+    <div class="disc-ch-badge" style="color:#a78bfa;background:rgba(167,139,250,0.12)">CH.22</div>
+    <div class="disc-prompt">Describe the Spanish-American War (1898). What caused it, what happened, and what territories did the U.S. acquire? How did the war mark a turning point in U.S. foreign policy?</div>
+    <textarea class="disc-textarea" id="disc-ta-2" placeholder="Write your response here…" aria-label="Write your response here"></textarea>
+    <button class="btn primary" onclick="submitDisc(2)">Submit &amp; Self-Grade</button>
+    <div class="disc-checklist" id="disc-check-2" aria-live="polite">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:8px;letter-spacing:0.1em;text-transform:uppercase;">Check what you covered:</div>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(2)"> Causes: Cuba's independence movement; yellow journalism (Hearst/Pulitzer); sinking of USS Maine (February 1898)</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(2)"> Teller Amendment: U.S. promised not to annex Cuba after the war</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(2)"> TR's Rough Riders at San Juan Hill, Cuba; U.S. Navy defeated Spanish fleet in Caribbean and Pacific; war lasted ~4 months</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(2)"> Treaty of Paris (Dec 10, 1898): Cuba independent; U.S. gained Puerto Rico, Guam, Philippines ($20M to Spain)</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(2)"> Anti-Imperialist League formed (Carnegie, Twain, Addams, Gompers) — opposed empire building as un-American</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(2)"> Platt Amendment: U.S. retained right to intervene in Cuba; secured Guantanamo Bay — Cuba was independent only on paper</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(2)"> Philippine-American War: Emilio Aguinaldo fought for independence; 3 years, 4,000 Americans and ~20,000 Filipino combatants and 250,000 civilian deaths</label>
+      <div class="disc-score-display" id="disc-score-2" aria-live="polite"></div>
+      <button class="btn-model-toggle" onclick="toggleModel(2)" aria-expanded="false">Show Model Answer</button>
+      <div class="disc-model" id="disc-model-2">The Spanish-American War (1898) was a pivotal turning point that launched the United States as a global imperial power. The war grew from a combination of genuine sympathy for Cuba's independence struggle against Spain, sensationalist "yellow journalism" by William Randolph Hearst and Joseph Pulitzer that inflamed public opinion, and the mysterious explosion of the USS Maine in Havana Harbor in February 1898, which killed 266 American sailors. The Teller Amendment, passed before the war, pledged that the U.S. would not annex Cuba. The war itself lasted only about four months. Theodore Roosevelt's Rough Riders fought in Cuba at San Juan Hill, while the U.S. Navy demolished the Spanish fleet in both the Caribbean and Manila Bay in the Philippines. The Treaty of Paris (December 10, 1898) recognized Cuba's independence and transferred Puerto Rico, Guam, and the Philippines to the United States for $20 million. The Anti-Imperialist League — whose members included Andrew Carnegie, Mark Twain, Jane Addams, and Samuel Gompers — opposed empire building as contrary to American democratic principles. The Senate nearly defeated the treaty, but news of Filipino resistance convinced undecided senators to ratify it. The Platt Amendment subsequently gave the U.S. the right to intervene in Cuban affairs at will and secured a permanent naval base at Guantanamo Bay, making Cuban independence largely nominal. In the Philippines, a brutal three-year war against Emilio Aguinaldo's independence movement (1899–1902) killed 4,000 Americans and as many as 250,000 Filipino civilians before the U.S. established control that would last until 1946.</div>
+    </div>
+  </div>
+
+  <div class="disc-q" id="disc-3">
+    <div class="disc-ch-badge" style="color:#22c55e;background:rgba(34,197,94,0.12)">CH.23</div>
+    <div class="disc-prompt">Discuss Wilson's Fourteen Points and the Treaty of Versailles. To what extent did the treaty reflect Wilson's vision? How was it punitive toward Germany, and why did the U.S. Senate reject it?</div>
+    <textarea class="disc-textarea" id="disc-ta-3" placeholder="Write your response here…" aria-label="Write your response here"></textarea>
+    <button class="btn primary" onclick="submitDisc(3)">Submit &amp; Self-Grade</button>
+    <div class="disc-checklist" id="disc-check-3" aria-live="polite">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:8px;letter-spacing:0.1em;text-transform:uppercase;">Check what you covered:</div>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(3)"> Wilson's 14 Points (Jan 1918): free trade, freedom of seas, no secret treaties, self-determination, League of Nations</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(3)"> Wilson attended Paris Peace Conference personally (unprecedented); France and Britain wanted German punishment, not "peace without victory"</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(3)"> Treaty of Versailles: "war guilt clause" — Germany solely responsible for WWI; $33 billion in reparations; territorial losses; military disarmament</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(3)"> League of Nations was included but U.S. never joined — Senate battle between Irreconcilables and Reservationists (Lodge)</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(3)"> Wilson went on speaking tour, suffered debilitating stroke (Sept 1919); Edith Wilson effectively ran the presidency for months</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(3)"> Senate rejected treaty twice; U.S. technically at war with Germany until Knox-Porter Resolution (July 1921)</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(3)"> Treaty's harsh terms on Germany sowed seeds of resentment that contributed to Hitler's rise and WWII</label>
+      <div class="disc-score-display" id="disc-score-3" aria-live="polite"></div>
+      <button class="btn-model-toggle" onclick="toggleModel(3)" aria-expanded="false">Show Model Answer</button>
+      <div class="disc-model" id="disc-model-3">Wilson announced his Fourteen Points in January 1918, months before the armistice, establishing an ambitious vision for postwar order: free trade, freedom of the seas, an end to secret treaties, the right of self-determination for all peoples, and most importantly, a League of Nations that would resolve international disputes through negotiation rather than war. Wilson made the unprecedented decision to attend the Paris Peace Conference personally, which other leaders followed. But there he encountered a stark reality: Britain, France, and Italy — exhausted, humiliated, and having suffered catastrophic losses — wanted Germany punished, not pardoned. The resulting Treaty of Versailles bore little resemblance to Wilson's original vision. Germany was forced to accept the "war guilt clause" (Article 231), taking sole responsibility for starting the war, and was compelled to pay reparations exceeding $33 billion to the Allies. Germany lost significant territory and was required to drastically disarm. The League of Nations was included, but stripped of much of Wilson's envisioned authority. Back home, the Senate was deeply divided. Irreconcilables opposed the treaty entirely on isolationist grounds. Reservationists, led by Republican Henry Cabot Lodge, would accept it if Article X (the League's collective security provision) were amended to preserve Congressional war powers. Wilson stubbornly refused all compromise, embarked on a grueling speaking tour, and collapsed after a public event in September 1919. He suffered a debilitating stroke; his wife Edith informally ran the government for months. The Senate voted down the treaty twice, and the U.S. never joined the League of Nations. The harsh reparations burden imposed on Germany would fuel economic collapse, national resentment, and ultimately the conditions that brought Hitler to power and led to World War II.</div>
+    </div>
+  </div>
+
+  <div class="disc-q" id="disc-4">
+    <div class="disc-ch-badge" style="color:#22c55e;background:rgba(34,197,94,0.12)">CH.23</div>
+    <div class="disc-prompt">Describe the difficult aftermath of WWI in America. Explain the Red Scare, Red Summer of 1919, the flu pandemic, and how these factors contributed to Harding's landslide victory in 1920.</div>
+    <textarea class="disc-textarea" id="disc-ta-4" placeholder="Write your response here…" aria-label="Write your response here"></textarea>
+    <button class="btn primary" onclick="submitDisc(4)">Submit &amp; Self-Grade</button>
+    <div class="disc-checklist" id="disc-check-4" aria-live="polite">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:8px;letter-spacing:0.1em;text-transform:uppercase;">Check what you covered:</div>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(4)"> Flu pandemic (1918–1919): 675,000 American deaths; 50 million worldwide; added to postwar trauma</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(4)"> Economic chaos: inflation 15–20% annually; worker strikes (4 million workers in 3,000 strikes in 1919 alone — both records)</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(4)"> Red Scare: fear of Communist revolution after Russia's 1917 Bolshevik Revolution; Palmer Raids arrested ~4,000; ~250 deported on "Soviet Ark"</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(4)"> Red Summer (1919): 25+ race riots; 250+ dead; Chicago Race Riot — Black teen stoned at "White beach"; police inaction; week-long riot, 38 dead</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(4)"> Tulsa Massacre (1921): White mob destroyed Greenwood "Black Wall Street"; 50–300 Black deaths; covered up in history for decades</label>
+      <label class="disc-check-item"><input type="checkbox" onchange="updateDiscScore(4)"> Harding's "return to normalcy" — low taxes, immigration restriction, no international involvement; won 404 electoral votes, 60% popular vote</label>
+      <div class="disc-score-display" id="disc-score-4" aria-live="polite"></div>
+      <button class="btn-model-toggle" onclick="toggleModel(4)" aria-expanded="false">Show Model Answer</button>
+      <div class="disc-model" id="disc-model-4">The end of World War I brought not celebration but a cascade of crises that shook American society to its foundations. The returning troops brought with them a devastating new influenza strain; by the spring of 1919, approximately 675,000 Americans had died — more than the war had killed — with an estimated 50 million deaths worldwide. Economic disruption followed the end of wartime production: inflation ran 15–20% annually from 1917–1920, and the cost of living nearly doubled by 1919. Workers, freed from their wartime no-strike pledge, launched an unprecedented wave of labor action — more than four million workers participated in nearly three thousand strikes in 1919 alone, both records in American history. Simultaneously, the Bolshevik Revolution in Russia triggered a Red Scare at home. When letter bombs were discovered addressed to prominent officials and explosions damaged the home of Attorney General A. Mitchell Palmer in 1919, the government cracked down. Palmer and his assistant J. Edgar Hoover organized raids in twelve cities, arresting approximately 4,000 alleged radicals and deporting around 250 on what newspapers called the "Soviet Ark." Race violence erupted as well. During the "Red Summer" of 1919, twenty-five bloody race riots killed more than 250 people. The Chicago Race Riot was triggered when a White mob stoned a Black teenager who drifted near the "White beach" on Lake Michigan — police at the scene did not arrest the attacker. A week of rioting followed, killing 38. The Tulsa Massacre of 1921 was even deadlier, as a White mob systematically destroyed the prosperous Greenwood district. Exhausted by war, Progressive government interventions, racial violence, economic anxiety, and fear of Communist infiltrators, Americans voted overwhelmingly for Senator Warren G. Harding, who promised a "return to normalcy." Harding won 404 electoral votes and 60% of the popular vote — a decisive mandate to step back from the world and Progressive activism alike.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NOTES PANEL ===== -->
+<div id="panel-notes" class="panel" role="tabpanel" aria-label="Notes template">
+  <div class="notes-template">
+    <div class="notes-header">
+      <div><div class="notes-title">Exam 2 Notes Framework</div><div class="notes-subtitle">HIST 1302 · Unit 2 · Ch. 21–23 · Prof. Walter</div></div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)">Exam: July 7, 2026</div>
+    </div>
+    <div class="notes-body">
+      <div class="notes-col-grid">
+        <div>
+          <div class="notes-col-title">Ch. 21 — Progressivism</div>
+          <div class="notes-item">Muckrakers: Tarbell (Standard Oil), Sinclair (The Jungle), Steffens (cities), Riis (slums)</div>
+          <div class="notes-item">Progressive goals: democracy, efficiency, social justice</div>
+          <div class="notes-item">Direct primary (SC 1896) → replaced convention delegates</div>
+          <div class="notes-item">Initiative, referendum, recall — direct democracy tools</div>
+          <div class="notes-item">17th Amendment (1913) — direct election of senators</div>
+          <div class="notes-item">Galveston commission system (1901) — hurricane aftermath reform</div>
+          <div class="notes-item">Triangle Shirtwaist Fire — March 25, 1911 — 146 dead → workplace safety laws</div>
+          <div class="notes-item">WCTU + Anti-Saloon League → 18th Amendment (1919) — Prohibition</div>
+          <div class="notes-item">NAWSA (1890): Stanton, Anthony, Catt → 19th Amendment (1920)</div>
+          <div class="notes-item">Alice Paul: Congressional Union, Silent Sentinels outside White House</div>
+          <div class="notes-item">Booker T. Washington: self-help, vocational ed, Atlanta Compromise</div>
+          <div class="notes-item">W.E.B. Du Bois: Niagara Movement (1905), NAACP (1909), The Crisis</div>
+          <div class="notes-item">TR became president: McKinley assassinated 1901, Buffalo, NY</div>
+          <div class="notes-item">TR trust-busting: Northern Securities (1904 Supreme Court win), 44+ suits</div>
+          <div class="notes-item">Anthracite Coal Strike 1902: TR invited both sides — sided with workers</div>
+          <div class="notes-item">Square Deal: Meat Inspection Act + Pure Food &amp; Drug Act (1906)</div>
+          <div class="notes-item">Conservation: Pinchot / Forestry Service; 230 million acres protected</div>
+          <div class="notes-item">Taft: TR's pick; Mann-Elkins Act; but Payne-Aldrich tariffs, fired Pinchot</div>
+          <div class="notes-item">1912 Election: TR (Bull Moose), Taft (R), Wilson (D), Debs (S) → Wilson wins</div>
+          <div class="notes-item">Wilson New Freedom: Federal Reserve Act (1913), Underwood Tariff, Clayton Act</div>
+        </div>
+        <div>
+          <div class="notes-col-title">Ch. 22–23 — Empire &amp; WWI</div>
+          <div class="notes-item">Turner Frontier Thesis (1893): frontier closed — where do we expand next?</div>
+          <div class="notes-item">Mahan: strong navy + bases + canal = world power; Naval Act 1890</div>
+          <div class="notes-item">Seward's Folly (1867): Alaska purchased for $7.2M; Midway Islands annexed</div>
+          <div class="notes-item">Hawaii: Queen Liliuokalani overthrown; annexed 1898</div>
+          <div class="notes-item">USS Maine sinking → Spanish-American War 1898; "Remember the Maine!"</div>
+          <div class="notes-item">Treaty of Paris (Dec 1898): Cuba free; U.S. gets PR, Guam, Philippines</div>
+          <div class="notes-item">Anti-Imperialist League: Carnegie, Twain, Addams, Gompers</div>
+          <div class="notes-item">Platt Amendment: U.S. right to intervene in Cuba; Guantanamo Bay</div>
+          <div class="notes-item">Philippine-American War: Aguinaldo, 3 yrs, ~250K civilian deaths; Taft Commission</div>
+          <div class="notes-item">Open Door notes (Hay, 1899): equal trade access in China — favored U.S.</div>
+          <div class="notes-item">Boxer Rebellion (1899–1901): U.S./Britain/Germany troops to China</div>
+          <div class="notes-item">Big Stick: "Speak softly, carry a big stick" — threaten force, not use it</div>
+          <div class="notes-item">Panama Canal: Colombia refused → TR backed Panamanian revolt 1903; Canal opened 1914</div>
+          <div class="notes-item">Roosevelt Corollary (1904): U.S. = "police power" of Western Hemisphere</div>
+          <div class="notes-item">Taft: Dollar Diplomacy — "substitute dollars for bullets"</div>
+          <div class="notes-item">WWI: Assassination of Franz Ferdinand June 1914 → Europe at war</div>
+          <div class="notes-item">Lusitania sunk May 7, 1915 — 1,198 dead including 128 Americans</div>
+          <div class="notes-item">Zimmermann Telegram (Jan 1917): Germany offered Mexico TX, NM, AZ</div>
+          <div class="notes-item">U.S. declared war April 6, 1917; Espionage Act 1917, Sedition Act 1918</div>
+          <div class="notes-item">Schenck v. US (1919): "clear and present danger" — free speech limits in wartime</div>
+          <div class="notes-item">Harlem Hellfighters (369th Infantry): 6 months frontline, 171 Legions of Merit</div>
+          <div class="notes-item">Armistice: November 11, 1918; 117K Americans killed</div>
+          <div class="notes-item">14 Points: free trade, self-determination, League of Nations</div>
+          <div class="notes-item">Treaty of Versailles: war guilt clause, $33B reparations, NO U.S. ratification</div>
+          <div class="notes-item">Red Scare: Palmer Raids, 4,000 arrested, 250 deported on "Soviet Ark"</div>
+          <div class="notes-item">Red Summer 1919: 25+ riots, 250+ dead; Chicago Race Riot</div>
+          <div class="notes-item">Flu pandemic: 675K Americans dead, 50M worldwide</div>
+          <div class="notes-item">Harding 1920: "return to normalcy" — 404 EV, 60% popular vote</div>
+        </div>
+      </div>
+      <div class="notes-tip">💡 <strong>Exam tip:</strong> Prof. Walter's objectives highlight the <em>1912 election</em> (all four candidates and their platforms), the <em>Roosevelt Corollary</em> vs. Monroe Doctrine, and the <em>Senate fight over the Treaty of Versailles</em> (Irreconcilables vs. Reservationists). Know Booker T. Washington vs. Du Bois strategies in depth — it's a classic compare/contrast question.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="../../index.html">← Back to Study Hub</a>
+  <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)">HIST-1302 · Unit 2 · study.imichaelv.com</p>
+</footer>
+
+</div><!-- /container -->
+
+<script>
+// ===== PANEL NAVIGATION =====
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+  if(id==='flashcards')renderCard();
+  if(id==='quiz')renderQuiz();
+}
+
+// ===== MASTERY (localStorage) =====
+function getMasteryKey(){return 'mastery_hist1302_unit2_';}
+function toggleObjMastery(btn,num){
+  const k=getMasteryKey()+'obj'+num;
+  const m=localStorage.getItem(k);
+  if(m){localStorage.removeItem(k);btn.textContent='☐';btn.classList.remove('mastered');}
+  else{localStorage.setItem(k,'1');btn.textContent='✓';btn.classList.add('mastered');}
+  updateMasteryBar();
+}
+function loadObjMastery(){
+  const btns=document.querySelectorAll('.mastery-btn');
+  btns.forEach(btn=>{
+    const onclick=btn.getAttribute('onclick');
+    const match=onclick&&onclick.match(/toggleObjMastery\(this,(\d+)\)/);
+    if(match){const num=match[1];const k=getMasteryKey()+'obj'+num;if(localStorage.getItem(k)){btn.textContent='✓';btn.classList.add('mastered');}}
+  });
+  updateMasteryBar();
+}
+function updateMasteryBar(){
+  const total=22;
+  let done=0;
+  for(let i=1;i<=total;i++){if(localStorage.getItem(getMasteryKey()+'obj'+i))done++;}
+  const pct=Math.round(done/total*100);
+  document.getElementById('mastery-fill').style.width=pct+'%';
+  document.getElementById('mastery-label').textContent='Mastery: '+pct+'% ('+done+'/'+total+')';
+}
+function resetAllMastery(){
+  if(!confirm('Reset all mastery for Unit 2?'))return;
+  Object.keys(localStorage).filter(k=>k.startsWith(getMasteryKey())).forEach(k=>localStorage.removeItem(k));
+  document.querySelectorAll('.mastery-btn').forEach(b=>{b.textContent='☐';b.classList.remove('mastered');});
+  document.querySelectorAll('.fc-mastered-indicator').forEach(el=>el.textContent='');
+  updateMasteryBar();
+}
+
+// ===== STUDY GUIDE =====
+function toggleChapter(header){
+  const body=header.nextElementSibling;
+  const open=body.classList.toggle('open');
+  header.classList.toggle('open',open);
+  header.setAttribute('aria-expanded',open);
+}
+
+// ===== FLASHCARDS =====
+const allCards=[
+  // CH.21
+  {ch:'ch21',q:'What were the three core goals of the Progressive movement?',a:'(1) Expand democracy, (2) Improve efficiency in government, (3) Promote social justice.'},
+  {ch:'ch21',q:'Who were the muckrakers, and why did TR give them that nickname?',a:'Investigative journalists who exposed social problems to spur reform. TR named them after a character in Pilgrim\'s Progress obsessed with filth — he felt they forced agendas into politics.'},
+  {ch:'ch21',q:'What did Ida Tarbell write about, and for which magazine?',a:'She exposed the monopolistic practices of Rockefeller\'s Standard Oil Company in a series of articles in McClure\'s magazine.'},
+  {ch:'ch21',q:'What did Upton Sinclair\'s The Jungle expose, and what law resulted?',a:'The gruesome conditions in Chicago\'s meatpacking industry. Led to the Meat Inspection Act and Pure Food and Drug Act (both 1906). Sinclair lamented: "I aimed at the public\'s heart, and hit it in the stomach."'},
+  {ch:'ch21',q:'What was the direct primary, and what system did it replace?',a:'Allowed party members to vote directly for candidates; replaced the old system of selection by convention delegates (party bosses).'},
+  {ch:'ch21',q:'What are the initiative, referendum, and recall?',a:'Initiative: citizens petition to place legislation on the ballot. Referendum: voters affirm/reject existing laws. Recall: citizens remove an official through petition and vote.'},
+  {ch:'ch21',q:'What amendment required direct election of U.S. senators?',a:'The 17th Amendment (1913). Previously, senators were chosen by state legislatures.'},
+  {ch:'ch21',q:'What happened in the Triangle Shirtwaist Factory fire (1911)?',a:'146 garment workers (mostly young immigrant women) died because management had locked exits and fire escapes. Led to major workplace safety legislation.'},
+  {ch:'ch21',q:'What was the WCTU and Anti-Saloon League\'s ultimate achievement?',a:'The 18th Amendment (1919), which prohibited the manufacture, sale, and transportation of alcoholic beverages nationwide (Prohibition).'},
+  {ch:'ch21',q:'Who founded the IWW and what was its strategy?',a:'"Big Bill" Haywood founded the Industrial Workers of the World (IWW/Wobblies) in 1905. Strategy: general strike and direct action to overthrow capitalism.'},
+  {ch:'ch21',q:'What was Eugene Debs\'s political party, and what did he achieve electorally?',a:'Socialist Party of America. Ran for president five times (1900–1920), twice earning nearly one million votes. Was sentenced to 10 years in prison for encouraging draft resistance.'},
+  {ch:'ch21',q:'What was NAWSA and who were its key leaders?',a:'National American Women\'s Suffrage Association (1890). Founded by Elizabeth Cady Stanton and Susan B. Anthony; later led by Carrie Chapman Catt. Pushed for constitutional amendment for women\'s vote.'},
+  {ch:'ch21',q:'Who were the "Silent Sentinels" and what did they do?',a:'Women suffragists organized by Alice Paul who picketed outside the White House demanding the right to vote — a radical strategy for the time.'},
+  {ch:'ch21',q:'What did the 19th Amendment accomplish and when?',a:'Guaranteed women\'s right to vote nationwide — ratified in 1920.'},
+  {ch:'ch21',q:'Contrast Booker T. Washington and W.E.B. Du Bois\'s strategies for African American rights.',a:'Washington (Atlanta Compromise): self-help, vocational education, economic progress; tolerate White racism for now. Du Bois (Niagara Movement): demand immediate full civil rights and political equality — no accommodation.'},
+  {ch:'ch21',q:'When was the NAACP founded, who founded it, and what was its publication?',a:'Founded in 1909 after the Springfield, IL race riot. Key founders: W.E.B. Du Bois, Ida B. Wells-Barnett, Mary Church Terrell. Du Bois edited The Crisis newspaper.'},
+  {ch:'ch21',q:'How did Theodore Roosevelt become president, and why was it unexpected?',a:'McKinley was assassinated in September 1901 at the Pan-American Exposition in Buffalo, NY. Republican bosses had put TR on the VP ticket to neutralize him — it backfired spectacularly.'},
+  {ch:'ch21',q:'What was the Northern Securities case, and why did it matter?',a:'TR\'s first major antitrust suit against a railroad monopoly controlled by Rockefeller and J.P. Morgan. Supreme Court ruled to break it up 5-4 in 1904 — proved TR could take on the biggest corporations.'},
+  {ch:'ch21',q:'How did TR handle the Anthracite Coal Strike (1902)?',a:'Invited both the mine owners and union leaders to the White House to negotiate — the first time a president sided with workers rather than automatically deploying troops against them.'},
+  {ch:'ch21',q:'What was TR\'s conservation legacy?',a:'Appointed Gifford Pinchot as first Forestry Service chief. Created 18 national monuments, 5 national parks, and over 150 national forests — approximately 230 million acres of protected public land.'},
+  {ch:'ch21',q:'Who did TR hand-pick as his successor, and what went wrong?',a:'William Howard Taft. Despite more antitrust suits than TR, Taft angered Progressives with the Payne-Aldrich Act (raised tariffs), fired Gifford Pinchot (conservation scandal), and supported conservative Republicans.'},
+  {ch:'ch21',q:'What were the four main candidates in the 1912 election and what happened?',a:'TR (Progressive/Bull Moose), Taft (Republican), Woodrow Wilson (Democrat), Eugene Debs (Socialist). TR survived assassination attempt; Wilson won with split Republican vote (435 electoral votes).'},
+  {ch:'ch21',q:'Contrast Roosevelt\'s "New Nationalism" vs. Wilson\'s "New Freedom."',a:'New Nationalism (TR): powerful federal government that regulates big business to serve public interest. New Freedom (Wilson): smaller federal government that breaks up trusts and protects free competition.'},
+  {ch:'ch21',q:'What were Wilson\'s major Progressive achievements?',a:'Federal Reserve Act (1913), Underwood Tariff (reduced tariffs + established income tax via 16th Amendment), Clayton Antitrust Act, federal child labor laws, 8-hour railroad workday.'},
+  // CH.22
+  {ch:'ch22',q:'What was Turner\'s Frontier Thesis (1893), and why was it significant for expansionism?',a:'Turner argued the frontier had shaped American democracy and character — but it was now closed. This raised the question of where America would find new frontiers, fueling arguments for overseas expansion.'},
+  {ch:'ch22',q:'What did Alfred Thayer Mahan argue in The Influence of Sea Power upon History?',a:'America needed: (1) a large steel navy, (2) overseas naval bases (coaling stations), and (3) a Central American canal to become a world power. The Naval Act of 1890 followed his prescription.'},
+  {ch:'ch22',q:'What was "Seward\'s Folly" and why is the nickname ironic?',a:'Secretary of State Seward purchased Alaska from Russia for $7.2 million in 1867 — mocked by the press as a wasteland. Proved enormously valuable (gold, oil, strategic location).'},
+  {ch:'ch22',q:'What caused the Spanish-American War?',a:'Cuba\'s independence struggle from Spain + yellow journalism (Hearst/Pulitzer inflaming public) + mysterious explosion of USS Maine in Havana Harbor (Feb 1898) — "Remember the Maine!"'},
+  {ch:'ch22',q:'What was the Teller Amendment?',a:'Passed before the Spanish-American War — pledged the U.S. would NOT annex Cuba after defeating Spain. Guaranteed Cuban independence (though the Platt Amendment later undermined it).'},
+  {ch:'ch22',q:'What territories did the U.S. gain from the Treaty of Paris (1898)?',a:'Puerto Rico, Guam, and the Philippines (the U.S. paid Spain $20 million). Cuba became independent. Combined with Hawaii (annexed 1898), the U.S. was now a Pacific and Caribbean empire.'},
+  {ch:'ch22',q:'Who formed the Anti-Imperialist League, and what did they argue?',a:'Jane Addams, Andrew Carnegie, Mark Twain, Samuel Gompers. Argued empire-building contradicted American democratic principles; worried about racial integration and competition from foreign workers.'},
+  {ch:'ch22',q:'What was the Platt Amendment, and what did it do to Cuba?',a:'Gave the U.S. the right to intervene in Cuban affairs to maintain stability; prohibited Cuba from making treaties with other countries; secured Guantanamo Bay naval base. Cuba was "independent" only on paper.'},
+  {ch:'ch22',q:'Who was Emilio Aguinaldo and what war did he lead?',a:'Philippine independence leader who expected the U.S. to grant independence after Spain\'s defeat. Led the Philippine-American War (1899–1902) — 3 years, 4,000 Americans and ~20,000 Filipino combatants killed, 250,000 civilian deaths.'},
+  {ch:'ch22',q:'What were the Open Door notes (1899), and why did they benefit the U.S.?',a:'Circular notes by Sec. of State John Hay demanding equal trade access to all Chinese ports for all nations — no special tariff or transportation advantages. Benefited U.S. because American goods were cheaper and higher quality, flooding the Chinese market.'},
+  {ch:'ch22',q:'What was the Boxer Rebellion (1899–1901) and how did the U.S. respond?',a:'Chinese nationalists (Righteous and Harmonious Fists) sought to expel all western influence from China. U.S., Britain, and Germany sent ~2,000 troops to suppress it; reinforced U.S. commitment to China\'s territorial integrity and Open Door policy.'},
+  {ch:'ch22',q:'What is "Big Stick" foreign policy? What African proverb inspired it?',a:'"Speak softly, and carry a big stick, and you will go far." Threaten force rather than actually use it — U.S. military credibility from Spanish-American War made the threat believable without firing a shot.'},
+  {ch:'ch22',q:'How did TR acquire the Panama Canal zone?',a:'Colombia rejected his treaty offer; TR secretly encouraged a Panamanian revolution (1903), sent battleships to block Colombian troops, and immediately recognized the new republic. Same terms offered: $10M + $250K/year. Canal opened 1914.'},
+  {ch:'ch22',q:'What was the Roosevelt Corollary (1904), and how did it differ from the Monroe Doctrine?',a:'Roosevelt Corollary extended Monroe Doctrine: U.S. would act as "international police power" in Latin America, actively intervening in countries with "chronic wrongdoing." Monroe Doctrine said Europe stay out; Roosevelt Corollary said U.S. could go in.'},
+  {ch:'ch22',q:'What was Taft\'s "Dollar Diplomacy"?',a:'"Substitute dollars for bullets" — use U.S. economic power (loans, debt payoffs) instead of military threats to achieve foreign policy goals. In practice, still used military force when economic coercion failed (e.g., Nicaragua).'},
+  {ch:'ch22',q:'What was the Lodge Corollary, and what triggered it?',a:'Extension of the Roosevelt Corollary stating no foreign corporation (except American) could acquire strategic lands in the Western Hemisphere. Triggered by Japan\'s attempt to gain economic advantages in Mexico.'},
+  // CH.23
+  {ch:'ch23',q:'What event triggered WWI (1914), and what were the two main alliance blocs?',a:'Assassination of Archduke Franz Ferdinand of Austria-Hungary in Sarajevo, June 28, 1914. Central Powers: Germany, Austria-Hungary, Ottoman Empire. Allied Powers: Britain, France, Russia; later Italy and Japan.'},
+  {ch:'ch23',q:'Why did the U.S. initially declare neutrality in WWI?',a:'Wilson wanted to avoid entanglement; strong ethnic ties of immigrants to both sides; Wilson\'s SoS Bryan was anti-imperialist; U.S. had profitable trade with both sides. "He kept us out of war" became his 1916 campaign slogan.'},
+  {ch:'ch23',q:'What was the Lusitania incident and what was its significance?',a:'British ocean liner torpedoed by German U-boat May 7, 1915 — 1,198 killed including 128 Americans. Major public outrage; pushed the U.S. toward war, though Wilson didn\'t immediately declare it. Germany agreed to the Sussex Pledge (1916) to limit submarine warfare.'},
+  {ch:'ch23',q:'What was the Zimmermann Telegram and why did it matter?',a:'January 1917: German Foreign Minister Arthur Zimmermann secretly offered Mexico an alliance — if U.S. entered war, Mexico could reclaim Texas, New Mexico, and Arizona. British intercepted and gave it to the U.S. American public outrage helped push Wilson toward war.'},
+  {ch:'ch23',q:'When did the U.S. declare war on Germany, and what was the vote?',a:'April 6, 1917. Congress voted for war, though 56 members voted against it.'},
+  {ch:'ch23',q:'What was the Creel Committee (Committee on Public Information)?',a:'George Creel directed a massive propaganda campaign: anti-German posters, pamphlets, films; "Four-Minute Men" gave pro-war speeches nationwide. Powerful tool for building public support for the war.'},
+  {ch:'ch23',q:'What did the Espionage Act (1917) and Sedition Act (1918) do?',a:'Espionage Act: prohibited aiding the enemy; up to 20-year sentences for opposing the war. Sedition Act: prohibited any criticism of the government, military, Constitution, or flag. Over 2,000 charged; Eugene Debs got 10 years.'},
+  {ch:'ch23',q:'What was Schenck v. United States (1919) and its ruling?',a:'Supreme Court unanimously upheld the Espionage/Sedition Acts. Justice Oliver Wendell Holmes wrote that speech presenting a "clear and present danger" is not protected — compared anti-draft pamphlets to falsely shouting "fire!" in a crowded theater.'},
+  {ch:'ch23',q:'What was the no-strike pledge, and what did workers receive in exchange?',a:'The AFL pledged no strikes for the war\'s duration. In exchange: government protected right to organize and bargain collectively, promoted 8-hour workday and living wages. Union membership rose from 2.6M (1916) to 4.1M (1919).'},
+  {ch:'ch23',q:'Who were the Harlem Hellfighters and what did they achieve?',a:'The 369th Infantry — an all-Black regiment that served on the French frontline for 6 months, longer than any other American unit. 171 men received the French Legion of Merit. Returned to a homecoming parade in NYC.'},
+  {ch:'ch23',q:'What were Wilson\'s Fourteen Points?',a:'Wilson\'s postwar peace plan (January 1918): free trade, freedom of the seas, no secret treaties, self-determination of peoples, reduction of armaments, and most importantly, a League of Nations to resolve future conflicts peacefully.'},
+  {ch:'ch23',q:'How did the Treaty of Versailles differ from Wilson\'s vision?',a:'Far harsher than Wilson\'s 14 Points. Germany forced to accept the "war guilt clause," pay $33+ billion in reparations, surrender territories, and disarm. Britain and France prioritized punishment over peace. League of Nations included but weakened.'},
+  {ch:'ch23',q:'What were the Irreconcilables vs. Reservationists in the Senate treaty fight?',a:'Irreconcilables: opposed Treaty of Versailles on all grounds (mainly isolationists). Reservationists (led by Henry Cabot Lodge): would support treaty with amendments, particularly removing Article X (collective security provision). Wilson refused compromise.'},
+  {ch:'ch23',q:'What happened to Wilson during the treaty fight, and what was the outcome?',a:'Wilson went on cross-country speaking tour to build public support; suffered debilitating stroke September 1919. His wife Edith ran the government for months. Senate voted down the treaty twice — U.S. never joined League of Nations.'},
+  {ch:'ch23',q:'What was the Red Scare (1919–1920)?',a:'Fear of Communist/Bolshevik revolution in the U.S., following Russia\'s 1917 revolution. Triggered by letter bombs and actual explosions (including at AG Palmer\'s home). Palmer Raids: ~4,000 arrested; ~250 deported on "Soviet Ark." J. Edgar Hoover directed raids.'},
+  {ch:'ch23',q:'What was the Red Summer (1919)?',a:'25+ bloody race riots in northern cities killed over 250 people. The Chicago Race Riot: White mob stoned a Black teenager who swam near the "White beach" on Lake Michigan; police didn\'t arrest the killer; week-long riot killed 38.'},
+  {ch:'ch23',q:'What was the Tulsa Massacre (1921)?',a:'White mob destroyed Greenwood ("Black Wall Street") district in Tulsa, OK. Estimated 50–300 Black deaths. Widely reported at the time, then deliberately omitted from textbooks and history for decades.'},
+  {ch:'ch23',q:'How severe was the 1918–1919 flu pandemic?',a:'675,000 Americans died; worldwide ~500 million infected, ~50 million deaths. Troops returning from WWI spread a new influenza strain. Contributed to postwar trauma and anxiety.'},
+  {ch:'ch23',q:'Why did Harding win the 1920 election in a landslide, and what did he promise?',a:'"Return to normalcy" — low taxes, immigration restriction, no international involvement. Americans were exhausted by Progressive government, WWI, flu pandemic, Red Scare, and racial violence. Harding won 404 electoral votes and 60% of the popular vote.'},
+  {ch:'ch23',q:'When did the armistice end WWI, and what were the American casualties?',a:'Armistice: November 11, 1918. American toll: 117,000 killed, 206,000 wounded. Total Allied military deaths: 5.7 million. Central Powers: 4 million. War cost U.S. over $32 billion.'}
+];
+
+let filteredCards=[...allCards];
+let currentIndex=0;
+let isFlipped=false;
+
+const chColors={ch21:'#3b82f6',ch22:'#a78bfa',ch23:'#22c55e'};
+const chLabels={ch21:'CH.21',ch22:'CH.22',ch23:'CH.23'};
+
+function renderCard(){
+  if(!filteredCards.length)return;
+  const card=filteredCards[currentIndex];
+  isFlipped=false;
+  document.getElementById('flashcard').classList.remove('flipped');
+  const tag=document.getElementById('fc-chapter-tag');
+  tag.textContent=chLabels[card.ch];
+  tag.style.background=chColors[card.ch]+'20';
+  tag.style.color=chColors[card.ch];
+  document.getElementById('fc-question').textContent=card.q;
+  document.getElementById('fc-answer').textContent=card.a;
+  document.getElementById('fc-counter').textContent=(currentIndex+1)+' / '+filteredCards.length;
+  document.getElementById('fc-stat').textContent='Card '+(currentIndex+1)+' of '+filteredCards.length;
+  // mastered indicator
+  const k=getMasteryKey()+'fc'+allCards.indexOf(card);
+  const indicator=document.getElementById('fc-mastered-indicator');
+  if(indicator)indicator.textContent=localStorage.getItem(k)?'★ Mastered':'';
+}
+function flipCard(){
+  isFlipped=!isFlipped;
+  document.getElementById('flashcard').classList.toggle('flipped',isFlipped);
+}
+function nextCard(){currentIndex=(currentIndex+1)%filteredCards.length;renderCard();}
+function prevCard(){currentIndex=(currentIndex-1+filteredCards.length)%filteredCards.length;renderCard();}
+function shuffleCards(){filteredCards.sort(()=>Math.random()-0.5);currentIndex=0;renderCard();}
+function filterCards(ch,btn){
+  document.querySelectorAll('#panel-flashcards .filter-btn').forEach(b=>b.classList.remove('active-filter'));
+  btn.classList.add('active-filter');
+  filteredCards=ch==='all'?[...allCards]:allCards.filter(c=>c.ch===ch);
+  currentIndex=0;renderCard();
+}
+function toggleMastered(idx){
+  const card=filteredCards[idx];
+  const realIdx=allCards.indexOf(card);
+  const k=getMasteryKey()+'fc'+realIdx;
+  const indicator=document.getElementById('fc-mastered-indicator');
+  if(localStorage.getItem(k)){localStorage.removeItem(k);if(indicator)indicator.textContent='';}
+  else{localStorage.setItem(k,'1');if(indicator)indicator.textContent='★ Mastered';}
+}
+
+// ===== QUIZ =====
+const allQuizData=[
+  // CH.21
+  {ch:'ch21',type:'mc',q:'Which of the following best describes what muckrakers did?',opts:['Sensationalized stories to sell newspapers','Exposed social problems to urge public action','Lobbied Congress for Progressive legislation','Founded settlement houses for the urban poor'],ans:1,exp:'Muckrakers exposed real problems — unlike "yellow journalists" who sensationalized. Roosevelt coined the nickname, comparing them to a character in Pilgrim\'s Progress obsessed with filth.'},
+  {ch:'ch21',type:'mc',q:'The direct primary replaced which system for selecting candidates?',opts:['A general election vote','Selection by party convention delegates and machine bosses','A secret ballot among elected officials','Appointment by the sitting president'],ans:1,exp:'Direct primaries allowed party members — not delegates at conventions — to vote directly for candidates. South Carolina adopted it first (1896).'},
+  {ch:'ch21',type:'mc',q:'The Triangle Shirtwaist Factory fire (1911) was significant primarily because it:',opts:['Led to the founding of the IWW','Caused 146 deaths due to management locking exits, galvanizing workplace safety reform','Resulted in the 18th Amendment','Proved that muckrakers had exaggerated conditions in factories'],ans:1,exp:'Management had blocked exits to control workers. The deaths of 146 young, mostly immigrant women turned public opinion toward workplace safety legislation.'},
+  {ch:'ch21',type:'mc',q:'Booker T. Washington\'s Atlanta Compromise (1895) argued that African Americans should:',opts:['Demand immediate civil and voting rights','Focus on self-help and vocational education, tolerating White racism for economic gains','Form the NAACP to fight lynching','Migrate north to escape Jim Crow laws'],ans:1,exp:'Washington believed economic progress through vocational skills and self-improvement should come before political rights. Du Bois strongly disagreed, demanding immediate equality.'},
+  {ch:'ch21',type:'mc',q:'The NAACP was founded in 1909 in response to:',opts:['The Triangle Shirtwaist fire','The Springfield, Illinois race riot of 1908','Booker T. Washington\'s Atlanta Compromise','The passage of the 17th Amendment'],ans:1,exp:'Following the 1908 Springfield, IL race riot, a newspaper call attracted 60 respondents including W.E.B. Du Bois, Ida B. Wells-Barnett, and Mary Church Terrell, who founded the NAACP.'},
+  {ch:'ch21',type:'mc',q:'Theodore Roosevelt became president in 1901 because:',opts:['He won the 1900 presidential election directly','President McKinley died in office from an assassin\'s bullet','The Republican Party chose him at their convention','He was appointed by the Supreme Court'],ans:1,exp:'McKinley was shot at the Pan-American Exposition in Buffalo, NY. Republican leaders had put TR on the VP ticket to limit his influence — a plan that spectacularly backfired.'},
+  {ch:'ch21',type:'mc',q:'What triggered the Meat Inspection Act and Pure Food and Drug Act (1906)?',opts:['The Triangle Shirtwaist fire','A series of articles by Ida Tarbell about Standard Oil','Upton Sinclair\'s novel The Jungle exposing meatpacking conditions','The Anthracite Coal Strike of 1902'],ans:2,exp:'TR read The Jungle and had a presidential commission investigate. Confirmed the deplorable conditions; public outrage forced legislation. Sinclair said he aimed at the "public\'s heart" but hit it in the "stomach."'},
+  {ch:'ch21',type:'mc',q:'In the 1912 election, Roosevelt\'s Progressive Party was nicknamed:',opts:['The Red Bull Party','The Bull Moose Party','The Big Stick Party','The New Deal Party'],ans:1,exp:'After surviving an assassination attempt in Milwaukee, TR told the crowd "It takes more than a bullet to kill a bull moose!" The nickname stuck.'},
+  {ch:'ch21',type:'mc',q:'Wilson\'s "New Freedom" differed from TR\'s "New Nationalism" in that Wilson favored:',opts:['A powerful federal government that regulated large corporations','A smaller federal government that broke up trusts to restore competition','Government ownership of railroads and utilities','Higher tariffs to protect American industry'],ans:1,exp:'Wilson wanted to eliminate monopolistic trusts and restore competitive markets with limited government. TR wanted a strong federal government to regulate (not necessarily break up) large corporations for the public good.'},
+  {ch:'ch21',type:'fitb',q:'Upton Sinclair\'s novel ___________ (1905) exposed the meatpacking industry and led to federal food safety legislation.',ans:['the jungle','jungle'],display:'The Jungle',exp:'The Jungle\'s graphic descriptions of meat processing conditions shocked the public and led TR to push for the Meat Inspection Act and Pure Food and Drug Act (both 1906).'},
+  {ch:'ch21',type:'fitb',q:'The ___________ Amendment (1920) gave women the right to vote nationwide.',ans:['19th','nineteenth'],display:'19th',exp:'The 19th Amendment ratified in 1920 after decades of work by NAWSA, Alice Paul, and the suffrage movement. Western states had already granted women\'s suffrage before the amendment.'},
+  {ch:'ch21',type:'fitb',q:'W.E.B. Du Bois founded the ___________ Movement in 1905, which demanded immediate civil rights for African Americans.',ans:['niagara'],display:'Niagara',exp:'The Niagara Movement met at Niagara Falls (Canadian side) and declared a full program of civil and political rights — directly contrasting Washington\'s accommodationist approach.'},
+  {ch:'ch21',type:'fitb',q:'The ___________ Amendment (1913) established the direct election of U.S. senators.',ans:['17th','seventeenth'],display:'17th',exp:'Previously, senators were selected by state legislatures — susceptible to corruption and machine politics. The 17th Amendment made them directly elected by the people.'},
+  {ch:'ch21',type:'fitb',q:'TR\'s \'___________ Deal\' represented his belief that the federal government should serve as a steward of all Americans, not just business interests.',ans:['square'],display:'Square',exp:'The Square Deal included trust-busting, labor mediation, food safety, and conservation — embodying TR\'s belief the government should fairly referee between business and the public.'},
+  {ch:'ch21',type:'fitb',q:'The ___________ Act of 1906 strengthened the Interstate Commerce Commission\'s power to regulate railroad rates.',ans:['hepburn'],display:'Hepburn',exp:'The Hepburn Act (1906) and Elkins Act (1903) extended ICC authority over railroad pricing and eventually extended to bridges, ferries, and oil pipelines.'},
+  // CH.22
+  {ch:'ch22',type:'mc',q:'Frederick Jackson Turner\'s Frontier Thesis (1893) argued that:',opts:['America needed to build a stronger navy','The encounter between European traditions and the western frontier had shaped American character — but the frontier was now closed','American businesses needed access to Asian markets','The U.S. should avoid overseas expansion at all costs'],ans:1,exp:'Turner\'s thesis raised a crisis: if the frontier made Americans democratic and innovative, what happens now that it\'s closed? Politicians used his argument to justify overseas expansion as a new frontier.'},
+  {ch:'ch22',type:'mc',q:'Alfred Thayer Mahan argued that to become a world power, the U.S. needed:',opts:['A large army stationed in Europe','A powerful navy, overseas bases (coaling stations), and a canal across Central America','Tariff-free trade with all nations','Strong alliances with Britain and France'],ans:1,exp:'Mahan\'s The Influence of Sea Power upon History (1890) laid out the blueprint. The Naval Act of 1890 immediately began expanding the U.S. fleet from wooden ships to steel battleships.'},
+  {ch:'ch22',type:'mc',q:'The Teller Amendment (1898) stated that after defeating Spain, the U.S.:',opts:['Would annex Cuba as a territory','Would grant Cuba independence and not annex it','Would allow Cuba to choose its own fate in a referendum','Would give Cuba to Puerto Rico to govern jointly'],ans:1,exp:'The Teller Amendment guaranteed Cuban independence before the war even began. The subsequent Platt Amendment (1901) essentially gave the U.S. control over Cuban foreign policy anyway.'},
+  {ch:'ch22',type:'mc',q:'The Treaty of Paris (December 10, 1898) transferred which territories to the United States?',opts:['Cuba, Puerto Rico, and Mexico','Puerto Rico, Guam, and the Philippines','Cuba, Panama, and Hawaii','The Philippines, Hawaii, and Guam'],ans:1,exp:'Cuba became independent; Spain transferred Puerto Rico, Guam, and the Philippines to the U.S. for $20 million. Combined with Hawaii (also 1898), the U.S. became an empire.'},
+  {ch:'ch22',type:'mc',q:'Secretary of State John Hay\'s Open Door notes (1899) were designed to:',opts:['Divide China into U.S. and European spheres of influence','Force all nations to grant equal trade access to all Chinese ports, ending spheres of influence','Exclude Asian nations from trading with the United States','Form a military alliance with China against Japan'],ans:1,exp:'The Open Door notes demanded equal trade access for all nations in China\'s ports — but actually benefited the U.S. most, since American goods were cheaper and higher quality, flooding out competitors.'},
+  {ch:'ch22',type:'mc',q:'The Roosevelt Corollary (1904) extended the Monroe Doctrine by:',opts:['Declaring the U.S. would never intervene in Latin American affairs','Stating the U.S. would act as an "international police power" and intervene in Latin America to maintain stability','Promising European nations the U.S. would help them collect debts in Latin America','Establishing free trade between the U.S. and all Western Hemisphere nations'],ans:1,exp:'Unlike the Monroe Doctrine (which just told Europe to stay out), the Roosevelt Corollary claimed the U.S. right to actively intervene in Latin American countries with "chronic wrongdoing." Used to justify numerous interventions.'},
+  {ch:'ch22',type:'mc',q:'Taft\'s "Dollar Diplomacy" meant:',opts:['Demanding that Latin American nations pay tariffs in U.S. dollars','Using American economic power (loans, investments) instead of military threats to achieve foreign policy goals','Charging foreign nations dollars to use the Panama Canal','Investing U.S. dollars in the stock markets of developing countries'],ans:1,exp:'Taft said "substitute dollars for bullets" — use economic leverage. In practice, he still used military force when economic coercion failed (Nicaragua). Created long-term resentment and debt dependence in Central America.'},
+  {ch:'ch22',type:'mc',q:'How did Roosevelt acquire the rights to build the Panama Canal after Colombia refused?',opts:['He declared war on Colombia','He secretly encouraged a Panamanian revolt, sent battleships to block Colombian troops, and immediately recognized the new republic','He offered Colombia twice as much money','He built the canal through Nicaragua instead'],ans:1,exp:'TR made it clear to Panamanian revolutionaries that the U.S. would support them. When Panama declared independence in November 1903, TR sent battleships and recognized Panama within a week. Canal opened 1914.'},
+  {ch:'ch22',type:'fitb',q:'Frederick Jackson Turner\'s "___________ Thesis" argued the frontier had shaped American character but was now closed — raising the question of where to expand next.',ans:['frontier'],display:'Frontier',exp:'Turner presented this thesis to historians in Chicago in 1893. While later criticized as deeply flawed, it influenced politicians and fueled arguments for overseas expansion.'},
+  {ch:'ch22',type:'fitb',q:'The ___________ Amendment prohibited the U.S. from annexing Cuba after the Spanish-American War.',ans:['teller'],display:'Teller',exp:'The Teller Amendment was passed before the war began. The subsequent Platt Amendment (1901) gave U.S. the right to intervene in Cuban affairs, making the independence largely nominal.'},
+  {ch:'ch22',type:'fitb',q:'Roosevelt\'s foreign policy motto was "Speak softly and carry a big ___________."',ans:['stick'],display:'stick',exp:'The "Big Stick" policy relied on the credible threat of military force (rather than actual use) to achieve diplomatic goals — backed by U.S. military credibility from the Spanish-American War.'},
+  {ch:'ch22',type:'fitb',q:'Secretary of State Seward purchased Alaska from Russia in 1867 for $7.2 million — mocked by critics as "___________ Folly."',ans:["seward's","sewards"],display:"Seward's",exp:'Russia feared losing Alaska in a future war with Britain (Crimean War rival) and sold it cheaply. The press mocked it as a frozen wasteland. Alaska proved enormously valuable.'},
+  {ch:'ch22',type:'fitb',q:'Taft\'s foreign policy was called "___________ Diplomacy" because it used economic power, not military threats, as its primary tool.',ans:['dollar'],display:'Dollar',exp:'Taft announced he would "substitute dollars for bullets." He paid off Central American debts to European nations with U.S. loans — making those countries indebted to the U.S. instead.'},
+  {ch:'ch22',type:'fitb',q:'The ___________ Amendment (1901) gave the U.S. the right to intervene in Cuban affairs and secured the Guantanamo Bay naval base.',ans:['platt'],display:'Platt',exp:'The Platt Amendment made Cuban independence nominal. Cuba could not make treaties with other nations that might threaten stability; the U.S. retained the right to intervene whenever it saw fit.'},
+  // CH.23
+  {ch:'ch23',type:'mc',q:'The primary reason the U.S. initially declared neutrality in WWI was:',opts:['The U.S. had no navy capable of fighting','Wilson believed America should only intervene for moral reasons; many Americans had ethnic ties to both sides','The U.S. had signed a treaty with Germany','Congress declared it illegal to enter the war'],ans:1,exp:'Wilson\'s foreign policy philosophy stressed non-intervention unless morally imperative. He also recognized that millions of German-American and other immigrant voters were divided on the war.'},
+  {ch:'ch23',type:'mc',q:'The sinking of the Lusitania (1915) was significant because:',opts:['It caused the U.S. to immediately declare war on Germany','1,198 people were killed including 128 Americans, causing public outrage and pushing the U.S. toward eventual intervention','It gave Germany control of the Atlantic shipping lanes','It ended German U-boat warfare permanently'],ans:1,exp:'The Lusitania was a British ocean liner torpedoed by a U-boat. The deaths of 128 Americans created enormous public anger. Germany agreed to the Sussex Pledge (1916) but eventually resumed unrestricted submarine warfare in 1917.'},
+  {ch:'ch23',type:'mc',q:'The Zimmermann Telegram (January 1917) was a secret message from Germany to:',opts:['Japan, offering Asian territories in exchange for attacking the U.S.','Mexico, offering Texas, New Mexico, and Arizona if Mexico allied with Germany against the U.S.','Austria-Hungary, urging resumption of submarine warfare','Russia, threatening to attack if Russia signed a separate peace'],ans:1,exp:'German Foreign Minister Zimmermann sent a telegram to the German ambassador in Mexico. British intelligence intercepted it; Wilson shared it with Congress. Public outrage accelerated the U.S. declaration of war.'},
+  {ch:'ch23',type:'mc',q:'The Espionage Act (1917) and Sedition Act (1918) primarily did which of the following?',opts:['Allowed American spies to operate in Germany','Prohibited criticism of the war, the government, the military, and the flag; imposed prison sentences up to 20 years','Required all German-Americans to register with the government','Banned the sale of alcohol as a patriotic measure'],ans:1,exp:'More than 2,000 were charged. Eugene Debs received 10 years for encouraging draft resistance. The Acts represented the most severe federal restriction on free speech since the Alien and Sedition Acts of 1798.'},
+  {ch:'ch23',type:'mc',q:'In Schenck v. United States (1919), the Supreme Court ruled that:',opts:['The Espionage Act was unconstitutional','Anti-war speech presenting a "clear and present danger" was not protected by the First Amendment','Eugene Debs must be released from prison','German-American citizens could not be deported'],ans:1,exp:'Justice Oliver Wendell Holmes wrote the unanimous opinion: speech that poses a "clear and present danger" — like falsely shouting "fire!" in a crowded theater — is not protected. Upheld the Espionage and Sedition Acts.'},
+  {ch:'ch23',type:'mc',q:'The Harlem Hellfighters (369th Infantry) were notable for:',opts:['Being the first African American regiment to serve in WWI','Serving on the French frontline for 6 months — longer than any other American unit — and receiving 171 French Legions of Merit','Winning the Medal of Honor at the Battle of Argonne Forest','Leading the Meuse-Argonne Offensive that broke German lines'],ans:1,exp:'The 369th served longer than any other American unit on the frontlines, fought under French command, and 171 received the Legion of Merit. They returned to a homecoming parade in NYC — but returned to a segregated society.'},
+  {ch:'ch23',type:'mc',q:'Which of the following was NOT part of Wilson\'s Fourteen Points?',opts:['Freedom of the seas','A League of Nations','Germany must pay $33 billion in reparations','Self-determination for all peoples'],ans:2,exp:'The $33 billion in reparations was imposed at the Treaty of Versailles against Wilson\'s wishes — a demand of France and Britain. Wilson\'s Fourteen Points specifically called for "a peace without victory" and no punitive measures.'},
+  {ch:'ch23',type:'mc',q:'In the Senate fight over the Treaty of Versailles, what was the difference between "Irreconcilables" and "Reservationists"?',opts:['Irreconcilables wanted more reparations; Reservationists wanted less','Irreconcilables opposed the treaty entirely; Reservationists would accept it with amendments (especially removing Article X on collective security)','Irreconcilables supported Wilson; Reservationists opposed him','Irreconcilables were Democrats; Reservationists were Republicans who agreed with Wilson'],ans:1,exp:'Both groups prevented ratification. Irreconcilables (led by Borah) opposed any international entanglement. Reservationists (led by Lodge) wanted Article X amended so Congress retained war-making power. Wilson refused to compromise.'},
+  {ch:'ch23',type:'mc',q:'The "Red Summer" of 1919 refers to:',opts:['The spread of Communist ideology through American cities','Twenty-five bloody race riots in northern cities that killed over 250 people, including the Chicago Race Riot','The Palmer Raids that arrested 4,000 suspected radicals','The wave of labor strikes that hit 4 million workers'],ans:1,exp:'The Chicago Race Riot began when a White mob stoned a Black teenager who drifted near the "White beach" on Lake Michigan — police didn\'t arrest the attacker. Week-long riot killed 38. Similar violence erupted in 24 other cities.'},
+  {ch:'ch23',type:'mc',q:'Warren G. Harding won the 1920 election in a landslide primarily because:',opts:['He promised to join the League of Nations','Americans were exhausted by WWI, the flu pandemic, Red Scare, and Progressive government intervention, and wanted a "return to normalcy"','He promised a new wave of Progressive reforms','The Democratic candidate refused to campaign'],ans:1,exp:'Harding won 404 electoral votes and 60% of the popular vote. He represented a desire to step back from world affairs, reduce government intervention, and let Americans live their private lives without Progressive mandates.'},
+  {ch:'ch23',type:'fitb',q:'The German telegram offering Mexico Texas, New Mexico, and Arizona if Mexico allied against the U.S. was called the ___________ Telegram.',ans:['zimmermann'],display:'Zimmermann',exp:'German Foreign Minister Arthur Zimmermann sent the telegram in January 1917. British intelligence decoded and passed it to Wilson. Public outrage accelerated Congress\'s April 1917 declaration of war.'},
+  {ch:'ch23',type:'fitb',q:'Justice Oliver Wendell Holmes ruled in Schenck v. United States that anti-war speech presenting a "___________ and present danger" was not protected by the First Amendment.',ans:['clear'],display:'clear',exp:'"Clear and present danger" — Holmes compared it to someone falsely shouting "fire!" in a crowded theater. The unanimous ruling upheld the Espionage and Sedition Acts.'},
+  {ch:'ch23',type:'fitb',q:'The ___________ Hellfighters (369th Infantry) served on the French frontline for 6 months — longer than any other American unit in WWI.',ans:['harlem'],display:'Harlem',exp:'The Harlem Hellfighters served under French command, received 171 Legions of Merit, and marched in a homecoming parade in New York City. They still returned to a segregated nation.'},
+  {ch:'ch23',type:'fitb',q:'Wilson\'s postwar peace plan, announced in January 1918, was known as the ___________ Points.',ans:['fourteen','14'],display:'Fourteen',exp:'The Fourteen Points included free trade, freedom of the seas, self-determination of peoples, and a League of Nations. The Treaty of Versailles largely ignored Wilson\'s vision.'},
+  {ch:'ch23',type:'fitb',q:'The Treaty of Versailles included a "___________ guilt clause" forcing Germany to accept sole responsibility for WWI and pay over $33 billion in reparations.',ans:['war'],display:'war',exp:'The war guilt clause (Article 231) and $33B+ in reparations created enormous resentment in Germany — contributing to economic collapse, hyperinflation, and eventually Hitler\'s rise to power.'},
+  {ch:'ch23',type:'fitb',q:'The fear of Communist revolution in the U.S. following Russia\'s 1917 Bolshevik Revolution was called the ___________ Scare.',ans:['red'],display:'Red',exp:'The Red Scare led to the Palmer Raids, which arrested ~4,000 suspected radicals and deported ~250 on the "Soviet Ark." J. Edgar Hoover organized the raids as Palmer\'s assistant.'},
+  {ch:'ch23',type:'fitb',q:'The 1918–1919 influenza pandemic killed approximately ___________ Americans.',ans:['675,000','675000','675 000'],display:'675,000',exp:'The flu killed more Americans than WWI. Worldwide, an estimated 500 million were infected and 50 million died. Added enormously to the trauma of the immediate postwar period.'},
+  {ch:'ch23',type:'fitb',q:'The armistice ending WWI took effect on November ___________, 1918.',ans:['11'],display:'11',exp:'November 11, 1918 at 11 AM — the 11th hour of the 11th day of the 11th month. Now commemorated as Veterans Day in the U.S. and Remembrance Day in the UK and Canada.'}
+];
+
+let currentQuizFilter='all';
+let activeQuizData=[...allQuizData];
+let userAnswers={};
+let quizSubmitted=false;
+
+function setQuizFilter(ch,btn){
+  document.querySelectorAll('#quiz-filters .filter-btn').forEach(b=>b.classList.remove('active-filter'));
+  btn.classList.add('active-filter');
+  currentQuizFilter=ch;resetQuiz();
+}
+
+function renderQuiz(){
+  activeQuizData=currentQuizFilter==='all'?[...allQuizData]:allQuizData.filter(q=>q.ch===currentQuizFilter);
+  const chColorsQ={ch21:'#3b82f6',ch22:'#a78bfa',ch23:'#22c55e'};
+  const chLabelsQ={ch21:'CH.21',ch22:'CH.22',ch23:'CH.23'};
+  const area=document.getElementById('quiz-area');
+  area.innerHTML=activeQuizData.map((q,qi)=>{
+    const badge=`<span class="q-ch-badge" style="background:${chColorsQ[q.ch]}20;color:${chColorsQ[q.ch]}">${chLabelsQ[q.ch]}</span>`;
+    if(q.type==='mc'){
+      const opts=q.opts.map((o,oi)=>`<div class="option" id="opt-${qi}-${oi}" onclick="selectMC(${qi},${oi})" role="button" tabindex="0" aria-label="Option ${oi+1}: ${o}">${o}</div>`).join('');
+      return `<div class="q-block" id="qblock-${qi}" role="listitem">${badge}<div class="q-text">${q.q}</div>${opts}<div class="explanation" id="exp-${qi}">${q.exp}</div></div>`;
+    }else{
+      return `<div class="q-block" id="qblock-${qi}" role="listitem">${badge}<div class="q-text">${q.q}</div><input type="text" class="fitb-input" id="fitb-${qi}" placeholder="Type your answer..." oninput="storeFITB(${qi})" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Fill in the blank answer"><div class="fitb-correct-answer" id="fitb-ans-${qi}">Correct answer: ${q.display}</div><div class="explanation" id="exp-${qi}">${q.exp}</div></div>`;
+    }
+  }).join('');
+  document.getElementById('submit-btn').style.display='block';
+}
+
+function selectMC(qi,oi){
+  if(quizSubmitted)return;
+  document.querySelectorAll(`#qblock-${qi} .option`).forEach(o=>{o.style.borderColor='';o.style.background='';});
+  document.getElementById(`opt-${qi}-${oi}`).style.borderColor='var(--accent)';
+  document.getElementById(`opt-${qi}-${oi}`).style.background='var(--accent-dim)';
+  userAnswers[qi]={type:'mc',val:oi};
+}
+
+function storeFITB(qi){userAnswers[qi]={type:'fitb',val:document.getElementById(`fitb-${qi}`).value.trim().toLowerCase()};}
+
+function submitQuiz(){
+  for(let i=0;i<activeQuizData.length;i++){
+    const q=activeQuizData[i];
+    if(!userAnswers[i]){
+      if(q.type==='mc'){alert(`Please answer question ${i+1}.`);return;}
+      else{const v=document.getElementById(`fitb-${i}`).value.trim();if(!v){alert(`Please answer question ${i+1}.`);return;}userAnswers[i]={type:'fitb',val:v.toLowerCase()};}
+    }
+  }
+  quizSubmitted=true;
+  let score=0,mcC=0,fitbC=0,mcT=0,fitbT=0;
+  activeQuizData.forEach((q,i)=>{
+    const ans=userAnswers[i];
+    if(q.type==='mc'){
+      mcT++;
+      document.querySelectorAll(`#qblock-${i} .option`).forEach(o=>{o.style.borderColor='';o.style.background='';o.classList.add('answered');});
+      if(ans.val===q.ans){score++;mcC++;document.getElementById(`opt-${i}-${ans.val}`).classList.add('correct');}
+      else{document.getElementById(`opt-${i}-${ans.val}`).classList.add('wrong');document.getElementById(`opt-${i}-${q.ans}`).classList.add('reveal');}
+    }else{
+      fitbT++;
+      const input=document.getElementById(`fitb-${i}`);
+      const correct=q.ans.some(a=>ans.val===a||ans.val.includes(a)||a.includes(ans.val));
+      if(correct){score++;fitbC++;input.classList.add('correct-input');}
+      else{input.classList.add('wrong-input');document.getElementById(`fitb-ans-${i}`).style.display='block';}
+    }
+    document.getElementById(`exp-${i}`).style.display='block';
+  });
+  const pct=Math.round((score/activeQuizData.length)*100);
+  const grade=pct>=90?'A':pct>=80?'B':pct>=70?'C':'Keep studying!';
+  document.getElementById('score-display').textContent=score+' / '+activeQuizData.length;
+  document.getElementById('score-breakdown').innerHTML=`${pct}% &nbsp;·&nbsp; ${grade} &nbsp;·&nbsp; MC: ${mcC}/${mcT} &nbsp;·&nbsp; Fill-in: ${fitbC}/${fitbT}`;
+  document.getElementById('quiz-score').style.display='block';
+  document.getElementById('submit-btn').style.display='none';
+  document.getElementById('quiz-score').scrollIntoView({behavior:'smooth'});
+}
+
+function resetQuiz(){userAnswers={};quizSubmitted=false;document.getElementById('quiz-score').style.display='none';document.getElementById('quiz-area').innerHTML='';renderQuiz();}
+
+// ===== DISCUSSION =====
+function submitDisc(idx){
+  const ta=document.getElementById(`disc-ta-${idx}`);
+  if(!ta.value.trim()){alert('Please write a response before submitting.');return;}
+  document.getElementById(`disc-check-${idx}`).classList.add('visible');
+  ta.disabled=true;
+  document.querySelector(`#disc-${idx} .btn.primary`).style.display='none';
+  updateDiscScore(idx);
+}
+function updateDiscScore(idx){
+  const checks=document.querySelectorAll(`#disc-check-${idx} input[type=checkbox]`);
+  const total=checks.length;
+  const done=[...checks].filter(c=>c.checked).length;
+  const pct=Math.round(done/total*100);
+  document.getElementById(`disc-score-${idx}`).textContent=`Self-score: ${done}/${total} points (${pct}%)`;
+}
+function toggleModel(idx){
+  const model=document.getElementById(`disc-model-${idx}`);
+  const btn=document.querySelector(`#disc-check-${idx} .btn-model-toggle`);
+  const visible=model.classList.toggle('visible');
+  btn.textContent=visible?'Hide Model Answer':'Show Model Answer';
+  btn.setAttribute('aria-expanded',visible);
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded',()=>{loadObjMastery();renderCard();renderQuiz();});
+document.getElementById('flashcard').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')flipCard();});
+</script>
+</body>
+</html>
