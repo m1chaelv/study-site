@@ -42,17 +42,49 @@ h1{font-size:clamp(26px,5vw,42px);font-weight:700;letter-spacing:-0.02em;line-he
 /* Panels */
 .panel{display:none;}.panel.active{display:block;}
 /* Objectives */
-.obj-grid{display:grid;gap:12px;margin-bottom:32px;}
-.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:grid;grid-template-columns:32px 1fr auto;gap:12px;align-items:start;}
-.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
-.obj-text{font-size:13px;line-height:1.6;}
-.obj-chapter{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:4px;}
+.obj-hint{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:16px;padding:8px 12px;border:1px dashed var(--border);border-radius:6px;letter-spacing:0.03em;}
+.obj-grid{display:grid;gap:10px;margin-bottom:32px;}
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color 0.2s;}
+.obj-card:focus-within{outline:2px solid var(--accent);outline-offset:2px;}
+.ch21.obj-card.expanded{border-color:rgba(59,130,246,0.4);}
+.ch22.obj-card.expanded{border-color:rgba(167,139,250,0.4);}
+.ch23.obj-card.expanded{border-color:rgba(34,197,94,0.4);}
+.obj-header{padding:14px 18px;display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:start;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;}
+.obj-header:hover{background:var(--surface2);}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;width:26px;height:26px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;margin-top:1px;}
 .ch21 .obj-num{color:#3b82f6;background:rgba(59,130,246,0.12);}
 .ch22 .obj-num{color:#a78bfa;background:rgba(167,139,250,0.12);}
 .ch23 .obj-num{color:#22c55e;background:rgba(34,197,94,0.12);}
-.mastery-btn{width:24px;height:24px;border-radius:4px;border:1px solid var(--border);background:transparent;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all 0.2s;}
+.obj-header-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;}
+.obj-chevron{color:var(--muted);font-size:11px;transition:transform 0.25s;line-height:1;margin-top:3px;}
+.obj-card.expanded .obj-chevron{transform:rotate(180deg);}
+.obj-text{font-size:13px;line-height:1.6;font-weight:600;}
+.obj-chapter{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:3px;}
+.mastery-btn{width:22px;height:22px;border-radius:4px;border:1px solid var(--border);background:transparent;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s;}
 .mastery-btn.mastered{background:rgba(34,197,94,0.15);border-color:var(--green);color:var(--green);}
 .mastery-btn:not(.mastered){color:var(--muted);}
+.obj-expand{display:none;border-top:1px solid var(--border);padding:16px 18px 18px;background:var(--surface2);}
+.obj-expand.open{display:block;}
+.obj-expand-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.ch21 .obj-expand-label{color:#3b82f6;}
+.ch22 .obj-expand-label{color:#a78bfa;}
+.ch23 .obj-expand-label{color:#22c55e;}
+.obj-summary{font-size:13px;line-height:1.8;color:#c8c8d8;margin-bottom:12px;}
+.obj-summary strong{color:var(--text);}
+.obj-people-label,.obj-terms-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;margin-top:12px;}
+.obj-people-row{display:flex;flex-direction:column;gap:6px;}
+.obj-person{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 10px;}
+.obj-person-name{font-size:12px;font-weight:700;color:var(--text);}
+.obj-person-role{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4;}
+.obj-terms-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;}
+.obj-term{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:3px 7px;border-radius:4px;}
+.ch21 .obj-term{background:rgba(59,130,246,0.12);color:#3b82f6;}
+.ch22 .obj-term{background:rgba(167,139,250,0.12);color:#a78bfa;}
+.ch23 .obj-term{background:rgba(34,197,94,0.12);color:#22c55e;}
+.obj-bullets{margin-top:8px;list-style:none;padding:0;}
+.obj-bullets li{font-size:12px;line-height:1.7;color:#c8c8d8;padding:2px 0 2px 14px;position:relative;}
+.obj-bullets li::before{content:'·';position:absolute;left:0;color:var(--muted);}
+.obj-bullets li strong{color:var(--text);}
 /* Study Guide */
 .chapter-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;}
 .chapter-header{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background 0.2s;border-bottom:1px solid var(--border);}
@@ -170,13 +202,13 @@ footer a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent
 <body>
 <div class="container">
 
-<nav class="topnav" role="navigation" aria-label="Study tabs">
-  <button class="nav-btn active" onclick="showPanel('overview',this)" aria-selected="true">📋 Objectives</button>
-  <button class="nav-btn" onclick="showPanel('guide',this)" aria-selected="false">📖 Study Guide</button>
-  <button class="nav-btn" onclick="showPanel('flashcards',this)" aria-selected="false">🃏 Flashcards</button>
-  <button class="nav-btn" onclick="showPanel('quiz',this)" aria-selected="false">✏️ Practice Quiz</button>
-  <button class="nav-btn" onclick="showPanel('discussion',this)" aria-selected="false">💬 Discussion</button>
-  <button class="nav-btn" onclick="showPanel('notes',this)" aria-selected="false">📝 Notes</button>
+<nav class="topnav" role="tablist" aria-label="Study sections">
+  <button class="nav-btn active" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)" role="tab" aria-selected="false" aria-controls="panel-guide">📖 Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)" role="tab" aria-selected="false" aria-controls="panel-flashcards">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)" role="tab" aria-selected="false" aria-controls="panel-quiz">✏️ Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('discussion',this)" role="tab" aria-selected="false" aria-controls="panel-discussion">💬 Discussion</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes</button>
 </nav>
 
 <header>
@@ -204,39 +236,484 @@ footer a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent
 </div>
 
 <!-- ===== OBJECTIVES PANEL ===== -->
-<div id="panel-overview" class="panel active" role="tabpanel" aria-label="Learning objectives">
-  <div class="section-label">22 Learning Objectives</div>
+<div id="panel-overview" class="panel active" role="tabpanel" aria-labelledby="tab-overview">
+  <div class="section-label">22 Learning Objectives — Tap any to expand</div>
+  <div class="obj-hint" role="note">Tap an objective to see a full study breakdown. Use the ✓ button to mark it mastered. VoiceOver: swipe to each card header and double-tap to expand.</div>
   <div class="obj-grid" id="obj-grid">
-    <!-- CH.21 -->
-    <div class="obj-card ch21"><div class="obj-num" aria-label="Objective 1">1</div><div><div class="obj-text">What was the Progressive Era? How did it impact American life, and what were its features? Who were the muckrakers?</div><div class="obj-chapter">CH. 21 · Sec 21.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,1)" aria-label="Mark objective 1 as mastered">☐</button></div>
-    <div class="obj-card ch21"><div class="obj-num" aria-label="Objective 2">2</div><div><div class="obj-text">Discuss Progressive movements at the local &amp; state levels: the direct primary, initiative, referendum, and recall. Describe Progressivism in social justice, labor, and women's rights movements.</div><div class="obj-chapter">CH. 21 · Sec 21.2</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,2)" aria-label="Mark objective 2 as mastered">☐</button></div>
-    <div class="obj-card ch21"><div class="obj-num" aria-label="Objective 3">3</div><div><div class="obj-text">What was the Progressive Era? How did it impact American life, especially politics? Identify key reforms achieved.</div><div class="obj-chapter">CH. 21 · Sec 21.2–21.3</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,3)" aria-label="Mark objective 3 as mastered">☐</button></div>
-    <div class="obj-card ch21"><div class="obj-num" aria-label="Objective 4">4</div><div><div class="obj-text">Explain how Theodore Roosevelt became President, even though he was not considered "conservative" by Republican Party leaders.</div><div class="obj-chapter">CH. 21 · Sec 21.4</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,4)" aria-label="Mark objective 4 as mastered">☐</button></div>
-    <div class="obj-card ch21"><div class="obj-num" aria-label="Objective 5">5</div><div><div class="obj-text">Evaluate T. Roosevelt as president: his handling of the trusts (Northern Securities, Standard Oil); the "Square Deal" regarding labor disputes (Anthracite Coal Strike); safer food &amp; drugs (Meat Inspection Act, Pure Food &amp; Drug Act); and land conservation.</div><div class="obj-chapter">CH. 21 · Sec 21.4</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,5)" aria-label="Mark objective 5 as mastered">☐</button></div>
-    <div class="obj-card ch21"><div class="obj-num" aria-label="Objective 6">6</div><div><div class="obj-text">Name the man T. Roosevelt personally selected as his successor. Describe how Taft's personality and leadership style differed from TR's, and how Taft's presidency went wrong.</div><div class="obj-chapter">CH. 21 · Sec 21.4</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,6)" aria-label="Mark objective 6 as mastered">☐</button></div>
-    <div class="obj-card ch21"><div class="obj-num" aria-label="Objective 7">7</div><div><div class="obj-text">Describe how the Republican Party split (conservatives vs. progressives) in the 1912 election, and the reemergence of TR. Name the major candidates, their platforms (New Nationalism vs. New Freedom), and the outcome.</div><div class="obj-chapter">CH. 21 · Sec 21.4</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,7)" aria-label="Mark objective 7 as mastered">☐</button></div>
-    <div class="obj-card ch21"><div class="obj-num" aria-label="Objective 8">8</div><div><div class="obj-text">Describe Wilson's career background. Identify his Progressive "New Freedom" agenda and key reforms (Federal Reserve, Underwood Tariff, Clayton Act). How did WWI cause his Progressive agenda to be sidelined?</div><div class="obj-chapter">CH. 21 · Sec 21.4</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,8)" aria-label="Mark objective 8 as mastered">☐</button></div>
-    <!-- CH.22 -->
-    <div class="obj-card ch22"><div class="obj-num" aria-label="Objective 9">9</div><div><div class="obj-text">Explain America's expansionist impulse of the 1890s. Discuss Turner's Frontier Thesis and Mahan's arguments for a strong navy, overseas bases, and a Central American canal.</div><div class="obj-chapter">CH. 22 · Sec 22.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,9)" aria-label="Mark objective 9 as mastered">☐</button></div>
-    <div class="obj-card ch22"><div class="obj-num" aria-label="Objective 10">10</div><div><div class="obj-text">Describe U.S. involvement in the Pacific and acquisition of Hawaii: the sugar industry, Queen Liliuokalani, the American-backed overthrow, and annexation in 1898.</div><div class="obj-chapter">CH. 22 · Sec 22.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,10)" aria-label="Mark objective 10 as mastered">☐</button></div>
-    <div class="obj-card ch22"><div class="obj-num" aria-label="Objective 11">11</div><div><div class="obj-text">Describe U.S. involvement in Cuba, the Spanish-American War, the Treaty of Paris (1898), and land acquired. Discuss the Philippine-American War, Emilio Aguinaldo, and the Taft Commission.</div><div class="obj-chapter">CH. 22 · Sec 22.2</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,11)" aria-label="Mark objective 11 as mastered">☐</button></div>
-    <div class="obj-card ch22"><div class="obj-num" aria-label="Objective 12">12</div><div><div class="obj-text">Discuss U.S. interest in Asia and the "Open Door" policy toward China. Explain Secretary Hay's Open Door notes and how they favored American trade. Describe the Boxer Rebellion and U.S. response.</div><div class="obj-chapter">CH. 22 · Sec 22.3</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,12)" aria-label="Mark objective 12 as mastered">☐</button></div>
-    <div class="obj-card ch22"><div class="obj-num" aria-label="Objective 13">13</div><div><div class="obj-text">Discuss foreign policy under T. Roosevelt: Latin America ("Big Stick" diplomacy and the Roosevelt Corollary to the Monroe Doctrine); the Panama Canal (Colombia, Panama revolution, construction); and other diplomatic initiatives including the Russo-Japanese War.</div><div class="obj-chapter">CH. 22 · Sec 22.4</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,13)" aria-label="Mark objective 13 as mastered">☐</button></div>
-    <div class="obj-card ch22"><div class="obj-num" aria-label="Objective 14">14</div><div><div class="obj-text">Describe Taft's "Dollar Diplomacy" — substituting dollars for bullets. Explain how it worked in Central America and Asia, and what problems it created long-term.</div><div class="obj-chapter">CH. 22 · Sec 22.5</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,14)" aria-label="Mark objective 14 as mastered">☐</button></div>
-    <div class="obj-card ch22"><div class="obj-num" aria-label="Objective 15">15</div><div><div class="obj-text">Discuss the political situation in Mexico and how Wilson tried to handle it. Explain Wilson's overall foreign policy philosophy vs. his actual interventionist actions.</div><div class="obj-chapter">CH. 22–23 · Sec 22.5 / 23.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,15)" aria-label="Mark objective 15 as mastered">☐</button></div>
-    <!-- CH.23 -->
-    <div class="obj-card ch23"><div class="obj-num" aria-label="Objective 16">16</div><div><div class="obj-text">Describe the conditions and events (~1900–1914) that led to WWI in Europe. Name the Central Powers (Germany, Austria-Hungary, Ottoman Empire) and Allied Powers (Britain, France, Russia, Italy) at the outset of war.</div><div class="obj-chapter">CH. 23 · Sec 23.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,16)" aria-label="Mark objective 16 as mastered">☐</button></div>
-    <div class="obj-card ch23"><div class="obj-num" aria-label="Objective 17">17</div><div><div class="obj-text">Why did the U.S. declare neutrality when WWI broke out, and why was this policy difficult to maintain? Explain Wilson's dilemma between free trade and neutrality.</div><div class="obj-chapter">CH. 23 · Sec 23.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,17)" aria-label="Mark objective 17 as mastered">☐</button></div>
-    <div class="obj-card ch23"><div class="obj-num" aria-label="Objective 18">18</div><div><div class="obj-text">Discuss the fighting in WWI in the years prior to U.S. involvement: trench warfare, stalemate on the Western Front, the scale of European casualties.</div><div class="obj-chapter">CH. 23 · Sec 23.1</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,18)" aria-label="Mark objective 18 as mastered">☐</button></div>
-    <div class="obj-card ch23"><div class="obj-num" aria-label="Objective 19">19</div><div><div class="obj-text">Explain the events that forced the U.S. into the war: German U-boat warfare; the sinking of the Lusitania (1915); the Zimmermann Telegram (1917); and the U.S. declaration of war in April 1917.</div><div class="obj-chapter">CH. 23 · Sec 23.1–23.2</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,19)" aria-label="Mark objective 19 as mastered">☐</button></div>
-    <div class="obj-card ch23"><div class="obj-num" aria-label="Objective 20">20</div><div><div class="obj-text">Describe the "home front" during WWI: Creel Committee propaganda, the Espionage Act (1917), Sedition Act (1918), anti-German sentiment, and Schenck v. United States ("clear and present danger").</div><div class="obj-chapter">CH. 23 · Sec 23.2–23.3</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,20)" aria-label="Mark objective 20 as mastered">☐</button></div>
-    <div class="obj-card ch23"><div class="obj-num" aria-label="Objective 21">21</div><div><div class="obj-text">Describe U.S. military activities during WWI: the AEF under Pershing, the Harlem Hellfighters, the Meuse-Argonne Offensive, and the armistice of November 11, 1918. What were American and Allied casualties?</div><div class="obj-chapter">CH. 23 · Sec 23.4</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,21)" aria-label="Mark objective 21 as mastered">☐</button></div>
-    <div class="obj-card ch23"><div class="obj-num" aria-label="Objective 22">22</div><div><div class="obj-text">Discuss Wilson's "14 Points" and the Treaty of Versailles: to what degree did the treaty include the 14 Points? How was the treaty punitive toward Germany (war guilt clause, reparations)? Why did the U.S. Senate not ratify it (Irreconcilables vs. Reservationists)? Discuss demobilization aftermath: Red Scare, Red Summer, flu pandemic, and Harding's election.</div><div class="obj-chapter">CH. 23 · Sec 23.4–23.5</div></div><button class="mastery-btn" onclick="toggleObjMastery(this,22)" aria-label="Mark objective 22 as mastered">☐</button></div>
+
+    <div class="obj-card ch21" id="obj-card-1">
+      <div class="obj-header" onclick="toggleObj(1)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-1" aria-label="Objective 1: What was the Progressive Era. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">1</div>
+        <div><div class="obj-text">What was the Progressive Era? How did it impact American life, and what were its features? Who were the muckrakers?</div><div class="obj-chapter">CH. 21 · Sec 21.1</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,1)" aria-label="Mark objective 1 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-1" role="region" aria-label="Study content for objective 1">
+        <div class="obj-expand-label">Study Breakdown · Ch. 21 Objective 1</div>
+        <div class="obj-summary">The <strong>Progressive Era (approximately 1890–1920)</strong> was a broad reform movement responding to Gilded Age ills — urban poverty, corruption, monopolies, dangerous working conditions, and racial violence. Progressives united around three core goals: <strong>expanding democracy</strong>, <strong>improving efficiency</strong> in government, and <strong>promoting social justice</strong>. Reform began at the grassroots; federal involvement came later under Theodore Roosevelt.</div>
+        <div class="obj-people-label">Key People — The Muckrakers</div>
+        <div class="obj-people-row">
+          <div class="obj-person"><div class="obj-person-name">Ida Tarbell</div><div class="obj-person-role">Exposed Standard Oil's monopolistic practices in a series of articles in <em>McClure's</em> magazine.</div></div>
+          <div class="obj-person"><div class="obj-person-name">Upton Sinclair</div><div class="obj-person-role">Wrote <em>The Jungle</em> (1905) exposing horrific conditions in Chicago's meatpacking industry. Triggered the Meat Inspection Act (1906).</div></div>
+          <div class="obj-person"><div class="obj-person-name">Lincoln Steffens</div><div class="obj-person-role">Investigated and exposed corruption in city governments across the United States.</div></div>
+          <div class="obj-person"><div class="obj-person-name">Jacob Riis</div><div class="obj-person-role"><em>How the Other Half Lives</em> (1890) documented NYC slum tenement conditions with photographs.</div></div>
+        </div>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">muckrakers</span><span class="obj-term">yellow journalism</span><span class="obj-term">grassroots Progressivism</span><span class="obj-term">social justice</span></div>
+        <div class="obj-people-label">Remember</div>
+        <ul class="obj-bullets"><li>Theodore Roosevelt coined "muckraker" — from John Bunyan's <em>Pilgrim's Progress</em>. He meant it as criticism; journalists wore it as a badge.</li><li>Unlike sensationalist "yellow journalists," muckrakers had explicit reform goals — they wanted public outrage to lead to legislation.</li></ul>
+      </div>
+    </div>
+
+    <div class="obj-card ch21" id="obj-card-2">
+      <div class="obj-header" onclick="toggleObj(2)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-2" aria-label="Objective 2: Progressive movements at local and state levels. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">2</div>
+        <div><div class="obj-text">Discuss Progressive movements at the local &amp; state levels: direct primary, initiative, referendum, and recall. Describe Progressivism in social justice, labor, and women's rights.</div><div class="obj-chapter">CH. 21 · Sec 21.2</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,2)" aria-label="Mark objective 2 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-2" role="region" aria-label="Study content for objective 2">
+        <div class="obj-expand-label">Study Breakdown · Ch. 21 Objective 2</div>
+        <div class="obj-summary">Progressives introduced four tools of <strong>direct democracy</strong> to reduce the power of party bosses and give citizens more control. They also tackled labor, child labor, alcohol, and women's rights.</div>
+        <ul class="obj-bullets">
+          <li><strong>Direct Primary</strong> — Voters (not convention delegates) select party candidates. South Carolina first (1896).</li>
+          <li><strong>Initiative</strong> — Citizens petition to place a new law on the ballot. South Dakota first (1898).</li>
+          <li><strong>Referendum</strong> — Voters affirm or reject an existing law.</li>
+          <li><strong>Recall</strong> — Citizens remove a public official via petition and vote. Oregon first (1910).</li>
+          <li><strong>17th Amendment (1913)</strong> — Direct election of U.S. senators (previously chosen by state legislatures).</li>
+          <li><strong>Triangle Shirtwaist Factory Fire (March 25, 1911)</strong> — 146 workers killed, exits locked. Galvanized workplace safety laws.</li>
+          <li><strong>Florence Kelley</strong> (National Consumers League) — pushed for 8-hour workday and safer factory conditions.</li>
+          <li><strong>William "Big Bill" Haywood</strong> founded the IWW (Industrial Workers of the World / Wobblies) in 1905.</li>
+          <li><strong>Eugene Victor Debs</strong> led the Socialist Party of America; ran for president five times.</li>
+          <li><strong>18th Amendment (1919)</strong> — Prohibition; driven by WCTU and Anti-Saloon League.</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">direct primary</span><span class="obj-term">initiative</span><span class="obj-term">referendum</span><span class="obj-term">recall</span><span class="obj-term">17th Amendment</span><span class="obj-term">Triangle Shirtwaist Fire</span><span class="obj-term">18th Amendment</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch21" id="obj-card-3">
+      <div class="obj-header" onclick="toggleObj(3)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-3" aria-label="Objective 3: Progressive Era impact on politics and key reforms. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">3</div>
+        <div><div class="obj-text">What was the Progressive Era? How did it impact American life, especially politics? Identify key reforms achieved.</div><div class="obj-chapter">CH. 21 · Sec 21.2–21.3</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,3)" aria-label="Mark objective 3 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-3" role="region" aria-label="Study content for objective 3">
+        <div class="obj-expand-label">Study Breakdown · Ch. 21 Objective 3</div>
+        <div class="obj-summary">The Progressive Era fundamentally reshaped American politics by expanding participation, changing how candidates were selected, and expanding what government was responsible for. Key reforms shifted power from party machines to citizens and expert administrators.</div>
+        <ul class="obj-bullets">
+          <li><strong>City commission system</strong> — Galveston, Texas (1901); each commissioner ran one city function; reduced boss corruption.</li>
+          <li><strong>City manager system</strong> — Staunton, Virginia (1908); elected council hires a professional manager.</li>
+          <li><strong>Robert Marion "Fighting Bob" La Follette</strong> — Progressive governor and senator from Wisconsin; model of state-level reform against special interests.</li>
+          <li><strong>16th Amendment (1913)</strong> — Authorized a federal income tax; fundamental shift in how the federal government was funded.</li>
+          <li><strong>Federal Reserve Act (1913)</strong> — Created the central banking system under Woodrow Wilson; stabilized the money supply.</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">16th Amendment</span><span class="obj-term">Federal Reserve Act 1913</span><span class="obj-term">commission system</span><span class="obj-term">city manager system</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch21" id="obj-card-4">
+      <div class="obj-header" onclick="toggleObj(4)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-4" aria-label="Objective 4: How Theodore Roosevelt became President. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">4</div>
+        <div><div class="obj-text">Explain how Theodore Roosevelt became President, even though he was not considered "conservative" by Republican Party leaders.</div><div class="obj-chapter">CH. 21 · Sec 21.4</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,4)" aria-label="Mark objective 4 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-4" role="region" aria-label="Study content for objective 4">
+        <div class="obj-expand-label">Study Breakdown · Ch. 21 Objective 4</div>
+        <div class="obj-summary"><strong>Theodore Roosevelt</strong> became president on <strong>September 14, 1901</strong> when <strong>President William McKinley</strong> was assassinated at the Pan-American Exposition in Buffalo, New York. Roosevelt was only 42 — the youngest person ever to become president. Republican conservative bosses, including Senator <strong>Mark Hanna</strong>, had intentionally placed Roosevelt on the VP ticket to neutralize his Progressive influence — they considered the VP spot a political dead end. Hanna reportedly said: "Now look! That damned cowboy is now president!" The plan backfired spectacularly.</div>
+        <div class="obj-people-label">Key People</div>
+        <div class="obj-people-row">
+          <div class="obj-person"><div class="obj-person-name">Theodore Roosevelt</div><div class="obj-person-role">Youngest president in history at 42. Former NY Governor, former Assistant Secretary of the Navy, Rough Riders leader in Cuba. Republicans considered him too Progressive and too popular to leave in a powerful office.</div></div>
+          <div class="obj-person"><div class="obj-person-name">William McKinley</div><div class="obj-person-role">25th President; shot by anarchist Leon Czolgosz at the Pan-American Exposition; died September 14, 1901.</div></div>
+        </div>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">Pan-American Exposition 1901</span><span class="obj-term">accidental president</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch21" id="obj-card-5">
+      <div class="obj-header" onclick="toggleObj(5)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-5" aria-label="Objective 5: Evaluate Theodore Roosevelt as president. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">5</div>
+        <div><div class="obj-text">Evaluate Theodore Roosevelt as president: his handling of the trusts (Northern Securities, Standard Oil); the "Square Deal" regarding labor disputes (Anthracite Coal Strike); safer food &amp; drugs (Meat Inspection Act, Pure Food &amp; Drug Act); and land conservation.</div><div class="obj-chapter">CH. 21 · Sec 21.4</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,5)" aria-label="Mark objective 5 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-5" role="region" aria-label="Study content for objective 5">
+        <div class="obj-expand-label">Study Breakdown · Ch. 21 Objective 5</div>
+        <div class="obj-summary">Roosevelt's <strong>Square Deal</strong> transformed the presidency into an active guardian of the public good — a dramatic break from Gilded Age hands-off government. His agenda covered four major areas.</div>
+        <ul class="obj-bullets">
+          <li><strong>Trust-busting:</strong> Filed suit against <strong>Northern Securities Trust</strong> (1902) — railroad monopoly controlled by <strong>John Pierpont Morgan</strong> and <strong>John D. Rockefeller</strong>. Won 5-4 at Supreme Court (1904). Also sued <strong>Standard Oil</strong> and the American Tobacco Company. Over 44 antitrust suits total. Distinguished "good trusts" from "bad trusts."</li>
+          <li><strong>Labor / Square Deal:</strong> <strong>Anthracite Coal Strike (1902)</strong> — invited both the United Mine Workers and mine owners to the White House to negotiate. First president to side with workers rather than deploy troops against them.</li>
+          <li><strong>Food Safety:</strong> After reading <em>The Jungle</em> by Upton Sinclair: <strong>Meat Inspection Act (1906)</strong> established federal meat inspection; <strong>Pure Food and Drug Act (1906)</strong> required accurate labeling and banned adulterated goods.</li>
+          <li><strong>Conservation:</strong> Appointed <strong>Gifford Pinchot</strong> as first chief of the U.S. Forestry Service. Created 18 national monuments, 5 national parks, and 150+ national forests — approximately 230 million acres total.</li>
+          <li><strong>Railroad regulation:</strong> <strong>Elkins Act (1903)</strong> and <strong>Hepburn Act (1906)</strong> strengthened the Interstate Commerce Commission's authority over railroad rates.</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">Square Deal</span><span class="obj-term">Northern Securities Trust</span><span class="obj-term">Anthracite Coal Strike 1902</span><span class="obj-term">Meat Inspection Act 1906</span><span class="obj-term">Pure Food and Drug Act 1906</span><span class="obj-term">Gifford Pinchot</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch21" id="obj-card-6">
+      <div class="obj-header" onclick="toggleObj(6)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-6" aria-label="Objective 6: Taft as Roosevelt's successor. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">6</div>
+        <div><div class="obj-text">Name the man Theodore Roosevelt personally selected as his successor. Describe how Taft's personality and leadership style differed from Roosevelt's, and how Taft's presidency went wrong.</div><div class="obj-chapter">CH. 21 · Sec 21.4</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,6)" aria-label="Mark objective 6 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-6" role="region" aria-label="Study content for objective 6">
+        <div class="obj-expand-label">Study Breakdown · Ch. 21 Objective 6</div>
+        <div class="obj-summary">Roosevelt hand-picked <strong>William Howard Taft</strong> — his Secretary of War and former Governor-General of the Philippines — as his successor. Taft won the 1908 election easily, defeating three-time Democratic nominee <strong>William Jennings Bryan</strong>. Despite strong credentials, Taft's presidency disappointed Progressives and Roosevelt himself.</div>
+        <ul class="obj-bullets">
+          <li><strong>Personality:</strong> Roosevelt was charismatic and combative, loved using the presidency as a "bully pulpit." Taft was cautious, judicial-minded, and uncomfortable with political combat.</li>
+          <li><strong>What Taft did right:</strong> Initiated <em>twice as many</em> antitrust suits as Roosevelt. Signed the <strong>Mann-Elkins Act (1910)</strong> extending ICC authority to telephones and telegraphs.</li>
+          <li><strong>Payne-Aldrich Act (1909):</strong> Taft endorsed a Senate bill that raised tariffs on over 800 products — enraging Progressives who wanted tariff reductions.</li>
+          <li><strong>Pinchot-Ballinger Affair:</strong> Taft's Secretary of the Interior, <strong>Richard Ballinger</strong>, approved selling federal land to a company he had previously represented. <strong>Gifford Pinchot</strong> publicly condemned it. Taft fired Pinchot — which infuriated Roosevelt and widened the rift.</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">William Howard Taft</span><span class="obj-term">Payne-Aldrich Act 1909</span><span class="obj-term">Mann-Elkins Act 1910</span><span class="obj-term">Ballinger-Pinchot Affair</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch21" id="obj-card-7">
+      <div class="obj-header" onclick="toggleObj(7)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-7" aria-label="Objective 7: 1912 election and Republican split. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">7</div>
+        <div><div class="obj-text">Describe how the Republican Party split (conservatives vs. progressives) in the 1912 election, and the reemergence of Theodore Roosevelt. Name the major candidates, their platforms (New Nationalism vs. New Freedom), and the outcome.</div><div class="obj-chapter">CH. 21 · Sec 21.4</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,7)" aria-label="Mark objective 7 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-7" role="region" aria-label="Study content for objective 7">
+        <div class="obj-expand-label">Study Breakdown · Ch. 21 Objective 7</div>
+        <div class="obj-summary">The <strong>1912 presidential election</strong> was one of the most dramatic in American history. Know all four candidates by full name, party, and platform.</div>
+        <div class="obj-people-label">The Four Candidates — 1912</div>
+        <div class="obj-people-row">
+          <div class="obj-person"><div class="obj-person-name">Theodore Roosevelt — Progressive (Bull Moose) Party</div><div class="obj-person-role"><strong>New Nationalism:</strong> powerful federal government regulates big business for the public good. Bolted the GOP after conservatives denied him the Republican nomination. Survived assassination attempt in Milwaukee; declared "It takes more than a bullet to kill a bull moose!" Finished second.</div></div>
+          <div class="obj-person"><div class="obj-person-name">William Howard Taft — Republican Party</div><div class="obj-person-role">Secured the Republican nomination with conservative support. Barely campaigned. Finished third — worst showing for a sitting president in history to that point.</div></div>
+          <div class="obj-person"><div class="obj-person-name">Woodrow Wilson — Democratic Party</div><div class="obj-person-role"><strong>New Freedom:</strong> smaller federal government breaks up monopolistic trusts to restore competition. Former Princeton president and Progressive governor of New Jersey. Won with 435 electoral votes, exploiting the Republican split.</div></div>
+          <div class="obj-person"><div class="obj-person-name">Eugene Victor Debs — Socialist Party of America</div><div class="obj-person-role">Received approximately 900,000 popular votes (6%) — best Socialist showing in U.S. history at that time.</div></div>
+        </div>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">Bull Moose Party</span><span class="obj-term">New Nationalism (Roosevelt)</span><span class="obj-term">New Freedom (Wilson)</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch21" id="obj-card-8">
+      <div class="obj-header" onclick="toggleObj(8)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-8" aria-label="Objective 8: Woodrow Wilson's New Freedom agenda and WWI. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">8</div>
+        <div><div class="obj-text">Describe Wilson's career background. Identify his Progressive "New Freedom" agenda and key reforms (Federal Reserve, Underwood Tariff, Clayton Act). How did WWI cause his Progressive agenda to be sidelined?</div><div class="obj-chapter">CH. 21 · Sec 21.4</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,8)" aria-label="Mark objective 8 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-8" role="region" aria-label="Study content for objective 8">
+        <div class="obj-expand-label">Study Breakdown · Ch. 21 Objective 8</div>
+        <div class="obj-summary"><strong>Woodrow Wilson</strong> was a former history professor and president of <strong>Princeton University</strong>, then Progressive governor of <strong>New Jersey</strong>. His "New Freedom" promised a smaller, less interventionist federal government that would restore market competition by busting trusts — contrasting Roosevelt's big-government regulation approach.</div>
+        <ul class="obj-bullets">
+          <li><strong>Phase 1 (1913–1914):</strong> <strong>Underwood Tariff Act</strong> — reduced tariffs; established graduated federal income tax (16th Amendment). <strong>Federal Reserve Act (1913)</strong> — created the Federal Reserve central banking system.</li>
+          <li><strong>Phase 2 (1916):</strong> <strong>Clayton Antitrust Act</strong> — strengthened antitrust law; protected labor unions. Federal child labor laws (<strong>Keating-Owen Act, 1916</strong>). 8-hour workday for railroad workers (<strong>Adamson Act, 1916</strong>).</li>
+          <li><strong>WWI sidelined the agenda:</strong> After the U.S. entered WWI in April 1917, national security consumed Wilson's presidency. Progressive reform goals were pushed aside in favor of wartime mobilization.</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">New Freedom</span><span class="obj-term">Underwood Tariff Act</span><span class="obj-term">Federal Reserve Act 1913</span><span class="obj-term">Clayton Antitrust Act</span><span class="obj-term">Keating-Owen Act</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch22" id="obj-card-9">
+      <div class="obj-header" onclick="toggleObj(9)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-9" aria-label="Objective 9: America's expansionist impulse, Turner and Mahan. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">9</div>
+        <div><div class="obj-text">Explain America's expansionist impulse of the 1890s. Discuss Turner's Frontier Thesis and Mahan's arguments for a strong navy, overseas bases, and a Central American canal.</div><div class="obj-chapter">CH. 22 · Sec 22.1</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,9)" aria-label="Mark objective 9 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-9" role="region" aria-label="Study content for objective 9">
+        <div class="obj-expand-label">Study Breakdown · Ch. 22 Objective 9</div>
+        <div class="obj-summary">Two thinkers provided the intellectual framework for American overseas expansion in the 1890s, as the continental frontier closed and American industry needed new markets.</div>
+        <div class="obj-people-label">Key Thinkers</div>
+        <div class="obj-people-row">
+          <div class="obj-person"><div class="obj-person-name">Frederick Jackson Turner</div><div class="obj-person-role"><strong>Frontier Thesis (1893):</strong> The encounter between European traditions and the western wilderness shaped American democracy and character — but the frontier was now <em>closed</em>. This raised the question: where does America expand next? Politicians used Turner's argument to justify overseas expansion as a new frontier.</div></div>
+          <div class="obj-person"><div class="obj-person-name">Alfred Thayer Mahan</div><div class="obj-person-role"><strong><em>The Influence of Sea Power upon History</em> (1890):</strong> America needed (1) a large modern steel navy, (2) overseas naval bases and coaling stations, and (3) a canal across Central America. Congress passed the <strong>Naval Act of 1890</strong> immediately after.</div></div>
+          <div class="obj-person"><div class="obj-person-name">William Henry Seward</div><div class="obj-person-role">Secretary of State (1861–1869). Purchased Alaska from Russia for $7.2 million (1867) — mocked as <strong>"Seward's Folly."</strong> Also annexed the Midway Islands. Laid early groundwork for overseas expansion.</div></div>
+        </div>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">Frontier Thesis (Turner)</span><span class="obj-term">Sea Power / Mahan</span><span class="obj-term">Seward's Folly</span><span class="obj-term">Naval Act 1890</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch22" id="obj-card-10">
+      <div class="obj-header" onclick="toggleObj(10)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-10" aria-label="Objective 10: Hawaii acquisition. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">10</div>
+        <div><div class="obj-text">Describe U.S. involvement in the Pacific and acquisition of Hawaii: the sugar industry, Queen Liliuokalani, the American-backed overthrow, and annexation in 1898.</div><div class="obj-chapter">CH. 22 · Sec 22.1</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,10)" aria-label="Mark objective 10 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-10" role="region" aria-label="Study content for objective 10">
+        <div class="obj-expand-label">Study Breakdown · Ch. 22 Objective 10</div>
+        <div class="obj-summary">Hawaii's annexation illustrates how American economic interests drove territorial expansion — not military conquest alone, but corporate influence backed by U.S. diplomatic and military muscle.</div>
+        <ul class="obj-bullets">
+          <li>By 1890, American sugar planters dominated Hawaii's economy; Hawaii exported nearly all its sugar to the U.S. tariff-free.</li>
+          <li><strong>Queen Liliuokalani (1891–1893)</strong> tried to reassert Hawaiian sovereignty against American economic dominance. American businessmen, working with U.S. Minister to Hawaii <strong>John Stevens</strong>, staged an armed revolt against her government.</li>
+          <li>President <strong>Grover Cleveland</strong> initially refused to annex Hawaii, finding the overthrow illegal. President <strong>William McKinley</strong> and Congress formally <strong>annexed Hawaii in 1898</strong> during the Spanish-American War for its strategic Pacific location.</li>
+          <li>Hawaii became a U.S. territory in 1900; residents gained U.S. citizenship.</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">Queen Liliuokalani</span><span class="obj-term">Hawaii annexation 1898</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch22" id="obj-card-11">
+      <div class="obj-header" onclick="toggleObj(11)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-11" aria-label="Objective 11: Spanish-American War and Philippines. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">11</div>
+        <div><div class="obj-text">Describe U.S. involvement in Cuba, the Spanish-American War, the Treaty of Paris (1898), and land acquired. Discuss the Philippine-American War, Emilio Aguinaldo, and the Taft Commission.</div><div class="obj-chapter">CH. 22 · Sec 22.2</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,11)" aria-label="Mark objective 11 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-11" role="region" aria-label="Study content for objective 11">
+        <div class="obj-expand-label">Study Breakdown · Ch. 22 Objective 11</div>
+        <ul class="obj-bullets">
+          <li><strong>Causes:</strong> Cuba's independence struggle; sensationalist yellow journalism by <strong>William Randolph Hearst</strong> and <strong>Joseph Pulitzer</strong>; mysterious explosion of the <strong>USS Maine</strong> in Havana Harbor (February 15, 1898) — "Remember the Maine!"</li>
+          <li><strong>Teller Amendment:</strong> U.S. pledged before the war not to annex Cuba after defeating Spain.</li>
+          <li><strong>The War:</strong> Lasted ~4 months. Theodore Roosevelt's <strong>Rough Riders</strong> charged San Juan Hill, Cuba. U.S. Navy destroyed the Spanish fleet in both the Caribbean and Manila Bay.</li>
+          <li><strong>Treaty of Paris (December 10, 1898):</strong> Spain recognized Cuba's independence; transferred Puerto Rico, Guam, and the Philippines to the U.S. for $20 million.</li>
+          <li><strong>Anti-Imperialist League (1898):</strong> <strong>Jane Addams</strong>, <strong>Andrew Carnegie</strong>, <strong>Mark Twain</strong>, <strong>Samuel Gompers</strong>. Opposed the treaty; Senate barely ratified it.</li>
+          <li><strong>Platt Amendment:</strong> Gave U.S. right to intervene in Cuba; secured Guantanamo Bay. Cuba was "independent" only on paper.</li>
+          <li><strong>Philippine-American War (1899–1902):</strong> <strong>Emilio Aguinaldo</strong> led Filipino resistance. 3 years; ~4,000 Americans killed, ~20,000 Filipino combatants, estimated 250,000 civilian deaths.</li>
+          <li><strong>Taft Commission:</strong> <strong>William Howard Taft</strong> as civil governor; built infrastructure, schools, hospitals; offered political appointments to rebel leaders. <strong>Emilio Aguinaldo</strong> captured and forced to swear allegiance. Philippines under U.S. control until 1946.</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">USS Maine</span><span class="obj-term">Teller Amendment</span><span class="obj-term">Rough Riders</span><span class="obj-term">Treaty of Paris 1898</span><span class="obj-term">Anti-Imperialist League</span><span class="obj-term">Platt Amendment</span><span class="obj-term">Emilio Aguinaldo</span><span class="obj-term">Taft Commission</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch22" id="obj-card-12">
+      <div class="obj-header" onclick="toggleObj(12)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-12" aria-label="Objective 12: Open Door Policy and Boxer Rebellion. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">12</div>
+        <div><div class="obj-text">Discuss U.S. interest in Asia and the "Open Door" policy toward China. Explain Secretary Hay's Open Door notes and how they favored American trade. Describe the Boxer Rebellion and U.S. response.</div><div class="obj-chapter">CH. 22 · Sec 22.3</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,12)" aria-label="Mark objective 12 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-12" role="region" aria-label="Study content for objective 12">
+        <div class="obj-expand-label">Study Breakdown · Ch. 22 Objective 12</div>
+        <div class="obj-summary">European powers had carved China into <strong>spheres of influence</strong> — exclusive trade zones. The U.S. had no sphere and wanted all of China open to American goods.</div>
+        <div class="obj-people-label">Key Figure</div>
+        <div class="obj-people-row">
+          <div class="obj-person"><div class="obj-person-name">Secretary of State John Hay</div><div class="obj-person-role">Issued the <strong>Open Door notes (1899)</strong> — circular letters demanding equal trade access to all Chinese ports for all nations. No special tariffs, no transportation monopolies. Overwhelmingly benefited the U.S. because American goods were cheaper and higher quality, flooding the Chinese market.</div></div>
+        </div>
+        <ul class="obj-bullets">
+          <li>Other nations gave lukewarm replies, but <strong>Secretary Hay declared it official U.S. policy</strong> regardless.</li>
+          <li><strong>Boxer Rebellion (1899–1901):</strong> Chinese nationalists (Righteous and Harmonious Fists) rose up to expel all Western influence. The U.S., Britain, and Germany sent ~2,000 troops to suppress it. Reinforced U.S. commitment to China's territorial integrity and the Open Door.</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">Open Door notes (Hay, 1899)</span><span class="obj-term">sphere of influence</span><span class="obj-term">Boxer Rebellion 1899–1901</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch22" id="obj-card-13">
+      <div class="obj-header" onclick="toggleObj(13)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-13" aria-label="Objective 13: Roosevelt's Big Stick foreign policy, Panama Canal, Roosevelt Corollary. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">13</div>
+        <div><div class="obj-text">Discuss foreign policy under Theodore Roosevelt: Latin America ("Big Stick" diplomacy and the Roosevelt Corollary to the Monroe Doctrine); the Panama Canal; and other diplomatic initiatives including the Russo-Japanese War.</div><div class="obj-chapter">CH. 22 · Sec 22.4</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,13)" aria-label="Mark objective 13 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-13" role="region" aria-label="Study content for objective 13">
+        <div class="obj-expand-label">Study Breakdown · Ch. 22 Objective 13</div>
+        <div class="obj-summary">Roosevelt's foreign policy rested on an African proverb: <strong>"Speak softly, and carry a big stick, and you will go far."</strong> Rather than actually using military force, he threatened it credibly. Three major applications follow.</div>
+        <ul class="obj-bullets">
+          <li><strong>Panama Canal:</strong> Colombia rejected Roosevelt's treaty offer ($10M + $250K/year). Roosevelt signaled support for a Panamanian revolution (1903); sent U.S. battleships to block Colombian troops; recognized the Republic of Panama within a week. Canal opened <strong>August 1914</strong>. Roosevelt became the first sitting U.S. president to travel internationally (visited the construction site).</li>
+          <li><strong>Roosevelt Corollary (1904):</strong> Roosevelt's address to Congress extended the Monroe Doctrine. The U.S. would act as an <strong>"international police power"</strong> in Latin America, intervening to correct "chronic wrongdoing." Unlike the Monroe Doctrine (which told Europe to stay out), the Roosevelt Corollary asserted the U.S. <em>right to go in</em>. Used to establish protectorates over Cuba, Panama, and the Dominican Republic.</li>
+          <li><strong>Russo-Japanese War (1904–1905):</strong> Roosevelt mediated peace at Portsmouth, New Hampshire. Won the <strong>Nobel Peace Prize (1906)</strong> — but Japan felt cheated out of fair reparations, beginning long-term tensions with the U.S.</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">Big Stick diplomacy</span><span class="obj-term">Panama Canal 1914</span><span class="obj-term">Roosevelt Corollary 1904</span><span class="obj-term">Monroe Doctrine</span><span class="obj-term">Nobel Peace Prize</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch22" id="obj-card-14">
+      <div class="obj-header" onclick="toggleObj(14)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-14" aria-label="Objective 14: Taft's Dollar Diplomacy. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">14</div>
+        <div><div class="obj-text">Describe Taft's "Dollar Diplomacy" — substituting dollars for bullets. Explain how it worked in Central America and Asia, and what problems it created long-term.</div><div class="obj-chapter">CH. 22 · Sec 22.5</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,14)" aria-label="Mark objective 14 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-14" role="region" aria-label="Study content for objective 14">
+        <div class="obj-expand-label">Study Breakdown · Ch. 22 Objective 14</div>
+        <div class="obj-summary">When <strong>William Howard Taft</strong> became president in 1909, he adapted Roosevelt's foreign policy to rely on economic power rather than military threats. He announced his goal to <strong>"substitute dollars for bullets."</strong></div>
+        <ul class="obj-bullets">
+          <li><strong>Central America:</strong> Taft paid off Central American debts owed to European powers with U.S. loans — making those countries indebted to the U.S. instead. When Nicaragua refused U.S. loans, Taft sent warships and marines to pressure the government.</li>
+          <li><strong>Lodge Corollary:</strong> When Mexico considered allowing a Japanese corporation to obtain strategic land, Taft urged Congress to pass the <strong>Lodge Corollary</strong> — stating no foreign corporation (other than American ones) could acquire strategic lands in the Western Hemisphere.</li>
+          <li><strong>Asia:</strong> Tried to bolster China's railroad development against Japanese expansion. Efforts backfired — alienated Japan and heightened U.S.-Japan tensions contributing to World War II.</li>
+          <li><strong>Long-term damage:</strong> Created economic instability and nationalist resentment in Central America; heightened tensions with Japan.</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">Dollar Diplomacy</span><span class="obj-term">Lodge Corollary</span><span class="obj-term">"substitute dollars for bullets"</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch22" id="obj-card-15">
+      <div class="obj-header" onclick="toggleObj(15)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-15" aria-label="Objective 15: Wilson's foreign policy and Mexico. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">15</div>
+        <div><div class="obj-text">Discuss the political situation in Mexico and how Wilson tried to handle it. Explain Wilson's overall foreign policy philosophy vs. his actual interventionist actions.</div><div class="obj-chapter">CH. 22–23 · Sec 22.5 / 23.1</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,15)" aria-label="Mark objective 15 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-15" role="region" aria-label="Study content for objective 15">
+        <div class="obj-expand-label">Study Breakdown · Ch. 22–23 Objective 15</div>
+        <div class="obj-summary"><strong>Woodrow Wilson</strong> promised a less expansionist, more morally grounded foreign policy than Roosevelt or Taft. Yet Wilson found it nearly impossible to avoid intervention.</div>
+        <ul class="obj-bullets">
+          <li><strong>Philosophy vs. reality:</strong> Wilson believed the U.S. should only intervene abroad when there was a clear moral imperative. In practice, he sent troops into Haiti, the Dominican Republic, Cuba, and Nicaragua — often protecting American business interests, just as his predecessors had.</li>
+          <li><strong>Secretary of State William Jennings Bryan</strong> — noted anti-imperialist; negotiated "cooling off treaties"; offered Colombia a $25 million apology for Roosevelt's Panama actions.</li>
+          <li><strong>Mexico:</strong> Wilson refused to recognize the government of <strong>Victoriano Huerta</strong> (who seized power by assassination). U.S. forces briefly occupied Veracruz (1914). Later, revolutionary leader <strong>Pancho Villa</strong> raided Columbus, New Mexico (1916), killing American civilians. Wilson sent General <strong>John "Black Jack" Pershing</strong> on a failed punitive expedition into Mexico to capture Villa. Pershing never caught him and withdrew in 1917 as WWI loomed.</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">William Jennings Bryan</span><span class="obj-term">Victoriano Huerta</span><span class="obj-term">Pancho Villa</span><span class="obj-term">John Pershing punitive expedition</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch23" id="obj-card-16">
+      <div class="obj-header" onclick="toggleObj(16)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-16" aria-label="Objective 16: Origins of WWI and the two alliances. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">16</div>
+        <div><div class="obj-text">Describe the conditions and events (~1900–1914) that led to WWI in Europe. Name the Central Powers (Germany, Austria-Hungary, Ottoman Empire) and Allied Powers (Britain, France, Russia, Italy) at the outset of war.</div><div class="obj-chapter">CH. 23 · Sec 23.1</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,16)" aria-label="Mark objective 16 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-16" role="region" aria-label="Study content for objective 16">
+        <div class="obj-expand-label">Study Breakdown · Ch. 23 Objective 16</div>
+        <div class="obj-summary">WWI began on July 28, 1914, triggered by a single assassination but rooted in decades of European nationalism, imperial rivalry, an arms race, and interlocking alliances that turned a regional conflict into a world war.</div>
+        <ul class="obj-bullets">
+          <li><strong>Spark:</strong> Archduke <strong>Franz Ferdinand</strong> — heir to the Austro-Hungarian throne — was assassinated by <strong>Gavrilo Princip</strong>, a Serbian nationalist, in Sarajevo, Bosnia on <strong>June 28, 1914</strong>.</li>
+          <li><strong>Central Powers:</strong> Germany, Austria-Hungary, Ottoman Empire (and later Bulgaria).</li>
+          <li><strong>Allied Powers (Entente):</strong> Britain, France, Russia; later joined by Italy (1915), Japan, and the United States (1917).</li>
+          <li><strong>Underlying causes:</strong> Intense nationalism (especially in the Balkans); imperial rivalries; massive military buildup (arms race); a system of secret alliances that meant a local conflict could drag in all major powers.</li>
+          <li>The Western Front quickly became brutal <strong>trench warfare</strong> stalemate — both sides dug in across hundreds of miles of France and Belgium; millions died for small territorial gains.</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">Franz Ferdinand assassination</span><span class="obj-term">Central Powers</span><span class="obj-term">Allied Powers / Entente</span><span class="obj-term">trench warfare</span><span class="obj-term">Western Front</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch23" id="obj-card-17">
+      <div class="obj-header" onclick="toggleObj(17)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-17" aria-label="Objective 17: U.S. neutrality and its challenges. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">17</div>
+        <div><div class="obj-text">Why did the U.S. declare neutrality when WWI broke out, and why was this policy difficult to maintain? Explain Wilson's dilemma between free trade and neutrality.</div><div class="obj-chapter">CH. 23 · Sec 23.1</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,17)" aria-label="Mark objective 17 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-17" role="region" aria-label="Study content for objective 17">
+        <div class="obj-expand-label">Study Breakdown · Ch. 23 Objective 17</div>
+        <div class="obj-summary">President <strong>Woodrow Wilson</strong> declared neutrality in August 1914. His 1916 reelection slogan was "He kept us out of war." But neutrality proved nearly impossible to sustain.</div>
+        <ul class="obj-bullets">
+          <li><strong>Why neutrality initially made sense:</strong> Millions of Americans were recent immigrants with strong ethnic ties to both sides. Secretary of State <strong>William Jennings Bryan</strong> was a committed anti-imperialist. American businesses profitably traded with all sides.</li>
+          <li><strong>The dilemma:</strong> U.S. had profitable free trade with Allied nations (especially Britain and France). Germany's submarine warfare targeted <em>all</em> shipping to Britain, including American ships. Wilson insisted on the right to trade freely — which put American ships in German crosshairs.</li>
+          <li><strong>Why neutrality was hard:</strong> American banks and businesses had lent enormous sums to Britain and France; if the Allies lost, those loans would default. The U.S. economy was effectively entangled with Allied success.</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">neutrality</span><span class="obj-term">U-boats / submarines</span><span class="obj-term">free trade</span><span class="obj-term">"He kept us out of war"</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch23" id="obj-card-18">
+      <div class="obj-header" onclick="toggleObj(18)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-18" aria-label="Objective 18: WWI fighting before U.S. involvement. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">18</div>
+        <div><div class="obj-text">Discuss the fighting in WWI in the years prior to U.S. involvement: trench warfare, stalemate on the Western Front, the scale of European casualties.</div><div class="obj-chapter">CH. 23 · Sec 23.1</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,18)" aria-label="Mark objective 18 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-18" role="region" aria-label="Study content for objective 18">
+        <div class="obj-expand-label">Study Breakdown · Ch. 23 Objective 18</div>
+        <div class="obj-summary">Before the U.S. entered the war in April 1917, Europe had been fighting for nearly three years in one of the bloodiest conflicts in human history. Understanding the scale of slaughter helps explain why Americans were reluctant to join.</div>
+        <ul class="obj-bullets">
+          <li><strong>Trench warfare:</strong> Both sides dug massive trench systems across hundreds of miles of France and Belgium. Soldiers lived in the trenches for months, exposed to mud, disease, rats, and constant shelling. "Going over the top" meant near-certain death from machine guns and artillery.</li>
+          <li><strong>Scale of casualties (pre-U.S. entry):</strong> By 1917, the Allies had suffered ~5 million military deaths; Germany and Austria-Hungary roughly 3 million more. The Battle of the Somme (1916) alone killed over 1 million men.</li>
+          <li><strong>New weapons of mass killing:</strong> Machine guns, artillery, poison gas (first used by Germany in 1915), tanks, and aircraft made this war far deadlier than any before it.</li>
+          <li><strong>Stalemate:</strong> Despite enormous casualties, neither side gained significant ground on the Western Front for three years.</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">trench warfare</span><span class="obj-term">Western Front stalemate</span><span class="obj-term">Battle of the Somme 1916</span><span class="obj-term">poison gas</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch23" id="obj-card-19">
+      <div class="obj-header" onclick="toggleObj(19)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-19" aria-label="Objective 19: Events forcing U.S. into WWI. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">19</div>
+        <div><div class="obj-text">Explain the events that forced the U.S. into the war: German U-boat warfare; the sinking of the Lusitania (1915); the Zimmermann Telegram (1917); and the U.S. declaration of war in April 1917.</div><div class="obj-chapter">CH. 23 · Sec 23.1–23.2</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,19)" aria-label="Mark objective 19 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-19" role="region" aria-label="Study content for objective 19">
+        <div class="obj-expand-label">Study Breakdown · Ch. 23 Objective 19</div>
+        <div class="obj-summary">The U.S. did not enter WWI because of a single event but a series of escalating German provocations that made neutrality politically and economically untenable.</div>
+        <ul class="obj-bullets">
+          <li><strong>German U-boats:</strong> Germany declared a war zone around Britain; submarines attacked ships without warning, violating international law (ships were supposed to warn crews before sinking them).</li>
+          <li><strong>Sinking of the RMS Lusitania (May 7, 1915):</strong> British ocean liner torpedoed off the coast of Ireland. 1,198 killed including <strong>128 Americans</strong>. Germany agreed to the <strong>Sussex Pledge (1916)</strong> — promising to limit submarine warfare.</li>
+          <li><strong>Germany resumes unrestricted submarine warfare (February 1917):</strong> Desperate to break the Allied naval blockade, Germany announced it would sink all ships — including American — without warning. Directly violated the Sussex Pledge.</li>
+          <li><strong>Zimmermann Telegram (January 1917):</strong> German Foreign Minister <strong>Arthur Zimmermann</strong> secretly proposed an alliance with Mexico: if the U.S. entered the war, Mexico should join Germany and could reclaim Texas, New Mexico, and Arizona. British intelligence intercepted and decoded the telegram; Wilson released it to the public. Outrage was immediate.</li>
+          <li><strong>Declaration of War (April 6, 1917):</strong> Wilson asked Congress for a declaration of war. Congress voted yes, though <strong>56 members voted against it</strong>.</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">Lusitania May 7, 1915</span><span class="obj-term">Sussex Pledge 1916</span><span class="obj-term">Zimmermann Telegram 1917</span><span class="obj-term">Arthur Zimmermann</span><span class="obj-term">Declaration of War April 6, 1917</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch23" id="obj-card-20">
+      <div class="obj-header" onclick="toggleObj(20)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-20" aria-label="Objective 20: WWI home front, propaganda, and civil liberties. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">20</div>
+        <div><div class="obj-text">Describe the "home front" during WWI: Creel Committee propaganda, the Espionage Act (1917), Sedition Act (1918), anti-German sentiment, and Schenck v. United States ("clear and present danger").</div><div class="obj-chapter">CH. 23 · Sec 23.2–23.3</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,20)" aria-label="Mark objective 20 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-20" role="region" aria-label="Study content for objective 20">
+        <div class="obj-expand-label">Study Breakdown · Ch. 23 Objective 20</div>
+        <div class="obj-summary">The federal government mobilized public opinion through propaganda while suppressing dissent through sweeping laws that restricted free speech more severely than any legislation since 1798.</div>
+        <div class="obj-people-label">Key Figures</div>
+        <div class="obj-people-row">
+          <div class="obj-person"><div class="obj-person-name">George Creel</div><div class="obj-person-role">Directed the Committee on Public Information (CPI). Produced anti-German posters, pamphlets, films. Organized "Four-Minute Men" who gave short pro-war speeches at movie theaters.</div></div>
+          <div class="obj-person"><div class="obj-person-name">Eugene Victor Debs</div><div class="obj-person-role">Socialist Party leader; sentenced to 10 years in prison under the Espionage Act for encouraging young men to resist the draft.</div></div>
+          <div class="obj-person"><div class="obj-person-name">Justice Oliver Wendell Holmes</div><div class="obj-person-role">Wrote the unanimous Supreme Court opinion in Schenck v. United States (1919); created the "clear and present danger" standard for limiting First Amendment speech.</div></div>
+        </div>
+        <ul class="obj-bullets">
+          <li><strong>Espionage Act (1917):</strong> Prohibited aiding the enemy; up to 20-year sentences for opposing the war or interfering with military recruitment. Over 2,000 people charged.</li>
+          <li><strong>Sedition Act (1918):</strong> Extended restrictions to any criticism of the government, Constitution, military, or American flag.</li>
+          <li><strong>Schenck v. United States (1919):</strong> Justice <strong>Oliver Wendell Holmes</strong> wrote: speech presenting a <strong>"clear and present danger"</strong> is not protected — compared anti-draft pamphlets to falsely shouting "fire!" in a crowded theater.</li>
+          <li><strong>Anti-German sentiment:</strong> Sauerkraut renamed "liberty cabbage"; German street names changed; anti-German hysteria actually accelerated Prohibition (German-owned breweries targeted).</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">Creel Committee / CPI</span><span class="obj-term">Espionage Act 1917</span><span class="obj-term">Sedition Act 1918</span><span class="obj-term">Schenck v. United States</span><span class="obj-term">"clear and present danger"</span><span class="obj-term">Oliver Wendell Holmes</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch23" id="obj-card-21">
+      <div class="obj-header" onclick="toggleObj(21)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-21" aria-label="Objective 21: U.S. military activities in WWI. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">21</div>
+        <div><div class="obj-text">Describe U.S. military activities during WWI: the AEF under Pershing, the Harlem Hellfighters, the Meuse-Argonne Offensive, and the armistice of November 11, 1918. What were American and Allied casualties?</div><div class="obj-chapter">CH. 23 · Sec 23.4</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,21)" aria-label="Mark objective 21 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-21" role="region" aria-label="Study content for objective 21">
+        <div class="obj-expand-label">Study Breakdown · Ch. 23 Objective 21</div>
+        <div class="obj-summary">American military involvement in WWI was late but decisive. Fresh American soldiers — the "doughboys" — helped break the German stalemate after European armies were exhausted.</div>
+        <div class="obj-people-label">Key Figures</div>
+        <div class="obj-people-row">
+          <div class="obj-person"><div class="obj-person-name">General John "Black Jack" Pershing</div><div class="obj-person-role">Commanded the American Expeditionary Forces (AEF). Insisted U.S. troops fight as an independent army, not be split up to reinforce Allied units. Previously led the failed punitive expedition against Pancho Villa in Mexico.</div></div>
+          <div class="obj-person"><div class="obj-person-name">369th Infantry — "Harlem Hellfighters"</div><div class="obj-person-role">All-Black regiment that served on the French frontline for <strong>6 months</strong> — longer than any other American unit. Fought under French command. <strong>171 men</strong> received the French <strong>Legion of Merit</strong> for meritorious service in combat.</div></div>
+        </div>
+        <ul class="obj-bullets">
+          <li><strong>Meuse-Argonne Offensive (September–November 1918):</strong> Over 1 million U.S. troops attacked German lines. 47 days of intense fighting broke the German military's ability to continue the war.</li>
+          <li><strong>Armistice — November 11, 1918:</strong> Kaiser Wilhelm II abdicated November 9. Armistice took effect at 11 AM on the 11th hour of the 11th day of the 11th month.</li>
+          <li><strong>American casualties:</strong> 117,000 killed; 206,000 wounded. Total Allied military deaths: ~5.7 million. Central Powers: ~4 million. War cost the U.S. over $32 billion.</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">AEF / John Pershing</span><span class="obj-term">Harlem Hellfighters / 369th Infantry</span><span class="obj-term">Meuse-Argonne Offensive</span><span class="obj-term">Armistice November 11, 1918</span></div>
+      </div>
+    </div>
+
+    <div class="obj-card ch23" id="obj-card-22">
+      <div class="obj-header" onclick="toggleObj(22)" role="button" tabindex="0" aria-expanded="false" aria-controls="obj-expand-22" aria-label="Objective 22: Fourteen Points, Treaty of Versailles, Senate fight, and postwar aftermath. Tap to expand.">
+        <div class="obj-num" aria-hidden="true">22</div>
+        <div><div class="obj-text">Discuss Wilson's "14 Points" and the Treaty of Versailles: to what degree did the treaty include the 14 Points? How was the treaty punitive toward Germany (war guilt clause, reparations)? Why did the U.S. Senate not ratify it (Irreconcilables vs. Reservationists)? Discuss demobilization aftermath: Red Scare, Red Summer, flu pandemic, and Harding's election.</div><div class="obj-chapter">CH. 23 · Sec 23.4–23.5</div></div>
+        <div class="obj-header-right"><span class="obj-chevron" aria-hidden="true">▾</span><button class="mastery-btn" onclick="toggleObjMastery(event,22)" aria-label="Mark objective 22 as mastered">☐</button></div>
+      </div>
+      <div class="obj-expand" id="obj-expand-22" role="region" aria-label="Study content for objective 22">
+        <div class="obj-expand-label">Study Breakdown · Ch. 23 Objective 22</div>
+        <div class="obj-summary">This objective covers the entire postwar sequence — Wilson's vision, its betrayal at Versailles, the Senate fight, and the traumatic domestic aftermath that set the stage for the 1920s.</div>
+        <ul class="obj-bullets">
+          <li><strong>Fourteen Points (January 8, 1918):</strong> Wilson's postwar vision: free trade, freedom of the seas, no secret treaties, self-determination of peoples, reduction of armaments, and a <strong>League of Nations</strong>. Announced five months before U.S. troops fired their first shot.</li>
+          <li><strong>Paris Peace Conference (Dec 1918–June 1919):</strong> Wilson attended personally — unprecedented. Britain's <strong>David Lloyd George</strong>, France's <strong>Georges Clemenceau</strong>, and Italy's <strong>Vittorio Orlando</strong> wanted Germany punished, not "peace without victory."</li>
+          <li><strong>Treaty of Versailles (June 1919):</strong> Far harsher than Wilson's 14 Points. Germany forced to accept the <strong>"war guilt clause"</strong> (Article 231, sole responsibility for WWI); over <strong>$33 billion in reparations</strong>; surrender of territories; military disarmament. League of Nations included but the U.S. never joined.</li>
+          <li><strong>Senate battle:</strong> <strong>Irreconcilables</strong> (led by Senator <strong>William Borah</strong>) opposed the treaty entirely. <strong>Reservationists</strong> (led by Senator <strong>Henry Cabot Lodge</strong>) would support it with amendments removing Article X. Wilson refused to compromise. Went on cross-country tour; suffered a debilitating <strong>stroke (September 25, 1919)</strong>. His wife <strong>Edith Wilson</strong> effectively ran the presidency for ~six months. Senate voted down the treaty twice. U.S. technically at war with Germany until <strong>Knox-Porter Resolution (July 1921)</strong>.</li>
+          <li><strong>Flu Pandemic (1918–1919):</strong> ~675,000 Americans died; worldwide ~500 million infected, ~50 million deaths.</li>
+          <li><strong>Red Scare (1919–1920):</strong> Fear of Communist revolution. Attorney General <strong>A. Mitchell Palmer</strong> and his assistant <strong>J. Edgar Hoover</strong> organized raids; ~4,000 arrested; ~250 deported on the "Soviet Ark."</li>
+          <li><strong>Red Summer (1919):</strong> 25+ race riots; 250+ killed. <strong>Chicago Race Riot</strong>: triggered when a White mob stoned a Black teenager at Lake Michigan; police didn't arrest the perpetrator; week-long riot, 38 dead. <strong>Tulsa Massacre (1921)</strong>: White mob destroyed Greenwood ("Black Wall Street"); 50–300 Black deaths; suppressed from history for decades.</li>
+          <li><strong>Election of 1920:</strong> Senator <strong>Warren Gamaliel Harding</strong> won on "return to normalcy" — 404 electoral votes, 60% popular vote. Americans exhausted by war, flu, Red Scare, racial violence, and Progressive government interventions.</li>
+        </ul>
+        <div class="obj-terms-label">Key Terms</div>
+        <div class="obj-terms-row"><span class="obj-term">Fourteen Points</span><span class="obj-term">League of Nations</span><span class="obj-term">war guilt clause (Article 231)</span><span class="obj-term">$33 billion reparations</span><span class="obj-term">Irreconcilables (William Borah)</span><span class="obj-term">Reservationists (Henry Cabot Lodge)</span><span class="obj-term">Edith Wilson</span><span class="obj-term">Red Scare / Palmer Raids</span><span class="obj-term">Red Summer 1919</span><span class="obj-term">Tulsa Massacre 1921</span><span class="obj-term">Warren Harding / "return to normalcy"</span></div>
+      </div>
+    </div>
+
   </div>
 </div>
 
 <!-- ===== STUDY GUIDE PANEL ===== -->
-<div id="panel-guide" class="panel" role="tabpanel" aria-label="Study guide">
+<div id="panel-guide" class="panel" role="tabpanel" aria-labelledby="tab-guide">
   <div class="section-label">Chapter Summaries — Click to expand</div>
 
   <!-- CH.21 -->
@@ -451,7 +928,7 @@ footer a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent
 </div>
 
 <!-- ===== FLASHCARDS PANEL ===== -->
-<div id="panel-flashcards" class="panel" role="tabpanel" aria-label="Flashcards">
+<div id="panel-flashcards" class="panel" role="tabpanel" aria-labelledby="tab-flashcards">
   <div class="filter-row" role="group" aria-label="Filter flashcards by chapter">
     <button class="filter-btn active-filter" onclick="filterCards('all',this)">All Chapters</button>
     <button class="filter-btn" onclick="filterCards('ch21',this)" style="color:#3b82f6;border-color:#3b82f6">Ch.21</button>
@@ -487,7 +964,7 @@ footer a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent
 </div>
 
 <!-- ===== QUIZ PANEL ===== -->
-<div id="panel-quiz" class="panel" role="tabpanel" aria-label="Practice quiz">
+<div id="panel-quiz" class="panel" role="tabpanel" aria-labelledby="tab-quiz">
   <div class="filter-row" id="quiz-filters" role="group" aria-label="Filter quiz by chapter">
     <button class="filter-btn active-filter" onclick="setQuizFilter('all',this)">All Chapters</button>
     <button class="filter-btn" onclick="setQuizFilter('ch21',this)">Ch.21</button>
@@ -505,7 +982,7 @@ footer a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent
 </div>
 
 <!-- ===== DISCUSSION PANEL ===== -->
-<div id="panel-discussion" class="panel" role="tabpanel" aria-label="Discussion questions">
+<div id="panel-discussion" class="panel" role="tabpanel" aria-labelledby="tab-discussion">
   <div class="section-label">Self-Graded Discussion Practice</div>
 
   <div class="disc-q" id="disc-0">
@@ -607,7 +1084,7 @@ footer a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent
 </div>
 
 <!-- ===== NOTES PANEL ===== -->
-<div id="panel-notes" class="panel" role="tabpanel" aria-label="Notes template">
+<div id="panel-notes" class="panel" role="tabpanel" aria-labelledby="tab-notes">
   <div class="notes-template">
     <div class="notes-header">
       <div><div class="notes-title">Exam 2 Notes Framework</div><div class="notes-subtitle">HIST 1302 · Unit 2 · Ch. 21–23 · Prof. Walter</div></div>
@@ -695,22 +1172,51 @@ function showPanel(id,btn){
 
 // ===== MASTERY (localStorage) =====
 function getMasteryKey(){return 'mastery_hist1302_unit2_';}
-function toggleObjMastery(btn,num){
+function toggleObjMastery(e,num){
+  e.stopPropagation();
+  const btn=e.currentTarget;
   const k=getMasteryKey()+'obj'+num;
   const m=localStorage.getItem(k);
-  if(m){localStorage.removeItem(k);btn.textContent='☐';btn.classList.remove('mastered');}
-  else{localStorage.setItem(k,'1');btn.textContent='✓';btn.classList.add('mastered');}
+  if(m){
+    localStorage.removeItem(k);
+    btn.textContent='☐';
+    btn.classList.remove('mastered');
+    btn.setAttribute('aria-label','Mark objective '+num+' as mastered');
+  }else{
+    localStorage.setItem(k,'1');
+    btn.textContent='✓';
+    btn.classList.add('mastered');
+    btn.setAttribute('aria-label','Objective '+num+' is mastered. Tap to unmark.');
+  }
   updateMasteryBar();
 }
 function loadObjMastery(){
-  const btns=document.querySelectorAll('.mastery-btn');
-  btns.forEach(btn=>{
-    const onclick=btn.getAttribute('onclick');
-    const match=onclick&&onclick.match(/toggleObjMastery\(this,(\d+)\)/);
-    if(match){const num=match[1];const k=getMasteryKey()+'obj'+num;if(localStorage.getItem(k)){btn.textContent='✓';btn.classList.add('mastered');}}
-  });
+  for(let i=1;i<=22;i++){
+    if(localStorage.getItem(getMasteryKey()+'obj'+i)){
+      const btn=document.querySelector('#obj-card-'+i+' .mastery-btn');
+      if(btn){btn.textContent='✓';btn.classList.add('mastered');btn.setAttribute('aria-label','Objective '+i+' is mastered. Tap to unmark.');}
+    }
+  }
   updateMasteryBar();
 }
+function toggleObj(num){
+  const card=document.getElementById('obj-card-'+num);
+  const expand=document.getElementById('obj-expand-'+num);
+  const header=card.querySelector('.obj-header');
+  const open=expand.classList.toggle('open');
+  card.classList.toggle('expanded',open);
+  header.setAttribute('aria-expanded',open);
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'||e.key===' '){
+    const t=e.target;
+    if(t.classList.contains('obj-header')){
+      e.preventDefault();
+      const m=t.getAttribute('onclick').match(/toggleObj\((\d+)\)/);
+      if(m)toggleObj(parseInt(m[1]));
+    }
+  }
+});
 function updateMasteryBar(){
   const total=22;
   let done=0;
@@ -722,8 +1228,12 @@ function updateMasteryBar(){
 function resetAllMastery(){
   if(!confirm('Reset all mastery for Unit 2?'))return;
   Object.keys(localStorage).filter(k=>k.startsWith(getMasteryKey())).forEach(k=>localStorage.removeItem(k));
-  document.querySelectorAll('.mastery-btn').forEach(b=>{b.textContent='☐';b.classList.remove('mastered');});
-  document.querySelectorAll('.fc-mastered-indicator').forEach(el=>el.textContent='');
+  for(let i=1;i<=22;i++){
+    const btn=document.querySelector('#obj-card-'+i+' .mastery-btn');
+    if(btn){btn.textContent='☐';btn.classList.remove('mastered');btn.setAttribute('aria-label','Mark objective '+i+' as mastered');}
+  }
+  const indicator=document.getElementById('fc-mastered-indicator');
+  if(indicator)indicator.textContent='';
   updateMasteryBar();
 }
 
@@ -822,6 +1332,7 @@ function renderCard(){
   document.getElementById('fc-answer').textContent=card.a;
   document.getElementById('fc-counter').textContent=(currentIndex+1)+' / '+filteredCards.length;
   document.getElementById('fc-stat').textContent='Card '+(currentIndex+1)+' of '+filteredCards.length;
+  document.getElementById('flashcard').setAttribute('aria-label','Flashcard '+(currentIndex+1)+' of '+filteredCards.length+'. Question: '+card.q+'. Tap to flip for answer.');
   // mastered indicator
   const k=getMasteryKey()+'fc'+allCards.indexOf(card);
   const indicator=document.getElementById('fc-mastered-indicator');
@@ -830,6 +1341,10 @@ function renderCard(){
 function flipCard(){
   isFlipped=!isFlipped;
   document.getElementById('flashcard').classList.toggle('flipped',isFlipped);
+  if(isFlipped){
+    const card=filteredCards[currentIndex];
+    document.getElementById('flashcard').setAttribute('aria-label','Answer: '+card.a);
+  }
 }
 function nextCard(){currentIndex=(currentIndex+1)%filteredCards.length;renderCard();}
 function prevCard(){currentIndex=(currentIndex-1+filteredCards.length)%filteredCards.length;renderCard();}
