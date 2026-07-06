@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>ASTR-1304 — Unit 2 — Ch. 7-10: Earth, Moon, Mercury, Venus, Mars</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #16161f;
+  --border: #1e1e2e;
+  --text: #e8e8f0;
+  --muted: #6b6b80;
+  --green: #22c55e;
+  --red: #ef4444;
+  --yellow: #eab308;
+  --purple: #a78bfa;
+  --orange: #f97316;
+  --accent: #22c55e;
+  --accent-dim: rgba(34,197,94,0.12);
+}
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans', sans-serif;
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(var(--accent) 1px, transparent 1px),
+    linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 0;
+}
+header.site-header {
+  position: relative; z-index: 1;
+  padding: 18px 16px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.unit-badge {
+  display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px;
+  letter-spacing:0.06em; color: var(--accent); background: var(--accent-dim);
+  padding:3px 8px; border-radius:5px; margin-bottom:8px;
+}
+.back-link {
+  display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px;
+  color: var(--muted); text-decoration:none; margin-bottom:10px;
+}
+.back-link:hover, .back-link:active { color: var(--accent); }
+footer .footer-back-link { color: var(--muted); }
+footer .footer-back-link:hover, footer .footer-back-link:active { color: var(--accent); }
+h1 { font-size: 20px; margin: 4px 0 6px; line-height:1.3; }
+.exam-pill {
+  display:inline-flex; align-items:center; gap:6px; font-family:'IBM Plex Mono',monospace;
+  font-size:11px; color: var(--yellow); background: rgba(234,179,8,0.1);
+  border:1px solid rgba(234,179,8,0.25); padding:3px 8px; border-radius:5px; margin-right:6px;
+}
+.textbook-links { font-size:12px; color: var(--muted); margin-top:6px; }
+.textbook-links span { margin-right:10px; }
+
+nav.topnav {
+  position: sticky; top:0; z-index: 5;
+  display:flex; overflow-x:auto; gap:4px;
+  background: var(--surface); border-bottom:1px solid var(--border);
+  padding: 6px 8px; -webkit-overflow-scrolling: touch;
+}
+nav.topnav::-webkit-scrollbar { display:none; }
+.nav-btn {
+  flex: 0 0 auto; font-family:'IBM Plex Mono',monospace; font-size:12px;
+  background: transparent; color: var(--muted); border:1px solid transparent;
+  padding:8px 10px; border-radius:8px; cursor:pointer; white-space:nowrap;
+}
+.nav-btn.active { color: var(--accent); background: var(--accent-dim); border-color: rgba(34,197,94,0.3); }
+
+main { position:relative; z-index:1; max-width: 760px; margin:0 auto; padding: 14px 14px 40px; }
+.panel { display:none; }
+.panel.active { display:block; }
+
+.mastery-bar {
+  background: var(--surface); border:1px solid var(--border); border-radius:10px;
+  padding:10px 12px; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+}
+.mastery-bar .label { font-size:12px; color: var(--muted); font-family:'IBM Plex Mono',monospace; }
+.reset-mastery-btn {
+  font-family:'IBM Plex Mono',monospace; font-size:11px; background: rgba(239,68,68,0.1);
+  color: var(--red); border:1px solid rgba(239,68,68,0.3); padding:6px 10px; border-radius:6px; cursor:pointer;
+}
+
+.ch-heading {
+  font-family:'IBM Plex Mono',monospace; font-size:13px; text-transform:uppercase; letter-spacing:0.05em;
+  color: var(--accent); margin: 22px 0 10px; padding-bottom:6px; border-bottom:1px solid var(--border);
+}
+.ch-heading:first-child { margin-top:0; }
+
+.obj-card {
+  background: var(--surface); border:1px solid var(--border); border-radius:10px;
+  padding:12px; margin-bottom:8px; cursor:pointer;
+}
+.obj-row { display:flex; align-items:center; gap:10px; }
+.obj-num {
+  font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600;
+  color: var(--accent); background: var(--accent-dim); border-radius:6px;
+  width:26px; height:26px; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.obj-text { flex:1; font-size:14.5px; line-height:1.4; }
+.obj-master-btn {
+  flex-shrink:0; width:28px; height:28px; border-radius:6px; border:1px solid var(--border);
+  background: var(--surface2); color: var(--muted); cursor:pointer; font-size:14px;
+}
+.obj-master-btn.done { color: var(--bg); background: var(--green); border-color: var(--green); }
+.obj-caret { flex-shrink:0; color: var(--muted); font-size:12px; transition: transform 0.2s; }
+.obj-card[aria-expanded="true"] .obj-caret { transform: rotate(180deg); color: var(--accent); }
+.obj-body { display:none; margin-top:10px; padding-top:10px; border-top:1px solid var(--border); }
+.obj-card[aria-expanded="true"] .obj-body { display:block; }
+.obj-body ul { margin:0; padding-left:18px; }
+.obj-body li { font-size:13px; line-height:1.6; color: var(--text); margin-bottom:4px; }
+.obj-body li:last-child { margin-bottom:0; }
+
+.chapter-block { border:1px solid var(--border); border-radius:10px; margin-bottom:10px; overflow:hidden; background: var(--surface); }
+.chapter-header {
+  padding:12px 14px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;
+  font-weight:600; font-size:14.5px;
+}
+.chevron { transition: transform 0.2s; color: var(--muted); }
+.chapter-header[aria-expanded="true"] .chevron { transform: rotate(180deg); }
+.chapter-body { display:none; padding: 0 14px 16px; font-size:13.5px; line-height:1.6; color: var(--text); }
+.chapter-body h4 { color: var(--accent); font-size:13px; text-transform:uppercase; letter-spacing:0.03em; margin: 16px 0 6px; }
+.chapter-body h4:first-child { margin-top:4px; }
+.chapter-body p, .chapter-body ul { margin: 6px 0; }
+.chapter-body ul { padding-left: 20px; }
+.data-table { width:100%; border-collapse: collapse; margin: 8px 0 14px; font-size:12.5px; }
+.data-table th, .data-table td { border:1px solid var(--border); padding:5px 7px; text-align:left; }
+.data-table th { background: var(--surface2); color: var(--accent); font-family:'IBM Plex Mono',monospace; font-size:11px; }
+
+.filter-row { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+.filter-btn {
+  font-family:'IBM Plex Mono',monospace; font-size:11px; background: var(--surface2); color: var(--muted);
+  border:1px solid var(--border); padding:6px 10px; border-radius:20px; cursor:pointer;
+}
+.filter-btn.active { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+
+.fc-wrap { display:flex; flex-direction:column; align-items:center; gap:14px; }
+.fc-card {
+  width:100%; min-height:180px; background: var(--surface); border:1px solid var(--border); border-radius:14px;
+  padding:22px; display:flex; align-items:center; justify-content:center; text-align:center; cursor:pointer;
+  font-size:16px; line-height:1.5;
+}
+.fc-tag { font-family:'IBM Plex Mono',monospace; font-size:10px; color: var(--accent); background: var(--accent-dim); padding:2px 8px; border-radius:10px; position:absolute; margin-top:-190px; }
+.fc-controls { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
+.fc-controls button {
+  font-family:'IBM Plex Mono',monospace; font-size:12px; background: var(--surface2); color: var(--text);
+  border:1px solid var(--border); padding:9px 14px; border-radius:8px; cursor:pointer;
+}
+.fc-nav { display:flex; align-items:center; gap:14px; }
+.fc-nav button { font-size:18px; background: var(--surface2); color: var(--accent); border:1px solid var(--border); width:40px; height:40px; border-radius:50%; cursor:pointer; }
+.fc-counter { font-family:'IBM Plex Mono',monospace; font-size:12px; color: var(--muted); }
+.fc-mastered-btn.done { color: var(--green); }
+
+.quiz-q { background: var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:12px; }
+.quiz-q .qtag { font-family:'IBM Plex Mono',monospace; font-size:10px; color: var(--accent); }
+.quiz-q .qtext { font-size:14.5px; margin: 6px 0 10px; line-height:1.4; }
+.mc-opt { display:block; width:100%; text-align:left; background: var(--surface2); color: var(--text); border:1px solid var(--border); padding:10px 12px; border-radius:8px; margin-bottom:6px; cursor:pointer; font-size:13.5px; }
+.mc-opt.selected { border-color: var(--accent); background: var(--accent-dim); }
+.mc-opt.correct { border-color: var(--green); background: rgba(34,197,94,0.15); }
+.mc-opt.incorrect { border-color: var(--red); background: rgba(239,68,68,0.15); }
+.fitb-input { width:100%; background: var(--surface2); color: var(--text); border:1px solid var(--border); border-radius:8px; padding:10px; font-size:13.5px; }
+.fitb-input.correct { border-color: var(--green); }
+.fitb-input.incorrect { border-color: var(--red); }
+.exp-box { font-size:12.5px; color: var(--muted); margin-top:8px; padding-top:8px; border-top:1px solid var(--border); display:none; }
+.exp-box.show { display:block; }
+#submit-btn, .disc-btn-row button, .reset-mastery-btn, .fc-controls button, .quiz-actions button {
+  -webkit-tap-highlight-color: transparent;
+}
+#submit-btn { width:100%; background: var(--accent); color: var(--bg); border:none; padding:13px; border-radius:10px; font-weight:600; font-size:14px; cursor:pointer; margin-top:6px; }
+#quiz-score { text-align:center; font-family:'IBM Plex Mono',monospace; background: var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:14px; display:none; }
+#quiz-score.show { display:block; }
+.quiz-actions { display:flex; gap:8px; }
+.quiz-actions button { flex:1; font-family:'IBM Plex Mono',monospace; font-size:12px; background: var(--surface2); color: var(--text); border:1px solid var(--border); padding:10px; border-radius:8px; cursor:pointer; }
+
+.disc-q { background: var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:14px; }
+.disc-q .qtag { font-family:'IBM Plex Mono',monospace; font-size:10px; color: var(--accent); }
+.disc-q .qtext { font-size:14.5px; margin:6px 0 10px; font-weight:600; line-height:1.4; }
+.disc-q textarea { width:100%; min-height:110px; background: var(--surface2); color: var(--text); border:1px solid var(--border); border-radius:8px; padding:10px; font-family:inherit; font-size:13.5px; resize:vertical; }
+.disc-q textarea:disabled { opacity:0.85; }
+.disc-btn-row { display:flex; gap:8px; margin-top:8px; }
+.disc-btn-row button { flex:1; font-family:'IBM Plex Mono',monospace; font-size:12px; padding:10px; border-radius:8px; cursor:pointer; border:1px solid var(--border); background: var(--surface2); color: var(--text); }
+.disc-btn-row button.primary { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.disc-rubric { display:none; margin-top:12px; padding-top:12px; border-top:1px solid var(--border); }
+.disc-rubric.show { display:block; }
+.rubric-item { display:flex; align-items:flex-start; gap:8px; margin-bottom:8px; font-size:13px; }
+.rubric-item input { margin-top:3px; }
+.disc-score { font-family:'IBM Plex Mono',monospace; font-size:13px; color: var(--accent); margin-top:6px; }
+.model-toggle { font-family:'IBM Plex Mono',monospace; font-size:11px; color: var(--purple); background:none; border:1px solid rgba(167,139,250,0.3); padding:6px 10px; border-radius:6px; cursor:pointer; margin-top:8px; }
+.model-answer { display:none; margin-top:8px; font-size:13px; line-height:1.55; background: rgba(167,139,250,0.08); border:1px solid rgba(167,139,250,0.25); border-radius:8px; padding:10px; }
+.model-answer.show { display:block; }
+
+.lectures-panel { background: var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:18px; }
+.lectures-panel h3 { margin:0 0 4px; font-size:15px; }
+.muted-note { color: var(--muted); font-size:12px; margin:4px 0 12px; }
+.video-group { margin-bottom:10px; }
+.video-group h4 { color: var(--accent); font-size:12.5px; margin: 0 0 6px; }
+.video-list { list-style:none; padding:0; margin:0; }
+.video-list li { margin-bottom:6px; }
+.video-list a { color: var(--text); background: var(--surface2); border:1px solid var(--border); display:block; padding:9px 10px; border-radius:8px; text-decoration:none; font-size:13.5px; }
+.video-list a:active { border-color: var(--accent); }
+
+.notes-grid { display:grid; grid-template-columns: 1fr; gap:22px; }
+@media (min-width: 640px) { .notes-grid { grid-template-columns: 1fr 1fr; } }
+.notes-col h4 { color: var(--accent); font-size:13px; text-transform:uppercase; letter-spacing:0.03em; margin: 18px 0 8px; }
+.notes-col h4:first-child { margin-top:0; }
+.notes-col p { font-size:13.5px; line-height:1.9; margin:4px 0; }
+
+footer { text-align:center; color: var(--muted); font-size:11px; padding:20px 14px; font-family:'IBM Plex Mono',monospace; }
+
+/* ASTR-1304 — use accent (green) for all chapters */
+.ch7 .obj-num, .ch8 .obj-num, .ch9 .obj-num, .ch10 .obj-num { color: var(--accent); background: var(--accent-dim); }
+
+@media print {
+  body::before, .topnav, .exam-pill, .textbook-links,
+  footer, .fc-controls, .fc-nav, .filter-row,
+  #submit-btn, #quiz-score, .disc-btn-row, .disc-rubric,
+  .obj-master-btn, .reset-mastery-btn, .mastery-bar { display: none !important; }
+  .panel { display: none !important; }
+  .panel.active { display: block !important; }
+  *, *::before, *::after {
+    background: white !important; background-color: white !important;
+    background-image: none !important; color: black !important;
+    border-color: #bbb !important; box-shadow: none !important;
+    -webkit-text-fill-color: black !important;
+  }
+  body { font-size: 12pt; }
+  .chapter-body { display: block !important; }
+  @page { margin: 0.75in; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="back-link" href="../../index.html">← All courses</a>
+  <span class="unit-badge">ASTR-1304-004 · UNIT 2</span>
+  <h1>Chapters 7–10: Earth, Moon &amp; Mercury, Venus, Mars</h1>
+  <div>
+    <span class="exam-pill">📅 Exam: Jul 5–9</span>
+  </div>
+  <div class="textbook-links">
+    <span>📘 Chaisson &amp; McMillan, 9th Ed.</span>
+    <span>👤 Dr. Michael Endl</span>
+  </div>
+</header>
+
+<nav class="topnav" role="tablist" aria-label="Study sections">
+  <button class="nav-btn active" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)" role="tab" aria-selected="false" aria-controls="panel-guide">📖 Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)" role="tab" aria-selected="false" aria-controls="panel-flashcards">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)" role="tab" aria-selected="false" aria-controls="panel-quiz">✏️ Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('discussion',this)" role="tab" aria-selected="false" aria-controls="panel-discussion">💬 Discussion</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes Template</button>
+</nav>
+
+<main>
+
+<div class="mastery-bar">
+  <span class="label">Unit 2 mastery tracking</span>
+  <button class="reset-mastery-btn" onclick="resetAllMastery()">Reset unit progress</button>
+</div>
+
+<section id="panel-overview" class="panel active" role="tabpanel" aria-labelledby="overview">
+  <h3 class="ch-heading ch7">Ch. 7 — Earth</h3>
+
+<div class="obj-card ch7" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">1</span>
+    <span class="obj-text">Understand Earth's interior structure</span>
+    <button class="obj-master-btn" aria-label="Mark objective 1 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch7_1')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Layers</strong> — names Earth's four layers (inner core, outer core, mantle, crust) with rough composition/state</li><li><strong>Seismic evidence</strong> — explains that P- and S-waves from earthquakes are used to probe the interior</li><li><strong>Shadow zones</strong> — connects the S-wave shadow zone to the existence of a liquid outer core</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch7" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">2</span>
+    <span class="obj-text">Understand the process of differentiation</span>
+    <button class="obj-master-btn" aria-label="Mark objective 2 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch7_2')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Definition</strong> — defines differentiation as separation by density in a molten body</li><li><strong>Cause</strong> — identifies that early Earth was largely molten (from accretion energy and radioactive decay), allowing material to sort by density</li><li><strong>Result</strong> — connects differentiation to the layered core/mantle/crust structure and floating continents</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch7" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">3</span>
+    <span class="obj-text">Understand plate tectonics</span>
+    <button class="obj-master-btn" aria-label="Mark objective 3 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch7_3')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>What plates are</strong> — describes the crust as broken into a dozen or so rigid tectonic plates</li><li><strong>Driving mechanism</strong> — attributes plate motion to mantle convection powered by internal heat</li><li><strong>Evidence</strong> — cites a specific piece of evidence (e.g., continental drift rates, magnetic striping at mid-ocean ridges)</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch7" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">4</span>
+    <span class="obj-text">Understand how we use radiometric dating to measure the age of the Earth</span>
+    <button class="obj-master-btn" aria-label="Mark objective 4 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch7_4')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Half-life concept</strong> — defines half-life and gives uranium's value (4.5 billion years)</li><li><strong>Method</strong> — explains that measuring the ratio of parent to decay-product element in a crystal reveals its age</li><li><strong>Application</strong> — notes why meteorites/Moon rocks (not Earth rocks) give the best solar system age estimate</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch7" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">5</span>
+    <span class="obj-text">Know more about Earth's magnetic field</span>
+    <button class="obj-master-btn" aria-label="Mark objective 5 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch7_5')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Dynamo theory</strong> — explains the field is generated by rotation + convection in the liquid, conducting outer core</li><li><strong>Magnetosphere/Van Allen belts</strong> — describes the region the field creates and the trapped particles within it</li><li><strong>Protective role</strong> — explains what the field shields Earth (and life) from</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch7" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">6</span>
+    <span class="obj-text">Understand the general properties of Earth's atmosphere</span>
+    <button class="obj-master-btn" aria-label="Mark objective 6 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch7_6')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Composition</strong> — lists the major gases and approximate percentages (N2, O2, etc.)</li><li><strong>Layers</strong> — names the atmospheric layers in order and a defining feature of each</li><li><strong>Origin</strong> — notes that oxygen mostly comes from life, not the original atmosphere</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch7" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">7</span>
+    <span class="obj-text">Understand how the greenhouse effect works</span>
+    <button class="obj-master-btn" aria-label="Mark objective 7 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch7_7')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Mechanism</strong> — explains how greenhouse gases trap outgoing infrared radiation</li><li><strong>Natural magnitude</strong> — states the natural greenhouse effect warms Earth by about 40 K</li><li><strong>Human enhancement</strong> — names the key gases increased since 1750 and their sources</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch7" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">8</span>
+    <span class="obj-text">Know how tides work and how they are connected to gravity</span>
+    <button class="obj-master-btn" aria-label="Mark objective 8 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch7_8')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Cause</strong> — identifies tides as a secondary/differential effect of gravity, not gravity itself</li><li><strong>Mechanism</strong> — explains that near and far sides of a body feel different gravitational pull, creating a stretching bulge</li><li><strong>Broader connection</strong> — connects tidal forces to related phenomena discussed in the unit (e.g., tidal locking, the Roche limit)</li></ul>
+  </div>
+</div>
+<h3 class="ch-heading ch8">Ch. 8 — Moon & Mercury</h3>
+
+<div class="obj-card ch8" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">9</span>
+    <span class="obj-text">Understand the major properties of the Moon</span>
+    <button class="obj-master-btn" aria-label="Mark objective 9 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch8_9')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Key numbers</strong> — cites at least two physical properties (mass, radius, density, gravity) compared to Earth</li><li><strong>Surface</strong> — describes maria and highlands and how they differ</li><li><strong>Lack of atmosphere</strong> — connects the absence of atmosphere to surface conditions (cratering, temperature swings)</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch8" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">10</span>
+    <span class="obj-text">Know more about the Moon's interior structure and composition (lack of metals)</span>
+    <button class="obj-master-btn" aria-label="Mark objective 10 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch8_10')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Density clue</strong> — connects the Moon's low average density to a metal-poor interior</li><li><strong>Comparison to Earth</strong> — contrasts with Earth's nickel-iron core</li><li><strong>Magnetic field implication</strong> — links the lack of a strong core to the absence of a lunar magnetic field</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch8" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">11</span>
+    <span class="obj-text">Know our current best model for the Moon's formation</span>
+    <button class="obj-master-btn" aria-label="Mark objective 11 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch8_11')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>The theory</strong> — describes a Mars-sized object colliding with early Earth</li><li><strong>Context</strong> — notes such collisions were common in the young solar system</li><li><strong>Evidence it explains</strong> — names at least one observation the model successfully explains (chemical similarity, lack of metals)</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch8" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">12</span>
+    <span class="obj-text">Understand the concept of the Roche limit</span>
+    <button class="obj-master-btn" aria-label="Mark objective 12 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch8_12')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Definition</strong> — defines the Roche limit as the tidal-disruption distance</li><li><strong>Formula/magnitude</strong> — gives the rough rule (~2.5× the primary's radius for similar composition)</li><li><strong>Application to the Moon</strong> — connects the concept to where/how close the Moon formed</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch8" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">13</span>
+    <span class="obj-text">Understand the Moon's rotation and its orbital evolution</span>
+    <button class="obj-master-btn" aria-label="Mark objective 13 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch8_13')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Synchronous rotation</strong> — explains that the Moon rotates once per orbit, always showing the same face</li><li><strong>Cause</strong> — attributes this to tidal locking from Earth-Moon gravitational interaction, not lunar phases</li><li><strong>Orbital evolution</strong> — describes the Moon's outward migration from ~15,000 km to ~380,000 km over time</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch8" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">14</span>
+    <span class="obj-text">Know about Mercury's eccentric orbit</span>
+    <button class="obj-master-btn" aria-label="Mark objective 14 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch8_14')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Eccentricity value</strong> — states Mercury's orbital eccentricity (0.21) and that it's the highest of any planet</li><li><strong>Orbital period</strong> — gives Mercury's 88-day orbital period</li><li><strong>Observing difficulty</strong> — explains why Mercury is hard to see from Earth</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch8" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">15</span>
+    <span class="obj-text">Understand how we measured Mercury's rotation</span>
+    <button class="obj-master-btn" aria-label="Mark objective 15 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch8_15')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Earlier assumption</strong> — notes the historical (incorrect) assumption of a synchronous 1:1 rotation</li><li><strong>Method</strong> — identifies Arecibo radar observations (1965) as the technique that revealed the true period</li><li><strong>Result</strong> — states the measured 59-day rotation period</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch8" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">16</span>
+    <span class="obj-text">Understand how the 3:2 spin-orbit resonance works</span>
+    <button class="obj-master-btn" aria-label="Mark objective 16 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch8_16')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>The ratio</strong> — states that Mercury rotates 3 times for every 2 orbits (59 days vs. 88 days)</li><li><strong>Why not 1:1</strong> — explains that Mercury's orbital eccentricity prevented a simple synchronous lock</li><li><strong>Consequence</strong> — describes a resulting effect, e.g. extreme dayside/poleside temperature contrast</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch8" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">17</span>
+    <span class="obj-text">Know more about Mercury's unique metallic interior</span>
+    <button class="obj-master-btn" aria-label="Mark objective 17 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch8_17')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Density evidence</strong> — cites Mercury's high average density as the clue to its composition</li><li><strong>Core size</strong> — describes the unusually large iron-rich core relative to the mantle</li><li><strong>Magnetic field</strong> — connects the metallic core to Mercury's (weak but present) magnetic field via dynamo action</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch8" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">18</span>
+    <span class="obj-text">Know about problems of formation models for Mercury</span>
+    <button class="obj-master-btn" aria-label="Mark objective 18 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch8_18')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>The puzzle</strong> — identifies Mercury's unusually high metal-to-silicate ratio as the central problem</li><li><strong>Competing models</strong> — names at least two of the three proposed explanations</li><li><strong>Resolution</strong> — describes how MESSENGER's GRS data narrowed down the possibilities</li></ul>
+  </div>
+</div>
+<h3 class="ch-heading ch9">Ch. 9 — Venus</h3>
+
+<div class="obj-card ch9" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">19</span>
+    <span class="obj-text">Know Venus as the evening/morning "star"</span>
+    <button class="obj-master-btn" aria-label="Mark objective 19 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch9_19')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Orbital geometry</strong> — explains that Venus's orbit lies inside Earth's</li><li><strong>Maximum elongation</strong> — states Venus never strays more than 47° from the Sun</li><li><strong>Visibility</strong> — describes when/how long Venus is visible</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch9" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">20</span>
+    <span class="obj-text">Understand how we measured Venus's very slow rotation</span>
+    <button class="obj-master-btn" aria-label="Mark objective 20 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch9_20')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Obstacle</strong> — notes Venus's thick clouds prevent direct visual observation of surface features</li><li><strong>Method</strong> — identifies Arecibo radar observations as the technique used</li><li><strong>Result</strong> — states the 243-day rotation vs. 225-day orbital period, and that the day is longer than the year</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch9" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">21</span>
+    <span class="obj-text">Know more about the unique 180-degree axis tilt of this planet</span>
+    <button class="obj-master-btn" aria-label="Mark objective 21 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch9_21')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Tilt value</strong> — states the 177.4° tilt and that this makes rotation retrograde</li><li><strong>Comparison</strong> — contrasts with a 'normal' small axial tilt like Earth's</li><li><strong>Likely cause</strong> — proposes a massive early collision as the explanation</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch9" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">22</span>
+    <span class="obj-text">Know more about the surface of Venus (volcanoes) and surface conditions (pressure and temperature)</span>
+    <button class="obj-master-btn" aria-label="Mark objective 22 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch9_22')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Major features</strong> — names at least one surface feature (e.g., Ishtar/Aphrodite Terra, Maxwell Montes, shield volcanoes)</li><li><strong>Surface conditions</strong> — states approximate surface temperature and pressure</li><li><strong>How we know</strong> — notes that radar mapping (through the clouds) revealed the surface</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch9" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">23</span>
+    <span class="obj-text">Know more about the dense CO2 atmosphere of Venus</span>
+    <button class="obj-master-btn" aria-label="Mark objective 23 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch9_23')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Main composition</strong> — states the CO2/nitrogen percentages</li><li><strong>Scale</strong> — compares Venus's atmosphere mass/height to Earth's</li><li><strong>Clouds</strong> — mentions the sulfuric acid cloud layer</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch9" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">24</span>
+    <span class="obj-text">Understand how a runaway greenhouse effect makes Venus the planet with the hottest surface temperature</span>
+    <button class="obj-master-btn" aria-label="Mark objective 24 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch9_24')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Mechanism</strong> — explains how CO2 traps outgoing infrared radiation</li><li><strong>Why Venus and not Earth</strong> — explains that Venus likely never had oceans to lock away CO2</li><li><strong>Water loss evidence</strong> — cites the high D/H ratio as evidence of past water loss</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch9" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">25</span>
+    <span class="obj-text">Know about potential resurfacing events (no plate tectonics)</span>
+    <button class="obj-master-btn" aria-label="Mark objective 25 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch9_25')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Why no plate tectonics</strong> — connects the lack of water in the lithosphere to a too-rigid crust</li><li><strong>Heat escape problem</strong> — notes internal heat must still escape somehow without plate tectonics</li><li><strong>Resurfacing evidence</strong> — cites crater counts / ~500-million-year resurfacing age, and possible ongoing activity</li></ul>
+  </div>
+</div>
+<h3 class="ch-heading ch10">Ch. 10 — Mars</h3>
+
+<div class="obj-card ch10" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">26</span>
+    <span class="obj-text">Know more about Mars's place in popular culture</span>
+    <button class="obj-master-btn" aria-label="Mark objective 26 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch10_26')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Lowell's canals</strong> — describes Percival Lowell's drawings and the 'canals' controversy</li><li><strong>War of the Worlds</strong> — mentions the 1938 Orson Welles broadcast</li><li><strong>Lasting impact</strong> — connects these events to Mars's enduring association with alien life in the public imagination</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch10" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">27</span>
+    <span class="obj-text">Know more about its orbit and spin</span>
+    <button class="obj-master-btn" aria-label="Mark objective 27 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch10_27')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Orbital numbers</strong> — cites semimajor axis, eccentricity, and orbital period</li><li><strong>Rotation/tilt</strong> — compares Mars's rotation rate and axial tilt to Earth's</li><li><strong>Effect of eccentricity</strong> — explains how Mars's eccentric orbit affects sunlight/seasons</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch10" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">28</span>
+    <span class="obj-text">Know more about Phobos and Deimos, its two small moons</span>
+    <button class="obj-master-btn" aria-label="Mark objective 28 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch10_28')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Basic properties</strong> — gives size/orbital period for at least one moon</li><li><strong>Density clue</strong> — cites their low density (~2000 kg/m³) as evidence against forming with Mars</li><li><strong>Origin hypotheses</strong> — mentions capture and/or impact-ejecta origin theories</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch10" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">29</span>
+    <span class="obj-text">Have learned about the major space missions to Mars</span>
+    <button class="obj-master-btn" aria-label="Mark objective 29 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch10_29')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Early missions</strong> — names an early mission (e.g., Mariner 9) and its key finding</li><li><strong>Rover missions</strong> — names at least one rover mission and its goal</li><li><strong>Recent milestone</strong> — mentions Perseverance/Ingenuity or another recent achievement</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch10" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">30</span>
+    <span class="obj-text">Understand Mars's geology and its major features</span>
+    <button class="obj-master-btn" aria-label="Mark objective 30 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch10_30')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Hemispheric asymmetry</strong> — describes the north-south difference in elevation/age/cratering</li><li><strong>Tharsis/Olympus Mons</strong> — describes the Tharsis bulge and Olympus Mons</li><li><strong>Valles Marineris/Hellas</strong> — mentions at least one other major feature and how it formed</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch10" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">31</span>
+    <span class="obj-text">Know more about its thin atmosphere</span>
+    <button class="obj-master-btn" aria-label="Mark objective 31 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch10_31')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Composition</strong> — gives the major gas percentages</li><li><strong>Thinness</strong> — compares atmospheric mass/density to Earth's</li><li><strong>Seasonal behavior</strong> — describes CO2 freezing at the poles or dust storm activity</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch10" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">32</span>
+    <span class="obj-text">Have learned more about water and climate change on Mars</span>
+    <button class="obj-master-btn" aria-label="Mark objective 32 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch10_32')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Surface evidence</strong> — distinguishes runoff channels from outflow channels</li><li><strong>Past climate</strong> — mentions the hypothesized early warm, wet phase</li><li><strong>Present-day water</strong> — describes where water exists on Mars now (polar caps, permafrost)</li></ul>
+  </div>
+</div>
+
+<div class="obj-card ch10" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">33</span>
+    <span class="obj-text">Know more about future exploration of Mars (colonization?)</span>
+    <button class="obj-master-btn" aria-label="Mark objective 33 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch10_33')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Resource technology</strong> — mentions in-situ resource technologies being tested (e.g., MOXIE oxygen production)</li><li><strong>Key challenges</strong> — names at least one challenge for human missions (water access, landing precision, weather/dust hazards)</li><li><strong>Framing</strong> — connects current robotic missions to eventual human exploration goals</li></ul>
+  </div>
+</div>
+</section>
+
+<section id="panel-guide" class="panel" role="tabpanel" aria-labelledby="guide">
+  
+<div class="chapter-block ch7">
+  <div class="chapter-header" onclick="toggleChapter(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleChapter(this);}">
+    <span>Ch. 7 — Earth</span><span class="chevron">▾</span>
+  </div>
+  <div class="chapter-body">
+    
+<h4>Interior structure</h4>
+<p>Earth is studied indirectly through seismic (earthquake) waves. P-waves (pressure) and S-waves (shear) travel through the interior and bend as density changes. S-waves are blocked by the liquid outer core, creating a "shadow zone" &mdash; the best evidence the outer core is liquid. Faint P-waves reflecting off a solid inner core reveal a core radius of about 3500&nbsp;km.</p>
+<table class="data-table"><tr><th>Region</th><th>Outer radius</th><th>Phase</th><th>Composition</th></tr>
+<tr><td>Inner core</td><td>1200 km</td><td>Solid</td><td>Iron &amp; nickel</td></tr>
+<tr><td>Outer core</td><td>3500 km</td><td>Liquid</td><td>Iron &amp; nickel</td></tr>
+<tr><td>Mantle</td><td>~6400 km (to surface)</td><td>Solid (flows slowly)</td><td>Iron-rich rock</td></tr>
+<tr><td>Crust</td><td>8&ndash;70 km thick</td><td>Solid</td><td>Granite &amp; basalt</td></tr></table>
+<p>Central temperature is about 6000 K &mdash; hotter than the Sun's surface (5800 K). Heat comes from (1) residual heat from formation/accretion and (2) radioactive decay of elements like uranium, thorium, and plutonium.</p>
+
+<h4>Differentiation</h4>
+<p>Early Earth was largely molten. Dense material (iron, nickel) sank toward the center while lighter material floated up, producing a layered planet: dense core &rarr; intermediate mantle &rarr; low-density crust. Basalt (3000&ndash;3300 kg/m&sup3;) forms the ocean floor/upwelled mantle material; granite (2700&ndash;3000 kg/m&sup3;) is lighter and makes up continents, which is why continents "float" on the denser mantle/basaltic crust.</p>
+
+<h4>Plate tectonics</h4>
+<p>The basaltic crust is broken into a dozen or so rigid tectonic plates that ride on convecting mantle material, driven by escaping internal heat. Plates move ~2&ndash;10 cm/year (continental drift) &mdash; e.g., it took Africa and South America about 110 million years to reach their present positions. Evidence includes matching magnetic stripes on either side of the Mid-Atlantic Ridge, which record periodic reversals of Earth's magnetic field as new seafloor forms and spreads.</p>
+
+<h4>Radiometric dating</h4>
+<p>Radioactive elements decay into other elements at a fixed, element-specific rate described by a <strong>half-life</strong> &mdash; the time for half of a sample to decay. Uranium's half-life is 4.5 &times; 10&sup9; years. By measuring the ratio of a radioactive parent element to its decay product (e.g., uranium&rarr;lead) trapped in a crystal, geologists calculate the crystal's age.</p>
+<ul><li>Oldest Earth crystals (zircons, found in Canada): ~4.03 &times; 10&sup9; years</li>
+<li>Oldest Moon crystals: ~4.5 &times; 10&sup9; years</li>
+<li>Oldest meteorites: 4.5662 &times; 10&sup9; years (&plusmn;100,000 yr) &mdash; best estimate of the age of the solar system</li></ul>
+<p>Earth's oldest rocks have been erased by erosion and plate tectonics, so Moon rocks and meteorites (which lack these processes) give the best age estimate for the whole solar system.</p>
+
+<h4>Earth's magnetic field</h4>
+<p>Earth's magnetic field is generated by <strong>dynamo theory</strong>: rotation plus convection of molten, electrically conducting material (liquid outer core) generates the field &mdash; requires both rapid rotation and a conducting fluid interior. The field creates the <strong>magnetosphere</strong>, a region that traps charged solar-wind particles in two doughnut-shaped zones called the <strong>Van Allen belts</strong>. The magnetosphere is compressed on the sunward side and stretched into a long tail on the night side by the solar wind. Occasionally Van Allen particles escape near the poles and produce aurorae. Earth's field also reverses polarity on average roughly every ~500,000 years (recorded in seafloor magnetic striping).</p>
+
+<h4>Atmosphere</h4>
+<p>Earth's original atmosphere was outgassed by volcanoes: mostly CO2, sulfur dioxide, water vapor, methane, and nitrogen &mdash; no free oxygen. As the surface cooled below water's boiling point, rain fell for millions of years, forming the oceans, which absorbed most of the CO2 and locked it into rocks, leaving an atmosphere dominated by nitrogen. Almost all atmospheric oxygen was produced later by life; there was little free oxygen until about 2 billion years ago.</p>
+<table class="data-table"><tr><th>Gas</th><th>Fraction</th></tr><tr><td>Nitrogen (N2)</td><td>78%</td></tr><tr><td>Oxygen (O2)</td><td>21%</td></tr><tr><td>Water vapor</td><td>0.1&ndash;3% (variable)</td></tr><tr><td>Argon</td><td>0.9%</td></tr><tr><td>Carbon dioxide</td><td>0.03%</td></tr></table>
+<p>Structure: Troposphere (0&ndash;12 km, weather/convection) &rarr; Stratosphere (up to 40&ndash;50 km, ozone layer converts O3&harr;O2, absorbing UV) &rarr; Mesosphere (up to 50&ndash;80 km) &rarr; Ionosphere (above 80 km, ionized by UV).</p>
+
+<h4>Greenhouse effect</h4>
+<p>Infrared radiation emitted by the warm surface is partly absorbed by CO2 (and other greenhouse gases) and re-emitted in all directions, including back down &mdash; this extra energy makes the surface about 40 K warmer than it would be otherwise. Since 1750, human activity has raised CO2 (~30%, mainly fossil fuel/wood burning), methane (~140%, cattle/rice paddies), and nitrous oxide (~15%, fertilizer/waste/exhaust) &mdash; enhancing the natural greenhouse effect.</p>
+
+<h4>Tides</h4>
+<p>Tides are a secondary effect of gravity: because gravity weakens with distance, the near side of an object (facing the other body) is pulled more strongly than the far side. This differential ("tidal") force stretches the object, raising bulges on the near and far sides. Tides couple the rotation and orbits of bodies over time (see also the Moon's synchronous rotation, Ch. 8).</p>
+
+  </div>
+</div>
+
+<div class="chapter-block ch8">
+  <div class="chapter-header" onclick="toggleChapter(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleChapter(this);}">
+    <span>Ch. 8 — Moon & Mercury</span><span class="chevron">▾</span>
+  </div>
+  <div class="chapter-body">
+    
+<h4>Major properties of the Moon</h4>
+<table class="data-table"><tr><th>Quantity</th><th>Moon</th><th>Earth</th></tr>
+<tr><td>Mass</td><td>7.3&times;10&sup2;&sup2; kg</td><td>6&times;10&sup2;&sup4; kg</td></tr>
+<tr><td>Radius</td><td>1700 km</td><td>6400 km</td></tr>
+<tr><td>Density</td><td>3300 kg/m&sup3;</td><td>5500 kg/m&sup3;</td></tr>
+<tr><td>Escape velocity</td><td>2.4 km/s</td><td>11.2 km/s</td></tr>
+<tr><td>Temperature</td><td>100&ndash;400 K</td><td>183&ndash;333 K</td></tr>
+<tr><td>Atmosphere</td><td>No</td><td>Yes</td></tr>
+<tr><td>Surface gravity</td><td>1/6 g</td><td>1 g</td></tr></table>
+<p>Dark <strong>maria</strong> are vast flat basaltic lava-flow plains (Mare Imbrium is largest, ~1100 km across); lighter <strong>highlands</strong> sit several km higher. Craters cover the whole surface (smallest visible to the naked eye ~200 km; smallest via telescope ~1 km). Highland rock is aluminum-rich, lighter-colored, and older (4&ndash;4.4 billion years); maria rock is more iron-rich and younger (3.2&ndash;3.9 billion years). Surface <strong>regolith</strong> (dust from micrometeorite impacts) accumulates at ~5 m per billion years; there is essentially no water (~1 part in 100,000, less than desert sand on Earth) and no organic matter.</p>
+
+<h4>Interior structure / lack of metals</h4>
+<p>The Moon's low average density (3300 kg/m&sup3; vs Earth's 5500) shows its core is <em>not</em> nickel-iron like Earth's &mdash; it is deficient in iron and other heavy metals. There is no evidence of a strong lunar magnetic field, consistent with the absence of a large, rapidly rotating liquid core (only a small inner core, ~200 km radius, ~1500 K).</p>
+
+<h4>Formation model</h4>
+<p>The best current model is the <strong>Giant Impact ("Impact Theory")</strong>: a Mars-sized object collided with the young Earth. Such massive collisions were common in the early solar system. This model explains both the Moon's chemical similarity to Earth's mantle and its deficiency in metals/low mean density (the impactor's and Earth's metallic cores largely stayed with Earth, while rocky mantle material was ejected to form the Moon).</p>
+
+<h4>Roche limit</h4>
+<p>The <strong>Roche limit</strong> is the minimum distance a large satellite can approach its primary body without being torn apart by tidal forces; for bodies of similar composition it's about 2.5&times; the primary's radius. Saturn's rings lie inside its Roche limit, possibly debris from a destroyed moon. The Moon likely formed only ~15,000 km from Earth (just outside the Roche limit) and has since migrated outward to its current ~380,000 km distance.</p>
+
+<h4>Rotation and orbital evolution</h4>
+<p>The Moon is in <strong>synchronous rotation</strong> (tidally locked) &mdash; it rotates once per orbit, so we always see the same face; this is common among solar-system moons and is unrelated to lunar phases. Tidal bulges raised when the Earth-Moon system was much closer gradually slowed the Moon's spin until it locked, and ongoing tidal interaction is causing the Moon to slowly spiral outward (and Earth's rotation to gradually slow) over time.</p>
+
+<h4>Mercury's eccentric orbit</h4>
+<p>Mercury has the most eccentric orbit of any planet (e = 0.21), orbital period 88 days. It's visible only briefly near dawn/dusk (max ~2 hours/night) since it never strays far from the Sun.</p>
+<table class="data-table"><tr><th>Quantity</th><th>Mercury</th><th>Earth</th></tr>
+<tr><td>Mass</td><td>3.3&times;10&sup2;&sup3; kg</td><td>6&times;10&sup2;&sup4; kg</td></tr>
+<tr><td>Radius</td><td>2450 km</td><td>6400 km</td></tr>
+<tr><td>Density</td><td>5400 kg/m&sup3;</td><td>5500 kg/m&sup3;</td></tr>
+<tr><td>Temperature</td><td>100&ndash;700 K</td><td>183&ndash;333 K</td></tr></table>
+
+<h4>Measuring Mercury's rotation</h4>
+<p>Astronomers (Schiaparelli, 19th century) initially assumed Mercury was tidally locked 1:1, like the Moon. 1965 Arecibo radar observations revealed the true values: orbital period 88 days, rotation period 59 days.</p>
+
+<h4>3:2 spin-orbit resonance</h4>
+<p>59 days is exactly 2/3 of 88 days, so Mercury completes 3 rotations for every 2 orbits &mdash; a <strong>3:2 spin-orbit resonance</strong> rather than the expected 1:1. Because Mercury's orbit is quite eccentric, the varying tidal force at different points in its orbit locked it into this 3:2 ratio instead of a simple synchronous (1:1) lock. Dayside temperatures reach 700 K while the poles (where the Sun sits perpetually on the horizon) stay around 125 K.</p>
+
+<h4>Mercury's metallic interior</h4>
+<p>Mercury's magnetic field (about 1/100 Earth's) is generated by dynamo action from a partially molten core. Its unusually high average density implies a very large iron-rich core (~1800 km) with a comparatively thin mantle (500&ndash;600 km) &mdash; the highest metal-to-silicate ratio of any terrestrial planet.</p>
+
+<h4>Problems with formation models</h4>
+<p>Explaining Mercury's outsized metallic core has produced 3 competing models: (1) a giant impact stripped away much of the original silicate mantle, (2) the young Sun's heat vaporized surface silicates, or (3) Mercury simply formed from primitive, metal-rich material (similar to certain chondritic meteorites) rather than losing material later. MESSENGER's Gamma-Ray Spectrometer measured surface potassium, thorium, and uranium abundances that <strong>rule out</strong> the giant-impact and vaporization models, favoring formation from primitive, pre-selected metal-rich material.</p>
+
+  </div>
+</div>
+
+<div class="chapter-block ch9">
+  <div class="chapter-header" onclick="toggleChapter(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleChapter(this);}">
+    <span>Ch. 9 — Venus</span><span class="chevron">▾</span>
+  </div>
+  <div class="chapter-body">
+    
+<h4>Venus as the evening/morning "star"</h4>
+<p>Venus is the third-brightest object in the sky (after the Sun and Moon). Because its orbit lies inside Earth's, it never strays more than 47&deg; from the Sun, appearing as the "morning star" or "evening star," visible up to about 6 hours a night before dawn or after sunset.</p>
+
+<h4>Measuring Venus's very slow rotation</h4>
+<p>Venus's permanent cloud cover hides its surface from visible light, so early astronomers debated 24-hour or 25-day rotation periods. 1960s Arecibo radar observations settled it: orbital period 225 days, rotation period 243 days &mdash; Venus rotates more slowly than it orbits the Sun, and its "day" is longer than its "year."</p>
+
+<h4>180-degree axis tilt</h4>
+<p>Venus's rotation axis is tilted 177.4&deg; &mdash; essentially upside down (retrograde), with its south pole "up." This backwards rotation was likely caused by a massive, late collision early in its history (conceptually similar to the Moon-forming impact on Earth).</p>
+
+<h4>Surface (volcanoes) and surface conditions</h4>
+<p>Radar mapping (Magellan) reveals rolling plains with modest highlands/lowlands; two continent-sized highland regions, Ishtar Terra and Aphrodite Terra, cover about 8% of the surface. Maxwell Montes rises 14 km above Venus's lowest terrain. Numerous shield volcanoes (including Sif Mons and Gula Mons) and a general lack of small craters (the dense atmosphere burns up small impactors) are observed. Surface conditions: temperature ~730 K (~860&deg;F, hot enough to melt lead), pressure ~90 bars &mdash; no oxygen, no life.</p>
+
+<h4>Dense CO2 atmosphere</h4>
+<p>Venus's atmosphere is about 90&times; more massive than Earth's, roughly 50 km deep, composed of 97% carbon dioxide and 3% nitrogen, with sulfuric acid clouds and traces of water vapor, CO, and SO2. Surface winds are slow (~4 mph) despite the immense atmospheric mass.</p>
+
+<h4>Runaway greenhouse effect</h4>
+<p>Venus's thick CO2 atmosphere traps far more outgoing infrared radiation than Earth's, producing a much stronger greenhouse effect. Because Venus likely never had oceans to absorb CO2 (its early temperature was already too high for liquid water to persist), CO2 built up in the atmosphere rather than being locked into rock/ocean as on Earth &mdash; a runaway feedback that makes Venus, not Mercury, the hottest planet. Any early water underwent photodissociation (UV breaking apart H2O), and the resulting hydrogen escaped to space, explaining Venus's unusually high deuterium-to-hydrogen (D/H) ratio (deuterium being heavier, escapes less easily).</p>
+
+<h4>Resurfacing events (no plate tectonics)</h4>
+<p>Venus's crust has no water in its lithosphere, making it too rigid for Earth-style plate tectonics, yet internal radioactive heat must still escape. Crater counts suggest the surface is relatively young and was likely resurfaced by widespread volcanism roughly 500 million years ago, possibly through periodic, catastrophic episodes of extreme volcanism or lithosphere overturn rather than gradual plate motion. Fluctuating sulfur dioxide levels above the clouds and bursts of radio energy hint that volcanism may still be ongoing today.</p>
+
+  </div>
+</div>
+
+<div class="chapter-block ch10">
+  <div class="chapter-header" onclick="toggleChapter(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleChapter(this);}">
+    <span>Ch. 10 — Mars</span><span class="chevron">▾</span>
+  </div>
+  <div class="chapter-body">
+    
+<h4>Mars in popular culture</h4>
+<p>Percival Lowell's early-1900s drawings of apparent "canals" fueled speculation about intelligent life and irrigation networks on Mars. Orson Welles's 1938 radio broadcast of <em>The War of the Worlds</em> dramatized a Martian invasion and famously caused public alarm, cementing Mars's cultural status as the likeliest home for alien life.</p>
+
+<h4>Orbit and spin</h4>
+<table class="data-table"><tr><th>Quantity</th><th>Mars</th><th>Earth</th></tr>
+<tr><td>Semimajor axis</td><td>1.52 AU (228&times;10&sup6; km)</td><td>1 AU</td></tr>
+<tr><td>Eccentricity</td><td>0.093 (perihelion 1.38 AU, aphelion 1.67 AU)</td><td>~0.017</td></tr>
+<tr><td>Orbital period</td><td>687 Earth days</td><td>365 days</td></tr>
+<tr><td>Axial tilt</td><td>25.19&deg;</td><td>23.5&deg;</td></tr>
+<tr><td>Mass</td><td>6.4&times;10&sup2;&sup3; kg</td><td>6&times;10&sup2;&sup4; kg</td></tr>
+<tr><td>Radius</td><td>3390 km</td><td>6400 km</td></tr>
+<tr><td>Surface gravity</td><td>1/3 g</td><td>1 g</td></tr></table>
+<p>Mars's fairly high orbital eccentricity causes sunlight intensity to vary by 45% between perihelion and aphelion. Kepler used Mars's orbit primarily to derive his laws of planetary motion. Mars's axial tilt (close to Earth's) gives it Earth-like seasons, but its eccentric orbit makes the two hemispheres' seasons noticeably asymmetric.</p>
+
+<h4>Phobos and Deimos</h4>
+<p>Both small moons resemble asteroids in size and composition (Phobos ~28&times;20 km, Deimos ~16&times;10 km) with densities (~2000 kg/m&sup3;) far lower than any planet in the inner solar system. They are thought to be either captured asteroids or debris from a massive impact on Mars. Phobos orbits so close (orbital period 7h40m) that it moves faster than Mars rotates &mdash; it rises in the west and sets in the east, crossing the sky in about 5.5 hours; its orbit is decaying and it will eventually crash into Mars or break apart. Deimos, farther out, orbits in 30h18m and moves normally (east to west) across the sky, taking about 3 days to cross.</p>
+
+<h4>Major space missions to Mars</h4>
+<ul>
+<li><strong>Mariner 9</strong> (1971): first probe to orbit Mars; revealed a mix of Moon-like cratered terrain and Earth-like canyons; first hints that liquid water once flowed on the surface.</li>
+<li><strong>Viking 1 &amp; 2</strong> (1970s): first successful landers.</li>
+<li><strong>Mars Pathfinder</strong> (1997) with the Sojourner rover (first Mars rover).</li>
+<li><strong>Mars Global Surveyor</strong> (1997&ndash;2006), <strong>Mars Odyssey</strong> (2001), <strong>Mars Reconnaissance Orbiter</strong> (2006), ESA's <strong>Mars Express</strong> (2003): orbital mapping and atmosphere studies.</li>
+<li><strong>Spirit &amp; Opportunity</strong> rovers (2004), <strong>Phoenix</strong> polar lander (2006).</li>
+<li><strong>Curiosity</strong> rover (launched Nov 26, 2011; landed Aug 6, 2012) in Gale Crater &mdash; studies climate, geology, and past habitability.</li>
+<li><strong>Perseverance</strong> (Mars 2020, landed Feb 18, 2021) with the <strong>Ingenuity</strong> helicopter (first powered flight on another planet); searches for ancient life, collects samples, tests oxygen production from the atmosphere.</li>
+<li>ESA/Roscosmos <strong>Rosalind Franklin</strong> rover (2023, in development).</li>
+</ul>
+<p>Common goal across missions: search for water, both past (surface) and present (subsurface ice).</p>
+
+<h4>Geology and major features</h4>
+<p>Mars shows a striking north-south asymmetry: the northern hemisphere is lower, younger, crater-poor volcanic plains, while the southern hemisphere is higher, older, and heavily cratered. The <strong>Tharsis bulge</strong> (equatorial) may result from an upwelling mantle plume; it hosts <strong>Olympus Mons</strong>, the largest known volcano in the solar system (height 27 km, diameter 600 km, caldera 70 km &mdash; no longer active; its great height is possible because of Mars's low surface gravity). Nearby lies the <strong>Valles Marineris</strong>, a tectonic rift valley (not water-carved) 5000 km long, up to 500 km wide, and 6 km deep. On the opposite side of the planet is the <strong>Hellas Basin</strong>, formed by a giant early impact.</p>
+
+<h4>Thin atmosphere</h4>
+<p>Mars's atmosphere is about 1/100 as massive as Earth's, roughly 50 km deep (top of troposphere ~30 km), composed of CO2 95.3%, N2 2.7%, Ar 1.6%, O2 0.13%, CO 0.07%, water vapor 0.03%. In winter, CO2 freezes out at the poles (seasonal caps), while a residual water-ice cap remains year-round. Strong winds drive dust storms and dust devils that redistribute surface dust. Mars has an extremely weak magnetic field (~1/800 of Earth's); combined with its rotation rate, this implies its core is nonmetallic, nonliquid, or both &mdash; evidence Mars never differentiated as thoroughly as Earth. Its thin atmosphere is slowly leaking away to space today.</p>
+
+<h4>Water and climate change</h4>
+<p>Runoff channels (ancient river remains) and outflow channels (paths of catastrophic flash floods from the southern highlands into the northern plains) provide strong evidence Mars once had abundant liquid surface water, likely during a brief early "Earth-like" warm phase with a thicker atmosphere, rain, and possibly lakes or oceans. Today, most water is locked in the polar caps and in subsurface permafrost; orbiters have detected extensive buried ice deposits, and some crater-wall gullies show evidence of much more recent (possibly ongoing) flows, though whether these involve liquid water or ice remains unclear.</p>
+
+<h4>Future exploration / colonization</h4>
+<p>Current and near-future missions test technologies relevant to eventual human exploration: producing oxygen from the Martian atmosphere (demonstrated by Perseverance/MOXIE), locating accessible subsurface water/ice, improving precision landing, and characterizing weather/dust hazards that would affect astronauts. These efforts are framed as building blocks toward eventual human missions and possible long-term settlement.</p>
+
+  </div>
+</div>
+</section>
+
+<section id="panel-flashcards" class="panel" role="tabpanel" aria-labelledby="flashcards">
+  <div class="filter-row" role="group" aria-label="Filter by chapter"><button class="filter-btn active" onclick="filterCards('all',this)">All</button><button class="filter-btn" onclick="filterCards('ch7',this)">Ch. 7</button><button class="filter-btn" onclick="filterCards('ch8',this)">Ch. 8</button><button class="filter-btn" onclick="filterCards('ch9',this)">Ch. 9</button><button class="filter-btn" onclick="filterCards('ch10',this)">Ch. 10</button></div>
+  <div class="fc-wrap">
+    <div class="fc-card" id="fc-card" onclick="flipCard()" aria-live="polite" tabindex="0" role="button" aria-label="Flashcard, tap to flip"></div>
+    <div class="fc-nav">
+      <button onclick="prevCard()" aria-label="Previous card">‹</button>
+      <span class="fc-counter" id="fc-counter">1 / 1</span>
+      <button onclick="nextCard()" aria-label="Next card">›</button>
+    </div>
+    <div class="fc-controls">
+      <button onclick="shuffleCards()">🔀 Shuffle</button>
+      <button id="fc-master-btn" onclick="toggleMastered(currentIndex)">☆ Mark mastered</button>
+    </div>
+  </div>
+</section>
+
+<section id="panel-quiz" class="panel" role="tabpanel" aria-labelledby="quiz">
+  <div class="filter-row" role="group" aria-label="Filter by chapter"><button class="filter-btn active" onclick="setQuizFilter('all',this)">All</button><button class="filter-btn" onclick="setQuizFilter('ch7',this)">Ch. 7</button><button class="filter-btn" onclick="setQuizFilter('ch8',this)">Ch. 8</button><button class="filter-btn" onclick="setQuizFilter('ch9',this)">Ch. 9</button><button class="filter-btn" onclick="setQuizFilter('ch10',this)">Ch. 10</button></div>
+  <div id="quiz-score"></div>
+  <div id="quiz-container"></div>
+  <div class="quiz-actions">
+    <button id="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <button onclick="resetQuiz()">↺ Reset</button>
+  </div>
+</section>
+
+<section id="panel-discussion" class="panel" role="tabpanel" aria-labelledby="discussion">
+  <p class="muted-note">Short-answer / discussion prep — self-grade using the checklist after you write your response. ~50% of the last exam was short-answer, so use these to build fluency.</p>
+  <div class="filter-row" role="group" aria-label="Filter by chapter"><button class="filter-btn active" onclick="filterDisc('all',this)">All</button><button class="filter-btn" onclick="filterDisc('ch7',this)">Ch. 7</button><button class="filter-btn" onclick="filterDisc('ch8',this)">Ch. 8</button><button class="filter-btn" onclick="filterDisc('ch9',this)">Ch. 9</button><button class="filter-btn" onclick="filterDisc('ch10',this)">Ch. 10</button></div>
+  <div id="disc-container"></div>
+</section>
+
+<section id="panel-notes" class="panel" role="tabpanel" aria-labelledby="notes">
+  
+<div class="lectures-panel">
+  <h3>🎥 Video Lectures (Dr. Endl) — study on the go</h3>
+  <p class="muted-note">Tap a link to open the lecture on YouTube. Great for reviewing while walking or commuting.</p>
+  <div class="video-group"><h4>Ch. 7 — Planet Earth</h4><ul class="video-list"><li><a href="https://youtu.be/M25IGVLF9f8" target="_blank" rel="noopener">Chapter 7 Lecture, Part 1</a></li><li><a href="https://youtu.be/HWswCbGfafE" target="_blank" rel="noopener">Chapter 7 Lecture, Part 2</a></li></ul></div><div class="video-group"><h4>Ch. 8 — Cratered Worlds: Moon & Mercury</h4><ul class="video-list"><li><a href="https://youtu.be/nNCJdZb77BI" target="_blank" rel="noopener">Chapter 8 Lecture, Part 1 (Moon)</a></li><li><a href="https://youtu.be/zVdiRnyRF2s" target="_blank" rel="noopener">Chapter 8 Lecture, Part 2 (Mercury)</a></li></ul></div><div class="video-group"><h4>Ch. 9 — Venus</h4><ul class="video-list"><li><a href="https://youtu.be/I2FvtrnDjHg" target="_blank" rel="noopener">Chapter 9 Lecture (52 min)</a></li></ul></div><div class="video-group"><h4>Ch. 10 — Mars</h4><ul class="video-list"><li><a href="https://youtu.be/rS2Uw240aD0" target="_blank" rel="noopener">Chapter 10 Lecture (56 min)</a></li></ul></div>
+</div>
+
+<div class="notes-grid">
+<div class="notes-col">
+<h4>Ch. 7 — Earth</h4>
+<p><strong>Interior:</strong> ____________________________</p>
+<p><strong>Differentiation:</strong> ____________________________</p>
+<p><strong>Plate tectonics evidence:</strong> ____________________________</p>
+<p><strong>Radiometric dating / half-life:</strong> ____________________________</p>
+<p><strong>Magnetic field / dynamo:</strong> ____________________________</p>
+<p><strong>Atmosphere layers &amp; composition:</strong> ____________________________</p>
+<p><strong>Greenhouse effect:</strong> ____________________________</p>
+<p><strong>Tides:</strong> ____________________________</p>
+<h4>Ch. 9 — Venus</h4>
+<p><strong>Rotation (243 vs 225 days):</strong> ____________________________</p>
+<p><strong>180° tilt / retrograde:</strong> ____________________________</p>
+<p><strong>Surface (T, P, features):</strong> ____________________________</p>
+<p><strong>Runaway greenhouse:</strong> ____________________________</p>
+<p><strong>No plate tectonics / resurfacing:</strong> ____________________________</p>
+</div>
+<div class="notes-col">
+<h4>Ch. 8 — Moon &amp; Mercury</h4>
+<p><strong>Moon properties &amp; interior:</strong> ____________________________</p>
+<p><strong>Giant Impact Theory:</strong> ____________________________</p>
+<p><strong>Roche limit:</strong> ____________________________</p>
+<p><strong>Synchronous rotation / orbital evolution:</strong> ____________________________</p>
+<p><strong>Mercury orbit &amp; 3:2 resonance:</strong> ____________________________</p>
+<p><strong>Mercury interior / formation models:</strong> ____________________________</p>
+<h4>Ch. 10 — Mars</h4>
+<p><strong>Orbit &amp; spin:</strong> ____________________________</p>
+<p><strong>Phobos &amp; Deimos:</strong> ____________________________</p>
+<p><strong>Missions:</strong> ____________________________</p>
+<p><strong>Geology (Tharsis, Olympus Mons, Valles Marineris):</strong> ____________________________</p>
+<p><strong>Atmosphere:</strong> ____________________________</p>
+<p><strong>Water / climate history:</strong> ____________________________</p>
+<p><strong>Future exploration:</strong> ____________________________</p>
+</div>
+</div>
+
+</section>
+
+</main>
+
+<footer>study.imichaelv.com · ASTR-1304-004 · Unit 2 · <a href="../../index.html" class="back-link footer-back-link">← Back to all courses</a></footer>
+
+<script>
+const FLASHCARDS_DATA = [{"ch": "ch7", "q": "What are Earth's four main interior layers, from center outward?", "a": "Inner core (solid, iron & nickel, ~1200 km) \u2192 outer core (liquid, iron & nickel, ~3500 km) \u2192 mantle (solid but flows, iron-rich rock, ~6400 km) \u2192 crust (solid, granite & basalt, 8\u201370 km thick)."}, {"ch": "ch7", "q": "How do we know Earth's outer core is liquid?", "a": "S-waves (shear waves) from earthquakes cannot travel through liquid, so they are blocked, creating an S-wave 'shadow zone' on the far side of the planet from a quake."}, {"ch": "ch7", "q": "What is differentiation?", "a": "The process by which a molten planet separates into layers as dense material (iron, nickel) sinks toward the center and lighter material floats toward the surface."}, {"ch": "ch7", "q": "Roughly how fast do tectonic plates move?", "a": "About 2\u201310 cm per year (e.g., Africa and South America took ~110 million years to separate to their current positions)."}, {"ch": "ch7", "q": "What drives plate tectonic motion?", "a": "Convective motion in the mantle, powered by the release of Earth's internal heat."}, {"ch": "ch7", "q": "What is a radioactive element's 'half-life'?", "a": "The time it takes for half of the atoms in a radioactive sample to decay into another element."}, {"ch": "ch7", "q": "What is uranium's half-life, and why does that matter for dating rocks?", "a": "4.5 \u00d7 10\u2079 years; by measuring the ratio of remaining uranium to the lead it decays into within a crystal, scientists can calculate the crystal's age."}, {"ch": "ch7", "q": "What gives the best estimate of the age of the solar system, and why not Earth rocks?", "a": "Meteorites (4.5662 \u00d7 10\u2079 years) and Moon rocks, because Earth's oldest rocks have been destroyed/altered by erosion and plate tectonics."}, {"ch": "ch7", "q": "What generates Earth's magnetic field?", "a": "Dynamo theory: rotation combined with convection of the electrically conducting, liquid outer core."}, {"ch": "ch7", "q": "What are the Van Allen belts?", "a": "Two doughnut-shaped zones of high-energy charged particles from the solar wind, trapped by Earth's magnetic field within the magnetosphere."}, {"ch": "ch7", "q": "What are the 4 layers of Earth's atmosphere, low to high?", "a": "Troposphere (0\u201312 km) \u2192 Stratosphere (up to 40\u201350 km, ozone layer) \u2192 Mesosphere (up to 50\u201380 km) \u2192 Ionosphere (above 80 km)."}, {"ch": "ch7", "q": "Where did most of Earth's atmospheric oxygen come from?", "a": "It is a product of life (photosynthesis); there was little free oxygen until about 2 billion years ago."}, {"ch": "ch7", "q": "How much warmer does the greenhouse effect make Earth?", "a": "About 40 K warmer than it would be without it."}, {"ch": "ch7", "q": "What are the three most important human-influenced greenhouse gases, and their main sources?", "a": "Carbon dioxide (fossil fuel/wood burning), methane (cattle & rice paddies), nitrous oxide (fertilizer, waste, auto exhaust)."}, {"ch": "ch7", "q": "What causes tides?", "a": "The difference in gravitational pull across the volume of a body \u2014 the near side is pulled more strongly than the far side, stretching the object into a bulge."}, {"ch": "ch8", "q": "Why is the Moon's core different from Earth's?", "a": "The Moon's low average density (3300 kg/m\u00b3 vs Earth's 5500) shows it is deficient in iron and other heavy metals, unlike Earth's nickel-iron core."}, {"ch": "ch8", "q": "What are the two main types of lunar surface terrain?", "a": "Dark maria (flat basaltic lava plains, e.g. Mare Imbrium) and lighter, elevated highlands."}, {"ch": "ch8", "q": "What is lunar regolith?", "a": "Surface dust produced by micrometeorite impacts, accumulating at roughly 5 m per billion years."}, {"ch": "ch8", "q": "What is the current best model for the Moon's formation?", "a": "The Giant Impact Theory: a Mars-sized object collided with the young Earth, ejecting material that formed the Moon."}, {"ch": "ch8", "q": "What two facts does the Giant Impact model explain?", "a": "The chemical similarity between Moon and Earth, and the Moon's lack of metals / low mean density."}, {"ch": "ch8", "q": "Define the Roche limit.", "a": "The minimum distance a large satellite can approach its primary body without being torn apart by tidal forces \u2014 about 2.5\u00d7 the primary's radius for similar-composition bodies."}, {"ch": "ch8", "q": "How far from Earth did the Moon form, and how far is it today?", "a": "It formed at roughly 15,000 km and has since migrated outward to about 380,000 km."}, {"ch": "ch8", "q": "What does 'synchronous rotation' mean for the Moon?", "a": "The Moon rotates once per orbit around Earth, so the same face always points toward Earth \u2014 caused by tidal locking, unrelated to lunar phases."}, {"ch": "ch8", "q": "What makes Mercury's orbit distinctive?", "a": "It is the most eccentric orbit of any planet (e = 0.21), with an 88-day period."}, {"ch": "ch8", "q": "How was Mercury's true rotation period measured?", "a": "1965 Arecibo radar observations found a 59-day rotation period (previously assumed to be tidally locked 1:1 with its 88-day orbit)."}, {"ch": "ch8", "q": "Explain Mercury's 3:2 spin-orbit resonance.", "a": "Mercury rotates 3 times for every 2 orbits (59 days = 2/3 of 88 days); its orbital eccentricity prevented it from settling into a simple 1:1 tidal lock."}, {"ch": "ch8", "q": "What does Mercury's high density imply about its interior?", "a": "A very large iron-rich core (~1800 km) with a relatively thin mantle (500\u2013600 km) \u2014 the highest metal-to-silicate ratio of any terrestrial planet."}, {"ch": "ch8", "q": "What did MESSENGER's Gamma-Ray Spectrometer rule out about Mercury's formation?", "a": "It ruled out the giant-impact and vaporization models, supporting formation from primitive, metal-rich material instead."}, {"ch": "ch8", "q": "What is the Caloris Basin?", "a": "A large impact crater on Mercury; seismic waves from the impact produced strange 'weird terrain' on the opposite side of the planet."}, {"ch": "ch9", "q": "Why is Venus called the morning/evening star?", "a": "Because its orbit lies inside Earth's, it never strays more than 47\u00b0 from the Sun and is only visible near dawn or dusk."}, {"ch": "ch9", "q": "How was Venus's rotation period measured, and what is it?", "a": "1960s Arecibo radar observations found a 243-day rotation period versus a 225-day orbital period \u2014 Venus's day is longer than its year."}, {"ch": "ch9", "q": "What is unusual about Venus's axial tilt?", "a": "It is tilted 177.4\u00b0, essentially upside down (retrograde rotation), likely from a massive early collision."}, {"ch": "ch9", "q": "What are Venus's surface temperature and pressure?", "a": "About 730 K (~860\u00b0F, hot enough to melt lead) and about 90 bars of pressure."}, {"ch": "ch9", "q": "What are Venus's two continent-sized highland regions?", "a": "Ishtar Terra and Aphrodite Terra, covering about 8% of the surface."}, {"ch": "ch9", "q": "What is Venus's atmosphere made of, and how does it compare to Earth's?", "a": "About 97% CO2, 3% nitrogen, with sulfuric acid clouds; roughly 90\u00d7 more massive than Earth's atmosphere."}, {"ch": "ch9", "q": "Why does Venus have a runaway greenhouse effect instead of Earth-like conditions?", "a": "Venus likely never had oceans to absorb CO2, so CO2 built up in its atmosphere rather than being locked into rock, trapping far more heat and driving surface temperature ever higher."}, {"ch": "ch9", "q": "What does Venus's high deuterium-to-hydrogen (D/H) ratio suggest?", "a": "That Venus once had more water, which underwent photodissociation (UV splitting H2O), after which lighter hydrogen escaped to space faster than heavier deuterium."}, {"ch": "ch9", "q": "Why doesn't Venus have plate tectonics like Earth?", "a": "Its lithosphere lacks water, making the crust too rigid for plate motion, even though internal heat must still escape some other way."}, {"ch": "ch9", "q": "What evidence suggests Venus was resurfaced relatively recently?", "a": "Crater counts suggest widespread volcanic resurfacing occurred about 500 million years ago; fluctuating sulfur dioxide levels hint volcanism may continue today."}, {"ch": "ch10", "q": "What sparked the popular idea of intelligent life/canals on Mars?", "a": "Percival Lowell's early-1900s drawings of apparent linear features ('canals'), later amplified by Orson Welles's 1938 War of the Worlds radio broadcast."}, {"ch": "ch10", "q": "What is Mars's orbital eccentricity and how does it affect sunlight?", "a": "0.093 \u2014 sunlight intensity varies by 45% between perihelion (1.38 AU) and aphelion (1.67 AU)."}, {"ch": "ch10", "q": "How do Phobos and Deimos compare to a typical planetary moon?", "a": "They resemble captured asteroids \u2014 small, irregular, and much less dense (~2000 kg/m\u00b3) than any inner solar system planet."}, {"ch": "ch10", "q": "Why does Phobos rise in the west and set in the east?", "a": "It orbits Mars faster than Mars rotates, so it overtakes the planet's spin (orbital period only 7h40m)."}, {"ch": "ch10", "q": "Which Mars mission achieved the first powered flight on another planet?", "a": "Perseverance's Ingenuity helicopter (landed with Mars 2020, Feb 18, 2021)."}, {"ch": "ch10", "q": "What is Olympus Mons and why can it be so tall?", "a": "The largest known volcano in the solar system (27 km tall, 600 km wide); its height is possible because Mars's surface gravity is much lower than Earth's."}, {"ch": "ch10", "q": "What is Valles Marineris and how did it form?", "a": "A 5000-km-long, up to 500-km-wide, 6-km-deep rift valley formed by tectonic activity, not by water erosion."}, {"ch": "ch10", "q": "What does Mars's north-south hemispheric asymmetry look like?", "a": "The northern hemisphere is lower, younger, crater-poor volcanic plains; the southern hemisphere is higher, older, and heavily cratered."}, {"ch": "ch10", "q": "What is Mars's atmosphere mostly made of, and how dense is it compared to Earth's?", "a": "About 95.3% CO2, 2.7% nitrogen, 1.6% argon; roughly 1/100 as massive as Earth's atmosphere."}, {"ch": "ch10", "q": "What happens to Mars's CO2 atmosphere at the poles in winter?", "a": "CO2 freezes out, forming seasonal polar caps over the permanent, water-ice residual caps."}, {"ch": "ch10", "q": "What does Mars's weak magnetic field suggest about its interior?", "a": "Combined with its rotation rate, it implies the core is nonmetallic, nonliquid, or both \u2014 Mars never differentiated as extensively as Earth."}, {"ch": "ch10", "q": "What is the difference between runoff channels and outflow channels on Mars?", "a": "Runoff channels are remains of ancient slow-flowing rivers; outflow channels were carved by catastrophic flash floods from the southern highlands into the northern plains."}, {"ch": "ch10", "q": "Where is most of Mars's water located today?", "a": "Locked in the polar ice caps and in subsurface permafrost/buried ice deposits."}, {"ch": "ch10", "q": "What technology did Perseverance test for future human missions?", "a": "Producing oxygen from the Martian atmosphere (MOXIE), among other landing and resource-identification technologies."}];
+const QUIZ_DATA = [{"ch": "ch7", "type": "mc", "q": "Which of Earth's interior layers is liquid?", "opts": ["Inner core", "Outer core", "Mantle", "Crust"], "ans": 1, "exp": "The outer core is liquid iron & nickel; the inner core is solid despite higher temperature because of extreme pressure."}, {"ch": "ch7", "type": "mc", "q": "What process explains why Earth has a dense core and lighter crust?", "opts": ["Radiometric decay", "Differentiation", "Plate tectonics", "Photodissociation"], "ans": 1, "exp": "Differentiation is the sinking of dense material and rising of light material in a once-molten Earth."}, {"ch": "ch7", "type": "mc", "q": "About how fast do tectonic plates typically move?", "opts": ["2\u201310 cm/year", "2\u201310 m/year", "2\u201310 km/year", "2\u201310 mm/century"], "ans": 0, "exp": "Continental drift proceeds at roughly 2\u201310 cm per year."}, {"ch": "ch7", "type": "mc", "q": "The half-life of a radioactive element is the time for:", "opts": ["All atoms to decay", "One quarter of atoms to decay", "Half of the atoms to decay", "The element to disappear entirely"], "ans": 2, "exp": "By definition, a half-life is the time for half of a sample to decay."}, {"ch": "ch7", "type": "mc", "q": "Which gives the best estimate of the age of the solar system?", "opts": ["Oldest Earth rocks", "Oldest lunar rocks and meteorites", "Deepest ocean sediments", "Ice core samples"], "ans": 1, "exp": "Earth's oldest rocks were erased by erosion/plate tectonics, so meteorites and Moon rocks (4.5+ billion years) give the best age estimate."}, {"ch": "ch7", "type": "mc", "q": "Earth's magnetic field is generated by:", "opts": ["Static charge in the crust", "Dynamo action in the rotating, convecting liquid outer core", "Solar wind pressure", "Radioactive decay in the mantle"], "ans": 1, "exp": "Dynamo theory requires both rotation and a conducting, convecting fluid \u2014 Earth's liquid outer core."}, {"ch": "ch7", "type": "mc", "q": "The Van Allen belts are:", "opts": ["Layers of Earth's crust", "Zones of trapped charged particles in the magnetosphere", "Ozone concentrations in the stratosphere", "Tectonic plate boundaries"], "ans": 1, "exp": "Van Allen belts are doughnut-shaped regions where the magnetosphere traps solar wind particles."}, {"ch": "ch7", "type": "mc", "q": "Which atmospheric layer contains the ozone layer?", "opts": ["Troposphere", "Stratosphere", "Mesosphere", "Ionosphere"], "ans": 1, "exp": "The stratosphere (up to 40\u201350 km) hosts the ozone layer, which absorbs UV radiation."}, {"ch": "ch7", "type": "mc", "q": "Almost all of Earth's atmospheric oxygen originated from:", "opts": ["Volcanic outgassing", "Comet impacts", "Biological life (photosynthesis)", "Solar wind"], "ans": 2, "exp": "Free oxygen is overwhelmingly a byproduct of life; there was little until ~2 billion years ago."}, {"ch": "ch7", "type": "mc", "q": "The main driver of the human-enhanced greenhouse effect since 1750 is increased:", "opts": ["Nitrogen and argon", "CO2, methane, and nitrous oxide", "Oxygen and hydrogen", "Ozone"], "ans": 1, "exp": "CO2 (fossil fuels), methane (livestock/rice), and nitrous oxide (fertilizer/exhaust) have all risen sharply since 1750."}, {"ch": "ch7", "type": "fitb", "q": "Tides are caused by the ___ of gravitational pull across the volume of a body.", "ans": ["difference", "variation", "gradient"], "display": "difference", "exp": "The near side of a body feels stronger gravity than the far side, stretching it into a tidal bulge."}, {"ch": "ch7", "type": "fitb", "q": "The process by which dense material sinks and light material rises in a molten planet is called ___.", "ans": ["differentiation"], "display": "differentiation", "exp": "Differentiation produced Earth's layered core-mantle-crust structure."}, {"ch": "ch7", "type": "fitb", "q": "Uranium's half-life is about ___ billion years.", "ans": ["4.5", "4.5 billion"], "display": "4.5", "exp": "Uranium decays to lead with a half-life of 4.5 \u00d7 10\u2079 years, used in radiometric dating."}, {"ch": "ch7", "type": "fitb", "q": "Earth's crust is broken into a dozen or so rigid chunks called tectonic ___.", "ans": ["plates"], "display": "plates", "exp": "Tectonic plates ride atop the convecting mantle."}, {"ch": "ch7", "type": "fitb", "q": "The greenhouse effect makes Earth's surface about ___ K warmer than it would otherwise be.", "ans": ["40"], "display": "40", "exp": "Without the natural greenhouse effect, Earth would be roughly 40 K colder."}, {"ch": "ch8", "type": "mc", "q": "Why is the Moon's core different from Earth's?", "opts": ["It's larger", "It's deficient in iron and heavy metals", "It's entirely liquid", "It's hotter than Earth's core"], "ans": 1, "exp": "The Moon's low average density (3300 kg/m\u00b3) shows it lacks Earth's nickel-iron-rich core."}, {"ch": "ch8", "type": "mc", "q": "What are lunar maria?", "opts": ["Impact craters", "Highland mountain ranges", "Dark, flat basaltic lava plains", "Regions of exposed metallic core"], "ans": 2, "exp": "Maria are extensive flat, dark basalt lava-flow plains, younger than the surrounding highlands."}, {"ch": "ch8", "type": "mc", "q": "The current best model for the Moon's formation is:", "opts": ["Capture of a passing asteroid", "Fission from a rapidly spinning Earth", "A Mars-sized impactor colliding with young Earth", "Simultaneous condensation with Earth from the solar nebula"], "ans": 2, "exp": "The Giant Impact Theory best explains the Moon's chemistry and lack of metals."}, {"ch": "ch8", "type": "mc", "q": "The Roche limit is defined as:", "opts": ["The maximum orbital distance of any moon", "The minimum distance a satellite can orbit before tidal forces tear it apart", "The distance at which a moon becomes tidally locked", "The boundary of a planet's magnetosphere"], "ans": 1, "exp": "Inside the Roche limit, tidal forces exceed a satellite's self-gravity/structural strength."}, {"ch": "ch8", "type": "mc", "q": "The Moon's synchronous rotation means:", "opts": ["It doesn't rotate at all", "It rotates once per orbit, showing the same face to Earth", "It rotates faster than it orbits", "Its rotation period changes with the phases"], "ans": 1, "exp": "Tidal locking causes one rotation per orbit \u2014 unrelated to lunar phases."}, {"ch": "ch8", "type": "mc", "q": "Mercury's orbital eccentricity is:", "opts": ["0.01, nearly circular", "0.21, the most eccentric of any planet", "0.5, extremely elongated", "0.9, nearly a straight line"], "ans": 1, "exp": "Mercury's e = 0.21 makes it the most eccentric planetary orbit in the solar system."}, {"ch": "ch8", "type": "mc", "q": "Mercury's rotation period, measured by Arecibo radar, is:", "opts": ["24 hours", "88 days (synchronous with orbit)", "59 days", "243 days"], "ans": 2, "exp": "59 days \u2014 two-thirds of its 88-day orbital period, giving the 3:2 spin-orbit resonance."}, {"ch": "ch8", "type": "mc", "q": "Why didn't Mercury settle into a simple 1:1 tidal lock like the Moon?", "opts": ["It rotates too fast", "Its orbit is too eccentric", "It lacks a magnetic field", "It has no tidal bulge"], "ans": 1, "exp": "Mercury's eccentric orbit varies the tidal force enough to favor the 3:2 resonance over 1:1 lock."}, {"ch": "ch8", "type": "mc", "q": "Mercury's high average density implies:", "opts": ["A thick, low-density mantle", "A very large, iron-rich core", "No core at all", "A core made mostly of ice"], "ans": 1, "exp": "Mercury has the highest metal-to-silicate ratio of the terrestrial planets \u2014 an oversized iron core (~1800 km)."}, {"ch": "ch8", "type": "mc", "q": "MESSENGER's GRS measurements ruled out which formation models for Mercury?", "opts": ["Primitive material and giant impact", "Giant impact and vaporization", "Vaporization and primitive material", "None; all remain viable"], "ans": 1, "exp": "GRS data ruled out giant-impact and vaporization models, favoring formation from primitive metal-rich material."}, {"ch": "ch8", "type": "fitb", "q": "The minimum distance a satellite can approach its primary without being torn apart by tidal forces is called the ___ limit.", "ans": ["Roche"], "display": "Roche", "exp": "Named after French astronomer \u00c9douard Roche."}, {"ch": "ch8", "type": "fitb", "q": "Mercury completes 3 rotations for every 2 orbits \u2014 a ___:___ spin-orbit resonance.", "ans": ["3:2", "3 2", "3-2"], "display": "3:2", "exp": "This resonance arises because of Mercury's orbital eccentricity."}, {"ch": "ch8", "type": "fitb", "q": "The Moon's dark, flat lava plains are called ___.", "ans": ["maria"], "display": "maria", "exp": "Maria (Latin for 'seas') are ancient basaltic lava flows."}, {"ch": "ch8", "type": "fitb", "q": "The large impact crater on Mercury, opposite the strange 'weird terrain,' is the ___ Basin.", "ans": ["Caloris"], "display": "Caloris", "exp": "Seismic waves from the Caloris impact produced jumbled terrain on the far side of Mercury."}, {"ch": "ch8", "type": "fitb", "q": "The Moon likely formed about 15,000 km from Earth and has since migrated to about ___ km.", "ans": ["380000", "380,000"], "display": "380,000", "exp": "Tidal interaction has driven the Moon's slow outward migration over billions of years."}, {"ch": "ch9", "type": "mc", "q": "Why is Venus never visible in the middle of the night?", "opts": ["Its orbit lies inside Earth's, keeping it within 47\u00b0 of the Sun", "It has no reflective clouds", "It's too small to see at night", "Its rotation blocks nighttime viewing"], "ans": 0, "exp": "Venus's inner orbit limits its maximum angular separation from the Sun to 47\u00b0."}, {"ch": "ch9", "type": "mc", "q": "Venus's rotation period compared to its orbital period is:", "opts": ["Much shorter (fast spinner)", "About equal (tidally locked)", "Longer \u2014 its day exceeds its year", "Impossible to measure"], "ans": 2, "exp": "Venus rotates once every 243 days but orbits the Sun in 225 days."}, {"ch": "ch9", "type": "mc", "q": "Venus's axial tilt of 177.4\u00b0 means its rotation is:", "opts": ["Prograde and typical", "Retrograde (essentially upside down)", "Zero tilt", "Identical to Earth's"], "ans": 1, "exp": "A tilt near 180\u00b0 indicates retrograde rotation, likely from an ancient massive collision."}, {"ch": "ch9", "type": "mc", "q": "Venus's surface pressure is approximately:", "opts": ["1 bar", "10 bars", "90 bars", "900 bars"], "ans": 2, "exp": "Surface pressure on Venus is about 90 times that of Earth."}, {"ch": "ch9", "type": "mc", "q": "Venus's atmosphere is primarily composed of:", "opts": ["Nitrogen and oxygen", "Carbon dioxide (~97%) with sulfuric acid clouds", "Hydrogen and helium", "Methane and ammonia"], "ans": 1, "exp": "About 97% CO2 and 3% nitrogen, with sulfuric acid cloud layers."}, {"ch": "ch9", "type": "mc", "q": "The main reason Venus, not Mercury, has the hottest surface in the solar system is:", "opts": ["Venus is closer to the Sun", "Venus's runaway greenhouse effect from its dense CO2 atmosphere", "Venus has more volcanoes", "Venus rotates faster"], "ans": 1, "exp": "Despite being farther from the Sun than Mercury, Venus's thick CO2 atmosphere traps far more heat."}, {"ch": "ch9", "type": "mc", "q": "Venus's high deuterium-to-hydrogen ratio is evidence that:", "opts": ["Venus never had any water", "Venus lost hydrogen to space after water photodissociation", "Venus has active oceans today", "Deuterium is created by volcanism"], "ans": 1, "exp": "Lighter hydrogen escaped to space faster than heavier deuterium after UV light split water molecules."}, {"ch": "ch9", "type": "mc", "q": "Why doesn't Venus have Earth-style plate tectonics?", "opts": ["Its crust is too thin", "Its lithosphere lacks water, making it too rigid", "It has no internal heat", "Its core is too large"], "ans": 1, "exp": "Without water in the lithosphere, Venus's crust is too rigid for plate motion."}, {"ch": "ch9", "type": "fitb", "q": "Venus's two continent-sized highland regions are Ishtar Terra and ___ Terra.", "ans": ["Aphrodite"], "display": "Aphrodite", "exp": "Together they cover about 8% of Venus's surface."}, {"ch": "ch9", "type": "fitb", "q": "Radar mapping of Venus was performed by the ___ spacecraft.", "ans": ["Magellan"], "display": "Magellan", "exp": "The Magellan probe produced near-global radar topographic maps of Venus."}, {"ch": "ch9", "type": "fitb", "q": "Venus's surface appears to have been resurfaced by volcanism about ___ million years ago.", "ans": ["500"], "display": "500", "exp": "Crater counts suggest a relatively young, globally resurfaced Venusian crust."}, {"ch": "ch10", "type": "mc", "q": "Percival Lowell's drawings of Mars famously depicted:", "opts": ["Volcanoes", "Polar ice caps", "Straight-line 'canals'", "Dust storms"], "ans": 2, "exp": "Lowell interpreted faint linear features as artificial canals, fueling speculation about Martian civilization."}, {"ch": "ch10", "type": "mc", "q": "Mars's orbital eccentricity causes sunlight intensity to vary by about:", "opts": ["5%", "15%", "45%", "90%"], "ans": 2, "exp": "Between perihelion (1.38 AU) and aphelion (1.67 AU), sunlight varies by roughly 45%."}, {"ch": "ch10", "type": "mc", "q": "Phobos appears to rise in the west and set in the east because:", "opts": ["Mars rotates backward", "Phobos orbits faster than Mars rotates", "Phobos has a retrograde orbit", "It's an optical illusion from dust"], "ans": 1, "exp": "Phobos's 7h40m orbital period is much shorter than Mars's rotation period, so it overtakes the planet's spin."}, {"ch": "ch10", "type": "mc", "q": "Which Mars mission first confirmed a mix of moon-like and Earth-like surface features?", "opts": ["Viking 1", "Mariner 9", "Curiosity", "Perseverance"], "ans": 1, "exp": "Mariner 9 (1971), the first probe to orbit Mars, revealed craters alongside canyons and volcanoes."}, {"ch": "ch10", "type": "mc", "q": "Olympus Mons is notable for being:", "opts": ["The deepest canyon in the solar system", "The largest known volcano in the solar system", "An active supervolcano", "Located in the Hellas Basin"], "ans": 1, "exp": "Olympus Mons stands 27 km tall and 600 km across, the largest known volcano anywhere in the solar system."}, {"ch": "ch10", "type": "mc", "q": "Valles Marineris was formed by:", "opts": ["Water erosion", "Meteorite impact", "Tectonic rifting", "Wind erosion"], "ans": 2, "exp": "It's a tectonic rift valley, not a water-carved canyon."}, {"ch": "ch10", "type": "mc", "q": "Mars's atmosphere is roughly what fraction of Earth's mass density?", "opts": ["1/2", "1/10", "1/100", "1/1000"], "ans": 2, "exp": "Mars's atmosphere is about 1/100 as massive as Earth's."}, {"ch": "ch10", "type": "mc", "q": "In winter, Mars's seasonal polar caps form primarily from:", "opts": ["Water ice", "Frozen carbon dioxide (dry ice)", "Frozen nitrogen", "Frozen methane"], "ans": 1, "exp": "CO2 freezes out of the thin atmosphere at the poles in winter, forming seasonal dry-ice caps over the permanent water-ice caps."}, {"ch": "ch10", "type": "mc", "q": "Mars's weak magnetic field, combined with its rotation, suggests:", "opts": ["A liquid metallic core like Earth's", "A nonmetallic and/or nonliquid core", "No core at all", "An extremely strong dynamo"], "ans": 1, "exp": "The weak field implies Mars's core lacks the conditions (liquid + conducting) needed for a strong dynamo."}, {"ch": "ch10", "type": "mc", "q": "Perseverance's Ingenuity helicopter achieved:", "opts": ["First Mars sample return", "First powered flight on another planet", "First manned Mars landing", "First Mars orbit insertion"], "ans": 1, "exp": "Ingenuity's 2021 flight was the first powered, controlled flight on another planet."}, {"ch": "ch10", "type": "fitb", "q": "Runoff channels on Mars are the remains of ancient ___.", "ans": ["rivers"], "display": "rivers", "exp": "Runoff channels indicate slow, sustained water flow in Mars's past."}, {"ch": "ch10", "type": "fitb", "q": "Mars's two small moons are named Phobos and ___.", "ans": ["Deimos"], "display": "Deimos", "exp": "Both are named after sons of Ares (Mars) in Greek mythology."}, {"ch": "ch10", "type": "fitb", "q": "The giant impact basin on the opposite side of Mars from the Tharsis bulge is the ___ Basin.", "ans": ["Hellas"], "display": "Hellas", "exp": "Hellas Basin is the site of a violent early meteoritic impact."}, {"ch": "ch10", "type": "fitb", "q": "NASA's Perseverance technology demonstration for producing oxygen from the Martian atmosphere is called ___.", "ans": ["MOXIE"], "display": "MOXIE", "exp": "MOXIE (Mars Oxygen In-Situ Resource Utilization Experiment) tests oxygen production for future human missions."}];
+const DISC_DATA = [{"ch": "ch7", "q": "Describe Earth's interior structure, including how we know what's inside a planet we can't drill into.", "points": [{"text": "<strong>Layers</strong> \u2014 names Earth's four layers (inner core, outer core, mantle, crust) with rough composition/state"}, {"text": "<strong>Seismic evidence</strong> \u2014 explains that P- and S-waves from earthquakes are used to probe the interior"}, {"text": "<strong>Shadow zones</strong> \u2014 connects the S-wave shadow zone to the existence of a liquid outer core"}], "model": "Earth has four main layers: a solid inner core (iron/nickel, ~1200 km), a liquid outer core (iron/nickel, ~3500 km), a solid but slowly flowing mantle (iron-rich rock, up to ~6400 km), and a thin solid crust (granite/basalt, 8\u201370 km). We can't drill deep enough to sample these layers directly, so geologists use seismic waves generated by earthquakes. P-waves (pressure) travel through solids and liquids; S-waves (shear) only travel through solids. Because S-waves never reach the far side of Earth from a quake, geologists concluded a liquid layer (the outer core) must be blocking them \u2014 this 'shadow zone' evidence, combined with modeling of density and temperature, is how the layered interior model was built."}, {"ch": "ch7", "q": "Explain the process of differentiation and why Earth ended up with a layered structure instead of being uniform throughout.", "points": [{"text": "<strong>Definition</strong> \u2014 defines differentiation as separation by density in a molten body"}, {"text": "<strong>Cause</strong> \u2014 identifies that early Earth was largely molten (from accretion energy and radioactive decay), allowing material to sort by density"}, {"text": "<strong>Result</strong> \u2014 connects differentiation to the layered core/mantle/crust structure and floating continents"}], "model": "Differentiation is the sorting of material by density that occurs when a planet is (or was) molten. Early Earth was heated by the energy of accretion (infalling material) and by radioactive decay, becoming largely molten. In that molten state, dense material like iron and nickel sank toward the center while lighter, rocky material floated toward the surface. This produced Earth's layered structure: a dense metallic core, an intermediate-density mantle, and a low-density crust. It's also why continents (made of lighter granite) float above the denser basaltic ocean crust and mantle, rather than sinking."}, {"ch": "ch7", "q": "Explain plate tectonics: what plates are, why they move, and what evidence supports the theory.", "points": [{"text": "<strong>What plates are</strong> \u2014 describes the crust as broken into a dozen or so rigid tectonic plates"}, {"text": "<strong>Driving mechanism</strong> \u2014 attributes plate motion to mantle convection powered by internal heat"}, {"text": "<strong>Evidence</strong> \u2014 cites a specific piece of evidence (e.g., continental drift rates, magnetic striping at mid-ocean ridges)"}], "model": "Earth's basaltic crust is broken into roughly a dozen rigid tectonic plates that ride atop the mantle. These plates move because the mantle beneath them convects \u2014 hot material rises, cools, and sinks in a slow circulation driven by Earth's internal heat, dragging the plates along at typically 2\u201310 cm per year (continental drift). One strong piece of supporting evidence is the magnetic striping found on the seafloor near mid-ocean ridges like the Mid-Atlantic Ridge: as new crust forms and spreads outward from the ridge, it records the orientation of Earth's magnetic field at the time it solidified, and the field's periodic reversals show up as symmetric, mirrored stripes on either side of the ridge \u2014 direct evidence that the seafloor (and the plates it's part of) is spreading over time."}, {"ch": "ch7", "q": "Explain how radiometric dating works and why it gives us the age of the Earth, the Moon, and meteorites.", "points": [{"text": "<strong>Half-life concept</strong> \u2014 defines half-life and gives uranium's value (4.5 billion years)"}, {"text": "<strong>Method</strong> \u2014 explains that measuring the ratio of parent to decay-product element in a crystal reveals its age"}, {"text": "<strong>Application</strong> \u2014 notes why meteorites/Moon rocks (not Earth rocks) give the best solar system age estimate"}], "model": "Radioactive elements decay into other elements at a fixed rate described by their half-life \u2014 the time for half of the atoms in a sample to decay. Uranium, for example, has a half-life of 4.5 billion years, decaying into lead. When a crystal solidifies, it traps a certain amount of the parent element; over time, a known fraction converts to the decay product. By measuring the present-day ratio of uranium to lead in a crystal, scientists calculate how long the decay has been happening \u2014 the crystal's age. Earth's oldest surviving crystals (zircons) are about 4.03 billion years old, but erosion and plate tectonics have destroyed Earth's very oldest rocks. Because the Moon and meteorites lack these erasing processes, their oldest samples (4.5\u20134.57 billion years) give the most reliable estimate of the age of the whole solar system."}, {"ch": "ch7", "q": "Describe Earth's magnetic field: what generates it, and what does it protect us from?", "points": [{"text": "<strong>Dynamo theory</strong> \u2014 explains the field is generated by rotation + convection in the liquid, conducting outer core"}, {"text": "<strong>Magnetosphere/Van Allen belts</strong> \u2014 describes the region the field creates and the trapped particles within it"}, {"text": "<strong>Protective role</strong> \u2014 explains what the field shields Earth (and life) from"}], "model": "Earth's magnetic field is produced by dynamo theory: the combination of rapid planetary rotation and convection within the liquid, electrically conducting outer core generates electric currents that in turn produce a magnetic field, similar in structure to a giant bar magnet. This field extends far above the atmosphere as the magnetosphere, which traps charged particles from the solar wind into two doughnut-shaped regions called the Van Allen belts. By deflecting and trapping these energetic particles, the magnetosphere protects Earth's atmosphere and surface life from being directly bombarded by solar wind, which over long timescales could otherwise strip away the atmosphere (as appears to have happened on Mars, which lacks a strong field)."}, {"ch": "ch7", "q": "Describe the general composition and layered structure of Earth's atmosphere.", "points": [{"text": "<strong>Composition</strong> \u2014 lists the major gases and approximate percentages (N2, O2, etc.)"}, {"text": "<strong>Layers</strong> \u2014 names the atmospheric layers in order and a defining feature of each"}, {"text": "<strong>Origin</strong> \u2014 notes that oxygen mostly comes from life, not the original atmosphere"}], "model": "Earth's present atmosphere is about 78% nitrogen, 21% oxygen, with variable water vapor (0.1\u20133%), 0.9% argon, and only 0.03% carbon dioxide. It's structured in layers: the troposphere (0\u201312 km) where weather and convection occur; the stratosphere (up to 40\u201350 km) containing the ozone layer, which absorbs UV radiation; the mesosphere (up to 50\u201380 km); and the ionosphere (above 80 km), ionized by UV radiation. Notably, almost all of the atmosphere's free oxygen is a byproduct of life (photosynthesis) rather than part of the original volcanic outgassing \u2014 there was very little free oxygen until roughly 2 billion years ago."}, {"ch": "ch7", "q": "Explain how the greenhouse effect works and how human activity has enhanced it.", "points": [{"text": "<strong>Mechanism</strong> \u2014 explains how greenhouse gases trap outgoing infrared radiation"}, {"text": "<strong>Natural magnitude</strong> \u2014 states the natural greenhouse effect warms Earth by about 40 K"}, {"text": "<strong>Human enhancement</strong> \u2014 names the key gases increased since 1750 and their sources"}], "model": "The greenhouse effect occurs because infrared radiation emitted by Earth's warm surface is partially absorbed by greenhouse gases like CO2 in the atmosphere, and then re-emitted in all directions \u2014 including back down toward the surface. This extra downward energy keeps the surface roughly 40 K warmer than it would be without any greenhouse gases at all. Since 1750, human activity has substantially increased the three most important greenhouse gases: carbon dioxide (~30% increase, mainly from burning fossil fuels and wood), methane (~140% increase, mainly from cattle and rice paddies), and nitrous oxide (~15% increase, from fertilizer, waste, and auto exhaust) \u2014 enhancing the natural greenhouse effect and warming the planet further."}, {"ch": "ch7", "q": "Explain how tides work and how they connect to gravity.", "points": [{"text": "<strong>Cause</strong> \u2014 identifies tides as a secondary/differential effect of gravity, not gravity itself"}, {"text": "<strong>Mechanism</strong> \u2014 explains that near and far sides of a body feel different gravitational pull, creating a stretching bulge"}, {"text": "<strong>Broader connection</strong> \u2014 connects tidal forces to related phenomena discussed in the unit (e.g., tidal locking, the Roche limit)"}], "model": "Tides are a secondary effect of gravity: because gravitational pull weakens with distance, the side of an object facing a nearby massive body (like the Moon) is pulled more strongly than the far side. This difference in pull across the object's volume stretches it, raising bulges on both the near and far sides. The same underlying tidal force is responsible for related phenomena covered elsewhere in this unit \u2014 it's what tidally locks the Moon into synchronous rotation with Earth, and it's what defines the Roche limit, the distance inside which tidal stresses would tear a satellite apart."}, {"ch": "ch8", "q": "Describe the major physical properties of the Moon and how they compare to Earth's.", "points": [{"text": "<strong>Key numbers</strong> \u2014 cites at least two physical properties (mass, radius, density, gravity) compared to Earth"}, {"text": "<strong>Surface</strong> \u2014 describes maria and highlands and how they differ"}, {"text": "<strong>Lack of atmosphere</strong> \u2014 connects the absence of atmosphere to surface conditions (cratering, temperature swings)"}], "model": "The Moon is much smaller and less dense than Earth: 7.3\u00d710\u00b2\u00b2 kg versus Earth's 6\u00d710\u00b2\u2074 kg, a radius of 1700 km versus 6400 km, a density of 3300 kg/m\u00b3 versus 5500 kg/m\u00b3, and only 1/6 of Earth's surface gravity. Its surface shows two contrasting terrains: dark, flat maria formed by ancient basaltic lava flows, and lighter, elevated highlands made of older, aluminum-rich rock. With no atmosphere, the Moon has no protection from meteoroid impacts (craters cover the entire surface) and no insulation, so its surface temperature swings widely, from about 100 K to 400 K."}, {"ch": "ch8", "q": "What does the Moon's interior structure and composition tell us, especially regarding metals?", "points": [{"text": "<strong>Density clue</strong> \u2014 connects the Moon's low average density to a metal-poor interior"}, {"text": "<strong>Comparison to Earth</strong> \u2014 contrasts with Earth's nickel-iron core"}, {"text": "<strong>Magnetic field implication</strong> \u2014 links the lack of a strong core to the absence of a lunar magnetic field"}], "model": "The Moon's average density (3300 kg/m\u00b3) is much lower than Earth's (5500 kg/m\u00b3), indicating the Moon is deficient in iron and other heavy metals compared to Earth \u2014 unlike Earth, it doesn't have a large nickel-iron core. Its inner core is small (~200 km, ~1500 K). Because there's no large, rapidly rotating liquid metallic core to drive a dynamo, the Moon shows no evidence of a significant global magnetic field. This metal deficiency is one of the key clues used to test models of the Moon's formation."}, {"ch": "ch8", "q": "Explain the Giant Impact Theory for the Moon's formation and why it's currently the best-supported model.", "points": [{"text": "<strong>The theory</strong> \u2014 describes a Mars-sized object colliding with early Earth"}, {"text": "<strong>Context</strong> \u2014 notes such collisions were common in the young solar system"}, {"text": "<strong>Evidence it explains</strong> \u2014 names at least one observation the model successfully explains (chemical similarity, lack of metals)"}], "model": "The current best model for the Moon's formation is the Giant Impact Theory: a Mars-sized planetary body collided with the young Earth, ejecting a large amount of debris \u2014 mostly from Earth's rocky mantle \u2014 into orbit, which then coalesced into the Moon. Such massive collisions were common during the early, chaotic period of solar system formation. This model is favored because it successfully explains two otherwise puzzling observations at once: the strong chemical similarity between the Moon and Earth's mantle (since much of the Moon-forming material came from Earth), and the Moon's deficiency in metals and low overall density (since the metallic cores of both Earth and the impactor mostly merged with Earth rather than ending up in the ejected debris)."}, {"ch": "ch8", "q": "Explain the concept of the Roche limit and how it relates to the Moon's history.", "points": [{"text": "<strong>Definition</strong> \u2014 defines the Roche limit as the tidal-disruption distance"}, {"text": "<strong>Formula/magnitude</strong> \u2014 gives the rough rule (~2.5\u00d7 the primary's radius for similar composition)"}, {"text": "<strong>Application to the Moon</strong> \u2014 connects the concept to where/how close the Moon formed"}], "model": "The Roche limit is the minimum distance at which a large satellite can orbit its primary body without being torn apart by tidal forces; for bodies of similar composition, it's roughly 2.5 times the radius of the larger body. Inside this limit, tidal stretching forces exceed the satellite's own gravitational cohesion. This concept matters for the Moon because it likely formed just outside Earth's Roche limit, at only about 15,000 km \u2014 much too close to survive today, but stable enough at formation to gradually coalesce and then migrate outward over billions of years to its current distance of about 380,000 km."}, {"ch": "ch8", "q": "Explain the Moon's synchronous rotation and how tidal forces have driven its orbital evolution over time.", "points": [{"text": "<strong>Synchronous rotation</strong> \u2014 explains that the Moon rotates once per orbit, always showing the same face"}, {"text": "<strong>Cause</strong> \u2014 attributes this to tidal locking from Earth-Moon gravitational interaction, not lunar phases"}, {"text": "<strong>Orbital evolution</strong> \u2014 describes the Moon's outward migration from ~15,000 km to ~380,000 km over time"}], "model": "The Moon is in synchronous (tidally locked) rotation: it rotates exactly once for every orbit around Earth, so the same hemisphere always faces us \u2014 a coincidence unrelated to lunar phases, which are caused by changing sunlight angles, not rotation. This locking happened because tidal bulges raised on the Moon by Earth's gravity (larger when the two bodies were much closer together) created a torque that gradually slowed the Moon's spin until it matched its orbital period. That same tidal interaction continues today: it is slowly transferring angular momentum from Earth's spin to the Moon's orbit, causing the Moon to spiral outward \u2014 from an initial distance of roughly 15,000 km to its current ~380,000 km \u2014 while very gradually slowing Earth's rotation."}, {"ch": "ch8", "q": "Describe Mercury's eccentric orbit and how it affects observing conditions from Earth.", "points": [{"text": "<strong>Eccentricity value</strong> \u2014 states Mercury's orbital eccentricity (0.21) and that it's the highest of any planet"}, {"text": "<strong>Orbital period</strong> \u2014 gives Mercury's 88-day orbital period"}, {"text": "<strong>Observing difficulty</strong> \u2014 explains why Mercury is hard to see from Earth"}], "model": "Mercury has the most eccentric orbit of any planet, with e = 0.21, and completes one orbit every 88 days. Because Mercury orbits so close to the Sun, it never appears far from it in Earth's sky \u2014 it's only visible briefly, for at most about two hours, just before sunrise or just after sunset, low on the horizon near dawn or dusk. This combination of proximity to the Sun and a highly eccentric orbit makes Mercury one of the more challenging planets to observe from Earth."}, {"ch": "ch8", "q": "Explain how astronomers measured Mercury's true rotation period, and why earlier estimates were wrong.", "points": [{"text": "<strong>Earlier assumption</strong> \u2014 notes the historical (incorrect) assumption of a synchronous 1:1 rotation"}, {"text": "<strong>Method</strong> \u2014 identifies Arecibo radar observations (1965) as the technique that revealed the true period"}, {"text": "<strong>Result</strong> \u2014 states the measured 59-day rotation period"}], "model": "In the mid-19th century, Giovanni Schiaparelli proposed that Mercury was tidally locked in synchronous (1:1) rotation with the Sun, similar to the Moon's relationship with Earth, based on the assumption that solar tides had fixed one side permanently toward the Sun. This was overturned in 1965, when Arecibo radio telescope radar observations directly measured Mercury's rotation by bouncing radar signals off the surface and analyzing the Doppler shift. These measurements revealed an orbital period of 88 days but a rotation period of only 59 days \u2014 proving Mercury does rotate relative to the Sun, just not synchronously."}, {"ch": "ch8", "q": "Explain how the 3:2 spin-orbit resonance works for Mercury.", "points": [{"text": "<strong>The ratio</strong> \u2014 states that Mercury rotates 3 times for every 2 orbits (59 days vs. 88 days)"}, {"text": "<strong>Why not 1:1</strong> \u2014 explains that Mercury's orbital eccentricity prevented a simple synchronous lock"}, {"text": "<strong>Consequence</strong> \u2014 describes a resulting effect, e.g. extreme dayside/poleside temperature contrast"}], "model": "Mercury's 59-day rotation period is exactly two-thirds of its 88-day orbital period, meaning it completes 3 full rotations for every 2 orbits around the Sun \u2014 a 3:2 spin-orbit resonance. This happens instead of a simple 1:1 synchronous lock because Mercury's orbit is quite eccentric: the strength of the tidal torque varies significantly as Mercury's distance from the Sun changes over an orbit, and this variation stabilizes the 3:2 ratio rather than a straightforward 1:1 lock. One dramatic consequence is Mercury's extreme temperature range: dayside temperatures reach 700 K, while at the poles, where the Sun sits perpetually near the horizon, temperatures stay around 125 K."}, {"ch": "ch8", "q": "Describe Mercury's unique metallic interior and what evidence supports it.", "points": [{"text": "<strong>Density evidence</strong> \u2014 cites Mercury's high average density as the clue to its composition"}, {"text": "<strong>Core size</strong> \u2014 describes the unusually large iron-rich core relative to the mantle"}, {"text": "<strong>Magnetic field</strong> \u2014 connects the metallic core to Mercury's (weak but present) magnetic field via dynamo action"}], "model": "Mercury's average density (5400 kg/m\u00b3, nearly equal to Earth's 5500 despite Mercury being much smaller) reveals it has the highest metal-to-silicate ratio of any terrestrial planet. Models suggest Mercury has an unusually large iron-rich core, roughly 1800 km in radius, with a comparatively thin mantle of only 500\u2013600 km. Despite Mercury's slow rotation, this partially molten metallic core still generates a weak magnetic field (about 1/100 of Earth's strength) through dynamo action, and observed short-term changes in the field suggest the core remains at least partly liquid today."}, {"ch": "ch8", "q": "Describe the problems that Mercury's formation poses for planet-formation models, and how they've been addressed.", "points": [{"text": "<strong>The puzzle</strong> \u2014 identifies Mercury's unusually high metal-to-silicate ratio as the central problem"}, {"text": "<strong>Competing models</strong> \u2014 names at least two of the three proposed explanations"}, {"text": "<strong>Resolution</strong> \u2014 describes how MESSENGER's GRS data narrowed down the possibilities"}], "model": "Mercury's unusually high metal-to-silicate ratio compared to Venus, Earth, and Mars has long puzzled planetary scientists, since it's not what standard solar-nebula formation models would predict at Mercury's distance from the Sun. Three models were proposed: (1) a giant impact stripped away much of Mercury's original silicate mantle, (2) intense early solar heat vaporized surface silicates and blew them away, or (3) Mercury simply formed from primitive, metal-rich material (similar to certain chondritic meteorites) rather than losing material afterward. MESSENGER's Gamma-Ray Spectrometer measured the abundances of potassium, thorium, and uranium on Mercury's surface \u2014 elements that would have been depleted by a giant impact or vaporization event \u2014 and found levels inconsistent with those two models, instead supporting formation from primitive material."}, {"ch": "ch9", "q": "Explain why Venus appears as the 'morning star' or 'evening star' and describe its visibility from Earth.", "points": [{"text": "<strong>Orbital geometry</strong> \u2014 explains that Venus's orbit lies inside Earth's"}, {"text": "<strong>Maximum elongation</strong> \u2014 states Venus never strays more than 47\u00b0 from the Sun"}, {"text": "<strong>Visibility</strong> \u2014 describes when/how long Venus is visible"}], "model": "Venus orbits the Sun at a smaller radius than Earth, so as seen from Earth it can never appear far from the Sun in the sky \u2014 its maximum angular separation ('greatest elongation') is about 47\u00b0. This means Venus is only ever visible shortly before sunrise or shortly after sunset, never in the middle of the night, giving rise to its nicknames 'morning star' and 'evening star' even though it is a planet, not a star. It's the third-brightest object in the sky after the Sun and Moon, visible for up to about 6 hours a night."}, {"ch": "ch9", "q": "Explain how astronomers measured Venus's very slow rotation, and what makes the result unusual.", "points": [{"text": "<strong>Obstacle</strong> \u2014 notes Venus's thick clouds prevent direct visual observation of surface features"}, {"text": "<strong>Method</strong> \u2014 identifies Arecibo radar observations as the technique used"}, {"text": "<strong>Result</strong> \u2014 states the 243-day rotation vs. 225-day orbital period, and that the day is longer than the year"}], "model": "Venus's permanent, thick cloud cover makes it impossible to track surface features visually to determine its rotation, which led to early, incorrect guesses of a 24-hour or 25-day period. In the 1960s, astronomers used Arecibo radar, which can penetrate the clouds, to bounce radio waves off the solid surface and measure the Doppler shift as the planet rotated. This revealed a rotation period of 243 days, compared to an orbital period of only 225 days \u2014 meaning Venus's 'day' (one rotation) is actually longer than its 'year' (one orbit), a genuinely unusual result among the planets."}, {"ch": "ch9", "q": "Describe Venus's unique 180-degree axis tilt and what it implies about the planet's history.", "points": [{"text": "<strong>Tilt value</strong> \u2014 states the 177.4\u00b0 tilt and that this makes rotation retrograde"}, {"text": "<strong>Comparison</strong> \u2014 contrasts with a 'normal' small axial tilt like Earth's"}, {"text": "<strong>Likely cause</strong> \u2014 proposes a massive early collision as the explanation"}], "model": "Venus's rotation axis is tilted 177.4\u00b0 \u2014 essentially upside-down compared to most planets, which have tilts closer to 0\u201330\u00b0. This large tilt means Venus actually rotates retrograde (backward relative to its orbital motion and to most other planets), with its south pole effectively 'up.' The leading explanation is that a massive, late collision early in Venus's history flipped or drastically altered its original spin, similar in spirit to the giant impact hypothesized for the Moon's formation, though on Venus the outcome was a near-total inversion of its rotation rather than the creation of a moon."}, {"ch": "ch9", "q": "Describe the surface of Venus, including its major features and the conditions found there.", "points": [{"text": "<strong>Major features</strong> \u2014 names at least one surface feature (e.g., Ishtar/Aphrodite Terra, Maxwell Montes, shield volcanoes)"}, {"text": "<strong>Surface conditions</strong> \u2014 states approximate surface temperature and pressure"}, {"text": "<strong>How we know</strong> \u2014 notes that radar mapping (through the clouds) revealed the surface"}], "model": "Because Venus's clouds block visible light, its surface was mapped using radar, most comprehensively by the Magellan spacecraft. The surface consists mostly of rolling plains with modest highlands and lowlands, dominated by two continent-sized highland regions, Ishtar Terra and Aphrodite Terra, together covering about 8% of the surface. Maxwell Montes rises 14 km above Venus's lowest terrain, and numerous shield volcanoes (such as Sif Mons and Gula Mons) dot the landscape. Conditions at the surface are brutal: about 730 K (roughly 860\u00b0F, hot enough to melt lead) and a crushing pressure of about 90 bars \u2014 with no oxygen and no evidence of life."}, {"ch": "ch9", "q": "Describe the composition and structure of Venus's atmosphere.", "points": [{"text": "<strong>Main composition</strong> \u2014 states the CO2/nitrogen percentages"}, {"text": "<strong>Scale</strong> \u2014 compares Venus's atmosphere mass/height to Earth's"}, {"text": "<strong>Clouds</strong> \u2014 mentions the sulfuric acid cloud layer"}], "model": "Venus's atmosphere is roughly 97% carbon dioxide and 3% nitrogen, with traces of water vapor, carbon monoxide, and sulfur dioxide, topped by dense sulfuric acid clouds. It is about 90 times more massive than Earth's atmosphere and extends to a much greater height (roughly 50 km of dense atmosphere versus Earth's much thinner effective depth), with temperature dropping more rapidly with altitude than on Earth. Despite this enormous atmospheric mass, surface winds are surprisingly gentle, only around 4 mph."}, {"ch": "ch9", "q": "Explain how a runaway greenhouse effect made Venus the hottest planet in the solar system, despite Mercury being closer to the Sun.", "points": [{"text": "<strong>Mechanism</strong> \u2014 explains how CO2 traps outgoing infrared radiation"}, {"text": "<strong>Why Venus and not Earth</strong> \u2014 explains that Venus likely never had oceans to lock away CO2"}, {"text": "<strong>Water loss evidence</strong> \u2014 cites the high D/H ratio as evidence of past water loss"}], "model": "Venus's dense CO2 atmosphere traps far more outgoing infrared radiation than Earth's, producing an intense greenhouse effect. On Earth, oceans absorbed most atmospheric CO2 and locked it into rocks, keeping the greenhouse effect moderate; Venus, being closer to the Sun and therefore always somewhat hotter, likely never had liquid oceans to perform this same CO2 drawdown. Without that safety valve, CO2 built up in the atmosphere, trapping more heat, which prevented any oceans from ever forming or persisting \u2014 a runaway feedback loop. Supporting evidence for early water on Venus comes from its unusually high deuterium-to-hydrogen (D/H) ratio: ultraviolet light split any atmospheric water molecules apart (photodissociation), and the lighter hydrogen atoms escaped to space more easily than the heavier deuterium, enriching what little hydrogen remains in deuterium. The net result is that Venus, not Mercury, has the hottest surface of any planet (~730 K) despite orbiting farther from the Sun."}, {"ch": "ch9", "q": "Explain why Venus lacks plate tectonics and what evidence suggests it undergoes periodic resurfacing instead.", "points": [{"text": "<strong>Why no plate tectonics</strong> \u2014 connects the lack of water in the lithosphere to a too-rigid crust"}, {"text": "<strong>Heat escape problem</strong> \u2014 notes internal heat must still escape somehow without plate tectonics"}, {"text": "<strong>Resurfacing evidence</strong> \u2014 cites crater counts / ~500-million-year resurfacing age, and possible ongoing activity"}], "model": "Unlike Earth, Venus's lithosphere contains no water, which makes the crust too rigid to break into moving plates the way Earth's does \u2014 so Venus lacks plate tectonics. However, Venus's interior still generates heat from radioactive decay, and that heat must escape somehow. The leading idea is that instead of continuous plate motion, Venus undergoes periodic, catastrophic resurfacing events \u2014 episodes of extreme volcanism or wholesale overturn of the lithosphere \u2014 that release built-up heat all at once. Crater counts across Venus's surface are relatively low and fairly uniform in age, suggesting the entire surface was resurfaced around 500 million years ago rather than continuously renewed. Some evidence, like fluctuating sulfur dioxide levels above the clouds and bursts of radio energy consistent with lightning or volcanic activity, hints that volcanism may still be ongoing today."}, {"ch": "ch10", "q": "Describe Mars's place in popular culture and how it shaped public perception of the planet.", "points": [{"text": "<strong>Lowell's canals</strong> \u2014 describes Percival Lowell's drawings and the 'canals' controversy"}, {"text": "<strong>War of the Worlds</strong> \u2014 mentions the 1938 Orson Welles broadcast"}, {"text": "<strong>Lasting impact</strong> \u2014 connects these events to Mars's enduring association with alien life in the public imagination"}], "model": "Mars has long captured the public imagination as the solar system's most likely home for extraterrestrial life. In the early 1900s, astronomer Percival Lowell drew detailed maps of Mars showing apparent straight-line features he interpreted as artificial canals, sparking widespread speculation about a Martian civilization irrigating its dying planet. This fascination was amplified in 1938 when Orson Welles's radio adaptation of The War of the Worlds, framed as a series of realistic news bulletins describing a Martian invasion, caused genuine panic among some listeners who believed it was real. Together, these episodes cemented Mars's cultural status as the planet most associated with the search for (and fear of) alien life, an association that persists in science fiction and public interest today."}, {"ch": "ch10", "q": "Describe Mars's orbital and rotational properties, and how they compare to Earth's.", "points": [{"text": "<strong>Orbital numbers</strong> \u2014 cites semimajor axis, eccentricity, and orbital period"}, {"text": "<strong>Rotation/tilt</strong> \u2014 compares Mars's rotation rate and axial tilt to Earth's"}, {"text": "<strong>Effect of eccentricity</strong> \u2014 explains how Mars's eccentric orbit affects sunlight/seasons"}], "model": "Mars orbits the Sun at 1.52 AU with an eccentricity of 0.093 (perihelion 1.38 AU, aphelion 1.67 AU), completing one orbit every 687 Earth days. Its rotation period and axial tilt (25.19\u00b0) are both remarkably close to Earth's, giving Mars a day length similar to ours and Earth-like seasonal cycles. However, because Mars's orbit is noticeably more eccentric than Earth's, the intensity of sunlight it receives varies by about 45% between perihelion and aphelion, making its seasons more asymmetric in length and intensity between the two hemispheres than Earth's are. Mars's orbit was also historically important \u2014 Kepler used detailed observations of Mars's motion to derive his laws of planetary motion."}, {"ch": "ch10", "q": "Describe Phobos and Deimos, and explain why scientists think they may not have formed alongside Mars.", "points": [{"text": "<strong>Basic properties</strong> \u2014 gives size/orbital period for at least one moon"}, {"text": "<strong>Density clue</strong> \u2014 cites their low density (~2000 kg/m\u00b3) as evidence against forming with Mars"}, {"text": "<strong>Origin hypotheses</strong> \u2014 mentions capture and/or impact-ejecta origin theories"}], "model": "Phobos (about 28\u00d720 km) and Deimos (about 16\u00d710 km) are small, irregularly shaped moons. Phobos orbits so close and fast (period 7h40m) that it moves faster than Mars rotates, rising in the west and setting in the east; Deimos, farther out, orbits in about 30h18m and moves normally across the sky. Their densities, around 2000 kg/m\u00b3, are far lower than any planet in the inner solar system, which is one of the main reasons scientists doubt they formed together with Mars from the same material \u2014 a body that formed alongside Mars would be expected to have a more Mars-like density. Instead, they may be asteroids captured by Mars's gravity early in its history, or \u2014 as some more recent evidence from Phobos's unusual porous structure and composition suggests \u2014 debris ejected by a giant impact on Mars that later coalesced into orbit, similar in spirit to (but on a much smaller scale than) the Moon-forming impact on Earth."}, {"ch": "ch10", "q": "Summarize the major space missions to Mars and what each contributed to our understanding of the planet.", "points": [{"text": "<strong>Early missions</strong> \u2014 names an early mission (e.g., Mariner 9) and its key finding"}, {"text": "<strong>Rover missions</strong> \u2014 names at least one rover mission and its goal"}, {"text": "<strong>Recent milestone</strong> \u2014 mentions Perseverance/Ingenuity or another recent achievement"}], "model": "Mars exploration began in earnest with Mariner 9 (1971), the first spacecraft to orbit another planet, which revealed a mix of ancient cratered terrain and Earth-like canyons and volcanoes, along with the first hints of past liquid water. The Viking landers followed in the 1970s, and Mars Pathfinder (1997) delivered the first rover, Sojourner. Later orbiters (Mars Global Surveyor, Mars Odyssey, Mars Reconnaissance Orbiter, Mars Express) mapped the surface and atmosphere in detail, while rovers like Spirit, Opportunity, and Curiosity (landed 2012) investigated geology, climate, and past habitability on the ground. Most recently, Perseverance (landed February 18, 2021) is searching for signs of ancient life and collecting samples for eventual return to Earth, and its accompanying Ingenuity helicopter achieved the first powered flight on another planet \u2014 a major technological milestone. A common thread across nearly all these missions has been the search for water, past and present."}, {"ch": "ch10", "q": "Describe Mars's geology and its most significant surface features.", "points": [{"text": "<strong>Hemispheric asymmetry</strong> \u2014 describes the north-south difference in elevation/age/cratering"}, {"text": "<strong>Tharsis/Olympus Mons</strong> \u2014 describes the Tharsis bulge and Olympus Mons"}, {"text": "<strong>Valles Marineris/Hellas</strong> \u2014 mentions at least one other major feature and how it formed"}], "model": "Mars shows a striking hemispheric asymmetry: the northern hemisphere consists of lower-elevation, younger, crater-poor volcanic plains, while the southern hemisphere sits several kilometers higher and is heavily cratered and older \u2014 the cause of this asymmetry remains unresolved. The equatorial Tharsis bulge, possibly caused by an upwelling mantle plume, hosts Olympus Mons, the largest known volcano in the solar system at 27 km tall and 600 km across, whose extreme height is possible thanks to Mars's low surface gravity; it shows no evidence of recent activity. Nearby, tectonic rifting (not water) carved Valles Marineris, a canyon system 5000 km long, up to 500 km wide, and 6 km deep. On the opposite side of the planet from Tharsis lies the Hellas Basin, formed by a violent meteorite impact early in Mars's history."}, {"ch": "ch10", "q": "Describe the composition and behavior of Mars's thin atmosphere.", "points": [{"text": "<strong>Composition</strong> \u2014 gives the major gas percentages"}, {"text": "<strong>Thinness</strong> \u2014 compares atmospheric mass/density to Earth's"}, {"text": "<strong>Seasonal behavior</strong> \u2014 describes CO2 freezing at the poles or dust storm activity"}], "model": "Mars's atmosphere is about 95.3% carbon dioxide, 2.7% nitrogen, 1.6% argon, with small amounts of oxygen, carbon monoxide, and water vapor. It's roughly 1/100 as massive as Earth's atmosphere, though it still extends to a similar height (~50 km, with the troposphere reaching about 30 km). Strong surface winds generate dust storms and dust devils that redistribute surface material, and in winter the extreme cold causes atmospheric CO2 to freeze out directly onto the poles, forming seasonal caps that grow and shrink with the Martian year, on top of the permanent water-ice residual caps."}, {"ch": "ch10", "q": "Describe the evidence that Mars once had liquid water, and where Mars's water is located today.", "points": [{"text": "<strong>Surface evidence</strong> \u2014 distinguishes runoff channels from outflow channels"}, {"text": "<strong>Past climate</strong> \u2014 mentions the hypothesized early warm, wet phase"}, {"text": "<strong>Present-day water</strong> \u2014 describes where water exists on Mars now (polar caps, permafrost)"}], "model": "Two types of surface features provide strong evidence of past liquid water on Mars: runoff channels, which resemble the remains of slow-flowing ancient rivers, and outflow channels, carved by sudden, catastrophic flash floods that surged from the southern highlands into the northern plains. This evidence suggests Mars may have enjoyed a relatively brief, early 'Earth-like' phase with a thicker atmosphere, rain, and possibly rivers, lakes, or even oceans. Today, most of that water is locked away rather than flowing: it's found in the polar ice caps and in a layer of subsurface permafrost, with orbiters detecting extensive buried ice deposits beneath the surface. Some crater-wall gullies show signs of much more recent \u2014 possibly ongoing \u2014 flows, though it remains unclear whether these involve liquid water or just ice."}, {"ch": "ch10", "q": "Describe current thinking about future exploration of Mars, including possible colonization.", "points": [{"text": "<strong>Resource technology</strong> \u2014 mentions in-situ resource technologies being tested (e.g., MOXIE oxygen production)"}, {"text": "<strong>Key challenges</strong> \u2014 names at least one challenge for human missions (water access, landing precision, weather/dust hazards)"}, {"text": "<strong>Framing</strong> \u2014 connects current robotic missions to eventual human exploration goals"}], "model": "Current Mars missions are increasingly designed with future human exploration in mind. Perseverance, for example, carries MOXIE, a technology demonstration that produces oxygen from Mars's carbon-dioxide-rich atmosphere \u2014 a capability that could support both breathable air and rocket fuel production for astronauts. Other priorities include locating accessible subsurface water and ice deposits (for drinking water, oxygen, and fuel), improving precision landing techniques for larger and heavier payloads, and characterizing Martian weather, dust storms, and radiation environments that would pose hazards to human crews. While no human mission timeline is fixed, these robotic missions are explicitly framed as stepping stones \u2014 testing exactly the resources and technologies that would be needed for eventual astronaut expeditions or long-term colonization of Mars."}];
+
+function getMasteryKey() { return 'mastery_astr1304_unit2_'; }
+
+function showPanel(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+  btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+}
+
+function toggleChapter(header) {
+  const body = header.nextElementSibling;
+  const expanded = header.getAttribute('aria-expanded') === 'true';
+  header.setAttribute('aria-expanded', String(!expanded));
+  body.style.display = expanded ? 'none' : 'block';
+}
+
+function toggleObj(card) {
+  const expanded = card.getAttribute('aria-expanded') === 'true';
+  card.setAttribute('aria-expanded', String(!expanded));
+}
+
+function toggleObjMastery(btn, key) {
+  const k = getMasteryKey().replace('mastery_','masteryobj_') + key;
+  const isDone = localStorage.getItem(k) === '1';
+  if (isDone) { localStorage.removeItem(k); btn.classList.remove('done'); }
+  else { localStorage.setItem(k, '1'); btn.classList.add('done'); }
+}
+
+function initObjMastery() {
+  document.querySelectorAll('.obj-master-btn').forEach(btn => {
+    const onclickAttr = btn.getAttribute('onclick') || '';
+    const m = onclickAttr.match(/toggleObjMastery\(this,'([^']+)'\)/);
+    if (!m) return;
+    const k = getMasteryKey().replace('mastery_','masteryobj_') + m[1];
+    if (localStorage.getItem(k) === '1') btn.classList.add('done');
+  });
+}
+
+/* ---------------- Flashcards ---------------- */
+let currentDeck = FLASHCARDS_DATA.slice();
+let currentIndex = 0;
+let flipped = false;
+
+function renderCard() {
+  const card = document.getElementById('fc-card');
+  if (currentDeck.length === 0) { card.textContent = 'No cards in this filter.'; return; }
+  const item = currentDeck[currentIndex];
+  card.textContent = flipped ? item.a : item.q;
+  document.getElementById('fc-counter').textContent = (currentIndex+1) + ' / ' + currentDeck.length;
+  const mkey = getMasteryKey() + FLASHCARDS_DATA.indexOf(item);
+  const mBtn = document.getElementById('fc-master-btn');
+  if (localStorage.getItem(mkey) === '1') { mBtn.textContent = '★ Mastered'; mBtn.classList.add('done'); }
+  else { mBtn.textContent = '☆ Mark mastered'; mBtn.classList.remove('done'); }
+}
+function flipCard() { flipped = !flipped; renderCard(); }
+function nextCard() { if (!currentDeck.length) return; currentIndex = (currentIndex+1) % currentDeck.length; flipped = false; renderCard(); }
+function prevCard() { if (!currentDeck.length) return; currentIndex = (currentIndex-1+currentDeck.length) % currentDeck.length; flipped = false; renderCard(); }
+function shuffleCards() {
+  for (let i = currentDeck.length -1; i>0; i--) { const j = Math.floor(Math.random()*(i+1)); [currentDeck[i],currentDeck[j]]=[currentDeck[j],currentDeck[i]]; }
+  currentIndex = 0; flipped = false; renderCard();
+}
+function filterCards(ch, btn) {
+  document.querySelectorAll('#panel-flashcards .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentDeck = ch === 'all' ? FLASHCARDS_DATA.slice() : FLASHCARDS_DATA.filter(c=>c.ch===ch);
+  currentIndex = 0; flipped = false; renderCard();
+}
+function toggleMastered(idx) {
+  const item = currentDeck[idx];
+  const realIdx = FLASHCARDS_DATA.indexOf(item);
+  const mkey = getMasteryKey() + realIdx;
+  if (localStorage.getItem(mkey) === '1') localStorage.removeItem(mkey); else localStorage.setItem(mkey,'1');
+  renderCard();
+}
+
+/* ---------------- Quiz ---------------- */
+let quizDeck = QUIZ_DATA.slice();
+let quizAnswers = {};
+
+function setQuizFilter(ch, btn) {
+  document.querySelectorAll('#panel-quiz .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  quizDeck = ch === 'all' ? QUIZ_DATA.slice() : QUIZ_DATA.filter(q=>q.ch===ch);
+  quizAnswers = {};
+  document.getElementById('quiz-score').classList.remove('show');
+  renderQuiz();
+}
+function renderQuiz() {
+  const c = document.getElementById('quiz-container');
+  c.innerHTML = '';
+  quizDeck.forEach((q, qi) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-q';
+    let inner = '<div class="qtag">' + q.ch.toUpperCase() + ' · ' + (q.type==='mc'?'Multiple Choice':'Fill in the Blank') + '</div>';
+    inner += '<div class="qtext">' + (qi+1) + '. ' + q.q + '</div>';
+    if (q.type === 'mc') {
+      q.opts.forEach((opt, oi) => { inner += '<button class="mc-opt" id="mc-' + qi + '-' + oi + '" onclick="selectMC(' + qi + ',' + oi + ')">' + opt + '</button>'; });
+    } else {
+      inner += '<input type="text" class="fitb-input" id="fitb-' + qi + '" placeholder="Type your answer" oninput="storeFITB(' + qi + ')">';
+    }
+    inner += '<div class="exp-box" id="exp-' + qi + '"><strong>Explanation:</strong> ' + q.exp + '</div>';
+    div.innerHTML = inner;
+    c.appendChild(div);
+  });
+}
+function selectMC(qi, oi) {
+  quizAnswers[qi] = oi;
+  for (let i=0;i<quizDeck[qi].opts.length;i++) {
+    document.getElementById('mc-'+qi+'-'+i).classList.remove('selected');
+  }
+  document.getElementById('mc-'+qi+'-'+oi).classList.add('selected');
+}
+function storeFITB(qi) {
+  quizAnswers[qi] = document.getElementById('fitb-'+qi).value;
+}
+function submitQuiz() {
+  let correct = 0;
+  quizDeck.forEach((q, qi) => {
+    const expBox = document.getElementById('exp-'+qi);
+    expBox.classList.add('show');
+    if (q.type === 'mc') {
+      const given = quizAnswers[qi];
+      for (let i=0;i<q.opts.length;i++) {
+        const el = document.getElementById('mc-'+qi+'-'+i);
+        el.classList.remove('correct','incorrect');
+        if (i === q.ans) el.classList.add('correct');
+        else if (i === given) el.classList.add('incorrect');
+      }
+      if (given === q.ans) correct++;
+    } else {
+      const el = document.getElementById('fitb-'+qi);
+      const given = (quizAnswers[qi]||'').trim().toLowerCase();
+      const ok = q.ans.some(a => a.toLowerCase() === given);
+      el.classList.remove('correct','incorrect');
+      el.classList.add(ok ? 'correct' : 'incorrect');
+      el.disabled = true;
+      if (ok) correct++;
+    }
+  });
+  const pct = quizDeck.length ? Math.round((correct/quizDeck.length)*100) : 0;
+  const scoreBox = document.getElementById('quiz-score');
+  scoreBox.textContent = 'Score: ' + correct + ' / ' + quizDeck.length + ' (' + pct + '%)';
+  scoreBox.classList.add('show');
+}
+function resetQuiz() {
+  quizAnswers = {};
+  document.getElementById('quiz-score').classList.remove('show');
+  renderQuiz();
+}
+
+/* ---------------- Discussion ---------------- */
+function filterDisc(ch, btn) {
+  document.querySelectorAll('#panel-discussion .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDiscussion(ch);
+}
+function renderDiscussion(filterCh) {
+  const c = document.getElementById('disc-container');
+  c.innerHTML = '';
+  DISC_DATA.forEach((d, idx) => {
+    if (filterCh && filterCh !== 'all' && d.ch !== filterCh) return;
+    const div = document.createElement('div');
+    div.className = 'disc-q';
+    let inner = '<div class="qtag">' + d.ch.toUpperCase() + ' · Short Answer / Discussion</div>';
+    inner += '<div class="qtext">' + (idx+1) + '. ' + d.q + '</div>';
+    inner += '<textarea id="disc-ta-' + idx + '" aria-label="Your answer" placeholder="Write your answer here..."></textarea>';
+    inner += '<div class="disc-btn-row"><button class="primary" onclick="submitDisc(' + idx + ')">Submit &amp; Self-Grade</button><button onclick="resetDisc(' + idx + ')">Reset</button></div>';
+    inner += '<div class="disc-rubric" id="disc-rubric-' + idx + '">';
+    d.points.forEach((p, pi) => {
+      inner += '<label class="rubric-item"><input type="checkbox" onchange="updateDiscScore(' + idx + ')" id="disc-pt-' + idx + '-' + pi + '"> <span>' + p.text + '</span></label>';
+    });
+    inner += '<div class="disc-score" id="disc-score-' + idx + '">Score: 0%</div>';
+    inner += '<button class="model-toggle" onclick="toggleModel(' + idx + ')">Show model answer</button>';
+    inner += '<div class="model-answer" id="disc-model-' + idx + '">' + d.model + '</div>';
+    inner += '</div>';
+    div.innerHTML = inner;
+    c.appendChild(div);
+  });
+}
+function submitDisc(idx) {
+  document.getElementById('disc-ta-'+idx).disabled = true;
+  document.getElementById('disc-rubric-'+idx).classList.add('show');
+  updateDiscScore(idx);
+}
+function resetDisc(idx) {
+  const ta = document.getElementById('disc-ta-'+idx);
+  ta.disabled = false; ta.value = '';
+  document.getElementById('disc-rubric-'+idx).classList.remove('show');
+  DISC_DATA[idx].points.forEach((p,pi)=>{ const cb = document.getElementById('disc-pt-'+idx+'-'+pi); if (cb) cb.checked = false; });
+  const model = document.getElementById('disc-model-'+idx); model.classList.remove('show');
+}
+function updateDiscScore(idx) {
+  const total = DISC_DATA[idx].points.length;
+  let checked = 0;
+  DISC_DATA[idx].points.forEach((p,pi)=>{ const cb = document.getElementById('disc-pt-'+idx+'-'+pi); if (cb && cb.checked) checked++; });
+  const pct = total ? Math.round((checked/total)*100) : 0;
+  document.getElementById('disc-score-'+idx).textContent = 'Score: ' + checked + '/' + total + ' (' + pct + '%)';
+}
+function toggleModel(idx) {
+  document.getElementById('disc-model-'+idx).classList.toggle('show');
+}
+
+/* ---------------- Mastery reset ---------------- */
+function resetAllMastery() {
+  const prefix1 = getMasteryKey();
+  const prefix2 = prefix1.replace('mastery_','masteryobj_');
+  Object.keys(localStorage).forEach(k => {
+    if (k.indexOf(prefix1) === 0 || k.indexOf(prefix2) === 0) localStorage.removeItem(k);
+  });
+  renderCard(); initObjMastery();
+  document.querySelectorAll('.obj-master-btn').forEach(b=>b.classList.remove('done'));
+}
+
+/* ---------------- Init ---------------- */
+document.addEventListener('DOMContentLoaded', () => {
+  initObjMastery();
+  renderCard();
+  renderQuiz();
+  renderDiscussion('all');
+});
+</script>
+</body>
+</html>

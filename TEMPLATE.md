@@ -248,6 +248,69 @@ Reset button clears only keys starting with this unit's prefix.
 
 ---
 
+## Root index.html (Study Hub)
+The root `index.html` is a separate page from the unit template — it's the course/module directory, not a unit page. It does **not** use the 6-tab design system above; it has its own standalone styling (fonts: `Space Mono` + `Syne`; per-course color vars `--hist`/`--astr`/`--govt`/`--fall`).
+
+Structure: one `.course-card` per course (class `hist`/`astr`/`govt`/`fall-course`), each containing a `.unit-grid` of `.unit-link` cards, one per unit/module.
+
+**Activating a unit** (turning a placeholder into a live link):
+```html
+<!-- Placeholder (not yet built) -->
+<a href="#" class="unit-link" style="opacity:0.4;pointer-events:none">
+
+<!-- Activated -->
+<a href="astr1304/unitN/index.html" class="unit-link" style="border-color:rgba(34,197,94,0.3);">
+```
+Use the course's `--accent` color at 0.3 alpha for the border-color highlight on the current/active unit. Only the `href`, the placeholder `style` removal, and the highlight style change — nothing else in the card should be touched.
+
+---
+
+## Back-to-Root Link (all unit pages)
+Every unit page must link back to the root Study Hub. Path is always `../../index.html` (unit pages live two levels deep: `coursecode/unitN/index.html`).
+
+Two placements, both required:
+```html
+<!-- In <header>, above the unit badge -->
+<a class="back-link" href="../../index.html">← All courses</a>
+
+<!-- In <footer>, appended after the unit/course label -->
+· <a href="../../index.html" class="back-link footer-back-link">← Back to all courses</a>
+```
+```css
+.back-link { display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px; color: var(--muted); text-decoration:none; margin-bottom:10px; }
+.back-link:hover, .back-link:active { color: var(--accent); }
+```
+
+---
+
+## Expandable Objectives (Objectives tab)
+Each objective card expands (via the existing `toggleObj(card)` / `aria-expanded` mechanism) to reveal a condensed bullet list of key facts for that objective — this is the "correct response" to self-check against, not just a mastery checkbox.
+
+Data source: reuse the same key-facts bullets that feed the matching Discussion question's self-grade checklist (`DISC_QUESTIONS[i].points`), since objectives and discussion questions are built 1:1 in the same order. Don't author a separate third copy of the same facts.
+
+```html
+<div class="obj-card ch7" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="...">
+  <div class="obj-row">
+    <span class="obj-num">1</span>
+    <span class="obj-text">Objective text</span>
+    <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'ch7_1')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li>Key fact 1</li><li>Key fact 2</li><li>Key fact 3</li></ul>
+  </div>
+</div>
+```
+```css
+.obj-caret { flex-shrink:0; color: var(--muted); font-size:12px; transition: transform 0.2s; }
+.obj-card[aria-expanded="true"] .obj-caret { transform: rotate(180deg); color: var(--accent); }
+.obj-body { display:none; margin-top:10px; padding-top:10px; border-top:1px solid var(--border); }
+.obj-card[aria-expanded="true"] .obj-body { display:block; }
+```
+No new JS function is needed — `toggleObj(card)` already flips `aria-expanded`, and the CSS attribute selector handles show/hide.
+
+---
+
 ## New Unit Build Checklist
 - [ ] Copy `TEMPLATE_unit.html` → `coursecode/unitN/index.html`
 - [ ] Set title, unit-badge, h1, exam-pill, textbook-links
@@ -260,7 +323,9 @@ Reset button clears only keys starting with this unit's prefix.
 - [ ] Populate `DISC_QUESTIONS` from learning objectives
 - [ ] Fill notes two-column grid
 - [ ] Update all filter-row buttons to match chapter keys
-- [ ] Update root `index.html` (activate link, dim future units)
+- [ ] Add back-to-root links (header + footer, `../../index.html`)
+- [ ] Give each objective card an `.obj-body` with condensed key-facts bullets (reuse matching `DISC_QUESTIONS[i].points`)
+- [ ] Update root `index.html` (activate this unit's link + border highlight, leave future units dimmed/placeholder)
 - [ ] `git add . && git commit -m "feat: [course] unit [N]" && git push origin main`
 
 ---
