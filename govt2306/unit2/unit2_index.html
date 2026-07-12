@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GOVT 2306 — Unit 2: Local Governments & Political Parties</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#0a0a0f; --surface:#12121a; --surface2:#16161f; --border:#1e1e2e;
+  --text:#e8e8f0; --muted:#6b6b80; --green:#22c55e; --red:#ef4444;
+  --yellow:#eab308; --purple:#a78bfa; --orange:#f97316;
+  --accent:#f97316; --accent-dim:rgba(249,115,22,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(249,115,22,0.025) 39px,rgba(249,115,22,0.025) 40px),
+  repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(249,115,22,0.025) 39px,rgba(249,115,22,0.025) 40px);}
+body::before{content:'GOVT 2306 · Unit 2 · Chapters 3–4';position:fixed;top:0;left:0;right:0;
+  background:rgba(10,10,15,0.95);border-bottom:1px solid var(--border);padding:10px 16px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);z-index:100;letter-spacing:.05em;}
+.topnav{display:flex;gap:4px;padding:48px 12px 8px;overflow-x:auto;position:sticky;top:0;
+  background:rgba(10,10,15,0.97);z-index:90;border-bottom:1px solid var(--border);}
+.nav-btn{flex-shrink:0;background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:7px 13px;border-radius:6px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:11px;transition:all .15s;}
+.nav-btn:hover{color:var(--text);border-color:var(--accent);}
+.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.panel{display:none;padding:20px 16px 60px;max-width:860px;margin:0 auto;}
+.panel.active{display:block;}
+h1{font-size:1.4rem;font-weight:600;color:var(--accent);margin-bottom:4px;}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;display:block;}
+.exam-pill{display:inline-block;background:rgba(234,179,8,0.15);border:1px solid var(--yellow);
+  color:var(--yellow);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;
+  border-radius:20px;margin-bottom:20px;}
+.textbook-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.textbook-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;
+  transition:all .15s;}
+.textbook-links a:hover{color:var(--accent);border-color:var(--accent);}
+
+/* Objectives */
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  margin-bottom:10px;cursor:pointer;transition:border-color .15s;}
+.obj-card:hover{border-color:var(--accent);}
+.obj-header{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;
+  padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.ch3 .obj-num{color:var(--orange);background:rgba(249,115,22,0.12);}
+.ch4 .obj-num{color:var(--purple);background:rgba(167,139,250,0.12);}
+.obj-title{font-size:.88rem;font-weight:500;flex:1;}
+.obj-expand{color:var(--muted);font-size:12px;transition:transform .2s;}
+.obj-body{display:none;padding:0 16px 14px;font-size:.84rem;line-height:1.65;color:#b0b0c8;}
+.obj-body.open{display:block;}
+.obj-master-btn{margin-top:10px;background:transparent;border:1px solid var(--border);
+  color:var(--muted);padding:5px 12px;border-radius:4px;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;transition:all .15s;}
+.obj-master-btn.mastered{border-color:var(--green);color:var(--green);background:rgba(34,197,94,0.08);}
+.mastery-bar{background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  height:6px;margin-bottom:20px;overflow:hidden;}
+.mastery-fill{height:100%;background:var(--green);border-radius:20px;transition:width .4s;}
+.reset-mastery-btn{display:block;margin-bottom:20px;background:transparent;
+  border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:4px;
+  cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;}
+.reset-mastery-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* Study Guide */
+.chapter-block{margin-bottom:16px;}
+.chapter-header{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;
+  align-items:center;font-weight:500;font-size:.9rem;transition:border-color .15s;}
+.chapter-header:hover{border-color:var(--accent);}
+.chapter-body{display:none;background:var(--surface2);border:1px solid var(--border);
+  border-top:none;border-radius:0 0 8px 8px;padding:16px;}
+.chapter-body h3{font-size:.82rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px;}
+.chapter-body h3:first-child{margin-top:0;}
+.chapter-body p,.chapter-body li{font-size:.84rem;line-height:1.7;color:#b0b0c8;margin-bottom:6px;}
+.chapter-body ul{padding-left:18px;}
+.chapter-body strong{color:var(--text);}
+.flag-note{background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.3);
+  border-radius:6px;padding:8px 12px;font-size:.78rem;color:var(--yellow);margin:8px 0;}
+
+/* Flashcards */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:5px 12px;border-radius:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;transition:all .15s;}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.fc-wrap{perspective:1000px;margin-bottom:16px;}
+.fc-card{width:100%;min-height:220px;position:relative;transform-style:preserve-3d;
+  transition:transform .5s;cursor:pointer;}
+.fc-card.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  display:flex;flex-direction:column;justify-content:center;padding:24px;border-radius:10px;}
+.fc-back{transform:rotateY(180deg);border-color:var(--accent);background:var(--accent-dim);}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
+.fc-q,.fc-a{font-size:1rem;line-height:1.6;color:var(--text);}
+.fc-a{color:var(--accent);}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);
+  text-align:center;margin-bottom:12px;}
+.fc-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+.fc-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);
+  padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82rem;transition:all .15s;}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent);}
+.fc-btn.mastered-btn{border-color:var(--green);color:var(--green);}
+.fc-nav{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+.fc-empty{text-align:center;padding:40px;color:var(--muted);font-size:.9rem;}
+
+/* Quiz */
+.quiz-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.quiz-q-text{font-size:.9rem;margin-bottom:12px;line-height:1.6;}
+.quiz-opts label{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;
+  border-radius:5px;cursor:pointer;font-size:.85rem;line-height:1.5;transition:background .1s;}
+.quiz-opts label:hover{background:rgba(255,255,255,0.04);}
+.quiz-opts input{margin-top:3px;flex-shrink:0;accent-color:var(--accent);}
+.fitb-input{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:8px 12px;border-radius:5px;font-size:.85rem;margin-top:8px;}
+.fitb-input:focus{outline:none;border-color:var(--accent);}
+.q-correct{border-color:var(--green)!important;background:rgba(34,197,94,0.06)!important;}
+.q-wrong{border-color:var(--red)!important;background:rgba(239,68,68,0.06)!important;}
+.q-exp{font-size:.8rem;color:#9090b0;margin-top:8px;padding-top:8px;
+  border-top:1px solid var(--border);display:none;}
+.q-exp.show{display:block;}
+#submit-btn,#reset-btn{padding:10px 22px;border-radius:6px;cursor:pointer;
+  font-size:.88rem;font-weight:500;transition:all .15s;border:1px solid;}
+#submit-btn{background:var(--accent);border-color:var(--accent);color:#fff;margin-right:8px;}
+#submit-btn:hover{opacity:.85;}
+#reset-btn{background:transparent;border-color:var(--border);color:var(--muted);}
+#reset-btn:hover{border-color:var(--red);color:var(--red);}
+#quiz-score{margin-top:16px;padding:14px;background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;font-size:.9rem;display:none;}
+
+/* Discussion */
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.disc-q-text{font-size:.9rem;line-height:1.6;margin-bottom:12px;font-weight:500;}
+.disc-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:10px 12px;border-radius:5px;font-size:.84rem;
+  min-height:120px;resize:vertical;font-family:'IBM Plex Sans',sans-serif;line-height:1.6;}
+.disc-textarea:focus{outline:none;border-color:var(--accent);}
+.disc-btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.disc-btn{padding:6px 14px;border-radius:5px;cursor:pointer;font-size:.82rem;
+  border:1px solid var(--border);background:var(--surface2);color:var(--muted);transition:all .15s;}
+.disc-btn:hover{color:var(--text);}
+.disc-btn.primary{border-color:var(--accent);color:var(--accent);}
+.disc-rubric{display:none;margin-top:12px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:6px;padding:12px;}
+.disc-rubric.show{display:block;}
+.rubric-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;
+  border-bottom:1px solid var(--border);font-size:.82rem;}
+.rubric-item:last-child{border-bottom:none;}
+.rubric-item input[type=checkbox]{flex-shrink:0;margin-top:2px;accent-color:var(--green);}
+.disc-score{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--green);
+  margin-top:8px;}
+.model-answer{display:none;margin-top:10px;font-size:.82rem;line-height:1.65;
+  color:#9090b0;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.2);
+  border-radius:6px;padding:12px;}
+.model-answer.show{display:block;}
+
+/* Notes */
+.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.notes-grid{grid-template-columns:1fr;}}
+.note-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.note-card h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.note-lines{display:flex;flex-direction:column;gap:8px;}
+.note-line{border-bottom:1px solid var(--border);min-height:28px;}
+footer{text-align:center;padding:30px 16px;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;color:var(--muted);}
+@media print{
+  body::before,.topnav,.exam-pill,.textbook-links,footer,.fc-controls,.fc-nav,.filter-row,
+  #submit-btn,#quiz-score,.disc-btn-row,.disc-rubric,.obj-master-btn,.reset-mastery-btn,
+  .mastery-bar{display:none!important;}
+  .panel{display:none!important;}.panel.active{display:block!important;}
+  *,*::before,*::after{background:white!important;background-color:white!important;
+    background-image:none!important;color:black!important;border-color:#bbb!important;
+    box-shadow:none!important;-webkit-text-fill-color:black!important;}
+  body{font-size:12pt;}.chapter-body{display:block!important;}
+  @page{margin:.75in;}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav" role="tablist" aria-label="Study sections">
+  <button class="nav-btn active" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)" role="tab" aria-selected="false" aria-controls="panel-guide">📖 Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)" role="tab" aria-selected="false" aria-controls="panel-flashcards">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)" role="tab" aria-selected="false" aria-controls="panel-quiz">✏️ Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('discussion',this)" role="tab" aria-selected="false" aria-controls="panel-discussion">💬 Discussion</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes Template</button>
+</nav>
+
+<!-- ═══════════════════════════ OBJECTIVES ═══════════════════════════ -->
+<div class="panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+  <span class="unit-badge">GOVT 2306 · Unit 2</span>
+  <h1>Local Governments &amp; Political Parties</h1>
+  <span class="exam-pill">📅 Chapters 3 &amp; 4 — Check Blackboard for Exam Date</span>
+  <div class="textbook-links">
+    <a href="#">Ch. 3: Local Governments</a>
+    <a href="#">Ch. 4: Political Parties</a>
+  </div>
+  <div class="mastery-bar"><div class="mastery-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="reset-mastery-btn" onclick="resetAllMastery()">↺ Reset All Mastery</button>
+
+  <!-- CH3 OBJECTIVES -->
+  <div class="obj-card ch3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 3.1</span>
+      <span class="obj-title">Relationships between local government and all other governments</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Explain the relationships that exist between a local government and all other governments, including national, state, and other local governments.</p>
+      <p><strong>Key concepts:</strong> Dillon's Rule vs. Cooley Doctrine, intergovernmental relations, grassroots challenges, unfunded mandates. Texas strictly follows <strong>Dillon's Rule</strong> — local governments have only the powers granted, implied, or indispensable under state law. Local governments are created by the state and must obey both state and national laws. About 88% of Texans live in metropolitan areas (current edition, LO 3.6).</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit2_31')" aria-label="Mark LO 3.1 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 3.2</span>
+      <span class="obj-title">Forms of municipal government organization</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Describe the four forms of municipal government in Texas and the two legal classifications of cities.</p>
+      <p><strong>Classifications:</strong> General-law cities (population 201+) vs. Home-rule cities (5,000+). <strong>Four forms:</strong> Strong mayor-council (Houston, Pasadena — most responsive), Weak mayor-council, Council-manager (most common in Texas home-rule cities), Commission. Home-rule cities may also use recall, initiative, and referendum.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit2_32')" aria-label="Mark LO 3.2 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 3.3</span>
+      <span class="obj-title">Rules and social issues that shape local government outcomes</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Identify the election rules and social issues that shape who wins and what policies get made at the local level.</p>
+      <p><strong>Key concepts:</strong> Nonpartisan elections (no party labels), at-large vs. single-member district elections, cumulative voting (used to increase minority representation), redistricting (required under federal law), municipal services (police, fire, water, streets), revenue sources (property tax + sales tax are the two largest), bonds, fees, TIRZs (Tax Increment Reinvestment Zones).</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit2_33')" aria-label="Mark LO 3.3 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 3.4</span>
+      <span class="obj-title">Structure and responsibilities of counties</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Analyze the structure and responsibilities of Texas's 254 counties.</p>
+      <p><strong>Key facts:</strong> All counties have the same constitutional structure. Commissioners court (county judge + 4 commissioners) is the major policymaking body. County judge has both administrative AND judicial responsibilities. County sheriff keeps the peace. Other offices: county clerk, county tax assessor-collector, county auditor, county attorney, district attorney, justices of the peace. Revenue = primarily property taxes. Challenges: border counties, colonias, USMCA/NAFTA, lack of home-rule authority.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit2_34')" aria-label="Mark LO 3.4 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 3.5</span>
+      <span class="obj-title">Functions and importance of special districts</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Explain the functions of special districts and their importance to the community.</p>
+      <p><strong>Two categories:</strong> (1) School districts (~1,000+ ISDs — most visible/important) — governed by elected boards of trustees, funded primarily by local property taxes. (2) Noneducation special districts (~2,300+) — water, sewer, fire, parks, housing, transit. Also: 50 community college districts funded by property taxes, state, and tuition. T. Boone Pickens water district case illustrates private abuse of public district authority.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit2_35')" aria-label="Mark LO 3.5 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 3.6</span>
+      <span class="obj-title">How local governments deal with metropolitan issues</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Discuss the ways that local governments deal with metropolitan-wide and regional issues.</p>
+      <p><strong>Key concepts:</strong> Metro government (full consolidation — Louisville, KY example), Extraterritorial jurisdiction (ETJ — limited authority outside city limits; ETJ abolished in 2019 by Texas legislature), Annexation (now requires vote or petition of those to be annexed), Councils of Government (COGs — 24 regional planning bodies). 88%+ of Texans live in metro areas.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit2_36')" aria-label="Mark LO 3.6 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <!-- CH4 OBJECTIVES -->
+  <div class="obj-card ch4" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" style="margin-top:20px;">
+    <div class="obj-header">
+      <span class="obj-num">LO 4.1</span>
+      <span class="obj-title">Role of political parties in Texas</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Evaluate the role of political parties in Texas.</p>
+      <p><strong>Key concepts:</strong> A political party is chiefly concerned with <em>recruitment, nomination, and election</em> of citizens to governmental office. Texas uses a two-party system (Democratic and Republican). Single Member District (SMD) plurality system favors two parties. Political parties are NOT mentioned in the U.S. Constitution. Texas Election Code mandates both major parties have the same structure.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit2_41')" aria-label="Mark LO 4.1 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch4" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 4.2</span>
+      <span class="obj-title">Political ideologies in Texas</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Compare and contrast the different political ideologies found in the Lone Star State.</p>
+      <p><strong>Conservative:</strong> Prefer minimal government in social/economic matters; split into fiscal conservatives (reduced taxes/spending) and social conservatives (family values, oppose abortion/gay marriage). <strong>Liberal:</strong> Favor government regulation of economy and aid to unemployed/poor; limited government in personal/religious matters. <strong>Neoliberal:</strong> Less government regulation of business but more government involvement in social programs (common among Texas Democrats). <strong>Libertarian:</strong> Minimal government in BOTH economic AND social matters. Because of Texas's individualistic and traditionalist culture, both Democrats and Republicans tend to be conservative.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit2_42')" aria-label="Mark LO 4.2 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch4" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 4.3</span>
+      <span class="obj-title">Electoral trends in Texas</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Identify electoral trends in Texas, including realignments, third parties, and independent candidates.</p>
+      <p><strong>Realignment:</strong> Voters shift from one party to another (Texas Democrats → Republicans in 1990s). <strong>Dealignment:</strong> Voters no longer identify with any party. <strong>Third parties:</strong> Measured by ability to raise awareness, not win elections. Populist Party (1890s — agriculture), La Raza Unida (1970s — Latino rights), Libertarian Party, Green Party. Duverger's Law: SMD plurality systems favor two parties; proportional representation favors multiparty. <strong>Independents:</strong> Must collect signatures equal to 1% of total governor's race vote. Straight-ticket voting eliminated after 2018.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit2_43')" aria-label="Mark LO 4.3 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch4" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 4.4</span>
+      <span class="obj-title">Evolution of political parties in Texas</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Trace the evolution of political parties in Texas from the 1840s to the present.</p>
+      <p><strong>1840s–1870s:</strong> Dominated by Democrats (Pro-Houston vs. Anti-Houston factions). <strong>Reconstruction (1865–1873):</strong> Republicans controlled Texas (E.J. Davis). <strong>1870s–1970s:</strong> Solid Democratic one-party state. <strong>1970s–1990s:</strong> Emerging two-party competition; Bill Clements first Republican governor since Reconstruction (1978); Kay Bailey Hutchison first woman senator (1993). <strong>2000s+:</strong> Republican dominance; no Democrat has won statewide office since 1998. <strong>Future:</strong> Younger, more diverse voters trending Democratic; Great Recession era shaped younger generation away from Republicans.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit2_44')" aria-label="Mark LO 4.4 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch4" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 4.5</span>
+      <span class="obj-title">Political party system in Texas</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Describe the political party system in Texas — structure, conventions, and delegate selection.</p>
+      <p><strong>Four levels:</strong> National, state, county, precinct. Parties organized as <em>stratarchies</em> (power diffused across levels). <strong>Temporary organization:</strong> Primaries + conventions (precinct → county/district → state). State convention adopts platform, elects delegates, selects presidential electors. <strong>Permanent organization:</strong> Precinct chairs, county executive committees, State Executive Committee (highest — one man, one woman from each of 31 senatorial districts). State chair is chief fundraiser. <strong>General election:</strong> Winner = most votes (plurality) — no runoff. Texas has 40 electoral votes.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit2_45')" aria-label="Mark LO 4.5 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ STUDY GUIDE ═══════════════════════════ -->
+<div class="panel" id="panel-guide" role="tabpanel" aria-labelledby="tab-guide">
+  <h1>Study Guide</h1>
+  <span class="unit-badge">Unit 2 · Chapters 3 &amp; 4</span>
+
+  <!-- CHAPTER 3 -->
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>📍 Chapter 3: Local Governments</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+
+      <h3>LO 3.1 — Local Government &amp; Federalism</h3>
+      <ul>
+        <li><strong>Dillon's Rule</strong> — Local govts have ONLY powers granted by the state, implied by the grant, or indispensable to functioning. <em>Texas follows this.</em></li>
+        <li><strong>Cooley Doctrine</strong> — Local self-governance is an absolute right the state cannot take away. Followed in ~10 states, NOT Texas.</li>
+        <li>Texas local governments are created by the state, subject to the state, and must obey both state and national laws.</li>
+        <li><strong>Intergovernmental relations</strong> — The relationship between and among different types of governments (national, state, local).</li>
+        <li><strong>Grassroots challenges:</strong> 85%+ of Texans live in cities; voter apathy (fewer than 10% vote in local elections); funding pressures; infrastructure; demographic diversity.</li>
+        <li>Local govt has the greatest effect on daily lives (not national or state).</li>
+      </ul>
+
+      <h3>LO 3.2 — Municipal Government Forms</h3>
+      <ul>
+        <li><strong>General-law city</strong> — Population 201+; follows state-prescribed charter; less flexibility.</li>
+        <li><strong>Home-rule city</strong> — Population 5,000+; drafts its own charter by majority vote; more flexibility. Charter sets officer powers, salaries, terms, procedures.</li>
+        <li><strong>Principal advantage of home-rule</strong> — Flexibility in organization and operation.</li>
+        <li><strong>3 extra powers of home-rule cities:</strong> Recall (remove officials), Initiative (propose law by petition + popular vote), Referendum (approve or repeal existing law by petition).</li>
+        <li><strong>Strong mayor-council</strong> — Mayor appoints/removes department heads, has veto power. Most responsive to citizens. Popular among large cities. Only Houston and Pasadena in Texas.</li>
+        <li><strong>Weak mayor-council</strong> — Mayor has limited power; shares authority with council.</li>
+        <li><strong>Council-manager</strong> — Most common in Texas home-rule cities. Mayor elected at-large with few formal powers; council appoints a professional city manager to run departments. Criticized for being more responsive to elites than everyday citizens.</li>
+        <li><strong>Commission</strong> — Elected commissioners form a policymaking board; each heads a department. Lacks a single executive. Not used in pure form by any Texas city today.</li>
+        <li>Minimum population to become a city in Texas: <strong>201</strong>.</li>
+      </ul>
+
+      <h3>LO 3.3 — Municipal Politics, Elections &amp; Revenue</h3>
+      <ul>
+        <li><strong>Nonpartisan elections</strong> — All Texas city and special district elections; candidates listed without party labels. Effect: lower turnout, reduced minority representation, more personal/less issue-oriented.</li>
+        <li><strong>At-large elections</strong> — Elected citywide; tend to overrepresent White middle class.</li>
+        <li><strong>Single-member district elections</strong> — Elected by neighborhood; increases minority representation.</li>
+        <li><strong>Cumulative voting</strong> — When multiple seats vacant, voters cast one or more votes in any combination. Used in ~50 Texas local governments to increase minority representation.</li>
+        <li><strong>Redistricting</strong> — Required by federal law; city council district lines redrawn to represent equal population. Challenged due to gerrymandering. Most impacts Latino Texans.</li>
+        <li><strong>Municipal services:</strong> Police, fire, water, streets, sewer, sanitation, parks.</li>
+        <li><strong>Two largest tax sources:</strong> Property taxes + Sales taxes.</li>
+        <li>Other revenue: Fees, bonds, certificates of obligation, TIRZs (Tax Increment Reinvestment Zones).</li>
+        <li>When revenue falls short → cities cut services (especially those serving politically weaker citizens).</li>
+        <li><strong>City charter</strong> — Legal document establishing powers of city government.</li>
+        <li><strong>Ordinance</strong> — Laws passed by a city (equivalent of state statutes at local level).</li>
+      </ul>
+
+      <h3>LO 3.4 — County Government</h3>
+      <ul>
+        <li>Texas has <strong>254 counties</strong> — more than any other state.</li>
+        <li>All counties have the <strong>same basic constitutional structure</strong> (Texas Constitution mandates it).</li>
+        <li>Counties are considered <strong>administrative arms of the state</strong> under the Texas Constitution.</li>
+        <li><strong>Commissioners court</strong> — Major policymaking body; 4 elected commissioners (by precinct) + county judge. Approves budget.</li>
+        <li><strong>County judge</strong> — Most prominent; has BOTH administrative AND judicial responsibilities.</li>
+        <li><strong>County sheriff</strong> — Responsible for keeping the peace; chief law enforcement officer.</li>
+        <li><strong>County clerk</strong> — Issues/maintains marriage licenses, vital records.</li>
+        <li><strong>County tax assessor-collector</strong> — Collects property taxes.</li>
+        <li><strong>County auditor</strong> — Financial oversight.</li>
+        <li><strong>Primary revenue source:</strong> Property taxes.</li>
+        <li>Largest expenditures: Hospitals/health care, public safety, roads.</li>
+        <li><strong>All elected county officials</strong> serve four-year terms (partisan elections).</li>
+        <li><strong>Border counties</strong> — Challenges: colonias (2,300+ depressed settlements often without water/sewage), NAFTA/USMCA, undocumented immigration, border security, poverty.</li>
+        <li><strong>Home-rule reform</strong> — Suggested but rejected; would give counties more ability to organize per local needs.</li>
+      </ul>
+
+      <h3>LO 3.5 — Special Districts</h3>
+      <ul>
+        <li>Texas has nearly <strong>3,900 special districts</strong> — fastest growing form of local government.</li>
+        <li><strong>Two categories:</strong> (1) School districts, (2) Noneducation special districts.</li>
+        <li><strong>School districts (~1,000+ ISDs)</strong> — Most visible special district. Governed by popularly elected, nonsalaried boards of trustees. Funded primarily by local property taxes. Two main finance issues: equity and how much to spend.</li>
+        <li><strong>Community college districts (50)</strong> — Different from public universities: receive local property taxes (public universities do not).</li>
+        <li><strong>Noneducation special districts (~2,300+)</strong> — Water, sewer, fire, parks, housing. Exist because local needs cut across city/county lines.</li>
+        <li>Low public awareness = vulnerability to fraud/manipulation (T. Boone Pickens water district example).</li>
+      </ul>
+
+      <h3>LO 3.6 — Metropolitan Issues</h3>
+      <ul>
+        <li>88%+ of Texans live in metro areas.</li>
+        <li><strong>Metro government</strong> — Consolidation of local governments into one umbrella government. Example: Louisville-Jefferson County, Kentucky. No significant movement toward this in Texas.</li>
+        <li><strong>ETJ (Extraterritorial jurisdiction)</strong> — Limited authority a city has outside its boundaries. <em>Abolished in 2019 by the Texas Legislature.</em></li>
+        <li><strong>Annexation</strong> — Making an outlying area part of a city. Now requires vote or petition of those to be annexed (changed in 2019).</li>
+        <li><strong>COGs (Councils of Government)</strong> — 24 regional planning bodies created in the 1960s. Coordinate regional planning and implement state/federal programs.</li>
+        <li>The Starbase/SpaceX case (Boca Chica) illustrates the municipal incorporation process under Texas law.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CHAPTER 4 -->
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🏛️ Chapter 4: Political Parties</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+
+      <h3>LO 4.1 — Role of Political Parties</h3>
+      <ul>
+        <li><strong>Political party</strong> — Organization chiefly concerned with recruitment, nomination, and election of citizens to governmental office.</li>
+        <li>Political parties are NOT mentioned in the U.S. Constitution.</li>
+        <li>Texas uses a <strong>two-party system</strong> (Democratic + Republican).</li>
+        <li><strong>SMD plurality system</strong> — Winner = most votes (plurality). Favors two parties (Duverger's Law).</li>
+        <li><strong>Proportional Representation (PR)</strong> — Seats allocated by percentage of vote. Favors multiparty systems (common in Europe).</li>
+        <li><strong>Third party / minor party</strong> — Any party other than Democratic or Republican.</li>
+        <li>Texas Election Code mandates both major parties have the SAME structure.</li>
+        <li><strong>General election</strong> — Held in November of even-numbered years; winner = plurality, no runoff needed.</li>
+        <li>Texas has <strong>40 electoral votes</strong>.</li>
+      </ul>
+
+      <h3>LO 4.2 — Political Ideologies</h3>
+      <ul>
+        <li><strong>Conservative</strong> — Minimal government in social and economic matters; split into fiscal conservatives (tax cuts, less spending) and social conservatives (family values, oppose abortion/gay marriage).</li>
+        <li><strong>Liberal</strong> — Government regulation of economy; aid unemployed/poor; limited government in personal/religious matters.</li>
+        <li><strong>Neoliberal</strong> — Less government regulation of business, BUT more government involvement in social programs. Common among Texas Democrats.</li>
+        <li><strong>Libertarian</strong> — Minimal government in BOTH economic AND social areas.</li>
+        <li>Because of Texas's <strong>individualistic and traditionalistic culture</strong>, both Democrats and Republicans tend to be conservative.</li>
+        <li>The Tea Party (2009) made the Republican Party more conservative — focused on debt reduction, less spending, tax cuts.</li>
+      </ul>
+      <div class="flag-note">⚠️ <strong>Neoconservatism</strong> appears on the test review but is NOT defined in your current or previous edition textbook. The PPT raises it as a learning check question but provides no answer slide. Standard definition: a conservative ideology that advocates active government intervention in foreign policy while maintaining conservative domestic positions. Use this definition but know it comes from outside the textbook.</div>
+
+      <h3>LO 4.3 — Electoral Trends</h3>
+      <ul>
+        <li><strong>Realignment</strong> — Voters shift allegiance from one party to another (e.g., conservative Texas Democrats → Republicans in 1990s).</li>
+        <li><strong>Dealignment</strong> — Voters no longer identify with ANY political party.</li>
+        <li><strong>Straight-ticket voting</strong> — Voting for all candidates of one party. Eliminated in Texas after 2018 election (law passed in 2017 session).</li>
+        <li><strong>Duverger's Law</strong> — SMD plurality systems favor two-party systems; PR systems favor multiparty systems.</li>
+        <li><strong>Third parties:</strong> Populist (1890s, agriculture), La Raza Unida (1970s, Latino rights, South Texas), Libertarian Party, Green Party. Success measured by issue awareness, not elections won.</li>
+        <li><strong>Independent candidates</strong> — No party affiliation; must collect signatures equal to <strong>1% of total vote</strong> in most recent governor's race for statewide ballot access.</li>
+        <li>Younger Texans (born 1979 and later) more likely to identify as Democrats — shaped by Iraq War, <strong>Great Recession</strong>, 2008 Obama election, Trump era.</li>
+        <li>Texas politics today is <strong>more partisan</strong> (party centered) than in earlier years.</li>
+      </ul>
+
+      <h3>LO 4.4 — History of Texas Political Parties</h3>
+      <ul>
+        <li><strong>1840s–1870s:</strong> Democrats dominated. Pro-Houston (Jackson Democrats) vs. Anti-Houston (Calhoun Democrats) factions.</li>
+        <li><strong>Reconstruction (1865–1873):</strong> Republicans controlled Texas. E.J. Davis was Reconstruction governor.</li>
+        <li><strong>1870s–1970s:</strong> Solid one-party Democratic state. Fiercest political fighting was between <em>conservative Democrats vs. liberal Democrats</em> (between 1900–1950).</li>
+        <li><strong>1970s–1990s:</strong> Emerging two-party competition. Bill Clements — first Republican governor since Reconstruction (1978). Kay Bailey Hutchison — first Texas woman in U.S. Senate (1993).</li>
+        <li><strong>2000s–present:</strong> Republican dominance. No Democrat has won statewide since 1998. Republicans hold governorship throughout the 21st century.</li>
+        <li><strong>Latinos and African Americans</strong> have strengthened the Democratic Party, especially in urban counties.</li>
+        <li><strong>Principle difficulty for women candidates</strong> — Raising money; tend to face more scrutiny and access to campaign funds than male candidates.</li>
+      </ul>
+
+      <h3>LO 4.5 — Party Structure</h3>
+      <ul>
+        <li>Parties exist at <strong>4 levels</strong>: National, state, county, precinct.</li>
+        <li>Organized as a <strong>stratarchy</strong> — power diffused among and within levels; state and local levels are free to decide their own positions.</li>
+        <li><strong>Temporary organization</strong> — Primaries + conventions. Functions briefly to nominate candidates, pass resolutions, adopt platform, select delegates. Precinct → County/District → State.</li>
+        <li><strong>Platform</strong> — Document setting forth the party's position on issues.</li>
+        <li><strong>Precinct convention</strong> — Held every even-numbered year; usually sparsely attended; elects delegates to county convention.</li>
+        <li><strong>State convention</strong> — Held in June of even-numbered years; writes party rules, adopts platform, in presidential years nominates delegates to national convention and elects presidential electors.</li>
+        <li><strong>Permanent organization</strong> — Ongoing. Precinct chairs → County executive committees → State executive committee.</li>
+        <li><strong>State Executive Committee</strong> — Highest permanent party body in state. One man, one woman from each of 31 senatorial districts. Elected by delegates at state convention. YES, Texas mandates equal men/women membership.</li>
+        <li><strong>State party chair</strong> — Chief fundraiser. Elected by state convention delegates.</li>
+        <li><strong>Why both parties have same structure</strong> — Texas Election Code mandates it.</li>
+        <li><strong>PAC (Political Action Committee)</strong> — Raises/spends money to influence elections. Monitored by Texas Ethics Commission.</li>
+        <li><strong>Superdelegate</strong> — Democratic party official who can support any candidate at national convention regardless of primary results.</li>
+        <li><strong>Why parties have primaries</strong> — To select candidates for the general election and local party officers.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ FLASHCARDS ═══════════════════════════ -->
+<div class="panel" id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards">
+  <h1>Flashcards</h1>
+  <div class="filter-row" role="group" aria-label="Filter flashcards by chapter">
+    <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('ch3',this)">Ch. 3</button>
+    <button class="filter-btn" onclick="filterCards('ch4',this)">Ch. 4</button>
+  </div>
+  <div class="fc-counter" id="fc-counter" aria-live="polite"></div>
+  <div class="fc-wrap">
+    <div class="fc-card" id="fc-card" onclick="flipCard()" aria-label="Flashcard — click to flip">
+      <div class="fc-front">
+        <div class="fc-label">Question</div>
+        <div class="fc-q" id="fc-q" aria-live="polite"></div>
+      </div>
+      <div class="fc-back">
+        <div class="fc-label">Answer</div>
+        <div class="fc-a" id="fc-a" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-controls">
+    <button class="fc-btn" onclick="flipCard()" aria-label="Flip card">↩ Flip</button>
+    <button class="fc-btn mastered-btn" id="fc-master-btn" onclick="toggleMastered(currentIdx)" aria-label="Toggle mastered">☐ Mastered</button>
+    <button class="fc-btn" onclick="shuffleCards()" aria-label="Shuffle deck">🔀 Shuffle</button>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
+    <button class="fc-btn" onclick="nextCard()" aria-label="Next card">Next →</button>
+  </div>
+  <div class="fc-empty" id="fc-empty" style="display:none">No cards in this filter.</div>
+</div>
+
+<!-- ═══════════════════════════ QUIZ ═══════════════════════════ -->
+<div class="panel" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+  <h1>Practice Quiz</h1>
+  <div class="filter-row" role="group" aria-label="Filter quiz by chapter">
+    <button class="filter-btn active" onclick="setQuizFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch3',this)">Ch. 3</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch4',this)">Ch. 4</button>
+  </div>
+  <div id="quiz-container"></div>
+  <div style="margin-top:16px;">
+    <button id="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <button id="reset-btn" onclick="resetQuiz()">Reset</button>
+  </div>
+  <div id="quiz-score"></div>
+</div>
+
+<!-- ═══════════════════════════ DISCUSSION ═══════════════════════════ -->
+<div class="panel" id="panel-discussion" role="tabpanel" aria-labelledby="tab-discussion">
+  <h1>Discussion Board Prep</h1>
+  <div class="filter-row" role="group" aria-label="Filter discussion by chapter">
+    <button class="filter-btn active" onclick="filterDisc('all',this)">All</button>
+    <button class="filter-btn" onclick="filterDisc('ch3',this)">Ch. 3</button>
+    <button class="filter-btn" onclick="filterDisc('ch4',this)">Ch. 4</button>
+  </div>
+  <div id="disc-container"></div>
+</div>
+
+<!-- ═══════════════════════════ NOTES ═══════════════════════════ -->
+<div class="panel" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes">
+  <h1>Notes Template</h1>
+  <span class="unit-badge">Unit 2 · Chapters 3 &amp; 4 — Print this tab for in-class notes</span>
+  <div class="notes-grid">
+    <div class="note-card">
+      <h4>Dillon's Rule vs. Cooley Doctrine</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>4 Forms of Municipal Government</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>General-Law vs. Home-Rule Cities</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>At-Large vs. Single-Member Districts</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>County Government Structure</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Special Districts — 2 Categories</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Political Ideologies Comparison</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Temporary vs. Permanent Party Org</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Texas Party History Timeline</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Duverger's Law + Third Parties</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>COGs, ETJ, Annexation — Metro Issues</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Key Numbers to Remember</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+  </div>
+</div>
+
+<footer>GOVT 2306 · Unit 2 · study.imichaelv.com · Built from Ch. 3 &amp; 4 (18th ed.) source materials</footer>
+
+<script>
+// ─── MASTERY ───
+function getMasteryKey(){return 'mastery_govt2306_unit2_';}
+function resetAllMastery(){
+  Object.keys(localStorage).filter(k=>k.startsWith(getMasteryKey())).forEach(k=>localStorage.removeItem(k));
+  document.querySelectorAll('.obj-master-btn').forEach(b=>{b.textContent='☐ Mark Mastered';b.classList.remove('mastered');});
+  document.querySelectorAll('.fc-card').forEach((_,i)=>localStorage.removeItem(getMasteryKey()+i));
+  updateMasteryBar();
+}
+function updateMasteryBar(){
+  const total=document.querySelectorAll('.obj-master-btn').length;
+  const done=Object.keys(localStorage).filter(k=>k.startsWith('obj_govt2306_unit2_')).length;
+  const pct=total?Math.round(done/total*100):0;
+  const f=document.getElementById('mastery-fill');
+  if(f)f.style.width=pct+'%';
+}
+function toggleObjMastery(btn,key){
+  const is=localStorage.getItem(key);
+  if(is){localStorage.removeItem(key);btn.textContent='☐ Mark Mastered';btn.classList.remove('mastered');}
+  else{localStorage.setItem(key,'1');btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  updateMasteryBar();
+}
+function toggleObj(card){
+  const body=card.querySelector('.obj-body');
+  const arrow=card.querySelector('.obj-expand');
+  const open=body.classList.toggle('open');
+  arrow.style.transform=open?'rotate(180deg)':'';
+  card.setAttribute('aria-expanded',open);
+}
+function toggleChapter(header){
+  const body=header.nextElementSibling;
+  const arrow=header.querySelector('span:last-child');
+  const open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  arrow.style.transform=open?'':'rotate(180deg)';
+  header.setAttribute('aria-expanded',!open);
+}
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+}
+
+// ─── FLASHCARD DATA ───
+const allCards=[
+  // Ch3
+  {ch:'ch3',q:"What is Dillon's Rule?",a:"Local governments have ONLY the powers granted by the state, implied by the grant, or indispensable to their functioning. Texas follows this rule."},
+  {ch:'ch3',q:"What is the Cooley Doctrine?",a:"Local self-governance is an absolute right the state cannot take away. Followed in ~10 states — NOT Texas."},
+  {ch:'ch3',q:"What are the two legal classifications of cities in Texas?",a:"General-law cities (population 201+, follows state-prescribed charter) and Home-rule cities (population 5,000+, drafts its own charter)."},
+  {ch:'ch3',q:"What is the principal advantage of a home-rule city?",a:"Flexibility in how it organizes and operates — it can draft its own charter establishing officer powers, salaries, terms, and procedures."},
+  {ch:'ch3',q:"What 3 extra powers do home-rule cities have that general-law cities do not?",a:"Recall (remove officials), Initiative (propose a law by petition + popular vote), Referendum (approve or repeal an existing city law by petition)."},
+  {ch:'ch3',q:"Which form of city government is most common among Texas home-rule cities?",a:"Council-manager form — mayor elected at-large with few formal powers; council appoints a professional city manager."},
+  {ch:'ch3',q:"Which form of city government is most popular among LARGE cities and most responsive to all citizens?",a:"Strong mayor-council — mayor appoints/removes department heads, has veto power. Only Houston and Pasadena use it in Texas."},
+  {ch:'ch3',q:"What is the commission form of city government?",a:"Elected commissioners form a policymaking board; each commissioner heads a specific department. Lacks a single executive."},
+  {ch:'ch3',q:"What does 'nonpartisan election' mean for Texas city elections?",a:"Candidates are listed on the ballot WITHOUT party labels. All city and special district elections in Texas are nonpartisan."},
+  {ch:'ch3',q:"What is cumulative voting and why is it used?",a:"When multiple seats are vacant in an at-large election, voters can cast one or more votes in any combination. Used to increase minority representation (~50 Texas local governments use it)."},
+  {ch:'ch3',q:"When must cities redistrict?",a:"Under federal law, city council district lines must be redrawn after each census to ensure equal population representation."},
+  {ch:'ch3',q:"What are the two largest revenue sources for Texas city governments?",a:"Property taxes and sales taxes."},
+  {ch:'ch3',q:"What constitution creates cities and counties in Texas?",a:"The Texas Constitution — local governments are created by the state, not the federal government."},
+  {ch:'ch3',q:"Which form of election tends to increase minority representation in local government?",a:"Single-member district elections (members elected by neighborhood). Cumulative voting also increases minority representation."},
+  {ch:'ch3',q:"How many counties does Texas have?",a:"254 counties — more than any other state in the U.S."},
+  {ch:'ch3',q:"What is the major policymaking body of a Texas county?",a:"The commissioners court — made up of the county judge and four elected commissioners (one per precinct)."},
+  {ch:'ch3',q:"Which county official has BOTH administrative and judicial responsibilities?",a:"The county judge — the most prominent and influential position in county government."},
+  {ch:'ch3',q:"Who is responsible for keeping the peace in each Texas county?",a:"The county sheriff — the chief law enforcement officer of the county."},
+  {ch:'ch3',q:"What is the primary revenue source for county governments?",a:"Property taxes."},
+  {ch:'ch3',q:"Why is the structure of all Texas counties the same?",a:"The Texas Constitution mandates the same basic structure for all counties. Counties are considered administrative arms of the state."},
+  {ch:'ch3',q:"What are the two categories of special districts in Texas?",a:"(1) School districts (ISDs and community college districts) and (2) Noneducation special districts (water, fire, housing, transit, etc.)."},
+  {ch:'ch3',q:"Which special district is the most visible and important?",a:"Public school districts (ISDs) — governed by popularly elected boards of trustees, funded primarily by local property taxes."},
+  {ch:'ch3',q:"How is community college funding different from public universities in Texas?",a:"Community colleges receive funding from local property taxes; public universities do not receive local property taxes."},
+  {ch:'ch3',q:"What is extraterritorial jurisdiction (ETJ)?",a:"The limited authority a city has outside its boundaries. ETJ was abolished in 2019 by the Texas Legislature."},
+  {ch:'ch3',q:"What is a metro government?",a:"Consolidation of local governments into one umbrella government for the entire metropolitan area. Example: Louisville-Jefferson County, Kentucky."},
+  {ch:'ch3',q:"What are Councils of Government (COGs)?",a:"24 regional planning bodies created in the 1960s that coordinate planning and implement state/federal programs. The primary tool Texas uses for regional cooperation."},
+  {ch:'ch3',q:"What is annexation and how did the rules change in 2019?",a:"Making an outlying area part of a city. Before 2019, cities could annex unincorporated areas without resident consent. Since 2019, annexation now requires a vote or petition of those to be annexed."},
+  {ch:'ch3',q:"What percentage of Texans live in cities?",a:"More than 85% of Texans reside in cities (metro areas)."},
+  {ch:'ch3',q:"What are colonias?",a:"Depressed housing settlements, often near the Texas-Mexico border, that frequently lack running water or sewage systems. Approximately 2,300 exist in Texas."},
+  {ch:'ch3',q:"What is intergovernmental relations?",a:"The relationship between and among the different types of governments — national, state, and local."},
+  {ch:'ch3',q:"What are the two main issues Texas's education system faces regarding school finance?",a:"Equity (equal funding between rich and poor districts) and how much should be spent on public education."},
+  {ch:'ch3',q:"What is a bond in local government finance?",a:"A loan instrument used by local governments to fund major capital projects, repaid with interest over time, often backed by taxes."},
+  {ch:'ch3',q:"Which county official is responsible for issuing marriage licenses?",a:"The county clerk — responsible for maintaining official records including marriage licenses and vital records."},
+  {ch:'ch3',q:"What form of government does Texas form NOT have meaningful movement toward?",a:"Metro government — consolidation of local governments into one umbrella authority. Texas cities remain fragmented."},
+  // Ch4
+  {ch:'ch4',q:"What is a political party?",a:"An organization chiefly concerned with the recruitment, nomination, and election of citizens to governmental office. Primary goal: control government by winning elections."},
+  {ch:'ch4',q:"Are political parties mentioned in the U.S. Constitution?",a:"No — political parties are NOT mentioned in the U.S. Constitution."},
+  {ch:'ch4',q:"What is Duverger's Law?",a:"SMD plurality systems (like in Texas/U.S.) favor a two-party system. Proportional representation systems (common in Europe) favor multiparty systems."},
+  {ch:'ch4',q:"What is political ideology?",a:"A collection of beliefs, attitudes, and values about the appropriate order of society and how government should work."},
+  {ch:'ch4',q:"Where do the political terms 'left' and 'right' come from?",a:"The seating arrangements in the French National Assembly during the French revolutionary era — monarchists sat right, republicans sat left."},
+  {ch:'ch4',q:"What is the difference between fiscal and social conservatives?",a:"Fiscal conservatives prioritize reduced taxes and spending. Social conservatives stress family values, opposing abortion and homosexuality (e.g., Christian Coalition)."},
+  {ch:'ch4',q:"What is a liberal ideology?",a:"Favor government regulation of the economy; government obligated to aid unemployed and alleviate poverty; limited government role in personal/religious matters."},
+  {ch:'ch4',q:"What is a neoliberal?",a:"Advocates LESS government regulation of business/economy, but MORE government involvement in social programs. Common among Texas Democrats."},
+  {ch:'ch4',q:"What is libertarianism?",a:"Advocates minimal government role in BOTH economic matters AND social issues. Memory trick: 'Liberty' = freedom from government everywhere."},
+  {ch:'ch4',q:"Why do Texas Democrats and Republicans both tend to be conservative?",a:"Because of Texas's individualistic and traditionalistic political culture — both parties are influenced by this conservative tradition."},
+  {ch:'ch4',q:"What is dealignment?",a:"When voters no longer identify with ANY political party. 'De' = removing their alignment with a party."},
+  {ch:'ch4',q:"What is realignment?",a:"When voters shift their allegiance FROM one party TO another (e.g., conservative Democrats shifted to Republicans in the 1990s)."},
+  {ch:'ch4',q:"What is straight-ticket voting and when was it eliminated in Texas?",a:"Voting for all candidates of one party with a single selection. Eliminated in Texas after the 2018 election (law passed in 2017 legislative session)."},
+  {ch:'ch4',q:"What party promoted agricultural issues and displaced Republicans as 'second party' in Texas during the 1890s?",a:"The Populist Party — an agrarian movement representing farmers and rural working people."},
+  {ch:'ch4',q:"What party fought for Latino rights in 1970s South Texas?",a:"La Raza Unida Party — elected candidates to local offices in South Texas and forced Democrats to address Mexican American concerns."},
+  {ch:'ch4',q:"How do third parties typically succeed in Texas?",a:"Not by winning elections, but by making the public aware of their issues and persuading the major parties to adopt those issues."},
+  {ch:'ch4',q:"What criteria must independent candidates meet to get on the statewide ballot in Texas?",a:"Collect signatures equal to 1% of the total vote received by all candidates for governor in the most recent gubernatorial general election."},
+  {ch:'ch4',q:"Who dominated Texas during Reconstruction (1865–1873)?",a:"The Republican Party — E.J. Davis was the Reconstruction governor."},
+  {ch:'ch4',q:"Who dominated Texas from the end of Reconstruction until the 1970s?",a:"The Democratic Party — Texas was a solid one-party Democratic state."},
+  {ch:'ch4',q:"Who was the first Republican governor of Texas since Reconstruction?",a:"Bill Clements, elected in 1978 — a watershed year for Texas Republicans."},
+  {ch:'ch4',q:"What was the significance of Kay Bailey Hutchison's 1993 Senate election?",a:"She became the first woman elected to the U.S. Senate from Texas."},
+  {ch:'ch4',q:"When did the last Democrat win a statewide office in Texas?",a:"1998 — no Democrat has won a statewide Texas office since then."},
+  {ch:'ch4',q:"What 4 levels do American political parties exist on?",a:"National, state, county, and precinct."},
+  {ch:'ch4',q:"What is a stratarchy?",a:"A party organization where power is diffused among and within levels — each level operates with significant autonomy rather than top-down control."},
+  {ch:'ch4',q:"What is the temporary party organization?",a:"Primaries and conventions that function briefly to nominate candidates, pass resolutions, adopt a platform, and select delegates to higher-level conventions."},
+  {ch:'ch4',q:"What is the permanent party organization?",a:"The ongoing structure: precinct chairs, county executive committees, and the State Executive Committee. Handles day-to-day party operations between elections."},
+  {ch:'ch4',q:"What is the highest permanent party organization in the state of Texas?",a:"The State Executive Committee — one man and one woman from each of the 31 senatorial districts, elected at the state convention."},
+  {ch:'ch4',q:"What is a political party platform?",a:"A document that sets forth a political party's position on public policy issues (taxes, education, healthcare, etc.)."},
+  {ch:'ch4',q:"Why do both major parties have the same structure in Texas?",a:"The Texas Election Code mandates that both parties follow the same structural organization."},
+  {ch:'ch4',q:"What is the main purpose of the precinct convention?",a:"To elect delegates to the county or district convention and adopt resolutions."},
+  {ch:'ch4',q:"What does the state party chair do?",a:"Serves as chief fundraiser for the party; elected by delegates at the state convention."},
+  {ch:'ch4',q:"Does Texas mandate equal men/women on the State Executive Committee?",a:"Yes — one man and one woman must be elected from each of the 31 senatorial districts."},
+  {ch:'ch4',q:"Who had the fiercest political fighting in Texas between 1900 and 1950?",a:"Conservative Democrats vs. Liberal Democrats — within the same party, since Texas was a one-party Democratic state."},
+  {ch:'ch4',q:"How many votes are needed to win a general election in Texas?",a:"A plurality — the most votes, not a majority. No runoff needed in a general election."},
+  {ch:'ch4',q:"What event contributed to younger Texans moving away from the Republican Party in the 21st century?",a:"The Great Recession (2007–2009), along with the Iraq War, 2008 Obama election, and Trump era — shaping those born 1979 and later."},
+  {ch:'ch4',q:"How many electoral votes does Texas have?",a:"40 electoral votes."},
+  {ch:'ch4',q:"What is a Political Action Committee (PAC)?",a:"An organization that raises and spends money to influence elections. Monitored by the Texas Ethics Commission."},
+  {ch:'ch4',q:"What is a superdelegate?",a:"A Democratic party official who can support any presidential candidate at the national convention regardless of primary results."},
+  {ch:'ch4',q:"What is the principal difficulty faced by women candidates for elective office in Texas?",a:"Raising money — women candidates historically face more difficulty accessing campaign funds compared to male candidates."},
+  // ── GAP FILL: Ch3 missing terms ──
+  {ch:'ch3',q:"What is grassroots government?",a:"Local and state government at the community level. 'Grassroots' refers to local government and local politics — the level of government closest to citizens and most directly affecting their daily lives."},
+  {ch:'ch3',q:"What challenges do grassroots local governments face?",a:"Fear of crime, decaying infrastructure (streets/bridges), controversies over public schools, healthcare, widespread voter apathy (fewer than 10% of qualified voters participate in local elections), and growing demographic diversity."},
+  {ch:'ch3',q:"What is a city charter?",a:"The legal document (like a constitution) that establishes the powers of a city government. It sets officer powers, salaries, terms of office, and procedures for passing, repealing, or amending ordinances. Home-rule cities draft their own; general-law cities use a charter prescribed by the legislature."},
+  {ch:'ch3',q:"What can a city charter establish?",a:"Powers of municipal officers; salaries and terms of office for council members and mayors; procedures for passing, repealing, or amending ordinances; and for home-rule cities, the ability to use recall, initiative, and referendum."},
+  {ch:'ch3',q:"What is a municipal code?",a:"The organized, comprehensive collection of a city's ordinances (laws) arranged by topic — similar to how state law is organized into codes. Cities maintain a municipal code that compiles all active city laws."},
+  {ch:'ch3',q:"What kind of laws can a city pass?",a:"Ordinances — local laws enacted by a city council or approved by popular vote. They cover local matters such as zoning, traffic, health, noise, and public safety. They cannot conflict with state or federal law (Dillon's Rule applies)."},
+  {ch:'ch3',q:"What is the weak mayor-council form of city government?",a:"A form where the mayor shares appointive and removal powers over municipal personnel with the city council. The mayor is NOT a chief executive — just one of several elected officials. The council can override the mayor's veto. No large Texas city currently uses this form."},
+  {ch:'ch3',q:"Which city form of government can limit the terms an elected official can serve?",a:"Home-rule cities — their locally drafted charters can establish term limits for council members and mayors. General-law cities cannot set term limits because their charter is prescribed by the state legislature."},
+  {ch:'ch3',q:"What is a statutory county court?",a:"A court created by the Texas legislature (statute) — distinct from the constitutionally created county court. Statutory county courts (also called county courts-at-law) hear civil and criminal cases and help handle the heavy caseloads in larger counties. They are probate courts with statutory authority."},
+  {ch:'ch3',q:"What is annexation?",a:"The process of making an outlying unincorporated area legally part of a city. Before 2019, Texas home-rule cities could annex areas without resident consent. Since 2019, annexation requires a vote or petition by those to be annexed."},
+  {ch:'ch3',q:"What are the 3 types of local government in Texas?",a:"(1) Municipalities (cities and towns — 1,200+), (2) Counties (254), and (3) Special districts (almost 3,900). Each covers a geographic area, collects revenue, provides services, and is controlled by officials responsible to voters."},
+  {ch:'ch3',q:"Which form of local government has the greatest effect on citizens' daily lives?",a:"Municipal (city) government — it taxes residents, arrests criminals, collects garbage, provides libraries, repairs streets, and regulates restaurants and building permits. Local government overall has more direct daily impact than state or national government."},
+  {ch:'ch3',q:"Is there more participation in local or national elections?",a:"National elections — far more Texans vote in national elections. Fewer than 10% of qualified voters typically participate in local elections, despite local government having the greatest effect on daily life."},
+  {ch:'ch3',q:"Do election laws make a difference in who wins?",a:"Yes — the textbook explicitly states that election rules and the way governments are organized 'make a difference in who is elected and who benefits from government.' At-large vs. single-member districts, nonpartisan elections, and cumulative voting all affect outcomes."},
+  {ch:'ch3',q:"What is the role of political parties in Texas municipal elections?",a:"Minimal — all city and special district elections in Texas are nonpartisan, meaning no party labels appear on the ballot. However, political parties may informally support candidates, especially in larger cities like Houston and Dallas."},
+  {ch:'ch3',q:"What functions are performed by counties in Texas?",a:"Counties issue state auto licenses, enforce state laws, register voters, conduct elections, collect some state taxes, administer health and welfare programs, maintain vital records (births/deaths), issue licenses, collect fees, and provide public services like roads and public safety."},
+  {ch:'ch3',q:"Under the Texas Constitution, what are counties considered?",a:"Administrative arms (agents) of the state — they carry out state functions at the local level. They are created by the Texas Constitution with a uniform structure mandated statewide."},
+  {ch:'ch3',q:"What are the two primary issues Texas's school finance system faces?",a:"(1) Equity — ensuring equal funding between property-rich and property-poor school districts, and (2) How much should be spent — the total level of education funding statewide."},
+  {ch:'ch3',q:"What services do cities provide?",a:"Police and fire protection, water and sewer, streets and transportation, solid waste/sanitation, parks and recreation, libraries, building inspections, health inspections (restaurants), and public housing."},
+  // ── GAP FILL: Ch4 missing terms ──
+  {ch:'ch4',q:"What is the underlying assumption of conservative philosophy?",a:"A minimal role for government in regulating the economy and business, combined with emphasis on traditional social values and a more active role for government on social/moral issues. Conservatives generally oppose government-subsidized social programs but support government restrictions on reproductive rights and same-sex marriage."},
+  {ch:'ch4',q:"What is social conservatism?",a:"A branch of conservatism that stresses the importance of traditional family values, including opposition to abortion and homosexuality. Social conservatives support school vouchers and teaching of creationism/intelligent design. Associated with the Christian Coalition."},
+  {ch:'ch4',q:"Are Democrats in Texas generally conservative? Why?",a:"Yes — more so than national Democrats. Because of Texas's deeply individualistic and traditionalistic political culture, Texas Democrats have historically adopted neoliberal positions — less government regulation of business — rather than the more liberal positions of national Democrats."},
+  {ch:'ch4',q:"What is the role of the temporary party organization?",a:"To function during election season: conduct primaries, hold conventions (precinct → county/district → state), nominate candidates, pass resolutions, adopt party platform, and select delegates to higher-level conventions. It is temporary because it disbands after these tasks are complete."},
+  {ch:'ch4',q:"What is the role of the permanent party organization?",a:"To maintain the party's ongoing operations between elections: recruit candidates, raise funds, organize local party activities, conduct primaries, and maintain party infrastructure year-round. Includes precinct chairs, county executive committees, and the State Executive Committee."},
+  {ch:'ch4',q:"What is a precinct chair?",a:"An unpaid party official elected by county party members in the primary. Arranges for the precinct convention (Republican Party), serves on the county executive committee, and is the most local level of permanent party organization."},
+  {ch:'ch4',q:"What is a district convention?",a:"The second level of the temporary party convention structure (above precinct, below state). Senatorial district conventions are held in odd-numbered congressional districts. Delegates from precinct conventions attend, adopt resolutions, and elect delegates to the state convention."},
+  {ch:'ch4',q:"What is the Texas Ethics Commission?",a:"The state agency that monitors and enforces campaign finance laws in Texas. Political Action Committees (PACs) are required to disclose their fundraising and spending to the Texas Ethics Commission."},
+  {ch:'ch4',q:"Which party had the highest voter turnout in the last 3 primaries?",a:"The Republican Party — Republicans have consistently had higher primary turnout than Democrats in recent Texas primary elections, reflecting the party's dominant position in Texas statewide politics since 2002."},
+  {ch:'ch4',q:"Has Texas historically tended to be a one-party state?",a:"Yes — Texas has been dominated by one party for most of its history. From post-Reconstruction through the 1970s it was solidly Democratic. Since 2002 it has been solidly Republican. Brief competitive two-party periods occurred in the late 1970s through 1990s."},
+  {ch:'ch4',q:"When is the general election held in Texas?",a:"In November of even-numbered years. The winner is determined by plurality — most votes wins, no majority required, no runoff."},
+  {ch:'ch4',q:"Why do parties have primaries?",a:"To allow party members to directly select the party's candidates for the general election and to elect local party officers (precinct chairs, county chairs). Texas requires an absolute majority (50%+1) to win a primary; if no candidate reaches that threshold, a runoff primary is held."},
+];
+
+// ─── FLASHCARD ENGINE ───
+let deck=[],currentIdx=0,flipped=false;
+function filterCards(ch,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  deck=ch==='all'?[...allCards]:allCards.filter(c=>c.ch===ch);
+  currentIdx=0;flipped=false;renderCard();
+}
+function renderCard(){
+  const empty=document.getElementById('fc-empty');
+  if(!deck.length){empty.style.display='block';document.getElementById('fc-counter').textContent='';return;}
+  empty.style.display='none';
+  const c=deck[currentIdx];
+  document.getElementById('fc-q').textContent=c.q;
+  document.getElementById('fc-a').textContent=c.a;
+  document.getElementById('fc-counter').textContent=(currentIdx+1)+' / '+deck.length;
+  const card=document.getElementById('fc-card');
+  card.classList.remove('flipped');flipped=false;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+  else{mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+}
+function flipCard(){document.getElementById('fc-card').classList.toggle('flipped');flipped=!flipped;}
+function nextCard(){if(!deck.length)return;currentIdx=(currentIdx+1)%deck.length;renderCard();}
+function prevCard(){if(!deck.length)return;currentIdx=(currentIdx-1+deck.length)%deck.length;renderCard();}
+function shuffleCards(){for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}currentIdx=0;renderCard();}
+function toggleMastered(idx){
+  const c=deck[idx];const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){localStorage.removeItem(key);mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+  else{localStorage.setItem(key,'1');mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+}
+
+// ─── QUIZ DATA ───
+const allQuizData=[
+  // CH3 MC
+  {ch:'ch3',type:'mc',q:"Which policy dictates that local governments have only those powers granted by the state, those implied in the grant, and those indispensable to their functioning?",opts:["Separation of powers","The Cooley Doctrine","Home-rule","Dillon's Rule"],ans:3,exp:"Dillon's Rule: local governments are creatures of the state and have only what the state grants. Texas follows this strictly."},
+  {ch:'ch3',type:'mc',q:"What are the two legal classifications of cities in Texas?",opts:["General-law cities and single-member cities","Home-rule cities and at-large cities","Home-rule cities and general-law cities","General-law cities and at-large cities"],ans:2,exp:"General-law cities (population 201+) follow state-prescribed charters; home-rule cities (5,000+) draft their own charters."},
+  {ch:'ch3',type:'mc',q:"Which process approves or repeals an existing ordinance?",opts:["Initiative","Amendment","Referendum","Recall"],ans:2,exp:"Referendum = approve or repeal an EXISTING law. Initiative = propose a NEW law. Recall = remove an official."},
+  {ch:'ch3',type:'mc',q:"What is an accurate depiction of the mayor in the council-manager form of municipal government?",opts:["The mayor and the city council have similar powers.","The mayor is appointed by a special task force.","The mayor has the power to appoint and remove department heads.","The mayor has few formal administrative powers."],ans:3,exp:"In the council-manager form, the mayor presides but has few formal administrative powers. The city manager handles administration."},
+  {ch:'ch3',type:'mc',q:"All city and special district elections in Texas are nonpartisan. What does this mean?",opts:["Every registered voter in the state is eligible to vote.","They are held every four years.","Voters must cast votes that align with their party affiliation.","Candidates are listed on the ballot without party labels."],ans:3,exp:"Nonpartisan = no party labels on the ballot. City and special district elections in Texas are all nonpartisan."},
+  {ch:'ch3',type:'mc',q:"Why have at-large elections come under challenge in Texas?",opts:["They require separate ballots for all political parties.","They can only be used for federal elections.","They tend to overrepresent the majority White middle-class population.","They tend to have high turnouts causing lengthy vote counts."],ans:2,exp:"At-large elections are elected citywide, which tends to favor the White middle class. Single-member districts better represent minority communities."},
+  {ch:'ch3',type:'mc',q:"What are the two major revenue sources for local governments in Texas?",opts:["Fees and bonds","Recalls and referendums","Oil and gas markets","Property and sales taxes"],ans:3,exp:"Property taxes and sales taxes are the two largest revenue sources for Texas local governments."},
+  {ch:'ch3',type:'mc',q:"What is the major policy-making body in Texas county government?",opts:["District court","Commissioners court","County congress","County council"],ans:1,exp:"The commissioners court — made up of the county judge and four elected commissioners — is the major policymaking body of every Texas county."},
+  {ch:'ch3',type:'mc',q:"Which county official has both administrative and judicial responsibilities?",opts:["County attorney","County treasurer","County judge","County sheriff"],ans:2,exp:"The county judge is the most prominent county official and holds both administrative AND judicial responsibilities."},
+  {ch:'ch3',type:'mc',q:"What is the term for cities that have limited authority outside their city boundaries?",opts:["Extraterritorial jurisdiction","Urbanization","Home-rule","Federalism"],ans:0,exp:"Extraterritorial jurisdiction (ETJ) is the limited authority a city has outside its boundaries. ETJ was abolished in Texas in 2019."},
+  {ch:'ch3',type:'mc',q:"Tula lives in Louisville-Jefferson County, Kentucky, where local governments are consolidated into one umbrella government for the entire metro area. What is this?",opts:["A special district","A general-law city","A nonpartisan government","A metro government"],ans:3,exp:"Metro government = consolidation of local governments under a single authority. Louisville-Jefferson County, KY is the textbook example."},
+  {ch:'ch3',type:'mc',q:"In Texas, who governs public school districts?",opts:["Popularly elected boards of trustees","Appointed administrators","School principals","Superintendents"],ans:0,exp:"ISDs are governed by popularly elected, nonsalaried boards of trustees. The board hires the superintendent, who manages day-to-day operations."},
+  {ch:'ch3',type:'mc',q:"What is one of the main reasons Texas has so many noneducation special districts?",opts:["Local needs are restricted by the boundaries of cities and counties.","Special districts are mandated by the state.","Lenient state provisions make it easier for existing government to take new tasks.","People are motivated to create them for personal profit."],ans:0,exp:"Many local service needs (water, fire, housing) cross city and county lines, making special districts the most practical solution."},
+  {ch:'ch3',type:'mc',q:"Sarah was just elected as a county treasurer in Texas. How long will she serve?",opts:["Two years","Four years","A lifetime","One year"],ans:1,exp:"All elected county officials in Texas serve four-year terms in partisan elections."},
+  {ch:'ch3',type:'mc',q:"Which is the most prominent and influential position in Texas county government?",opts:["County attorney","County treasurer","County judge","County sheriff"],ans:2,exp:"The county judge is the most prominent position — presiding over the commissioners court with both administrative and judicial duties."},
+  // CH3 FITB
+  {ch:'ch3',type:'fitb',q:"Texas follows ___'s Rule, meaning local governments have only the powers the state grants them.",ans:["dillon","dillon's"],display:"Dillon's",exp:"Dillon's Rule: local governments are creatures of the state — a rule Texas strictly follows."},
+  {ch:'ch3',type:'fitb',q:"The __________ form of city government is most common among Texas home-rule cities.",ans:["council-manager","council manager"],display:"Council-manager",exp:"Council-manager is the most popular form among Texas home-rule cities. The mayor has few formal powers; a city manager handles administration."},
+  {ch:'ch3',type:'fitb',q:"Texas has _____ counties — more than any other state.",ans:["254"],display:"254",exp:"Texas has 254 counties, all with the same basic constitutional structure."},
+  {ch:'ch3',type:'fitb',q:"The __________ was abolished in Texas in 2019, ending cities' limited authority outside their boundaries.",ans:["extraterritorial jurisdiction","etj","extraterritorial jurisdiction (etj)"],display:"Extraterritorial jurisdiction (ETJ)",exp:"The Texas Legislature ended ETJ in 2019. Annexation now requires a vote or petition from those to be annexed."},
+  // CH4 MC
+  {ch:'ch4',type:'mc',q:"Which group is chiefly concerned with the recruitment, nomination, and election of citizens to governmental office?",opts:["Lobbyists","Interest groups","Political Action Committees","Political parties"],ans:3,exp:"Political parties — unlike PACs (money) or interest groups (policy influence) — are specifically focused on recruiting, nominating, and electing candidates."},
+  {ch:'ch4',type:'mc',q:"How does Duverger's Law influence third parties in Texas and the U.S.?",opts:["It supports at least a four-party system.","It shows how third parties are not favored.","It allows for the growth of third parties.","It claims the necessity of third parties."],ans:1,exp:"Duverger's Law: SMD plurality systems (used in Texas/U.S.) favor two-party systems. Third parties can't win seats even with significant vote share."},
+  {ch:'ch4',type:'mc',q:"Timothy is associated with the Christian Coalition and believes in family values, opposing abortion and homosexuality. Which ideology does he most likely adhere to?",opts:["Fiscal conservatism","Neoliberalism","Libertarianism","Social conservatism"],ans:3,exp:"Social conservatives stress family values including opposition to abortion and homosexuality — the Christian Coalition is the textbook example."},
+  {ch:'ch4',type:'mc',q:"Ming strongly believes in a minimal role for government in both social AND economic matters. Which ideology does she most likely adhere to?",opts:["Libertarianism","Liberalism","Neoliberalism","Fiscal conservatism"],ans:0,exp:"Libertarianism = minimal government in BOTH economic AND social matters. Memory trick: 'Liberty' is hidden in the word — freedom everywhere."},
+  {ch:'ch4',type:'mc',q:"Which group favors an active role for government regulation in economic areas?",opts:["Libertarians","Conservatives","Neoliberals","Liberals"],ans:3,exp:"Liberals favor government regulation of the economy to achieve equitable wealth distribution. Libertarians and conservatives oppose this."},
+  {ch:'ch4',type:'mc',q:"Which of these situations represents a political dealignment?",opts:["Corinne considers herself a member of a third party.","The next election requires voters to vote straight-ticket.","Douglas considered himself a Democrat for years but no longer identifies with any party.","Latinos and African Americans in Texas tend to support the Democratic Party."],ans:2,exp:"Dealignment = no longer identifying with ANY party. Douglas didn't switch parties — he dropped his affiliation entirely. 'De' = removing alignment."},
+  {ch:'ch4',type:'mc',q:"What political party successfully promoted agricultural issues and displaced Republicans as 'second party' in Texas during the 1890s?",opts:["The La Raza Unida Party","The Libertarian Party","The Populist Party","The Green Party"],ans:2,exp:"The Populist Party — an agrarian movement representing farmers. 'Populist' = the people, which in 1890s Texas meant farmers. La Raza Unida was 1970s."},
+  {ch:'ch4',type:'mc',q:"What criteria must independent candidates satisfy to get on the statewide ballot in Texas?",opts:["Collect signatures from 10% of the total vote for governor","Get endorsement from the current governor","Get approval from one Democrat and one Republican representative","Collect signatures equal to 1% of the total vote for governor in the most recent election"],ans:3,exp:"1% signature requirement for independent statewide candidates. Note: the 2% threshold is for THIRD PARTIES to auto-qualify — a different rule."},
+  {ch:'ch4',type:'mc',q:"What political party dominated Texas during Reconstruction (immediately following the Civil War)?",opts:["Anti-Houston Party","Democratic Party","Pro-Houston Party","Republican Party"],ans:3,exp:"Republicans controlled Texas during Reconstruction (1865–1873). E.J. Davis was the Reconstruction governor. Democrats reclaimed control after 1873."},
+  {ch:'ch4',type:'mc',q:"Which emerging group helped strengthen the liberal faction of the Texas Democratic Party in the 1960s?",opts:["Latinos","Women","Asian Americans","LGBTQ+ community"],ans:0,exp:"Latinos (especially Mexican Americans) strengthened the liberal Democratic faction in the 1960s. The Viva Kennedy Clubs are a key example."},
+  {ch:'ch4',type:'mc',q:"The election of Kay Bailey Hutchison to the U.S. Senate in 1993 represented which historical moment?",opts:["The first woman senator from Texas","The last Democrat elected","The first Mexican American senator","The last Republican elected"],ans:0,exp:"Kay Bailey Hutchison was the first woman elected to the U.S. Senate from Texas in 1993."},
+  {ch:'ch4',type:'mc',q:"Which event contributes to younger generations increasingly moving away from the Republican Party in Texas?",opts:["The rise of cryptocurrency","The Vietnam War","The Capitol riot","The Great Recession"],ans:3,exp:"The Great Recession (2007–2009) — not the Vietnam War (1960s-70s) or Great Depression (1930s). Those born 1979+ were shaped by the Great Recession, Iraq War, 2008 Obama election, and Trump era."},
+  {ch:'ch4',type:'mc',q:"In American politics, the party structure exists on what four levels?",opts:["State, county, district, and local","National, state, county, and precinct","National, district, municipal, and precinct","State, county, local, and special"],ans:1,exp:"National, state, county, and precinct — the four levels correspond to the federal structure of U.S. government."},
+  {ch:'ch4',type:'mc',q:"What is used to set forth a political party's position on public policy issues?",opts:["A platform","A recall","A referendum","A primary"],ans:0,exp:"A platform is the document that sets forth a party's positions on issues like taxes, education, and healthcare."},
+  {ch:'ch4',type:'mc',q:"What is the main purpose of the Republican precinct convention?",opts:["Elect delegates to the county or district convention","Nominate candidates to the national convention","Nominate candidates for governor","Elect delegates to the state convention"],ans:0,exp:"The precinct convention elects delegates to the county or district convention — the first step in the party convention ladder."},
+  {ch:'ch4',type:'mc',q:"For each major party, what is the highest permanent party organization in the state?",opts:["County chair","Precinct chair","State executive committee","Senatorial district executive committee"],ans:2,exp:"The State Executive Committee is the highest permanent party body — one man and one woman from each of 31 senatorial districts."},
+  {ch:'ch4',type:'mc',q:"Which of the following best describes the Texas Republican Party's history?",opts:["It dominated Texas except for a brief period of Democratic control","It was a minority party except during Reconstruction AND has held the governorship throughout the 21st century","It has always shared power equally with Democrats","It became dominant in the 1960s"],ans:1,exp:"Republicans were a minority (except Reconstruction 1865-1873) AND have held the governorship throughout the 21st century. Both A and B from the original question are correct together."},
+  // CH4 FITB
+  {ch:'ch4',type:'fitb',q:"A ________ advocates minimal government involvement in BOTH economic and social matters.",ans:["libertarian","libertarianism"],display:"Libertarian",exp:"Libertarians want 'liberty' from government in all areas — both economic and personal/social."},
+  {ch:'ch4',type:'fitb',q:"A ________ is a political ideology that advocates less government regulation of business but supports more government involvement in social programs.",ans:["neoliberal","neoliberalism"],display:"Neoliberal",exp:"Neoliberals split the difference: free market economics + government social programs. Common among Texas Democrats."},
+  {ch:'ch4',type:'fitb',q:"The __________ states that SMD plurality systems favor a two-party system while proportional representation favors multiparty systems.",ans:["duverger's law","duverger's","duveger's law"],display:"Duverger's Law",exp:"Duverger's Law explains why the U.S. and Texas have a two-party system — the winner-take-all structure makes third parties unviable."},
+  {ch:'ch4',type:'fitb',q:"When voters shift their allegiance from one party to another, this is called a ________.",ans:["realignment"],display:"Realignment",exp:"Realignment = shifting FROM one party TO another. Dealignment = dropping party affiliation entirely."},
+  {ch:'ch4',type:'fitb',q:"The highest permanent party organization in the state of Texas is the State __________ Committee.",ans:["executive","state executive"],display:"Executive",exp:"The State Executive Committee — one man and one woman from each of 31 senatorial districts — is the highest permanent party body."},
+  {ch:'ch4',type:'fitb',q:"Texas has _____ electoral votes.",ans:["40"],display:"40",exp:"Texas has 40 electoral votes as of the 2020 reapportionment."},
+  // ── GAP FILL QUIZ: Ch3 ──
+  {ch:'ch3',type:'mc',q:"Which city form of government can limit the terms an elected official can serve?",opts:["General-law cities","Commission form cities","Home-rule cities","Council-manager cities"],ans:2,exp:"Home-rule cities can establish term limits in their locally drafted charters. General-law cities cannot — their charter is prescribed by the state legislature."},
+  {ch:'ch3',type:'mc',q:"What kind of laws can a city pass?",opts:["Statutes","Codes","Ordinances","Charters"],ans:2,exp:"Cities pass ordinances — local laws enacted by a city council or approved by popular vote. They cannot conflict with state or federal law (Dillon's Rule)."},
+  {ch:'ch3',type:'mc',q:"What is the minimum population requirement for a community to become a general-law city in Texas?",opts:["1,000","5,000","201","500"],ans:2,exp:"A community with a population of 201 or more may become a general-law city. A city needs 5,000+ to become a home-rule city."},
+  {ch:'ch3',type:'mc',q:"Which form of local government has the greatest effect on citizens' daily lives?",opts:["Federal government","State government","Local (municipal) government","County government"],ans:2,exp:"Local government — it taxes, provides police/fire, water, streets, inspects restaurants, and issues building permits. More daily impact than state or national government."},
+  {ch:'ch3',type:'mc',q:"Is there more voter participation in local government elections or national elections?",opts:["Local elections","National elections","They are roughly equal","It varies by election cycle"],ans:1,exp:"National elections — far more Texans vote nationally. Fewer than 10% of qualified voters typically participate in local elections despite local government having the greatest daily impact."},
+  {ch:'ch3',type:'mc',q:"Under the Texas Constitution, what are counties considered?",opts:["Independent governing bodies","Administrative arms of the state","Federal subdivisions","Home-rule entities"],ans:1,exp:"Counties are administrative arms (agents) of the state — they carry out state functions at the local level, created and structured by the Texas Constitution."},
+  {ch:'ch3',type:'fitb',q:"A __________ is a legal document that establishes the powers and structure of a city government.",ans:["city charter","charter","municipal charter"],display:"City charter",exp:"The city charter is the city's foundational legal document — sets officer powers, salaries, terms, and procedures for ordinances."},
+  {ch:'ch3',type:'fitb',q:"Cities pass __________ — local laws that cover matters like zoning, traffic, and public safety.",ans:["ordinances","ordinance"],display:"Ordinances",exp:"Ordinances are city laws. They cannot conflict with state or federal law. Home-rule cities can also pass ordinances via initiative (citizen-proposed popular vote)."},
+  {ch:'ch3',type:'fitb',q:"The __________ court is a Texas court created by statute to help handle heavy caseloads in larger counties, hearing civil and criminal cases.",ans:["statutory county","statutory county court","county court-at-law"],display:"Statutory county",exp:"Statutory county courts (county courts-at-law) are created by the legislature — distinct from the constitutionally created county court."},
+  // ── GAP FILL QUIZ: Ch4 ──
+  {ch:'ch4',type:'mc',q:"What is the underlying assumption of conservative philosophy?",opts:["Government should actively manage the economy","A minimal role for government in economic matters combined with active government on social/moral issues","Government should provide extensive social programs","Individual rights must always yield to community needs"],ans:1,exp:"Conservatives believe in minimal government in the economy/business, while favoring a more active government role on social and moral issues like abortion and same-sex marriage."},
+  {ch:'ch4',type:'mc',q:"Are Democrats in Texas generally conservative? Why?",opts:["No — Texas Democrats are more liberal than national Democrats","Yes — because of Texas's individualistic and traditionalistic political culture, Texas Democrats tend toward neoliberal positions","No — Texas Democrats closely mirror national Democratic positions","Yes — because Texas law requires all candidates to be conservative"],ans:1,exp:"Yes — Texas's individualistic and traditionalistic culture pushes both parties rightward. Texas Democrats have historically adopted neoliberal (less business regulation) rather than fully liberal positions."},
+  {ch:'ch4',type:'mc',q:"Which party had the highest voter turnout in the last several Texas primaries?",opts:["Democrats","Republicans","Libertarians","Turnout has been equal between parties"],ans:1,exp:"Republicans have consistently had higher primary turnout than Democrats in recent Texas primaries, reflecting Republican dominance of Texas statewide politics since 2002."},
+  {ch:'ch4',type:'mc',q:"Has Texas historically tended to be a one-party state?",opts:["No — Texas has always had competitive two-party elections","Yes — dominated by Democrats until the 1970s, then Republicans from 2002 onward; only briefly competitive in between","No — Texas has had four or more competitive parties throughout its history","Yes — always dominated by Republicans"],ans:1,exp:"Texas has been a one-party state for most of its history: solidly Democratic post-Reconstruction through the 1970s, briefly competitive in the 1970s-1990s, then solidly Republican since 2002."},
+  {ch:'ch4',type:'mc',q:"What is social conservatism?",opts:["A focus on reducing taxes and government spending","A belief in minimal government in both social and economic matters","Emphasis on traditional family values, opposing abortion and homosexuality, supporting school vouchers","A moderate Democratic ideology favoring less business regulation"],ans:2,exp:"Social conservatives (Christian Coalition, etc.) stress family values — opposing abortion and homosexuality, supporting school vouchers and creationism in schools. Distinct from fiscal conservatives who focus on tax cuts."},
+  {ch:'ch4',type:'mc',q:"When is the general election held in Texas?",opts:["March of even-numbered years","November of odd-numbered years","November of even-numbered years","June of even-numbered years"],ans:2,exp:"General elections are held in November of even-numbered years. Primaries are held in March of even-numbered years."},
+  {ch:'ch4',type:'mc',q:"Why do parties hold primaries?",opts:["To raise money for the general election","To allow party members to select the party's candidates for the general election and elect local party officers","To test candidates' debate skills before the general election","To determine which party platform positions are most popular"],ans:1,exp:"Primaries allow party members to directly select candidates for the general election and elect local officers like precinct chairs. Texas requires a majority (50%+1) to win; if no one gets it, a runoff is held."},
+  {ch:'ch4',type:'fitb',q:"A __________ is an unpaid party official elected by county party members who arranges the precinct convention and serves on the county executive committee.",ans:["precinct chair","precinct chairs"],display:"Precinct chair",exp:"The precinct chair is the most local level of permanent party organization — unpaid, elected in the primary, and the party's representative in each precinct."},
+  {ch:'ch4',type:'fitb',q:"The __________ is the state agency that monitors and enforces campaign finance laws and PAC disclosure requirements in Texas.",ans:["texas ethics commission","ethics commission"],display:"Texas Ethics Commission",exp:"The Texas Ethics Commission monitors PACs and campaign finance. All PACs must disclose fundraising and spending to this agency."},
+];
+
+// ─── QUIZ ENGINE ───
+let quizFilter='all',userAnswers={};
+function setQuizFilter(ch,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');quizFilter=ch;resetQuiz();
+}
+function getQuizDeck(){return quizFilter==='all'?allQuizData:allQuizData.filter(q=>q.ch===quizFilter);}
+function renderQuiz(){
+  const deck=getQuizDeck();
+  const c=document.getElementById('quiz-container');c.innerHTML='';userAnswers={};
+  deck.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='quiz-q';div.id='qq'+i;
+    if(q.type==='mc'){
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <div class="quiz-opts">${q.opts.map((o,oi)=>`<label><input type="radio" name="q${i}" onclick="selectMC(${i},${oi})"> ${o}</label>`).join('')}</div>
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    } else {
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <input class="fitb-input" id="fitb${i}" placeholder="Type your answer..." oninput="storeFITB(${i})">
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    }
+    c.appendChild(div);
+  });
+  document.getElementById('quiz-score').style.display='none';
+}
+function selectMC(qi,oi){userAnswers[qi]=oi;}
+function storeFITB(qi){userAnswers[qi]=document.getElementById('fitb'+qi).value.trim().toLowerCase();}
+function submitQuiz(){
+  const deck=getQuizDeck();let correct=0;
+  deck.forEach((q,i)=>{
+    const el=document.getElementById('qq'+i);
+    const exp=document.getElementById('exp'+i);exp.classList.add('show');
+    if(q.type==='mc'){
+      const ua=userAnswers[i];
+      if(ua===q.ans){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    } else {
+      const ua=(userAnswers[i]||'').toLowerCase();
+      const ok=q.ans.some(a=>ua.includes(a.toLowerCase()));
+      if(ok){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    }
+  });
+  const sc=document.getElementById('quiz-score');
+  const pct=Math.round(correct/deck.length*100);
+  sc.style.display='block';
+  sc.style.borderColor=pct>=70?'var(--green)':'var(--red)';
+  sc.innerHTML=`<strong>Score: ${correct}/${deck.length} (${pct}%)</strong> — ${pct>=90?'Excellent! 🎉':pct>=70?'Good work — review flagged questions.':'Keep studying — focus on the red ones.'}`;
+}
+function resetQuiz(){renderQuiz();}
+
+// ─── DISCUSSION DATA ───
+const DISC_QUESTIONS=[
+  {ch:'ch3',q:"A new residential neighborhood is being built just outside the city limits of a Texas home-rule city. The developer wants to build without following the city's building codes. The city wants to regulate the area. Using what you know about Chapter 3, what legal tools does the city have — and what changed in 2019 that limits its authority?",
+   points:[
+     {text:"<strong>ETJ defined</strong> — explains that extraterritorial jurisdiction is the limited authority a city has outside its boundaries."},
+     {text:"<strong>2019 change</strong> — notes that Texas abolished ETJ in 2019, significantly limiting city authority over surrounding unincorporated areas."},
+     {text:"<strong>Annexation rules</strong> — explains that annexation now requires a vote or petition of those to be annexed (no longer unilateral)."},
+     {text:"<strong>Dillon's Rule context</strong> — connects the limitation to Dillon's Rule: cities only have what the state grants, and the state took this authority away."},
+     {text:"<strong>Real-world implications</strong> — discusses what this means for urban planning, growth management, or development standards near Texas cities."},
+   ],
+   model:"Before 2019, this city could have used its extraterritorial jurisdiction to enforce building codes in the adjacent unincorporated area. ETJ gave home-rule cities limited regulatory authority outside their boundaries — the larger the city, the larger the ETJ reach. The city could also have begun the annexation process, incorporating the area into the city without requiring resident consent. However, the Texas Legislature fundamentally changed this in 2019. ETJ was abolished, ending cities' ability to regulate outside their boundaries. Annexation now requires a vote or petition of those to be annexed. This reflects Dillon's Rule in action — the state, which created local governments and granted their powers, can also take those powers away. The developer would now largely be free from city building codes unless the state intervenes or the area voluntarily joins the city."},
+
+  {ch:'ch3',q:"Compare and contrast at-large elections and single-member district elections for city council. Which form is more likely to be responsive to ALL of the community, and why?",
+   points:[
+     {text:"<strong>At-large defined</strong> — members elected on a citywide basis."},
+     {text:"<strong>Single-member defined</strong> — members elected from a specific geographic area within the city."},
+     {text:"<strong>Minority representation</strong> — explains that at-large elections tend to overrepresent the White middle class while single-member districts increase minority representation."},
+     {text:"<strong>More responsive form</strong> — identifies single-member districts as more likely to be responsive to ALL of the community."},
+     {text:"<strong>Cumulative voting</strong> — mentions cumulative voting as an additional tool used in ~50 Texas local governments to further increase minority representation."},
+   ],
+   model:"At-large elections require candidates to run citywide — which means they need broader name recognition and larger campaign budgets. This structure tends to favor the majority White middle class, since majority voting blocs citywide can consistently out-vote minority communities in specific neighborhoods. Single-member district elections divide the city into geographic areas, with each area electing its own representative. This makes it far more likely that communities of color and lower-income neighborhoods will have a voice on the council, since their votes are concentrated in their district rather than diluted citywide. The textbook is clear that single-member districts are more responsive to all of the community. Some Texas local governments go further and use cumulative voting — where voters can cast multiple votes for the same candidate when multiple seats are open — to further boost minority representation."},
+
+  {ch:'ch3',q:"The Nueces County Commissioners Court recently declared a local disaster over the region's water shortage. Using Chapter 3, explain how this is an example of county government working as intended — and what its limitations are.",
+   points:[
+     {text:"<strong>Commissioners court role</strong> — identifies the commissioners court as the major policymaking body of Texas counties."},
+     {text:"<strong>County judge leadership</strong> — notes the county judge's prominent role in declaring and managing emergencies."},
+     {text:"<strong>Intergovernmental coordination</strong> — explains the county must coordinate with city (which controls water) and state government."},
+     {text:"<strong>County limitations</strong> — discusses that counties lack home-rule authority and cannot override municipal water decisions."},
+     {text:"<strong>Constitutional constraint</strong> — connects to the fact that all Texas counties have the same rigid constitutional structure — limiting flexibility in crisis response."},
+   ],
+   model:"The Nueces County Commissioners Court declared a local disaster using its authority under state law — exactly the kind of collective action the textbook describes. The county judge provided public leadership while the commissioners court acted as a unified policymaking body. This is county government functioning as designed. However, the case also reveals the limitations built into Texas county structure. The county judge acknowledged the county has no authority over the city's water supply — Corpus Christi controls the water. The county can access state emergency resources and coordinate, but cannot override municipal decisions. This reflects the rigid, state-mandated structure of Texas counties — they are administrative arms of the state with defined but limited powers. The lack of county home-rule authority means counties cannot reorganize or expand their powers to match the specific needs of a crisis, which is a structural weakness the textbook identifies as a key reform challenge."},
+
+  {ch:'ch4',q:"Explain what Duverger's Law means and why it makes it so difficult for third parties to survive in Texas. What has been third parties' most realistic measure of success in Texas history?",
+   points:[
+     {text:"<strong>Duverger's Law defined</strong> — SMD plurality systems favor two-party systems; proportional representation favors multiparty."},
+     {text:"<strong>SMD explanation</strong> — explains that in a winner-take-all system, third parties can get significant votes but zero representation."},
+     {text:"<strong>Texas ballot access</strong> — notes that Texas election laws add additional hurdles for third parties (filing fees, signature requirements)."},
+     {text:"<strong>Third party success measure</strong> — third parties succeed by raising awareness of issues and persuading major parties to adopt them."},
+     {text:"<strong>Historical examples</strong> — cites Populist Party (1890s agriculture), La Raza Unida (1970s Latino rights), Libertarian or Green Party."},
+   ],
+   model:"Duverger's Law explains why the United States — and Texas specifically — operates as a two-party system. In a Single Member District plurality system, only the candidate with the most votes wins the district. A third party that gets 15% of the vote statewide wins nothing — no seats, no representation. Voters who prefer a third party eventually abandon it rather than 'waste' their vote, gravitating toward whichever major party is closest to their views. Texas election laws pile on additional barriers — filing fees, signature requirements, and vote thresholds make it hard for third parties to even get on the ballot. The realistic measure of third party success in Texas isn't winning elections — it's influencing the agenda. The Populist Party of the 1890s successfully elevated agricultural issues. La Raza Unida in the 1970s forced the Democratic Party to start addressing Mexican American concerns. Third parties serve as pressure valves and agenda-setters, even when they can't win."},
+
+  {ch:'ch4',q:"Compare conservative, liberal, neoliberal, and libertarian ideologies as they exist in Texas. Why do BOTH Texas Democrats and Republicans tend to be more conservative than their national counterparts?",
+   points:[
+     {text:"<strong>Conservative defined</strong> — minimal government in social/economic matters; fiscal vs. social conservative distinction."},
+     {text:"<strong>Liberal defined</strong> — government regulation of economy; aid to poor/unemployed; limited government in personal matters."},
+     {text:"<strong>Neoliberal defined</strong> — less business regulation but more government social programs; common among Texas Democrats."},
+     {text:"<strong>Libertarian defined</strong> — minimal government in BOTH economic AND social matters."},
+     {text:"<strong>Texas culture explanation</strong> — connects conservative lean of both parties to Texas's individualistic and traditionalistic political culture."},
+   ],
+   model:"Texas politics features four main ideological camps. Conservatives favor minimal government — fiscal conservatives prioritize tax cuts and reduced spending, while social conservatives focus on family values issues like opposing abortion. Liberals favor government intervention in the economy to reduce inequality while limiting government in personal and religious life. Neoliberals — common among Texas Democrats — split the difference on economics, arguing for less business regulation but still supporting government social programs. Libertarians go furthest, opposing government involvement in both economic and social matters. What makes Texas unique is that both major parties skew conservative compared to their national counterparts. The textbook attributes this to Texas's deeply individualistic and traditionalistic political culture — a history that values personal responsibility, limited government, and traditional social arrangements. Even Texas Democrats have historically adopted neoliberal rather than fully liberal positions as a result."},
+
+  {ch:'ch4',q:"Explain the difference between the temporary and permanent party organization in Texas. What does each do, and why does both parties having the same structure actually make sense?",
+   points:[
+     {text:"<strong>Temporary organization defined</strong> — primaries and conventions; functions briefly to nominate candidates, adopt platform, select delegates."},
+     {text:"<strong>Convention ladder</strong> — explains precinct → county/district → state convention sequence."},
+     {text:"<strong>Permanent organization defined</strong> — precinct chairs, county executive committees, state executive committee; ongoing day-to-day operations."},
+     {text:"<strong>State Executive Committee</strong> — highest permanent body; one man, one woman from each of 31 senatorial districts."},
+     {text:"<strong>Texas Election Code</strong> — explains that BOTH parties have the same structure because the Texas Election Code mandates it."},
+   ],
+   model:"Texas parties have two layers of organization. The temporary organization — primaries and conventions — springs to life during election season to nominate candidates, pass resolutions, adopt the party platform, and select delegates to higher-level conventions. It moves from the precinct level up through county/district conventions to the state convention, which in presidential years also selects national delegates. Once the conventions are done, this organization goes dormant. The permanent organization runs year-round: precinct chairs organize local party activities, county executive committees conduct primaries and arrange conventions, and at the top sits the State Executive Committee — the highest permanent party body, with one man and one woman elected from each of Texas's 31 senatorial districts. The reason both parties share this identical structure isn't a coincidence — the Texas Election Code mandates it. The state controls how parties must be organized, which is itself an expression of Dillon's Rule: even political parties operating in Texas must follow the rules the state sets."},
+];
+
+// ─── DISCUSSION ENGINE ───
+let discFilter='all';
+function filterDisc(ch,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');discFilter=ch;renderDiscussion();
+}
+function renderDiscussion(){
+  const list=discFilter==='all'?DISC_QUESTIONS:DISC_QUESTIONS.filter(d=>d.ch===discFilter);
+  const c=document.getElementById('disc-container');c.innerHTML='';
+  list.forEach((d,i)=>{
+    const idx=DISC_QUESTIONS.indexOf(d);
+    const div=document.createElement('div');div.className='disc-q';
+    div.innerHTML=`<div class="disc-q-text">${i+1}. ${d.q}</div>
+      <textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Draft your response here..." aria-label="Discussion response"></textarea>
+      <div class="disc-btn-row">
+        <button class="disc-btn primary" onclick="submitDisc(${idx})">Submit &amp; Self-Grade</button>
+        <button class="disc-btn" onclick="toggleModel(${idx})">Show Model Answer</button>
+        <button class="disc-btn" onclick="resetDisc(${idx})">Reset</button>
+      </div>
+      <div class="disc-rubric" id="disc-rubric-${idx}">
+        <strong style="font-size:.82rem;color:var(--text)">Self-Grading Rubric</strong>
+        <div style="margin-top:8px;">${d.points.map((p,pi)=>`<div class="rubric-item"><input type="checkbox" id="rub-${idx}-${pi}" onchange="updateDiscScore(${idx})"><label for="rub-${idx}-${pi}">${p.text}</label></div>`).join('')}</div>
+        <div class="disc-score" id="disc-score-${idx}">Score: 0 / ${d.points.length}</div>
+      </div>
+      <div class="model-answer" id="disc-model-${idx}">${d.model}</div>`;
+    c.appendChild(div);
+  });
+}
+function submitDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);
+  ta.disabled=true;
+  document.getElementById('disc-rubric-'+idx).classList.add('show');
+}
+function resetDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);ta.disabled=false;ta.value='';
+  document.getElementById('disc-rubric-'+idx).classList.remove('show');
+  document.getElementById('disc-model-'+idx).classList.remove('show');
+  document.querySelectorAll(`[id^="rub-${idx}-"]`).forEach(cb=>cb.checked=false);
+  document.getElementById('disc-score-'+idx).textContent='Score: 0 / '+DISC_QUESTIONS[idx].points.length;
+}
+function updateDiscScore(idx){
+  const total=DISC_QUESTIONS[idx].points.length;
+  const checked=document.querySelectorAll(`[id^="rub-${idx}-"]:checked`).length;
+  document.getElementById('disc-score-'+idx).textContent=`Score: ${checked} / ${total} (${Math.round(checked/total*100)}%)`;
+}
+function toggleModel(idx){document.getElementById('disc-model-'+idx).classList.toggle('show');}
+
+// ─── INIT ───
+window.addEventListener('DOMContentLoaded',()=>{
+  deck=[...allCards];renderCard();renderQuiz();renderDiscussion();updateMasteryBar();
+  document.querySelectorAll('.obj-master-btn').forEach(btn=>{
+    const key=btn.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+    if(key&&localStorage.getItem(key)){btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  });
+});
+</script>
+</body>
+</html>

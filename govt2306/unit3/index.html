@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GOVT 2306 — Unit 3: Voting, Elections &amp; Media</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#0a0a0f; --surface:#12121a; --surface2:#16161f; --border:#1e1e2e;
+  --text:#e8e8f0; --muted:#6b6b80; --green:#22c55e; --red:#ef4444;
+  --yellow:#eab308; --purple:#a78bfa; --orange:#f97316;
+  --accent:#f97316; --accent-dim:rgba(249,115,22,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(249,115,22,0.025) 39px,rgba(249,115,22,0.025) 40px),
+  repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(249,115,22,0.025) 39px,rgba(249,115,22,0.025) 40px);}
+body::before{content:'GOVT 2306 · Unit 3 · Chapters 5–6';position:fixed;top:0;left:0;right:0;
+  background:rgba(10,10,15,0.95);border-bottom:1px solid var(--border);padding:10px 16px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);z-index:100;letter-spacing:.05em;}
+.topnav{display:flex;gap:4px;padding:48px 12px 8px;overflow-x:auto;position:sticky;top:0;
+  background:rgba(10,10,15,0.97);z-index:90;border-bottom:1px solid var(--border);}
+.nav-btn{flex-shrink:0;background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:7px 13px;border-radius:6px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:11px;transition:all .15s;}
+.nav-btn:hover{color:var(--text);border-color:var(--accent);}
+.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.panel{display:none;padding:20px 16px 60px;max-width:860px;margin:0 auto;}
+.panel.active{display:block;}
+h1{font-size:1.4rem;font-weight:600;color:var(--accent);margin-bottom:4px;}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;display:block;}
+.exam-pill{display:inline-block;background:rgba(234,179,8,0.15);border:1px solid var(--yellow);
+  color:var(--yellow);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;
+  border-radius:20px;margin-bottom:20px;}
+.textbook-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.textbook-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;
+  transition:all .15s;}
+.textbook-links a:hover{color:var(--accent);border-color:var(--accent);}
+
+/* Objectives */
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  margin-bottom:10px;cursor:pointer;transition:border-color .15s;}
+.obj-card:hover{border-color:var(--accent);}
+.obj-header{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;
+  padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.ch5 .obj-num{color:var(--orange);background:rgba(249,115,22,0.12);}
+.ch6 .obj-num{color:var(--purple);background:rgba(167,139,250,0.12);}
+.obj-title{font-size:.88rem;font-weight:500;flex:1;}
+.obj-expand{color:var(--muted);font-size:12px;transition:transform .2s;}
+.obj-body{display:none;padding:0 16px 14px;font-size:.84rem;line-height:1.65;color:#b0b0c8;}
+.obj-body.open{display:block;}
+.obj-master-btn{margin-top:10px;background:transparent;border:1px solid var(--border);
+  color:var(--muted);padding:5px 12px;border-radius:4px;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;transition:all .15s;}
+.obj-master-btn.mastered{border-color:var(--green);color:var(--green);background:rgba(34,197,94,0.08);}
+.mastery-bar{background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  height:6px;margin-bottom:20px;overflow:hidden;}
+.mastery-fill{height:100%;background:var(--green);border-radius:20px;transition:width .4s;}
+.reset-mastery-btn{display:block;margin-bottom:20px;background:transparent;
+  border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:4px;
+  cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;}
+.reset-mastery-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* Study Guide */
+.chapter-block{margin-bottom:16px;}
+.chapter-header{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;
+  align-items:center;font-weight:500;font-size:.9rem;transition:border-color .15s;}
+.chapter-header:hover{border-color:var(--accent);}
+.chapter-body{display:none;background:var(--surface2);border:1px solid var(--border);
+  border-top:none;border-radius:0 0 8px 8px;padding:16px;}
+.chapter-body h3{font-size:.82rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px;}
+.chapter-body h3:first-child{margin-top:0;}
+.chapter-body p,.chapter-body li{font-size:.84rem;line-height:1.7;color:#b0b0c8;margin-bottom:6px;}
+.chapter-body ul{padding-left:18px;}
+.chapter-body strong{color:var(--text);}
+.flag-note{background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.3);
+  border-radius:6px;padding:8px 12px;font-size:.78rem;color:var(--yellow);margin:8px 0;}
+
+/* Flashcards */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:5px 12px;border-radius:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;transition:all .15s;}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.fc-wrap{perspective:1000px;margin-bottom:16px;}
+.fc-card{width:100%;min-height:220px;position:relative;transform-style:preserve-3d;
+  transition:transform .5s;cursor:pointer;}
+.fc-card.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  display:flex;flex-direction:column;justify-content:center;padding:24px;border-radius:10px;}
+.fc-back{transform:rotateY(180deg);border-color:var(--accent);background:var(--accent-dim);}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
+.fc-q,.fc-a{font-size:1rem;line-height:1.6;color:var(--text);}
+.fc-a{color:var(--accent);}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);
+  text-align:center;margin-bottom:12px;}
+.fc-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+.fc-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);
+  padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82rem;transition:all .15s;}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent);}
+.fc-btn.mastered-btn{border-color:var(--green);color:var(--green);}
+.fc-nav{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+.fc-empty{text-align:center;padding:40px;color:var(--muted);font-size:.9rem;}
+
+/* Quiz */
+.quiz-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.quiz-q-text{font-size:.9rem;margin-bottom:12px;line-height:1.6;}
+.quiz-opts label{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;
+  border-radius:5px;cursor:pointer;font-size:.85rem;line-height:1.5;transition:background .1s;}
+.quiz-opts label:hover{background:rgba(255,255,255,0.04);}
+.quiz-opts input{margin-top:3px;flex-shrink:0;accent-color:var(--accent);}
+.fitb-input{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:8px 12px;border-radius:5px;font-size:.85rem;margin-top:8px;}
+.fitb-input:focus{outline:none;border-color:var(--accent);}
+.q-correct{border-color:var(--green)!important;background:rgba(34,197,94,0.06)!important;}
+.q-wrong{border-color:var(--red)!important;background:rgba(239,68,68,0.06)!important;}
+.q-exp{font-size:.8rem;color:#9090b0;margin-top:8px;padding-top:8px;
+  border-top:1px solid var(--border);display:none;}
+.q-exp.show{display:block;}
+#submit-btn,#reset-btn{padding:10px 22px;border-radius:6px;cursor:pointer;
+  font-size:.88rem;font-weight:500;transition:all .15s;border:1px solid;}
+#submit-btn{background:var(--accent);border-color:var(--accent);color:#fff;margin-right:8px;}
+#submit-btn:hover{opacity:.85;}
+#reset-btn{background:transparent;border-color:var(--border);color:var(--muted);}
+#reset-btn:hover{border-color:var(--red);color:var(--red);}
+#quiz-score{margin-top:16px;padding:14px;background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;font-size:.9rem;display:none;}
+
+/* Discussion */
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.disc-q-text{font-size:.9rem;line-height:1.6;margin-bottom:12px;font-weight:500;}
+.disc-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:10px 12px;border-radius:5px;font-size:.84rem;
+  min-height:120px;resize:vertical;font-family:'IBM Plex Sans',sans-serif;line-height:1.6;}
+.disc-textarea:focus{outline:none;border-color:var(--accent);}
+.disc-btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.disc-btn{padding:6px 14px;border-radius:5px;cursor:pointer;font-size:.82rem;
+  border:1px solid var(--border);background:var(--surface2);color:var(--muted);transition:all .15s;}
+.disc-btn:hover{color:var(--text);}
+.disc-btn.primary{border-color:var(--accent);color:var(--accent);}
+.disc-rubric{display:none;margin-top:12px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:6px;padding:12px;}
+.disc-rubric.show{display:block;}
+.rubric-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;
+  border-bottom:1px solid var(--border);font-size:.82rem;}
+.rubric-item:last-child{border-bottom:none;}
+.rubric-item input[type=checkbox]{flex-shrink:0;margin-top:2px;accent-color:var(--green);}
+.disc-score{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--green);
+  margin-top:8px;}
+.model-answer{display:none;margin-top:10px;font-size:.82rem;line-height:1.65;
+  color:#9090b0;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.2);
+  border-radius:6px;padding:12px;}
+.model-answer.show{display:block;}
+
+/* Notes */
+.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.notes-grid{grid-template-columns:1fr;}}
+.note-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.note-card h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.note-lines{display:flex;flex-direction:column;gap:8px;}
+.note-line{border-bottom:1px solid var(--border);min-height:28px;}
+.video-block{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:14px 16px;margin-bottom:12px;}
+.video-block h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.video-link{display:flex;align-items:center;gap:8px;padding:7px 0;font-size:.84rem;
+  border-bottom:1px solid var(--border);}
+.video-link:last-child{border-bottom:none;}
+.video-link a{color:var(--text);text-decoration:none;flex:1;}
+.video-link a:hover{color:var(--accent);}
+.video-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);
+  border:1px solid var(--border);padding:2px 6px;border-radius:10px;flex-shrink:0;}
+.source-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.source-list a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;}
+.source-list a:hover{color:var(--accent);border-color:var(--accent);}
+footer{text-align:center;padding:30px 16px;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;color:var(--muted);}
+@media print{
+  body::before,.topnav,.exam-pill,.textbook-links,footer,.fc-controls,.fc-nav,.filter-row,
+  #submit-btn,#quiz-score,.disc-btn-row,.disc-rubric,.obj-master-btn,.reset-mastery-btn,
+  .mastery-bar{display:none!important;}
+  .panel{display:none!important;}.panel.active{display:block!important;}
+  *,*::before,*::after{background:white!important;background-color:white!important;
+    background-image:none!important;color:black!important;border-color:#bbb!important;
+    box-shadow:none!important;-webkit-text-fill-color:black!important;}
+  body{font-size:12pt;}.chapter-body{display:block!important;}
+  @page{margin:.75in;}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav" role="tablist" aria-label="Study sections">
+  <button class="nav-btn active" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)" role="tab" aria-selected="false" aria-controls="panel-guide">📖 Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)" role="tab" aria-selected="false" aria-controls="panel-flashcards">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)" role="tab" aria-selected="false" aria-controls="panel-quiz">✏️ Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('discussion',this)" role="tab" aria-selected="false" aria-controls="panel-discussion">💬 Discussion</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes Template</button>
+</nav>
+
+<!-- ═══════════════════════════ OBJECTIVES ═══════════════════════════ -->
+<div class="panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+  <span class="unit-badge">GOVT 2306 · Unit 3</span>
+  <h1>Voting, Elections &amp; Media</h1>
+  <span class="exam-pill">📅 Chapters 5 &amp; 6 — Check Blackboard for Exam Date</span>
+  <div class="textbook-links">
+    <a href="#">Ch. 5: Voting and Elections</a>
+    <a href="#">Ch. 6: The Media and Politics</a>
+  </div>
+  <div class="flag-note">📌 Heads up: the current (18th) edition retitled Chapter 5 from "Campaigns and Elections" to "Voting and Elections" and added LGBTQ+ representation as a full learning objective (5.4). The test review still uses the old chapter title — same content, just reorganized, so don't let the naming throw you.</div>
+  <div class="mastery-bar"><div class="mastery-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="reset-mastery-btn" onclick="resetAllMastery()">↺ Reset All Mastery</button>
+
+  <!-- CH5 OBJECTIVES -->
+  <div class="obj-card ch5" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 5.1</span>
+      <span class="obj-title">Individual characteristics &amp; voter participation</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Explain how individual characteristics and the voting process promote and inhibit voter participation.</p>
+      <p><strong>Key concepts:</strong> Voter turnout can be measured 3 ways — % of voting-age population (VAP), % of registered voters, or % of voting-eligible population (VEP, the most accurate — excludes non-citizens and unreleased felons). Education is the single strongest socioeconomic predictor of turnout. Older Texans vote more than younger Texans (a "life cycle" effect, not a permanent trait). Political efficacy (belief that officials respond to you) and strength of partisanship both raise turnout. Obstacles historically used to suppress the vote: poll tax, white primary, literacy tests, grandfather clause, vote dilution (cracking/packing, at-large districts). Universal suffrage didn't become a practical reality in Texas until the <strong>mid-1960s</strong> — long after it was technically legal.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit3_51')" aria-label="Mark LO 5.1 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch5" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 5.2</span>
+      <span class="obj-title">Vote choice &amp; the role of campaigns</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Analyze how voters choose which candidates to vote for, and the role of campaigns.</p>
+      <p><strong>Key concepts:</strong> Party identification is the single best predictor of vote choice, especially in low-information/down-ballot races (judicial, county). Character/favorability and issue positions matter more in high-profile races. Texas is a "media state" — its size and 20 media markets make TV/radio/social media essential and campaigns expensive. Campaign finance: PACs, the Texas Ethics Commission (enforces TX campaign law — 4 Republicans/4 Democrats by constitutional mandate), the federal Campaign Reform Act (2002, soft vs. hard money), Citizens United v. FEC (2010 — opened the door to Super PACs), McCutcheon v. FEC (2014 — struck down aggregate contribution limits), and dark money (anonymous nonprofit spending). Texas has almost no state contribution limits — the one exception is judicial candidates, where limits are tiered by court population.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit3_52')" aria-label="Mark LO 5.2 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch5" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 5.3</span>
+      <span class="obj-title">Texas's changing demographics &amp; elections</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Describe the impact of Texas's changing demographics on voting and elections.</p>
+      <p><strong>Key concepts:</strong> Latinos, Black Americans, and Asian Americans together make up 57% of Texas's population but do NOT yet comprise a majority of actual voters (the "turnout gap"). Latinos favor Democrats but are internally diverse (RGV vs. big-city Latinos vote differently) — a large Latino population does not guarantee Democratic wins. Black Texans are the most consistently Democratic group (~86–89% in recent elections). Asian Americans are diverse and trending Democratic, but vary a lot by national-origin group (Indian Americans lean D, Vietnamese Americans lean R). Demographic change does NOT automatically produce political change — mobilization and turnout matter just as much as population size.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit3_53')" aria-label="Mark LO 5.3 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch5" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 5.4</span>
+      <span class="obj-title">Women &amp; LGBTQ+ in Texas politics</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Describe the evolving role of women and LGBTQ+ Texans in Texas politics.</p>
+      <p><strong>Key concepts:</strong> Only 4 women held statewide office before 1990 (Ma Ferguson was the first, twice, 1925–27 &amp; 1933–35, riding on her husband's political network). Ann Richards elected governor 1990. Women still seek office less than men — largely due to disproportionate family/home responsibilities and harsher media scrutiny (Wendy Davis "abandoning her children" attack, 2014). The 2018 election was dubbed the <strong>"rainbow wave"</strong> — a record 35 LGBTQ+ candidates ran, 14 won. Annise Parker (Houston, 2010) was the first openly gay mayor of a major U.S. city; Lupe Valdez (2018) was the first Latina and openly gay major-party gubernatorial nominee in Texas.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit3_54')" aria-label="Mark LO 5.4 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch5" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 5.5</span>
+      <span class="obj-title">Election administration: primary, general &amp; special</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Understand election administration, including differences among primary, general, and special elections.</p>
+      <p><strong>Key concepts:</strong> The <strong>secretary of state</strong> is Texas's chief elections officer, but administration is decentralized to the 254 counties. All election law is compiled in the <strong>Texas Election Code</strong>. Primaries nominate a party's candidates (need 50%+1 to win outright, else a runoff); general elections (first Tuesday after the first Monday in November) fill offices by <strong>plurality</strong> — no runoff required even without a majority. Texas uses a <strong>combination open/closed primary</strong> (you declare affiliation only at the moment you vote). Early voting begins 17 days before a general election. Special elections fill vacancies or decide constitutional amendments and DO require a majority (runoff if none).</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit3_55')" aria-label="Mark LO 5.5 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <!-- CH6 OBJECTIVES -->
+  <div class="obj-card ch6" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" style="margin-top:20px;">
+    <div class="obj-header">
+      <span class="obj-num">LO 6.1</span>
+      <span class="obj-title">How Texans get information, then &amp; now</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Compare the ways in which Texans get their information today with past patterns.</p>
+      <p><strong>Key concepts:</strong> Newspapers dominated the 1800s–early 1900s; television took over mid-20th century and is STILL the largest single source for Texans overall (though the Internet/social media are closing in, especially with the young). Two-thirds of Texans now get news on smartphones. Print media matters disproportionately because it (1) has space for depth, (2) is read by elites, (3) remains the biggest original "gatherer" of news that TV/radio/internet then repackage, and (4) practices the most vetting/fact-checking.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit3_61')" aria-label="Mark LO 6.1 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch6" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 6.2</span>
+      <span class="obj-title">The media's roles in Texas politics</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Describe the roles of the media in Texas politics.</p>
+      <p><strong>Key concepts: 4 roles</strong> — (1) <strong>Providing information</strong> (soft news vs. hard news); (2) <strong>Maintaining democracy</strong> (professionalism/objectivity, investigative journalism, open meetings &amp; open records laws, exposing scandals like Sharpstown); (3) <strong>Setting the public agenda</strong> (agenda setting — what government pays attention to); (4) <strong>Shaping our views</strong> (priming — what issues we use to judge leaders; framing — how an issue is characterized; attack ads). The media rarely change firmly-held minds (selective perception/retention) but strongly influence the undecided and uninformed.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit3_62')" aria-label="Mark LO 6.2 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch6" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 6.3</span>
+      <span class="obj-title">Media in campaigns &amp; citizen movements</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Discuss the roles of the media in modern Texas election campaigns and citizen movements.</p>
+      <p><strong>Key concepts:</strong> Candidates and the press need each other but want different things (free/friendly coverage vs. entertaining controversy) — a relationship that often produces <strong>horserace journalism</strong> (who's ahead, not what they stand for). Digital campaigning became standard starting with 2008–2012 (Obama, Perry 2010, Cruz 2012). Texas is historically below the national average in civic engagement, though the gap is narrowing. Protests (BLM, Tea Party) rely heavily on social media to organize and gain coverage, with mixed policy success.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit3_63')" aria-label="Mark LO 6.3 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch6" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 6.4</span>
+      <span class="obj-title">Bias in the Texas media</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Analyze the issue of bias in the Texas media.</p>
+      <p><strong>Key concepts:</strong> Research finds <strong>little systematic ideological/partisan bias in mainstream media</strong> — examples of bias exist but "balance out" over time. Bias IS concentrated where consumers self-select their source: Fox (right) vs. MSNBC (left), talk radio (heavily conservative), blogs. Two biases researchers DO find broadly: a bias toward entertainment over substance, and a commercial bias (protecting advertisers/owners). Reporters skew more liberal than the public; owners/management skew more conservative — the two tend to offset each other.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit3_64')" aria-label="Mark LO 6.4 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch6" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 6.5</span>
+      <span class="obj-title">Women &amp; minorities in Texas media</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Discuss the representation of women and ethnic minorities in Texas media.</p>
+      <p><strong>Key concepts:</strong> Racial/ethnic minorities were 40% of the U.S. population in 2019 but only 22% of journalists and 18% of newsroom leaders — a gap that has barely moved in 20 years. Women are ~half the population but only 41% of newsroom staff/management, and are paid less. Coverage of minorities has improved (fewer overt stereotypes) but critics still find subtle stereotyping and under-coverage. Spanish-language TV (Univision, Telemundo) frequently beats English-language news in the ratings in Houston, Dallas, and San Antonio.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit3_65')" aria-label="Mark LO 6.5 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch6" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 6.6</span>
+      <span class="obj-title">Government regulation of print &amp; electronic media</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Distinguish how print and electronic media are regulated by government.</p>
+      <p><strong>Key concepts:</strong> The 1st Amendment protects the press from <strong>prior restraint</strong> (censorship before publication) — established nationally in New York Times Co. v. United States (1971, the Pentagon Papers case). The <strong>FCC</strong> regulates broadcast TV most heavily; radio/cable were deregulated in 1996; the Internet is the least regulated, with <strong>net neutrality</strong> as its central fight. Texas passed a <strong>shield law</strong> in 2009 protecting reporters' confidential sources. <strong>Defamation</strong> = false + damaging statement (libel if written, slander if spoken) — public figures must additionally prove "actual malice" (NYT v. Sullivan, 1964). <strong>SLAPP</strong> = strategic lawsuits meant to intimidate critics into silence; Texas's 2011 anti-SLAPP law was weakened in 2019.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit3_66')" aria-label="Mark LO 6.6 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch6" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 6.7</span>
+      <span class="obj-title">Positive &amp; negative effects of media change</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Discuss the positive and negative effects of changes the media are undergoing in Texas.</p>
+      <p><strong>Key concepts:</strong> Fewer than 10 corporations now own most national media (conglomerates). This drives <strong>homogenization</strong> (same stories, same way, less local flavor), <strong>soft news</strong> (entertainment over substance), a shrinking <strong>Capitol press corps</strong> (fewer reporters watchdogging state government), and <strong>commercial bias</strong> (favoring advertisers/owners). The upside: more voices, more participation, more choice for consumers. The core unresolved question the book poses: can digital/social media ever replace the sheer volume of original reporting that a well-funded newsroom used to produce?</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit3_67')" aria-label="Mark LO 6.7 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ STUDY GUIDE ═══════════════════════════ -->
+<div class="panel" id="panel-guide" role="tabpanel" aria-labelledby="tab-guide">
+  <h1>Study Guide</h1>
+  <span class="unit-badge">Unit 3 · Chapters 5 &amp; 6</span>
+
+  <!-- CHAPTER 5 -->
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🗳️ Chapter 5: Voting and Elections</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+
+      <h3>LO 5.1 — Turnout &amp; Obstacles to Voting</h3>
+      <ul>
+        <li><strong>Voter turnout</strong> can be calculated 3 ways: % of <strong>voting-age population</strong> (VAP — everyone 18+, even non-eligible), % of <strong>registered voters</strong>, or % of <strong>voting-eligible population</strong> (VEP — the most accurate; excludes non-citizens and unrestored felons). In the 2020 Texas general election these gave three different numbers: 51.3% (VAP), 60.2% (VEP), 66.7% (registered voters) — same election, three defensible answers, depending on the denominator.</li>
+        <li>Texas ranked <strong>45th</strong> in the nation in 2020 turnout; national average was 66% VEP vs. Texas's 60.2%.</li>
+        <li>12.6% of Texas's voting-age population was ineligible in 2020 due to citizenship status; another 2% due to unrestored felon status. (Felony voting rights are restored automatically in Texas once a sentence, including probation/parole, is fully completed.)</li>
+        <li><strong>Education is the single strongest socioeconomic predictor</strong> of turnout — stronger than income, gender, or age.</li>
+        <li>Age matters via a <em>life-cycle effect</em>, not fixed identity — young adults (Gen Z, Millennials) vote least, but turnout climbs as people age/settle into communities.</li>
+        <li><strong>Political efficacy</strong> — belief that elected officials respond to your input. High efficacy → more likely to vote. Strong partisans (strong D or strong R) also vote more than weak partisans/independents.</li>
+        <li><strong>Turnout gap</strong> (Bernard Fraga's research) — Black, Latino, and Asian American Texans vote at lower rates than Whites even controlling for education/income/age; the gap shrinks when a group's numbers are large enough to actually swing an election.</li>
+        <li><strong>Mobilization</strong> — registration drives, phone calls, door-knocking, social media outreach by parties/candidates/nonpartisan groups (League of Women Voters, MOVE Texas, Voto Latino). People who are personally contacted are more likely to vote.</li>
+        <li><strong>Universal suffrage</strong> — voting open to virtually all citizens 18+ — did not become a practical reality in Texas until the <strong>mid-1960s</strong>, a full century after the 14th/15th Amendments.</li>
+        <li><strong>Poll tax</strong> — required 1902–1966 ($1.75 by the end); disproportionately blocked poor, Black, and Mexican American voters. Ended by the <strong>24th Amendment</strong> (1964, national elections) and a 1966 Texas constitutional amendment (state elections), reinforced by <em>Harper v. Virginia State Board of Elections</em> (1966).</li>
+        <li><strong>White primary</strong> — Texas's 1923 law made the Democratic primary a "private" party function to legally exclude Black voters (since the Democratic primary = the real election in one-party Texas). Struck down in <em>Smith v. Allwright</em> (1944).</li>
+        <li><strong>Literacy tests</strong> — used in other Southern states (NOT Texas) starting in the 1870s to disenfranchise Black voters under cover of "civic knowledge" testing. Banned nationally by the VRA of 1965.</li>
+        <li><strong>Grandfather clause</strong> — also NOT used in Texas; exempted anyone (or their descendants) who could vote before 1867 from literacy/property/tax tests — obviously excluded Black citizens. Struck down in <em>Guinn v. United States</em> (1915).</li>
+        <li><strong>Gerrymandering</strong> — drawing district lines to include/exclude groups of voters. Diluting tactics: <em>cracking/splintering</em> (spread a minority population thin across many districts so it's never a majority anywhere) and <em>packing</em> (cram a minority into few districts to limit their overall influence). <strong>Affirmative racial gerrymandering</strong> is legal — drawing "majority-minority"/minority-opportunity districts to help elect minority candidates — as long as race isn't the sole basis for the lines.</li>
+        <li><strong>At-large districts</strong> dilute minority voting strength because representatives are elected citywide rather than by neighborhood; San Antonio replaced its at-large council with single-member districts in 1977 after DOJ found it violated the VRA.</li>
+        <li><div class="flag-note">⚠️ <strong>Shaw v. Reno (1993)</strong> — on the test review, but not covered in either textbook edition or the PowerPoint. Standard definition: a landmark U.S. Supreme Court case (North Carolina) holding that redistricting plans that are so bizarrely shaped they can only be explained by race are subject to "strict scrutiny" under the Equal Protection Clause — i.e., race cannot be the *predominant* factor in drawing district lines, even when the intent is to help minority representation. It's the case that put real limits on affirmative racial gerrymandering.</div></li>
+        <li><strong>Voting Rights Act of 1965</strong> — banned literacy tests; capped residency requirements at 30 days for presidential elections; required some/all early or absentee voting; required bilingual ballots where a large share of residents speak another primary language (Spanish statewide in TX; also Vietnamese &amp; Chinese in Harris County/Houston). Renewed 4 times by Congress, most recently through 2031.</li>
+        <li><strong><em>Shelby County v. Holder</em> (2013)</strong> — struck down the VRA's Section 4(b) coverage formula that determined which jurisdictions (Texas included) needed federal "preclearance" before changing election laws. Effectively ended preclearance. Section 2 of the VRA (banning discriminatory voting practices generally) is still in force — but now requires a lawsuit after the fact rather than pre-approval.</li>
+        <li><strong>Motor-voter law</strong> (National Voter Registration Act, 1993) — requires certain government offices (DMV, public assistance/disability offices, military recruiters) to offer voter registration. A 2020 federal court order forced Texas to extend this to online driver's license renewals.</li>
+        <li>Constitutional amendments expanding the vote: <strong>15th</strong> (race, 1870), <strong>19th</strong> (sex, 1920), <strong>24th</strong> (banned poll tax, 1964), <strong>26th</strong> (age 18, 1971).</li>
+      </ul>
+
+      <h3>LO 5.2 — Vote Choice, Campaigns &amp; Campaign Finance</h3>
+      <ul>
+        <li><strong>Vote choice</strong> drivers: candidate character/favorability, issue positions, and — the single best predictor, especially down-ballot — <strong>party identification</strong>. With less information (judicial/county races), voters lean on party ID even more heavily.</li>
+        <li>Texas is a <strong>"media state"</strong> for campaigns — its sheer size (20 media markets — more than any state but California) makes personal, county-by-county campaigning impractical, forcing reliance on expensive TV/radio/digital advertising.</li>
+        <li><strong>Sound bite</strong> — a short, quotable statement designed to convey a campaign theme, usually 10 seconds to a minute on TV.</li>
+        <li><strong>Negative campaigning</strong> — research finds ads focused on irrelevant, uncivil attacks discourage voters, while civil ads on relevant issues can actually boost participation.</li>
+        <li><strong>Political action committee (PAC)</strong> — an organization created to collect and distribute campaign contributions.</li>
+        <li><strong>Texas Ethics Commission</strong> — established 1993; enforces campaign finance/lobbying disclosure law; constitutionally mandated to have 4 Republican + 4 Democratic members; can levy fines but has limited authority to cap contributions.</li>
+        <li>Texas places <strong>almost no limits</strong> on campaign contributions — the major exception is judicial candidates, whose limits are tiered by the population of the court's jurisdiction: <strong>$5,000</strong> (Supreme Court/Court of Criminal Appeals, or district/county courts with 1M+ population), <strong>$2,500</strong> (250K–1M population), <strong>$1,000</strong> (under 250K population). <div class="flag-note">⚠️ The Texas law creating these judicial limits is the <strong>Judicial Campaign Fairness Act</strong> — this is on your sample quiz but the Act isn't named in either textbook edition (only the dollar-limit mechanism is). Standard definition: a 1995 Texas law that set contribution limits and disclosure/reporting rules specifically for judicial campaigns, in response to concerns about the appearance of "buying" judicial decisions.</div></li>
+        <li><strong>Campaign Reform Act</strong> (2002, "McCain-Feingold") — federal law restricting <strong>soft money</strong> (unregulated money for party-building/issue ads, not directly to a candidate) and regulating <strong>hard money</strong> (capped, direct-to-candidate contributions). Upheld in <em>McConnell v. FEC</em> (2003).</li>
+        <li><strong><em>Citizens United v. FEC</em> (2010)</strong> — struck down limits on independent political spending by corporations/unions, opening the door to <strong>Super PACs</strong> — committees that can raise/spend unlimited money as long as they don't coordinate directly with a candidate's campaign.</li>
+        <li><strong><em>McCutcheon v. FEC</em> (2014)</strong> — struck down the *aggregate* cap on how much an individual could donate across all federal candidates/parties/PACs combined in one cycle (per-candidate limits still apply).</li>
+        <li><strong>Dark money</strong> — political spending by nonprofits that don't have to disclose their donors, because they're technically organized as "social welfare" groups rather than PACs.</li>
+        <li>2018 Cruz vs. O'Rourke U.S. Senate race: <strong>$138.5 million</strong> total — 2nd-most-expensive Senate race in the nation that cycle.</li>
+      </ul>
+
+      <h3>LO 5.3 — Racial &amp; Ethnic Politics</h3>
+      <ul>
+        <li>Latinos, Black Americans, and Asian Americans together = <strong>57%</strong> of Texas's population but do not yet make up a majority of actual <em>voters</em> — the turnout gap in action.</li>
+        <li><strong>Latinos</strong> — lean strongly Democratic overall (Biden won ~67% of the Latino vote in 2020) but are internally diverse: the Rio Grande Valley shifted toward Trump in 2020 even as Latinos in big metro counties favored Biden 2-to-1. A large Latino population does not guarantee a Democratic win (see: Tony Gonzales winning a heavily Latino 23rd district as a Republican in 2020).</li>
+        <li>2002: Tony Sanchez became the first Latino nominated for governor by a major party. 2018: Sylvia Garcia &amp; Veronica Escobar became the first Mexican American Latinas elected to the U.S. House from Texas.</li>
+        <li><strong>Black Americans</strong> — the most consistently Democratic-voting group (86%+ in recent statewide races). 1990: Morris Overstreet became the first Black Texan elected to statewide office. Identification with the Democratic Party dates to the 1930s, strengthened after 1960s civil rights legislation under LBJ.</li>
+        <li><strong>Asian Americans</strong> — fast-growing, diverse, increasingly Democratic-leaning as a whole, but varies sharply by national-origin group: Indian Americans lean Democratic, Vietnamese Americans lean Republican (anti-communism is a major factor), Filipino Americans are closely divided.</li>
+        <li>Key takeaway across all three groups: <strong>demographic change does not automatically produce political change</strong> — mobilization, turnout, and internal diversity all matter as much as raw population growth.</li>
+      </ul>
+
+      <h3>LO 5.4 — Women &amp; LGBTQ+ in Texas Politics</h3>
+      <ul>
+        <li>Before 1990, only <strong>4 women</strong> had won statewide office in Texas — including Miriam "Ma" Ferguson (1925–27, 1933–35), who ran essentially as a proxy for her impeached husband, Jim Ferguson.</li>
+        <li>1990: Texas female voters outnumbered male voters for the first time; Ann Richards elected governor.</li>
+        <li>Women continue to run for office less than men, largely because of (a) disproportionate family/home responsibilities and (b) harsher media/opponent scrutiny of working mothers — e.g., Wendy Davis was attacked in 2014 for "abandoning her children" to attend Harvard Law.</li>
+        <li>2021: 48 women in the Texas Legislature (10 Senate, 38 House) — up but still well short of parity (31 Senate seats, 150 House seats total).</li>
+        <li><strong>LGBTQ+:</strong> Annise Parker (Houston, 2010) — first openly gay mayor of a major U.S. city. The 2018 election was dubbed the <strong>"rainbow wave"</strong> — a record 35 LGBTQ+ candidates ran for office, 14 won. Lupe Valdez (2018 Democratic gubernatorial nominee) — first Latina and openly gay candidate to win a major party's gubernatorial nomination in Texas.</li>
+      </ul>
+
+      <h3>LO 5.5 — Election Administration</h3>
+      <ul>
+        <li><strong>Secretary of state</strong> = Texas's chief elections officer, but day-to-day administration is <strong>decentralized</strong> to the 254 counties.</li>
+        <li>All Texas election law is compiled in the <strong>Texas Election Code</strong>.</li>
+        <li><strong>Voter qualifications:</strong> U.S. citizen; 18+ on Election Day; resident of the state/county 30+ days; resident of the area covered by the election; registered 30+ days before the election; not a convicted felon still serving sentence/probation/parole; not declared mentally incompetent by a court.</li>
+        <li>You do NOT need your physical registration certificate to vote — a valid photo ID + signed affidavit at the polls works if your certificate is missing, as long as the name is exact or "substantially similar."</li>
+        <li><strong>Early voting</strong> begins <strong>17 days</strong> before a November general election (12 days before a March primary, 10 days before other runoffs) and ends 4 days before Election Day. 57% of Texans voted early in the 2020 general election.</li>
+        <li>Texas has more than <strong>8,500 voting precincts</strong>, boundaries drawn by the 254 county commissioners courts. Some counties (80+, including El Paso and Galveston) use countywide <strong>voting centers</strong> instead — vote at any location in the county.</li>
+        <li><strong>Election officials:</strong> county clerk/elections administrator prepares general/special election ballots; each precinct gets one election judge + one alternate (different parties) appointed by the commissioners court, plus clerks; a county election commission (county judge, clerk/administrator, sheriff, both major-party chairs) selects polling places and handles logistics.</li>
+        <li><strong>Direct primary</strong> — party members choose their own nominees directly at the polls, avoiding domination by party bosses.</li>
+        <li><strong>Closed primary</strong> — must declare party affiliation to vote in that party's primary. <strong>Open primary</strong> — no party declaration required; pick either party's ballot at the polls. <strong>Jungle/top-two primary</strong> (CA, WA, LA) — all candidates from all parties on one ballot; top two advance to a runoff regardless of party.</li>
+        <li><div class="flag-note">⚠️ <strong>Blanket primary</strong> — on the test review, but not defined in either textbook edition or the PowerPoint. Standard definition: a primary format (once used in California, Washington, and Alaska) where voters could pick a *different* party's candidate for *each different office* on the same ballot — e.g., voting in the Democratic primary for governor and the Republican primary for senator on the same ballot. Ruled unconstitutional for federal/state partisan primaries in <em>California Democratic Party v. Jones</em> (2000) because it forces parties to let non-members help pick their nominee. It's distinct from jungle/top-two primaries, where candidates of all parties appear together for the SAME office.</div></li>
+        <li>Texas uses a <strong>combination of open and closed</strong> — you don't register by party, but you DO declare which party's primary you're voting in at the moment you show up (and can't then vote/convention with the other party that same cycle). This is called <strong>crossover voting</strong> when done strategically.</li>
+        <li>Winning a primary outright requires an <strong>absolute majority (50%+1)</strong>; if no one clears that, a <strong>runoff primary</strong> is held the 4th Tuesday in May between the top two finishers.</li>
+        <li>Primaries are financed ~30% by candidate <strong>filing fees</strong> ($5,000 U.S. Senate; $3,750 governor/statewide; $1,250 state Senate; $750 state House) with the state covering the rest — or a candidate can submit a signature petition instead of paying (5,000 signatures statewide; 500 or 2% of the last governor's race vote, whichever is less, for district/county/precinct office).</li>
+        <li><strong>General elections</strong> — first Tuesday after the first Monday in November of even-numbered years. Winner = <strong>plurality</strong> (most votes) — Texas does NOT require a majority or hold runoffs for state/district/county general elections, even with strong third-party/independent vote-splitting.</li>
+        <li><strong>Off-year/midterm election</strong> — governor and other statewide officers are elected in the even-numbered year BETWEEN presidential elections, to reduce presidential coattail effects on state races.</li>
+        <li><strong>Special elections</strong> — called by the governor to fill legislative/congressional vacancies or to vote on constitutional amendments. UNLIKE general elections, special elections DO require a majority to win outright — if no one gets 50%+1, the top two go to a runoff.</li>
+        <li>Voting systems (chosen by county commissioners court): paper ballot, optical scan, and direct recording electronic (DRE/touch screen). Straight-ticket voting was eliminated starting with the 2020 election.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CHAPTER 6 -->
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>📰 Chapter 6: The Media and Politics</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+
+      <h3>LO 6.1 — Where Texans Get Their Information</h3>
+      <ul>
+        <li>Three media types: <strong>print</strong> (newspapers/magazines), <strong>electronic</strong> (radio/TV — broadcast vs. cable), <strong>digital</strong> (Internet/social media).</li>
+        <li>Television remains Texans' single largest overall news source, but the Internet/social media are gaining fast, especially among younger Texans. Two-thirds of Texans now get news on smartphones — the same share as desktop/laptop.</li>
+        <li>Print media punches above its weight for 4 reasons: more space/depth than broadcast; it's the elite's preferred source; it's still the biggest original "gatherer" of news (TV/radio/internet mostly repackage what newspapers break); and it has the strongest tradition of vetting/fact-checking.</li>
+        <li>Texas has 41 daily newspapers (2020) — about a third of the number that existed in 1975. Only the Dallas Morning News remains Texas-owned among major dailies; most others are owned by out-of-state chains.</li>
+        <li>Radio: ~2,400 stations in Texas; limited political value beyond talk radio, which is dominated by conservatives — helped along by the FCC's 1987 repeal of the Fairness Doctrine (which had required stations to air both sides of controversial issues).</li>
+        <li><strong>Blog</strong> — a regularly updated website/page where a writer (or writers) posts opinion, information, and links; Texas has prominent blogs on both the left (Off the Kuff, Grits for Breakfast) and right (Big Jolly Politics, Texas Insider).</li>
+      </ul>
+
+      <h3>LO 6.2 — The Media's 4 Roles in Politics</h3>
+      <ul>
+        <li><strong>1. Providing information</strong> — the basic function, but complicated by the "softening" of news: <strong>hard news</strong> (fact-focused, policy-relevant) is increasingly crowded out by <strong>soft news</strong> (entertaining, sensationalized, low policy substance) as outlets compete for eyeballs.</li>
+        <li><strong>2. Maintaining democracy</strong> — 19th-century media was highly partisan ("yellow journalism" = sensationalized, exaggerated reporting). 20th century brought <strong>professionalism</strong> (objective, neutral, accurate reporting, separated from opinion/editorial pages). <strong>Investigative journalism</strong> has declined due to fewer reporters, but remains important — <strong>open meetings</strong> and <strong>open records</strong> laws (strengthened after the <strong>Sharpstown</strong> stock fraud scandal of the early 1970s) are the media's key tools for digging up what officials would rather hide.</li>
+        <li><strong>3. Setting the public agenda (agenda setting)</strong> — media coverage strongly shapes which problems officials feel pressure to act on (e.g., the Snook, TX highway-bypass tree controversy forcing TxDOT to change its plan after Houston Chronicle coverage), though the Texas press competes for agenda-setting power against the governor, legislative leaders, and interest groups, who often have more resources.</li>
+        <li><strong>4. Shaping our views</strong> — the media rarely change firmly held opinions (people practice <strong>selective perception/retention</strong> — hearing what confirms existing beliefs) but strongly influence undecided/low-information voters through: <strong>priming</strong> (which issues become the yardstick we judge leaders by — classic example: Clayton Williams's rape joke and refusal to shake Ann Richards's hand became the defining story of the 1990 governor's race), <strong>framing</strong> (how an issue is characterized — e.g., "defund the police" framed as either "redirect some funding" or "eliminate police" produced wildly different poll results depending on wording), and <strong>attack ads</strong> (negative advertising — works by generating free media coverage AND by making marginal supporters abstain rather than switch sides).</li>
+      </ul>
+
+      <h3>LO 6.3 — Media in Campaigns &amp; Citizen Movements</h3>
+      <ul>
+        <li>Texas has <strong>20 media markets</strong> (more than any state but California), which is why statewide campaigns are so expensive — 2018 and 2020 U.S. Senate races cost candidates/supporters $139M and $90M respectively.</li>
+        <li><strong>Horserace journalism</strong> — coverage focused on who's ahead in the polls rather than substantive policy differences; a persistent media/campaign complaint.</li>
+        <li><strong>Digital campaigning</strong> became standard starting 2008–2012: Obama's social-media targeting, Rick Perry's 2010 "ask 12 friends" Facebook strategy, Ted Cruz's 2012 upset primary win fueled by digital ad targeting.</li>
+        <li><strong>Civic engagement</strong> — actions addressing public concerns (voting, volunteering, contacting officials, discussing politics). Texas has historically ranked below the national average, though the gap has been narrowing.</li>
+        <li>Protests (Tea Party, Black Lives Matter, #MeToo) increasingly rely on social media to organize, fundraise, and recruit — with real but limited policy success (e.g., "defund the police" gained little traction outside Austin, while removing Confederate monuments saw significant success — 33 of 114 nationwide removals through 2018 were in Texas, the most of any state).</li>
+      </ul>
+
+      <h3>LO 6.4 — Bias in the Texas Media</h3>
+      <ul>
+        <li>Bottom line from the research: <strong>little systematic ideological/partisan bias</strong> in mainstream/professional media — individual biased stories exist but "balance out" over time (media scholar Timothy E. Cook: newsmaking is shaped more by routine journalistic institutions than by individual reporters' attitudes).</li>
+        <li>Bias IS real and growing where audiences self-select: Fox News (consciously conservative) vs. MSNBC (consciously liberal) vs. CNN (traditionally objective, now rated left-leaning by Media Bias/Fact Check); talk radio (long dominated by conservatives); blogs (split left/right, fewer in the center).</li>
+        <li>Reporters, as a group, skew more liberal/Democratic than the general public; owners/management skew more conservative/Republican — the two tendencies tend to offset each other in a newsroom.</li>
+        <li>Two OTHER real biases researchers consistently find: a bias toward <strong>entertainment over substance</strong>, and a <strong>commercial bias</strong> (protecting advertisers and parent-company interests).</li>
+        <li>Public trust in media has declined sharply since the mid-1980s and now breaks heavily along party lines (in 2020, most Democrats trusted media on COVID-19 info; most Republicans did not).</li>
+      </ul>
+
+      <h3>LO 6.5 — Women &amp; Minorities in Texas Media</h3>
+      <ul>
+        <li>2019: racial/ethnic minorities were 40% of the U.S. population but only 22% of journalists and 18% of newsroom leadership — a gap essentially unchanged over 20 years.</li>
+        <li>Women (~half the population) were 41% of both newsroom staff and management in 2019, and tend to be paid less than male colleagues.</li>
+        <li>Coverage of minority Texans has improved over time (fewer overt stereotypes, more varied contexts) but critics still find subtler stereotyping, under-coverage relative to population share, and disparities in how similar violent events get framed depending on the race of those involved.</li>
+        <li>A Ford Foundation survey found all racial groups agreed Black Americans are portrayed more negatively than reality; nearly half of minorities felt White Americans are portrayed more positively than reality.</li>
+        <li><strong>Univision</strong> is the largest Spanish-language network in the U.S. (started in San Antonio/LA, 1962); <strong>Telemundo</strong> is second. Spanish-language primetime news regularly beats English-language competitors in Houston, Dallas, and San Antonio.</li>
+      </ul>
+
+      <h3>LO 6.6 — Government Regulation of the Media</h3>
+      <ul>
+        <li><strong>Prior restraint</strong> — censorship/suppression BEFORE publication; U.S. courts are highly suspicious of it. Established nationally in <em>New York Times Co. v. United States</em> (1971) — the "Pentagon Papers" case, allowing publication of classified Vietnam War documents despite government objections.</li>
+        <li>The <strong>FCC (Federal Communications Commission)</strong> is the primary federal media regulator — still heavily regulates broadcast television; radio and cable were deregulated in 1996.</li>
+        <li><strong>Net neutrality</strong> — the principle that internet service providers must treat all data equally (no paid fast lanes, no throttling lawful content) — the central current battle over Internet regulation; the FCC adopted it in 2015, then repealed it in 2017.</li>
+        <li><strong>Shield law</strong> — protects journalists from being forced to reveal confidential sources in court. Texas passed its shield law (the Free Flow of Information Act) in 2009, becoming the 37th state to do so.</li>
+        <li><strong>Defamation</strong> — a false statement that damages someone's reputation; <strong>libel</strong> if written, <strong>slander</strong> if spoken. Since <em>New York Times Co. v. Sullivan</em> (1964), public figures must additionally prove "actual malice" to win a defamation suit — a much higher bar than private citizens face.</li>
+        <li><strong>SLAPP (Strategic Lawsuit Against Public Participation)</strong> — a lawsuit (often over libel) filed mainly to intimidate and financially drain a critic into silence rather than to win on the merits. Texas passed a strong anti-SLAPP law in 2011 (strengthened 2013), but business interests won a significant rollback of its scope in the 2019 legislature.</li>
+      </ul>
+
+      <h3>LO 6.7 — Change in the Media: More Sources, Less News?</h3>
+      <ul>
+        <li><strong>Concentration of ownership</strong> — fewer than 10 corporations now own most national newspapers, magazines, and broadcast/cable networks. In Texas: TEGNA owns 15 TV stations (including major-metro ABC/NBC/CBS affiliates); iHeartMedia (based in San Antonio) owns 72 of Texas's ~2,400 radio stations, including most major talk-radio outlets.</li>
+        <li><strong>Homogenization of news</strong> — the increased likelihood that chain-owned outlets run the same story the same way, losing local/regional flavor — driven by outlets relying on wire services and shared corporate feeds instead of original local reporting.</li>
+        <li><strong>Soft news</strong> — growing emphasis on entertainment, scandal, and horserace coverage over substantive/hard news, driven by competition for advertising revenue since the mid-1980s when networks began demanding profitability from news divisions.</li>
+        <li><strong>Capitol press corps</strong> — reporters covering the state capitol full-time. Texas's press corps shrank from 66 (1991) to 32 (2016) — though it partially rebounded to 85 credentialed reporters by 2021, mostly due to growth in TV reporters.</li>
+        <li><strong>Commercial bias</strong> — the tendency to favor a parent company's interests by running favorable stories or suppressing unfavorable ones; documented in surveys of local news directors reporting advertiser pressure on content decisions.</li>
+        <li>The book's open question: will digital/social media ever be able to replace the sheer *quantity* of original, professionally vetted reporting that a well-staffed traditional newsroom used to produce? So far: no clear answer, but newspapers remain the source that most other media (including blogs) still originate from — one Pew study found 99% of blog stories originated in traditional media first.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ FLASHCARDS ═══════════════════════════ -->
+<div class="panel" id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards">
+  <h1>Flashcards</h1>
+  <div class="filter-row" role="group" aria-label="Filter flashcards by chapter">
+    <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('ch5',this)">Ch. 5</button>
+    <button class="filter-btn" onclick="filterCards('ch6',this)">Ch. 6</button>
+  </div>
+  <div class="fc-counter" id="fc-counter" aria-live="polite"></div>
+  <div class="fc-wrap">
+    <div class="fc-card" id="fc-card" onclick="flipCard()" aria-label="Flashcard — click to flip">
+      <div class="fc-front">
+        <div class="fc-label">Question</div>
+        <div class="fc-q" id="fc-q" aria-live="polite"></div>
+      </div>
+      <div class="fc-back">
+        <div class="fc-label">Answer</div>
+        <div class="fc-a" id="fc-a" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-controls">
+    <button class="fc-btn" onclick="flipCard()" aria-label="Flip card">↩ Flip</button>
+    <button class="fc-btn mastered-btn" id="fc-master-btn" onclick="toggleMastered(currentIdx)" aria-label="Toggle mastered">☐ Mastered</button>
+    <button class="fc-btn" onclick="shuffleCards()" aria-label="Shuffle deck">🔀 Shuffle</button>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
+    <button class="fc-btn" onclick="nextCard()" aria-label="Next card">Next →</button>
+  </div>
+  <div class="fc-empty" id="fc-empty" style="display:none">No cards in this filter.</div>
+</div>
+
+<!-- ═══════════════════════════ QUIZ ═══════════════════════════ -->
+<div class="panel" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+  <h1>Practice Quiz</h1>
+  <div class="filter-row" role="group" aria-label="Filter quiz by chapter">
+    <button class="filter-btn active" onclick="setQuizFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch5',this)">Ch. 5</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch6',this)">Ch. 6</button>
+  </div>
+  <div id="quiz-container"></div>
+  <div style="margin-top:16px;">
+    <button id="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <button id="reset-btn" onclick="resetQuiz()">Reset</button>
+  </div>
+  <div id="quiz-score"></div>
+</div>
+
+<!-- ═══════════════════════════ DISCUSSION ═══════════════════════════ -->
+<div class="panel" id="panel-discussion" role="tabpanel" aria-labelledby="tab-discussion">
+  <h1>Discussion Board Prep</h1>
+  <div class="filter-row" role="group" aria-label="Filter discussion by chapter">
+    <button class="filter-btn active" onclick="filterDisc('all',this)">All</button>
+    <button class="filter-btn" onclick="filterDisc('ch5',this)">Ch. 5</button>
+    <button class="filter-btn" onclick="filterDisc('ch6',this)">Ch. 6</button>
+  </div>
+  <div id="disc-container"></div>
+</div>
+
+<!-- ═══════════════════════════ NOTES ═══════════════════════════ -->
+<div class="panel" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes">
+  <h1>Notes Template</h1>
+  <span class="unit-badge">Unit 3 · Chapters 5 &amp; 6 — Print this tab for in-class notes</span>
+
+  <div class="video-block">
+    <h4>📺 Chapter 5 Videos — Voting, Elections &amp; Campaigns</h4>
+    <div class="video-link"><span class="video-tag">Elections</span><a href="https://www.youtube.com/watch?v=48EZKXweGDo" target="_blank" rel="noopener">Crash Course: Elections</a></div>
+    <div class="video-link"><span class="video-tag">Campaigns</span><a href="https://www.youtube.com/watch?v=2A5QlpAyKSQ" target="_blank" rel="noopener">Crash Course: Campaigns</a></div>
+    <div class="video-link"><span class="video-tag">Bonus/Review</span><a href="https://www.youtube.com/watch?v=pLlvOv7JOXs" target="_blank" rel="noopener">Political Parties (review — ties into primaries)</a></div>
+  </div>
+
+  <div class="video-block">
+    <h4>📺 Chapter 6 Videos — Media &amp; Bias</h4>
+    <div class="video-link"><span class="video-tag">Media</span><a href="https://youtu.be/6F0g4N415uw" target="_blank" rel="noopener">Crash Course: Media &amp; Politics</a></div>
+    <div class="video-link"><span class="video-tag">Bias</span><a href="https://www.youtube.com/watch?v=xTfYdIzxhiI" target="_blank" rel="noopener">AllSides: Understanding Media Bias</a></div>
+    <div class="video-link"><span class="video-tag">Tool</span><a href="https://www.allsides.com/media-bias/media-bias-chart" target="_blank" rel="noopener">AllSides Media Bias Chart (interactive)</a></div>
+    <p style="font-size:.78rem;color:var(--muted);margin-top:8px;">Reputable Texas news sources for the current-event discussion assignment:</p>
+    <div class="source-list">
+      <a href="https://www.texastribune.org/" target="_blank" rel="noopener">Texas Tribune</a>
+      <a href="https://communityimpact.com/" target="_blank" rel="noopener">Community Impact</a>
+      <a href="https://www.kut.org/" target="_blank" rel="noopener">KUT</a>
+    </div>
+  </div>
+
+  <div class="notes-grid">
+    <div class="note-card">
+      <h4>3 Ways to Measure Turnout</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Historical Voting Obstacles</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Gerrymandering: Cracking vs. Packing</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Campaign Finance Case Law Timeline</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Primary Types Comparison</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Primary vs. General vs. Special Elections</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Demographic Voting Trends</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>The Media's 4 Roles</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Priming vs. Framing vs. Agenda Setting</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Where Is Bias Actually Found?</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Media Regulation: Prior Restraint, FCC, Shield Law</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Key Numbers to Remember</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+  </div>
+</div>
+
+<footer>GOVT 2306 · Unit 3 · study.imichaelv.com · Built from Ch. 5 &amp; 6 (18th ed.) source materials</footer>
+
+<script>
+// ─── MASTERY ───
+function getMasteryKey(){return 'mastery_govt2306_unit3_';}
+function resetAllMastery(){
+  Object.keys(localStorage).filter(k=>k.startsWith(getMasteryKey())).forEach(k=>localStorage.removeItem(k));
+  Object.keys(localStorage).filter(k=>k.startsWith('obj_govt2306_unit3_')).forEach(k=>localStorage.removeItem(k));
+  document.querySelectorAll('.obj-master-btn').forEach(b=>{b.textContent='☐ Mark Mastered';b.classList.remove('mastered');});
+  document.querySelectorAll('.fc-card').forEach((_,i)=>localStorage.removeItem(getMasteryKey()+i));
+  updateMasteryBar();
+}
+function updateMasteryBar(){
+  const total=document.querySelectorAll('.obj-master-btn').length;
+  const done=Object.keys(localStorage).filter(k=>k.startsWith('obj_govt2306_unit3_')).length;
+  const pct=total?Math.round(done/total*100):0;
+  const f=document.getElementById('mastery-fill');
+  if(f)f.style.width=pct+'%';
+}
+function toggleObjMastery(btn,key){
+  const is=localStorage.getItem(key);
+  if(is){localStorage.removeItem(key);btn.textContent='☐ Mark Mastered';btn.classList.remove('mastered');}
+  else{localStorage.setItem(key,'1');btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  updateMasteryBar();
+}
+function toggleObj(card){
+  const body=card.querySelector('.obj-body');
+  const arrow=card.querySelector('.obj-expand');
+  const open=body.classList.toggle('open');
+  arrow.style.transform=open?'rotate(180deg)':'';
+  card.setAttribute('aria-expanded',open);
+}
+function toggleChapter(header){
+  const body=header.nextElementSibling;
+  const arrow=header.querySelector('span:last-child');
+  const open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  arrow.style.transform=open?'':'rotate(180deg)';
+  header.setAttribute('aria-expanded',!open);
+}
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+}
+
+// ─── FLASHCARD DATA ───
+const allCards=[
+  // Ch5
+  {ch:'ch5',q:"What are the 3 ways to measure voter turnout, and which is most accurate?",a:"% of voting-age population (VAP), % of registered voters, or % of voting-eligible population (VEP). VEP is the most accurate — it excludes non-citizens and felons who haven't completed their sentence."},
+  {ch:'ch5',q:"What is the single strongest socioeconomic predictor of whether someone votes?",a:"Education. As education rises, so does likelihood of voting — stronger than income, age, or gender."},
+  {ch:'ch5',q:"What is political efficacy, and how does it relate to turnout?",a:"The belief that elected officials respond to attempts to influence them. Texans with high political efficacy are more likely to vote; those with low efficacy are less likely."},
+  {ch:'ch5',q:"What is the 'turnout gap,' and what does Bernard Fraga's research find about it?",a:"The persistent gap in voter turnout between Black, Latino, and Asian American voters compared to White voters, even controlling for education/income/age. The gap shrinks when a group's numbers are large enough to swing an election outcome."},
+  {ch:'ch5',q:"What is mobilization, in the context of voter turnout?",a:"Actions like registration drives, phone calls, door-knocking, and social media outreach by parties, candidates, and nonpartisan groups (League of Women Voters, MOVE Texas) that get individuals to actually vote. People personally contacted are more likely to vote."},
+  {ch:'ch5',q:"When did universal suffrage become a PRACTICAL reality in Texas, and why is that date later than you'd expect?",a:"The mid-1960s — even though the 14th/15th Amendments passed a century earlier, poll taxes, white primaries, and other obstacles blocked practical access to the vote until the VRA era."},
+  {ch:'ch5',q:"What was the poll tax, and how was it ended?",a:"A tax (up to $1.75) required in Texas from 1902–1966 to vote; disproportionately blocked poor, Black, and Mexican American voters. Ended by the 24th Amendment (1964, national elections) and a 1966 TX constitutional amendment (state elections)."},
+  {ch:'ch5',q:"What was the white primary, and what case ended it?",a:"Texas's 1923 law made the Democratic primary a 'private' party function to exclude Black voters — significant because the Democratic primary WAS the real election in one-party Texas. Struck down in Smith v. Allwright (1944)."},
+  {ch:'ch5',q:"Were literacy tests and the grandfather clause used in Texas?",a:"No — both were used by OTHER southern states to disenfranchise Black voters, but not Texas. Literacy tests were banned nationally by the VRA (1965); the grandfather clause was struck down in Guinn v. United States (1915)."},
+  {ch:'ch5',q:"What's the difference between 'cracking' and 'packing' as vote-dilution tactics?",a:"Cracking (splintering) spreads a minority population across many districts so it's never a majority anywhere. Packing crams minority voters into few districts to limit their overall statewide influence."},
+  {ch:'ch5',q:"What is affirmative racial gerrymandering, and is it legal?",a:"Drawing 'majority-minority' or minority-opportunity districts designed to help elect a racial/ethnic minority candidate. It IS legal, as long as race isn't the sole/predominant basis for the district lines."},
+  {ch:'ch5',q:"⚠️ What did Shaw v. Reno (1993) establish? (Not in your textbook — flagged term)",a:"A landmark case holding that districts so bizarrely shaped they can only be explained by race are subject to strict scrutiny — race cannot be the PREDOMINANT factor in redistricting, even for minority-opportunity purposes."},
+  {ch:'ch5',q:"What did Shelby County v. Holder (2013) do?",a:"Struck down the VRA's Section 4(b) coverage formula that determined which jurisdictions (including Texas) needed federal 'preclearance' before changing election laws — effectively ending preclearance nationwide."},
+  {ch:'ch5',q:"What is the motor-voter law, and what expanded it in Texas in 2020?",a:"The National Voter Registration Act (1993) requires DMVs, public assistance offices, and military recruiters to offer voter registration. A 2020 federal court order forced Texas to also offer it during ONLINE driver's license renewals."},
+  {ch:'ch5',q:"Match the amendment to what it protects: 15th, 19th, 24th, 26th.",a:"15th = race (1870); 19th = sex (1920); 24th = banned poll tax (1964); 26th = voting age 18 (1971)."},
+  {ch:'ch5',q:"What is the single best predictor of vote choice, especially in low-information races?",a:"Party identification — even more powerful in down-ballot races (judicial, county) where voters know little about individual candidates."},
+  {ch:'ch5',q:"Why is Texas called a 'media state' for campaigns?",a:"Its size (20 media markets, more than any state but California) makes personal county-by-county campaigning impractical, forcing heavy reliance on expensive TV/radio/digital advertising."},
+  {ch:'ch5',q:"What is a PAC, and what agency regulates Texas campaign finance?",a:"A political action committee — an organization that collects/distributes campaign contributions. The Texas Ethics Commission (est. 1993, mandated 4R/4D members) enforces disclosure law and can levy fines."},
+  {ch:'ch5',q:"⚠️ What is the Judicial Campaign Fairness Act? (Named on your sample quiz, not in your textbook)",a:"A 1995 Texas law setting tiered contribution limits for judicial candidates ($5,000/$2,500/$1,000 depending on the court's population) — the only real contribution cap in Texas campaign law."},
+  {ch:'ch5',q:"What does the Campaign Reform Act (2002) regulate, and what upheld it?",a:"Restricts 'soft money' (unregulated party-building money) and hard money contribution limits. Upheld in McConnell v. FEC (2003)."},
+  {ch:'ch5',q:"What did Citizens United v. FEC (2010) rule, and what did it create?",a:"Struck down limits on independent political spending by corporations/unions — opening the door to Super PACs, which can raise/spend unlimited money as long as they don't coordinate directly with a campaign."},
+  {ch:'ch5',q:"What did McCutcheon v. FEC (2014) strike down?",a:"The AGGREGATE cap on how much an individual could donate across ALL federal candidates/parties/PACs combined in one cycle. Per-candidate limits still apply."},
+  {ch:'ch5',q:"What is 'dark money'?",a:"Political spending by nonprofits that don't have to disclose their donors because they're organized as 'social welfare' groups rather than PACs."},
+  {ch:'ch5',q:"What percent of the Texas population do Latinos, Black Americans, and Asian Americans together make up — and is that reflected in the electorate?",a:"57% of the population — but NOT a majority of actual voters, due to the turnout gap."},
+  {ch:'ch5',q:"Does a large Latino population guarantee Democratic wins in Texas?",a:"No — Latinos favor Democrats overall (~67% Biden in 2020) but are internally diverse. The Rio Grande Valley shifted toward Trump in 2020 even as big-metro Latinos favored Biden 2-to-1."},
+  {ch:'ch5',q:"Which racial/ethnic group is the most consistently Democratic-voting in Texas?",a:"Black Americans — roughly 86%+ support for Democratic candidates in recent statewide races, a pattern dating to the 1930s and strengthened after 1960s civil rights legislation."},
+  {ch:'ch5',q:"How do Asian American voting patterns vary by national-origin group?",a:"Indian Americans lean Democratic; Vietnamese Americans lean Republican (anti-communism is a major factor); Filipino Americans are closely divided."},
+  {ch:'ch5',q:"Who was the first woman elected governor of Texas, and who came before her?",a:"Ann Richards (1990). Before her, only 4 women had EVER won statewide office — including Miriam 'Ma' Ferguson (1925–27, 1933–35), who ran as a proxy for her impeached husband Jim Ferguson."},
+  {ch:'ch5',q:"Why was the 2018 Texas election called the 'rainbow wave'?",a:"A record 35 LGBTQ+ candidates ran for office and 14 won — including Lupe Valdez, the first Latina and openly gay major-party gubernatorial nominee in Texas."},
+  {ch:'ch5',q:"Who was the first openly gay mayor of a major U.S. city?",a:"Annise Parker, elected mayor of Houston in 2010."},
+  {ch:'ch5',q:"Who is Texas's chief elections officer, and is election administration centralized or decentralized?",a:"The secretary of state is chief elections officer, but administration is DECENTRALIZED — actual day-to-day running of elections happens at the county level."},
+  {ch:'ch5',q:"Where is all Texas election law compiled?",a:"The Texas Election Code."},
+  {ch:'ch5',q:"List the 7 qualifications to vote in Texas.",a:"U.S. citizen; 18+ on Election Day; state/county resident 30+ days; resident of the area covered by the election; registered 30+ days before the election; not a convicted felon still serving sentence/probation/parole; not declared mentally incompetent by a court."},
+  {ch:'ch5',q:"Do you need your physical voter registration card to vote in Texas?",a:"No — a valid photo ID plus a signed affidavit at the polls works if your name is exact or 'substantially similar' to the registration list, even without the physical certificate."},
+  {ch:'ch5',q:"How many days before a general election does early voting begin, and end?",a:"Begins 17 days before a November general election (12 days before a March primary); ends 4 days before Election Day."},
+  {ch:'ch5',q:"How many voting precincts does Texas have, and who draws their boundaries?",a:"More than 8,500 precincts, with boundaries drawn by the 254 county commissioners courts."},
+  {ch:'ch5',q:"Who decides which voting system (paper, optical scan, DRE) a Texas county uses?",a:"The county commissioners court."},
+  {ch:'ch5',q:"What is a direct primary?",a:"A nominating method where party members choose their own candidates directly at the polls — designed to avoid domination by party bosses."},
+  {ch:'ch5',q:"What's the difference between a closed and an open primary?",a:"Closed: must declare party affiliation to vote in that party's primary. Open: no declaration required — pick either party's ballot at the polls."},
+  {ch:'ch5',q:"What is a jungle/top-two primary, and which states use it?",a:"All candidates from all parties appear on one ballot for the same office; the top two vote-getters advance to a runoff regardless of party. Used in California, Washington, and Louisiana."},
+  {ch:'ch5',q:"⚠️ What is a blanket primary, and how is it different from a jungle primary? (Not in your textbook — flagged term)",a:"A format where voters could pick a DIFFERENT party's candidate for EACH DIFFERENT office on the same ballot (e.g., Dem for governor, GOP for senator). Ruled unconstitutional for partisan primaries in California Democratic Party v. Jones (2000). Different from jungle primaries, where all candidates for the SAME office appear together."},
+  {ch:'ch5',q:"What kind of primary system does Texas use?",a:"A combination of open and closed — no party registration, but you declare which party's primary you're voting in at the moment you vote (and can't cross to the other party that same cycle without triggering crossover-voting rules)."},
+  {ch:'ch5',q:"What percentage of the vote is needed to win a Texas primary outright, and what happens if no one gets it?",a:"An absolute majority (50%+1). If no one reaches that, a runoff primary is held the 4th Tuesday in May between the top two finishers."},
+  {ch:'ch5',q:"How is a Texas primary financed?",a:"About 30% from candidate filing fees (e.g., $5,000 for U.S. Senate, $3,750 for governor/statewide, $1,250 state Senate, $750 state House); the state covers the balance. Candidates can file a signature petition instead of paying a fee."},
+  {ch:'ch5',q:"When are Texas general elections held, and what determines the winner?",a:"First Tuesday after the first Monday in November of even-numbered years. Winner = PLURALITY (most votes) — no majority or runoff required, even with strong third-party vote-splitting."},
+  {ch:'ch5',q:"Why are governor and other statewide offices elected in 'off-year' (midterm) elections?",a:"To reduce the influence of presidential campaigns/coattails on the election of state and local officials."},
+  {ch:'ch5',q:"How is a special election different from a general election in terms of what's required to win?",a:"Special elections DO require a majority to win outright — if no one gets 50%+1, the top two go to a runoff. (General elections only require a plurality.)"},
+  // Ch6
+  {ch:'ch6',q:"What are the 3 types of media the textbook distinguishes, and what falls under each?",a:"Print media (newspapers/magazines), electronic media (radio/TV, broadcast vs. cable), digital media (Internet/social media)."},
+  {ch:'ch6',q:"Is television still Texans' largest single source of news overall?",a:"Yes — though the Internet and social media are closing the gap fast, especially among younger Texans. Two-thirds of Texans now get news on smartphones."},
+  {ch:'ch6',q:"What are the 4 reasons print media matters disproportionately to its audience size?",a:"(1) More space/depth than broadcast, (2) it's the elite's preferred source, (3) it's the biggest original 'gatherer' of news that other media repackage, (4) it has the strongest tradition of vetting/fact-checking."},
+  {ch:'ch6',q:"What is a blog?",a:"A regularly updated website or web page where a writer or group of writers posts opinion, information, and links to other sites."},
+  {ch:'ch6',q:"What did the FCC's 1987 repeal of the Fairness Doctrine lead to?",a:"It ended the requirement that stations air both sides of controversial issues — conservatives, with a bigger built-in audience, quickly came to dominate talk radio afterward."},
+  {ch:'ch6',q:"What are the media's 4 roles in politics?",a:"(1) Providing information, (2) maintaining democracy, (3) setting the public agenda, (4) shaping our views."},
+  {ch:'ch6',q:"What is the difference between hard news and soft news?",a:"Hard news: fact-focused, in-depth, policy-relevant. Soft news: entertaining, sensationalized, low policy substance. Competition for audience has pushed coverage toward soft news over time."},
+  {ch:'ch6',q:"What is yellow journalism?",a:"Sensationalized, exaggerated journalism, common in the highly partisan 19th-century press before the 20th-century shift toward professionalism."},
+  {ch:'ch6',q:"What does 'professionalism' mean in journalism, and how does it differ from advocacy journalism?",a:"Professionalism = objective, neutral, accurate reporting, kept separate from opinion (editorial/analysis sections). Advocacy journalism (e.g., the Texas Observer) strives for accuracy but openly rejects objectivity."},
+  {ch:'ch6',q:"What is investigative journalism, and what tools support it in Texas?",a:"Reporting that digs up wrongdoing officials would rather hide. Supported by open meetings laws (public bodies must deliberate/decide in public) and open records laws (the Public Information Act) — both strengthened after the Sharpstown scandal."},
+  {ch:'ch6',q:"What was the Sharpstown scandal, and what did it produce?",a:"An early-1970s stock fraud scandal that swept Governor Preston Smith and much of the legislature from office. It produced Texas's open meetings and open records laws."},
+  {ch:'ch6',q:"What is agenda setting?",a:"The media's influence over which issues government and the public actually pay attention to and feel pressure to act on."},
+  {ch:'ch6',q:"What is priming, with a classic Texas example?",a:"The media indicating which issues/traits matter most for judging leaders. Example: Clayton Williams's rape joke and refusal to shake Ann Richards's hand became the defining 'issue' of the 1990 governor's race, flipping his lead."},
+  {ch:'ch6',q:"What is framing, with a 2020 example?",a:"How the media characterizes an issue, shaping how audiences understand it. Example: 'defund the police' framed as 'redirect some funding' vs. 'eliminate police' produced very different poll results depending on the wording used."},
+  {ch:'ch6',q:"How do attack ads work, according to research?",a:"They generate free media coverage AND make marginal supporters abstain rather than switch to the other side — the media rarely change firmly-held opinions, but attack ads still move the undecided."},
+  {ch:'ch6',q:"Why does Texas have such expensive statewide campaigns, media-wise?",a:"Texas has 20 media markets — more than any state but California — making broad advertising extremely costly (2018 and 2020 Senate races cost $139M and $90M)."},
+  {ch:'ch6',q:"What is horserace journalism?",a:"Campaign coverage that focuses on who's winning/ahead in the polls rather than substantive policy differences between candidates."},
+  {ch:'ch6',q:"What campaigns are credited with making digital campaigning standard?",a:"Obama's 2008/2012 social media targeting, Rick Perry's 2010 'ask 12 friends' Facebook strategy, and Ted Cruz's 2012 primary upset fueled by digital ad targeting."},
+  {ch:'ch6',q:"What is civic engagement, and how does Texas compare nationally?",a:"Citizen actions addressing public concerns — voting, volunteering, contacting officials, discussing politics. Texas has historically ranked below the national average, though the gap has narrowed."},
+  {ch:'ch6',q:"What does research say about ideological/partisan bias in mainstream Texas/national media?",a:"Little systematic bias — individual biased stories exist but 'balance out' over time. Bias is concentrated where audiences self-select their source (Fox/MSNBC, talk radio, blogs), not in mainstream/professional outlets."},
+  {ch:'ch6',q:"What TWO biases DOES research consistently find in the media, beyond partisanship?",a:"A bias toward entertainment over substance, and a commercial bias (favoring advertisers/parent-company interests)."},
+  {ch:'ch6',q:"How do reporters' political leanings compare to owners/management, and why does it matter?",a:"Reporters skew more liberal/Democratic than the public; owners/management skew more conservative/Republican. The two tendencies tend to offset each other within a newsroom."},
+  {ch:'ch6',q:"What share of journalists and newsroom leaders were racial/ethnic minorities in 2019, versus their share of the population?",a:"40% of the U.S. population, but only 22% of journalists and 18% of newsroom leadership — a gap that has barely moved in 20 years."},
+  {ch:'ch6',q:"What did the Ford Foundation survey find about how different races are portrayed in media?",a:"All groups agreed Black Americans are portrayed more negatively than reality. Nearly half of minorities felt White Americans are portrayed more positively than reality."},
+  {ch:'ch6',q:"What are the two largest Spanish-language TV networks, and how do they perform against English-language competitors?",a:"Univision (largest, started San Antonio/LA 1962) and Telemundo (2nd). Spanish-language primetime news regularly beats English-language competitors in Houston, Dallas, and San Antonio."},
+  {ch:'ch6',q:"What is prior restraint, and what case established protection against it nationally?",a:"Censorship/suppression BEFORE publication. New York Times Co. v. United States (1971), the 'Pentagon Papers' case, allowed publication of classified Vietnam War documents despite government objection."},
+  {ch:'ch6',q:"What does the FCC regulate, and what changed in 1996?",a:"The FCC is the main federal media regulator, still heavily regulating broadcast TV. Radio and cable television were deregulated in 1996."},
+  {ch:'ch6',q:"What is net neutrality?",a:"The principle that internet service providers must treat all data equally — no paid fast lanes, no throttling of lawful content. Adopted by the FCC in 2015, repealed in 2017."},
+  {ch:'ch6',q:"What is a shield law, and when did Texas get one?",a:"A law protecting journalists from being forced to reveal confidential sources in court. Texas passed its shield law (Free Flow of Information Act) in 2009, becoming the 37th state to do so."},
+  {ch:'ch6',q:"What's the difference between libel and slander, and what extra burden do public figures face?",a:"Both are defamation (a false, damaging statement) — libel if written, slander if spoken. Since NYT v. Sullivan (1964), public figures must ALSO prove 'actual malice,' a much higher bar than private citizens face."},
+  {ch:'ch6',q:"What is a SLAPP suit?",a:"A Strategic Lawsuit Against Public Participation — filed mainly to intimidate/financially drain a critic into silence rather than to win on the merits. Texas's strong 2011 anti-SLAPP law was significantly narrowed by the 2019 legislature."},
+  {ch:'ch6',q:"What is homogenization of news, and what causes it?",a:"The increased likelihood that chain-owned outlets present the same stories the same way, losing local flavor — driven by reliance on wire services and shared corporate feeds instead of original local reporting."},
+  {ch:'ch6',q:"Name two major Texas media companies and what they own.",a:"TEGNA owns 15 Texas TV stations, including major-metro network affiliates. iHeartMedia (based in San Antonio) owns 72 of Texas's ~2,400 radio stations, including most major talk-radio outlets."},
+  {ch:'ch6',q:"What is the Capitol press corps, and how has it changed?",a:"Reporters who cover the state capitol full-time. Shrank from 66 (1991) to 32 (2016), then partially rebounded to 85 credentialed reporters by 2021 (mostly TV reporters)."},
+  {ch:'ch6',q:"What is commercial bias?",a:"The tendency of media to favor a parent company's interests — running favorable stories or suppressing unfavorable ones — documented in surveys where local news directors report advertiser pressure on content."},
+  {ch:'ch6',q:"What did a Pew study find about where blog stories actually originate?",a:"99% of stories covered by blogs originated in traditional media first and were then rebroadcast/commented on by bloggers."},
+  {ch:'ch6',q:"Which amendment protects freedom of the press, and how does U.S. protection compare internationally?",a:"The 1st Amendment. U.S. courts protect media criticism of government more strongly than most other countries, though the FCC regulates broadcast obscenity more tightly than many Western nations."},
+];
+
+// ─── FLASHCARD ENGINE ───
+let deck=[],currentIdx=0,flipped=false;
+function filterCards(ch,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  deck=ch==='all'?[...allCards]:allCards.filter(c=>c.ch===ch);
+  currentIdx=0;flipped=false;renderCard();
+}
+function renderCard(){
+  const empty=document.getElementById('fc-empty');
+  if(!deck.length){empty.style.display='block';document.getElementById('fc-counter').textContent='';return;}
+  empty.style.display='none';
+  const c=deck[currentIdx];
+  document.getElementById('fc-q').textContent=c.q;
+  document.getElementById('fc-a').textContent=c.a;
+  document.getElementById('fc-counter').textContent=(currentIdx+1)+' / '+deck.length;
+  const card=document.getElementById('fc-card');
+  card.classList.remove('flipped');flipped=false;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+  else{mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+}
+function flipCard(){document.getElementById('fc-card').classList.toggle('flipped');flipped=!flipped;}
+function nextCard(){if(!deck.length)return;currentIdx=(currentIdx+1)%deck.length;renderCard();}
+function prevCard(){if(!deck.length)return;currentIdx=(currentIdx-1+deck.length)%deck.length;renderCard();}
+function shuffleCards(){for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}currentIdx=0;renderCard();}
+function toggleMastered(idx){
+  const c=deck[idx];const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){localStorage.removeItem(key);mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+  else{localStorage.setItem(key,'1');mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+}
+
+// ─── QUIZ DATA ───
+const allQuizData=[
+  // CH5 MC
+  {ch:'ch5',type:'mc',q:"What is the single variable that appears to be the best socioeconomic predictor of voter turnout?",opts:["Age","Gender","Education","Income"],ans:2,exp:"Education is the strongest socioeconomic predictor — as education rises, so does likelihood of voting."},
+  {ch:'ch5',type:'mc',q:"Which term describes the percentage of eligible voters actually casting ballots?",opts:["Voter turnout","Voting-eligible population","Voting-age population","Registered voters"],ans:0,exp:"Voter turnout is the percentage figure itself; VEP and VAP are the different possible denominators used to calculate it."},
+  {ch:'ch5',type:'mc',q:"What does 'voting-eligible population' (VEP) mean?",opts:["Everyone who votes in an election","All people in an area who are over 18","The proportion of a population that meets all criteria to qualify to vote","People who are registered to vote"],ans:2,exp:"VEP estimates the population that actually qualifies to vote — excluding non-citizens and unrestored felons, unlike raw voting-age population (VAP)."},
+  {ch:'ch5',type:'mc',q:"Despite the fact that universal suffrage had been legal for some time, when did it become a practical reality in Texas?",opts:["After the Civil War","Early 1990s","Late 1940s","Mid-1960s"],ans:3,exp:"Poll taxes, white primaries, and other barriers blocked practical access until the VRA era of the mid-1960s."},
+  {ch:'ch5',type:'mc',q:"Why were literacy tests implemented in the 1870s (in states other than Texas)?",opts:["To encourage literacy among residents","To teach children how to read","To prevent Black voters from voting","To encourage underrepresented people to vote"],ans:2,exp:"Literacy tests were a disenfranchisement tool disguised as a civic-knowledge requirement — not used in Texas, but common elsewhere in the South."},
+  {ch:'ch5',type:'mc',q:"Which voting restriction exempted people (or their descendants) who could vote before 1867 from educational, property, or tax requirements?",opts:["Poll tax","Grandfather clause","Gerrymandering","Literacy test"],ans:1,exp:"The grandfather clause — not used in Texas — effectively exempted only White voters, since Black citizens couldn't vote before 1867. Struck down in Guinn v. United States (1915)."},
+  {ch:'ch5',type:'mc',q:"What is gerrymandering?",opts:["Using literacy tests to prevent minorities from voting","Manipulating district boundaries to include or exclude certain voters and affect outcomes","Slandering a political opponent","Making unfulfilled campaign promises"],ans:1,exp:"Gerrymandering = drawing district lines to affect election outcomes by including/excluding specific groups of voters."},
+  {ch:'ch5',type:'mc',q:"The Voting Rights Act of 1965, together with later federal court rulings, does which of the following?",opts:["Requires residency requirements of more than 30 days for presidential elections","Requires states to eliminate segregation generally","Requires states to use literacy tests in voter registration","Requires states to provide some form of absentee or early voting"],ans:3,exp:"The VRA caps residency requirements at 30 days (not 'more than'), bans literacy tests, and requires some absentee/early voting option."},
+  {ch:'ch5',type:'mc',q:"Which of the following is an example of a step Texas has taken to try to increase voter turnout?",opts:["Require photo ID to cast a ballot","Reduce the number of election dates","Reduce the length of early voting","Standardize the number of statewide election dates to two per year"],ans:3,exp:"Texas moved to two standard uniform election dates a year (2015 law) partly to combat 'turnout burnout.' Photo ID and reduced early voting are cited as obstacles, not turnout boosters."},
+  {ch:'ch5',type:'mc',q:"How do most Texas voters learn about political candidates?",opts:["Social media","Live debates","Television commercials","Newspaper ads"],ans:2,exp:"Television commercials remain the primary way most Texas voters learn about candidates, per the textbook."},
+  {ch:'ch5',type:'mc',q:"What is a sound bite?",opts:["A negative campaign attack","A brief, quotable statement designed to convey a campaign theme","A candidate's full policy platform","A type of campaign finance report"],ans:1,exp:"A sound bite is a short (often 10 seconds to a minute) statement crafted for easy media pickup."},
+  {ch:'ch5',type:'mc',q:"What is the maximum contribution an individual may give to most Texas legislative candidates?",opts:["$5,000","$1,000,000","There are no contribution limits","$25,000"],ans:2,exp:"Texas places essentially no limits on contributions to most candidates — the major exception is judicial candidates."},
+  {ch:'ch5',type:'mc',q:"Where do Texas candidates file their campaign finance reports?",opts:["The Federal Election Commission","The post office","The local police department","The Texas Ethics Commission"],ans:3,exp:"The Texas Ethics Commission collects and maintains campaign finance disclosure reports for state and local candidates."},
+  {ch:'ch5',type:'mc',q:"What did Citizens United v. Federal Election Commission (2010) establish?",opts:["A cap on individual contributions to candidates","That corporations/unions can make unlimited independent political expenditures","A national voter ID requirement","The legality of the poll tax"],ans:1,exp:"Citizens United struck down limits on independent spending by corporations and unions, paving the way for Super PACs."},
+  {ch:'ch5',type:'mc',q:"A constituent donates money directly to a candidate for governor. What is this contribution called?",opts:["Commission","Soft money","Salary","Hard money"],ans:3,exp:"Hard money = campaign money donated directly to a candidate, restricted in amount by federal law (though Texas itself sets no such limit for most races)."},
+  {ch:'ch5',type:'mc',q:"Traditionally, communities and counties with larger Latino populations, and majority-Latino districts, are more likely to vote for which party?",opts:["Democrat","Libertarian","Republican","Green"],ans:0,exp:"Majority-Latino areas traditionally favor Democratic candidates, though Latino voters are internally diverse across the state."},
+  {ch:'ch5',type:'mc',q:"Most Black Texans today identify with which political party?",opts:["Libertarian","Independent","Republican","Democrat"],ans:3,exp:"Since the 1930s, Black Texans have identified overwhelmingly with the Democratic Party, strengthened after 1960s civil rights legislation."},
+  {ch:'ch5',type:'mc',q:"Which statement is true regarding demographic change and Texas politics?",opts:["Demographic change always leads to political change","Demographic change does not inevitably lead to political change","White Texans have lost all political power","Asian Americans are the most politically homogeneous group in Texas"],ans:1,exp:"A large or growing population does NOT automatically translate to political power without matching turnout/mobilization — this is a core theme of LO 5.3."},
+  {ch:'ch5',type:'mc',q:"How is a primary different from a general election?",opts:["Primaries happen right after the general election", "Primaries allow party members to select nominees for the general election","Primaries are used only by the Republican Party","Primaries occur once every 8 years"],ans:1,exp:"Primaries are party functions to choose nominees; general elections determine who actually holds office."},
+  {ch:'ch5',type:'mc',q:"What type of primary system does Texas use?",opts:["A closed primary","A runoff primary","An open primary","A combination of open and closed"],ans:3,exp:"Texas doesn't register voters by party, but requires a party declaration at the moment of voting in a primary — a hybrid of open and closed systems."},
+  {ch:'ch5',type:'mc',q:"What is the size of the vote necessary for a candidate to win a Texas GENERAL election?",opts:["A plurality (most votes)","An absolute majority (50%+1)","Two-thirds of the vote","60% of the vote"],ans:0,exp:"General elections in Texas are decided by plurality — no majority or runoff is required."},
+  {ch:'ch5',type:'mc',q:"What is the size of the vote necessary to win a Texas SPECIAL election outright?",opts:["A plurality (most votes)","An absolute majority (50%+1), or a runoff follows","Two-thirds of the vote","There is no majority requirement"],ans:1,exp:"Unlike general elections, special elections require a true majority — if no candidate gets 50%+1, the top two go to a runoff."},
+  {ch:'ch5',type:'mc',q:"Who prepares the official ballot for Texas general elections?",opts:["The Texas Ethics Commission","The county clerk or elections administrator, based on certification from the secretary of state","The national party chair","The county sheriff"],ans:1,exp:"The county clerk or elections administrator prepares general/special election ballots, based on candidate certification from the secretary of state (for state/district races) or the county itself (for county races)."},
+  {ch:'ch5',type:'fitb',q:"Early or absentee voting in Texas for a general election begins how many days prior to Election Day? ___",ans:["17"],display:"17",exp:"Early voting begins 17 days before a November general election (12 days before a March primary)."},
+  {ch:'ch5',type:'fitb',q:"Who draws the voting precincts in Texas's 254 counties? The __________.",ans:["county commissioners court","commissioners court","county commissioners courts"],display:"County commissioners court",exp:"Each county's commissioners court draws that county's voting precinct boundaries."},
+  {ch:'ch5',type:'fitb',q:"In Texas, redistricting after each census is primarily the responsibility of the __________.",ans:["legislature","texas legislature","state legislature"],display:"(Texas) Legislature",exp:"The Texas Legislature draws congressional and state legislative district lines after each federal census."},
+  {ch:'ch5',type:'fitb',q:"The __________ is Texas's chief elections officer.",ans:["secretary of state"],display:"Secretary of State",exp:"The secretary of state holds this role, though actual administration is decentralized to the 254 counties."},
+  {ch:'ch5',type:'fitb',q:"All Texas election law is compiled into the __________.",ans:["texas election code","election code"],display:"Texas Election Code",exp:"Every election law currently in effect in Texas is compiled into this single body of law."},
+  {ch:'ch5',type:'fitb',q:"⚠️ The __________ (1995) set tiered contribution limits specifically for Texas judicial candidates. (Flagged term — not in your textbook by name)",ans:["judicial campaign fairness act"],display:"Judicial Campaign Fairness Act",exp:"This Act created the $5,000/$2,500/$1,000 tiered limits based on court population — Texas's only real campaign contribution cap."},
+  {ch:'ch5',type:'fitb',q:"⚠️ __________ v. Reno (1993) held that districts shaped predominantly by race are subject to strict scrutiny. (Flagged term — not in your textbook)",ans:["shaw"],display:"Shaw",exp:"Shaw v. Reno (1993) — a landmark case putting real limits on how far race can predominate in redistricting decisions."},
+  // CH6 MC
+  {ch:'ch6',type:'mc',q:"From what media source do most Texans still get the largest share of their news?",opts:["Newspapers","Television","Radio","Podcasts"],ans:1,exp:"Television remains Texans' largest single source overall, though digital sources are closing the gap fast."},
+  {ch:'ch6',type:'mc',q:"What ideology has historically dominated talk radio at both the local and national level?",opts:["Conservatives","Religious demagogues","Liberals","Intellectual elites"],ans:0,exp:"Talk radio has long been dominated by conservative hosts, a pattern reinforced by the FCC's 1987 repeal of the Fairness Doctrine."},
+  {ch:'ch6',type:'mc',q:"Who is responsible for media regulation at the national level?",opts:["Federal Bureau of Investigation","State Department","Department of the Interior","Federal Communications Commission"],ans:3,exp:"The FCC is the primary federal media regulator, most active in regulating broadcast television."},
+  {ch:'ch6',type:'mc',q:"Which controversial regulatory principle requires treating all data on the Internet equally?",opts:["Censorship","Net neutrality","The digital divide","Prior restraint"],ans:1,exp:"Net neutrality — adopted by the FCC in 2015, repealed in 2017."},
+  {ch:'ch6',type:'mc',q:"U.S. courts have been particularly suspicious of censorship BEFORE information is published. What is this concept called?",opts:["Censorship","Slander","Libel","Jurisdiction"],ans:0,exp:"This describes prior restraint generally; 'censorship' is the plain-language term the courts are wary of. (Note: 'prior restraint' IS the precise legal term, but among the options given, censorship is the closest match.)"},
+  {ch:'ch6',type:'mc',q:"What is the sensational, exaggerated reporting style associated with 19th-century Texas newspapers called?",opts:["Yellow journalism","Soft news","Investigative journalism","Hard news"],ans:0,exp:"Yellow journalism — the highly partisan, sensationalized style common before 20th-century professionalism took hold."},
+  {ch:'ch6',type:'mc',q:"A newspaper avoids covering a local flooding crisis, causing politicians to focus on other issues instead. What media role/concept is at play?",opts:["Yellow journalism","Open record reporting","Investigative journalism","Agenda setting"],ans:3,exp:"This is agenda setting — the media's power to influence which issues government actually pays attention to (or ignores by not covering)."},
+  {ch:'ch6',type:'mc',q:"The news media provides meaning or defines the central theme of an issue. What is this called?",opts:["Priming","Agenda setting","Regulating","Framing"],ans:3,exp:"Framing = how an issue is characterized, shaping how the audience understands it."},
+  {ch:'ch6',type:'mc',q:"A reader is frustrated that coverage focuses on who's winning the race rather than what the candidates stand for. What is this called?",opts:["Framing","Horserace journalism","Hard news","Yellow journalism"],ans:1,exp:"Horserace journalism — campaign coverage focused on polling/competition rather than substantive policy differences."},
+  {ch:'ch6',type:'mc',q:"One charge against digital media is that heavy Internet/social media use contributes to what measured outcome?",opts:["Identification with centrist politics","More frequent horserace journalism","Lower civic engagement","Higher rates of mudslinging"],ans:2,exp:"Critics argue digital media reduces face-to-face civic engagement, though research on this is mixed."},
+  {ch:'ch6',type:'mc',q:"Which statement is true regarding U.S./Texas media over the last half century?",opts:["Most mainstream media has become partisan and ideological","Increased public confidence has grown alongside increased journalistic standards","Few media outlets adhere to standards of objectivity and neutrality","Public trust in the media has declined"],ans:3,exp:"Public trust has declined sharply since the mid-1980s, even though most mainstream media still hold to professional/objectivity standards."},
+  {ch:'ch6',type:'mc',q:"When it comes to supporting political candidates, Texas newspapers have generally supported which type of candidate historically?",opts:["Trustee","Conservative","Third party","Liberal"],ans:1,exp:"Texas newspapers have historically leaned toward endorsing conservative candidates, though the modern pattern is more mixed/case-by-case."},
+  {ch:'ch6',type:'mc',q:"Which group has long dominated talk radio at both the local and national level?",opts:["Conservatives","Religious demagogues","Liberals","Intellectual elites"],ans:0,exp:"Same pattern noted throughout the chapter — conservatives have long dominated talk radio."},
+  {ch:'ch6',type:'mc',q:"What is the largest Spanish-language network in the United States?",opts:["Texas Monthly","Telemundo","La Voz de Houston","Univision"],ans:3,exp:"Univision is the largest, followed by Telemundo. Both began serving Texas audiences decades ago."},
+  {ch:'ch6',type:'mc',q:"One concern with the concentration of media ownership is 'homogenization' of news. What does this mean?",opts:["The increased chance that the same stories are presented in the same way regardless of local concerns","The impact of the digital divide preventing access to news","The possibility federal legislation affects local lawmakers' decisions","The likelihood voters trust social media opinions over facts"],ans:0,exp:"Homogenization = chain ownership producing uniform coverage that loses local/regional flavor."},
+  {ch:'ch6',type:'mc',q:"What is a likely consequence of the growing concentration of media ownership, according to the textbook?",opts:["A larger network of reporters","More state and local news","Greater diversity of news","An increase in soft news"],ans:3,exp:"Concentration of ownership is linked to more soft news, homogenization, and commercial bias — not more original local reporting."},
+  {ch:'ch6',type:'mc',q:"What percentage of Texans now get news on their smartphones (roughly)?",opts:["25 percent","92 percent","66 percent","33 percent"],ans:2,exp:"About two-thirds of Texans now get news on smartphones — the same share that use a desktop or laptop."},
+  {ch:'ch6',type:'mc',q:"Which medium is consumed at a notably high rate in Texas, ahead of most other individual sources?",opts:["Local newspapers","Social media","Local television news","Cable news"],ans:2,exp:"Local television news remains the single most-consumed news source for Texans, even as overall viewing shifts toward digital."},
+  {ch:'ch6',type:'mc',q:"What is one major problem researchers identify with the rise of blogs, social media, and ideologically-focused 'news' sites?",opts:["They provide too much accurate information to process","They're the last to report news due to rigorous fact-checking","They cater only to younger generations","They can quickly spread false or distorted information"],ans:3,exp:"The speed and lack of vetting on many blogs/social platforms make them prone to spreading misinformation quickly."},
+  {ch:'ch6',type:'mc',q:"Which medium remains the largest original 'gatherer' of news in Texas — the source other media rely on for breaking stories?",opts:["Local television news","Cable news","Newspapers","Social media"],ans:2,exp:"Newspapers still break the most original stories; TV, radio, and digital outlets largely repackage what newspapers report first."},
+  {ch:'ch6',type:'mc',q:"Compared to MSNBC and Fox News, how does Media Bias/Fact Check currently rate CNN's ideological lean?",opts:["CNN is traditionally objective but is rated left-leaning today","CNN is more conservative than Fox News","CNN is traditionally more left-leaning but is centrist today","CNN is more liberal than MSNBC"],ans:0,exp:"CNN began with a tradition of objective reporting but has more recently been rated 'Left Bias' by Media Bias/Fact Check."},
+  {ch:'ch6',type:'mc',q:"Who is responsible for media regulation at the national level, and which medium do they regulate most heavily today?",opts:["The FCC; broadcast television","The FTC; newspapers","The DOJ; radio","The FEC; cable television"],ans:0,exp:"The FCC regulates broadcast television most heavily; radio and cable were deregulated in 1996."},
+  {ch:'ch6',type:'fitb',q:"__________ is the news media indicating how important an issue is or which part of a situation matters most.",ans:["priming"],display:"Priming",exp:"Priming shapes which issues/traits the public uses to evaluate leaders and policies."},
+  {ch:'ch6',type:'fitb',q:"__________ is the news media providing meaning or defining the central theme of an issue.",ans:["framing"],display:"Framing",exp:"Framing shapes HOW an issue is understood, distinct from priming (which issue matters)."},
+  {ch:'ch6',type:'fitb',q:"News that focuses on who is ahead in the race rather than policy differences is called __________ journalism.",ans:["horserace"],display:"Horserace",exp:"Horserace journalism prioritizes poll standings and competition over substantive coverage."},
+  {ch:'ch6',type:'fitb',q:"The media's substantial influence over which issues government pays attention to is called __________.",ans:["agenda setting","agenda-setting"],display:"Agenda setting",exp:"One of the media's 4 core political roles."},
+  {ch:'ch6',type:'fitb',q:"A __________ protects journalists from being forced to reveal confidential sources in court; Texas passed one in 2009.",ans:["shield law"],display:"Shield law",exp:"The Free Flow of Information Act made Texas the 37th state with a shield law."},
+  {ch:'ch6',type:'fitb',q:"The increased likelihood that chain-owned media outlets present the same stories in the same way, losing local flavor, is called __________ of news.",ans:["homogenization"],display:"Homogenization",exp:"A key concern flowing from concentrated media ownership."},
+  {ch:'ch6',type:'fitb',q:"Reporting that digs up wrongdoing officials would rather keep hidden is called __________ journalism.",ans:["investigative"],display:"Investigative",exp:"Investigative journalism has declined due to fewer reporters, but remains a core watchdog function."},
+  {ch:'ch6',type:'fitb',q:"A regularly updated website or page where a writer records opinions, information, and links is called a __________.",ans:["blog"],display:"Blog",exp:"Blogs are prominent across the Texas political spectrum, both left and right."},
+];
+
+// ─── QUIZ ENGINE ───
+let quizFilter='all',userAnswers={};
+function setQuizFilter(ch,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');quizFilter=ch;resetQuiz();
+}
+function getQuizDeck(){return quizFilter==='all'?allQuizData:allQuizData.filter(q=>q.ch===quizFilter);}
+function renderQuiz(){
+  const deck=getQuizDeck();
+  const c=document.getElementById('quiz-container');c.innerHTML='';userAnswers={};
+  deck.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='quiz-q';div.id='qq'+i;
+    if(q.type==='mc'){
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <div class="quiz-opts">${q.opts.map((o,oi)=>`<label><input type="radio" name="q${i}" onclick="selectMC(${i},${oi})"> ${o}</label>`).join('')}</div>
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    } else {
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <input class="fitb-input" id="fitb${i}" placeholder="Type your answer..." oninput="storeFITB(${i})">
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    }
+    c.appendChild(div);
+  });
+  document.getElementById('quiz-score').style.display='none';
+}
+function selectMC(qi,oi){userAnswers[qi]=oi;}
+function storeFITB(qi){userAnswers[qi]=document.getElementById('fitb'+qi).value.trim().toLowerCase();}
+function submitQuiz(){
+  const deck=getQuizDeck();let correct=0;
+  deck.forEach((q,i)=>{
+    const el=document.getElementById('qq'+i);
+    const exp=document.getElementById('exp'+i);exp.classList.add('show');
+    if(q.type==='mc'){
+      const ua=userAnswers[i];
+      if(ua===q.ans){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    } else {
+      const ua=(userAnswers[i]||'').toLowerCase();
+      const ok=q.ans.some(a=>ua.includes(a.toLowerCase()));
+      if(ok){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    }
+  });
+  const sc=document.getElementById('quiz-score');
+  const pct=Math.round(correct/deck.length*100);
+  sc.style.display='block';
+  sc.style.borderColor=pct>=70?'var(--green)':'var(--red)';
+  sc.innerHTML=`<strong>Score: ${correct}/${deck.length} (${pct}%)</strong> — ${pct>=90?'Excellent! 🎉':pct>=70?'Good work — review flagged questions.':'Keep studying — focus on the red ones.'}`;
+}
+function resetQuiz(){renderQuiz();}
+
+// ─── DISCUSSION DATA ───
+const DISC_QUESTIONS=[
+  {ch:'ch5',q:"A county with a fast-growing Latino population still hasn't elected a Latino candidate to a majority of its commissioners court seats. Using what you know about Chapter 5, what would need to be true about BOTH turnout AND district lines for that to change — and why isn't population growth alone enough?",
+   points:[
+     {text:"<strong>Turnout gap</strong> — explains that Latino turnout historically lags behind Latino population share (Fraga's research), so raw population growth doesn't automatically convert to voting power."},
+     {text:"<strong>District lines matter</strong> — explains how at-large elections or 'cracked' single-member districts can dilute a growing minority population's influence even if the numbers are there."},
+     {text:"<strong>Affirmative racial gerrymandering</strong> — discusses how minority-opportunity districts could be drawn to help translate population into representation, within Shaw v. Reno's limits on race as the predominant factor."},
+     {text:"<strong>Mobilization</strong> — notes that turnout gaps close when a group's numbers get large enough to plausibly swing an election — implying organized mobilization efforts matter as much as demographics."},
+     {text:"<strong>Demographic change ≠ political change</strong> — directly addresses the chapter's core theme that population share and political power are not the same thing."},
+   ],
+   model:"Population growth alone doesn't guarantee representation because of two separate gaps the chapter identifies. First, there's a turnout gap — Latino voters historically vote at lower rates than their population share would predict, even controlling for education and income, so the electorate doesn't grow at the same pace as the population. Second, district lines matter enormously: if Latino voters are spread thin across many districts (cracking) or the county still uses at-large elections, a numerical majority in the county overall can still translate into zero seats. For real change, you'd need both higher turnout AND districts drawn to reflect where Latino voters are actually concentrated — an affirmative racial gerrymander creating a genuine Latino-opportunity district, which is legal as long as race isn't the sole basis for the lines (the Shaw v. Reno limit). Without both pieces moving together, a county can see decades of demographic change with almost no shift in who actually holds office — exactly the pattern the textbook warns against assuming."},
+
+  {ch:'ch5',q:"Texas places almost no limits on campaign contributions except for judicial candidates. Using Chapter 5, explain the reasoning behind that one exception — and whether you think the same logic should apply to legislative or statewide candidates.",
+   points:[
+     {text:"<strong>General rule</strong> — states that Texas imposes essentially no contribution limits on legislative/statewide candidates."},
+     {text:"<strong>Judicial exception explained</strong> — identifies the tiered limits ($5,000/$2,500/$1,000 by court population) and connects them to concerns about buying judicial outcomes."},
+     {text:"<strong>Case law context</strong> — references Citizens United and/or McCutcheon to explain the broader legal environment that has weakened contribution limits generally."},
+     {text:"<strong>Appearance vs. proof of corruption</strong> — distinguishes between the appearance of impropriety (which judicial limits target) and provable quid pro quo corruption (very hard to establish, as the textbook notes with the payday-loan industry example)."},
+     {text:"<strong>Own position</strong> — takes and defends a position on whether the judicial-only exception makes sense or should be extended."},
+   ],
+   model:"The logic behind Texas's judicial-only limit is that judges are supposed to be neutral arbiters, not political actors — so a judge ruling in favor of a major campaign donor creates a specific, visible appearance-of-impropriety problem that a legislator taking the same donation doesn't create in quite the same way (legislators are expected to represent interests; judges are supposed to be above them). The tiered limits by court population reflect that bigger courts handle bigger-money cases, so the temptation is proportionally larger. That said, the textbook's own payday-loan industry example — $2.5 million in campaign donations the same year the legislature declined to tighten payday-loan regulation — shows the same 'appearance' problem exists everywhere money and policymaking meet, judicial or not. Whether that logic should extend to legislative and statewide races is genuinely debatable: proponents of limits would say the payday-loan case makes the argument for them; opponents would point to Citizens United's reasoning that campaign spending is protected political speech, and that voters, not contribution caps, are the real check on legislators. Reasonable people land in different places here — but the Texas legislature has, so far, only found the judicial argument compelling enough to act on."},
+
+  {ch:'ch5',q:"Explain the difference between how a Texas GENERAL election and a Texas SPECIAL election determine a winner. Why do you think the legislature set up these two different standards — and what would change about Texas elections if general elections required a majority too?",
+   points:[
+     {text:"<strong>General election rule</strong> — plurality wins, no runoff required even without a majority."},
+     {text:"<strong>Special election rule</strong> — majority (50%+1) required, runoff if no one reaches it."},
+     {text:"<strong>Practical reasoning</strong> — discusses cost/frequency: general elections have many races on one ballot on a fixed calendar; special elections are one-off, lower-turnout events filling a single vacancy or deciding one amendment."},
+     {text:"<strong>Real example</strong> — cites the Beth Van Duyne 2020 congressional race (won with 48.8% due to third-party/independent vote-splitting) as a concrete illustration of plurality rule in action."},
+     {text:"<strong>Hypothetical analysis</strong> — reasons through what would change if general elections required majorities (more runoffs, higher costs, possibly more strategic voting or fewer minor-party candidates)."},
+   ],
+   model:"General elections in Texas are decided by plurality — whoever gets the most votes wins, even without a majority, as illustrated by Beth Van Duyne winning her 2020 congressional race with only 48.8% of the vote because Libertarian and independent candidates split the rest. Special elections, by contrast, require a true majority, with a runoff between the top two finishers if nobody clears 50%+1. The likely reasoning is practical: general elections happen on a fixed calendar with dozens of races on one ballot statewide, so requiring runoffs for every plurality winner would be enormously expensive and logistically complicated. Special elections, by contrast, are one-off events — usually filling a single legislative vacancy or deciding one constitutional amendment — where a runoff is a much smaller lift. If general elections required majorities the way special elections do, Texas would likely see far more runoff elections in competitive multi-candidate races, significantly higher election costs, lower overall turnout in the runoff round (which is a nationwide pattern), and possibly more strategic behavior — minor-party and independent candidates might face more pressure to drop out early rather than risk 'spoiling' a race, since their presence could force an expensive runoff rather than just shave a few points off the plurality winner."},
+
+  {ch:'ch6',q:"Using the concepts of priming and framing from Chapter 6, analyze how the SAME underlying event or policy could be covered in two very different ways by two different news outlets. Use a specific example from the chapter (or one of your own) to illustrate both concepts.",
+   points:[
+     {text:"<strong>Priming defined</strong> — explains that priming is about WHICH issue/trait becomes the yardstick for judging a leader or event."},
+     {text:"<strong>Framing defined</strong> — explains that framing is about HOW that issue is characterized once it's the focus."},
+     {text:"<strong>Specific example used</strong> — applies both concepts to a concrete case (e.g., 'defund the police' framed as 'redirect funding' vs. 'eliminate police'; or the 1990 Clayton Williams/Ann Richards race)."},
+     {text:"<strong>Distinguishes the two concepts</strong> — clearly separates priming (which issue matters) from framing (how it's characterized) rather than treating them as the same thing."},
+     {text:"<strong>Connects to the 'shaping our views' role</strong> — ties both concepts back to the media's 4th political role and the idea that they mainly move undecided/low-information voters, not committed partisans."},
+   ],
+   model:"Priming and framing are related but distinct tools the media use to shape political understanding, even when covering the exact same event. Priming determines WHICH issue or trait becomes the lens for judging a leader — the textbook's 1990 example is perfect: the Ann Richards/Clayton Williams governor's race was initially about ideology, but once Williams told a rape joke and refused to shake Richards's hand, the press coverage 'primed' voters to judge him on temperament and respect for women instead — and his lead collapsed. Framing, by contrast, is about HOW that chosen issue gets characterized. The 2020 'defund the police' coverage is the clean example: when pollsters and media framed the idea as 'defunding the police,' only about a quarter of Texans supported it; when the same underlying policy was framed as 'redirecting some funding to social services,' opinion was nearly evenly split. Same policy, same event — completely different levels of public support depending purely on the words chosen to describe it. Both concepts matter most for shaping the views of people without strong existing opinions; committed partisans on either side tend to filter both the priming and the framing through what they already believe (selective perception), which is why the media's real power here is concentrated among the undecided middle, not the base of either party."},
+
+  {ch:'ch6',q:"The textbook argues there is 'little systematic ideological or partisan bias' in mainstream media, but that bias IS real and growing in outlets where consumers self-select their source. Do you find this distinction convincing? Use specific evidence from Chapter 6 to support your answer either way.",
+   points:[
+     {text:"<strong>States the textbook's claim accurately</strong> — no systemic bias in mainstream/professional media; self-selected outlets (Fox, MSNBC, talk radio, blogs) are where real partisan sorting happens."},
+     {text:"<strong>Cites supporting evidence</strong> — reporters lean left/owners lean right (offsetting tendencies), Timothy Cook quote about institutional routines mattering more than individual attitudes, or the finding that biased stories 'balance out' over time."},
+     {text:"<strong>Cites the OTHER two documented biases</strong> — entertainment bias and commercial bias — as evidence that 'no partisan bias' doesn't mean 'no bias at all.'"},
+     {text:"<strong>Engages critically</strong> — either agrees with reasoning, or pushes back (e.g., questioning whether 'balancing out over time' is good enough for an individual voter reading one story today, or whether declining public trust suggests something IS being perceived even if researchers can't fully document it)."},
+     {text:"<strong>Uses specific data</strong> — references concrete numbers/findings from the chapter (e.g., the partisan split in COVID-19 media trust, or CNN's shift from objective to left-rated by Media Bias/Fact Check) rather than only general statements."},
+   ],
+   model:"I find the distinction genuinely useful, but incomplete on its own. The textbook's core evidence is solid: reporters skew more liberal than the public while owners/management skew more conservative, which tends to offset within a single newsroom, and media scholar Timothy Cook's point — that news production is shaped more by routine journalistic institutions than by individual reporters' politics — helps explain why individual biased stories don't add up to a systemic tilt. The self-selection point is also well supported: Fox and MSNBC are consciously ideological by design, and Media Bias/Fact Check has even reclassified CNN from historically objective to left-leaning, showing that where people genuinely have no choice but to pick a side, outlets respond to that demand. But I don't think 'no partisan bias' should be read as 'no bias at all' — the textbook itself documents two OTHER real, measurable biases: a bias toward entertainment over substance, and a commercial bias protecting advertisers and parent companies. Those aren't partisan, but they absolutely shape what gets covered and how. And the sharply partisan collapse in public trust — Democrats trusting COVID-19 coverage roughly twice as often as Republicans in 2020 — suggests that even if researchers can't find systemic left/right bias in the data, a huge share of the public perceives one anyway, which is its own kind of problem for a democracy that depends on shared facts, regardless of whether that perception matches the research."},
+];
+
+// ─── DISCUSSION ENGINE ───
+let discFilter='all';
+function filterDisc(ch,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');discFilter=ch;renderDiscussion();
+}
+function renderDiscussion(){
+  const list=discFilter==='all'?DISC_QUESTIONS:DISC_QUESTIONS.filter(d=>d.ch===discFilter);
+  const c=document.getElementById('disc-container');c.innerHTML='';
+  list.forEach((d,i)=>{
+    const idx=DISC_QUESTIONS.indexOf(d);
+    const div=document.createElement('div');div.className='disc-q';
+    div.innerHTML=`<div class="disc-q-text">${i+1}. ${d.q}</div>
+      <textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Draft your response here..." aria-label="Discussion response"></textarea>
+      <div class="disc-btn-row">
+        <button class="disc-btn primary" onclick="submitDisc(${idx})">Submit &amp; Self-Grade</button>
+        <button class="disc-btn" onclick="toggleModel(${idx})">Show Model Answer</button>
+        <button class="disc-btn" onclick="resetDisc(${idx})">Reset</button>
+      </div>
+      <div class="disc-rubric" id="disc-rubric-${idx}">
+        <strong style="font-size:.82rem;color:var(--text)">Self-Grading Rubric</strong>
+        <div style="margin-top:8px;">${d.points.map((p,pi)=>`<div class="rubric-item"><input type="checkbox" id="rub-${idx}-${pi}" onchange="updateDiscScore(${idx})"><label for="rub-${idx}-${pi}">${p.text}</label></div>`).join('')}</div>
+        <div class="disc-score" id="disc-score-${idx}">Score: 0 / ${d.points.length}</div>
+      </div>
+      <div class="model-answer" id="disc-model-${idx}">${d.model}</div>`;
+    c.appendChild(div);
+  });
+}
+function submitDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);
+  ta.disabled=true;
+  document.getElementById('disc-rubric-'+idx).classList.add('show');
+}
+function resetDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);ta.disabled=false;ta.value='';
+  document.getElementById('disc-rubric-'+idx).classList.remove('show');
+  document.getElementById('disc-model-'+idx).classList.remove('show');
+  document.querySelectorAll(`[id^="rub-${idx}-"]`).forEach(cb=>cb.checked=false);
+  document.getElementById('disc-score-'+idx).textContent='Score: 0 / '+DISC_QUESTIONS[idx].points.length;
+}
+function updateDiscScore(idx){
+  const total=DISC_QUESTIONS[idx].points.length;
+  const checked=document.querySelectorAll(`[id^="rub-${idx}-"]:checked`).length;
+  document.getElementById('disc-score-'+idx).textContent=`Score: ${checked} / ${total} (${Math.round(checked/total*100)}%)`;
+}
+function toggleModel(idx){document.getElementById('disc-model-'+idx).classList.toggle('show');}
+
+// ─── INIT ───
+window.addEventListener('DOMContentLoaded',()=>{
+  deck=[...allCards];renderCard();renderQuiz();renderDiscussion();updateMasteryBar();
+  document.querySelectorAll('.obj-master-btn').forEach(btn=>{
+    const key=btn.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+    if(key&&localStorage.getItem(key)){btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  });
+});
+</script>
+</body>
+</html>
