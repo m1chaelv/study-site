@@ -1,238 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>COURSE — Unit N Study Hub</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GOVT [COURSE] — Unit [N]: [UNIT TITLE]</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 :root {
-  --bg: #0a0a0f;
-  --surface: #12121a;
-  --surface2: #16161f;
-  --border: #1e1e2e;
-  --text: #e8e8f0;
-  --muted: #6b6b80;
-  --green: #22c55e;
-  --red: #ef4444;
-  --yellow: #eab308;
-  --purple: #a78bfa;
-  --orange: #f97316;
-  --accent: #3b82f6;              /* CHANGE PER COURSE */
-  --accent-dim: rgba(59,130,246,0.12); /* CHANGE PER COURSE */
+  --bg:#0a0a0f; --surface:#12121a; --surface2:#16161f; --border:#1e1e2e;
+  --text:#e8e8f0; --muted:#6b6b80; --green:#22c55e; --red:#ef4444;
+  --yellow:#eab308; --purple:#a78bfa; --orange:#f97316;
+  --accent:#f97316; --accent-dim:rgba(249,115,22,0.12);
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;}
-body::before{content:'';position:fixed;inset:0;
-  background-image:linear-gradient(rgba(59,130,246,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.025) 1px,transparent 1px);
-  background-size:40px 40px;pointer-events:none;z-index:0;}
-.container{max-width:960px;margin:0 auto;padding:0 20px;position:relative;z-index:1;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(249,115,22,0.025) 39px,rgba(249,115,22,0.025) 40px),
+  repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(249,115,22,0.025) 39px,rgba(249,115,22,0.025) 40px);}
+body::before{content:'GOVT [COURSE] · Unit [N] · Chapters [A]–[B]';position:fixed;top:0;left:0;right:0;
+  background:rgba(10,10,15,0.95);border-bottom:1px solid var(--border);padding:10px 16px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);z-index:100;letter-spacing:.05em;}
+.topnav{display:flex;gap:4px;padding:48px 12px 8px;overflow-x:auto;position:sticky;top:0;
+  background:rgba(10,10,15,0.97);z-index:90;border-bottom:1px solid var(--border);}
+.nav-btn{flex-shrink:0;background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:7px 13px;border-radius:6px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:11px;transition:all .15s;}
+.nav-btn:hover{color:var(--text);border-color:var(--accent);}
+.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.panel{display:none;padding:20px 16px 60px;max-width:860px;margin:0 auto;}
+.panel.active{display:block;}
+h1{font-size:1.4rem;font-weight:600;color:var(--accent);margin-bottom:4px;}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;display:block;}
+.exam-pill{display:inline-block;background:rgba(234,179,8,0.15);border:1px solid var(--yellow);
+  color:var(--yellow);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;
+  border-radius:20px;margin-bottom:20px;}
+.textbook-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.textbook-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;
+  transition:all .15s;}
+.textbook-links a:hover{color:var(--accent);border-color:var(--accent);}
 
-/* ── NAV ── */
-.topnav{display:flex;gap:6px;padding:14px 0;border-bottom:1px solid var(--border);margin-bottom:28px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
-.topnav::-webkit-scrollbar{display:none;}
-.nav-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:8px 13px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;letter-spacing:.05em;white-space:nowrap;flex-shrink:0;}
-.nav-btn:hover,.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
-
-/* ── HEADER ── */
-header{padding:20px 0 28px;}
-.breadcrumb{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:10px;}
-.breadcrumb a{color:var(--accent);text-decoration:none;}
-.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);background:var(--accent-dim);padding:4px 10px;border-radius:4px;display:inline-block;margin-bottom:10px;}
-h1{font-size:clamp(24px,5vw,40px);font-weight:700;letter-spacing:-.02em;line-height:1.1;margin-bottom:10px;}
-.exam-pill{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid var(--orange);color:var(--orange);padding:6px 14px;border-radius:20px;background:rgba(249,115,22,.08);}
-.textbook-links{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;padding:10px 16px;border-radius:8px;background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);}
-.tb-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);font-weight:700;}
-.tb-link{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);text-decoration:none;transition:opacity .2s;}
-.tb-link:hover{opacity:.75;text-decoration:underline;}
-.tb-sep{color:var(--border);font-size:14px;}
-.tb-note{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);}
-
-/* ── MASTERY BAR ── */
-.mastery-bar{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;}
-.mastery-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
-.mastery-count{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--green);font-weight:700;}
-.mastery-track{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
-.mastery-fill{height:100%;background:var(--green);border-radius:3px;transition:width .4s;}
-.reset-mastery-btn{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:5px 10px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;}
+/* Objectives  —  NOTE: one color class per chapter, ALTERNATING orange then purple.
+   .chA = first chapter (orange), .chB = second chapter (purple).
+   For a 3-chapter unit add .chC using orange again, etc. */
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  margin-bottom:10px;cursor:pointer;transition:border-color .15s;}
+.obj-card:hover{border-color:var(--accent);}
+.obj-header{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;
+  padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.chA .obj-num{color:var(--orange);background:rgba(249,115,22,0.12);}
+.chB .obj-num{color:var(--purple);background:rgba(167,139,250,0.12);}
+.obj-title{font-size:.88rem;font-weight:500;flex:1;}
+.obj-expand{color:var(--muted);font-size:12px;transition:transform .2s;}
+.obj-body{display:none;padding:0 16px 14px;font-size:.84rem;line-height:1.65;color:#b0b0c8;}
+.obj-body.open{display:block;}
+.obj-master-btn{margin-top:10px;background:transparent;border:1px solid var(--border);
+  color:var(--muted);padding:5px 12px;border-radius:4px;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;transition:all .15s;}
+.obj-master-btn.mastered{border-color:var(--green);color:var(--green);background:rgba(34,197,94,0.08);}
+.mastery-bar{background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  height:6px;margin-bottom:20px;overflow:hidden;}
+.mastery-fill{height:100%;background:var(--green);border-radius:20px;transition:width .4s;}
+.reset-mastery-btn{display:block;margin-bottom:20px;background:transparent;
+  border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:4px;
+  cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;}
 .reset-mastery-btn:hover{border-color:var(--red);color:var(--red);}
 
-/* ── SECTION LABEL ── */
-.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
-.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+/* Study Guide */
+.chapter-block{margin-bottom:16px;}
+.chapter-header{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;
+  align-items:center;font-weight:500;font-size:.9rem;transition:border-color .15s;}
+.chapter-header:hover{border-color:var(--accent);}
+.chapter-body{display:none;background:var(--surface2);border:1px solid var(--border);
+  border-top:none;border-radius:0 0 8px 8px;padding:16px;}
+.chapter-body h3{font-size:.82rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px;}
+.chapter-body h3:first-child{margin-top:0;}
+.chapter-body p,.chapter-body li{font-size:.84rem;line-height:1.7;color:#b0b0c8;margin-bottom:6px;}
+.chapter-body ul{padding-left:18px;}
+.chapter-body strong{color:var(--text);}
+.flag-note{background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.3);
+  border-radius:6px;padding:8px 12px;font-size:.78rem;color:var(--yellow);margin:8px 0;}
 
-/* ── PANELS ── */
-.panel{display:none;}
-.panel.active{display:block;}
+/* Flashcards */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:5px 12px;border-radius:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;transition:all .15s;}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.fc-wrap{perspective:1000px;margin-bottom:16px;}
+.fc-card{width:100%;min-height:220px;position:relative;transform-style:preserve-3d;
+  transition:transform .5s;cursor:pointer;}
+.fc-card.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  display:flex;flex-direction:column;justify-content:center;padding:24px;border-radius:10px;}
+.fc-back{transform:rotateY(180deg);border-color:var(--accent);background:var(--accent-dim);}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
+.fc-q,.fc-a{font-size:1rem;line-height:1.6;color:var(--text);}
+.fc-a{color:var(--accent);}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);
+  text-align:center;margin-bottom:12px;}
+.fc-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+.fc-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);
+  padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82rem;transition:all .15s;}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent);}
+.fc-btn.mastered-btn{border-color:var(--green);color:var(--green);}
+.fc-nav{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+.fc-empty{text-align:center;padding:40px;color:var(--muted);font-size:.9rem;}
 
-/* ── OBJECTIVES ── */
-.obj-grid{display:grid;gap:10px;margin-bottom:28px;}
-.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:start;cursor:pointer;}
-.obj-card:focus{outline:2px solid var(--accent);outline-offset:2px;}
-.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);background:var(--accent-dim);width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
-.obj-text{font-size:13px;line-height:1.6;}
-.obj-chapter{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:4px;}
-.obj-detail{display:none;font-size:12px;line-height:1.7;color:#c8c8d8;margin-top:10px;}
-.obj-card.expanded .obj-detail{display:block;}
-.obj-master-btn{font-size:16px;background:none;border:none;cursor:pointer;padding:2px;line-height:1;flex-shrink:0;color:var(--muted);}
-.obj-master-btn.mastered{color:var(--green);}
+/* Quiz */
+.quiz-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.quiz-q-text{font-size:.9rem;margin-bottom:12px;line-height:1.6;}
+.quiz-opts label{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;
+  border-radius:5px;cursor:pointer;font-size:.85rem;line-height:1.5;transition:background .1s;}
+.quiz-opts label:hover{background:rgba(255,255,255,0.04);}
+.quiz-opts input{margin-top:3px;flex-shrink:0;accent-color:var(--accent);}
+.fitb-input{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:8px 12px;border-radius:5px;font-size:.85rem;margin-top:8px;}
+.fitb-input:focus{outline:none;border-color:var(--accent);}
+.q-correct{border-color:var(--green)!important;background:rgba(34,197,94,0.06)!important;}
+.q-wrong{border-color:var(--red)!important;background:rgba(239,68,68,0.06)!important;}
+.q-exp{font-size:.8rem;color:#9090b0;margin-top:8px;padding-top:8px;
+  border-top:1px solid var(--border);display:none;}
+.q-exp.show{display:block;}
+#submit-btn,#reset-btn{padding:10px 22px;border-radius:6px;cursor:pointer;
+  font-size:.88rem;font-weight:500;transition:all .15s;border:1px solid;}
+#submit-btn{background:var(--accent);border-color:var(--accent);color:#fff;margin-right:8px;}
+#submit-btn:hover{opacity:.85;}
+#reset-btn{background:transparent;border-color:var(--border);color:var(--muted);}
+#reset-btn:hover{border-color:var(--red);color:var(--red);}
+#quiz-score{margin-top:16px;padding:14px;background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;font-size:.9rem;display:none;}
 
-/* Chapter color classes */
-.ch1  .obj-num{color:#f97316;background:rgba(249,115,22,.12);}
-.ch2  .obj-num{color:#3b82f6;background:rgba(59,130,246,.12);}
-.ch17 .obj-num{color:#3b82f6;background:rgba(59,130,246,.12);}
-.ch18 .obj-num{color:#a78bfa;background:rgba(167,139,250,.12);}
-.ch19 .obj-num{color:#22c55e;background:rgba(34,197,94,.12);}
-.ch20 .obj-num{color:#f97316;background:rgba(249,115,22,.12);}
-
-/* ── STUDY GUIDE ── */
-.chapter-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:18px;}
-.chapter-header{padding:14px 18px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background .2s;border-bottom:1px solid var(--border);}
-.chapter-header:hover{background:var(--surface2);}
-.chapter-title{font-size:15px;font-weight:700;}
-.chapter-subtitle{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:2px;}
-.chevron{color:var(--muted);font-size:13px;transition:transform .2s;flex-shrink:0;}
-.chapter-header.open .chevron{transform:rotate(180deg);}
-.chapter-body{padding:18px;display:none;}
-.chapter-body.open{display:block;}
-.concept-title{font-size:13px;font-weight:700;color:var(--accent);margin:18px 0 6px;display:flex;align-items:center;gap:8px;}
-.concept-title:first-child{margin-top:0;}
-.concept-title::before{content:'▸';font-size:10px;}
-.concept-body{font-size:13px;line-height:1.8;color:#c8c8d8;}
-.concept-body strong{color:var(--text);}
-.key-term{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--accent-dim);color:var(--accent);padding:2px 8px;border-radius:4px;margin:2px;}
-.key-term.blue{background:rgba(59,130,246,.12);color:#3b82f6;}
-.key-term.green{background:rgba(34,197,94,.12);color:var(--green);}
-.key-term.orange{background:rgba(249,115,22,.12);color:var(--orange);}
-.key-term.purple{background:rgba(167,139,250,.12);color:var(--purple);}
-.people-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:10px;}
-.person-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;}
-.person-name{font-size:13px;font-weight:700;margin-bottom:4px;}
-.person-role{font-size:12px;color:var(--muted);line-height:1.5;}
-.callout{background:rgba(59,130,246,.06);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:13px;color:var(--text);}
-.formula{display:inline-block;background:var(--accent-dim);border:1px solid var(--border);padding:2px 8px;border-radius:5px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);margin:3px 0;}
-
-/* ── FLASHCARDS ── */
-.fc-controls{display:flex;gap:10px;align-items:center;margin-bottom:18px;flex-wrap:wrap;}
-.fc-stat{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);}
-.btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:8px 14px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;transition:all .2s;letter-spacing:.05em;}
-.btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
-.btn.primary:hover{opacity:.85;}
-.btn.mastered-btn{border-color:var(--green);color:var(--green);}
-.flashcard-area{perspective:1000px;margin-bottom:18px;}
-.flashcard{width:100%;min-height:200px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .5s;}
-.flashcard.flipped{transform:rotateY(180deg);}
-.fc-front,.fc-back{position:absolute;inset:0;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;backface-visibility:hidden;}
-.fc-back{transform:rotateY(180deg);background:var(--surface2);border-color:var(--accent);}
-.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;margin-bottom:14px;}
-.fc-question{font-size:17px;font-weight:700;line-height:1.4;}
-.fc-answer{font-size:13px;line-height:1.7;color:#c8c8d8;}
-.fc-hint{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:10px;}
-.fc-chapter-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:3px 8px;border-radius:4px;margin-bottom:6px;}
-.fc-mastered-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);padding:2px 8px;border-radius:4px;margin-bottom:6px;display:none;}
-.fc-nav{display:flex;gap:10px;justify-content:center;align-items:center;}
-.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);min-width:80px;text-align:center;}
-.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
-.filter-btn{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:5px 12px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;}
-.filter-btn.active-filter{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
-
-/* ── QUIZ ── */
-.quiz-area{max-width:700px;}
-.question-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:14px;}
-.q-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:8px;}
-.q-text{font-size:14px;font-weight:600;line-height:1.5;margin-bottom:14px;}
-.options{display:grid;gap:8px;}
-.option{padding:11px 14px;border-radius:8px;border:1px solid var(--border);cursor:pointer;font-size:13px;line-height:1.5;transition:all .2s;background:var(--surface2);display:flex;gap:12px;align-items:flex-start;}
-.option:hover:not(.answered){border-color:var(--accent);background:var(--accent-dim);}
-.option.correct{border-color:var(--green);background:rgba(34,197,94,.1);color:var(--green);}
-.option.wrong{border-color:var(--red);background:rgba(239,68,68,.1);color:var(--red);}
-.option.reveal{border-color:var(--green);background:rgba(34,197,94,.05);}
-.opt-letter{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;min-width:20px;color:var(--muted);}
-.explanation{margin-top:10px;padding:10px 14px;border-radius:8px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);font-size:12px;line-height:1.6;color:#a8b8d8;display:none;}
-.quiz-score{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;text-align:center;margin-bottom:18px;display:none;}
-.score-num{font-size:44px;font-weight:700;color:var(--accent);}
-.score-label{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);margin-top:6px;}
-.fitb-input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:14px;padding:8px 12px;width:100%;margin-top:10px;transition:border-color .2s;outline:none;}
-.fitb-input:focus{border-color:var(--accent);}
-.fitb-input.correct-input{border-color:var(--green);background:rgba(34,197,94,.08);color:var(--green);}
-.fitb-input.wrong-input{border-color:var(--red);background:rgba(239,68,68,.08);}
-.fitb-correct-answer{font-size:12px;margin-top:6px;color:var(--green);font-family:'IBM Plex Mono',monospace;display:none;}
-.q-type-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;margin-left:6px;vertical-align:middle;}
-.q-type-mc{background:rgba(59,130,246,.12);color:var(--accent);}
-.q-type-fitb{background:rgba(167,139,250,.12);color:var(--purple);}
-.q-ch-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 7px;border-radius:3px;margin-left:6px;vertical-align:middle;}
-
-/* ── DISCUSSION ── */
-.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden;}
-.disc-q-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:flex-start;}
-.disc-q-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--accent);background:var(--accent-dim);border-radius:4px;padding:2px 8px;flex-shrink:0;margin-top:2px;}
-.disc-q-text{font-size:14px;font-weight:600;color:var(--text);line-height:1.45;}
-.disc-q-body{padding:14px 16px;}
-.disc-textarea{width:100%;min-height:110px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;line-height:1.6;padding:12px;resize:vertical;font-family:'IBM Plex Sans',sans-serif;transition:border-color .2s;}
+/* Discussion */
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.disc-q-text{font-size:.9rem;line-height:1.6;margin-bottom:12px;font-weight:500;}
+.disc-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:10px 12px;border-radius:5px;font-size:.84rem;
+  min-height:120px;resize:vertical;font-family:'IBM Plex Sans',sans-serif;line-height:1.6;}
 .disc-textarea:focus{outline:none;border-color:var(--accent);}
-.disc-textarea.submitted{opacity:.75;}
-.disc-btn-row{display:flex;gap:10px;margin-top:10px;}
-.disc-rubric{display:none;margin-top:12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.disc-btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.disc-btn{padding:6px 14px;border-radius:5px;cursor:pointer;font-size:.82rem;
+  border:1px solid var(--border);background:var(--surface2);color:var(--muted);transition:all .15s;}
+.disc-btn:hover{color:var(--text);}
+.disc-btn.primary{border-color:var(--accent);color:var(--accent);}
+.disc-rubric{display:none;margin-top:12px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:6px;padding:12px;}
 .disc-rubric.show{display:block;}
-.disc-rubric-title{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
-.disc-point{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;font-size:13px;}
-.disc-check{width:17px;height:17px;border-radius:4px;border:2px solid var(--border);flex-shrink:0;cursor:pointer;appearance:none;-webkit-appearance:none;background:var(--surface);margin-top:2px;transition:all .15s;}
-.disc-check:checked{background:var(--green);border-color:var(--green);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='%23000' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:10px;}
-.disc-point-text{color:var(--muted);line-height:1.5;}
-.disc-point-text strong{color:var(--text);}
-.disc-self-score{margin-top:12px;padding-top:12px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;font-size:13px;}
-.disc-score-display{font-size:18px;font-weight:800;color:var(--accent);}
-.disc-model{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);}
-.disc-model.show{display:block;}
-.disc-model-title{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
-.disc-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.rubric-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;
+  border-bottom:1px solid var(--border);font-size:.82rem;}
+.rubric-item:last-child{border-bottom:none;}
+.rubric-item input[type=checkbox]{flex-shrink:0;margin-top:2px;accent-color:var(--green);}
+.disc-score{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--green);
+  margin-top:8px;}
+.model-answer{display:none;margin-top:10px;font-size:.82rem;line-height:1.65;
+  color:#9090b0;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.2);
+  border-radius:6px;padding:12px;}
+.model-answer.show{display:block;}
 
-/* ── NOTES ── */
-.notes-template{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:18px;}
-.notes-header{background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(167,139,250,.1));border-bottom:1px solid var(--border);padding:18px 22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-.notes-title{font-size:15px;font-weight:700;}
-.notes-subtitle{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:2px;}
-.notes-body{padding:22px;}
-.notes-col-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-.notes-col-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);}
-.notes-item{font-size:12px;line-height:1.8;padding:5px 0;border-bottom:1px dashed rgba(255,255,255,.04);display:flex;gap:8px;align-items:flex-start;}
-.notes-item::before{content:'›';color:var(--muted);flex-shrink:0;margin-top:1px;}
-.notes-tip{background:rgba(234,179,8,.08);border:1px solid rgba(234,179,8,.2);border-radius:8px;padding:12px 16px;margin-top:14px;font-size:12px;line-height:1.7;color:#d4b84a;}
-.notes-tip strong{color:var(--yellow);}
-
-/* ── FOOTER ── */
-footer{border-top:1px solid var(--border);padding:22px 0;margin-top:36px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
-footer a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);text-decoration:none;}
-
-/* ── MOBILE ── */
-@media(max-width:600px){
-  .notes-col-grid{grid-template-columns:1fr;}
-  .people-grid{grid-template-columns:1fr 1fr;}
-  .fc-question{font-size:15px;}
-  .topnav{gap:5px;}
-  .nav-btn{font-size:10px;padding:7px 10px;}
-  .textbook-links{gap:6px;}
-  .tb-note{display:none;}
-  h1{font-size:22px;}
-}
-
-/* ── PRINT (active tab only) ── */
+/* Notes */
+.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.notes-grid{grid-template-columns:1fr;}}
+.note-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.note-card h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.note-lines{display:flex;flex-direction:column;gap:8px;}
+.note-line{border-bottom:1px solid var(--border);min-height:28px;}
+.video-block{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:14px 16px;margin-bottom:12px;}
+.video-block h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.video-link{display:flex;align-items:center;gap:8px;padding:7px 0;font-size:.84rem;
+  border-bottom:1px solid var(--border);}
+.video-link:last-child{border-bottom:none;}
+.video-link a{color:var(--text);text-decoration:none;flex:1;}
+.video-link a:hover{color:var(--accent);}
+.video-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);
+  border:1px solid var(--border);padding:2px 6px;border-radius:10px;flex-shrink:0;}
+.source-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.source-list a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;}
+.source-list a:hover{color:var(--accent);border-color:var(--accent);}
+footer{text-align:center;padding:30px 16px;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;color:var(--muted);}
 @media print{
-  body::before,.topnav,.exam-pill,.textbook-links,footer,
-  .fc-controls,.fc-nav,.filter-row,#submit-btn,#quiz-score,
-  .disc-btn-row,.disc-rubric,.obj-master-btn,.reset-mastery-btn,.mastery-bar{display:none!important;}
-  .panel{display:none!important;}
-  .panel.active{display:block!important;}
-  *,*::before,*::after{background:white!important;background-color:white!important;background-image:none!important;color:black!important;border-color:#bbb!important;box-shadow:none!important;-webkit-text-fill-color:black!important;}
-  body{font-size:12pt;}
-  .chapter-body{display:block!important;}
+  body::before,.topnav,.exam-pill,.textbook-links,footer,.fc-controls,.fc-nav,.filter-row,
+  #submit-btn,#quiz-score,.disc-btn-row,.disc-rubric,.obj-master-btn,.reset-mastery-btn,
+  .mastery-bar{display:none!important;}
+  .panel{display:none!important;}.panel.active{display:block!important;}
+  *,*::before,*::after{background:white!important;background-color:white!important;
+    background-image:none!important;color:black!important;border-color:#bbb!important;
+    box-shadow:none!important;-webkit-text-fill-color:black!important;}
+  body{font-size:12pt;}.chapter-body{display:block!important;}
   @page{margin:.75in;}
 }
 </style>
 </head>
 <body>
-<div class="container">
+
+<!-- ══ TEMPLATE_unit.html ══════════════════════════════════════════════
+  REUSABLE SINGLE-FILE UNIT STUDY APP  (derived from Unit 3 / Unit 4 GOVT 2306)
+  HOW TO USE:
+    1. Copy this file to  [coursecode]/unit[N]/index.html
+    2. Find/replace tokens:  [COURSE] [N] [UNIT TITLE] [A] [B]  and the two
+       chapter color classes  .chA / .chB  (rename to the real chapter numbers,
+       e.g. .ch7 / .ch8 — alternate ORANGE then PURPLE).
+    3. Fill the OBJECTIVES and STUDY GUIDE panels (one obj-card per LO; one
+       chapter-block per chapter).
+    4. Fill the three JS data arrays: allCards, allQuizData, DISC_QUESTIONS.
+    5. Update the mastery-key strings (already tokenized as
+       mastery_[course]_unit[N]_ and obj_[course]_unit[N]_) — MUST be unique
+       per unit so localStorage progress doesn't collide across units.
+  The CSS and all engine functions below are reusable AS-IS.
+═══════════════════════════════════════════════════════════════════════ -->
 
 <nav class="topnav" role="tablist" aria-label="Study sections">
   <button class="nav-btn active" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
@@ -243,398 +229,344 @@ footer a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent
   <button class="nav-btn" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes Template</button>
 </nav>
 
-<header>
-  <div class="breadcrumb"><a href="../../index.html">Study Hub</a> / COURSE / Unit N</div>
-  <div class="unit-badge">COURSE · Unit 0N · Ch. X–Y</div>
-  <h1>Unit Title Here</h1>
-  <div class="exam-pill">⏰ Exam: Date Here</div>
+<!-- ═══════════════ OBJECTIVES ═══════════════ -->
+<div class="panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+  <span class="unit-badge">GOVT [COURSE] · Unit [N]</span>
+  <h1>[UNIT TITLE]</h1>
+  <span class="exam-pill">📅 Chapters [A] &amp; [B] — [exam date / check Blackboard]</span>
   <div class="textbook-links">
-    <span class="tb-label">📚 Textbook</span>
-    <a href="#" target="_blank" class="tb-link">Ch.X ↗</a>
-    <span class="tb-sep">·</span>
-    <span class="tb-note">Textbook info here</span>
+    <a href="#">Ch. [A]: [chapter A title]</a>
+    <a href="#">Ch. [B]: [chapter B title]</a>
   </div>
-</header>
+  <!-- Optional: <div class="flag-note">📌 unit-level heads-up about edition/term quirks</div> -->
+  <div class="mastery-bar"><div class="mastery-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="reset-mastery-btn" onclick="resetAllMastery()">↺ Reset All Mastery</button>
 
-<!-- Mastery overview bar -->
-<div class="mastery-bar" id="mastery-bar" aria-label="Mastery progress">
-  <span class="mastery-label">Mastered</span>
-  <span class="mastery-count" id="mastery-count">0 / 0</span>
-  <div class="mastery-track" aria-hidden="true"><div class="mastery-fill" id="mastery-fill" style="width:0%"></div></div>
-  <button class="reset-mastery-btn" onclick="resetAllMastery()" aria-label="Reset all mastery for this unit">Reset All</button>
-</div>
-
-<!-- ===== OBJECTIVES ===== -->
-<div id="panel-overview" class="panel active" role="tabpanel" aria-labelledby="panel-overview">
-  <div class="section-label">Learning Objectives</div>
-  <div class="obj-grid" id="obj-grid">
-    <!-- EXAMPLE: copy and fill -->
-    <div class="obj-card ch1" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
-      <div class="obj-num" aria-hidden="true">1</div>
-      <div>
-        <div class="obj-text">Objective statement here.</div>
-        <div class="obj-chapter">CH. 1 · LO 1.1</div>
-        <div class="obj-detail">Full explanation that expands on click. Key terms, context, examples.</div>
-      </div>
-      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_1')" aria-label="Mark objective 1 as mastered">☐</button>
+  <!-- ONE obj-card PER learning objective. First chapter = class "chA", second = "chB". -->
+  <div class="obj-card chA" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO [A].1</span>
+      <span class="obj-title">[short objective title]</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>[full objective statement]</p>
+      <p><strong>Key concepts:</strong> [dense paragraph — do NOT reduce multi-part terms to one-liners].</p>
+      <!-- ⚠️ use a <div class="flag-note"> here for any term on the review that is
+           missing from all source materials (define it + say it was sourced externally). -->
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_[course]_unit[N]_[A]1')" aria-label="Mark LO [A].1 as mastered">☐ Mark Mastered</button>
     </div>
   </div>
+  <!-- ...repeat obj-card for every LO. Add style="margin-top:20px;" on the first card of chapter B. -->
 </div>
 
-<!-- ===== STUDY GUIDE ===== -->
-<div id="panel-guide" class="panel" role="tabpanel" aria-labelledby="panel-guide">
+<!-- ═══════════════ STUDY GUIDE ═══════════════ -->
+<div class="panel" id="panel-guide" role="tabpanel" aria-labelledby="tab-guide">
+  <h1>Study Guide</h1>
+  <span class="unit-badge">Unit [N] · Chapters [A] &amp; [B]</span>
+
+  <!-- ONE chapter-block PER chapter -->
   <div class="chapter-block">
     <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
-      <div><div class="chapter-title" style="color:var(--accent)">Chapter Title</div><div class="chapter-subtitle">Subtitle</div></div>
-      <span class="chevron" aria-hidden="true">▼</span>
+      <span>[emoji] Chapter [A]: [title]</span><span>▼</span>
     </div>
     <div class="chapter-body">
-      <div class="concept-title">Section Heading</div>
-      <div class="concept-body">Content here. <strong>Bold term.</strong></div>
-      <span class="key-term">term</span>
+      <h3>LO [A].1 — [subsection title]</h3>
+      <ul>
+        <li><strong>[term]</strong> — [full definition, exam-depth].</li>
+        <!-- <div class="flag-note">⚠️ [flagged term missing from materials — external definition]</div> -->
+      </ul>
     </div>
   </div>
 </div>
 
-<!-- ===== FLASHCARDS ===== -->
-<div id="panel-flashcards" class="panel" role="tabpanel" aria-labelledby="panel-flashcards">
-  <div class="filter-row">
-    <button class="filter-btn active-filter" onclick="filterCards('all',this)">All</button>
-    <button class="filter-btn" onclick="filterCards('ch1',this)">Ch.1</button>
+<!-- ═══════════════ FLASHCARDS ═══════════════ -->
+<div class="panel" id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards">
+  <h1>Flashcards</h1>
+  <div class="filter-row" role="group" aria-label="Filter flashcards by chapter">
+    <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('chA',this)">Ch. [A]</button>
+    <button class="filter-btn" onclick="filterCards('chB',this)">Ch. [B]</button>
+  </div>
+  <div class="fc-counter" id="fc-counter" aria-live="polite"></div>
+  <div class="fc-wrap">
+    <div class="fc-card" id="fc-card" onclick="flipCard()" aria-label="Flashcard — click to flip">
+      <div class="fc-front"><div class="fc-label">Question</div><div class="fc-q" id="fc-q" aria-live="polite"></div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a" id="fc-a" aria-live="polite"></div></div>
+    </div>
   </div>
   <div class="fc-controls">
-    <button class="btn" onclick="shuffleCards()" aria-label="Shuffle flashcards">⇄ Shuffle</button>
-    <button class="btn" onclick="filterCards('unmastered',document.getElementById('unmasteredBtn'))" id="unmasteredBtn">⚡ Unmastered Only</button>
-    <span class="fc-stat" id="fc-stat" aria-live="polite">Card 1 of 0</span>
-  </div>
-  <div class="flashcard-area">
-    <div class="flashcard" id="flashcard" onclick="flipCard()" role="button" aria-label="Flashcard — tap to flip" tabindex="0">
-      <div class="fc-front">
-        <div id="fc-mastered-badge" class="fc-mastered-badge" aria-hidden="true">✅ MASTERED</div>
-        <div id="fc-chapter-tag" class="fc-chapter-tag" aria-hidden="true"></div>
-        <div class="fc-label" aria-hidden="true">TERM / CONCEPT</div>
-        <div class="fc-question" id="fc-question" aria-live="polite">Loading...</div>
-        <div class="fc-hint" aria-hidden="true">Tap to reveal answer</div>
-      </div>
-      <div class="fc-back">
-        <div class="fc-label" aria-hidden="true">ANSWER</div>
-        <div class="fc-answer" id="fc-answer" aria-live="polite">Loading...</div>
-      </div>
-    </div>
+    <button class="fc-btn" onclick="flipCard()" aria-label="Flip card">↩ Flip</button>
+    <button class="fc-btn mastered-btn" id="fc-master-btn" onclick="toggleMastered(currentIdx)" aria-label="Toggle mastered">☐ Mastered</button>
+    <button class="fc-btn" onclick="shuffleCards()" aria-label="Shuffle deck">🔀 Shuffle</button>
   </div>
   <div class="fc-nav">
-    <button class="btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
-    <span class="fc-counter" id="fc-counter" aria-live="polite">1 / 0</span>
-    <button class="btn" onclick="nextCard()" aria-label="Next card">Next →</button>
+    <button class="fc-btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
+    <button class="fc-btn" onclick="nextCard()" aria-label="Next card">Next →</button>
   </div>
-  <div style="display:flex;gap:10px;margin-top:12px;justify-content:center;">
-    <button class="btn mastered-btn" id="master-toggle-btn" onclick="toggleMastered(currentIndex)" aria-label="Toggle mastered status for current card">☐ Mark Mastered</button>
-    <button class="btn" onclick="window.print()" aria-label="Print active tab">🖨 Print</button>
-  </div>
+  <div class="fc-empty" id="fc-empty" style="display:none">No cards in this filter.</div>
 </div>
 
-<!-- ===== QUIZ ===== -->
-<div id="panel-quiz" class="panel" role="tabpanel" aria-labelledby="panel-quiz">
-  <div class="filter-row" id="quiz-filters">
-    <button class="filter-btn active-filter" onclick="setQuizFilter('all',this)">All Chapters</button>
-    <button class="filter-btn" onclick="setQuizFilter('ch1',this)">Ch.1</button>
-    <span style="flex:1"></span>
-    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)" id="quiz-count" aria-live="polite"></span>
+<!-- ═══════════════ QUIZ ═══════════════ -->
+<div class="panel" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+  <h1>Practice Quiz</h1>
+  <div class="filter-row" role="group" aria-label="Filter quiz by chapter">
+    <button class="filter-btn active" onclick="setQuizFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setQuizFilter('chA',this)">Ch. [A]</button>
+    <button class="filter-btn" onclick="setQuizFilter('chB',this)">Ch. [B]</button>
   </div>
-  <div class="quiz-score" id="quiz-score" role="status">
-    <div class="score-num" id="score-display">0</div>
-    <div class="score-label">QUIZ COMPLETE</div>
-    <div id="score-breakdown" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px"></div>
-    <br>
-    <button class="btn primary" onclick="resetQuiz()">Retake Quiz</button>
+  <div id="quiz-container"></div>
+  <div style="margin-top:16px;">
+    <button id="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <button id="reset-btn" onclick="resetQuiz()">Reset</button>
   </div>
-  <div class="quiz-area" id="quiz-area"></div>
-  <button class="btn primary" id="submit-btn" onclick="submitQuiz()" style="margin-top:18px;display:none">Submit Quiz</button>
+  <div id="quiz-score"></div>
 </div>
 
-<!-- ===== DISCUSSION ===== -->
-<div id="panel-discussion" class="panel" role="tabpanel" aria-labelledby="panel-discussion">
-  <div class="section-label">Discussion / Short Answer Practice</div>
-  <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">Write your response, then submit to reveal the self-grading checklist. Check each point you covered to calculate your score.</p>
-  <div class="disc-filter" id="disc-filters">
-    <button class="filter-btn active-filter" onclick="filterDisc('all',this)">All</button>
-    <!-- chapter filter buttons added dynamically or manually -->
+<!-- ═══════════════ DISCUSSION ═══════════════ -->
+<div class="panel" id="panel-discussion" role="tabpanel" aria-labelledby="tab-discussion">
+  <h1>Discussion Board Prep</h1>
+  <div class="filter-row" role="group" aria-label="Filter discussion by chapter">
+    <button class="filter-btn active" onclick="filterDisc('all',this)">All</button>
+    <button class="filter-btn" onclick="filterDisc('chA',this)">Ch. [A]</button>
+    <button class="filter-btn" onclick="filterDisc('chB',this)">Ch. [B]</button>
   </div>
   <div id="disc-container"></div>
 </div>
 
-<!-- ===== NOTES ===== -->
-<div id="panel-notes" class="panel" role="tabpanel" aria-labelledby="panel-notes">
-  <div class="notes-template">
-    <div class="notes-header">
-      <div>
-        <div class="notes-title">Exam Notes Template</div>
-        <div class="notes-subtitle">COURSE · Unit N · Exam: Date</div>
-      </div>
-      <button class="btn" onclick="window.print()" aria-label="Print notes">🖨 Print</button>
+<!-- ═══════════════ NOTES ═══════════════ -->
+<div class="panel" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes">
+  <h1>Notes Template</h1>
+  <span class="unit-badge">Unit [N] · Chapters [A] &amp; [B] — Print this tab for in-class notes</span>
+
+  <div class="video-block">
+    <h4>📺 [chapter] Video(s)</h4>
+    <!-- Per Unit 3+ convention: include YouTube LINKS only (not transcripts), for phone viewing. -->
+    <div class="video-link"><span class="video-tag">[tag]</span><a href="[url]" target="_blank" rel="noopener">[video title]</a></div>
+    <div class="source-list">
+      <a href="https://www.texastribune.org/" target="_blank" rel="noopener">Texas Tribune</a>
+      <a href="https://www.kut.org/" target="_blank" rel="noopener">KUT</a>
+      <a href="https://www.allsides.com/media-bias/media-bias-chart" target="_blank" rel="noopener">AllSides Bias Chart</a>
     </div>
-    <div class="notes-body">
-      <div class="notes-col-grid">
-        <div>
-          <div class="notes-col-title">Chapter X</div>
-          <div class="notes-item">Key point here</div>
-        </div>
-        <div>
-          <div class="notes-col-title">Chapter Y</div>
-          <div class="notes-item">Key point here</div>
-        </div>
-      </div>
-      <div class="notes-tip"><strong>Exam tip:</strong> Tip here.</div>
+  </div>
+
+  <div class="notes-grid">
+    <!-- ONE note-card per big concept; 4 blank lines each. -->
+    <div class="note-card">
+      <h4>[concept]</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
     </div>
   </div>
 </div>
 
-<footer>
-  <a href="../../index.html">← Back to Study Hub</a>
-  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)">COURSE · Unit N · ACC Summer 2026</span>
-</footer>
-</div>
+<footer>GOVT [COURSE] · Unit [N] · study.imichaelv.com · Built from Ch. [A] &amp; [B] source materials</footer>
 
 <script>
-// ── MASTERY KEY (update per unit) ──
-function getMasteryKey() { return 'mastery_COURSECODE_unitN_'; }
-function getObjMasteryKey() { return 'masteryobj_COURSECODE_unitN_'; }
-
-// ── PANEL SWITCHING ──
-function showPanel(id, btn) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
-  document.getElementById('panel-'+id).classList.add('active');
-  btn.classList.add('active'); btn.setAttribute('aria-selected','true');
-  if(id==='flashcards') renderCard();
-  if(id==='quiz') renderQuiz();
-  if(id==='discussion' && !discInit) { discInit=true; renderDiscussion(); }
-}
-
-// ── ACCORDION ──
-function toggleChapter(header) {
-  const body = header.nextElementSibling;
-  header.classList.toggle('open'); body.classList.toggle('open');
-  header.setAttribute('aria-expanded', header.classList.contains('open'));
-}
-function toggleObj(card) {
-  card.classList.toggle('expanded');
-  card.setAttribute('aria-expanded', card.classList.contains('expanded'));
-}
-
-// ── OBJECTIVE MASTERY ──
-function toggleObjMastery(btn, key) {
-  const fullKey = getObjMasteryKey() + key;
-  const isMastered = localStorage.getItem(fullKey) === '1';
-  if(isMastered) { localStorage.removeItem(fullKey); btn.textContent='☐'; btn.classList.remove('mastered'); btn.setAttribute('aria-label', btn.getAttribute('aria-label').replace('Unmark','Mark')); }
-  else { localStorage.setItem(fullKey,'1'); btn.textContent='✅'; btn.classList.add('mastered'); }
+// ─── MASTERY ───
+function getMasteryKey(){return 'mastery_[course]_unit[N]_';}
+function resetAllMastery(){
+  Object.keys(localStorage).filter(k=>k.startsWith(getMasteryKey())).forEach(k=>localStorage.removeItem(k));
+  Object.keys(localStorage).filter(k=>k.startsWith('obj_[course]_unit[N]_')).forEach(k=>localStorage.removeItem(k));
+  document.querySelectorAll('.obj-master-btn').forEach(b=>{b.textContent='☐ Mark Mastered';b.classList.remove('mastered');});
+  document.querySelectorAll('.fc-card').forEach((_,i)=>localStorage.removeItem(getMasteryKey()+i));
   updateMasteryBar();
 }
-function loadObjMastery() {
-  const prefix = getObjMasteryKey();
-  document.querySelectorAll('.obj-master-btn').forEach(btn => {
-    const key = btn.getAttribute('aria-label').match(/\d+/)?.[0];
-    if(key && localStorage.getItem(prefix+'obj_'+key)==='1') { btn.textContent='✅'; btn.classList.add('mastered'); }
-  });
+function updateMasteryBar(){
+  const total=document.querySelectorAll('.obj-master-btn').length;
+  const done=Object.keys(localStorage).filter(k=>k.startsWith('obj_[course]_unit[N]_')).length;
+  const pct=total?Math.round(done/total*100):0;
+  const f=document.getElementById('mastery-fill');
+  if(f)f.style.width=pct+'%';
+}
+function toggleObjMastery(btn,key){
+  const is=localStorage.getItem(key);
+  if(is){localStorage.removeItem(key);btn.textContent='☐ Mark Mastered';btn.classList.remove('mastered');}
+  else{localStorage.setItem(key,'1');btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  updateMasteryBar();
+}
+function toggleObj(card){
+  const body=card.querySelector('.obj-body');
+  const arrow=card.querySelector('.obj-expand');
+  const open=body.classList.toggle('open');
+  arrow.style.transform=open?'rotate(180deg)':'';
+  card.setAttribute('aria-expanded',open);
+}
+function toggleChapter(header){
+  const body=header.nextElementSibling;
+  const arrow=header.querySelector('span:last-child');
+  const open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  arrow.style.transform=open?'':'rotate(180deg)';
+  header.setAttribute('aria-expanded',!open);
+}
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
 }
 
-// ── MASTERY BAR ──
-function updateMasteryBar() {
-  const total = allCards.length;
-  const prefix = getMasteryKey();
-  const mastered = allCards.filter((_,i) => localStorage.getItem(prefix+i)==='1').length;
-  document.getElementById('mastery-count').textContent = mastered+' / '+total;
-  document.getElementById('mastery-fill').style.width = (total ? Math.round(mastered/total*100) : 0)+'%';
-}
-function resetAllMastery() {
-  const p1 = getMasteryKey(), p2 = getObjMasteryKey();
-  Object.keys(localStorage).filter(k => k.startsWith(p1)||k.startsWith(p2)).forEach(k => localStorage.removeItem(k));
-  document.querySelectorAll('.obj-master-btn').forEach(b => { b.textContent='☐'; b.classList.remove('mastered'); });
-  renderCard(); updateMasteryBar();
-  alert('All mastery for this unit has been reset.');
-}
 
-// ── FLASHCARDS ──
-const allCards = [
-  {ch:'ch1', q:'Sample question?', a:'Sample answer.'},
+// ─── FLASHCARD DATA ───  {ch:'chA'|'chB', q, a}   (⚠️ prefix flagged terms in q)
+const allCards=[
+  {ch:'chA',q:"[question]",a:"[answer — exam depth]"},
+  {ch:'chB',q:"[question]",a:"[answer]"},
+  // ...aim for the density of the prior unit unless the chapter scope is smaller.
 ];
-let currentCards = [...allCards];
-let currentIndex = 0;
-
-function renderCard() {
-  const card = currentCards[currentIndex];
-  if(!card) return;
-  const tag = document.getElementById('fc-chapter-tag');
-  const colors = {ch1:'#f97316',ch2:'#3b82f6'};
-  const labels = {ch1:'CH.1',ch2:'CH.2'};
-  tag.textContent = labels[card.ch]||card.ch.toUpperCase();
-  tag.style.color = colors[card.ch]||'var(--accent)';
-  tag.style.background = (colors[card.ch]||'var(--accent)')+'20';
-  document.getElementById('fc-question').textContent = card.q;
-  document.getElementById('fc-answer').textContent = card.a;
-  document.getElementById('fc-counter').textContent = (currentIndex+1)+' / '+currentCards.length;
-  document.getElementById('fc-stat').textContent = 'Card '+(currentIndex+1)+' of '+currentCards.length;
-  document.getElementById('flashcard').classList.remove('flipped');
-  const origIdx = allCards.indexOf(card);
-  const isMastered = localStorage.getItem(getMasteryKey()+origIdx)==='1';
-  const badge = document.getElementById('fc-mastered-badge');
-  badge.style.display = isMastered ? 'inline-block' : 'none';
-  const masterBtn = document.getElementById('master-toggle-btn');
-  masterBtn.textContent = isMastered ? '✅ Mastered' : '☐ Mark Mastered';
-  masterBtn.style.borderColor = isMastered ? 'var(--green)' : '';
-  masterBtn.style.color = isMastered ? 'var(--green)' : '';
+// ─── FLASHCARD ENGINE ───
+let deck=[],currentIdx=0,flipped=false;
+function filterCards(ch,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  deck=ch==='all'?[...allCards]:allCards.filter(c=>c.ch===ch);
+  currentIdx=0;flipped=false;renderCard();
 }
-function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
-function nextCard() { currentIndex=(currentIndex+1)%currentCards.length; renderCard(); }
-function prevCard() { currentIndex=(currentIndex-1+currentCards.length)%currentCards.length; renderCard(); }
-function shuffleCards() {
-  for(let i=currentCards.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[currentCards[i],currentCards[j]]=[currentCards[j],currentCards[i]];}
-  currentIndex=0; renderCard();
+function renderCard(){
+  const empty=document.getElementById('fc-empty');
+  if(!deck.length){empty.style.display='block';document.getElementById('fc-counter').textContent='';return;}
+  empty.style.display='none';
+  const c=deck[currentIdx];
+  document.getElementById('fc-q').textContent=c.q;
+  document.getElementById('fc-a').textContent=c.a;
+  document.getElementById('fc-counter').textContent=(currentIdx+1)+' / '+deck.length;
+  const card=document.getElementById('fc-card');
+  card.classList.remove('flipped');flipped=false;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+  else{mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
 }
-function filterCards(ch, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active-filter'));
-  if(btn) btn.classList.add('active-filter');
-  const prefix = getMasteryKey();
-  if(ch==='all') currentCards=[...allCards];
-  else if(ch==='unmastered') currentCards=allCards.filter((_,i)=>localStorage.getItem(prefix+i)!=='1');
-  else currentCards=allCards.filter(c=>c.ch===ch);
-  currentIndex=0; renderCard();
-}
-function toggleMastered(idx) {
-  const origCard = currentCards[idx];
-  const origIdx = allCards.indexOf(origCard);
-  const key = getMasteryKey()+origIdx;
-  if(localStorage.getItem(key)==='1') localStorage.removeItem(key);
-  else localStorage.setItem(key,'1');
-  renderCard(); updateMasteryBar();
+function flipCard(){document.getElementById('fc-card').classList.toggle('flipped');flipped=!flipped;}
+function nextCard(){if(!deck.length)return;currentIdx=(currentIdx+1)%deck.length;renderCard();}
+function prevCard(){if(!deck.length)return;currentIdx=(currentIdx-1+deck.length)%deck.length;renderCard();}
+function shuffleCards(){for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}currentIdx=0;renderCard();}
+function toggleMastered(idx){
+  const c=deck[idx];const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){localStorage.removeItem(key);mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+  else{localStorage.setItem(key,'1');mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
 }
 
-// ── QUIZ ──
-const allQuizData = [
-  {ch:'ch1',type:'mc',q:'Sample MC question?',opts:['A','B','C','D'],ans:0,exp:'Explanation.'},
-  {ch:'ch1',type:'fitb',q:'The ___ is important.',ans:['answer'],display:'Answer',exp:'Explanation.'},
+
+// ─── QUIZ DATA ───
+//   MC   -> {ch, type:'mc',   q, opts:[4 strings], ans:INDEX_0_BASED, exp}
+//   FITB -> {ch, type:'fitb', q, ans:[accepted strings, lowercase], display, exp}
+const allQuizData=[
+  {ch:'chA',type:'mc',q:"[question]",opts:["A","B","C","D"],ans:0,exp:"[why]"},
+  {ch:'chB',type:'fitb',q:"[____ prompt]",ans:["answer","alt"],display:"Answer",exp:"[why]"},
 ];
-let currentQuizFilter='all', activeQuizData=[...allQuizData], userAnswers={}, quizSubmitted=false;
+// ─── QUIZ ENGINE ───
+let quizFilter='all',userAnswers={};
 function setQuizFilter(ch,btn){
-  document.querySelectorAll('#quiz-filters .filter-btn').forEach(b=>b.classList.remove('active-filter'));
-  btn.classList.add('active-filter'); currentQuizFilter=ch; resetQuiz();
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');quizFilter=ch;resetQuiz();
 }
+function getQuizDeck(){return quizFilter==='all'?allQuizData:allQuizData.filter(q=>q.ch===quizFilter);}
 function renderQuiz(){
-  activeQuizData=currentQuizFilter==='all'?[...allQuizData]:allQuizData.filter(q=>q.ch===currentQuizFilter);
-  const chColors={ch1:'#f97316',ch2:'#3b82f6',ch17:'#3b82f6',ch18:'#a78bfa',ch19:'#22c55e',ch20:'#f97316'};
-  const chLabels={ch1:'CH.1',ch2:'CH.2',ch17:'CH.17',ch18:'CH.18',ch19:'CH.19',ch20:'CH.20'};
-  document.getElementById('quiz-count').textContent=activeQuizData.length+' questions';
-  if(quizSubmitted) return;
-  const area=document.getElementById('quiz-area');
-  area.innerHTML=activeQuizData.map((q,i)=>{
-    const chBadge=`<span class="q-ch-badge" style="background:${chColors[q.ch]||'var(--accent)'}20;color:${chColors[q.ch]||'var(--accent)'}">${chLabels[q.ch]||q.ch}</span>`;
-    const typeBadge=q.type==='mc'?'<span class="q-type-badge q-type-mc">MC</span>':'<span class="q-type-badge q-type-fitb">Fill-in</span>';
-    if(q.type==='mc') return `<div class="question-block" id="qblock-${i}"><div class="q-num">Q${i+1} of ${activeQuizData.length} ${chBadge} ${typeBadge}</div><div class="q-text">${q.q}</div><div class="options">${q.opts.map((o,j)=>`<div class="option" id="opt-${i}-${j}" onclick="selectMC(${i},${j})" role="radio" aria-checked="false"><span class="opt-letter">${['A','B','C','D'][j]}</span><span>${o}</span></div>`).join('')}</div><div class="explanation" id="exp-${i}">${q.exp}</div></div>`;
-    return `<div class="question-block" id="qblock-${i}"><div class="q-num">Q${i+1} of ${activeQuizData.length} ${chBadge} ${typeBadge}</div><div class="q-text">${q.q}</div><input type="text" class="fitb-input" id="fitb-${i}" placeholder="Type your answer..." oninput="storeFITB(${i})" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Answer for question ${i+1}"><div class="fitb-correct-answer" id="fitb-ans-${i}">Correct: ${q.display}</div><div class="explanation" id="exp-${i}">${q.exp}</div></div>`;
-  }).join('');
-  document.getElementById('submit-btn').style.display='block';
-}
-function selectMC(qi,oi){
-  if(quizSubmitted) return;
-  document.querySelectorAll(`#qblock-${qi} .option`).forEach(o=>{o.style.borderColor='';o.style.background='';o.setAttribute('aria-checked','false');});
-  document.getElementById(`opt-${qi}-${oi}`).style.borderColor='var(--accent)';
-  document.getElementById(`opt-${qi}-${oi}`).style.background='var(--accent-dim)';
-  document.getElementById(`opt-${qi}-${oi}`).setAttribute('aria-checked','true');
-  userAnswers[qi]={type:'mc',val:oi};
-}
-function storeFITB(qi){ userAnswers[qi]={type:'fitb',val:document.getElementById(`fitb-${qi}`).value.trim().toLowerCase()}; }
-function submitQuiz(){
-  for(let i=0;i<activeQuizData.length;i++){
-    const q=activeQuizData[i];
-    if(!userAnswers[i]){
-      if(q.type==='mc'){alert(`Please answer question ${i+1}.`);return;}
-      else{const v=document.getElementById(`fitb-${i}`).value.trim();if(!v){alert(`Please answer question ${i+1}.`);return;}userAnswers[i]={type:'fitb',val:v.toLowerCase()};}
-    }
-  }
-  quizSubmitted=true;
-  let score=0,mcC=0,fitbC=0,mcT=0,fitbT=0;
-  activeQuizData.forEach((q,i)=>{
-    const ans=userAnswers[i];
+  const deck=getQuizDeck();
+  const c=document.getElementById('quiz-container');c.innerHTML='';userAnswers={};
+  deck.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='quiz-q';div.id='qq'+i;
     if(q.type==='mc'){
-      mcT++;
-      document.querySelectorAll(`#qblock-${i} .option`).forEach(o=>{o.style.borderColor='';o.style.background='';o.classList.add('answered');});
-      if(ans.val===q.ans){score++;mcC++;document.getElementById(`opt-${i}-${ans.val}`).classList.add('correct');}
-      else{document.getElementById(`opt-${i}-${ans.val}`).classList.add('wrong');document.getElementById(`opt-${i}-${q.ans}`).classList.add('reveal');}
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <div class="quiz-opts">${q.opts.map((o,oi)=>`<label><input type="radio" name="q${i}" onclick="selectMC(${i},${oi})"> ${o}</label>`).join('')}</div>
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
     } else {
-      fitbT++;
-      const input=document.getElementById(`fitb-${i}`);
-      const correct=q.ans.some(a=>ans.val===a||ans.val.includes(a)||a.includes(ans.val));
-      if(correct){score++;fitbC++;input.classList.add('correct-input');}
-      else{input.classList.add('wrong-input');document.getElementById(`fitb-ans-${i}`).style.display='block';}
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <input class="fitb-input" id="fitb${i}" placeholder="Type your answer..." oninput="storeFITB(${i})">
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
     }
-    document.getElementById(`exp-${i}`).style.display='block';
+    c.appendChild(div);
   });
-  const pct=Math.round(score/activeQuizData.length*100);
-  const grade=pct>=90?'A':pct>=80?'B':pct>=70?'C':'Keep studying!';
-  document.getElementById('score-display').textContent=score+' / '+activeQuizData.length;
-  document.getElementById('score-breakdown').innerHTML=`${pct}% &nbsp;·&nbsp; ${grade} &nbsp;·&nbsp; MC: ${mcC}/${mcT} &nbsp;·&nbsp; Fill-in: ${fitbC}/${fitbT}`;
-  document.getElementById('quiz-score').style.display='block';
-  document.getElementById('submit-btn').style.display='none';
-  document.getElementById('quiz-score').scrollIntoView({behavior:'smooth'});
+  document.getElementById('quiz-score').style.display='none';
 }
-function resetQuiz(){ userAnswers={};quizSubmitted=false;document.getElementById('quiz-score').style.display='none';document.getElementById('quiz-area').innerHTML='';renderQuiz(); }
+function selectMC(qi,oi){userAnswers[qi]=oi;}
+function storeFITB(qi){userAnswers[qi]=document.getElementById('fitb'+qi).value.trim().toLowerCase();}
+function submitQuiz(){
+  const deck=getQuizDeck();let correct=0;
+  deck.forEach((q,i)=>{
+    const el=document.getElementById('qq'+i);
+    const exp=document.getElementById('exp'+i);exp.classList.add('show');
+    if(q.type==='mc'){
+      const ua=userAnswers[i];
+      if(ua===q.ans){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    } else {
+      const ua=(userAnswers[i]||'').toLowerCase();
+      const ok=q.ans.some(a=>ua.includes(a.toLowerCase()));
+      if(ok){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    }
+  });
+  const sc=document.getElementById('quiz-score');
+  const pct=Math.round(correct/deck.length*100);
+  sc.style.display='block';
+  sc.style.borderColor=pct>=70?'var(--green)':'var(--red)';
+  sc.innerHTML=`<strong>Score: ${correct}/${deck.length} (${pct}%)</strong> — ${pct>=90?'Excellent! 🎉':pct>=70?'Good work — review flagged questions.':'Keep studying — focus on the red ones.'}`;
+}
+function resetQuiz(){renderQuiz();}
 
-// ── DISCUSSION ──
-const DISC_QUESTIONS = [
-  {
-    ch:'ch1',
-    q:'Sample discussion question?',
-    points:[
-      {text:'<strong>Point 1</strong> — description'},
-      {text:'<strong>Point 2</strong> — description'},
-    ],
-    model:'Sample model answer paragraph.'
-  },
+
+// ─── DISCUSSION DATA ───  {ch, q, points:[{text}], model}
+const DISC_QUESTIONS=[
+  {ch:'chA',q:"[open-ended prompt]",
+   points:[
+     {text:"<strong>[rubric point]</strong> — [what a full answer covers]."},
+   ],
+   model:"[model answer in the student's plain, no-fluff voice]"},
 ];
-let discInit=false;
-function renderDiscussion(){
-  const container=document.getElementById('disc-container');
-  container.innerHTML=DISC_QUESTIONS.map((dq,idx)=>renderDiscQ(dq,idx)).join('');
+// ─── DISCUSSION ENGINE ───
+let discFilter='all';
+function filterDisc(ch,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');discFilter=ch;renderDiscussion();
 }
-function renderDiscQ(dq,idx){
-  const chLabel=dq.ch.replace('ch','Ch ');
-  const pointsHTML=dq.points.map((p,pi)=>`<div class="disc-point"><input type="checkbox" class="disc-check" id="chk-${idx}-${pi}" onchange="updateDiscScore(${idx})" aria-label="Covered: ${p.text.replace(/<[^>]+>/g,'')}"><label class="disc-point-text" for="chk-${idx}-${pi}">${p.text}</label></div>`).join('');
-  return `<div class="disc-q" id="disc-${idx}" data-ch="${dq.ch}"><div class="disc-q-header"><span class="disc-q-num">${chLabel} · Q${idx+1}</span><div class="disc-q-text">${dq.q}</div></div><div class="disc-q-body"><textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Write your response here…" rows="5" aria-label="Your response to question ${idx+1}"></textarea><div class="disc-btn-row"><button class="btn primary" onclick="submitDisc(${idx})">Submit &amp; Grade</button><button class="btn" onclick="resetDisc(${idx})">↺ Reset</button></div><div class="disc-rubric" id="disc-rubric-${idx}"><div class="disc-rubric-title">✅ Content Checklist — check each point you covered</div>${pointsHTML}<div class="disc-self-score"><span>Your score:</span><span class="disc-score-display" id="disc-score-${idx}">0 / ${dq.points.length}</span><span style="color:var(--muted);font-size:12px" id="disc-grade-${idx}"></span></div><div class="disc-model" id="disc-model-${idx}"><div class="disc-model-title">📋 Model Answer</div><p style="color:var(--muted);font-size:13px;line-height:1.7">${dq.model}</p></div><button class="btn" style="margin-top:10px;font-size:12px" onclick="toggleModel(${idx})">Show / Hide Model Answer</button></div></div></div>`;
+function renderDiscussion(){
+  const list=discFilter==='all'?DISC_QUESTIONS:DISC_QUESTIONS.filter(d=>d.ch===discFilter);
+  const c=document.getElementById('disc-container');c.innerHTML='';
+  list.forEach((d,i)=>{
+    const idx=DISC_QUESTIONS.indexOf(d);
+    const div=document.createElement('div');div.className='disc-q';
+    div.innerHTML=`<div class="disc-q-text">${i+1}. ${d.q}</div>
+      <textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Draft your response here..." aria-label="Discussion response"></textarea>
+      <div class="disc-btn-row">
+        <button class="disc-btn primary" onclick="submitDisc(${idx})">Submit &amp; Self-Grade</button>
+        <button class="disc-btn" onclick="toggleModel(${idx})">Show Model Answer</button>
+        <button class="disc-btn" onclick="resetDisc(${idx})">Reset</button>
+      </div>
+      <div class="disc-rubric" id="disc-rubric-${idx}">
+        <strong style="font-size:.82rem;color:var(--text)">Self-Grading Rubric</strong>
+        <div style="margin-top:8px;">${d.points.map((p,pi)=>`<div class="rubric-item"><input type="checkbox" id="rub-${idx}-${pi}" onchange="updateDiscScore(${idx})"><label for="rub-${idx}-${pi}">${p.text}</label></div>`).join('')}</div>
+        <div class="disc-score" id="disc-score-${idx}">Score: 0 / ${d.points.length}</div>
+      </div>
+      <div class="model-answer" id="disc-model-${idx}">${d.model}</div>`;
+    c.appendChild(div);
+  });
 }
 function submitDisc(idx){
-  const ta=document.getElementById(`disc-ta-${idx}`);
-  if(!ta.value.trim()){ta.style.borderColor='var(--red)';return;}
-  ta.classList.add('submitted');ta.readOnly=true;
-  document.getElementById(`disc-rubric-${idx}`).classList.add('show');
+  const ta=document.getElementById('disc-ta-'+idx);
+  ta.disabled=true;
+  document.getElementById('disc-rubric-'+idx).classList.add('show');
 }
 function resetDisc(idx){
-  const ta=document.getElementById(`disc-ta-${idx}`);
-  ta.value='';ta.readOnly=false;ta.style.borderColor='';ta.classList.remove('submitted');
-  document.getElementById(`disc-rubric-${idx}`).classList.remove('show');
-  document.getElementById(`disc-model-${idx}`).classList.remove('show');
-  document.querySelectorAll(`[id^="chk-${idx}-"]`).forEach(c=>c.checked=false);
-  updateDiscScore(idx);
+  const ta=document.getElementById('disc-ta-'+idx);ta.disabled=false;ta.value='';
+  document.getElementById('disc-rubric-'+idx).classList.remove('show');
+  document.getElementById('disc-model-'+idx).classList.remove('show');
+  document.querySelectorAll(`[id^="rub-${idx}-"]`).forEach(cb=>cb.checked=false);
+  document.getElementById('disc-score-'+idx).textContent='Score: 0 / '+DISC_QUESTIONS[idx].points.length;
 }
 function updateDiscScore(idx){
-  const dq=DISC_QUESTIONS[idx];
-  const checked=document.querySelectorAll(`[id^="chk-${idx}-"]:checked`).length;
-  const total=dq.points.length;
-  const pct=Math.round(checked/total*100);
-  document.getElementById(`disc-score-${idx}`).textContent=`${checked} / ${total}`;
-  const grade=pct>=90?'🌟 Excellent':pct>=70?'👍 Good':pct>=50?'📚 Needs work':'🔄 Review material';
-  document.getElementById(`disc-grade-${idx}`).textContent=grade;
+  const total=DISC_QUESTIONS[idx].points.length;
+  const checked=document.querySelectorAll(`[id^="rub-${idx}-"]:checked`).length;
+  document.getElementById('disc-score-'+idx).textContent=`Score: ${checked} / ${total} (${Math.round(checked/total*100)}%)`;
 }
-function toggleModel(idx){ document.getElementById(`disc-model-${idx}`).classList.toggle('show'); }
-function filterDisc(ch,btn){
-  document.querySelectorAll('.disc-filter .filter-btn').forEach(b=>b.classList.remove('active-filter'));
-  btn.classList.add('active-filter');
-  document.querySelectorAll('.disc-q').forEach(el=>{el.style.display=(ch==='all'||el.dataset.ch===ch)?'block':'none';});
-}
+function toggleModel(idx){document.getElementById('disc-model-'+idx).classList.toggle('show');}
 
-// ── INIT ──
+// ─── INIT ───
 window.addEventListener('DOMContentLoaded',()=>{
-  renderCard(); updateMasteryBar(); loadObjMastery();
-  document.getElementById('flashcard').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')flipCard();});
+  deck=[...allCards];renderCard();renderQuiz();renderDiscussion();updateMasteryBar();
+  document.querySelectorAll('.obj-master-btn').forEach(btn=>{
+    const key=btn.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+    if(key&&localStorage.getItem(key)){btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  });
 });
 </script>
 </body>

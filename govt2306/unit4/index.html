@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GOVT 2306 — Unit 4: Interest Groups &amp; the Legislature</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#0a0a0f; --surface:#12121a; --surface2:#16161f; --border:#1e1e2e;
+  --text:#e8e8f0; --muted:#6b6b80; --green:#22c55e; --red:#ef4444;
+  --yellow:#eab308; --purple:#a78bfa; --orange:#f97316;
+  --accent:#f97316; --accent-dim:rgba(249,115,22,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(249,115,22,0.025) 39px,rgba(249,115,22,0.025) 40px),
+  repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(249,115,22,0.025) 39px,rgba(249,115,22,0.025) 40px);}
+body::before{content:'GOVT 2306 · Unit 4 · Chapters 7–8';position:fixed;top:0;left:0;right:0;
+  background:rgba(10,10,15,0.95);border-bottom:1px solid var(--border);padding:10px 16px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);z-index:100;letter-spacing:.05em;}
+.topnav{display:flex;gap:4px;padding:48px 12px 8px;overflow-x:auto;position:sticky;top:0;
+  background:rgba(10,10,15,0.97);z-index:90;border-bottom:1px solid var(--border);}
+.nav-btn{flex-shrink:0;background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:7px 13px;border-radius:6px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:11px;transition:all .15s;}
+.nav-btn:hover{color:var(--text);border-color:var(--accent);}
+.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.panel{display:none;padding:20px 16px 60px;max-width:860px;margin:0 auto;}
+.panel.active{display:block;}
+h1{font-size:1.4rem;font-weight:600;color:var(--accent);margin-bottom:4px;}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;display:block;}
+.exam-pill{display:inline-block;background:rgba(234,179,8,0.15);border:1px solid var(--yellow);
+  color:var(--yellow);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;
+  border-radius:20px;margin-bottom:20px;}
+.textbook-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.textbook-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;
+  transition:all .15s;}
+.textbook-links a:hover{color:var(--accent);border-color:var(--accent);}
+
+/* Objectives */
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  margin-bottom:10px;cursor:pointer;transition:border-color .15s;}
+.obj-card:hover{border-color:var(--accent);}
+.obj-header{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;
+  padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.ch7 .obj-num{color:var(--orange);background:rgba(249,115,22,0.12);}
+.ch8 .obj-num{color:var(--purple);background:rgba(167,139,250,0.12);}
+.obj-title{font-size:.88rem;font-weight:500;flex:1;}
+.obj-expand{color:var(--muted);font-size:12px;transition:transform .2s;}
+.obj-body{display:none;padding:0 16px 14px;font-size:.84rem;line-height:1.65;color:#b0b0c8;}
+.obj-body.open{display:block;}
+.obj-master-btn{margin-top:10px;background:transparent;border:1px solid var(--border);
+  color:var(--muted);padding:5px 12px;border-radius:4px;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;transition:all .15s;}
+.obj-master-btn.mastered{border-color:var(--green);color:var(--green);background:rgba(34,197,94,0.08);}
+.mastery-bar{background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  height:6px;margin-bottom:20px;overflow:hidden;}
+.mastery-fill{height:100%;background:var(--green);border-radius:20px;transition:width .4s;}
+.reset-mastery-btn{display:block;margin-bottom:20px;background:transparent;
+  border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:4px;
+  cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;}
+.reset-mastery-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* Study Guide */
+.chapter-block{margin-bottom:16px;}
+.chapter-header{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;
+  align-items:center;font-weight:500;font-size:.9rem;transition:border-color .15s;}
+.chapter-header:hover{border-color:var(--accent);}
+.chapter-body{display:none;background:var(--surface2);border:1px solid var(--border);
+  border-top:none;border-radius:0 0 8px 8px;padding:16px;}
+.chapter-body h3{font-size:.82rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px;}
+.chapter-body h3:first-child{margin-top:0;}
+.chapter-body p,.chapter-body li{font-size:.84rem;line-height:1.7;color:#b0b0c8;margin-bottom:6px;}
+.chapter-body ul{padding-left:18px;}
+.chapter-body strong{color:var(--text);}
+.flag-note{background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.3);
+  border-radius:6px;padding:8px 12px;font-size:.78rem;color:var(--yellow);margin:8px 0;}
+
+/* Flashcards */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:5px 12px;border-radius:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;transition:all .15s;}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.fc-wrap{perspective:1000px;margin-bottom:16px;}
+.fc-card{width:100%;min-height:220px;position:relative;transform-style:preserve-3d;
+  transition:transform .5s;cursor:pointer;}
+.fc-card.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  display:flex;flex-direction:column;justify-content:center;padding:24px;border-radius:10px;}
+.fc-back{transform:rotateY(180deg);border-color:var(--accent);background:var(--accent-dim);}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
+.fc-q,.fc-a{font-size:1rem;line-height:1.6;color:var(--text);}
+.fc-a{color:var(--accent);}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);
+  text-align:center;margin-bottom:12px;}
+.fc-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+.fc-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);
+  padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82rem;transition:all .15s;}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent);}
+.fc-btn.mastered-btn{border-color:var(--green);color:var(--green);}
+.fc-nav{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+.fc-empty{text-align:center;padding:40px;color:var(--muted);font-size:.9rem;}
+
+/* Quiz */
+.quiz-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.quiz-q-text{font-size:.9rem;margin-bottom:12px;line-height:1.6;}
+.quiz-opts label{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;
+  border-radius:5px;cursor:pointer;font-size:.85rem;line-height:1.5;transition:background .1s;}
+.quiz-opts label:hover{background:rgba(255,255,255,0.04);}
+.quiz-opts input{margin-top:3px;flex-shrink:0;accent-color:var(--accent);}
+.fitb-input{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:8px 12px;border-radius:5px;font-size:.85rem;margin-top:8px;}
+.fitb-input:focus{outline:none;border-color:var(--accent);}
+.q-correct{border-color:var(--green)!important;background:rgba(34,197,94,0.06)!important;}
+.q-wrong{border-color:var(--red)!important;background:rgba(239,68,68,0.06)!important;}
+.q-exp{font-size:.8rem;color:#9090b0;margin-top:8px;padding-top:8px;
+  border-top:1px solid var(--border);display:none;}
+.q-exp.show{display:block;}
+#submit-btn,#reset-btn{padding:10px 22px;border-radius:6px;cursor:pointer;
+  font-size:.88rem;font-weight:500;transition:all .15s;border:1px solid;}
+#submit-btn{background:var(--accent);border-color:var(--accent);color:#fff;margin-right:8px;}
+#submit-btn:hover{opacity:.85;}
+#reset-btn{background:transparent;border-color:var(--border);color:var(--muted);}
+#reset-btn:hover{border-color:var(--red);color:var(--red);}
+#quiz-score{margin-top:16px;padding:14px;background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;font-size:.9rem;display:none;}
+
+/* Discussion */
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.disc-q-text{font-size:.9rem;line-height:1.6;margin-bottom:12px;font-weight:500;}
+.disc-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:10px 12px;border-radius:5px;font-size:.84rem;
+  min-height:120px;resize:vertical;font-family:'IBM Plex Sans',sans-serif;line-height:1.6;}
+.disc-textarea:focus{outline:none;border-color:var(--accent);}
+.disc-btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.disc-btn{padding:6px 14px;border-radius:5px;cursor:pointer;font-size:.82rem;
+  border:1px solid var(--border);background:var(--surface2);color:var(--muted);transition:all .15s;}
+.disc-btn:hover{color:var(--text);}
+.disc-btn.primary{border-color:var(--accent);color:var(--accent);}
+.disc-rubric{display:none;margin-top:12px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:6px;padding:12px;}
+.disc-rubric.show{display:block;}
+.rubric-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;
+  border-bottom:1px solid var(--border);font-size:.82rem;}
+.rubric-item:last-child{border-bottom:none;}
+.rubric-item input[type=checkbox]{flex-shrink:0;margin-top:2px;accent-color:var(--green);}
+.disc-score{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--green);
+  margin-top:8px;}
+.model-answer{display:none;margin-top:10px;font-size:.82rem;line-height:1.65;
+  color:#9090b0;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.2);
+  border-radius:6px;padding:12px;}
+.model-answer.show{display:block;}
+
+/* Notes */
+.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.notes-grid{grid-template-columns:1fr;}}
+.note-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.note-card h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.note-lines{display:flex;flex-direction:column;gap:8px;}
+.note-line{border-bottom:1px solid var(--border);min-height:28px;}
+.video-block{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:14px 16px;margin-bottom:12px;}
+.video-block h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.video-link{display:flex;align-items:center;gap:8px;padding:7px 0;font-size:.84rem;
+  border-bottom:1px solid var(--border);}
+.video-link:last-child{border-bottom:none;}
+.video-link a{color:var(--text);text-decoration:none;flex:1;}
+.video-link a:hover{color:var(--accent);}
+.video-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);
+  border:1px solid var(--border);padding:2px 6px;border-radius:10px;flex-shrink:0;}
+.source-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.source-list a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;}
+.source-list a:hover{color:var(--accent);border-color:var(--accent);}
+footer{text-align:center;padding:30px 16px;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;color:var(--muted);}
+@media print{
+  body::before,.topnav,.exam-pill,.textbook-links,footer,.fc-controls,.fc-nav,.filter-row,
+  #submit-btn,#quiz-score,.disc-btn-row,.disc-rubric,.obj-master-btn,.reset-mastery-btn,
+  .mastery-bar{display:none!important;}
+  .panel{display:none!important;}.panel.active{display:block!important;}
+  *,*::before,*::after{background:white!important;background-color:white!important;
+    background-image:none!important;color:black!important;border-color:#bbb!important;
+    box-shadow:none!important;-webkit-text-fill-color:black!important;}
+  body{font-size:12pt;}.chapter-body{display:block!important;}
+  @page{margin:.75in;}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav" role="tablist" aria-label="Study sections">
+  <button class="nav-btn active" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)" role="tab" aria-selected="false" aria-controls="panel-guide">📖 Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)" role="tab" aria-selected="false" aria-controls="panel-flashcards">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)" role="tab" aria-selected="false" aria-controls="panel-quiz">✏️ Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('discussion',this)" role="tab" aria-selected="false" aria-controls="panel-discussion">💬 Discussion</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes Template</button>
+</nav>
+
+<!-- ═══════════════════════════ OBJECTIVES ═══════════════════════════ -->
+<div class="panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+  <span class="unit-badge">GOVT 2306 · Unit 4</span>
+  <h1>Interest Groups &amp; the Legislature</h1>
+  <span class="exam-pill">📅 Chapters 7 &amp; 8 — Exam Jul 24–26 (check Blackboard)</span>
+  <div class="textbook-links">
+    <a href="#">Ch. 7: The Politics of Interest Groups</a>
+    <a href="#">Ch. 8: The Legislative Branch</a>
+  </div>
+  <div class="flag-note">📌 Two review terms to watch: <strong>pocket veto</strong> is on nothing in your materials because Texas has none — an unsigned bill becomes law; the post-adjournment veto is the closest thing (see Ch. 8 guide). And <strong>right-to-work</strong> was dropped from the current edition but is answerable from the older edition (business/employer groups favor it, unions oppose it).</div>
+  <div class="mastery-bar"><div class="mastery-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="reset-mastery-btn" onclick="resetAllMastery()">↺ Reset All Mastery</button>
+
+  <!-- CH7 OBJECTIVES -->
+  <div class="obj-card ch7" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 7.1</span>
+      <span class="obj-title">What interest groups are &amp; why they form</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Explain what interest groups are, why they form, and their essential characteristics.</p>
+      <p><strong>Key concepts:</strong> An <strong>interest group</strong> (also called a pressure group, special interest group, or lobby) is an organization whose members share common views/objectives and try to influence government officials and policy for the group's benefit. <strong>Lobbying</strong> = communicating directly with an official to influence a policy decision. Interest groups differ from political parties: <strong>parties want to WIN office</strong> (get their own members elected/appointed and control government); <strong>interest groups want to INFLUENCE officials</strong> of any party, without necessarily running their own members. They provide <strong>functional representation</strong> (by shared interest) that supplements the geographic representation of elected office. <strong>Why they form:</strong> (1) legal &amp; cultural reasons — the First Amendment <strong>right of association</strong>, recognized in <em>NAACP v. Alabama</em> (1958), plus a culture of joining groups; (2) a <strong>decentralized government</strong> — federalism + separation of powers create many access points; (3) the <strong>strength or weakness of the party system</strong> and political ideologies — weak parties = stronger interest groups. <strong>Characteristics:</strong> members are mostly from professional/managerial occupations with above-average income/education; every group has an active minority and a passive majority (a few make the decisions); a <strong>free rider</strong> gets the group's benefits without joining or paying.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit4_71')" aria-label="Mark LO 7.1 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch7" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 7.2</span>
+      <span class="obj-title">Types of interest groups &amp; what makes one powerful</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Describe types of interest groups and analyze the traits of a powerful interest group.</p>
+      <p><strong>Key concepts — the four broad types:</strong> (1) <strong>Economic interest groups</strong> — the most common in Texas; promote members' economic self-interest. Includes <strong>business organizations</strong> (often <strong>trade associations</strong>; the Texas Association of Business is an <strong>umbrella organization</strong> that coordinates smaller groups) and <strong>labor organizations</strong> (unions — relatively weak in Texas, under 5% membership). (2) <strong>Professional / public employee groups</strong> — licensing and standards (State Bar of Texas, the powerful Texas Medical Association). (3) <strong>Social interest groups</strong> — racial/ethnic (NAACP; <strong>LULAC</strong>, the oldest Latino group, founded 1929; MALDEF), women's (League of Women Voters, Annie's List), and <strong>religion-based groups</strong> (the <strong>Christian Coalition</strong> is one of the state's most influential; also Texas Values, Texas Freedom Network). (4) <strong>Public interest groups</strong> — claim to promote the general good, not a narrow private interest (Common Cause, League of Conservation Voters, Sierra Club). <strong>Power groups:</strong> business trade associations, professional associations (doctors, lawyers, teachers), and labor unions. <strong>Traits of a powerful group:</strong> sizable membership, above-average money, knowledgeable/dedicated leadership, and high unity; plus strong links to legislators and bureaucrats, status as a repeat player, and an Austin headquarters. In Texas, <strong>business groups are generally more powerful than labor</strong>.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit4_72')" aria-label="Mark LO 7.2 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch7" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 7.3</span>
+      <span class="obj-title">Techniques interest groups use to influence government</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Evaluate the activities interest groups use to influence Texas government.</p>
+      <p><strong>Key concepts — the techniques:</strong> (1) <strong>Lobbying</strong> — the oldest, best-known tactic; Texas ranks <strong>2nd (after California)</strong> in money spent lobbying, and lobbyists outnumber the 181 legislators about <strong>9 to 1</strong>. (2) <strong>Personal communication</strong> — a lobbyist's main tool is information/expertise delivered to officials. (3) <strong>Favors and gifts</strong> — capped: no more than <strong>$500/year</strong> in gifts from a single lobbyist, gifts over <strong>$250</strong> must be reported, and a <strong>$300/year</strong> cap on food/drink (from the 1991 law). (4) <strong>Grassroots activities</strong> — mobilizing members/sympathizers to create an image of broad support; <strong>"astroturfing"/"astrotweeting"</strong> uses fake social-media accounts to fake that support. (5) <strong>Electioneering</strong> — participating in campaigns (endorsements, mailing/email lists, "Get Out the Vote"). (6) <strong>Campaign financing through PACs</strong>. (7) rarely, <strong>bribery/unethical practices</strong> (e.g., the Sharpstown scandal). A <strong>PAC</strong> is "a group of persons that has a principal purpose of accepting political contributions or making political contributions." Texas sets <strong>no limits</strong> on PAC/individual contributions <strong>except in judicial races</strong>, and bans contributions during the regular session (a Dec–June moratorium). <strong>Super PACs</strong> (after <em>Citizens United</em>) raise unlimited sums for independent spending.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit4_73')" aria-label="Mark LO 7.3 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch7" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 7.4</span>
+      <span class="obj-title">How interest groups are regulated &amp; how well it works</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Assess how interest groups are regulated and evaluate the effectiveness of those laws.</p>
+      <p><strong>Key concepts:</strong> Prompted by media reports of heavy lobby spending and a grand-jury investigation, in <strong>1991</strong> the 72nd Legislature proposed a constitutional amendment — approved by voters that November — creating the <strong>eight-member Texas Ethics Commission (TEC)</strong> to enforce legal standards for lobbyists and public officials. (On your review this is the "<strong>1991 Ethics Act</strong>"; the textbook covers the substance without using that exact label.) <strong>Appointments:</strong> governor (4), lieutenant governor (2), Speaker (2). <strong>The law</strong> expanded disclosure, put a <strong>$300/year cap</strong> on lobbyist-provided food/drink, <strong>banned honoraria</strong> and lobby-paid pleasure trips, and required disclosure of gifts over <strong>$250</strong>. <strong>TEC duties:</strong> collect campaign-finance disclosure reports (filed 2–7 times a year), hear ethics complaints, and assess fines. <strong>Weaknesses:</strong> small budget/staff; lobbyists report only compensation <em>ranges</em>, not exact dollars; <strong>dark/secret money</strong> (undisclosed donors) is growing; and the TEC must dismiss an Election Code complaint if the respondent calls the violation a clerical error and fixes it within two weeks. Texas is unusual for a big state: <strong>strong interest groups, weak parties</strong> — a product of its individualistic/traditionalistic political culture, long one-party history, and the weak, fragmented government created by the 1876 Constitution.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit4_74')" aria-label="Mark LO 7.4 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <!-- CH8 OBJECTIVES -->
+  <div class="obj-card ch8" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" style="margin-top:20px;">
+    <div class="obj-header">
+      <span class="obj-num">LO 8.1</span>
+      <span class="obj-title">Structure of the Texas legislature</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Describe the structure of the Texas legislature.</p>
+      <p><strong>Key concepts:</strong> The legislature is <strong>bicameral</strong> (two houses): the larger <strong>House of Representatives (150 members)</strong> plus the smaller <strong>Senate (31 members)</strong> = <strong>181 legislators total</strong>. (Only Nebraska is <em>unicameral</em>.) <strong>Terms:</strong> Representatives serve <strong>2 years</strong>; Senators serve <strong>4 years</strong>, staggered (about half elected every two years). Terms begin in <strong>January of odd-numbered years</strong>. <strong>Regular session:</strong> begins the <strong>second Tuesday in January of odd-numbered years</strong>, runs <strong>140 days</strong>, and is <strong>biennial</strong> (every two years). <strong>Special session:</strong> called by the <strong>governor</strong>, lasts no more than <strong>30 days</strong> each, with <strong>no limit on the number</strong>; the governor sets the agenda (legislators may consider only what the governor puts before them). <strong>Redistricting</strong> happens in the <strong>first odd-numbered year of a decade</strong>, after the federal census. <strong>Reapportionment</strong> = allotting seats by population; <strong>redistricting</strong> = drawing the new lines. If the legislature fails, the <strong>Legislative Redistricting Board</strong> (5 ex officio members: lt. gov, Speaker, attorney general, comptroller, land commissioner) steps in. <strong>Gerrymandering</strong> = drawing districts to favor a group or party (tactics: packing, cracking, pairing; the term comes from Elbridge Gerry, 1812). <strong>Single-member districts</strong> (one member per district — used for all Texas House and Senate seats since 1975) lower campaign costs and elect more Black and Latino candidates than multimember districts did. <em>Reynolds v. Sims</em> (1964) established "one person, one vote."</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit4_81')" aria-label="Mark LO 8.1 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch8" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 8.2</span>
+      <span class="obj-title">Membership: qualifications, characteristics, pay</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Describe the membership of the Texas legislature — qualifications and compensation.</p>
+      <p><strong>Key concepts — formal (constitutional) qualifications:</strong> <strong>House</strong> — age 21+, U.S. &amp; Texas citizen, qualified voter, Texas resident 2 years, district resident 1 year. <strong>Senate</strong> — age 26+, Texas resident 5 years, district resident 1 year. Legislators <strong>may not hold another government office</strong>. <strong>Informal</strong> qualifications (the typical legislator): White, male, middle-aged (40–60), college-educated, an attorney or businessperson, and an incumbent (Catholics are the most numerous religious group, followed by Baptists). <strong>Descriptive representation</strong> = the lawmaker shares constituents' characteristics (a Latina representing Latinos); <strong>substantive representation</strong> = the lawmaker works for a group's interests regardless of shared traits. Research: increasing <em>descriptive</em> representation for a group improves <em>substantive</em> representation for that group. <strong>Compensation:</strong> <strong>$600/month = $7,200/year</strong>, set in the constitution and <strong>unchanged since 1975</strong> (changeable only by amendment/voter approval); plus a <strong>per diem</strong> ($221/day in 2021, set by the Ethics Commission) and a relatively generous pension. Texas is one of 35 states with <strong>no term limits</strong>.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit4_82')" aria-label="Mark LO 8.2 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch8" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 8.3</span>
+      <span class="obj-title">Organization: presiding officers, committees, caucuses</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Compare the organization of the Texas House and Senate.</p>
+      <p><strong>Key concepts — presiding officers:</strong> The <strong>Lieutenant Governor is President of the Senate</strong> (but is NOT a senator; elected statewide; usually the <strong>most powerful state officer</strong> when the legislature is in session — most of the power comes from Senate <em>Rules</em>, not the constitution). The <strong>president pro tempore</strong> presides when the lt. gov is absent. The <strong>Speaker of the House</strong> is elected by House members in an open vote to a two-year term and is generally the <strong>second most powerful</strong> official. Both presiding officers appoint committee members and chairs, refer bills to committee, control floor action, and break ties. <strong>Committees:</strong> <strong>substantive</strong> (consider bills by subject, e.g., Agriculture); <strong>procedural</strong> (internal matters, e.g., Calendars); <strong>select</strong> (temporary, cross-jurisdictional, may include non-legislators); <strong>standing</strong> (permanent); <strong>interim / special interim</strong> (study issues between sessions); and <strong>conference committee</strong> (reconciles differing House/Senate versions of a bill — five members from each chamber). A <strong>caucus</strong> is a group of legislators organized by party, ideology, race/ethnicity, or issue; caucuses must register with the Texas Ethics Commission (e.g., the Legislative Black Caucus is a racial/ethnic caucus).</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit4_83')" aria-label="Mark LO 8.3 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch8" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 8.4</span>
+      <span class="obj-title">Responsibilities: bills, resolutions, oversight, impeachment</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Outline the responsibilities of the Texas legislature.</p>
+      <p><strong>Key concepts:</strong> The legislature is the <strong>principal agent in making public policy</strong>. A <strong>bill</strong> is a proposed law (HB or SB) before enactment; its three categories are <strong>special</strong> (an exception for a specific person/class/corporation), <strong>general</strong> (applies to all of Texas), and <strong>local</strong> (a single unit of local government). To become law, a bill needs a <strong>simple majority in both chambers</strong> (two-thirds for an emergency measure taking immediate effect). <strong>Resolutions:</strong> a <strong>simple resolution</strong> involves one chamber only and is NOT sent to the governor (internal matters); a <strong>concurrent resolution</strong> passes both chambers and IS sent to the governor (e.g., adjournment); a <strong>joint resolution</strong> passes both chambers and is used to <strong>propose constitutional amendments and to ratify U.S. constitutional amendments</strong> (not signed by the governor). <strong>How a bill becomes law (House path):</strong> introduction (filed electronically with the chief clerk) → first reading &amp; referral to committee by the Speaker → committee report → second reading, debate &amp; vote → third reading &amp; final passage → the Senate repeats the steps → conference committee if the versions differ → enrollment &amp; signatures → the governor signs, lets it become law unsigned, or vetoes. <strong>Oversight</strong> = requiring reports from state agencies (tools include the state auditor via the Legislative Audit Committee, the <strong>Sunset Advisory Commission</strong> that reviews agencies every 12 years, and <em>senatorial courtesy</em>). Most gubernatorial board/commission appointments need approval by <strong>two-thirds of senators present</strong>. <strong>Impeachment:</strong> the House impeaches (simple majority present); the Senate convicts (two-thirds of membership); the Chief Justice of the Texas Supreme Court presides. <strong>Delaying tactics:</strong> a <strong>filibuster</strong> (Senate — speak as long as endurance permits) and <strong>chubbing</strong> (House — lengthy debate on buffer bills to run out the clock). <strong>Ghost voting</strong> = pressing another member's voting button (prohibited without permission). <strong>Veto:</strong> in session, overridden by two-thirds of both chambers; a <strong>post-adjournment veto</strong> (within 20 days of adjournment) cannot be overridden.</p>
+      <div class="flag-note">⚠️ <strong>Pocket veto:</strong> on your review, but Texas has <strong>no pocket veto</strong>. Federally, a pocket veto lets an executive kill a bill by taking no action while the legislature is adjourned so it can't override. In Texas the opposite happens — an unsigned bill <em>becomes law</em> (after 10 days in session, or 20 days after adjournment). The closest Texas analog is the <strong>post-adjournment veto</strong> (an active veto after <em>sine die</em> that can't be overridden). Not in any of your materials — sourced externally, verified against Texas Government 2.0 / OERTX.</div>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit4_84')" aria-label="Mark LO 8.4 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card ch8" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 8.5</span>
+      <span class="obj-title">Influences on legislators' voting decisions</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Explain the influences on legislators' voting decisions.</p>
+      <p><strong>Key concepts:</strong> In <em>theory</em>, constituents (especially voters) have the most influence, because they elect legislators. In <em>practice</em>, lawmakers are heavily swayed by the <strong>presiding officers</strong>, the <strong>governor</strong> (a threatened veto can kill a bill), the attorney general and comptroller, and <strong>lobbyists</strong>. <strong>Research organizations</strong> also shape decisions: the nonpartisan <strong>Texas Legislative Council</strong> (drafts bills, runs the "Red Apple" redistricting software); the <strong>House Research Organization (HRO)</strong> — bipartisan, produces the <em>Daily Floor Report</em> with arguments for and against each bill; the <strong>Senate Research Center</strong>; <strong>Every Texan</strong> (formerly the Center for Public Policy Priorities — critics call it too liberal); and the <strong>Texas Public Policy Foundation (TPPF)</strong> — conservative, described as the "in-house think tank of the state's current Republican leadership." The <strong>media</strong> (Texas Tribune, Quorum Report) round out the influences.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit4_85')" aria-label="Mark LO 8.5 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ STUDY GUIDE ═══════════════════════════ -->
+<div class="panel" id="panel-guide" role="tabpanel" aria-labelledby="tab-guide">
+  <h1>Study Guide</h1>
+  <span class="unit-badge">Unit 4 · Chapters 7 &amp; 8</span>
+
+  <!-- CHAPTER 7 -->
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🏛️ Chapter 7: The Politics of Interest Groups</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+
+      <h3>LO 7.1 — What Interest Groups Are &amp; Why They Form</h3>
+      <ul>
+        <li><strong>Interest group</strong> — an organization whose members share common views/objectives and participate in activities to influence government officials and policy decisions for the benefit of the group or its cause. Also called a <em>pressure group</em>, <em>special interest group</em>, or <em>lobby</em>.</li>
+        <li><strong>Primary objective</strong> of an interest group: to <strong>influence government officials and their policies on behalf of the group's members</strong> (not to place its own members in office, and not necessarily to serve the general public).</li>
+        <li><strong>Lobbying</strong> — when a group or individual communicates directly with a government official to influence that official's decision on a policy matter.</li>
+        <li><strong>Interest group vs. political party</strong> (a classic exam contrast): a <strong>party's</strong> main purpose is to get its members <strong>elected/appointed and control government</strong>; an <strong>interest group</strong> seeks to <strong>influence officials of any party</strong> to its advantage, usually <em>without</em> running its own members for office. Interest groups add <strong>functional representation</strong> (representation by shared interest) on top of the <strong>geographic representation</strong> of elected office.</li>
+        <li><strong>Right of association</strong> — the constitutional foundation for forming interest groups. In <em>NAACP v. Alabama</em> (1958) the U.S. Supreme Court recognized the right of association as part of the <strong>First Amendment</strong> right of assembly. <span class="flag-note">📌 Review asks: "Which constitutional right is the foundation of the right to form interest groups?" → the <strong>First Amendment</strong> right of association.</span></li>
+        <li><strong>Why interest groups form/grow:</strong> (1) <strong>Legal &amp; cultural reasons</strong> — the right of association plus an American culture of joining associations; (2) <strong>Decentralized government</strong> — federalism (national/state/local) plus separation of powers (legislative/executive/judicial) creates many access points to fight battles at different levels/branches; (3) <strong>Strength or weakness of the party system + ideologies</strong> — weak, undisciplined parties make officials more vulnerable to organized interest-group pressure.</li>
+        <li><strong>Characteristics/membership:</strong> members come chiefly from <strong>professional and managerial occupations</strong> with above-average income and education. Every organized group has an <strong>active minority and a passive majority</strong> — decisions are made by relatively few (leaders with money, time, and motivation).</li>
+        <li><strong>Free rider</strong> — someone who receives the benefits an interest group wins <em>without</em> joining or paying the costs of membership (the teacher who doesn't join the union but still gets the raise the union lobbied for).</li>
+      </ul>
+
+      <h3>LO 7.2 — Types of Interest Groups &amp; Power</h3>
+      <ul>
+        <li><strong>Economic interest groups</strong> — the <strong>most common</strong> type in Texas; exist to promote members' <strong>economic self-interest</strong> (maximize profits/wages).
+          <ul>
+            <li><strong>Business organizations</strong> — advocate lower taxes and fewer regulations; often take the form of <strong>trade associations</strong> (act on behalf of an industry). The <strong>Texas Association of Business (TAB)</strong> is an <strong>umbrella organization</strong> — it represents smaller groups and coordinates their activities. <span class="flag-note">📌 Review: "What type of group would most support the Texas <strong>right-to-work</strong> law?" → <strong>business/employer organizations</strong> support it; <strong>labor unions oppose</strong> it. ⚠️ "Right-to-work" was dropped from the current edition but is defined in the older edition — a law that <em>limits the power of workers/unions to bargain</em> (Texas enacted its right-to-work law in 1947; it bans the union shop).</span></li>
+            <li><strong>Labor organizations (unions)</strong> — seek higher wages, health/unemployment insurance, safe conditions. Relatively <strong>weak in Texas</strong> — under 5% union membership. Business groups are generally <strong>more powerful than labor</strong> here.</li>
+          </ul>
+        </li>
+        <li><strong>Professional / public employee groups</strong> — concerned with licensing and standards of a profession (State Bar of Texas, Texas Society of CPAs, and the <strong>Texas Medical Association</strong>, a powerful professional group). Public officer/employee groups (e.g., Texas Public Employees Association) push for pay and benefits.</li>
+        <li><strong>Social interest groups</strong> — organized around a shared identity or cause rather than economics:
+          <ul>
+            <li><strong>Racial/ethnic:</strong> NAACP; <strong>LULAC</strong> (League of United Latin American Citizens) — the <strong>oldest Latino group in Texas</strong>, founded 1929 in Corpus Christi; MALDEF (litigation for Latino rights, founded 1968).</li>
+            <li><strong>Women's:</strong> League of Women Voters (nonpartisan), Texas Federation of Republican Women (partisan), Annie's List (recruits progressive women).</li>
+            <li><strong>Religion-based groups:</strong> the <strong>Christian Coalition</strong> — continues to be one of the state's most influential political forces (peaked in the 1990s). Also Texas Values / Texas Values Action (conservative religious-liberty advocacy) and the Texas Freedom Network (formed to counter the Christian Coalition).</li>
+          </ul>
+        </li>
+        <li><strong>Public interest groups</strong> — claim to promote the <strong>general interest of society</strong>, not a narrow private/corporate interest. Common Cause Texas (government reform), the Texas League of Conservation Voters (scores lawmakers on "green" bills), Sierra Club, MADD.</li>
+        <li><strong>Texas power groups</strong> — the interest groups legislators consider most powerful: <strong>business trade associations</strong> (oil, gas, insurance, etc.), <strong>professional associations</strong> (physicians, lawyers, teachers), and <strong>labor unions</strong>.</li>
+        <li><strong>What makes a group powerful</strong> (its "necessary factors"): a sizable membership, above-average <strong>financial resources</strong>, <strong>knowledgeable and dedicated leadership</strong>, and a high degree of <strong>unity</strong>; plus strong links to both legislators and bureaucrats, status as a <strong>repeat player</strong>, and a <strong>headquarters in Austin</strong>. (Note: the single best "necessary factor" the sample quiz highlights is <strong>knowledgeable and dedicated leadership</strong>.)</li>
+      </ul>
+
+      <h3>LO 7.3 — Interest Group Techniques</h3>
+      <ul>
+        <li><strong>Lobbying</strong> — the oldest and best-known technique. A <strong>lobbyist</strong> is an individual hired by an interest group to influence government decision-makers, mostly legislators. Texas ranks <strong>2nd in the nation (after California)</strong> in money spent lobbying state government, and lobbyists outnumber the 181 legislators roughly <strong>9 to 1</strong>. A group like the Texas Motorcycle Rights Association travels to Austin for a "lobby day" to talk with lawmakers — that's lobbying.</li>
+        <li><strong>Personal communication</strong> — a lobbyist's core tool is the <strong>information, research, and expertise</strong> conveyed to busy officials (compared in the text to a pharmaceutical rep explaining new drugs to doctors).</li>
+        <li><strong>Favors and gifts</strong> — meals, tickets, gifts. Limits: no more than <strong>$500/year</strong> in gifts to a legislator from a single lobbyist; public officials must <strong>report gifts over $250</strong>; and the 1991 law placed a <strong>$300/year cap on lobbyist-provided food and drink</strong> and <strong>banned lobby-paid pleasure trips</strong>.</li>
+        <li><strong>Grassroots activities</strong> — mobilizing members and sympathizers to create an image of broad public support (petitions, social media, letters). <strong>"Astroturfing" / "astrotweeting"</strong> uses <em>fake social-media accounts</em> to create a false impression of how much support (or opposition) an issue has.</li>
+        <li><strong>Electioneering</strong> — participating in campaign activity: publicizing incumbents' records, giving favored candidates the group's mailing/email lists, public endorsements, and "Get Out the Vote" drives. (Sample quiz: providing candidates with membership info and mailing/email lists = <strong>electioneering</strong>.)</li>
+        <li><strong>Campaign financing by PACs.</strong> A <strong>political action committee (PAC)</strong> = "a group of persons that has a principal purpose of accepting political contributions or making political contributions." Texas imposes <strong>no limits</strong> on how much PACs (or individuals) can give to state candidates <strong>except in judicial races</strong>. State law bars legislators/statewide officeholders from accepting contributions <strong>during a regular session</strong> (a moratorium from December to June). Groups make <strong>last-minute ("late-train") contributions</strong> partly because gifts in the final two days need not be disclosed until the next semiannual report.</li>
+        <li><strong>Super PACs</strong> — after <em>Citizens United</em>, these can raise <strong>unlimited sums from corporations, unions, associations, and individuals</strong> for independent expenditures.</li>
+        <li><strong>Bribery/unethical practices</strong> — rare but real (the 1970s <strong>Sharpstown</strong> bank scandal brought down House Speaker Gus Mutscher and reshaped Texas ethics law).</li>
+      </ul>
+
+      <h3>LO 7.4 — Regulation of Interest Groups</h3>
+      <ul>
+        <li><strong>The Texas Ethics Commission (TEC)</strong> — an <strong>eight-member</strong> commission created to enforce legal standards for lobbyists and public officials. It is the primary state agency regulating political contributions and expenditures by lobbyists and officials, and it is where <strong>ethics complaints</strong> against state officials, candidates, and employees are brought. Appointments: <strong>governor (4), lieutenant governor (2), Speaker (2)</strong>.</li>
+        <li><strong>The 1991 ethics reform ("1991 Ethics Act")</strong> — in <strong>1991</strong>, in response to media reports of big lobby spending and a grand-jury investigation, the <strong>72nd Legislature</strong> proposed a constitutional amendment (approved by voters that November) creating the TEC. The law: expanded disclosure requirements; put a <strong>$300/year cap</strong> on lobbyist-provided food/drink; <strong>banned honoraria</strong> and <strong>lobby-paid pleasure trips</strong>; and required disclosure of <strong>gifts over $250</strong>. <span class="flag-note">📌 Review: "In response to big spending by lobbyists, what did Texas voters create in 1991?" → the <strong>Texas Ethics Commission</strong> (via a constitutional amendment).</span></li>
+        <li><strong>Does Texas have strict finance laws?</strong> Not really. Texas campaign-finance law is best described as <strong>public disclosure</strong> rather than strict limits — the state caps contribution <em>amounts</em> only for <strong>judicial candidates</strong> and otherwise relies on disclosure. Detailed contribution/expenditure records are filed with the TEC <strong>2 to 7 times a year</strong> and posted publicly.</li>
+        <li><strong>Weaknesses of regulation:</strong> the TEC has a small budget/staff; lobbyists report only compensation <strong>ranges</strong>, not exact amounts; <strong>dark/secret money</strong> (undisclosed nonprofit donors) is growing; and the TEC must <strong>dismiss</strong> an Election Code complaint if the respondent claims a clerical error and corrects it within two weeks. Many observers say the system still favors incumbents.</li>
+        <li><strong>Why Texas has strong interest groups &amp; weak parties</strong> (unusual for a large, wealthy, industrial state): its <strong>individualistic and traditionalistic political culture</strong>, its long <strong>one-party history</strong> (first Democratic, then Republican) that limits party competition, and the <strong>weak, fragmented government</strong> created by the 1876 Constitution.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CHAPTER 8 -->
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>⚖️ Chapter 8: The Legislative Branch</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+
+      <h3>LO 8.1 — Structure, Sessions &amp; Redistricting</h3>
+      <ul>
+        <li><strong>Bicameral</strong> = two chambers. In Texas (and 40 other states) the <strong>larger chamber is the House of Representatives</strong>. Sizes: <strong>House = 150</strong> members, <strong>Senate = 31</strong> members → <strong>181 legislators total</strong>. <em>Formula to remember:</em> 150 + 31 = <strong>181</strong>. (Only Nebraska is <strong>unicameral</strong>.)</li>
+        <li><strong>Terms:</strong> <strong>Representatives = 2 years</strong>; <strong>Senators = 4 years</strong> (staggered — about half the Senate is elected every two years). Terms begin in <strong>January of odd-numbered years</strong>. After redistricting, all 31 senators run at once, then <strong>draw lots</strong>: 16 get 4-year terms, 15 get 2-year terms, to re-stagger the chamber.</li>
+        <li><strong>Regular session</strong> — begins the <strong>second Tuesday in January of odd-numbered years</strong>, lasts <strong>140 days</strong>, and meets <strong>biennially</strong> (every two years). Texas is one of only four states with biennial sessions.</li>
+        <li><strong>Special session</strong> — <strong>called by the governor</strong>; lasts <strong>no more than 30 days</strong> each; <strong>no limit on the number</strong> a governor can call. The <strong>governor sets the agenda</strong> — the legislature may consider only the matters the governor places before it. <span class="flag-note">📌 Review often pairs these: <em>Who calls special sessions and decides the topics?</em> → the <strong>governor</strong> (for both).</span></li>
+        <li><strong>Function of the legislature:</strong> enacting bills and adopting resolutions (making public policy) — plus proposing constitutional amendments, adopting the budget, levying taxes, redistricting, impeaching/removing officials, and investigating.</li>
+        <li><strong>Redistricting</strong> — occurs in the <strong>first odd-numbered year of a decade</strong>, based on the federal decennial census. <strong>Reapportionment</strong> = allotment of seats according to population; <strong>redistricting</strong> = drawing the new district lines to reflect that. If the legislature fails to redistrict (or the governor vetoes the plan), the <strong>Legislative Redistricting Board</strong> takes over — five ex officio members: <strong>lieutenant governor, Speaker, attorney general, comptroller, and land commissioner</strong>.</li>
+        <li><strong>Gerrymandering</strong> — drawing districts to include or exclude certain voters so as to favor one group or party (districts often oddly shaped). Tactics: <strong>packing</strong>, <strong>cracking</strong>, and <strong>pairing/highjacking</strong> incumbents. The term comes from Massachusetts governor <strong>Elbridge Gerry (1812)</strong>. Gerrymandered districts are <strong>legal</strong> as long as populations are equal and they don't dilute the vote based on race/color/language.</li>
+        <li><strong>Single-member district</strong> — voters elect <strong>one</strong> member per district. Texas moved fully to single-member districts by <strong>1975</strong> (largely via court action). Compared with old <strong>multimember districts</strong>, single-member districts <strong>reduce campaign costs</strong> and elect <strong>more Black and Latino candidates</strong>.</li>
+        <li><em>Reynolds v. Sims</em> (1964) established "<strong>one person, one vote</strong>" — legislative seats must be apportioned on a population basis.</li>
+      </ul>
+
+      <h3>LO 8.2 — Membership &amp; Representation</h3>
+      <ul>
+        <li><strong>Formal (constitutional) qualifications</strong> — <strong>House:</strong> age <strong>21</strong>+, U.S. &amp; Texas citizen, qualified voter, <strong>2 years</strong> Texas residence, <strong>1 year</strong> district residence. <strong>Senate:</strong> age <strong>26</strong>+, <strong>5 years</strong> Texas residence, 1 year district residence. A key legal restriction: a legislator <strong>may not hold another government office</strong>.</li>
+        <li><strong>Informal qualifications</strong> (the "typical" legislator) — White, male, middle-aged, college-educated, a native Texan, and an <strong>attorney or businessperson</strong> who has served before. (Traditionally, the most common occupation is <strong>attorney</strong>.) Catholics are the most numerous religious group, followed by Baptists — but there is <strong>no religious qualification</strong> for office.</li>
+        <li><strong>Descriptive representation</strong> — the lawmaker shares the <strong>characteristics</strong> of constituents (a woman representing women, a Latino representing Latinos). <strong>Substantive representation</strong> — the lawmaker <strong>works on behalf of</strong> a group's interests regardless of shared traits. Research finds increasing <em>descriptive</em> representation for a group <strong>improves substantive</strong> representation for that same group.</li>
+        <li><strong>Compensation</strong> — salary is <strong>$600/month = $7,200/year</strong>, set in the constitution and <strong>unchanged since 1975</strong> (can be changed only by amendment, which voters must approve). Legislators also receive a <strong>per diem</strong> (daily expense allowance — $221/day in 2021, set by the Ethics Commission) and a <strong>relatively generous pension</strong> after minimum service. Texas is one of <strong>35 states with no term limits</strong>.</li>
+      </ul>
+
+      <h3>LO 8.3 — Presiding Officers, Committees &amp; Caucuses</h3>
+      <ul>
+        <li><strong>President of the Senate = the Lieutenant Governor.</strong> The lt. gov is <strong>not a senator</strong> (like the U.S. VP presiding over the U.S. Senate) but, unlike the VP, actively presides and leads on legislation. Chosen in a <strong>statewide election</strong> for a 4-year term; first in line to succeed the governor. Most of the lt. gov's power comes from <strong>Senate Rules</strong>, not the constitution — making the lt. gov arguably the <strong>most powerful officer in the state when the legislature is in session</strong>.</li>
+        <li><strong>President pro tempore</strong> — a senator elected by the Senate who presides <strong>when the lieutenant governor is absent or disabled</strong>.</li>
+        <li><strong>Speaker of the House</strong> — the presiding officer of the House, a representative <strong>elected by the House membership</strong> in an <strong>open (not secret) vote</strong> to a <strong>2-year term</strong>. The Speaker <strong>controls all proceedings</strong> in the House and is often called the second most powerful official in the state. Powers of both presiding officers: appoint committee members and chairs, refer bills to committee, control floor action, break ties, and appoint conference-committee members.</li>
+        <li><strong>Committee types:</strong>
+          <ul>
+            <li><strong>Substantive committee</strong> — considers bills/resolutions on the subject named by the committee (e.g., Agriculture, Public Health).</li>
+            <li><strong>Procedural committee</strong> — deals with internal legislative matters (e.g., the Calendars Committee, which sets when bills reach the floor).</li>
+            <li><strong>Standing committee</strong> — permanent committees established under the rules each session.</li>
+            <li><strong>Select committee</strong> — temporary; created to consider legislation crossing committee lines; may include non-legislators.</li>
+            <li><strong>Interim / special interim committee</strong> — studies important policy issues <strong>between regular sessions</strong>.</li>
+            <li><strong>Conference committee</strong> — reconciles differing House and Senate versions of the same bill; <strong>five members from each chamber</strong> (at least three from each must agree). <span class="flag-note">📌 Review: "What happens when the House and Senate pass a bill with different language?" → it goes to a <strong>conference committee</strong> to work out a compromise.</span></li>
+          </ul>
+        </li>
+        <li><strong>Caucus</strong> — a group of legislators organized around <strong>party, ideology, race/ethnicity, or a specific issue</strong>. Caucuses have no formal legal role but must <strong>register with the Texas Ethics Commission</strong>. The <strong>Legislative Black Caucus</strong> is an example of a <strong>racial/ethnic</strong> caucus; there are also party caucuses, ideological caucuses (Texas Freedom Caucus), and bipartisan issue caucuses.</li>
+      </ul>
+
+      <h3>LO 8.4 — Bills, Resolutions, Oversight, Impeachment &amp; Veto</h3>
+      <ul>
+        <li><strong>Bill</strong> — a proposed law before enactment (House Bill / Senate Bill). Three categories: <strong>special bill</strong> (an exception to general law for a specific individual, class, or corporation), <strong>general bill</strong> (applies to all people/property in Texas), and <strong>local bill</strong> (creates or affects a single unit of local government — a city, county, or special district). To become law, a bill needs a <strong>simple majority in both chambers</strong>; a <strong>two-thirds</strong> vote is needed for an emergency measure to take effect immediately.</li>
+        <li><strong>Resolutions</strong> (know the majorities and whether the governor signs):
+          <ul>
+            <li><strong>Simple resolution</strong> — action by <strong>one chamber only</strong>; <strong>NOT sent to the governor</strong> (internal matters, e.g., adopting rules).</li>
+            <li><strong>Concurrent resolution</strong> — passed by <strong>both chambers</strong> and <strong>sent to the governor</strong> (e.g., to adjourn, or to express the legislature's will).</li>
+            <li><strong>Joint resolution</strong> — passed by <strong>both chambers</strong>; used to <strong>propose amendments to the Texas Constitution</strong> and to <strong>ratify amendments to the U.S. Constitution</strong>. Joint resolutions proposing amendments are <strong>NOT signed by the governor</strong>. <span class="flag-note">📌 Review: "When Texas ratifies an amendment to the U.S. Constitution, what legal form is used?" → a <strong>joint resolution</strong>.</span></li>
+          </ul>
+        </li>
+        <li><strong>How a bill becomes a law</strong> (House-origin path — at least four major steps): <strong>1. Introduction</strong> — a member files the bill <strong>electronically with the chief clerk</strong>. <strong>2. First reading &amp; referral</strong> — the reading clerk reads the caption; the <strong>Speaker refers it to a committee</strong>. <strong>3. Committee consideration &amp; report</strong> — hearings, possible amendments; the bill can be "pigeon-holed" (killed by inaction). <strong>4. Second reading, debate &amp; vote</strong> (simple majority). <strong>5. Third reading &amp; final passage.</strong> Then the <strong>Senate repeats</strong> the readings/committee/votes. If the versions differ, a <strong>conference committee</strong> reconciles them; then <strong>enrollment</strong>, signatures of the presiding officers, and <strong>action by the governor</strong>.</li>
+        <li><strong>First reading in the House</strong> — the bill's <strong>caption is read</strong> and the bill is <strong>referred to a committee</strong> by the Speaker (no debate at first reading).</li>
+        <li><strong>Oversight</strong> — the legislature's power to monitor state agencies, largely by <strong>requiring agencies to make periodic and special reports</strong>. Tools include the <strong>state auditor</strong> (appointed by the Legislative Audit Committee) and the <strong>Sunset Advisory Commission</strong>, which reviews nearly every agency every <strong>12 years</strong> and recommends whether to continue, merge, or abolish it. Under <strong>senatorial courtesy</strong>, the Senate will reject an appointee deemed "personally objectionable" by the senator from the appointee's district.</li>
+        <li><strong>Approving the governor's appointments</strong> — most gubernatorial board/commission appointments to head state agencies must be approved by <strong>at least two-thirds of the senators present</strong>.</li>
+        <li><strong>Impeachment &amp; removal</strong> — the <strong>House impeaches</strong> (brings charges by a <strong>simple majority</strong> of members present); the official is suspended; the <strong>Senate tries and convicts</strong> by a <strong>two-thirds majority of its membership</strong>, with the <strong>Chief Justice of the Texas Supreme Court presiding</strong>. Punishment is limited to removal and disqualification from office (Gov. James Ferguson was removed this way in 1917). This is the process to <strong>remove a governor</strong> from office.</li>
+        <li><strong>Filibuster</strong> — a <strong>Senate</strong> delaying tactic: a senator speaks as long as physical endurance permits to block a vote (most effective near a deadline). Wendy Davis's 2013 abortion-bill filibuster is the famous example.</li>
+        <li><strong>Chubbing</strong> — a <strong>House</strong> delaying tactic: members debate bills at length (often "buffer bills" they don't oppose) to run out the clock and prevent a vote on another bill. <span class="flag-note">⚠️ Note a textbook glitch: the current edition's Learning Check answer says chubbing is used "to <em>hasten</em> a vote" — that's a typo. Chubbing is a <strong>delay</strong> tactic (the main text calls it "this delaying action"), and the older edition's answer key correctly says "delay."</span></li>
+        <li><strong>Ghost voting</strong> — pressing another representative's voting button. House rules <strong>prohibit</strong> it unless the absent member gave permission.</li>
+        <li><strong>Veto &amp; the governor's options.</strong> While the legislature is <strong>in session</strong>, the governor may: sign the bill; let it become law <strong>unsigned after 10 days</strong> (not counting Sundays); or <strong>veto</strong> it (which can be <strong>overridden by two-thirds of both chambers</strong>). After the legislature <strong>adjourns</strong>, the governor has <strong>20 days</strong> (counting Sundays) to act; a bill not vetoed becomes law. A <strong>post-adjournment veto</strong> is especially powerful because the legislature is gone and <strong>cannot override it</strong>. <span class="flag-note">📌 Review: "What is the fate of a bill vetoed after the legislature has adjourned?" → it <strong>dies and cannot be overridden</strong> (post-adjournment veto). "How long does the governor have after adjournment to act?" → <strong>20 days</strong>.</span></li>
+        <li><span class="flag-note">⚠️ <strong>Pocket veto</strong> — on your review, but <strong>Texas has none</strong>. A federal pocket veto lets an executive kill a bill by taking <em>no action</em> while the legislature is adjourned so it can't override. In Texas the opposite is true: an <strong>unsigned bill becomes law</strong> (after 10 days in session, 20 days after adjournment). The closest Texas analog is the <strong>post-adjournment veto</strong> (an <em>active</em> veto after adjournment that can't be overridden). Sourced externally — not in any provided material; verified against Texas Government 2.0 / OERTX.</span></li>
+      </ul>
+
+      <h3>LO 8.5 — Influences on Legislators' Voting</h3>
+      <ul>
+        <li>In <strong>theory</strong>, <strong>constituents</strong> (especially voters) matter most, because they elect legislators. In <strong>practice</strong>, legislators are heavily influenced by the <strong>presiding officers</strong>, the <strong>governor</strong> (a threatened veto can kill a bill in committee), the <strong>attorney general</strong> and <strong>comptroller</strong> (who estimates revenue), and <strong>lobbyists</strong>.</li>
+        <li><strong>Research organizations ("think tanks") &amp; official bodies:</strong>
+          <ul>
+            <li><strong>Texas Legislative Council (TLC)</strong> — nonpartisan; drafts bills, provides research, and runs the "Red Apple" redistricting software.</li>
+            <li><strong>House Research Organization (HRO)</strong> — bipartisan, independent of leadership; produces the <em>Daily Floor Report</em> with <strong>arguments for and against</strong> each bill.</li>
+            <li><strong>Senate Research Center</strong> — analyzes bills for the Senate.</li>
+            <li><strong>Every Texan</strong> (formerly the Center for Public Policy Priorities) — focuses on low/moderate-income families; critics call it <strong>too liberal</strong>.</li>
+            <li><strong>Texas Public Policy Foundation (TPPF)</strong> — conservative; described as the <strong>"in-house think tank of the state's current Republican leadership."</strong></li>
+          </ul>
+        </li>
+        <li>The <strong>media</strong> (Texas Tribune, Quorum Report, Austin American-Statesman) also shape legislators' decisions and priorities.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ FLASHCARDS ═══════════════════════════ -->
+<div class="panel" id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards">
+  <h1>Flashcards</h1>
+  <div class="filter-row" role="group" aria-label="Filter flashcards by chapter">
+    <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('ch7',this)">Ch. 7</button>
+    <button class="filter-btn" onclick="filterCards('ch8',this)">Ch. 8</button>
+  </div>
+  <div class="fc-counter" id="fc-counter" aria-live="polite"></div>
+  <div class="fc-wrap">
+    <div class="fc-card" id="fc-card" onclick="flipCard()" aria-label="Flashcard — click to flip">
+      <div class="fc-front">
+        <div class="fc-label">Question</div>
+        <div class="fc-q" id="fc-q" aria-live="polite"></div>
+      </div>
+      <div class="fc-back">
+        <div class="fc-label">Answer</div>
+        <div class="fc-a" id="fc-a" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-controls">
+    <button class="fc-btn" onclick="flipCard()" aria-label="Flip card">↩ Flip</button>
+    <button class="fc-btn mastered-btn" id="fc-master-btn" onclick="toggleMastered(currentIdx)" aria-label="Toggle mastered">☐ Mastered</button>
+    <button class="fc-btn" onclick="shuffleCards()" aria-label="Shuffle deck">🔀 Shuffle</button>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
+    <button class="fc-btn" onclick="nextCard()" aria-label="Next card">Next →</button>
+  </div>
+  <div class="fc-empty" id="fc-empty" style="display:none">No cards in this filter.</div>
+</div>
+
+<!-- ═══════════════════════════ QUIZ ═══════════════════════════ -->
+<div class="panel" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+  <h1>Practice Quiz</h1>
+  <div class="filter-row" role="group" aria-label="Filter quiz by chapter">
+    <button class="filter-btn active" onclick="setQuizFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch7',this)">Ch. 7</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch8',this)">Ch. 8</button>
+  </div>
+  <div id="quiz-container"></div>
+  <div style="margin-top:16px;">
+    <button id="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <button id="reset-btn" onclick="resetQuiz()">Reset</button>
+  </div>
+  <div id="quiz-score"></div>
+</div>
+
+<!-- ═══════════════════════════ DISCUSSION ═══════════════════════════ -->
+<div class="panel" id="panel-discussion" role="tabpanel" aria-labelledby="tab-discussion">
+  <h1>Discussion Board Prep</h1>
+  <div class="filter-row" role="group" aria-label="Filter discussion by chapter">
+    <button class="filter-btn active" onclick="filterDisc('all',this)">All</button>
+    <button class="filter-btn" onclick="filterDisc('ch7',this)">Ch. 7</button>
+    <button class="filter-btn" onclick="filterDisc('ch8',this)">Ch. 8</button>
+  </div>
+  <div id="disc-container"></div>
+</div>
+
+<!-- ═══════════════════════════ NOTES ═══════════════════════════ -->
+<div class="panel" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes">
+  <h1>Notes Template</h1>
+  <span class="unit-badge">Unit 4 · Chapters 7 &amp; 8 — Print this tab for in-class notes</span>
+
+  <div class="video-block">
+    <h4>📺 Chapter 7 Video — Interest Groups</h4>
+    <div class="video-link"><span class="video-tag">Interest Groups</span><a href="https://youtu.be/3tel4qrXL2Q?si=cxN1sLfQpNQzfpSK" target="_blank" rel="noopener">Interest Groups, Social Movements &amp; Issue Networks (Birkland)</a></div>
+    <p style="font-size:.78rem;color:var(--muted);margin-top:8px;">The professor assigned one video for this unit, specific to interest groups (Ch. 7). No Chapter 8 video was assigned.</p>
+    <p style="font-size:.78rem;color:var(--muted);margin-top:8px;">Reputable Texas news sources for the current-event discussion post:</p>
+    <div class="source-list">
+      <a href="https://www.texastribune.org/" target="_blank" rel="noopener">Texas Tribune</a>
+      <a href="https://www.kut.org/" target="_blank" rel="noopener">KUT</a>
+      <a href="https://communityimpact.com/" target="_blank" rel="noopener">Community Impact</a>
+      <a href="https://www.allsides.com/media-bias/media-bias-chart" target="_blank" rel="noopener">AllSides Bias Chart</a>
+    </div>
+  </div>
+
+  <div class="notes-grid">
+    <div class="note-card">
+      <h4>Interest Group vs. Political Party</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>4 Types of Interest Groups + Examples</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Interest Group Techniques (7)</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Texas Ethics Commission &amp; 1991 Law</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>What Makes an Interest Group Powerful?</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Bicameral: House vs. Senate (numbers/terms)</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Regular vs. Special Sessions</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Redistricting &amp; the Redistricting Board</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Presiding Officers: Lt. Gov &amp; Speaker</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Committee Types (6)</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>3 Bills + 3 Resolutions</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>How a Bill Becomes Law (4+ steps)</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Filibuster vs. Chubbing vs. Ghost Voting</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Veto: In-Session vs. Post-Adjournment (no pocket veto)</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Impeachment Process</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+    <div class="note-card">
+      <h4>Key Numbers to Remember</h4>
+      <div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div>
+    </div>
+  </div>
+</div>
+
+<footer>GOVT 2306 · Unit 4 · study.imichaelv.com · Built from Ch. 7 &amp; 8 source materials</footer>
+
+<script>
+// ─── MASTERY ───
+function getMasteryKey(){return 'mastery_govt2306_unit4_';}
+function resetAllMastery(){
+  Object.keys(localStorage).filter(k=>k.startsWith(getMasteryKey())).forEach(k=>localStorage.removeItem(k));
+  Object.keys(localStorage).filter(k=>k.startsWith('obj_govt2306_unit4_')).forEach(k=>localStorage.removeItem(k));
+  document.querySelectorAll('.obj-master-btn').forEach(b=>{b.textContent='☐ Mark Mastered';b.classList.remove('mastered');});
+  document.querySelectorAll('.fc-card').forEach((_,i)=>localStorage.removeItem(getMasteryKey()+i));
+  updateMasteryBar();
+}
+function updateMasteryBar(){
+  const total=document.querySelectorAll('.obj-master-btn').length;
+  const done=Object.keys(localStorage).filter(k=>k.startsWith('obj_govt2306_unit4_')).length;
+  const pct=total?Math.round(done/total*100):0;
+  const f=document.getElementById('mastery-fill');
+  if(f)f.style.width=pct+'%';
+}
+function toggleObjMastery(btn,key){
+  const is=localStorage.getItem(key);
+  if(is){localStorage.removeItem(key);btn.textContent='☐ Mark Mastered';btn.classList.remove('mastered');}
+  else{localStorage.setItem(key,'1');btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  updateMasteryBar();
+}
+function toggleObj(card){
+  const body=card.querySelector('.obj-body');
+  const arrow=card.querySelector('.obj-expand');
+  const open=body.classList.toggle('open');
+  arrow.style.transform=open?'rotate(180deg)':'';
+  card.setAttribute('aria-expanded',open);
+}
+function toggleChapter(header){
+  const body=header.nextElementSibling;
+  const arrow=header.querySelector('span:last-child');
+  const open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  arrow.style.transform=open?'':'rotate(180deg)';
+  header.setAttribute('aria-expanded',!open);
+}
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+}
+
+// ─── FLASHCARD DATA ───
+const allCards=[
+  // ── Chapter 7 ──
+  {ch:'ch7',q:"What is an interest group, and what are its other names?",a:"An organization whose members share common views/objectives and participate in activities to influence government officials and policy decisions for the group's benefit. Also called a pressure group, special interest group, or lobby."},
+  {ch:'ch7',q:"What is the PRIMARY objective of an interest group?",a:"To influence government officials and their policies on behalf of the group's members — NOT to place its own members in office, and not necessarily to benefit the general public."},
+  {ch:'ch7',q:"How is an interest group different from a political party?",a:"A political party wants to WIN office — get its own members elected/appointed and control government. An interest group wants to INFLUENCE officials of any party to its advantage, usually without running its own members for office."},
+  {ch:'ch7',q:"Which constitutional right is the foundation for forming interest groups, and what case recognized it?",a:"The First Amendment right of association (part of the right of assembly), recognized by the U.S. Supreme Court in NAACP v. Alabama (1958)."},
+  {ch:'ch7',q:"What are the three main reasons interest groups form and grow?",a:"(1) Legal & cultural reasons (the right of association + a culture of joining groups); (2) a decentralized government (federalism + separation of powers = many access points); (3) the strength or weakness of the party system and political ideologies (weak parties = stronger interest groups)."},
+  {ch:'ch7',q:"What is a 'free rider'?",a:"Someone who receives the benefits an interest group wins without joining the group or paying the costs of membership — e.g., a teacher who gets the raise the union lobbied for without joining the union."},
+  {ch:'ch7',q:"Describe the typical membership and participation pattern of an interest group.",a:"Members come chiefly from professional and managerial occupations with above-average income/education. Every organized group has an active minority and a passive majority — a few leaders make most decisions."},
+  {ch:'ch7',q:"What is an economic interest group, and how common is it in Texas?",a:"A group organized to promote its members' economic self-interest (maximize profits/wages). It is the MOST common type of interest group in Texas."},
+  {ch:'ch7',q:"What is a trade association, and what is an 'umbrella organization'?",a:"A trade association acts on behalf of an industry. An umbrella organization (like the Texas Association of Business) represents many smaller groups and coordinates their activities."},
+  {ch:'ch7',q:"How powerful are labor organizations (unions) in Texas?",a:"Relatively weak — under 5% of Texas workers belong to a union. In Texas, business groups are generally more powerful than labor groups."},
+  {ch:'ch7',q:"⚠️ Which type of group would most support the Texas right-to-work law, and who opposes it? (Term dropped from the current edition)",a:"Business/employer organizations support right-to-work; labor unions oppose it. A right-to-work law limits the power of workers/unions to bargain (Texas enacted its version in 1947; it bans the union shop)."},
+  {ch:'ch7',q:"What kind of interest group is the Texas Medical Association (TMA)?",a:"A professional group — organized around the licensing and standards of a profession (physicians). It is also one of Texas's most powerful groups."},
+  {ch:'ch7',q:"What is the oldest Latino interest group in Texas, and what type is it?",a:"LULAC (League of United Latin American Citizens), founded 1929 in Corpus Christi. It is a social interest group (racial/ethnic)."},
+  {ch:'ch7',q:"Which religion-based group is one of Texas's most influential political forces?",a:"The Christian Coalition (most influential in the 1990s), which acts primarily within the Republican Party. Other examples: Texas Values and the Texas Freedom Network."},
+  {ch:'ch7',q:"What is a public interest group?",a:"A group that claims to promote the GENERAL interest of society rather than a narrow private/corporate interest — e.g., Common Cause, the Texas League of Conservation Voters, the Sierra Club."},
+  {ch:'ch7',q:"Which interest groups do Texas legislators consider the most powerful?",a:"Business-oriented trade associations (oil, gas, insurance, etc.), professional associations (physicians, lawyers, teachers), and labor unions."},
+  {ch:'ch7',q:"What factors give an interest group maximum political power?",a:"A sizable membership, above-average financial resources, knowledgeable and dedicated leadership, and a high degree of unity — plus links to legislators and bureaucrats, being a repeat player, and an Austin headquarters. (Best single 'necessary factor': knowledgeable, dedicated leadership.)"},
+  {ch:'ch7',q:"What is lobbying, and who is a lobbyist?",a:"Lobbying = communicating directly with a government official to influence a policy decision. A lobbyist is an individual hired by an interest group to influence officials (mainly legislators)."},
+  {ch:'ch7',q:"Where does Texas rank nationally in lobbying spending, and what's the lobbyist-to-legislator ratio?",a:"Texas ranks 2nd (after California) in money spent lobbying state government, and lobbyists outnumber the 181 legislators roughly 9 to 1."},
+  {ch:'ch7',q:"What are the dollar limits on gifts and food/drink from lobbyists?",a:"No more than $500/year in gifts to a legislator from a single lobbyist; gifts over $250 must be reported; and a $300/year cap on lobbyist-provided food and drink (from the 1991 law)."},
+  {ch:'ch7',q:"What are grassroots activities, and what is 'astrotweeting'/'astroturfing'?",a:"Grassroots activities mobilize members and sympathizers to create an image of broad public support. Astrotweeting/astroturfing uses FAKE social-media accounts to create a false impression of how much support (or opposition) an issue has."},
+  {ch:'ch7',q:"What is electioneering?",a:"Interest-group participation in campaign activities — publicizing candidates' records, giving favored candidates the group's mailing/email lists, endorsements, and Get-Out-the-Vote drives."},
+  {ch:'ch7',q:"What is a political action committee (PAC)?",a:"'A group of persons that has a principal purpose of accepting political contributions or making political contributions' (Texas Ethics Commission definition)."},
+  {ch:'ch7',q:"Does Texas limit campaign contributions, and when may officeholders not accept them?",a:"Texas sets NO limits on PAC/individual contributions to state candidates EXCEPT in judicial races. Legislators and statewide officeholders may not accept contributions during a regular session (a December–June moratorium)."},
+  {ch:'ch7',q:"What is a Super PAC?",a:"A committee that can raise UNLIMITED sums from corporations, unions, associations, and individuals for independent expenditures (proliferated after the Citizens United decision)."},
+  {ch:'ch7',q:"Why do interest groups make last-minute ('late-train') contributions?",a:"Because contributions/expenditures in the last two days before an election need not be disclosed until the next semiannual report is due — so groups can influence a race with little immediate transparency."},
+  {ch:'ch7',q:"In response to big lobby spending, what did Texas voters create in 1991, and how is it structured?",a:"The Texas Ethics Commission — an eight-member body created by a constitutional amendment (proposed by the 72nd Legislature, approved by voters in Nov. 1991). Appointments: governor (4), lieutenant governor (2), Speaker (2)."},
+  {ch:'ch7',q:"What did the 1991 ethics law (the '1991 Ethics Act') do?",a:"Created the Texas Ethics Commission; expanded disclosure; put a $300/year cap on lobbyist food/drink; banned honoraria and lobby-paid pleasure trips; and required disclosure of gifts over $250."},
+  {ch:'ch7',q:"To whom must lobbyists register and report, and where are ethics complaints filed?",a:"The Texas Ethics Commission — it registers lobbyists, collects their reports, and hears ethics complaints against state officials, candidates, and employees."},
+  {ch:'ch7',q:"Does Texas have strict campaign-finance laws?",a:"No — Texas relies mainly on public DISCLOSURE, not strict limits. It caps contribution amounts only for judicial candidates. Reports are filed with the Ethics Commission 2–7 times a year."},
+  {ch:'ch7',q:"What is the general status of interest groups vs. political parties in Texas, and why?",a:"Interest groups are STRONG and political parties are WEAK — unusual for a big, wealthy state. Causes: an individualistic/traditionalistic political culture, a long one-party history, and the weak, fragmented government created by the 1876 Constitution."},
+  {ch:'ch7',q:"What was the Sharpstown scandal?",a:"A 1970s bribery scandal in which House Speaker Gus Mutscher and others were convicted of taking bribes to pass banking bills; it drove major Texas ethics reforms."},
+  // ── Chapter 8 ──
+  {ch:'ch8',q:"What does 'bicameral' mean, and which is the larger chamber in Texas?",a:"Bicameral = two chambers. In Texas (and 40 other states) the larger chamber is the House of Representatives. (Only Nebraska is unicameral.)"},
+  {ch:'ch8',q:"How many members are in each chamber, and how many legislators total?",a:"House = 150 members; Senate = 31 members; total = 181 legislators. (Formula: 150 + 31 = 181.)"},
+  {ch:'ch8',q:"How long are the terms for representatives and senators?",a:"Representatives serve 2-year terms; senators serve 4-year staggered terms (about half the Senate is elected every two years). Terms begin in January of odd-numbered years."},
+  {ch:'ch8',q:"When are regular sessions held, and how long do they last?",a:"They begin the second Tuesday in January of odd-numbered years, last 140 days, and are biennial (every two years)."},
+  {ch:'ch8',q:"Who calls special sessions, how long are they, is there a limit, and who sets the agenda?",a:"The governor calls them; each lasts no more than 30 days; there is NO limit on the number; and the governor decides which issues can be considered."},
+  {ch:'ch8',q:"When does legislative redistricting occur?",a:"In the first odd-numbered year of a decade, based on the federal decennial census."},
+  {ch:'ch8',q:"What is the difference between reapportionment and redistricting?",a:"Reapportionment = allotment of seats according to population. Redistricting = drawing the new district lines to reflect that apportionment and population change."},
+  {ch:'ch8',q:"What is the Legislative Redistricting Board, and who is on it?",a:"The backup body that redistricts if the legislature fails. Five ex officio members: the lieutenant governor, Speaker of the House, attorney general, comptroller, and land commissioner."},
+  {ch:'ch8',q:"What is gerrymandering, and where does the term come from?",a:"Drawing district lines to include/exclude certain voters so as to favor a group or party (tactics: packing, cracking, pairing). Named for Massachusetts governor Elbridge Gerry (1812). It is legal so long as populations are equal and the vote isn't diluted by race/language/color."},
+  {ch:'ch8',q:"What is a single-member district, and what were its effects compared to multimember districts?",a:"Voters elect ONE member per district. Texas went fully single-member by 1975 (via court action). Compared with multimember districts, single-member districts reduce campaign costs and elect more Black and Latino candidates."},
+  {ch:'ch8',q:"What are the formal qualifications for the Texas House vs. Senate?",a:"House: age 21+, U.S. & Texas citizen, qualified voter, 2 years Texas residence, 1 year district residence. Senate: age 26+, 5 years Texas residence, 1 year district residence."},
+  {ch:'ch8',q:"What is one key legal restriction on Texas legislators?",a:"They may NOT hold another government office at the same time."},
+  {ch:'ch8',q:"What occupation has traditionally been most typical of a Texas legislator?",a:"Attorney (lawyer). The typical legislator is also a White, middle-aged, college-educated businessperson or attorney."},
+  {ch:'ch8',q:"What is descriptive representation vs. substantive representation?",a:"Descriptive = the lawmaker SHARES constituents' characteristics (a Latina representing Latinos). Substantive = the lawmaker WORKS FOR a group's interests regardless of shared traits. Research: more descriptive representation improves substantive representation for that group."},
+  {ch:'ch8',q:"How much are Texas legislators paid, and when was it last changed?",a:"$600/month = $7,200/year, set in the constitution and unchanged since 1975. They also get a per diem (about $221/day in 2021, set by the Ethics Commission) and a generous pension."},
+  {ch:'ch8',q:"Does Texas have legislative term limits?",a:"No — Texas is one of 35 states with no term limits for legislators."},
+  {ch:'ch8',q:"Who is the President of the Senate, and are they a senator?",a:"The Lieutenant Governor is President of the Senate — but is NOT a member of the Senate (like the U.S. VP over the U.S. Senate). Elected statewide for 4 years; usually the most powerful officer in the state when the legislature is in session."},
+  {ch:'ch8',q:"When does the president pro tempore preside over the Senate?",a:"When the lieutenant governor is absent or disabled. The president pro tempore is a senator elected by the Senate."},
+  {ch:'ch8',q:"Who is the Speaker of the House, how are they chosen, and what do they control?",a:"The presiding officer of the House — a representative elected by the House membership in an OPEN vote to a 2-year term. The Speaker controls all proceedings in the House and is often the second most powerful state official."},
+  {ch:'ch8',q:"Where do the lieutenant governor's powers mostly come from?",a:"Mostly from the Senate RULES, not the Texas Constitution — which is why the office is so powerful when the legislature is in session."},
+  {ch:'ch8',q:"What is a substantive committee vs. a procedural committee?",a:"A substantive committee considers bills/resolutions on the SUBJECT named by the committee (e.g., Agriculture). A procedural committee handles internal legislative matters (e.g., the Calendars Committee, which sets when bills reach the floor)."},
+  {ch:'ch8',q:"What is a select committee vs. a standing committee?",a:"A select committee is TEMPORARY — created to consider legislation crossing committee lines, and may include non-legislators. A standing committee is a PERMANENT committee established under the rules each session."},
+  {ch:'ch8',q:"What is a conference committee, and how is it staffed?",a:"A committee that reconciles differing House and Senate versions of the SAME bill. Five members from each chamber (at least three from each must agree). This is what happens when the two chambers pass a bill with different language."},
+  {ch:'ch8',q:"What is a caucus, and what must Texas caucuses do?",a:"A group of legislators organized by party, ideology, race/ethnicity, or issue. Caucuses must register with the Texas Ethics Commission. The Legislative Black Caucus is a racial/ethnic caucus."},
+  {ch:'ch8',q:"What is a bill, and what are its three categories?",a:"A bill is a proposed law before enactment (HB/SB). Categories: SPECIAL (an exception for a specific person/class/corporation), GENERAL (applies to all of Texas), and LOCAL (affects a single unit of local government)."},
+  {ch:'ch8',q:"What vote is needed to pass a bill, versus an emergency measure?",a:"A simple majority of members present in both chambers passes a bill; a two-thirds majority is needed for an emergency measure to take effect immediately."},
+  {ch:'ch8',q:"What is a simple resolution?",a:"A resolution involving action by ONE chamber only that is NOT sent to the governor (used for internal matters like adopting rules)."},
+  {ch:'ch8',q:"What is a concurrent resolution?",a:"A resolution passed by BOTH chambers and sent to the governor (e.g., to adjourn or to express the legislature's will)."},
+  {ch:'ch8',q:"What is a joint resolution, and what is it used for?",a:"A resolution passed by both chambers, used to PROPOSE amendments to the Texas Constitution and to RATIFY amendments to the U.S. Constitution. Amendment resolutions are not signed by the governor."},
+  {ch:'ch8',q:"When Texas ratifies an amendment to the U.S. Constitution, what legal form is used?",a:"A joint resolution."},
+  {ch:'ch8',q:"How does a House member introduce a bill?",a:"By filing it electronically with the chief clerk of the House."},
+  {ch:'ch8',q:"What happens to a bill on its FIRST reading in the House?",a:"The reading clerk reads the bill's caption (a brief summary), and the Speaker refers it to a committee. There is no debate at first reading."},
+  {ch:'ch8',q:"List at least 4 major steps by which a bill becomes law.",a:"1) Introduction (filed with the chief clerk); 2) First reading & referral to committee by the Speaker; 3) Committee consideration & report; 4) Second reading, debate & vote; 5) Third reading & final passage; then the Senate repeats the steps; conference committee if versions differ; enrollment/signatures; and action by the governor."},
+  {ch:'ch8',q:"What is oversight, and what tools support it?",a:"Oversight = the legislature monitoring agencies, mainly by requiring them to make periodic/special reports. Tools: the state auditor (via the Legislative Audit Committee) and the Sunset Advisory Commission (reviews nearly every agency every 12 years)."},
+  {ch:'ch8',q:"How are most of the governor's board/commission appointments approved?",a:"They must be approved by at least two-thirds of the senators PRESENT. (Under senatorial courtesy, the Senate rejects an appointee deemed 'personally objectionable' by the senator from the appointee's district.)"},
+  {ch:'ch8',q:"What is the process to impeach and remove an official (including a governor)?",a:"The House impeaches by a simple majority of members present; the official is suspended; the Senate tries and convicts by a two-thirds majority of its membership, with the Chief Justice of the Texas Supreme Court presiding. Punishment is limited to removal and disqualification."},
+  {ch:'ch8',q:"What is a filibuster?",a:"A SENATE delaying tactic — a senator speaks as long as physical endurance permits to block a vote on a bill (most effective near a deadline)."},
+  {ch:'ch8',q:"What is chubbing? (Watch the textbook typo.)",a:"A HOUSE delaying tactic — members debate bills (often 'buffer bills' they don't oppose) at length to run out the clock and prevent a vote on another bill. It's a DELAY tactic (the current edition's Learning Check answer mistakenly says 'hasten')."},
+  {ch:'ch8',q:"What is ghost voting?",a:"Pressing another representative's voting button. House rules prohibit it unless the absent member gave permission."},
+  {ch:'ch8',q:"What are the governor's options on a bill while the legislature is IN session?",a:"Sign it; let it become law unsigned after 10 days (not counting Sundays); or veto it. An in-session veto can be overridden by a two-thirds vote of both chambers."},
+  {ch:'ch8',q:"What is the fate of a bill vetoed AFTER the legislature adjourns, and how long does the governor have?",a:"After adjournment the governor has 20 days (counting Sundays) to act. A post-adjournment veto CANNOT be overridden because the legislature is no longer in session — the bill dies."},
+  {ch:'ch8',q:"⚠️ Does Texas have a pocket veto? (Flagged — not in your materials)",a:"No. A federal pocket veto kills a bill when the executive takes NO action while the legislature is adjourned. In Texas the opposite happens — an unsigned bill BECOMES law (after 10 days in session, 20 days after adjournment). The closest Texas analog is the post-adjournment veto (an active veto that can't be overridden)."},
+  {ch:'ch8',q:"Who is the principal agent in making public policy in Texas?",a:"The legislature — it most frequently exercises its power by passing bills and adopting resolutions."},
+  {ch:'ch8',q:"Name the main research organizations that influence Texas legislators.",a:"Texas Legislative Council (nonpartisan; bill drafting + 'Red Apple' redistricting software); House Research Organization (bipartisan; Daily Floor Report with pro/con on bills); Senate Research Center; Every Texan (criticized as liberal); and the Texas Public Policy Foundation (conservative, called the Republican leadership's 'in-house think tank')."},
+];
+
+// ─── FLASHCARD ENGINE ───
+let deck=[],currentIdx=0,flipped=false;
+function filterCards(ch,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  deck=ch==='all'?[...allCards]:allCards.filter(c=>c.ch===ch);
+  currentIdx=0;flipped=false;renderCard();
+}
+function renderCard(){
+  const empty=document.getElementById('fc-empty');
+  if(!deck.length){empty.style.display='block';document.getElementById('fc-counter').textContent='';return;}
+  empty.style.display='none';
+  const c=deck[currentIdx];
+  document.getElementById('fc-q').textContent=c.q;
+  document.getElementById('fc-a').textContent=c.a;
+  document.getElementById('fc-counter').textContent=(currentIdx+1)+' / '+deck.length;
+  const card=document.getElementById('fc-card');
+  card.classList.remove('flipped');flipped=false;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+  else{mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+}
+function flipCard(){document.getElementById('fc-card').classList.toggle('flipped');flipped=!flipped;}
+function nextCard(){if(!deck.length)return;currentIdx=(currentIdx+1)%deck.length;renderCard();}
+function prevCard(){if(!deck.length)return;currentIdx=(currentIdx-1+deck.length)%deck.length;renderCard();}
+function shuffleCards(){for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}currentIdx=0;renderCard();}
+function toggleMastered(idx){
+  const c=deck[idx];const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){localStorage.removeItem(key);mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+  else{localStorage.setItem(key,'1');mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+}
+
+// ─── QUIZ DATA ───
+const allQuizData=[
+  // ── CH7 MC ──
+  {ch:'ch7',type:'mc',q:"What is the primary objective of an interest group?",opts:["To win elections and control the government","To influence government officials and policy on behalf of its members","To nominate candidates for public office","To serve the general public interest above all"],ans:1,exp:"An interest group's core goal is to influence officials and policy for its members — unlike a party, it doesn't try to win/control office itself."},
+  {ch:'ch7',type:'mc',q:"Which of the following best distinguishes an interest group from a political party?",opts:["Interest groups run their own members for office; parties do not","Parties seek to control government by winning office; interest groups seek to influence officials","Interest groups are illegal; parties are legal","Parties focus on a single issue; interest groups address many"],ans:1,exp:"The key contrast: parties want to WIN office; interest groups want to INFLUENCE whoever holds office."},
+  {ch:'ch7',type:'mc',q:"The right to form and join interest groups is grounded in which constitutional right?",opts:["The Second Amendment right to bear arms","The First Amendment right of association","The Fifth Amendment right against self-incrimination","The Tenth Amendment reservation of powers"],ans:1,exp:"The First Amendment right of association — recognized by the Supreme Court in NAACP v. Alabama (1958)."},
+  {ch:'ch7',type:'mc',q:"Which is the MOST common type of interest group in Texas?",opts:["Public interest groups","Religion-based groups","Economic interest groups","Women's groups"],ans:2,exp:"Economic interest groups (business and labor) are the most common, because they defend members' economic self-interest."},
+  {ch:'ch7',type:'mc',q:"A person who benefits from an interest group's success without joining or paying dues is called a:",opts:["Lobbyist","Free rider","Repeat player","Trustee"],ans:1,exp:"A free rider enjoys the group's winnings (e.g., a negotiated raise) without bearing membership costs."},
+  {ch:'ch7',type:'mc',q:"The Texas Association of Business, which represents many smaller groups and coordinates their activity, is an example of a(n):",opts:["Public interest group","Umbrella organization","Political action committee","Select committee"],ans:1,exp:"An umbrella organization coordinates and represents multiple smaller member groups."},
+  {ch:'ch7',type:'mc',q:"Which group would most strongly SUPPORT a Texas right-to-work law?",opts:["A labor union","A public employee association","A business/employer organization","A civil-rights group"],ans:2,exp:"Right-to-work laws limit union bargaining power, so business/employer groups favor them and unions oppose them. (Term is in the older edition, dropped from the current one.)"},
+  {ch:'ch7',type:'mc',q:"LULAC, founded in 1929, is best described as:",opts:["The oldest Latino interest group in Texas","A business trade association","A public interest environmental group","A professional licensing board"],ans:0,exp:"LULAC (League of United Latin American Citizens) is the oldest Latino social interest group in Texas."},
+  {ch:'ch7',type:'mc',q:"Which of the following is a PUBLIC interest group?",opts:["The Texas Medical Association","The Texas Association of Business","Common Cause Texas","A local plumbers' union"],ans:2,exp:"Public interest groups (Common Cause, Sierra Club, League of Conservation Voters) claim to serve the general good rather than a narrow private interest."},
+  {ch:'ch7',type:'mc',q:"Which single factor is most often cited as necessary for an interest group to be powerful?",opts:["A catchy name","Knowledgeable and dedicated leadership","Opposition from the governor","A large social-media following alone"],ans:1,exp:"Along with size, money, and unity, knowledgeable/dedicated leadership is the key 'necessary factor' for group power."},
+  {ch:'ch7',type:'mc',q:"The oldest and best-known technique interest groups use to influence government is:",opts:["Astroturfing","Lobbying","Litigation","Ghost voting"],ans:1,exp:"Lobbying — communicating directly with officials — is the oldest, best-known interest-group technique."},
+  {ch:'ch7',type:'mc',q:"Where does Texas rank nationally in the amount of money spent lobbying state government?",opts:["1st","2nd (behind California)","10th","Last"],ans:1,exp:"Texas ranks 2nd (behind California), with lobbyists outnumbering legislators about 9 to 1."},
+  {ch:'ch7',type:'mc',q:"Creating fake social-media accounts to make an issue look far more (or less) popular than it is describes:",opts:["Electioneering","Astrotweeting / astroturfing","Personal communication","A concurrent resolution"],ans:1,exp:"Astrotweeting/astroturfing fakes grassroots support using fake accounts."},
+  {ch:'ch7',type:'mc',q:"When an interest group gives favored candidates its membership mailing and email lists, it is engaged in:",opts:["Lobbying","Bribery","Electioneering","Oversight"],ans:2,exp:"Electioneering = participating in campaigns via endorsements, lists, and GOTV drives."},
+  {ch:'ch7',type:'mc',q:"In response to reports of heavy lobby spending, Texas voters in 1991 created the:",opts:["Sunset Advisory Commission","Legislative Redistricting Board","Texas Ethics Commission","Texas Legislative Council"],ans:2,exp:"A 1991 constitutional amendment created the eight-member Texas Ethics Commission."},
+  {ch:'ch7',type:'mc',q:"How many members serve on the Texas Ethics Commission, and who appoints them?",opts:["8 — appointed by the governor (4), lt. governor (2), and Speaker (2)","5 — all appointed by the governor","9 — elected statewide","31 — one per Senate district"],ans:0,exp:"The TEC has 8 members: governor appoints 4, lt. governor 2, Speaker 2."},
+  {ch:'ch7',type:'mc',q:"Texas campaign-finance law is best described as a system of:",opts:["Strict contribution limits for all candidates","Public disclosure, with amount limits only for judicial races","A total ban on PAC contributions","Full public financing of campaigns"],ans:1,exp:"Texas relies on disclosure; it caps contribution amounts only for judicial candidates."},
+  {ch:'ch7',type:'mc',q:"Why is Texas unusual among large, wealthy states in its group/party balance?",opts:["It has strong parties and weak interest groups","It has strong interest groups and weak political parties","It bans interest groups entirely","It has no political parties"],ans:1,exp:"Texas has strong interest groups and weak parties — a result of its political culture, one-party history, and fragmented 1876 Constitution."},
+  {ch:'ch7',type:'fitb',q:"A lobbyist may give a legislator no more than $______ per year in gifts (with gifts over $250 requiring disclosure).",ans:["500","$500"],display:"$500",exp:"The gift cap from a single lobbyist is $500/year; there is also a $300/year cap on food and drink."},
+  {ch:'ch7',type:'fitb',q:"A '________' is a group of persons whose principal purpose is accepting or making political contributions.",ans:["political action committee","pac"],display:"Political action committee (PAC)",exp:"That is the Texas Ethics Commission's definition of a PAC."},
+  {ch:'ch7',type:'fitb',q:"In Texas, business groups are generally MORE powerful than __________ groups.",ans:["labor","union","labor union","unions"],display:"Labor (union)",exp:"Union membership is under 5% in Texas, so labor is relatively weak compared with business."},
+  // ── CH8 MC ──
+  {ch:'ch8',type:'mc',q:"The Texas legislature is bicameral. How many total legislators are there?",opts:["150","181","31","254"],ans:1,exp:"House (150) + Senate (31) = 181 total legislators."},
+  {ch:'ch8',type:'mc',q:"How long are the terms of Texas representatives and senators?",opts:["Both serve 2 years","Both serve 4 years","Representatives 2 years; senators 4 years (staggered)","Representatives 4 years; senators 6 years"],ans:2,exp:"Representatives serve 2-year terms; senators serve 4-year staggered terms."},
+  {ch:'ch8',type:'mc',q:"A Texas regular legislative session:",opts:["Meets every year for 60 days","Begins the second Tuesday in January of odd years and lasts 140 days","Meets continuously year-round","Is called by the lieutenant governor"],ans:1,exp:"Regular sessions begin the 2nd Tuesday in January of odd-numbered years, last 140 days, and are biennial."},
+  {ch:'ch8',type:'mc',q:"Who may call a special session, and who decides what it addresses?",opts:["The lieutenant governor; the Senate","The Speaker; the House","The governor; the governor","The voters; a referendum"],ans:2,exp:"Only the governor can call a special session (max 30 days, no limit on number) and sets its agenda."},
+  {ch:'ch8',type:'mc',q:"If the legislature fails to redistrict, the job falls to the Legislative Redistricting Board, whose members include all EXCEPT:",opts:["The lieutenant governor","The Speaker of the House","The governor","The attorney general"],ans:2,exp:"The board's five ex officio members are the lt. governor, Speaker, attorney general, comptroller, and land commissioner — NOT the governor."},
+  {ch:'ch8',type:'mc',q:"Since 1975, Texas House and Senate seats have been filled using:",opts:["At-large districts","Multimember districts","Single-member districts","Proportional representation"],ans:2,exp:"Single-member districts (one member per district) — they lowered campaign costs and elected more Black and Latino members."},
+  {ch:'ch8',type:'mc',q:"Which are the correct minimum ages for the Texas House and Senate?",opts:["House 18 / Senate 21","House 21 / Senate 26","House 25 / Senate 30","House 30 / Senate 35"],ans:1,exp:"House members must be 21+ (2 yrs TX residence); senators 26+ (5 yrs TX residence)."},
+  {ch:'ch8',type:'mc',q:"When a Latina legislator advocates for policies benefiting Latino constituents because she shares that background, and also more broadly works for their interests, the sharing-of-traits part is called:",opts:["Substantive representation","Descriptive representation","Functional representation","Virtual representation"],ans:1,exp:"Descriptive representation = sharing constituents' characteristics; substantive = working for their interests. Research links the two."},
+  {ch:'ch8',type:'mc',q:"Texas legislators are paid a salary of:",opts:["$7,200 per year, unchanged since 1975","$57,500 per year","$600 per year","$100,000 per year"],ans:0,exp:"$600/month = $7,200/year, set in the constitution and unchanged since 1975 (plus a per diem and pension)."},
+  {ch:'ch8',type:'mc',q:"Who serves as President of the Texas Senate?",opts:["The most senior senator","The governor","The lieutenant governor","The Speaker of the House"],ans:2,exp:"The lieutenant governor is President of the Senate — but is NOT a senator, and is elected statewide."},
+  {ch:'ch8',type:'mc',q:"The Speaker of the Texas House is:",opts:["Appointed by the governor","Elected by the House membership to a 2-year term","The longest-serving representative automatically","Elected statewide by voters"],ans:1,exp:"House members elect the Speaker (open vote) to a 2-year term; the Speaker controls House proceedings."},
+  {ch:'ch8',type:'mc',q:"A committee created to reconcile differing House and Senate versions of the same bill is a:",opts:["Standing committee","Conference committee","Select committee","Procedural committee"],ans:1,exp:"A conference committee (5 members per chamber) works out a compromise when the chambers pass different versions."},
+  {ch:'ch8',type:'mc',q:"A permanent committee that considers bills within a defined subject area (like Agriculture) is a:",opts:["Substantive standing committee","Procedural committee","Interim committee","Conference committee"],ans:0,exp:"Substantive committees consider bills by subject; standing committees are permanent for the session."},
+  {ch:'ch8',type:'mc',q:"A bill that applies to all people and property throughout Texas is a:",opts:["Special bill","Local bill","General bill","Concurrent resolution"],ans:2,exp:"General bill = applies statewide. Special = exception for a specific person/class; local = single unit of local government."},
+  {ch:'ch8',type:'mc',q:"To ratify an amendment to the U.S. Constitution, the Texas legislature uses a:",opts:["Simple resolution","Concurrent resolution","Joint resolution","Special bill"],ans:2,exp:"A joint resolution is used to ratify U.S. amendments and to propose Texas constitutional amendments."},
+  {ch:'ch8',type:'mc',q:"On a bill's FIRST reading in the House, what happens?",opts:["The full bill is read aloud and debated","The caption is read and the Speaker refers it to a committee","It is sent directly to the governor","A final vote is taken"],ans:1,exp:"First reading = the caption is read and the Speaker refers the bill to committee; no debate yet."},
+  {ch:'ch8',type:'mc',q:"The commission that reviews nearly every state agency about every 12 years and recommends whether to keep, merge, or abolish it is the:",opts:["Legislative Redistricting Board","Sunset Advisory Commission","Texas Ethics Commission","Legislative Budget Board"],ans:1,exp:"The Sunset Advisory Commission conducts these periodic agency reviews — a key oversight tool."},
+  {ch:'ch8',type:'mc',q:"How is a governor (or other official) removed from office in Texas?",opts:["A statewide recall election","House impeachment by simple majority, then Senate conviction by two-thirds","A vote of the Texas Supreme Court alone","A petition signed by 10% of voters"],ans:1,exp:"The House impeaches (majority present); the Senate convicts (two-thirds of membership) with the Chief Justice presiding."},
+  {ch:'ch8',type:'mc',q:"A senator speaking for hours to block a vote is using a filibuster. The HOUSE equivalent delaying tactic is called:",opts:["Chubbing","Ghost voting","Gerrymandering","Logrolling"],ans:0,exp:"Chubbing is the House delay tactic (lengthy debate on buffer bills). Note: it DELAYS a vote (the textbook's 'hasten' is a typo)."},
+  {ch:'ch8',type:'mc',q:"What happens to a bill the governor vetoes AFTER the legislature has adjourned?",opts:["It automatically becomes law","It can be overridden at the next session","It dies — a post-adjournment veto cannot be overridden","It goes to the voters"],ans:2,exp:"A post-adjournment veto cannot be overridden because the legislature is no longer in session, so the bill dies."},
+  {ch:'ch8',type:'mc',q:"⚠️ Which statement about the 'pocket veto' is TRUE for Texas?",opts:["Texas has a pocket veto just like the president","Texas has no pocket veto — an unsigned bill becomes law","A pocket veto in Texas requires a two-thirds override","The lieutenant governor exercises the pocket veto"],ans:1,exp:"Texas has NO pocket veto. An unsigned bill becomes law (10 days in session / 20 after adjournment). Flagged term — not in your materials; sourced externally."},
+  {ch:'ch8',type:'fitb',q:"The Texas House has ______ members and the Senate has ______ members. (Enter both numbers, e.g. '150 and 31'.)",ans:["150 and 31","150, 31","150 31"],display:"150 and 31",exp:"House = 150, Senate = 31, total = 181."},
+  {ch:'ch8',type:'fitb',q:"A regular Texas legislative session lasts ______ days.",ans:["140"],display:"140",exp:"Regular sessions run 140 days, biennially, starting the 2nd Tuesday of January in odd years."},
+  {ch:'ch8',type:'fitb',q:"When the House and Senate pass different versions of a bill, it goes to a __________ committee.",ans:["conference"],display:"Conference",exp:"A conference committee (5 members per chamber) reconciles the two versions."},
+  {ch:'ch8',type:'fitb',q:"The presiding officer of the Texas Senate is the __________.",ans:["lieutenant governor","lt governor","lt. governor","lt gov"],display:"Lieutenant Governor",exp:"The lt. governor is President of the Senate but is not a member of the Senate."},
+  {ch:'ch8',type:'fitb',q:"Pressing another representative's voting button (prohibited without permission) is called __________.",ans:["ghost voting","ghost-voting"],display:"Ghost voting",exp:"Ghost voting is banned by House rules unless the absent member consented."},
+];
+
+// ─── QUIZ ENGINE ───
+let quizFilter='all',userAnswers={};
+function setQuizFilter(ch,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');quizFilter=ch;resetQuiz();
+}
+function getQuizDeck(){return quizFilter==='all'?allQuizData:allQuizData.filter(q=>q.ch===quizFilter);}
+function renderQuiz(){
+  const deck=getQuizDeck();
+  const c=document.getElementById('quiz-container');c.innerHTML='';userAnswers={};
+  deck.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='quiz-q';div.id='qq'+i;
+    if(q.type==='mc'){
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <div class="quiz-opts">${q.opts.map((o,oi)=>`<label><input type="radio" name="q${i}" onclick="selectMC(${i},${oi})"> ${o}</label>`).join('')}</div>
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    } else {
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <input class="fitb-input" id="fitb${i}" placeholder="Type your answer..." oninput="storeFITB(${i})">
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    }
+    c.appendChild(div);
+  });
+  document.getElementById('quiz-score').style.display='none';
+}
+function selectMC(qi,oi){userAnswers[qi]=oi;}
+function storeFITB(qi){userAnswers[qi]=document.getElementById('fitb'+qi).value.trim().toLowerCase();}
+function submitQuiz(){
+  const deck=getQuizDeck();let correct=0;
+  deck.forEach((q,i)=>{
+    const el=document.getElementById('qq'+i);
+    const exp=document.getElementById('exp'+i);exp.classList.add('show');
+    if(q.type==='mc'){
+      const ua=userAnswers[i];
+      if(ua===q.ans){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    } else {
+      const ua=(userAnswers[i]||'').toLowerCase();
+      const ok=q.ans.some(a=>ua.includes(a.toLowerCase()));
+      if(ok){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    }
+  });
+  const sc=document.getElementById('quiz-score');
+  const pct=Math.round(correct/deck.length*100);
+  sc.style.display='block';
+  sc.style.borderColor=pct>=70?'var(--green)':'var(--red)';
+  sc.innerHTML=`<strong>Score: ${correct}/${deck.length} (${pct}%)</strong> — ${pct>=90?'Excellent! 🎉':pct>=70?'Good work — review flagged questions.':'Keep studying — focus on the red ones.'}`;
+}
+function resetQuiz(){renderQuiz();}
+
+// ─── DISCUSSION DATA ───
+const DISC_QUESTIONS=[
+  {ch:'ch7',q:"Texas is famous for having strong interest groups and weak political parties. Using Chapter 7, explain WHY interest groups are so powerful in Texas, what makes any single group powerful, and why business groups tend to out-muscle labor.",
+   points:[
+     {text:"<strong>Strong groups / weak parties</strong> — ties Texas's pattern to its individualistic-traditionalistic political culture, one-party history, and the fragmented government created by the 1876 Constitution."},
+     {text:"<strong>Access points</strong> — explains that decentralized government (federalism + separation of powers) gives groups many places to apply pressure."},
+     {text:"<strong>Traits of a powerful group</strong> — names the key factors: sizable membership, money, knowledgeable/dedicated leadership, and unity (plus Austin presence and repeat-player status)."},
+     {text:"<strong>Business vs. labor</strong> — notes union membership is under 5% in Texas, so business trade associations generally outweigh labor."},
+     {text:"<strong>Specific examples</strong> — cites real groups (e.g., Texas Association of Business, Texas Medical Association, LULAC, Christian Coalition) to ground the argument."},
+   ],
+   model:"Texas has strong interest groups and weak parties largely because of its political culture and institutions. The state's individualistic and traditionalistic culture, its long history of one-party dominance (first Democratic, now Republican), and the deliberately weak, fragmented government built by the 1876 Constitution all leave openings that organized interests rush to fill. A decentralized system — federalism plus separation of powers — also gives groups many access points: if they lose in the legislature, they can try an agency, a court, or a local government. Within that environment, the groups that win are the ones with a sizable membership, above-average money, knowledgeable and dedicated leadership, and internal unity, usually backed by an Austin headquarters and a reputation as a repeat player. Business generally beats labor in Texas for a simple structural reason: union membership sits under 5% of the workforce, so trade associations like the Texas Association of Business, and professional groups like the Texas Medical Association, simply have more resources and members than organized labor. Social groups (LULAC, the Christian Coalition) can be influential too, but the economic groups — especially business — remain the heavyweights."},
+
+  {ch:'ch7',q:"After reports of heavy lobby spending, Texas voters created the Texas Ethics Commission in 1991. Using Chapter 7, explain what the TEC and the 1991 law actually regulate — and evaluate how EFFECTIVE that regulation really is.",
+   points:[
+     {text:"<strong>What was created</strong> — identifies the eight-member Texas Ethics Commission, created by a 1991 constitutional amendment (72nd Legislature), with appointments by the governor (4), lt. gov (2), and Speaker (2)."},
+     {text:"<strong>What the law does</strong> — lists concrete rules: disclosure of gifts over $250, the $300/year food-and-drink cap, and the ban on honoraria/lobby-paid pleasure trips."},
+     {text:"<strong>Disclosure, not limits</strong> — explains that Texas relies on public disclosure and caps contribution amounts only for judicial races."},
+     {text:"<strong>Weaknesses</strong> — names real limits: lobbyists report only compensation ranges, dark/secret money is growing, small TEC budget, and the clerical-error escape hatch."},
+     {text:"<strong>Own evaluation</strong> — takes and defends a position on whether the regulation is adequate."},
+   ],
+   model:"The Texas Ethics Commission is an eight-member body created by a 1991 constitutional amendment after media reports of lavish lobby spending and a grand-jury investigation embarrassed the legislature. Its members are appointed by the governor (four), lieutenant governor (two), and Speaker (two). The 1991 law expanded disclosure, capped lobbyist-provided food and drink at $300 a year, banned honoraria and lobby-paid pleasure trips, and required officials to disclose gifts worth more than $250. Crucially, though, the Texas system is built on disclosure rather than hard limits — the state caps contribution amounts only for judicial candidates and otherwise just asks that money be reported. That design has real weak spots: lobbyists report only broad compensation ranges rather than exact dollars, so the public can't see precise sums; 'dark money' from nonprofits that don't reveal donors is growing; the TEC has a small budget and staff; and the Commission must dismiss an Election Code complaint if the respondent calls the violation a clerical error and fixes it within two weeks. My own view is that the framework is better than nothing — sunlight does deter the most blatant abuses — but calling it strong regulation overstates it. As long as the emphasis is disclosure without meaningful limits, and as long as ranges and dark money obscure the real numbers, well-funded interests can operate largely as before while technically complying with the law."},
+
+  {ch:'ch8',q:"Every ten years the Texas legislature redraws district lines. Using Chapter 8, explain the redistricting process, what gerrymandering is and when it's legal, and why the shift to single-member districts mattered for representation.",
+   points:[
+     {text:"<strong>Process &amp; timing</strong> — explains redistricting happens in the first odd-numbered year of a decade after the census, and distinguishes reapportionment (seats by population) from redistricting (drawing lines)."},
+     {text:"<strong>Backup body</strong> — identifies the Legislative Redistricting Board and its five ex officio members (lt. gov, Speaker, AG, comptroller, land commissioner)."},
+     {text:"<strong>Gerrymandering</strong> — defines it (drawing lines to favor a group/party; packing/cracking) and notes it's legal if populations are equal and the vote isn't diluted by race/language."},
+     {text:"<strong>Single-member districts</strong> — explains Texas went fully single-member by 1975 and that this lowered campaign costs and elected more Black and Latino candidates than multimember districts."},
+     {text:"<strong>Reynolds v. Sims</strong> — connects the 'one person, one vote' principle to why districts must be roughly equal in population."},
+   ],
+   model:"Redistricting in Texas happens in the first odd-numbered year of each decade, right after the federal census reports new population figures. It's useful to separate two ideas: reapportionment is the allotment of seats according to population, while redistricting is the actual drawing of new district lines to reflect those numbers. Normally the legislature does this, but if it fails — or the governor vetoes the plan — the job passes to the Legislative Redistricting Board, five ex officio officials: the lieutenant governor, Speaker, attorney general, comptroller, and land commissioner. Gerrymandering is the practice of drawing those lines to favor a party or group, using tactics like packing opponents into a few districts or cracking them across many; the term dates to Elbridge Gerry in 1812. Gerrymandered maps are actually legal as long as the districts are roughly equal in population and don't dilute votes on the basis of race, color, or language — the equal-population requirement traces to Reynolds v. Sims (1964) and its 'one person, one vote' rule. The move to single-member districts, completed by 1975, mattered enormously: instead of electing several members at large across a big area (which favored well-funded, majority-backed candidates), each district now elects one member. That lowered campaign costs and, importantly, produced more Black and Latino legislators than the old multimember system ever did, because concentrated minority communities could finally elect candidates of their choice."},
+
+  {ch:'ch8',q:"Texas pays legislators $7,200 a year, hasn't raised it since 1975, and imposes no term limits. Using Chapter 8, analyze the tradeoffs of this 'citizen legislature' model. Who does it tend to advantage, and would you change it?",
+   points:[
+     {text:"<strong>The facts</strong> — states the $600/month ($7,200/year) salary set in the constitution and unchanged since 1975, plus the per diem, and that Texas has no term limits (one of 35 such states)."},
+     {text:"<strong>Citizen-legislature logic</strong> — explains the idea that low pay and biennial sessions are meant to keep lawmakers 'part-time' and close to ordinary life."},
+     {text:"<strong>Who it advantages</strong> — reasons that low pay favors the wealthy, retired, or those with flexible/self-employed careers (e.g., attorneys and businesspeople), shaping the 'typical legislator.'"},
+     {text:"<strong>Term limits debate</strong> — weighs incumbency/experience against the case for turnover, connecting to the informal qualification that incumbents dominate."},
+     {text:"<strong>Own position</strong> — takes and defends a view on whether to change pay and/or term limits."},
+   ],
+   model:"Texas runs a classic 'citizen legislature': lawmakers earn $600 a month — $7,200 a year — a figure written into the constitution and unchanged since 1975, supplemented only by a per diem (about $221/day in 2021) and a pension, and they serve with no term limits, as in 35 other states. The theory is appealing: low pay and biennial 140-day sessions are supposed to keep legislators part-time, rooted in ordinary jobs and communities rather than becoming a permanent political class. But the tradeoffs are real. A salary that low effectively screens out anyone who can't afford to leave their job for months at a time, which helps explain why the 'typical' Texas legislator is a White, middle-aged attorney or businessperson — professions with the flexibility and outside income to make the math work. In practice, the model advantages the wealthy, the retired, and the self-employed, and it arguably increases legislators' dependence on lobbyists for staff-like research and support. The lack of term limits compounds this by entrenching incumbents, who already enjoy huge reelection advantages. My own view is that I'd keep the citizen-legislature spirit but raise the base pay to something a working parent could actually live on during session — the current figure doesn't produce 'citizen' legislators so much as wealthy ones. On term limits I'm more cautious: they'd force turnover but also hand even more power to unelected lobbyists and staff who'd outlast every member, so the experience they'd sacrifice isn't a small cost."},
+
+  {ch:'ch8',q:"A minority of legislators often can't win a vote outright, but they can still shape outcomes through delay. Using Chapter 8, compare the filibuster and chubbing, and explain how the governor's veto — especially after adjournment — is another kind of choke point.",
+   points:[
+     {text:"<strong>Filibuster</strong> — correctly identifies it as a SENATE tactic (speaking as long as endurance permits to block a vote near a deadline)."},
+     {text:"<strong>Chubbing</strong> — correctly identifies it as a HOUSE tactic (lengthy debate on buffer bills to run out the clock) and notes it DELAYS a vote."},
+     {text:"<strong>Why deadlines matter</strong> — connects both tactics to the 140-day session clock: delay can kill a bill if time runs out."},
+     {text:"<strong>Governor's veto</strong> — explains the in-session veto (overridable by two-thirds of both chambers) vs. the post-adjournment veto (cannot be overridden)."},
+     {text:"<strong>No pocket veto</strong> — notes that Texas has no pocket veto; an unsigned bill becomes law, so the post-adjournment veto is the governor's strongest form."},
+   ],
+   model:"Delay is one of the most powerful tools a legislative minority has, because the Texas session runs on a hard 140-day clock — if a bill doesn't make it through in time, it dies. The two chambers delay differently. In the Senate, a lone senator can filibuster, speaking for as long as physical endurance allows to run out the clock on a bill; Wendy Davis's 2013 filibuster is the famous example. In the House, where individual speeches are time-limited, members instead use chubbing — debating a long series of 'buffer' bills they don't even oppose, purely to burn hours and prevent a targeted bill from reaching a vote. (Note that chubbing DELAYS a vote; a line in the current textbook's answer key mistakenly says 'hasten,' but the main text and the older edition both make clear it's a delaying action.) The governor's veto is a different kind of choke point, applied after the legislature acts rather than during debate. While the legislature is in session, a veto can be overridden by a two-thirds vote of both chambers — so it's strong but not absolute. The real power comes after adjournment: a post-adjournment veto cannot be overridden, because the legislature is gone and can't reconvene to reverse it. It's worth stressing that Texas has no pocket veto — unlike the president, a Texas governor who simply does nothing lets a bill become law — so the post-adjournment veto, not inaction, is the governor's most decisive weapon against a bill."},
+];
+
+// ─── DISCUSSION ENGINE ───
+let discFilter='all';
+function filterDisc(ch,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');discFilter=ch;renderDiscussion();
+}
+function renderDiscussion(){
+  const list=discFilter==='all'?DISC_QUESTIONS:DISC_QUESTIONS.filter(d=>d.ch===discFilter);
+  const c=document.getElementById('disc-container');c.innerHTML='';
+  list.forEach((d,i)=>{
+    const idx=DISC_QUESTIONS.indexOf(d);
+    const div=document.createElement('div');div.className='disc-q';
+    div.innerHTML=`<div class="disc-q-text">${i+1}. ${d.q}</div>
+      <textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Draft your response here..." aria-label="Discussion response"></textarea>
+      <div class="disc-btn-row">
+        <button class="disc-btn primary" onclick="submitDisc(${idx})">Submit &amp; Self-Grade</button>
+        <button class="disc-btn" onclick="toggleModel(${idx})">Show Model Answer</button>
+        <button class="disc-btn" onclick="resetDisc(${idx})">Reset</button>
+      </div>
+      <div class="disc-rubric" id="disc-rubric-${idx}">
+        <strong style="font-size:.82rem;color:var(--text)">Self-Grading Rubric</strong>
+        <div style="margin-top:8px;">${d.points.map((p,pi)=>`<div class="rubric-item"><input type="checkbox" id="rub-${idx}-${pi}" onchange="updateDiscScore(${idx})"><label for="rub-${idx}-${pi}">${p.text}</label></div>`).join('')}</div>
+        <div class="disc-score" id="disc-score-${idx}">Score: 0 / ${d.points.length}</div>
+      </div>
+      <div class="model-answer" id="disc-model-${idx}">${d.model}</div>`;
+    c.appendChild(div);
+  });
+}
+function submitDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);
+  ta.disabled=true;
+  document.getElementById('disc-rubric-'+idx).classList.add('show');
+}
+function resetDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);ta.disabled=false;ta.value='';
+  document.getElementById('disc-rubric-'+idx).classList.remove('show');
+  document.getElementById('disc-model-'+idx).classList.remove('show');
+  document.querySelectorAll(`[id^="rub-${idx}-"]`).forEach(cb=>cb.checked=false);
+  document.getElementById('disc-score-'+idx).textContent='Score: 0 / '+DISC_QUESTIONS[idx].points.length;
+}
+function updateDiscScore(idx){
+  const total=DISC_QUESTIONS[idx].points.length;
+  const checked=document.querySelectorAll(`[id^="rub-${idx}-"]:checked`).length;
+  document.getElementById('disc-score-'+idx).textContent=`Score: ${checked} / ${total} (${Math.round(checked/total*100)}%)`;
+}
+function toggleModel(idx){document.getElementById('disc-model-'+idx).classList.toggle('show');}
+
+// ─── INIT ───
+window.addEventListener('DOMContentLoaded',()=>{
+  deck=[...allCards];renderCard();renderQuiz();renderDiscussion();updateMasteryBar();
+  document.querySelectorAll('.obj-master-btn').forEach(btn=>{
+    const key=btn.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+    if(key&&localStorage.getItem(key)){btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  });
+});
+</script>
+</body>
+</html>
