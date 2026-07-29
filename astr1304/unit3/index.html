@@ -1,0 +1,3057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>ASTR-1304 — Unit 3 — Ch. 11-15: Outer Planets, Debris &amp; Exoplanets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #16161f;
+  --border: #1e1e2e;
+  --text: #e8e8f0;
+  --muted: #6b6b80;
+  --green: #22c55e;
+  --red: #ef4444;
+  --yellow: #eab308;
+  --purple: #a78bfa;
+  --orange: #f97316;
+  --accent: #22c55e;
+  --accent-dim: rgba(34,197,94,0.12);
+}
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans', sans-serif;
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(var(--accent) 1px, transparent 1px),
+    linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 0;
+}
+header.site-header {
+  position: relative; z-index: 1;
+  padding: 18px 16px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.unit-badge {
+  display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px;
+  letter-spacing:0.06em; color: var(--accent); background: var(--accent-dim);
+  padding:3px 8px; border-radius:5px; margin-bottom:8px;
+}
+.back-link {
+  display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px;
+  color: var(--muted); text-decoration:none; margin-bottom:10px;
+}
+.back-link:hover, .back-link:active { color: var(--accent); }
+footer .footer-back-link { color: var(--muted); }
+footer .footer-back-link:hover, footer .footer-back-link:active { color: var(--accent); }
+h1 { font-size: 20px; margin: 4px 0 6px; line-height:1.3; }
+.exam-pill {
+  display:inline-flex; align-items:center; gap:6px; font-family:'IBM Plex Mono',monospace;
+  font-size:11px; color: var(--yellow); background: rgba(234,179,8,0.1);
+  border:1px solid rgba(234,179,8,0.25); padding:3px 8px; border-radius:5px; margin-right:6px;
+}
+.textbook-links { font-size:12px; color: var(--muted); margin-top:6px; }
+.textbook-links span { margin-right:10px; }
+
+nav.topnav {
+  position: sticky; top:0; z-index: 5;
+  display:flex; overflow-x:auto; gap:4px;
+  background: var(--surface); border-bottom:1px solid var(--border);
+  padding: 6px 8px; -webkit-overflow-scrolling: touch;
+}
+nav.topnav::-webkit-scrollbar { display:none; }
+.nav-btn {
+  flex: 0 0 auto; font-family:'IBM Plex Mono',monospace; font-size:12px;
+  background: transparent; color: var(--muted); border:1px solid transparent;
+  padding:8px 10px; border-radius:8px; cursor:pointer; white-space:nowrap;
+}
+.nav-btn.active { color: var(--accent); background: var(--accent-dim); border-color: rgba(34,197,94,0.3); }
+
+main { position:relative; z-index:1; max-width: 760px; margin:0 auto; padding: 14px 14px 40px; }
+.panel { display:none; }
+.panel.active { display:block; }
+
+.mastery-bar {
+  background: var(--surface); border:1px solid var(--border); border-radius:10px;
+  padding:10px 12px; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+}
+.mastery-bar .label { font-size:12px; color: var(--muted); font-family:'IBM Plex Mono',monospace; }
+.reset-mastery-btn {
+  font-family:'IBM Plex Mono',monospace; font-size:11px; background: rgba(239,68,68,0.1);
+  color: var(--red); border:1px solid rgba(239,68,68,0.3); padding:6px 10px; border-radius:6px; cursor:pointer;
+}
+
+.ch-heading {
+  font-family:'IBM Plex Mono',monospace; font-size:13px; text-transform:uppercase; letter-spacing:0.05em;
+  color: var(--accent); margin: 22px 0 10px; padding-bottom:6px; border-bottom:1px solid var(--border);
+}
+.ch-heading:first-child { margin-top:0; }
+
+.obj-card {
+  background: var(--surface); border:1px solid var(--border); border-radius:10px;
+  padding:12px; margin-bottom:8px; cursor:pointer;
+}
+.obj-row { display:flex; align-items:center; gap:10px; }
+.obj-num {
+  font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600;
+  color: var(--accent); background: var(--accent-dim); border-radius:6px;
+  width:26px; height:26px; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.obj-text { flex:1; font-size:14.5px; line-height:1.4; }
+.obj-master-btn {
+  flex-shrink:0; width:28px; height:28px; border-radius:6px; border:1px solid var(--border);
+  background: var(--surface2); color: var(--muted); cursor:pointer; font-size:14px;
+}
+.obj-master-btn.done { color: var(--bg); background: var(--green); border-color: var(--green); }
+.obj-caret { flex-shrink:0; color: var(--muted); font-size:12px; transition: transform 0.2s; }
+.obj-card[aria-expanded="true"] .obj-caret { transform: rotate(180deg); color: var(--accent); }
+.obj-body { display:none; margin-top:10px; padding-top:10px; border-top:1px solid var(--border); }
+.obj-card[aria-expanded="true"] .obj-body { display:block; }
+.obj-body ul { margin:0; padding-left:18px; }
+.obj-body li { font-size:13px; line-height:1.6; color: var(--text); margin-bottom:4px; }
+.obj-body li:last-child { margin-bottom:0; }
+
+.chapter-block { border:1px solid var(--border); border-radius:10px; margin-bottom:10px; overflow:hidden; background: var(--surface); }
+.chapter-header {
+  padding:12px 14px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;
+  font-weight:600; font-size:14.5px;
+}
+.chevron { transition: transform 0.2s; color: var(--muted); }
+.chapter-header[aria-expanded="true"] .chevron { transform: rotate(180deg); }
+.chapter-body { display:none; padding: 0 14px 16px; font-size:13.5px; line-height:1.6; color: var(--text); }
+.chapter-body h4 { color: var(--accent); font-size:13px; text-transform:uppercase; letter-spacing:0.03em; margin: 16px 0 6px; }
+.chapter-body h4:first-child { margin-top:4px; }
+.chapter-body p, .chapter-body ul { margin: 6px 0; }
+.chapter-body ul { padding-left: 20px; }
+.data-table { width:100%; border-collapse: collapse; margin: 8px 0 14px; font-size:12.5px; }
+.data-table th, .data-table td { border:1px solid var(--border); padding:5px 7px; text-align:left; }
+.data-table th { background: var(--surface2); color: var(--accent); font-family:'IBM Plex Mono',monospace; font-size:11px; }
+
+.filter-row { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+.filter-btn {
+  font-family:'IBM Plex Mono',monospace; font-size:11px; background: var(--surface2); color: var(--muted);
+  border:1px solid var(--border); padding:6px 10px; border-radius:20px; cursor:pointer;
+}
+.filter-btn.active { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+
+.fc-wrap { display:flex; flex-direction:column; align-items:center; gap:14px; }
+.fc-card {
+  width:100%; min-height:180px; background: var(--surface); border:1px solid var(--border); border-radius:14px;
+  padding:22px; display:flex; align-items:center; justify-content:center; text-align:center; cursor:pointer;
+  font-size:16px; line-height:1.5;
+}
+.fc-tag { font-family:'IBM Plex Mono',monospace; font-size:10px; color: var(--accent); background: var(--accent-dim); padding:2px 8px; border-radius:10px; position:absolute; margin-top:-190px; }
+.fc-controls { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
+.fc-controls button {
+  font-family:'IBM Plex Mono',monospace; font-size:12px; background: var(--surface2); color: var(--text);
+  border:1px solid var(--border); padding:9px 14px; border-radius:8px; cursor:pointer;
+}
+.fc-nav { display:flex; align-items:center; gap:14px; }
+.fc-nav button { font-size:18px; background: var(--surface2); color: var(--accent); border:1px solid var(--border); width:40px; height:40px; border-radius:50%; cursor:pointer; }
+.fc-counter { font-family:'IBM Plex Mono',monospace; font-size:12px; color: var(--muted); }
+.fc-mastered-btn.done { color: var(--green); }
+
+.quiz-q { background: var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:12px; }
+.quiz-q .qtag { font-family:'IBM Plex Mono',monospace; font-size:10px; color: var(--accent); }
+.quiz-q .qtext { font-size:14.5px; margin: 6px 0 10px; line-height:1.4; }
+.mc-opt { display:block; width:100%; text-align:left; background: var(--surface2); color: var(--text); border:1px solid var(--border); padding:10px 12px; border-radius:8px; margin-bottom:6px; cursor:pointer; font-size:13.5px; }
+.mc-opt.selected { border-color: var(--accent); background: var(--accent-dim); }
+.mc-opt.correct { border-color: var(--green); background: rgba(34,197,94,0.15); }
+.mc-opt.incorrect { border-color: var(--red); background: rgba(239,68,68,0.15); }
+.fitb-input { width:100%; background: var(--surface2); color: var(--text); border:1px solid var(--border); border-radius:8px; padding:10px; font-size:13.5px; }
+.fitb-input.correct { border-color: var(--green); }
+.fitb-input.incorrect { border-color: var(--red); }
+.exp-box { font-size:12.5px; color: var(--muted); margin-top:8px; padding-top:8px; border-top:1px solid var(--border); display:none; }
+.exp-box.show { display:block; }
+#submit-btn, .disc-btn-row button, .reset-mastery-btn, .fc-controls button, .quiz-actions button {
+  -webkit-tap-highlight-color: transparent;
+}
+#submit-btn { width:100%; background: var(--accent); color: var(--bg); border:none; padding:13px; border-radius:10px; font-weight:600; font-size:14px; cursor:pointer; margin-top:6px; }
+#quiz-score { text-align:center; font-family:'IBM Plex Mono',monospace; background: var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:14px; display:none; }
+#quiz-score.show { display:block; }
+.quiz-actions { display:flex; gap:8px; }
+.quiz-actions button { flex:1; font-family:'IBM Plex Mono',monospace; font-size:12px; background: var(--surface2); color: var(--text); border:1px solid var(--border); padding:10px; border-radius:8px; cursor:pointer; }
+
+.disc-q { background: var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:14px; }
+.disc-q .qtag { font-family:'IBM Plex Mono',monospace; font-size:10px; color: var(--accent); }
+.disc-q .qtext { font-size:14.5px; margin:6px 0 10px; font-weight:600; line-height:1.4; }
+.disc-q textarea { width:100%; min-height:110px; background: var(--surface2); color: var(--text); border:1px solid var(--border); border-radius:8px; padding:10px; font-family:inherit; font-size:13.5px; resize:vertical; }
+.disc-q textarea:disabled { opacity:0.85; }
+.disc-btn-row { display:flex; gap:8px; margin-top:8px; }
+.disc-btn-row button { flex:1; font-family:'IBM Plex Mono',monospace; font-size:12px; padding:10px; border-radius:8px; cursor:pointer; border:1px solid var(--border); background: var(--surface2); color: var(--text); }
+.disc-btn-row button.primary { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.disc-rubric { display:none; margin-top:12px; padding-top:12px; border-top:1px solid var(--border); }
+.disc-rubric.show { display:block; }
+.rubric-item { display:flex; align-items:flex-start; gap:8px; margin-bottom:8px; font-size:13px; }
+.rubric-item input { margin-top:3px; }
+.disc-score { font-family:'IBM Plex Mono',monospace; font-size:13px; color: var(--accent); margin-top:6px; }
+.model-toggle { font-family:'IBM Plex Mono',monospace; font-size:11px; color: var(--purple); background:none; border:1px solid rgba(167,139,250,0.3); padding:6px 10px; border-radius:6px; cursor:pointer; margin-top:8px; }
+.model-answer { display:none; margin-top:8px; font-size:13px; line-height:1.55; background: rgba(167,139,250,0.08); border:1px solid rgba(167,139,250,0.25); border-radius:8px; padding:10px; }
+.model-answer.show { display:block; }
+
+.lectures-panel { background: var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:18px; }
+.lectures-panel h3 { margin:0 0 4px; font-size:15px; }
+.muted-note { color: var(--muted); font-size:12px; margin:4px 0 12px; }
+.video-group { margin-bottom:10px; }
+.video-group h4 { color: var(--accent); font-size:12.5px; margin: 0 0 6px; }
+.video-list { list-style:none; padding:0; margin:0; }
+.video-list li { margin-bottom:6px; }
+.video-list a { color: var(--text); background: var(--surface2); border:1px solid var(--border); display:block; padding:9px 10px; border-radius:8px; text-decoration:none; font-size:13.5px; }
+.video-list a:active { border-color: var(--accent); }
+
+.notes-grid { display:grid; grid-template-columns: 1fr; gap:22px; }
+@media (min-width: 640px) { .notes-grid { grid-template-columns: 1fr 1fr; } }
+.notes-col h4 { color: var(--accent); font-size:13px; text-transform:uppercase; letter-spacing:0.03em; margin: 18px 0 8px; }
+.notes-col h4:first-child { margin-top:0; }
+.notes-col p { font-size:13.5px; line-height:1.9; margin:4px 0; }
+
+footer { text-align:center; color: var(--muted); font-size:11px; padding:20px 14px; font-family:'IBM Plex Mono',monospace; }
+
+/* ASTR-1304 — use accent (green) for all chapters */
+.ch11 .obj-num, .ch12 .obj-num, .ch13 .obj-num, .ch14 .obj-num, .ch15 .obj-num { color: var(--accent); background: var(--accent-dim); }
+
+@media print {
+  body::before, .topnav, .exam-pill, .textbook-links,
+  footer, .fc-controls, .fc-nav, .filter-row,
+  #submit-btn, #quiz-score, .disc-btn-row, .disc-rubric,
+  .obj-master-btn, .reset-mastery-btn, .mastery-bar { display: none !important; }
+  .panel { display: none !important; }
+  .panel.active { display: block !important; }
+  *, *::before, *::after {
+    background: white !important; background-color: white !important;
+    background-image: none !important; color: black !important;
+    border-color: #bbb !important; box-shadow: none !important;
+    -webkit-text-fill-color: black !important;
+  }
+  body { font-size: 12pt; }
+  .chapter-body { display: block !important; }
+  @page { margin: 0.75in; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="back-link" href="../../index.html">← All courses</a>
+  <span class="unit-badge">ASTR-1304-004 · UNIT 3</span>
+  <h1>Chapters 11–15: Outer Planets, Debris &amp; Exoplanets</h1>
+  <div>
+    <span class="exam-pill">📅 Exam: Jul 28–Aug 2</span>
+  </div>
+  <div class="textbook-links">
+    <span>📘 Chaisson &amp; McMillan, 9th Ed.</span>
+    <span>👤 Dr. Michael Endl</span>
+  </div>
+</header>
+
+<nav class="topnav" role="tablist" aria-label="Study sections">
+  <button class="nav-btn active" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)" role="tab" aria-selected="false" aria-controls="panel-guide">📖 Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)" role="tab" aria-selected="false" aria-controls="panel-flashcards">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)" role="tab" aria-selected="false" aria-controls="panel-quiz">✏️ Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('discussion',this)" role="tab" aria-selected="false" aria-controls="panel-discussion">💬 Discussion</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes Template</button>
+</nav>
+
+<main>
+
+<div class="mastery-bar">
+  <span class="label">Unit 3 mastery tracking</span>
+  <button class="reset-mastery-btn" onclick="resetAllMastery()">Reset unit progress</button>
+</div>
+
+<section id="panel-overview" class="panel active" role="tabpanel" aria-labelledby="overview">
+<h3 class="ch-heading ch11">Ch. 11 — Jupiter</h3>
+<div class="obj-card ch11" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">1</span>
+    <span class="obj-text">Know more about Jupiter's orbit and spin</span>
+    <button class="obj-master-btn" aria-label="Mark objective 1 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch11_1')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Position</strong> — identifies Jupiter as the 5th planet and innermost gas giant, ~5.2 AU from the Sun with an ~11.86-year orbit</li><li><strong>Rotation</strong> — describes its fast differential rotation (~9 h 55 min, the fastest-spinning planet) and that it spins faster at the equator than at the poles</li><li><strong>Consequence</strong> — connects the rapid spin to the planet's oblateness (equatorial radius 71,500 km vs polar 66,900 km)</li></ul>
+  </div>
+</div>
+<div class="obj-card ch11" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">2</span>
+    <span class="obj-text">Understand what a gas giant planet is</span>
+    <button class="obj-master-btn" aria-label="Mark objective 2 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch11_2')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Composition</strong> — states it is almost entirely hydrogen and helium (H₂ ≈86%, He ≈14%) with no solid surface</li><li><strong>Scale</strong> — gives the comparative figures (~320× Earth's mass, ~11× Earth's radius) rather than a raw kg value, and notes the low density (~1300 kg/m³)</li><li><strong>Why H/He</strong> — connects its massive gravity to its ability to retain light gases, keeping the composition H/He-dominated</li></ul>
+  </div>
+</div>
+<div class="obj-card ch11" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">3</span>
+    <span class="obj-text">Know more about Jupiter's atmosphere and storms</span>
+    <button class="obj-master-btn" aria-label="Mark objective 3 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch11_3')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Bands</strong> — distinguishes zones (bright, rising, high-pressure) from belts (dark, sinking, low-pressure) and describes the stable alternating zonal wind flow</li><li><strong>Great Red Spot</strong> — describes it as a long-lived (≥300 yr) anticyclonic storm ~2× Earth's size</li><li><strong>Energy &amp; color</strong> — notes Jupiter emits ~2× the energy it receives (still cooling from formation) and that colors come from trace-molecule photochemistry, not H/He</li></ul>
+  </div>
+</div>
+<div class="obj-card ch11" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">4</span>
+    <span class="obj-text">Have learned about the interior structure of Jupiter</span>
+    <button class="obj-master-btn" aria-label="Mark objective 4 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch11_4')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Layers</strong> — names the outward sequence — compact core → liquid metallic hydrogen → liquid molecular hydrogen → gaseous atmosphere — with gradual, not sharp, boundaries</li><li><strong>Core</strong> — states the core is ~5–10 Earth masses (possibly “dilute”/dissolved per Juno)</li><li><strong>Conditions</strong> — gives the central pressure (~100 million bars) and temperature (~20,000 K)</li></ul>
+  </div>
+</div>
+<div class="obj-card ch11" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">5</span>
+    <span class="obj-text">Understand where Jupiter's gigantic magnetic field originates</span>
+    <button class="obj-master-btn" aria-label="Mark objective 5 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch11_5')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Source</strong> — attributes the field to electric currents in the conductive liquid metallic hydrogen layer, amplified by rapid rotation</li><li><strong>Strength/size</strong> — notes it is ~19,500× Earth's and that the magnetosphere extends beyond Saturn's orbit</li><li><strong>Io torus</strong> — describes the Io plasma torus as a ring of charged particles (Na, S) fed by Io's volcanoes</li></ul>
+  </div>
+</div>
+<div class="obj-card ch11" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">6</span>
+    <span class="obj-text">Know more about Jupiter's major moons</span>
+    <button class="obj-master-btn" aria-label="Mark objective 6 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch11_6')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Galilean set</strong> — names the four Galilean moons (Io, Europa, Ganymede, Callisto) and notes the ~1:2:4 resonance</li><li><strong>Io &amp; Europa</strong> — identifies Io as the most volcanically active body in the Solar System and Europa as an ice-covered world with a probable subsurface salt-water ocean</li><li><strong>Ganymede &amp; Callisto</strong> — notes Ganymede is the largest moon in the Solar System (bigger than Mercury) and Callisto is old, heavily cratered, and geologically dead</li></ul>
+  </div>
+</div>
+<div class="obj-card ch11" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">7</span>
+    <span class="obj-text">Understand the process of tidal heating</span>
+    <button class="obj-master-btn" aria-label="Mark objective 7 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch11_7')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Mechanism</strong> — explains that a varying tidal bulge flexes a moon's interior and the internal friction generates heat</li><li><strong>Two requirements</strong> — states that BOTH proximity to a massive planet AND a slightly eccentric orbit are needed</li><li><strong>Circular-orbit case</strong> — notes a perfectly circular orbit produces tidal bulges but NO tidal heating, and ranks Io (heated most) → Europa → Callisto (least)</li></ul>
+  </div>
+</div>
+<h3 class="ch-heading ch12">Ch. 12 — Saturn</h3>
+<div class="obj-card ch12" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">8</span>
+    <span class="obj-text">Know more about Saturn as the 2nd gas giant (interior structure, differences from Jupiter)</span>
+    <button class="obj-master-btn" aria-label="Mark objective 8 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch12_8')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Basics</strong> — identifies Saturn as the 2nd gas giant, ~2× Jupiter's distance, with an ~29.4-yr orbit and ~10 h rotation</li><li><strong>Interior contrast</strong> — notes a larger solid core but a much thinner liquid metallic hydrogen zone than Jupiter, giving a weaker magnetic field</li><li><strong>Mass comparison</strong> — gives the comparative mass (~95 Earth masses vs Jupiter's ~320) rather than a raw kg value</li></ul>
+  </div>
+</div>
+<div class="obj-card ch12" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">9</span>
+    <span class="obj-text">Know that Saturn is the least dense planet in the Solar System</span>
+    <button class="obj-master-btn" aria-label="Mark objective 9 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch12_9')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Density</strong> — states its mean density is ~700 kg/m³ — less than water — so Saturn would float</li><li><strong>Shape</strong> — connects fast rotation + low density to it being the flattest planet</li><li><strong>Excess heat</strong> — explains it radiates ~3× the energy it receives via helium precipitation (He condenses and sinks, heating the interior)</li></ul>
+  </div>
+</div>
+<div class="obj-card ch12" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">10</span>
+    <span class="obj-text">Have learned about the magnificent rings of Saturn and the connection to the Roche limit</span>
+    <button class="obj-master-btn" aria-label="Mark objective 10 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch12_10')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Ring nature</strong> — describes the rings as ~200,000 km wide but only tens of meters thick, made of countless mostly water-ice particles</li><li><strong>Roche limit</strong> — defines the Roche limit as the distance inside which tidal forces tear a moon apart, and notes the rings lie inside it</li><li><strong>Origin</strong> — connects this to a disrupted ~250 km body that could not re-form (Cassini data suggest the rings may be young, ~100 Myr)</li></ul>
+  </div>
+</div>
+<div class="obj-card ch12" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">11</span>
+    <span class="obj-text">Know more about Saturn's largest moon Titan</span>
+    <button class="obj-master-btn" aria-label="Mark objective 11 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch12_11')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Atmosphere</strong> — notes Titan is the only moon with a thick, dense atmosphere (~N₂ 98% + CH₄ 2%), surface pressure ~1.6× Earth's</li><li><strong>Surface</strong> — describes liquid methane/ethane lakes and a surface temperature ~94 K</li><li><strong>Size/probe</strong> — notes it is the 2nd-largest moon and that the Huygens probe landed on solid icy ground</li></ul>
+  </div>
+</div>
+<div class="obj-card ch12" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">12</span>
+    <span class="obj-text">Understand why Titan can retain a dense atmosphere</span>
+    <button class="obj-master-btn" aria-label="Mark objective 12 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch12_12')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Key factor</strong> — explains that it is mass PLUS low temperature, not mass alone</li><li><strong>Mechanism</strong> — states that Titan's great distance and cold make gas molecules too slow to escape</li><li><strong>Contrast</strong> — notes that if moved to Ganymede's warmer distance Titan would lose its atmosphere, explaining why bigger, warmer moons lack one</li></ul>
+  </div>
+</div>
+<div class="obj-card ch12" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">13</span>
+    <span class="obj-text">Know that the small moon Enceladus shows geologic activity</span>
+    <button class="obj-master-btn" aria-label="Mark objective 13 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch12_13')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Plumes</strong> — describes cryo-volcanic plumes (mostly water vapor) from the south polar region, found by Cassini</li><li><strong>Heat source</strong> — attributes the activity to tidal heating sustained by a 2:1 resonance with Dione</li><li><strong>E-ring</strong> — notes Enceladus orbits in, and is the likely source of, the E-ring</li></ul>
+  </div>
+</div>
+<h3 class="ch-heading ch13">Ch. 13 — Uranus &amp; Neptune</h3>
+<div class="obj-card ch13" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">14</span>
+    <span class="obj-text">Understand what an ice giant planet is</span>
+    <button class="obj-master-btn" aria-label="Mark objective 14 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch13_14')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Definition</strong> — states Uranus &amp; Neptune are ice giants — ~4× Earth's radius but &lt; 20 Earth masses (Uranus ~14, Neptune ~17)</li><li><strong>Composition</strong> — notes most of the mass (~80%) is an icy mantle of water/ammonia/methane over a rocky core, with only a modest H/He envelope</li><li><strong>Contrast</strong> — explains they are too dense to be pure H/He gas giants at that size</li></ul>
+  </div>
+</div>
+<div class="obj-card ch13" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">15</span>
+    <span class="obj-text">Understand the special interior of these two planets</span>
+    <button class="obj-master-btn" aria-label="Mark objective 15 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch13_15')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Layers</strong> — names rocky core (~10 M⊕) → massive icy mantle → H/He gas atmosphere</li><li><strong>Mass fraction</strong> — states core + mantle ≈ 80% of total mass, central pressure ~100 million bars</li><li><strong>No metallic H</strong> — notes the absence of a thick metallic-hydrogen zone (unlike Jupiter/Saturn), which changes how the field is generated</li></ul>
+  </div>
+</div>
+<div class="obj-card ch13" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">16</span>
+    <span class="obj-text">Know more about Uranus's extreme axis tilt</span>
+    <button class="obj-master-btn" aria-label="Mark objective 16 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch13_16')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Tilt</strong> — states Uranus is tilted ~98°, essentially on its side</li><li><strong>Seasons</strong> — describes the resulting extreme seasons (a pole can face continuous sunlight for years, then continuous dark)</li><li><strong>Cause</strong> — notes a giant collision is the likely cause, but the moons' matching tilt complicates a single-impact explanation</li></ul>
+  </div>
+</div>
+<div class="obj-card ch13" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">17</span>
+    <span class="obj-text">Know why both planets appear blue/green</span>
+    <button class="obj-master-btn" aria-label="Mark objective 17 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch13_17')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Methane</strong> — attributes the color to methane in the upper atmosphere absorbing red light and reflecting blue/green</li><li><strong>Uranus vs Neptune</strong> — contrasts featureless, heat-poor Uranus with the deeper-blue, dynamic Neptune</li><li><strong>Neptune's heat</strong> — notes Neptune radiates ~2.7× the energy it receives (a strong internal heat source)</li></ul>
+  </div>
+</div>
+<div class="obj-card ch13" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">18</span>
+    <span class="obj-text">Understand how their strange magnetic fields are generated</span>
+    <button class="obj-master-btn" aria-label="Mark objective 18 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch13_18')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Odd geometry</strong> — states both fields are strongly tilted (Uranus ~60°, Neptune ~46°) and offset ~⅓ of the radius from center</li><li><strong>Source</strong> — attributes them to electric currents in a conducting ionic solution within the icy mantle (e.g., dissolved ammonia)</li><li><strong>Contrast</strong> — notes this differs from Earth's molten core or Jupiter's metallic hydrogen, explaining the misalignment and offset</li></ul>
+  </div>
+</div>
+<div class="obj-card ch13" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">19</span>
+    <span class="obj-text">Know more about Triton, Neptune's extraordinary moon</span>
+    <button class="obj-master-btn" aria-label="Mark objective 19 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch13_19')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Retrograde/capture</strong> — states Triton has a retrograde, inclined orbit → almost certainly a captured Kuiper-belt object</li><li><strong>Surface</strong> — notes it is the coldest object yet visited (~37 K), with a thin N₂ atmosphere and nitrogen geysers</li><li><strong>Fate</strong> — describes it spiraling inward, to be tidally torn into a ring in ~100 Myr</li></ul>
+  </div>
+</div>
+<h3 class="ch-heading ch14">Ch. 14 — Solar System Debris</h3>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">20</span>
+    <span class="obj-text">Know how (and why) Pluto was discovered almost 100 years ago</span>
+    <button class="obj-master-btn" aria-label="Mark objective 20 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_20')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Motivation</strong> — explains astronomers searched for a “Planet X” to explain apparent irregularities in Uranus/Neptune's orbits</li><li><strong>Discovery</strong> — states Clyde Tombaugh discovered Pluto in 1930</li><li><strong>Twist</strong> — notes the irregularities were not real (Voyager 2 corrected Neptune's mass) and Pluto is far too small to have caused them — a lucky accident</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">21</span>
+    <span class="obj-text">Understand the orbital properties of Pluto</span>
+    <button class="obj-master-btn" aria-label="Mark objective 21 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_21')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Orbit</strong> — gives key values: e=0.25, perihelion 29.7 AU / aphelion 49.3 AU, inclination 17.2°, period 248 yr</li><li><strong>Resonance</strong> — describes the 3:2 resonance with Neptune (2 Pluto orbits per 3 Neptune orbits)</li><li><strong>Protection</strong> — explains the resonance keeps their minimum separation &gt; 17 AU despite crossing orbits</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">22</span>
+    <span class="obj-text">Know more about the surface, interior and atmosphere of Pluto</span>
+    <button class="obj-master-btn" aria-label="Mark objective 22 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_22')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Atmosphere</strong> — describes a tenuous N₂/CO atmosphere (traces of CH₄, ~44 K) that freezes out when far from the Sun</li><li><strong>New Horizons</strong> — notes the 2015 flyby revealed nitrogen-ice plains (Sputnik Planum) convecting like a lava lamp, plus water-ice hills</li><li><strong>Surface detail</strong> — mentions a brighter methane-frost south pole and haze layers</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">23</span>
+    <span class="obj-text">Understand Pluto's moon system</span>
+    <button class="obj-master-btn" aria-label="Mark objective 23 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_23')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Charon</strong> — describes the large moon Charon, tidally locked with Pluto, orbiting a barycenter outside Pluto</li><li><strong>Small moons</strong> — names the smaller moons (Nix, Hydra, Kerberos, Styx)</li><li><strong>Origin</strong> — connects Charon's formation to a giant impact, analogous to the Earth–Moon system</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">24</span>
+    <span class="obj-text">Understand why Pluto was demoted to dwarf planet</span>
+    <button class="obj-master-btn" aria-label="Mark objective 24 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_24')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Definition</strong> — states the IAU 2006 definition's three conditions (orbits the Sun; ~spherical; has cleared its orbital neighborhood)</li><li><strong>Which it fails</strong> — notes Pluto meets conditions 1 and 2 but not 3</li><li><strong>Reason</strong> — explains Pluto is embedded in the Kuiper belt among many similar objects, so it hasn't cleared its neighborhood</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">25</span>
+    <span class="obj-text">Understand the Kuiper belt and its origin</span>
+    <button class="obj-master-btn" aria-label="Mark objective 25 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_25')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Location</strong> — describes a disk of icy planetesimals just beyond Neptune (&gt;100,000 members)</li><li><strong>Members</strong> — notes Pluto is one of the largest and names Eris and Sedna</li><li><strong>Origin</strong> — explains it is the residual planetesimal disk that never formed a major planet, later sculpted by ice-giant migration</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">26</span>
+    <span class="obj-text">Understand what an asteroid is</span>
+    <button class="obj-master-btn" aria-label="Mark objective 26 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_26')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Definition</strong> — describes rocky minor planets in eccentric prograde orbits, mostly between Mars and Jupiter</li><li><strong>Not a broken planet</strong> — states asteroids are NOT fragments of a destroyed planet</li><li><strong>Origin</strong> — identifies them as primordial planetesimals that never accreted into a planet</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">27</span>
+    <span class="obj-text">Know that most asteroids are located in the Main Asteroid Belt between Mars and Jupiter</span>
+    <button class="obj-master-btn" aria-label="Mark objective 27 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_27')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Location</strong> — states the belt lies between Mars and Jupiter</li><li><strong>Mass</strong> — notes the original mass was ~1 Earth mass but is now &lt; 0.1% of Earth's</li><li><strong>Clearing</strong> — connects the depleted mass to gravitational clearing over time</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">28</span>
+    <span class="obj-text">Understand the cause of the Kirkwood Gaps in the Main Asteroid Belt</span>
+    <button class="obj-master-btn" aria-label="Mark objective 28 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_28')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>What they are</strong> — describes depleted zones at specific orbital radii within the belt</li><li><strong>Cause</strong> — attributes them to orbital resonances with Jupiter</li><li><strong>Mechanism</strong> — explains asteroids at those periods get repeatedly tugged and cleared out</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">29</span>
+    <span class="obj-text">Know more about the general chemical composition of asteroids</span>
+    <button class="obj-master-btn" aria-label="Mark objective 29 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_29')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Three types</strong> — names C-type (carbonaceous, ~75%, dark, most primitive), S-type (silicate/rocky, ~15%), and M-type (metallic, ~10%)</li><li><strong>Trend</strong> — notes composition trends from metallic/rocky in the inner belt to carbonaceous in the outer belt</li><li><strong>Primitive</strong> — connects C-types to material largely unchanged since ~4.6 Gyr</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">30</span>
+    <span class="obj-text">Understand that the asteroids are another remnant of the primordial planetesimal disk</span>
+    <button class="obj-master-btn" aria-label="Mark objective 30 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_30')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Leftovers</strong> — states asteroids are leftover planetesimals (rockier and less icy than Kuiper-belt objects)</li><li><strong>Jupiter's role</strong> — explains Jupiter's gravity prevented them from forming a planet</li><li><strong>Dawn</strong> — cites Dawn results — Ceres primitive and wet (~25% water), Vesta evolved, dry, and differentiated</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">31</span>
+    <span class="obj-text">Know more about the impact hazard of Near Earth Asteroids</span>
+    <button class="obj-master-btn" aria-label="Mark objective 31 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_31')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>NEAs</strong> — defines NEAs as asteroids coming within ~1 AU of Earth's orbit; ~1000 are potentially hazardous (≥150 m)</li><li><strong>K/T event</strong> — describes the ~10–15 km impactor 66 Myr ago → Chicxulub, with extinction driven by the following “nuclear winter,” not the blast</li><li><strong>Deflection</strong> — notes DART (2022) shortened Dimorphos's orbit by 32 min, showing deflection is feasible</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">32</span>
+    <span class="obj-text">Understand what comets and meteorites are</span>
+    <button class="obj-master-btn" aria-label="Mark objective 32 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_32')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Comet</strong> — describes a comet as a small (few-km) icy “dirty snowball,” among the oldest and most primitive material</li><li><strong>Meteoroid/meteor/meteorite</strong> — distinguishes meteoroid (the debris), meteor (the streak of light), and meteorite (what reaches the ground)</li><li><strong>Light</strong> — notes comets emit only reflected sunlight</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">33</span>
+    <span class="obj-text">Know more about the highly unusual orbital properties of comets</span>
+    <button class="obj-master-btn" aria-label="Mark objective 33 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_33')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Orbits</strong> — states comet orbits are far more elliptical and occur at all inclinations and orientations (prograde and retrograde)</li><li><strong>Contrast</strong> — contrasts this with planets/asteroids/KBOs, which stay near the ecliptic and prograde</li><li><strong>Two classes</strong> — distinguishes short-period (P &lt; 200 yr, e.g. Halley) from long-period (Oort cloud) comets</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">34</span>
+    <span class="obj-text">Understand why comets develop tails</span>
+    <button class="obj-master-btn" aria-label="Mark objective 34 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_34')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Sublimation</strong> — explains that near the Sun subsurface ice sublimates (solid → gas) forming a coma</li><li><strong>Push</strong> — attributes the tail to solar radiation pressure and the solar wind</li><li><strong>Direction</strong> — states the tail always points away from the Sun, not backward along the path</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">35</span>
+    <span class="obj-text">Know more about the physical properties of cometary nuclei</span>
+    <button class="obj-master-btn" aria-label="Mark objective 35 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_35')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Nucleus</strong> — describes a few-km “dirty snowball” of ices + dust holding most of the comet's mass, with a very dark surface</li><li><strong>Mass</strong> — gives the rough mass range (~10¹²–10¹⁶ kg)</li><li><strong>Erosion</strong> — notes close solar passes erode comets over time (Halley/Hale-Bopp destroyed in a few thousand orbits)</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">36</span>
+    <span class="obj-text">Know more about the Rosetta mission that landed on a comet</span>
+    <button class="obj-master-btn" aria-label="Mark objective 36 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_36')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Mission</strong> — states ESA's Rosetta orbited comet 67P/Churyumov–Gerasimenko</li><li><strong>Landing</strong> — notes the Philae lander touched down 11/12/2014 — the first-ever comet landing</li><li><strong>Science</strong> — mentions it imaged gas jets near perihelion</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">37</span>
+    <span class="obj-text">Understand the origin and structure of the Oort cloud</span>
+    <button class="obj-master-btn" aria-label="Mark objective 37 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_37')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Structure</strong> — describes a vast spherical shell of trillions of icy comets out to ~100,000 AU (~5 Earth masses)</li><li><strong>Origin</strong> — explains it formed from icy planetesimals ejected outward by gravitational interactions with the young giant planets</li><li><strong>Long-period comets</strong> — connects it to the source of long-period comets</li></ul>
+  </div>
+</div>
+<div class="obj-card ch14" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">38</span>
+    <span class="obj-text">Understand shooting stars and meteor showers</span>
+    <button class="obj-master-btn" aria-label="Mark objective 38 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch14_38')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Shooting star</strong> — defines it as a small dust particle burning up (~75–120 km altitude) from ram-pressure heating</li><li><strong>Meteor showers</strong> — explains they occur when Earth crosses a comet's debris stream, with meteors radiating from a “radiant”</li><li><strong>Examples</strong> — cites the Leonids (~Nov 16) and Geminids (~Dec 13)</li></ul>
+  </div>
+</div>
+<h3 class="ch-heading ch15">Ch. 15 — Exoplanets</h3>
+<div class="obj-card ch15" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">39</span>
+    <span class="obj-text">Understand how the two most important indirect techniques work</span>
+    <button class="obj-master-btn" aria-label="Mark objective 39 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch15_39')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Indirect vs direct</strong> — defines indirect detection as measuring the planet's effect on the star's light rather than imaging the planet</li><li><strong>Why indirect</strong> — explains direct imaging is extremely hard because the planet sits beside a vastly brighter star at huge distance</li><li><strong>The two methods</strong> — names radial velocity and transit as the two workhorse indirect methods</li></ul>
+  </div>
+</div>
+<div class="obj-card ch15" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">40</span>
+    <span class="obj-text">Understand the radial velocity technique</span>
+    <button class="obj-master-btn" aria-label="Mark objective 40 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch15_40')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Mechanism</strong> — explains the star wobbles around the common center of mass and the Doppler effect measures its velocity along the line of sight</li><li><strong>What it yields</strong> — states it gives minimum mass (M·sin i), period, and eccentricity — minimum mass because inclination is usually unknown</li><li><strong>51 Pegasi b</strong> — cites 51 Peg b (Mayor &amp; Queloz 1995) as the first, a surprising “hot Jupiter” (P=4.3 d, a=0.05 AU)</li></ul>
+  </div>
+</div>
+<div class="obj-card ch15" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">41</span>
+    <span class="obj-text">Understand the transit technique</span>
+    <button class="obj-master-btn" aria-label="Mark objective 41 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch15_41')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Mechanism</strong> — explains an edge-on planet crossing its star causes a small periodic dip in brightness</li><li><strong>What it yields</strong> — states it gives radius (from ΔL/L ≈ (R_p/R_star)²), period, and duration — but not mass or eccentricity</li><li><strong>Probability/density</strong> — notes transit probability is set mainly by orbital distance (closer = higher; Mercury only ~1%) and that transit + RV together give mean density</li></ul>
+  </div>
+</div>
+<div class="obj-card ch15" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">42</span>
+    <span class="obj-text">Know more about NASA's Kepler mission</span>
+    <button class="obj-master-btn" aria-label="Mark objective 42 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch15_42')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>Method</strong> — describes a space telescope using the transit method on ~160,000 stars over ~4 years</li><li><strong>Why space</strong> — explains an Earth-size transit signal is smaller than the light-curve noise from Earth's atmosphere</li><li><strong>Goal</strong> — states its primary goal was the frequency of Earth-size planets in the habitable zone of Sun-like stars</li></ul>
+  </div>
+</div>
+<div class="obj-card ch15" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleObj(this);}">
+  <div class="obj-row">
+    <span class="obj-num">43</span>
+    <span class="obj-text">Know more about the planets discovered by these 2 techniques and by Kepler</span>
+    <button class="obj-master-btn" aria-label="Mark objective 43 as mastered" onclick="event.stopPropagation();toggleObjMastery(this,'ch15_43')">✓</button>
+    <span class="obj-caret" aria-hidden="true">▾</span>
+  </div>
+  <div class="obj-body">
+    <ul><li><strong>RV finds</strong> — notes RV surveys found many close-in giant “hot Jupiters” with surprisingly high eccentricities</li><li><strong>Kepler finds</strong> — states Kepler's most common result was super-Earths and mini-Neptunes</li><li><strong>Frequency</strong> — cites the estimate of ~300 million potentially habitable worlds in the galaxy (examples: Proxima b, TRAPPIST-1)</li></ul>
+  </div>
+</div>
+</section>
+
+<section id="panel-guide" class="panel" role="tabpanel" aria-labelledby="guide">
+<div class="chapter-block ch11">
+  <div class="chapter-header" onclick="toggleChapter(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleChapter(this);}">
+    <span>Ch. 11 — Jupiter</span><span class="chevron">▾</span>
+  </div>
+  <div class="chapter-body">
+
+<h4>Orbit &amp; spin</h4>
+<p>Jupiter is the fifth planet from the Sun and the innermost jovian (gas giant) world. It is the third-brightest object in the night sky (after the Moon and Venus), brightest near opposition. It orbits at about 5.2 AU with a period of ~11.86 Earth years, and spins extremely fast — a differential rotation of about 9 h 55 min, faster at the equator than at the poles (the fastest-spinning planet). That rapid spin flattens the planet noticeably: the equatorial radius (71,500 km) exceeds the polar radius (66,900 km).</p>
+
+<h4>What a gas giant is</h4>
+<p>Jupiter is composed almost entirely of hydrogen and helium (H₂ ≈ 86.1%, He ≈ 13.8%, with trace CH₄, NH₃, C₂H₂, C₂H₆, H₂O). There is no solid surface — the atmosphere transitions smoothly into a fluid interior. Its mass is ~318–320 Earth masses (more than twice all the other planets combined), its radius ~11× Earth's, and its density is low (~1300 kg/m³). Its enormous gravity lets it hold onto light gases, which is <em>why</em> it stays H/He-dominated. It is the prototype for the other jovian worlds and a model for exoplanetary gas giants.</p>
+<p class="muted-note">Prof. note: don't memorize the mass in kilograms — know the comparative figures (~320× Earth's mass, ~11× Earth's radius). The four-giant-planets comparison slide (gas giants Jupiter/Saturn vs ice giants Uranus/Neptune) is flagged as maybe the most important slide of the chapter.</p>
+
+<h4>Atmosphere &amp; storms</h4>
+<p>Two features dominate: the banded structure and the Great Red Spot. The bands are alternating <strong>zones</strong> (bright, upward-moving convective currents, high pressure) and <strong>belts</strong> (dark, sinking material, low pressure). This zonal flow forms stable alternating east/west wind bands, exaggerated by the rapid rotation; there are no seasons. Colors come from photochemistry of trace molecules, not from H/He themselves. Jupiter emits about twice the energy it receives from the Sun — it is still cooling from its formation. The <strong>Great Red Spot</strong> is a giant anticyclonic storm about twice Earth's size, observed for ≥ 300 years, rotating counter-clockwise about once every 6 days over rising cool air; why it is red and so long-lived remain open puzzles.</p>
+
+<h4>Interior structure</h4>
+<table class="data-table"><tr><th>Layer (outward)</th><th>Description</th></tr>
+<tr><td>Core</td><td>Dense/compact, ~5–10 M⊕ (Juno data suggest it may be "dilute"/dissolved)</td></tr>
+<tr><td>Liquid metallic hydrogen</td><td>Highly conductive; source of the magnetic field</td></tr>
+<tr><td>Liquid molecular hydrogen</td><td>Thick fluid layer</td></tr>
+<tr><td>Gaseous atmosphere</td><td>Visible cloud decks</td></tr></table>
+<p>Boundaries are gradual, not sharp. Central pressure reaches ~100 million bars at ~20,000 K.</p>
+
+<h4>Magnetic field &amp; magnetosphere</h4>
+<p>The field is generated by electric currents in the large, highly conductive liquid metallic hydrogen zone, amplified by the fast rotation — about 19,500× Earth's field strength. The magnetosphere is enormous, extending beyond Saturn's orbit, with a flat current sheet in the magnetic equatorial plane. The <strong>Io plasma torus</strong> is a ring of charged particles (sodium, sulfur) fed by Io's volcanoes.</p>
+
+<h4>The Galilean moons</h4>
+<table class="data-table"><tr><th>Moon</th><th>a (km)</th><th>Period</th><th>Signature</th></tr>
+<tr><td>Io</td><td>422,000</td><td>1.8 d</td><td>Most volcanically active body in the Solar System; sulfur lava; youngest surface</td></tr>
+<tr><td>Europa</td><td>671,000</td><td>3.6 d</td><td>Ice-covered; probable subsurface salt-water ocean; life candidate</td></tr>
+<tr><td>Ganymede</td><td>1,070,000</td><td>7.2 d</td><td>Largest moon in the Solar System (bigger than Mercury); own magnetic field</td></tr>
+<tr><td>Callisto</td><td>1,883,000</td><td>16.7 d</td><td>Heavily cratered, old, geologically dead; effectively no tidal heating</td></tr></table>
+<p>The inner three (Io:Europa:Ganymede) sit near a 1:2:4 orbital resonance. All four were discovered by Galileo and are visible in binoculars.</p>
+
+<h4>Tidal heating</h4>
+<p>A moon on a slightly <strong>eccentric</strong> orbit close to a massive planet feels a <em>varying</em> tidal bulge; the flexing creates internal friction and therefore heat. Two conditions are required: proximity to a massive planet (large tides) <em>and</em> a slightly eccentric orbit (so the bulge changes size). On a perfectly circular orbit there would be tidal bulges but <strong>no</strong> tidal heating. Heating falls off with distance/period: Io (1.8 d) is heated most → continuous volcanism; Europa is intermediate; Callisto (16.7 d) is heated least.</p>
+
+<h4>Rings, Shoemaker–Levy 9, and extra moons</h4>
+<p>Jupiter has a thin, dusty ring produced by micrometeorite erosion of the small moons Metis and Adrastea, plus 60+ additional small/irregular moons. In 1994, comet <strong>Shoemaker–Levy 9</strong> — torn into fragments spread over ~1 million km, largest piece ~1–2 km — struck Jupiter, demonstrating the planet's strong gravitational influence on small bodies; such impacts are relatively common there.</p>
+
+  </div>
+</div>
+<div class="chapter-block ch12">
+  <div class="chapter-header" onclick="toggleChapter(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleChapter(this);}">
+    <span>Ch. 12 — Saturn</span><span class="chevron">▾</span>
+  </div>
+  <div class="chapter-body">
+
+<h4>Saturn as the 2nd gas giant</h4>
+<p>Saturn is the second gas giant and the outermost planet visible to the naked eye, roughly twice Jupiter's distance from the Sun. Its orbital period is 29.4 Earth years, it has a rapid differential rotation (~10 h), and an axial tilt of 27°. Its interior mirrors Jupiter's but with a larger solid core and a <strong>much thinner liquid metallic hydrogen zone</strong> beneath a thick liquid molecular hydrogen layer; the thinner metallic-H layer gives it a weaker magnetic field (~1/20 of Jupiter's). Its mass is ~95 Earth masses — only slightly smaller than Jupiter in size but far less massive.</p>
+<p class="muted-note">Prof. note: again, don't memorize kilograms — remember Jupiter ~320 M⊕ vs Saturn ~95 M⊕. Saturn is only slightly smaller than Jupiter but much less massive, hence its very low density.</p>
+
+<h4>Least dense &amp; flattest planet</h4>
+<p>Saturn's mean density is ~700 kg/m³ — <strong>less than water</strong> — so it would float. Its fast rotation combined with low density make it the <strong>flattest</strong> planet (equatorial 60,000 km vs polar 54,000 km). It radiates about three times the energy it receives; formation heat alone is insufficient, so the extra heat comes from <strong>helium precipitation</strong> — helium condenses and sinks through the liquid hydrogen, compressing and heating the interior (leaving the upper atmosphere ~50% poorer in helium than Jupiter's).</p>
+
+<h4>The rings &amp; the Roche limit</h4>
+<p>The rings span ~200,000 km but are only tens of meters thick, made of countless particles (fractions of a mm to tens of m) that are mostly water ice (reflecting ~80% of sunlight), lying in the equatorial plane. The <strong>Roche limit</strong> is the critical distance inside which a body's tidal forces would tear a moon apart (~2.4 Earth radii for the Earth–Moon case). Saturn's rings lie <strong>inside</strong> its Roche limit, so they most likely came from a ~250 km moon/asteroid/comet that was tidally disrupted and could not re-form. Cassini data suggest the rings may be only ~100 Myr old (still debated).</p>
+<table class="data-table"><tr><th>Year</th><th>Discovery</th></tr>
+<tr><td>1610</td><td>Galileo sees the rings (as "ears")</td></tr>
+<tr><td>1655</td><td>Huygens identifies them as a ring</td></tr>
+<tr><td>1675</td><td>Cassini finds the Cassini Division</td></tr>
+<tr><td>1875</td><td>Maxwell: rings are many small particles</td></tr>
+<tr><td>1895</td><td>Doppler measurements confirm Keplerian motion</td></tr></table>
+
+<h4>Titan</h4>
+<p>Titan is the second-largest moon in the Solar System and the only moon with a thick, dense atmosphere: ~98% N₂ + ~2% CH₄ (traces of argon), with a surface pressure about 60% greater than Earth's (~1.6×) and a surface temperature ~94 K. Its surface has lakes and oceans of liquid <strong>methane and ethane</strong> (mostly methane), "titanquakes," and likely a water layer tens of km down. The Huygens probe landed on solid icy ground.</p>
+
+<h4>Why Titan keeps its atmosphere</h4>
+<p>It is not mass alone — it is <strong>mass + low temperature</strong>. Titan's great distance from the Sun makes it cold enough that gas molecules move too slowly to escape. If Titan were moved to Ganymede's (warmer) distance, it would lose its atmosphere. This explains why larger but warmer moons (Ganymede, our Moon) lack thick atmospheres.</p>
+
+<h4>Enceladus</h4>
+<p>Cassini found jet-like <strong>cryo-volcanic plumes</strong> from the south polar region of the small moon Enceladus — mostly water vapor plus N₂, CH₄, and CO₂ — driven by tidal heating. Enceladus orbits within the densest part of the E-ring and is likely its source. It is in a <strong>2:1 resonance with Dione</strong>, which pumps its orbital eccentricity (0.0047) and sustains the internal heating; a mean density ~1.6 g/cm³ implies silicates/iron and possibly molten pockets.</p>
+
+  </div>
+</div>
+<div class="chapter-block ch13">
+  <div class="chapter-header" onclick="toggleChapter(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleChapter(this);}">
+    <span>Ch. 13 — Uranus &amp; Neptune</span><span class="chevron">▾</span>
+  </div>
+  <div class="chapter-body">
+
+<h4>Ice giants defined</h4>
+<p>Uranus and Neptune are <strong>ice giants</strong>, not gas giants. Each is about 4× Earth's radius but under 20 Earth masses (Uranus ~14 M⊕, Neptune ~17 M⊕) — too dense to be pure hydrogen/helium at that size. Most of their mass (~80%) is a mantle of "ices" — water, ammonia, and methane compounds of C, N, and O — over a rocky core, topped by only a modest H/He gas envelope.</p>
+<p class="muted-note">Prof. note: the interiors slide is flagged as "very important." At their size and mass these two <em>cannot</em> be pure H/He gas giants — hence the massive ice mantle, with mantle + core ≈ 80% of the mass. Expect a gas-giant-vs-ice-giant short answer.</p>
+
+<h4>Interior</h4>
+<p>Layers run rocky core (~10 M⊕, ~10× Earth's core) → a massive <strong>icy mantle</strong> (water/ammonia/methane) → an H/He molecular gas atmosphere. Core plus mantle make up ≈ 80% of the total mass, and central pressure reaches ~100 million bars. There is no thick metallic-hydrogen zone as in Jupiter/Saturn, which is why their magnetic fields are generated differently.</p>
+
+<h4>Uranus's extreme tilt</h4>
+<p>Uranus's rotation axis is tilted about 98° — essentially on its side. Its poles alternately point near the Sun, producing extreme seasons (a pole can face continuous sunlight for years, then continuous darkness). The likely cause is a giant collision, though the fact that the moons' orbits are tilted the same way is hard to explain with a single impact (there is no direct evidence).</p>
+
+<h4>Blue/green color</h4>
+<p><strong>Methane (CH₄)</strong> in the upper atmosphere absorbs red wavelengths and reflects blue/green. Uranus is a fairly featureless blue-green with little internal heat; Neptune is a deeper blue and surprisingly dynamic, with a strong internal heat source (radiating ~2.7× the energy it receives) and winds up to ~1500 km/h. Neptune's Great Dark Spot appeared in 1989 and later vanished.</p>
+
+<h4>Strange magnetic fields</h4>
+<p>Both fields are <strong>highly tilted</strong> relative to the rotation axis (Uranus ~60°, Neptune ~46°) and <strong>offset</strong> from the planet's center by about a third of the radius. They are generated not in metallic hydrogen or a molten core but by electric currents in a <strong>conducting ionic solution within the icy mantle</strong> (for example, dissolved ammonia), which explains the misalignment and offset.</p>
+
+<h4>Triton</h4>
+<p>Neptune's large moon Triton has a <strong>retrograde</strong> orbit inclined about -23° (opposite Neptune's spin), so it is almost certainly a <strong>captured</strong> Kuiper-belt object rather than one formed in place. It is the coldest object yet visited (~37 K), with a very thin N₂ atmosphere (~1/100,000 of Earth's), a water+nitrogen-ice surface, few craters (young, active), and nitrogen "geysers" several km high. It is spiraling inward and may be tidally torn into a ring in ~100 Myr.</p>
+
+<h4>Uranus vs Neptune — quick compare</h4>
+<table class="data-table"><tr><th></th><th>Uranus</th><th>Neptune</th></tr>
+<tr><td>Distance</td><td>19.2 AU</td><td>30.1 AU</td></tr>
+<tr><td>Period</td><td>84 yr</td><td>164 yr</td></tr>
+<tr><td>Axis tilt</td><td>98°</td><td>29.6°</td></tr>
+<tr><td>Field tilt</td><td>~60°</td><td>~46°</td></tr>
+<tr><td>Internal heat</td><td>Little</td><td>~2.7× received</td></tr>
+<tr><td>Mass</td><td>~14 M⊕</td><td>~17 M⊕</td></tr></table>
+<p>Voyager 2 (launched 1977) is the only spacecraft to visit both, on its "Grand Tour." Miranda (a moon of Uranus) hosts Verona Rupes, the tallest cliff in the Solar System (~20 km).</p>
+
+  </div>
+</div>
+<div class="chapter-block ch14">
+  <div class="chapter-header" onclick="toggleChapter(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleChapter(this);}">
+    <span>Ch. 14 — Solar System Debris</span><span class="chevron">▾</span>
+  </div>
+  <div class="chapter-body">
+
+<p class="muted-note">Chapter 14 spans three lecture parts — Pluto/Kuiper belt, asteroids, and comets/meteorites — and carries the largest share of study-guide bullets. All three feed this one section.</p>
+
+<h4>Pluto's discovery</h4>
+<p>Astronomers thought unexplained irregularities in the orbits of Uranus and Neptune implied a "Planet X." Clyde Tombaugh discovered <strong>Pluto in 1930</strong> (named by 11-year-old Venetia Burney; "PL" also honors Percival Lowell). The irregularities turned out <em>not</em> to be real — Voyager 2 gave Neptune's correct mass and they vanished, and Pluto is far too small to have caused them anyway. Its discovery was essentially a lucky accident.</p>
+
+<h4>Pluto's orbit</h4>
+<p>Eccentricity 0.25; perihelion 29.7 AU, aphelion 49.3 AU; inclination 17.2°; orbital period 248 yr; rotation 6.5 days. Pluto is in a <strong>3:2 resonance with Neptune</strong> (two Pluto orbits for every three of Neptune's) — a <em>protective</em> resonance: despite crossing Neptune's orbit, their minimum separation stays above 17 AU (Pluto actually comes closer to Uranus, ~11 AU, than to Neptune).</p>
+
+<h4>Pluto's surface, interior &amp; atmosphere</h4>
+<p>A tenuous atmosphere of N₂ and CO with traces of CH₄ is retained at ~44 K and freezes out when Pluto is far from the Sun; a brighter south pole marks a frozen methane cap. The New Horizons flyby (07/14/2015) revealed water-ice "floating hills," nitrogen-ice plains (Sputnik Planum) convecting like a lava lamp, and haze layers.</p>
+
+<h4>Pluto's moons</h4>
+<p>The large moon <strong>Charon</strong> is tidally locked with Pluto, and the pair orbit a barycenter that lies outside Pluto. Smaller moons include Nix, Hydra, Kerberos, and Styx. Charon likely formed in a giant impact, analogous to the Earth–Moon system.</p>
+
+<h4>Why Pluto was demoted</h4>
+<p>The IAU planet definition (<strong>2006</strong>) has three conditions: (1) orbits the Sun; (2) is massive enough to be roughly spherical; (3) has <strong>cleared its orbital neighborhood</strong>. Pluto meets 1 and 2 but not 3 — it is embedded in the Kuiper belt among many similar objects — so it is classified as a dwarf planet.</p>
+<p class="muted-note">Prof. note: the phrase "cleared the neighborhood" is hammered — the key is <em>no similar-size object nearby</em>. Jupiter's orbit has debris but nothing comparable in mass, so it qualifies; Pluto fails because it sits among similar Kuiper-belt bodies. A prime short-answer.</p>
+
+<h4>The Kuiper belt</h4>
+<p>A disk of icy planetesimals just beyond Neptune (predicted in the 1950s, first object found in 1992), with over 100,000 members and ~1100 Pluto-like objects; Pluto is one of the largest, near the inner edge. Notable members: Eris (~Triton-sized) and Sedna (76–928 AU). The belt is the residual planetesimal disk that never formed a major planet, later sculpted by the outward migration of the ice giants.</p>
+
+<h4>Asteroids: what, where, why gapped, composition</h4>
+<p>Asteroids are rocky "minor planets" in eccentric, prograde orbits, mostly between Mars and Jupiter; sizes range from ~1/10 km up to Ceres (~940 km), with ~500,000 known. They are <strong>not</strong> fragments of a broken-up planet — they are primordial planetesimals that never accreted into one (Jupiter's gravity prevented it). The belt's original mass was ~1 Earth mass but is now under 0.1% of Earth's. The <strong>Kirkwood gaps</strong> are depleted zones caused by orbital resonances with Jupiter, which repeatedly tug and clear asteroids at those periods.</p>
+<table class="data-table"><tr><th>Type</th><th>Share</th><th>Composition / location</th></tr>
+<tr><td>C-type</td><td>~75%</td><td>Carbonaceous, dark, most primitive; outer belt</td></tr>
+<tr><td>S-type</td><td>~15%</td><td>Silicate/rocky; inner belt</td></tr>
+<tr><td>M-type</td><td>~10%</td><td>Metallic (Ni/Fe)</td></tr></table>
+<p>The Dawn mission found <strong>Ceres</strong> primitive and wet (~25% water) and <strong>Vesta</strong> evolved, dry, and differentiated (core/mantle/crust).</p>
+
+<h4>Near-Earth Asteroids &amp; impacts</h4>
+<p>NEAs come within ~1 AU of Earth's orbit; Apollo asteroids actually cross it. There are ~6500 Earth-crossers and ~1000 "potentially hazardous" (≥150 m). The <strong>K/T impactor</strong> (~10–15 km, 66 Myr ago) formed the ~180 km Chicxulub crater; the extinction was driven by the following "nuclear winter," not the blast itself, and K/T-scale events happen roughly every 100 Myr. DART (2022) shortened the moonlet Dimorphos's orbit by 32 minutes, showing deflection is feasible — blowing an asteroid up Hollywood-style is not the plan.</p>
+<table class="data-table"><tr><th>Event</th><th>Size / date</th></tr>
+<tr><td>Tunguska</td><td>~40–80 m, 1908</td></tr>
+<tr><td>Chelyabinsk</td><td>~17–20 m, ~440 kT, 02/15/2013</td></tr>
+<tr><td>Meteor Crater (AZ)</td><td>~50 m Ni/Fe, ~50,000 yr ago, ~10 MT</td></tr></table>
+
+<h4>Comets &amp; meteorites</h4>
+<p>A <strong>comet</strong> is a small (few-km) icy "dirty snowball" nucleus — the oldest, most primitive Solar System material — that emits only reflected sunlight. A <strong>meteoroid</strong> is small rocky/metal debris; a <strong>meteor</strong> is the streak of light as it burns up ("shooting star"); a <strong>meteorite</strong> is the piece that survives to the ground. Comet orbits are far more elliptical than planets' and occur at all inclinations and orientations (prograde and retrograde), unlike planets/asteroids/KBOs, which stay near the ecliptic and prograde. Short-period comets (P &lt; 200 yr, e.g. Halley) come from the Kuiper belt; long-period comets come from the Oort cloud.</p>
+
+<h4>Why comets have tails</h4>
+<p>Near the Sun (~1 AU), subsurface ice <strong>sublimates</strong> (solid → gas directly, because of the low pressure), forming a coma. Solar radiation pressure and the <strong>solar wind</strong> push gas and dust outward, so the tail <strong>always points away from the Sun</strong> — not backward along the path. The ion tail is straight and glowing (CO, N₂), the dust tail broad and curved.</p>
+<p class="muted-note">Prof. note: expect the "why a tail / why away from the Sun" short-answer, and remember comets are more ice-rich than asteroids (closer to KBOs) yet only a few km across.</p>
+
+<h4>Cometary nuclei &amp; Rosetta</h4>
+<p>A nucleus is a few km across — a "dirty snowball" of ices (water, methane, ammonia, CO₂) plus dust — holding most of the comet's mass, with a very dark surface and a mass of ~10¹²–10¹⁶ kg. Close solar passes erode comets (Halley and Hale-Bopp would be destroyed in a few thousand orbits). ESA's <strong>Rosetta</strong> orbited comet 67P/Churyumov–Gerasimenko, and its <strong>Philae</strong> lander touched down on 11/12/2014 — the first-ever comet landing — imaging gas jets near perihelion.</p>
+
+<h4>The Oort cloud</h4>
+<p>A vast spherical shell of trillions of icy comets extending up to ~100,000 AU, ~5 Earth masses in total, still gravitationally bound to the Sun. It formed from icy planetesimals <strong>ejected from the inner Solar System</strong> by gravitational interactions with the young giant planets (especially Jupiter and Saturn), onto long, eccentric orbits where they spend most of their time near aphelion. It is the source of long-period comets.</p>
+
+<h4>Shooting stars &amp; meteor showers</h4>
+<p>A shooting star is a small dust particle burning up in the atmosphere (~75–120 km altitude) from ram-pressure heating. Meteor showers occur when Earth crosses a stream of debris left along a comet's orbit; the meteors appear to radiate from one point (the radiant). Examples: the Leonids (~Nov 16, ~12/hr) and the Geminids (~Dec 13, ~50/hr).</p>
+
+  </div>
+</div>
+<div class="chapter-block ch15">
+  <div class="chapter-header" onclick="toggleChapter(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleChapter(this);}">
+    <span>Ch. 15 — Exoplanets</span><span class="chevron">▾</span>
+  </div>
+  <div class="chapter-body">
+
+<h4>Indirect vs direct detection</h4>
+<p><strong>Indirect detection</strong> measures a planet's effect on its star's light rather than imaging the planet directly. Direct imaging is extremely hard because the planet sits right next to a vastly brighter star at huge distance. The two workhorse indirect methods are radial velocity and transit.</p>
+
+<h4>Radial velocity (RV)</h4>
+<p>A star and its planet both orbit their common center of mass, so the star wobbles; the <strong>Doppler effect</strong> measures the star's velocity along the line of sight (only the star is observed). RV yields the planet's <strong>minimum mass</strong> (M·sin i), the orbital period (→ distance), and the eccentricity — minimum mass only, because the orbital inclination is usually unknown. The signal is largest for a massive planet close to the star. <strong>51 Pegasi b</strong> (Mayor &amp; Queloz, 1995; half of the 2019 Nobel) was found this way — a "hot Jupiter" with P = 4.3 d and a = 0.05 AU, the big surprise being its very short period and close orbit.</p>
+
+<h4>Transit</h4>
+<p>When the orbit is edge-on, the planet crosses in front of the star and causes a small periodic <strong>dip in brightness</strong>. Transit yields the planet's <strong>radius</strong> (from ΔL/L ≈ (R_planet/R_star)²), the period, and the transit duration — but <em>not</em> mass or eccentricity. Depths: Jupiter ~1–2%, Earth ~0.0084%. <strong>Transit probability is set mainly by orbital distance</strong> (closer = higher probability); even Mercury's is only ~1%. Combining transit (radius) with RV (mass) gives the planet's <strong>mean density</strong>. HD 209458 b was the first transiting exoplanet, with a lower mean density than Saturn.</p>
+<table class="data-table"><tr><th>Method</th><th>Yields</th><th>Does not give</th></tr>
+<tr><td>Radial velocity</td><td>Minimum mass (M·sin i), period, eccentricity</td><td>Radius</td></tr>
+<tr><td>Transit</td><td>Radius, period, duration</td><td>Mass, eccentricity</td></tr>
+<tr><td>RV + transit</td><td>Mean density</td><td>—</td></tr></table>
+<p class="muted-note">Prof. note: transit probability depending on orbital distance is called out as "an important point" — even the best-case (closest) planet gives a low probability, which is <em>why</em> Kepler needed so many stars. The RV/transit contrast (mass vs radius, both → density) is framed as the spine of the chapter.</p>
+
+<h4>NASA's Kepler mission</h4>
+<p>Kepler was a space telescope (continuous view, no atmosphere) that used the transit method on ~160,000 stars over ~4 years, designed for ~20 ppm precision (an Earth transit is ~85 ppm); its PI was Bill Borucki at NASA Ames. It had to go to space because an Earth-size transit signal is smaller than the light-curve noise from Earth's atmosphere. Its primary goal was the <strong>frequency of Earth-size planets in the habitable zone of Sun-like stars</strong> — an answer that is a statistical range, not a single number.</p>
+
+<h4>What has been found</h4>
+<p>RV surveys found many close-in giant planets ("hot Jupiters") and surprisingly high eccentricities — unexpected, since giants were assumed to form far out — plus the first multi-planet systems, often in orbital resonances. Kepler's most common finds were <strong>super-Earths and mini-Neptunes</strong> (sizes between Earth and Neptune). Estimates suggest ~300 million potentially habitable worlds in the galaxy (≥7% of Sun-like stars conservatively, ~50% on average). Examples: Proxima b (~1.3 M⊕, around the nearest star), Kepler-62 (a habitable-zone system), and TRAPPIST-1 (a tiny star giving large transit signals for Earth-size planets).</p>
+
+  </div>
+</div>
+</section>
+
+<section id="panel-flashcards" class="panel" role="tabpanel" aria-labelledby="flashcards">
+  <div class="filter-row" role="group" aria-label="Filter by chapter"><button class="filter-btn active" onclick="filterCards('all',this)">All</button><button class="filter-btn" onclick="filterCards('ch11',this)">Ch. 11</button><button class="filter-btn" onclick="filterCards('ch12',this)">Ch. 12</button><button class="filter-btn" onclick="filterCards('ch13',this)">Ch. 13</button><button class="filter-btn" onclick="filterCards('ch14',this)">Ch. 14</button><button class="filter-btn" onclick="filterCards('ch15',this)">Ch. 15</button></div>
+  <div class="fc-wrap">
+    <div class="fc-card" id="fc-card" onclick="flipCard()" aria-live="polite" tabindex="0" role="button" aria-label="Flashcard, tap to flip"></div>
+    <div class="fc-nav">
+      <button onclick="prevCard()" aria-label="Previous card">‹</button>
+      <span class="fc-counter" id="fc-counter">1 / 1</span>
+      <button onclick="nextCard()" aria-label="Next card">›</button>
+    </div>
+    <div class="fc-controls">
+      <button onclick="shuffleCards()">🔀 Shuffle</button>
+      <button id="fc-master-btn" onclick="toggleMastered(currentIndex)">☆ Mark mastered</button>
+    </div>
+  </div>
+</section>
+
+<section id="panel-quiz" class="panel" role="tabpanel" aria-labelledby="quiz">
+  <div class="filter-row" role="group" aria-label="Filter by chapter"><button class="filter-btn active" onclick="setQuizFilter('all',this)">All</button><button class="filter-btn" onclick="setQuizFilter('ch11',this)">Ch. 11</button><button class="filter-btn" onclick="setQuizFilter('ch12',this)">Ch. 12</button><button class="filter-btn" onclick="setQuizFilter('ch13',this)">Ch. 13</button><button class="filter-btn" onclick="setQuizFilter('ch14',this)">Ch. 14</button><button class="filter-btn" onclick="setQuizFilter('ch15',this)">Ch. 15</button></div>
+  <div id="quiz-score"></div>
+  <div id="quiz-container"></div>
+  <div class="quiz-actions">
+    <button id="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <button onclick="resetQuiz()">↺ Reset</button>
+  </div>
+</section>
+
+<section id="panel-discussion" class="panel" role="tabpanel" aria-labelledby="discussion">
+  <p class="muted-note">Short-answer / discussion prep — self-grade using the checklist after you write your response. ~50% of the last exam was short-answer, so use these to build fluency.</p>
+  <div class="filter-row" role="group" aria-label="Filter by chapter"><button class="filter-btn active" onclick="filterDisc('all',this)">All</button><button class="filter-btn" onclick="filterDisc('ch11',this)">Ch. 11</button><button class="filter-btn" onclick="filterDisc('ch12',this)">Ch. 12</button><button class="filter-btn" onclick="filterDisc('ch13',this)">Ch. 13</button><button class="filter-btn" onclick="filterDisc('ch14',this)">Ch. 14</button><button class="filter-btn" onclick="filterDisc('ch15',this)">Ch. 15</button></div>
+  <div id="disc-container"></div>
+</section>
+
+<section id="panel-notes" class="panel" role="tabpanel" aria-labelledby="notes">
+<div class="lectures-panel">
+  <h3>🎥 Video Lectures (Dr. Endl) — study on the go</h3>
+  <p class="muted-note">Tap a link to open the lecture on YouTube. Great for reviewing while walking or commuting.</p>
+  <div class="video-group"><h4>Ch. 11 — Jupiter</h4><ul class="video-list"><li><a href="https://youtu.be/yfJdJh0pzMg" target="_blank" rel="noopener">Chapter 11 Lecture, Part 1 (46 min)</a></li><li><a href="https://youtu.be/fyUjkCTWLTQ" target="_blank" rel="noopener">Chapter 11 Lecture, Part 2 (32 min)</a></li></ul></div><div class="video-group"><h4>Ch. 12 — Saturn</h4><ul class="video-list"><li><a href="https://youtu.be/qrGst6hgDyk" target="_blank" rel="noopener">Chapter 12 Lecture (59 min)</a></li></ul></div><div class="video-group"><h4>Ch. 13 — Uranus &amp; Neptune</h4><ul class="video-list"><li><a href="https://youtu.be/qY4CR9GyIQ4" target="_blank" rel="noopener">Chapter 13 Lecture (60 min)</a></li></ul></div><div class="video-group"><h4>Ch. 14 — Solar System Debris</h4><ul class="video-list"><li><a href="https://youtu.be/20p5Kn7h03E" target="_blank" rel="noopener">Chapter 14 Lecture, Part 1 — Pluto &amp; Kuiper Belt (44 min)</a></li><li><a href="https://youtu.be/UKBbsNeC8d4" target="_blank" rel="noopener">Chapter 14 Lecture, Part 2 — Asteroids (64 min)</a></li><li><a href="https://youtu.be/75_Tlj9Aolo" target="_blank" rel="noopener">Chapter 14 Lecture, Part 3 — Comets &amp; Meteorites (51 min)</a></li></ul></div><div class="video-group"><h4>Ch. 15 — Exoplanets</h4><ul class="video-list"><li><a href="https://youtu.be/-ApaOVMwZX4" target="_blank" rel="noopener">Chapter 15 Lecture (78 min)</a></li></ul></div>
+</div>
+
+<div class="notes-grid">
+<div class="notes-col">
+<h4>Ch. 11 — Jupiter</h4>
+<p><strong>Orbit &amp; spin (5.2 AU, ~11.86 yr, 9h55m):</strong> ____________________________</p>
+<p><strong>Gas giant: composition &amp; scale (~320×, ~11×):</strong> ____________________________</p>
+<p><strong>Atmosphere: zones/belts &amp; Great Red Spot:</strong> ____________________________</p>
+<p><strong>Interior layers &amp; metallic hydrogen:</strong> ____________________________</p>
+<p><strong>Magnetic field &amp; Io plasma torus:</strong> ____________________________</p>
+<p><strong>Galilean moons (Io/Europa/Ganymede/Callisto):</strong> ____________________________</p>
+<p><strong>Tidal heating (2 requirements):</strong> ____________________________</p>
+<h4>Ch. 12 — Saturn</h4>
+<p><strong>Interior vs Jupiter (thin metallic-H):</strong> ____________________________</p>
+<p><strong>Least dense / flattest / He precipitation:</strong> ____________________________</p>
+<p><strong>Rings &amp; the Roche limit:</strong> ____________________________</p>
+<p><strong>Titan (atmosphere, methane lakes):</strong> ____________________________</p>
+<p><strong>Why Titan keeps its atmosphere:</strong> ____________________________</p>
+<p><strong>Enceladus (plumes, Dione 2:1):</strong> ____________________________</p>
+<h4>Ch. 13 — Uranus &amp; Neptune</h4>
+<p><strong>Ice giants defined (~4× R, &lt;20 M⊕):</strong> ____________________________</p>
+<p><strong>Interior (icy mantle ~80% mass):</strong> ____________________________</p>
+<p><strong>Uranus's 98° tilt:</strong> ____________________________</p>
+<p><strong>Blue/green color (methane):</strong> ____________________________</p>
+<p><strong>Tilted, offset magnetic fields:</strong> ____________________________</p>
+<p><strong>Triton (retrograde / captured):</strong> ____________________________</p>
+</div>
+<div class="notes-col">
+<h4>Ch. 14 — Solar System Debris</h4>
+<p><strong>Pluto discovery (1930, Planet X):</strong> ____________________________</p>
+<p><strong>Pluto orbit &amp; 3:2 resonance:</strong> ____________________________</p>
+<p><strong>Pluto surface/atmosphere/New Horizons:</strong> ____________________________</p>
+<p><strong>Pluto moons (Charon):</strong> ____________________________</p>
+<p><strong>Dwarf-planet definition (cleared neighborhood):</strong> ____________________________</p>
+<p><strong>Kuiper belt &amp; origin:</strong> ____________________________</p>
+<p><strong>Asteroids: what / belt / Kirkwood gaps:</strong> ____________________________</p>
+<p><strong>Asteroid types (C/S/M) &amp; Dawn:</strong> ____________________________</p>
+<p><strong>NEAs &amp; K/T impact / DART:</strong> ____________________________</p>
+<p><strong>Comets vs meteoroid/meteor/meteorite:</strong> ____________________________</p>
+<p><strong>Comet orbits &amp; why tails point away from Sun:</strong> ____________________________</p>
+<p><strong>Cometary nuclei &amp; Rosetta/Philae:</strong> ____________________________</p>
+<p><strong>Oort cloud (origin, ~100,000 AU):</strong> ____________________________</p>
+<p><strong>Meteor showers (Leonids/Geminids):</strong> ____________________________</p>
+<h4>Ch. 15 — Exoplanets</h4>
+<p><strong>Indirect vs direct detection:</strong> ____________________________</p>
+<p><strong>Radial velocity (min mass, 51 Peg b):</strong> ____________________________</p>
+<p><strong>Transit (radius, probability ← distance):</strong> ____________________________</p>
+<p><strong>RV + transit → density:</strong> ____________________________</p>
+<p><strong>Kepler (why space, primary goal):</strong> ____________________________</p>
+<p><strong>What's been found (hot Jupiters, super-Earths):</strong> ____________________________</p>
+</div>
+</div>
+</section>
+
+</main>
+
+<footer>study.imichaelv.com · ASTR-1304-004 · Unit 3 · <a href="../../index.html" class="back-link footer-back-link">← Back to all courses</a></footer>
+
+<script>
+const FLASHCARDS_DATA = [
+  [
+    "ch11",
+    "Where is Jupiter, and how big is it compared to Earth?",
+    "5th planet and innermost gas giant, ~5.2 AU from the Sun; ~320× Earth's mass and ~11× Earth's radius."
+  ],
+  [
+    "ch11",
+    "How long are Jupiter's year and day?",
+    "Year ≈ 11.86 Earth years; day ≈ 9 h 55 min — the fastest-spinning planet."
+  ],
+  [
+    "ch11",
+    "What is 'differential rotation' on Jupiter?",
+    "It spins faster at the equator than at the poles; the rapid spin also flattens it (equatorial 71,500 km vs polar 66,900 km)."
+  ],
+  [
+    "ch11",
+    "What is a gas giant made of?",
+    "Almost entirely hydrogen and helium (H₂ ≈86%, He ≈14%) with no solid surface — the atmosphere blends smoothly into a fluid interior."
+  ],
+  [
+    "ch11",
+    "Why does Jupiter stay hydrogen/helium-rich?",
+    "Its enormous gravity lets it hold onto light gases that smaller, less massive worlds would lose."
+  ],
+  [
+    "ch11",
+    "What are Jupiter's zones and belts?",
+    "Zones = bright, rising, high-pressure bands; belts = dark, sinking, low-pressure bands — alternating east/west winds exaggerated by fast rotation."
+  ],
+  [
+    "ch11",
+    "What causes Jupiter's colors?",
+    "Photochemistry of trace molecules (not the H/He itself), energized by internal heat, solar UV, aurorae, and lightning."
+  ],
+  [
+    "ch11",
+    "Describe the Great Red Spot.",
+    "A giant anticyclonic storm ~2× Earth's size, stable for ≥300 years, rotating once per ~6 days."
+  ],
+  [
+    "ch11",
+    "How much energy does Jupiter emit vs. receive?",
+    "About twice what it receives from the Sun — it is still slowly cooling from its formation."
+  ],
+  [
+    "ch11",
+    "List Jupiter's interior layers from the center out.",
+    "Dense core → liquid metallic hydrogen → liquid molecular hydrogen → gaseous atmosphere (boundaries gradual, not sharp)."
+  ],
+  [
+    "ch11",
+    "Where does Jupiter's magnetic field come from?",
+    "Electric currents in the conductive liquid metallic-hydrogen zone, amplified by fast rotation (~19,500× Earth's field)."
+  ],
+  [
+    "ch11",
+    "What is the Io plasma torus?",
+    "A ring of charged particles (sodium, sulfur) fed by Io's volcanoes, sitting within Jupiter's enormous magnetosphere."
+  ],
+  [
+    "ch11",
+    "Name the four Galilean moons in order from Jupiter.",
+    "Io, Europa, Ganymede, Callisto — in a near 1:2:4 orbital resonance."
+  ],
+  [
+    "ch11",
+    "Why is Io so volcanically active?",
+    "It is closest to Jupiter (1.8-day orbit) and tidally heated the most — the most volcanic body in the Solar System."
+  ],
+  [
+    "ch11",
+    "What makes Europa special?",
+    "Tidal heating sustains a subsurface liquid salt-water ocean beneath its ice shell — a candidate for life."
+  ],
+  [
+    "ch11",
+    "What is notable about Ganymede and Callisto?",
+    "Ganymede is the largest moon in the Solar System (bigger than Mercury) with its own magnetic field; Callisto is old, cratered, cold, and geologically dead."
+  ],
+  [
+    "ch11",
+    "What two conditions are required for tidal heating?",
+    "Proximity to a massive planet (large tides) AND a slightly eccentric orbit (so the bulge flexes). A perfectly circular orbit → no heating."
+  ],
+  [
+    "ch12",
+    "How does Saturn compare to Jupiter in mass and size?",
+    "Only slightly smaller than Jupiter but far less massive (~95× Earth vs ~320×) → much lower density."
+  ],
+  [
+    "ch12",
+    "Why is Saturn's magnetic field weaker than Jupiter's?",
+    "Its liquid metallic-hydrogen layer is much thinner than Jupiter's."
+  ],
+  [
+    "ch12",
+    "What is Saturn's density, and why does it matter?",
+    "~700 kg/m³ — less than water, so Saturn would float; it is the least dense planet."
+  ],
+  [
+    "ch12",
+    "Why is Saturn the flattest planet?",
+    "Fast rotation combined with very low density; equatorial radius ~60,000 km vs polar ~54,000 km."
+  ],
+  [
+    "ch12",
+    "Saturn emits ~3× the energy it receives — what's the source?",
+    "Formation heat alone isn't enough; helium precipitation — helium condenses, sinks through liquid H, and compresses/heats the interior."
+  ],
+  [
+    "ch12",
+    "What are Saturn's rings made of, and how big are they?",
+    "Countless small particles, mostly water ice; ~200,000 km wide but only tens of meters thick."
+  ],
+  [
+    "ch12",
+    "What is the Roche limit?",
+    "The distance inside which a planet's tidal forces would tear a moon apart; Saturn's rings lie inside it."
+  ],
+  [
+    "ch12",
+    "How did Saturn's rings likely form?",
+    "A ~250-km moon/asteroid/comet strayed inside the Roche limit and was tidally disrupted; the pieces can't re-form into a moon."
+  ],
+  [
+    "ch12",
+    "What is unique about Titan's atmosphere?",
+    "It's the only moon with a thick, dense atmosphere — ~98% N₂, ~2% CH₄, surface pressure ~1.6× Earth's."
+  ],
+  [
+    "ch12",
+    "Why can Titan keep a dense atmosphere when Ganymede can't?",
+    "Mass plus low temperature — Titan is cold enough that gas molecules move too slowly to escape."
+  ],
+  [
+    "ch12",
+    "What liquids are on Titan's surface?",
+    "Lakes and seas of liquid methane and ethane (mostly methane) at ~94 K."
+  ],
+  [
+    "ch12",
+    "What did Cassini find at Enceladus?",
+    "Cryo-volcanic plumes (mostly water vapor) erupting from the south pole, driven by tidal heating."
+  ],
+  [
+    "ch12",
+    "Why is Enceladus tidally heated?",
+    "A 2:1 orbital resonance with Dione pumps its eccentricity, sustaining internal heat; it likely feeds Saturn's E-ring."
+  ],
+  [
+    "ch13",
+    "What is an ice giant?",
+    "A planet ~4× Earth's radius but < 20 Earth masses (Uranus ~14, Neptune ~17) — too dense to be pure H/He at that size."
+  ],
+  [
+    "ch13",
+    "What is an ice giant mostly made of?",
+    "A massive mantle of 'ices' (water, ammonia, methane) over a rocky core; core+mantle ≈ 80% of the mass, with only a modest H/He envelope."
+  ],
+  [
+    "ch13",
+    "How do ice-giant interiors differ from Jupiter/Saturn?",
+    "They have no thick metallic-hydrogen zone — hence a different magnetic-field mechanism."
+  ],
+  [
+    "ch13",
+    "What's extreme about Uranus's tilt?",
+    "Its axis is tilted ~98° — tipped on its side, giving extreme decades-long seasons; likely from a giant collision."
+  ],
+  [
+    "ch13",
+    "Why do Uranus and Neptune look blue-green?",
+    "Methane (CH₄) in the upper atmosphere absorbs red light and reflects blue/green."
+  ],
+  [
+    "ch13",
+    "How do Uranus and Neptune differ in activity?",
+    "Uranus is bland with little internal heat; Neptune is dynamic with strong internal heat (~2.7× what it receives) and winds up to ~1500 km/h."
+  ],
+  [
+    "ch13",
+    "What's weird about ice-giant magnetic fields?",
+    "They're strongly tilted from the rotation axis (Uranus ~60°, Neptune ~46°) and offset from the center (~⅓ of the radius)."
+  ],
+  [
+    "ch13",
+    "How are the ice giants' magnetic fields generated?",
+    "By electric currents in a conducting ionic solution within the icy mantle (e.g., dissolved ammonia)."
+  ],
+  [
+    "ch13",
+    "What's odd about Triton's orbit?",
+    "It's retrograde (and inclined ~ −23°) — almost certainly a captured Kuiper-belt object, not formed in place."
+  ],
+  [
+    "ch13",
+    "Describe Triton's surface.",
+    "Coldest visited body (~37 K), thin N₂ atmosphere, nitrogen geysers, few craters (young surface); it's spiraling inward and may become a ring in ~100 Myr."
+  ],
+  [
+    "ch13",
+    "Which spacecraft visited Uranus and Neptune?",
+    "Voyager 2 (launched 1977) — the only spacecraft to visit both, on its 'Grand Tour.'"
+  ],
+  [
+    "ch13",
+    "Uranus vs Neptune orbital basics?",
+    "Uranus ~19 AU, ~84-year period; Neptune ~30 AU, ~164-year period."
+  ],
+  [
+    "ch13",
+    "What is Miranda known for?",
+    "Verona Rupes, the tallest known cliff in the Solar System (~20 km high)."
+  ],
+  [
+    "ch14",
+    "How and when was Pluto discovered?",
+    "Clyde Tombaugh, 1930, while searching for a 'Planet X' thought to perturb Uranus/Neptune — those irregularities later turned out not to be real."
+  ],
+  [
+    "ch14",
+    "Describe Pluto's orbit.",
+    "Eccentric (e=0.25) and inclined 17.2°; perihelion 29.7 AU, aphelion 49.3 AU; ~248-year period."
+  ],
+  [
+    "ch14",
+    "What is Pluto's resonance with Neptune?",
+    "A 3:2 resonance (2 Pluto orbits per 3 Neptune orbits) — protective, keeping them > 17 AU apart despite crossing orbits."
+  ],
+  [
+    "ch14",
+    "Which planet does Pluto actually come closest to?",
+    "Uranus (~11 AU) — the 3:2 resonance keeps Pluto from ever getting close to Neptune."
+  ],
+  [
+    "ch14",
+    "What is Pluto's atmosphere like?",
+    "A tenuous N₂/CO atmosphere with trace CH₄ (~44 K) that freezes out onto the surface as Pluto moves far from the Sun."
+  ],
+  [
+    "ch14",
+    "What did New Horizons reveal at Pluto (2015)?",
+    "Nitrogen-ice plains (Sputnik Planum) convecting like a lava lamp, water-ice hills, and layered haze."
+  ],
+  [
+    "ch14",
+    "Describe Pluto's moon Charon.",
+    "A large moon tidally locked with Pluto, orbiting a barycenter outside Pluto; likely formed in a giant impact (like Earth–Moon)."
+  ],
+  [
+    "ch14",
+    "Why was Pluto demoted to a dwarf planet?",
+    "It fails the 3rd IAU (2006) condition — it hasn't 'cleared its neighborhood,' being embedded among similar Kuiper-belt objects."
+  ],
+  [
+    "ch14",
+    "State the IAU 2006 planet definition.",
+    "(1) orbits the Sun, (2) massive enough to be round, (3) has cleared its orbital neighborhood."
+  ],
+  [
+    "ch14",
+    "What is the Kuiper belt and its origin?",
+    "A disk of icy planetesimals just beyond Neptune (>100,000 members) — leftover material that never formed a planet, later sculpted by the ice giants' outward migration."
+  ],
+  [
+    "ch14",
+    "What is an asteroid?",
+    "A rocky 'minor planet' in a prograde, often eccentric orbit — a primordial planetesimal that never accreted into a planet (NOT debris of a shattered planet)."
+  ],
+  [
+    "ch14",
+    "Where is the main asteroid belt, and how much mass is left?",
+    "Between Mars and Jupiter; the original ~1 Earth mass is now less than 0.1% of Earth's."
+  ],
+  [
+    "ch14",
+    "What causes the Kirkwood gaps?",
+    "Orbital resonances with Jupiter repeatedly tug and clear asteroids from specific radii."
+  ],
+  [
+    "ch14",
+    "Name the three asteroid types and their fractions.",
+    "C-type (carbonaceous, dark, ~75%, outer belt), S-type (silicate/rocky, ~15%, inner belt), M-type (metallic, ~10%)."
+  ],
+  [
+    "ch14",
+    "What did Dawn reveal about Ceres vs Vesta?",
+    "Ceres is primitive and wet (~25% water); Vesta is dry, evolved, and differentiated (core/mantle/crust)."
+  ],
+  [
+    "ch14",
+    "What is a Near-Earth Asteroid (NEA)?",
+    "An asteroid that comes within ~1 AU of Earth's orbit; ~1000 are 'potentially hazardous' (≥150 m)."
+  ],
+  [
+    "ch14",
+    "What killed the dinosaurs 66 Myr ago?",
+    "A ~10–15 km impactor (Chicxulub crater ~180 km); the extinction was driven by the 'nuclear winter' that followed, not the blast itself."
+  ],
+  [
+    "ch14",
+    "How often do K/T-scale impacts occur?",
+    "Roughly every 100 million years."
+  ],
+  [
+    "ch14",
+    "What did the DART mission demonstrate?",
+    "Kinetic deflection works — it shortened Dimorphos's orbit by ~32 minutes (not a Hollywood 'blow it up' plan)."
+  ],
+  [
+    "ch14",
+    "What is a comet?",
+    "A small (few-km) icy 'dirty snowball' nucleus — the oldest, most primitive Solar System material; it shines only by reflected sunlight."
+  ],
+  [
+    "ch14",
+    "Meteoroid vs meteor vs meteorite?",
+    "Meteoroid = the small debris in space; meteor = the streak of light ('shooting star'); meteorite = the piece that reaches the ground."
+  ],
+  [
+    "ch14",
+    "How do comet orbits differ from planets and asteroids?",
+    "Far more elliptical and at all inclinations/orientations (prograde AND retrograde), not confined near the ecliptic."
+  ],
+  [
+    "ch14",
+    "Why does a comet grow a tail?",
+    "Near the Sun its ice sublimates (solid→gas, due to low pressure), forming a coma; solar radiation pressure and the solar wind push it outward."
+  ],
+  [
+    "ch14",
+    "Which way does a comet's tail point?",
+    "Always away from the Sun — not backward along its path."
+  ],
+  [
+    "ch14",
+    "Name the parts of a comet.",
+    "Nucleus (few-km icy core), coma (surrounding gas/dust cloud), and tails — a straight ion tail and a broad curved dust tail."
+  ],
+  [
+    "ch14",
+    "What was the Rosetta mission?",
+    "ESA's orbiter at comet 67P; its Philae lander made the first-ever comet landing on 11/12/2014."
+  ],
+  [
+    "ch14",
+    "What is the Oort cloud?",
+    "A vast spherical shell of trillions of icy comets out to ~100,000 AU (~5 Earth masses total) — the source of long-period comets."
+  ],
+  [
+    "ch14",
+    "How did the Oort cloud form?",
+    "Icy planetesimals were flung onto huge, long-period orbits by the young giant planets (especially Jupiter/Saturn)."
+  ],
+  [
+    "ch14",
+    "What is a shooting star?",
+    "A small dust particle burning up in the atmosphere (~75–120 km up) from ram-pressure heating."
+  ],
+  [
+    "ch14",
+    "What causes a meteor shower?",
+    "Earth crossing a stream of debris left along a comet's orbit; the meteors appear to radiate from one point (e.g., Leonids, Geminids)."
+  ],
+  [
+    "ch15",
+    "Why is direct imaging of exoplanets so hard?",
+    "The planet sits right next to a vastly brighter star at huge distances, so its faint light is swamped."
+  ],
+  [
+    "ch15",
+    "What are the two workhorse indirect detection methods?",
+    "Radial velocity (stellar wobble via the Doppler effect) and transit (periodic dimming)."
+  ],
+  [
+    "ch15",
+    "How does the radial velocity method work?",
+    "Star and planet orbit a common center of mass; the Doppler effect measures the star's velocity along the line of sight."
+  ],
+  [
+    "ch15",
+    "What does the radial velocity method yield?",
+    "Minimum mass (M·sin i), orbital period, and eccentricity — minimum mass only, because the inclination is usually unknown."
+  ],
+  [
+    "ch15",
+    "Why only a minimum mass from radial velocity?",
+    "The orbital inclination (viewing angle) is usually unknown, so we recover M·sin i rather than the true mass."
+  ],
+  [
+    "ch15",
+    "What was 51 Pegasi b?",
+    "The first exoplanet found around a Sun-like star (Mayor & Queloz, 1995) — a 'hot Jupiter' with a surprisingly short 4.3-day orbit."
+  ],
+  [
+    "ch15",
+    "How does the transit method work?",
+    "An edge-on planet crossing in front of its star causes a small periodic dip in the star's brightness."
+  ],
+  [
+    "ch15",
+    "What does the transit method yield?",
+    "The planet's radius, orbital period, and transit duration — but not its mass or eccentricity."
+  ],
+  [
+    "ch15",
+    "What sets a planet's transit probability?",
+    "Mainly its orbital distance (closer = higher probability). Even Mercury's is only ~1%."
+  ],
+  [
+    "ch15",
+    "How do you get an exoplanet's density?",
+    "Combine transit (radius) with radial velocity (mass) — e.g., HD 209458 b, which is less dense than Saturn."
+  ],
+  [
+    "ch15",
+    "Why did Kepler need to be in space?",
+    "An Earth-size transit signal (~85 ppm) is smaller than the light-curve noise introduced by Earth's atmosphere."
+  ],
+  [
+    "ch15",
+    "What was Kepler's primary goal?",
+    "To measure the frequency of Earth-size planets in the habitable zones of Sun-like stars."
+  ],
+  [
+    "ch15",
+    "What planets did Kepler find most often?",
+    "Super-Earths and mini-Neptunes — sizes between Earth and Neptune."
+  ],
+  [
+    "ch15",
+    "Roughly how many potentially habitable worlds are estimated in the galaxy?",
+    "~300 million (≥7% of Sun-like stars conservatively, ~50% on average)."
+  ]
+];
+const QUIZ_DATA = [
+  {
+    "ch": "ch11",
+    "type": "mc",
+    "q": "Why do we call Jupiter a gas giant planet?",
+    "opts": [
+      "It is almost entirely composed of hydrogen and helium gas",
+      "It formed from volcanic gases ejected from the moon Io",
+      "It is made of pure CO₂ ice (dry ice)",
+      "Its atmosphere sits on top of a solid rocky surface",
+      "It has a dense CO₂ atmosphere, even denser than Venus"
+    ],
+    "ans": 0,
+    "exp": "Jupiter is almost entirely H₂ (≈86%) and He (≈14%), with no solid surface — the atmosphere transitions smoothly into the fluid interior."
+  },
+  {
+    "ch": "ch11",
+    "type": "mc",
+    "q": "Compared to Earth, how much more massive is Jupiter?",
+    "opts": [
+      "~30×",
+      "~1000×",
+      "~3×",
+      "~300×",
+      "~3000×"
+    ],
+    "ans": 3,
+    "exp": "Jupiter is ~318 Earth masses (≈320×) — more than twice all the other planets combined. Remember the comparison, not the raw kg value."
+  },
+  {
+    "ch": "ch11",
+    "type": "fitb",
+    "q": "Jupiter orbits the Sun at about ___ AU.",
+    "ans": [
+      "5.2",
+      "5"
+    ],
+    "display": "5.2",
+    "exp": "Jupiter sits ~5.2 AU from the Sun, with an ~11.86-year orbital period."
+  },
+  {
+    "ch": "ch11",
+    "type": "fitb",
+    "q": "Jupiter's ~9 h 55 min spin is called ___ rotation, because it rotates faster at the equator than at the poles.",
+    "ans": [
+      "differential"
+    ],
+    "display": "differential",
+    "exp": "This differential rotation, plus the fast spin, flattens Jupiter into an oblate shape."
+  },
+  {
+    "ch": "ch11",
+    "type": "mc",
+    "q": "In Jupiter's interior, moving outward, the layer just OUTSIDE the core is:",
+    "opts": [
+      "Liquid metallic hydrogen",
+      "Solid metallic hydrogen",
+      "Molecular hydrogen/helium gas",
+      "Metallic helium gas"
+    ],
+    "ans": 0,
+    "exp": "Order from center out: dense core → liquid metallic hydrogen → liquid molecular hydrogen → gaseous atmosphere."
+  },
+  {
+    "ch": "ch11",
+    "type": "mc",
+    "q": "In Jupiter's interior, the OUTER fluid layer (below the visible atmosphere) is:",
+    "opts": [
+      "Liquid/molecular hydrogen and helium",
+      "Solid metallic hydrogen",
+      "Rock (silicates)",
+      "Only helium gas"
+    ],
+    "ans": 0,
+    "exp": "Beneath the gaseous atmosphere is liquid molecular hydrogen/helium, which deeper down becomes conductive liquid metallic hydrogen."
+  },
+  {
+    "ch": "ch11",
+    "type": "mc",
+    "q": "Which statement about Jupiter's atmosphere is INCORRECT?",
+    "opts": [
+      "It transitions smoothly into the interior rather than sitting on a solid surface",
+      "Its strong colors are probably caused by photochemistry forming complex molecules",
+      "It is primarily composed of hydrogen and helium",
+      "It has banding from fast rotation, with frequent hurricane-type storms",
+      "It is mostly CO₂ and methane, causing an extreme runaway greenhouse effect"
+    ],
+    "ans": 4,
+    "exp": "The false statement: Jupiter's atmosphere is H/He, not CO₂/methane, and there is no runaway greenhouse."
+  },
+  {
+    "ch": "ch11",
+    "type": "mc",
+    "q": "Why does Jupiter have such a strong magnetic field?",
+    "opts": [
+      "Currents in the large metallic-hydrogen zone, plus slow rotation",
+      "Currents in the large molecular-hydrogen zone, plus fast rotation",
+      "Currents in a liquid iron core, plus fast rotation",
+      "Currents in the large metallic-hydrogen zone, plus fast rotation"
+    ],
+    "ans": 3,
+    "exp": "Electric currents flow easily in the conductive liquid metallic-hydrogen zone, and the fast spin amplifies the field (~19,500× Earth's)."
+  },
+  {
+    "ch": "ch11",
+    "type": "fitb",
+    "q": "The Great Red Spot is a giant ___ in the upper atmosphere of Jupiter.",
+    "ans": [
+      "storm"
+    ],
+    "display": "storm",
+    "exp": "It's an anticyclonic storm ~2× Earth's size that has lasted ≥300 years, rotating once per ~6 days."
+  },
+  {
+    "ch": "ch11",
+    "type": "fitb",
+    "q": "Jupiter emits about ___ times the energy it receives from the Sun, showing it is still cooling from its formation.",
+    "ans": [
+      "two",
+      "2"
+    ],
+    "display": "two (2)",
+    "exp": "The excess output indicates leftover heat of formation escaping over time."
+  },
+  {
+    "ch": "ch11",
+    "type": "mc",
+    "q": "The four large Galilean moons, in order outward from Jupiter, are:",
+    "opts": [
+      "Io, Europa, Ganymede, Callisto",
+      "Europa, Io, Callisto, Ganymede",
+      "Callisto, Ganymede, Europa, Io",
+      "Io, Ganymede, Europa, Callisto"
+    ],
+    "ans": 0,
+    "exp": "Io–Europa–Ganymede–Callisto, in a near 1:2:4 orbital resonance."
+  },
+  {
+    "ch": "ch11",
+    "type": "mc",
+    "q": "For tidal heating to occur, besides being close to a massive planet, a moon must also:",
+    "opts": [
+      "Have a subsurface layer of liquid water",
+      "Orbit a planet that itself has a strong magnetic field",
+      "Have a slightly eccentric orbit around the planet",
+      "Be made of material that easily absorbs heat"
+    ],
+    "ans": 2,
+    "exp": "A slightly eccentric orbit makes the tidal bulge vary; the flexing creates frictional heat. A circular orbit → no heating."
+  },
+  {
+    "ch": "ch11",
+    "type": "mc",
+    "q": "True or False: Io is the most volcanically active object in the Solar System, due to tidal heating.",
+    "opts": [
+      "True",
+      "False"
+    ],
+    "ans": 0,
+    "exp": "Io, closest to Jupiter (1.8-day orbit), is heated most and is the most volcanic body in the Solar System."
+  },
+  {
+    "ch": "ch11",
+    "type": "mc",
+    "q": "If Io were on a perfectly circular orbit, it would...",
+    "opts": [
+      "Still have large tidal bulges, but no tidal heating",
+      "Have no tidal bulges at all and zero heating",
+      "Have large bulges and even MORE heating than now",
+      "Have large bulges and somewhat less heating"
+    ],
+    "ans": 0,
+    "exp": "A circular orbit gives a constant bulge — no flexing, so no frictional heating. Eccentricity drives the heating."
+  },
+  {
+    "ch": "ch11",
+    "type": "fitb",
+    "q": "Europa experiences less tidal heating than Io because it orbits ___ from Jupiter than Io does.",
+    "ans": [
+      "farther",
+      "further"
+    ],
+    "display": "farther",
+    "exp": "Tidal heating weakens with distance/period; Europa (3.6 d) is farther out than Io (1.8 d)."
+  },
+  {
+    "ch": "ch11",
+    "type": "mc",
+    "q": "True or False: Ganymede, Jupiter's largest moon, is bigger than the planet Mercury.",
+    "opts": [
+      "True",
+      "False"
+    ],
+    "ans": 0,
+    "exp": "Ganymede is the largest moon in the Solar System — larger than Mercury."
+  },
+  {
+    "ch": "ch11",
+    "type": "mc",
+    "q": "Which statement about Callisto is INCORRECT?",
+    "opts": [
+      "It is the outermost of the four Galilean satellites",
+      "It is geologically dead with a cold interior",
+      "It experiences the same amount of tidal heating as Ganymede",
+      "Its cratered surface is a mix of rock and ice"
+    ],
+    "ans": 2,
+    "exp": "False statement: Callisto (16.7-day orbit) is farthest out and effectively has no tidal heating."
+  },
+  {
+    "ch": "ch11",
+    "type": "fitb",
+    "q": "When Voyager flew by Jupiter it discovered several new moons and a dark, dusty ___ around the planet.",
+    "ans": [
+      "ring",
+      "rings"
+    ],
+    "display": "ring",
+    "exp": "Jupiter's faint ring is dust eroded off the small inner moons Metis and Adrastea."
+  },
+  {
+    "ch": "ch11",
+    "type": "mc",
+    "q": "What is so extraordinary about Jupiter's moon Europa?",
+    "opts": [
+      "Tidal heating gives it a dense nitrogen atmosphere",
+      "Nothing — it has been geologically dead for 4+ billion years",
+      "Its retrograde orbit will make it spiral into Jupiter",
+      "Tidal heating warms its interior, allowing a large subsurface liquid-water ocean",
+      "Tidal heating makes it the most volcanic object in the Solar System"
+    ],
+    "ans": 3,
+    "exp": "Europa's ice shell covers a subsurface liquid salt-water ocean (inferred from magnetic data) — a prime candidate for life."
+  },
+  {
+    "ch": "ch11",
+    "type": "mc",
+    "q": "The 1994 Shoemaker–Levy 9 event demonstrated Jupiter's gravitational influence when:",
+    "opts": [
+      "A comet was torn into fragments that then impacted Jupiter",
+      "An asteroid was captured into a permanent orbit",
+      "A moon was ejected from the Jovian system",
+      "Jupiter's ring suddenly brightened"
+    ],
+    "ans": 0,
+    "exp": "Comet SL-9 was tidally split and its fragments struck Jupiter — a vivid demonstration of the planet's gravitational reach."
+  },
+  {
+    "ch": "ch12",
+    "type": "mc",
+    "q": "What is a major difference between Jupiter and Saturn?",
+    "opts": [
+      "Saturn has more helium than hydrogen, the reverse of Jupiter",
+      "Saturn has rings and Jupiter has none, but otherwise they're identical",
+      "Saturn is only slightly smaller but much less massive, giving a much lower density",
+      "Unlike Jupiter, Saturn has no metallic-hydrogen zone",
+      "Saturn is smaller but equally massive, giving a higher density"
+    ],
+    "ans": 2,
+    "exp": "Saturn (~95 M⊕) is only a bit smaller than Jupiter (~320 M⊕) but far less massive → much lower mean density."
+  },
+  {
+    "ch": "ch12",
+    "type": "fitb",
+    "q": "Its fast rotation and low density make Saturn the ___ planet in the Solar System.",
+    "ans": [
+      "flattest"
+    ],
+    "display": "flattest",
+    "exp": "Equatorial radius ~60,000 km vs polar ~54,000 km — the most oblate planet."
+  },
+  {
+    "ch": "ch12",
+    "type": "fitb",
+    "q": "Saturn's magnetic field is weaker than Jupiter's because its metallic-hydrogen layer is ___ than Jupiter's.",
+    "ans": [
+      "thinner",
+      "smaller"
+    ],
+    "display": "thinner (smaller)",
+    "exp": "A much thinner conductive metallic-hydrogen zone produces a weaker dynamo (~1/20th of Jupiter's field)."
+  },
+  {
+    "ch": "ch12",
+    "type": "mc",
+    "q": "Saturn emits about 3× the energy it receives. What is the extra source?",
+    "opts": [
+      "A recent major impact that also formed the rings",
+      "Purely residual heat from formation",
+      "Cooling from formation plus radioactive decay in the core",
+      "Cooling from formation plus helium precipitation that sinks and compresses the interior"
+    ],
+    "ans": 3,
+    "exp": "Formation heat alone is insufficient; helium condenses, sinks through liquid hydrogen, and releases gravitational energy."
+  },
+  {
+    "ch": "ch12",
+    "type": "mc",
+    "q": "What are Saturn's rings?",
+    "opts": [
+      "Solid rings orbiting within the Roche limit",
+      "A vast number of small icy particles orbiting within Saturn's Roche limit",
+      "Material flung out from Saturn's equator by fast rotation",
+      "A solid disk grooved by resonances with the moons"
+    ],
+    "ans": 1,
+    "exp": "The rings are countless small particles (mostly water ice), fractions of a mm to tens of m across."
+  },
+  {
+    "ch": "ch12",
+    "type": "mc",
+    "q": "How did Saturn's main ring system most likely form?",
+    "opts": [
+      "Enceladus's volcanism spilled particles that formed the rings",
+      "They are leftover disk material from Saturn's formation 4.5 Gyr ago",
+      "A ~250-km body strayed too close and was tidally disrupted into small particles",
+      "Fast rotation ejected equatorial material that condensed into ice"
+    ],
+    "ans": 2,
+    "exp": "A moon/asteroid/comet (~250 km) inside the Roche limit was torn apart; the pieces cannot re-accrete."
+  },
+  {
+    "ch": "ch12",
+    "type": "mc",
+    "q": "Why can Titan retain a dense atmosphere when other large moons cannot?",
+    "opts": [
+      "Its methane/ethane lakes evaporate, replenishing the gas",
+      "It is so cold that gas molecules move too slowly to escape",
+      "It is the most massive moon in the Solar System",
+      "It is so hot that gases cannot escape",
+      "It is volcanically active, constantly replenishing the gas"
+    ],
+    "ans": 1,
+    "exp": "It's mass PLUS low temperature — if Titan were at Ganymede's warmer distance it would lose the atmosphere."
+  },
+  {
+    "ch": "ch12",
+    "type": "mc",
+    "q": "What is the main component of Titan's atmosphere?",
+    "opts": [
+      "Oxygen",
+      "Nitrogen",
+      "Carbon dioxide",
+      "Methane"
+    ],
+    "ans": 1,
+    "exp": "Titan's air is ~98% nitrogen (N₂) with ~2% methane (CH₄)."
+  },
+  {
+    "ch": "ch12",
+    "type": "mc",
+    "q": "The liquids seen on Titan's surface are made mostly of:",
+    "opts": [
+      "Mostly methane",
+      "Mostly water",
+      "Liquid carbon dioxide",
+      "Liquid nitrogen"
+    ],
+    "ans": 0,
+    "exp": "Titan has lakes/seas of liquid methane and ethane (mostly methane) at ~94 K."
+  },
+  {
+    "ch": "ch12",
+    "type": "mc",
+    "q": "What did Cassini discover about Enceladus?",
+    "opts": [
+      "Hot 'Io-style' silicate volcanism at the south pole",
+      "Lakes of liquid methane on the surface",
+      "Two hemispheres of sharply different color",
+      "Cryo-volcanism at the south pole, showing tidal heating drives significant internal heat"
+    ],
+    "ans": 3,
+    "exp": "Cassini saw water-rich cryo-volcanic plumes from Enceladus's south pole, powered by tidal heating."
+  },
+  {
+    "ch": "ch12",
+    "type": "fitb",
+    "q": "Saturn's rings are made mostly of ___ ice.",
+    "ans": [
+      "water"
+    ],
+    "display": "water",
+    "exp": "The particles are largely water ice, reflecting ~80% of incoming sunlight."
+  },
+  {
+    "ch": "ch12",
+    "type": "mc",
+    "q": "With a density of ~700 kg/m³, Saturn would ___ in water.",
+    "opts": [
+      "Float",
+      "Sink",
+      "Dissolve",
+      "Boil"
+    ],
+    "ans": 0,
+    "exp": "Saturn is the only planet less dense than water — it would float."
+  },
+  {
+    "ch": "ch12",
+    "type": "fitb",
+    "q": "Enceladus is kept tidally heated by a 2:1 orbital resonance with the moon ___.",
+    "ans": [
+      "Dione"
+    ],
+    "display": "Dione",
+    "exp": "The Dione resonance pumps Enceladus's eccentricity, sustaining its internal heat and cryo-volcanism."
+  },
+  {
+    "ch": "ch13",
+    "type": "fitb",
+    "q": "Uranus and Neptune are each roughly ___ times larger in radius than Earth.",
+    "ans": [
+      "4",
+      "four"
+    ],
+    "display": "4",
+    "exp": "Both ice giants are ~4× Earth's radius but under 20 Earth masses."
+  },
+  {
+    "ch": "ch13",
+    "type": "fitb",
+    "q": "Uranus's orbital semimajor axis is a little over ___ AU.",
+    "ans": [
+      "19",
+      "19.2"
+    ],
+    "display": "19",
+    "exp": "Uranus orbits at ~19.2 AU, with an ~84-year period."
+  },
+  {
+    "ch": "ch13",
+    "type": "fitb",
+    "q": "Neptune's orbital semimajor axis is a little over ___ AU.",
+    "ans": [
+      "30",
+      "30.1"
+    ],
+    "display": "30",
+    "exp": "Neptune orbits at ~30.1 AU, with an ~164-year period."
+  },
+  {
+    "ch": "ch13",
+    "type": "mc",
+    "q": "What is the major difference between the gas giants and the ice giants?",
+    "opts": [
+      "In ice giants the H/He is frozen as ice rather than gas",
+      "Ice giants are just smaller in mass/size but otherwise the same",
+      "Ice giants have a much higher fraction of heavy elements — most of their mass is ice and rock, not H/He gas",
+      "Ice giants only differ by lacking visible ammonia"
+    ],
+    "ans": 2,
+    "exp": "Core+mantle ≈ 80% of an ice giant's mass; they can't be pure H/He at their size."
+  },
+  {
+    "ch": "ch13",
+    "type": "mc",
+    "q": "In Uranus and Neptune, the thick mantle between the rocky core and the gas envelope is made mostly of:",
+    "opts": [
+      "Ice — primarily water, plus ammonia and methane ices",
+      "Molecular hydrogen/helium gas",
+      "Metallic hydrogen",
+      "Rock (silicates)"
+    ],
+    "ans": 0,
+    "exp": "The 'ices' are water/ammonia/methane compounds forming the bulk of the planet's mass."
+  },
+  {
+    "ch": "ch13",
+    "type": "mc",
+    "q": "The outermost layer of Uranus and Neptune is made of:",
+    "opts": [
+      "Molecular hydrogen and helium gas",
+      "Rock (silicates)",
+      "Ice (water/ammonia/methane)",
+      "Metallic hydrogen"
+    ],
+    "ans": 0,
+    "exp": "Only a modest H/He gas envelope sits atop the massive icy mantle."
+  },
+  {
+    "ch": "ch13",
+    "type": "fitb",
+    "q": "For both ice giants, the mantle and core together make up about ___ percent of the total mass.",
+    "ans": [
+      "80"
+    ],
+    "display": "80",
+    "exp": "This is why they can't be pure gas giants — most of the mass is ice and rock."
+  },
+  {
+    "ch": "ch13",
+    "type": "mc",
+    "q": "True or False: Neither Uranus nor Neptune has any rings.",
+    "opts": [
+      "True",
+      "False"
+    ],
+    "ans": 1,
+    "exp": "False — both ice giants do have (faint) ring systems."
+  },
+  {
+    "ch": "ch13",
+    "type": "mc",
+    "q": "What is weird about the magnetic fields of both ice giants?",
+    "opts": [
+      "The metallic-hydrogen zone should make an even stronger field",
+      "Neither planet has any magnetic field",
+      "They are strongly tilted from the rotation axis and offset from the planet's center",
+      "The metallic core should make a stronger field"
+    ],
+    "ans": 2,
+    "exp": "Uranus's field tilts ~60° and Neptune's ~46°, each offset ~⅓ of the radius from center."
+  },
+  {
+    "ch": "ch13",
+    "type": "mc",
+    "q": "How are the magnetic fields of the ice giants generated?",
+    "opts": [
+      "Electric currents in ionic solutions within their icy mantles",
+      "Charged particles from volcanically active moons",
+      "Currents in molten metallic/rocky cores",
+      "Interaction with the solar wind, as at Venus",
+      "Currents in a metallic-hydrogen zone"
+    ],
+    "ans": 0,
+    "exp": "A conducting ionic solution (e.g., dissolved ammonia) in the mantle explains the tilt and offset."
+  },
+  {
+    "ch": "ch13",
+    "type": "mc",
+    "q": "What is odd about Neptune's large moon Triton?",
+    "opts": [
+      "It is in a very elliptical orbit",
+      "It has a strong magnetic field",
+      "It is in a retrograde orbit",
+      "It is in a prograde orbit"
+    ],
+    "ans": 2,
+    "exp": "Triton orbits backward relative to Neptune's spin — strong evidence it's a captured Kuiper-belt object."
+  },
+  {
+    "ch": "ch13",
+    "type": "fitb",
+    "q": "Uranus's rotation axis is tilted about ___ degrees, so the planet is essentially tipped on its side.",
+    "ans": [
+      "98"
+    ],
+    "display": "98",
+    "exp": "This extreme tilt gives decades-long seasons; a pole can face the Sun continuously for years."
+  },
+  {
+    "ch": "ch13",
+    "type": "mc",
+    "q": "Uranus and Neptune look blue-green because their upper-atmosphere ___ absorbs red light.",
+    "opts": [
+      "Methane",
+      "Ammonia",
+      "Water vapor",
+      "Helium"
+    ],
+    "ans": 0,
+    "exp": "Methane (CH₄) absorbs red wavelengths and reflects blue/green."
+  },
+  {
+    "ch": "ch13",
+    "type": "mc",
+    "q": "Triton's retrograde orbit indicates that the moon was:",
+    "opts": [
+      "Captured from the Kuiper belt",
+      "Formed in place from Neptune's disk",
+      "Torn from Neptune by a giant impact",
+      "A fragment of a former ring"
+    ],
+    "ans": 0,
+    "exp": "A retrograde, inclined orbit is the signature of gravitational capture."
+  },
+  {
+    "ch": "ch13",
+    "type": "fitb",
+    "q": "The only spacecraft to visit both Uranus and Neptune was ___ 2 (launched 1977).",
+    "ans": [
+      "Voyager"
+    ],
+    "display": "Voyager",
+    "exp": "Voyager 2's 'Grand Tour' remains the only close-up visit to either ice giant."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "Why did Clyde Tombaugh search for a 9th planet, leading to Pluto's 1930 discovery?",
+    "opts": [
+      "Percival Lowell inferred a planet from irregularities in Mars's orbit",
+      "Le Verrier inferred a ninth planet from irregularities in Uranus's orbit",
+      "Astronomers thought a planet past Neptune caused irregularities in the ice giants' orbits",
+      "Kuiper predicted a large icy planetesimal disk beyond Neptune"
+    ],
+    "ans": 2,
+    "exp": "The supposed irregularities in Uranus/Neptune's orbits later proved not to be real — Pluto's find was essentially a lucky accident."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "For every 3 full orbits of Neptune, how many orbits does Pluto complete?",
+    "opts": [
+      "1",
+      "2",
+      "2.5",
+      "3",
+      "1.5"
+    ],
+    "ans": 1,
+    "exp": "Pluto is in a 3:2 resonance with Neptune — 2 Pluto orbits per 3 of Neptune's."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "On its eccentric orbit, which major planet does Pluto come closest to?",
+    "opts": [
+      "Jupiter",
+      "Saturn",
+      "Neptune",
+      "Uranus"
+    ],
+    "ans": 3,
+    "exp": "The protective 3:2 resonance keeps Pluto > 17 AU from Neptune; it actually gets closer to Uranus (~11 AU)."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "Which of the following characterizes Pluto?",
+    "opts": [
+      "A small icy world so cold that nitrogen freezes out onto its surface",
+      "Its large moon probably formed in a giant impact, like the Earth–Moon system",
+      "Its orbit is very elliptical and highly inclined to the other planets' plane",
+      "All of these statements are true",
+      "It crosses Neptune's orbit but a resonance keeps them apart"
+    ],
+    "ans": 3,
+    "exp": "The first three descriptions are all correct, so 'all of these are true' is the best answer."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "Which other body we've studied most closely resembles Pluto?",
+    "opts": [
+      "Europa",
+      "Titan",
+      "Our Moon",
+      "Enceladus",
+      "Triton"
+    ],
+    "ans": 4,
+    "exp": "Triton is a captured, Pluto-like Kuiper-belt object — similar size, composition, and cold nitrogen surface."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "Why is Pluto no longer regarded as a major planet?",
+    "opts": [
+      "Its orbit is too elliptical",
+      "It is simply too small",
+      "Its mass is too low",
+      "Its orbit is too inclined",
+      "It is one of a large family of similar objects (it hasn't cleared its neighborhood)"
+    ],
+    "ans": 4,
+    "exp": "Pluto fails only the third IAU criterion — it's embedded among many similar Kuiper-belt bodies."
+  },
+  {
+    "ch": "ch14",
+    "type": "fitb",
+    "q": "An object round enough to be spherical but that has NOT cleared its orbital neighborhood is called a ___ planet.",
+    "ans": [
+      "dwarf"
+    ],
+    "display": "dwarf",
+    "exp": "Pluto, Eris, and Ceres are dwarf planets under the 2006 IAU definition."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "True or False: Charon, Pluto's large moon, is itself also a dwarf planet.",
+    "opts": [
+      "True",
+      "False"
+    ],
+    "ans": 1,
+    "exp": "False — Charon is classified as Pluto's moon, not a dwarf planet."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "What is the Kuiper belt?",
+    "opts": [
+      "A belt of icy minor bodies just beyond Neptune's orbit",
+      "A system of rings orbiting Neptune",
+      "The rocky minor-body belt between Mars and Jupiter",
+      "A belt of charged particles from Io's volcanoes",
+      "A huge spherical cloud of comets surrounding the Solar System"
+    ],
+    "ans": 0,
+    "exp": "The Kuiper belt holds >100,000 icy planetesimals just outside Neptune's orbit."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "How did the Kuiper belt form?",
+    "opts": [
+      "It's a leftover planetesimal disk that never formed a planet, later sculpted by the ice giants' outward migration",
+      "Interstellar comets captured by the Sun over billions of years",
+      "Debris of a planet tidally disrupted by Neptune's migration",
+      "Asteroids ejected from the inner Solar System by Jupiter"
+    ],
+    "ans": 0,
+    "exp": "The residual disk was reshaped as the giant planets migrated (the Nice model)."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "What does the asteroid belt really represent?",
+    "opts": [
+      "The remnant of a protoplanet disrupted by a late collision",
+      "The remnant of a small planet broken apart by Jupiter resonances",
+      "Leftover planetesimals that never formed a major planet",
+      "Icy Kuiper-belt objects scattered inward by the giant planets"
+    ],
+    "ans": 2,
+    "exp": "Jupiter's gravity prevented these primordial planetesimals from accreting into a planet — they are NOT a shattered world."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "Why is the Star Wars asteroid-field scene unrealistic for our main belt?",
+    "opts": [
+      "TIE-fighter pilots are actually much better",
+      "The asteroids shown are too big",
+      "The asteroids shown are too small",
+      "The asteroids are far too close to each other",
+      "The asteroids contain no ice"
+    ],
+    "ans": 3,
+    "exp": "The real belt is mostly empty space — asteroids are typically millions of km apart."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "Where are the majority of asteroids located?",
+    "opts": [
+      "Between Jupiter and Saturn",
+      "Between Saturn and Uranus",
+      "Beyond Neptune's orbit",
+      "Between Mars and Jupiter"
+    ],
+    "ans": 3,
+    "exp": "The main belt lies between Mars and Jupiter."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "What causes the Kirkwood gaps in the main asteroid belt?",
+    "opts": [
+      "Orbital resonances with Ceres",
+      "Orbital resonances with Jupiter",
+      "Vesta and Ceres clearing their neighborhoods",
+      "Orbital resonances with Mars"
+    ],
+    "ans": 1,
+    "exp": "At resonant periods with Jupiter, repeated tugs clear asteroids out, leaving gaps."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "An asteroid with a semimajor axis of 2 AU is most likely which type?",
+    "opts": [
+      "Equal chance of S- and M-type",
+      "M-type (metallic)",
+      "Equal chance of C- and S-type",
+      "S-type (silicaceous)",
+      "C-type (carbonaceous)"
+    ],
+    "ans": 3,
+    "exp": "The inner belt is dominated by rocky S-types; carbonaceous C-types dominate the outer belt."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "What did NASA's Dawn mission find about Vesta vs. Ceres?",
+    "opts": [
+      "Ceres has more heavy metals and less ice than Vesta",
+      "Ceres is big enough for a thin atmosphere; Vesta isn't",
+      "Vesta has more heavy metals and less ice than Ceres",
+      "Ceres is volcanically active; Vesta isn't"
+    ],
+    "ans": 2,
+    "exp": "Vesta is dry and differentiated; Ceres is primitive and wet (~25% water)."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "What is a Near-Earth asteroid?",
+    "opts": [
+      "A main-belt asteroid with perihelion under 1 AU",
+      "An inner-Solar-System asteroid that comes within ~1 AU of Earth's orbit",
+      "An asteroid with a high probability of hitting Earth",
+      "An asteroid captured into orbit around Earth"
+    ],
+    "ans": 1,
+    "exp": "NEAs approach within ~1 AU of Earth's orbit; ~1000 are 'potentially hazardous' (≥150 m)."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "What actually wiped out the (non-avian) dinosaurs 66 million years ago?",
+    "opts": [
+      "The shockwave from a 10–15 km impact",
+      "The 'nuclear winter' from planet-wide ash and dust after a 10–15 km impact",
+      "A 1-mile-high tsunami from the impact",
+      "Global wildfires after the impact"
+    ],
+    "ans": 1,
+    "exp": "The Chicxulub impactor (~10–15 km, crater ~180 km) triggered a global 'nuclear winter' that drove the extinction."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "How often do impacts like the K/T event occur on Earth?",
+    "opts": [
+      "Every ~100 million years",
+      "Every few millennia",
+      "Every million years",
+      "Every few centuries",
+      "Every few decades, but mostly in the oceans"
+    ],
+    "ans": 0,
+    "exp": "K/T-scale (~10 km) impacts are estimated at roughly one per 100 Myr."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "True or False: The best way to avoid a large asteroid impact is to plant a nuclear bomb inside it and blow it up.",
+    "opts": [
+      "True",
+      "False"
+    ],
+    "ans": 1,
+    "exp": "False — the realistic approach is deflection (a small nudge), as DART demonstrated on Dimorphos."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "Which is NOT a major difference between comet orbits and the orbits of planets, asteroids, and KBOs?",
+    "opts": [
+      "Comets can be in retrograde orbits",
+      "Comets have more elliptical orbits",
+      "Comets can be highly inclined to the ecliptic",
+      "Comets can reside in prograde orbits"
+    ],
+    "ans": 3,
+    "exp": "Prograde motion is shared with the planets — it's the high eccentricity, all inclinations, and retrograde possibility that set comets apart."
+  },
+  {
+    "ch": "ch14",
+    "type": "fitb",
+    "q": "The central small solid object of a comet is called the cometary ___.",
+    "ans": [
+      "nucleus"
+    ],
+    "display": "nucleus",
+    "exp": "The nucleus is a few-km 'dirty snowball' of ice and dust holding most of the comet's mass."
+  },
+  {
+    "ch": "ch14",
+    "type": "fitb",
+    "q": "The large cloud of gas and dust surrounding the nucleus of an active comet is called the ___.",
+    "ans": [
+      "coma"
+    ],
+    "display": "coma",
+    "exp": "The coma forms as solar heating sublimates the nucleus's ice near the Sun."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "True or False: A comet's tail always points opposite its motion because of its high orbital speed near the Sun.",
+    "opts": [
+      "True",
+      "False"
+    ],
+    "ans": 1,
+    "exp": "False — the tail points AWAY from the Sun (pushed by radiation pressure and the solar wind), regardless of the comet's direction."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "Why do comets develop a visible tail?",
+    "opts": [
+      "The tail is captured planetary atmosphere",
+      "Near the Sun the interior heats and subsurface ice sublimates into gas",
+      "Friction from the comet's high velocity breaks off surface material",
+      "It is leftover formation gas that reflects sunlight near the Sun",
+      "Surrounding hydrogen gas glows under solar UV"
+    ],
+    "ans": 1,
+    "exp": "Solar heating sublimates subsurface ice into a coma; radiation pressure and solar wind then form the tail."
+  },
+  {
+    "ch": "ch14",
+    "type": "fitb",
+    "q": "Besides light, the solar ___ pushes gas and dust away from the coma to form a comet's tails.",
+    "ans": [
+      "wind",
+      "solar wind"
+    ],
+    "display": "wind",
+    "exp": "The solar wind shapes the straight ion tail, while radiation pressure drives the curved dust tail."
+  },
+  {
+    "ch": "ch14",
+    "type": "fitb",
+    "q": "A comet's subsurface ice sublimates (turns directly to gas) rather than melting because of the low ___.",
+    "ans": [
+      "pressure"
+    ],
+    "display": "pressure",
+    "exp": "In the vacuum of space the low pressure means ice goes straight from solid to gas."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "What is the Oort cloud?",
+    "opts": [
+      "The remnant icy planetesimal disk just beyond 100 AU",
+      "A weather phenomenon over the Dutch town of Oort",
+      "The atmosphere of a Kuiper-belt object",
+      "A vast family of comets very far from the Sun (typically 10,000s of AU)"
+    ],
+    "ans": 3,
+    "exp": "The Oort cloud is a roughly spherical shell of trillions of comets out to ~100,000 AU."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "How did the Oort cloud form?",
+    "opts": [
+      "Icy planetesimals flung into extreme orbits by the young giant planets, especially Jupiter",
+      "The Sun captured interstellar objects over billions of years",
+      "Planetesimals thrown out by Neptune's outward migration",
+      "It formed directly from the collapsing cloud that made the Sun"
+    ],
+    "ans": 0,
+    "exp": "Gravitational kicks from the forming giant planets scattered icy bodies onto huge, long-period orbits."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "What is a shooting star?",
+    "opts": [
+      "A small dust particle glowing as it burns up in Earth's atmosphere",
+      "A dust particle lofted high by a volcanic eruption",
+      "A collision of two main-belt asteroids",
+      "A nearby star going supernova",
+      "A short-period comet passing close to Earth"
+    ],
+    "ans": 0,
+    "exp": "A meteor ('shooting star') is a small particle heated to glowing by ram pressure ~75–120 km up."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "Pluto's tenuous atmosphere is composed mainly of:",
+    "opts": [
+      "Nitrogen (N₂), with CO and trace methane",
+      "Carbon dioxide",
+      "Hydrogen and helium",
+      "Oxygen"
+    ],
+    "ans": 0,
+    "exp": "At ~44 K the N₂/CO/CH₄ atmosphere partly freezes out onto the surface as Pluto recedes from the Sun."
+  },
+  {
+    "ch": "ch14",
+    "type": "fitb",
+    "q": "The ___ spacecraft flew past Pluto on July 14, 2015.",
+    "ans": [
+      "New Horizons"
+    ],
+    "display": "New Horizons",
+    "exp": "It revealed nitrogen-ice plains (Sputnik Planum) convecting like a lava lamp, plus haze layers."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "Pluto's large moon Charon most likely formed by:",
+    "opts": [
+      "A giant impact, similar to the Earth–Moon system",
+      "Capture from the Kuiper belt",
+      "Co-accretion from a ring around Pluto",
+      "A cryo-volcanic eruption"
+    ],
+    "ans": 0,
+    "exp": "The Pluto–Charon system resembles a scaled-down Earth–Moon impact origin."
+  },
+  {
+    "ch": "ch14",
+    "type": "fitb",
+    "q": "The most common asteroid type — dark, carbon-rich, and most primitive — is the ___-type.",
+    "ans": [
+      "C",
+      "C-type",
+      "carbonaceous"
+    ],
+    "display": "C",
+    "exp": "C-types make up ~75% of asteroids and dominate the outer belt."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "A piece of space debris that survives its fiery passage and reaches the ground is called a:",
+    "opts": [
+      "Meteorite",
+      "Meteor",
+      "Meteoroid",
+      "Comet"
+    ],
+    "ans": 0,
+    "exp": "Meteoroid (in space) → meteor (the streak of light) → meteorite (the recovered rock)."
+  },
+  {
+    "ch": "ch14",
+    "type": "fitb",
+    "q": "A comet nucleus is often described as a 'dirty ___.'",
+    "ans": [
+      "snowball"
+    ],
+    "display": "snowball",
+    "exp": "It's a few-km mix of ices (water, methane, ammonia, CO₂) and dark dust."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "The first-ever soft landing on a comet was achieved by which mission?",
+    "opts": [
+      "ESA's Rosetta (Philae lander on comet 67P)",
+      "NASA's Deep Impact",
+      "Stardust",
+      "New Horizons"
+    ],
+    "ans": 0,
+    "exp": "Rosetta's Philae lander touched down on comet 67P/Churyumov–Gerasimenko on 11/12/2014."
+  },
+  {
+    "ch": "ch14",
+    "type": "fitb",
+    "q": "The ___ meteor exploded over Russia on Feb 15, 2013, injuring around 1,500 people.",
+    "ans": [
+      "Chelyabinsk"
+    ],
+    "display": "Chelyabinsk",
+    "exp": "The ~17–20 m object released ~440 kilotons — a reminder of the ongoing small-impact hazard."
+  },
+  {
+    "ch": "ch14",
+    "type": "mc",
+    "q": "A meteor shower occurs when:",
+    "opts": [
+      "Earth crosses a stream of debris left along a comet's orbit",
+      "Two asteroids collide in the main belt",
+      "A comet passes very close to Earth",
+      "The solar wind strikes the upper atmosphere"
+    ],
+    "ans": 0,
+    "exp": "The debris hits Earth in parallel paths, so the meteors appear to radiate from one point (the radiant)."
+  },
+  {
+    "ch": "ch15",
+    "type": "mc",
+    "q": "Why is it so difficult to directly image an exoplanet?",
+    "opts": [
+      "Over interstellar distances the planet is simply too faint to detect at all",
+      "The planet appears too close to a much brighter source — its host star",
+      "At such distances the planet is visible only in the infrared",
+      "Our telescopes are not big enough",
+      "The host star is too faint to detect"
+    ],
+    "ans": 1,
+    "exp": "The overwhelming glare of the nearby star drowns out the planet's faint light."
+  },
+  {
+    "ch": "ch15",
+    "type": "mc",
+    "q": "Why can indirect methods like radial velocity detect exoplanets?",
+    "opts": [
+      "Because the star and planet both orbit their common center of mass",
+      "Because the star+planet emit more light than a star alone",
+      "Because they move faster across the plane of the sky",
+      "Because the star changes size when it has a planet",
+      "Because the planet emits more light than the star"
+    ],
+    "ans": 0,
+    "exp": "The planet tugs the star around their shared barycenter, producing a detectable stellar wobble."
+  },
+  {
+    "ch": "ch15",
+    "type": "mc",
+    "q": "How exactly does the radial velocity method detect planets?",
+    "opts": [
+      "The Doppler effect measures the planet's velocity across the sky",
+      "The Doppler effect measures the star's dimming as the planet crosses it",
+      "The Doppler effect measures the star's velocity across the sky",
+      "The Doppler effect measures the star's velocity along the line of sight",
+      "The Doppler effect measures the planet's velocity along the line of sight"
+    ],
+    "ans": 3,
+    "exp": "Only the star is observed; its line-of-sight velocity oscillates as it orbits the barycenter."
+  },
+  {
+    "ch": "ch15",
+    "type": "mc",
+    "q": "Which parameters can the radial velocity method measure?",
+    "opts": [
+      "Mean density and orbital period",
+      "True mass, period, and eccentricity",
+      "Minimum mass, orbital period, and eccentricity",
+      "Size, chemical composition, and period",
+      "Only the orbital eccentricity"
+    ],
+    "ans": 2,
+    "exp": "It yields M·sin i (minimum mass), period, and eccentricity — minimum mass because the inclination is unknown."
+  },
+  {
+    "ch": "ch15",
+    "type": "mc",
+    "q": "Using radial velocity, which planet would be EASIEST to detect (largest signal)?",
+    "opts": [
+      "A Jupiter-mass planet in a 1-year orbit",
+      "A planet 10× Jupiter's mass in a 1-year orbit",
+      "A Mars-mass planet in a 1-year orbit",
+      "A planet 10× Earth's mass in a 1-year orbit",
+      "An Earth-mass planet in a 1-year orbit"
+    ],
+    "ans": 1,
+    "exp": "A more massive planet produces a larger stellar wobble, hence a bigger radial-velocity signal."
+  },
+  {
+    "ch": "ch15",
+    "type": "mc",
+    "q": "Why does radial velocity give only a MINIMUM mass?",
+    "opts": [
+      "Planets gain mass during the light-travel time",
+      "We usually don't know the viewing angle to the orbital plane",
+      "The star's velocity isn't really affected by the companion's mass",
+      "We usually don't know the planet's orbital distance",
+      "Stars change mass during the light-travel time"
+    ],
+    "ans": 1,
+    "exp": "Without the inclination we recover M·sin i; the true mass could be larger."
+  },
+  {
+    "ch": "ch15",
+    "type": "mc",
+    "q": "How does the transit technique detect planets?",
+    "opts": [
+      "It watches the star's brightness for a small dip as the planet passes in front",
+      "It uses high-resolution imaging of the faint planet",
+      "It uses the Doppler effect from the orbiting planet",
+      "It watches for dimming as the planet passes behind the star",
+      "It times pulses from a millisecond pulsar"
+    ],
+    "ans": 0,
+    "exp": "An edge-on planet crossing the star's disk causes a small periodic drop in light."
+  },
+  {
+    "ch": "ch15",
+    "type": "mc",
+    "q": "Which parameters can the transit method measure?",
+    "opts": [
+      "The planet's radius, orbital period, and transit duration",
+      "The planet's mass, period, and transit duration",
+      "Only the planet's size",
+      "Only the period and eccentricity",
+      "Mean density, eccentricity, and duration"
+    ],
+    "ans": 0,
+    "exp": "Depth gives radius (ΔL/L ≈ (R_planet/R_star)²); timing gives period and duration — but not mass."
+  },
+  {
+    "ch": "ch15",
+    "type": "mc",
+    "q": "Using the transit method, which planet would give the LARGEST signal?",
+    "opts": [
+      "A planet 2× Jupiter's size in a 10-day orbit",
+      "An Earth-size planet in a 10-day orbit",
+      "A Mars-size planet in a 10-day orbit",
+      "A Jupiter-size planet in a 10-day orbit",
+      "A planet half Jupiter's size in a 10-day orbit"
+    ],
+    "ans": 0,
+    "exp": "Transit depth scales with the planet's radius squared, so the largest planet blocks the most light."
+  },
+  {
+    "ch": "ch15",
+    "type": "mc",
+    "q": "What primarily determines an exoplanet's transit probability?",
+    "opts": [
+      "The planet's orbital eccentricity",
+      "The planet's orbital distance",
+      "The size of the star",
+      "The planet's size",
+      "The planet's mass"
+    ],
+    "ans": 1,
+    "exp": "Closer orbits are far more likely to appear edge-on; even Mercury's transit probability is only ~1%."
+  },
+  {
+    "ch": "ch15",
+    "type": "mc",
+    "q": "51 Pegasi b, the first exoplanet found orbiting a Sun-like star, was discovered by the:",
+    "opts": [
+      "Radial velocity technique",
+      "Astrometric technique",
+      "Direct imaging",
+      "Transit method"
+    ],
+    "ans": 0,
+    "exp": "Mayor & Queloz detected it via radial velocity in 1995 (half of the 2019 Nobel Prize)."
+  },
+  {
+    "ch": "ch15",
+    "type": "mc",
+    "q": "What was the big surprise about 51 Pegasi b?",
+    "opts": [
+      "Its high orbital eccentricity",
+      "Its extremely short orbital period and close orbit",
+      "Its extremely large minimum mass",
+      "Its extremely long period and large distance"
+    ],
+    "ans": 1,
+    "exp": "It was a 'hot Jupiter' — P = 4.3 days, a ≈ 0.05 AU — unexpected for a giant planet."
+  },
+  {
+    "ch": "ch15",
+    "type": "mc",
+    "q": "When we can combine radial velocity AND transit data for a planet, what new parameter can we determine?",
+    "opts": [
+      "Its formation timescale",
+      "Its atmospheric composition",
+      "Its mean density",
+      "Its age"
+    ],
+    "ans": 2,
+    "exp": "Transit gives radius and RV gives mass; together they yield the mean density."
+  },
+  {
+    "ch": "ch15",
+    "type": "fitb",
+    "q": "HD 209458 b, the first exoplanet seen transiting its star, has a ___ mean density than Saturn.",
+    "ans": [
+      "lower"
+    ],
+    "display": "lower",
+    "exp": "Its density (~0.38 g/cm³) is below Saturn's — an inflated 'hot Jupiter.'"
+  },
+  {
+    "ch": "ch15",
+    "type": "mc",
+    "q": "Why did NASA launch the Kepler telescope into space?",
+    "opts": [
+      "An Earth-size transit signal is smaller than the light-curve noise from Earth's atmosphere",
+      "The telescope was then closer to the Kepler-field stars",
+      "From space it could directly image the planets",
+      "Only in space can such high radial-velocity precision be achieved"
+    ],
+    "ans": 0,
+    "exp": "Ground-based atmospheric 'twinkle' exceeds the ~85 ppm dip of an Earth-size transit, so Kepler had to go to space."
+  },
+  {
+    "ch": "ch15",
+    "type": "mc",
+    "q": "Which planets did Kepler find to be MOST frequent around its target stars?",
+    "opts": [
+      "Planets much smaller than Mercury with periods over 1 year",
+      "Earth-size planets in the habitable zones of their stars",
+      "Planets much larger than Jupiter in short-period orbits",
+      "Super-Earths and mini-Neptunes (sizes between Earth and Neptune)",
+      "Jupiter/Saturn-size planets in short-period orbits"
+    ],
+    "ans": 3,
+    "exp": "Super-Earths/mini-Neptunes turned out to be the commonest size class — with no analog in our Solar System."
+  },
+  {
+    "ch": "ch15",
+    "type": "mc",
+    "q": "Mercury's transit probability is 1%. You survey a 1,000-star cluster and detect 10 transiting Mercurys. What can you conclude?",
+    "opts": [
+      "500 stars have a Mercury",
+      "100 stars have a Mercury",
+      "All 1,000 cluster stars have a Mercury",
+      "10 stars have a Mercury"
+    ],
+    "ans": 2,
+    "exp": "Only ~1% of randomly aligned systems transit, so 10 detections imply ~1,000 stars actually host a Mercury."
+  },
+  {
+    "ch": "ch15",
+    "type": "fitb",
+    "q": "Measuring a planet's effect on its star's light, rather than photographing the planet, is called ___ detection.",
+    "ans": [
+      "indirect"
+    ],
+    "display": "indirect",
+    "exp": "Radial velocity and transit are the two workhorse indirect methods."
+  },
+  {
+    "ch": "ch15",
+    "type": "mc",
+    "q": "What was Kepler's PRIMARY science goal?",
+    "opts": [
+      "To measure the frequency of Earth-size planets in the habitable zones of Sun-like stars",
+      "To measure the exact mass of every known exoplanet",
+      "To image the atmospheres of hot Jupiters",
+      "To measure the distance to the nearest star"
+    ],
+    "ans": 0,
+    "exp": "The answer is a statistical range, not a single number — which is why Kepler monitored ~160,000 stars."
+  },
+  {
+    "ch": "ch15",
+    "type": "fitb",
+    "q": "Kepler results suggest there may be roughly ___ million potentially habitable worlds in our galaxy.",
+    "ans": [
+      "300"
+    ],
+    "display": "300",
+    "exp": "Estimates run from ≥7% of Sun-like stars (conservative) to ~50% on average."
+  }
+];
+const DISC_DATA = [];
+
+function getMasteryKey() { return 'mastery_astr1304_unit3_'; }
+
+function showPanel(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+  btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+}
+
+function toggleChapter(header) {
+  const body = header.nextElementSibling;
+  const expanded = header.getAttribute('aria-expanded') === 'true';
+  header.setAttribute('aria-expanded', String(!expanded));
+  body.style.display = expanded ? 'none' : 'block';
+}
+
+function toggleObj(card) {
+  const expanded = card.getAttribute('aria-expanded') === 'true';
+  card.setAttribute('aria-expanded', String(!expanded));
+}
+
+function toggleObjMastery(btn, key) {
+  const k = getMasteryKey().replace('mastery_','masteryobj_') + key;
+  const isDone = localStorage.getItem(k) === '1';
+  if (isDone) { localStorage.removeItem(k); btn.classList.remove('done'); }
+  else { localStorage.setItem(k, '1'); btn.classList.add('done'); }
+}
+
+function initObjMastery() {
+  document.querySelectorAll('.obj-master-btn').forEach(btn => {
+    const onclickAttr = btn.getAttribute('onclick') || '';
+    const m = onclickAttr.match(/toggleObjMastery\(this,'([^']+)'\)/);
+    if (!m) return;
+    const k = getMasteryKey().replace('mastery_','masteryobj_') + m[1];
+    if (localStorage.getItem(k) === '1') btn.classList.add('done');
+  });
+}
+
+/* ---------------- Flashcards ---------------- */
+let currentDeck = FLASHCARDS_DATA.slice();
+let currentIndex = 0;
+let flipped = false;
+
+function renderCard() {
+  const card = document.getElementById('fc-card');
+  if (currentDeck.length === 0) { card.textContent = 'No cards in this filter.'; return; }
+  const item = currentDeck[currentIndex];
+  card.textContent = flipped ? item.a : item.q;
+  document.getElementById('fc-counter').textContent = (currentIndex+1) + ' / ' + currentDeck.length;
+  const mkey = getMasteryKey() + FLASHCARDS_DATA.indexOf(item);
+  const mBtn = document.getElementById('fc-master-btn');
+  if (localStorage.getItem(mkey) === '1') { mBtn.textContent = '★ Mastered'; mBtn.classList.add('done'); }
+  else { mBtn.textContent = '☆ Mark mastered'; mBtn.classList.remove('done'); }
+}
+function flipCard() { flipped = !flipped; renderCard(); }
+function nextCard() { if (!currentDeck.length) return; currentIndex = (currentIndex+1) % currentDeck.length; flipped = false; renderCard(); }
+function prevCard() { if (!currentDeck.length) return; currentIndex = (currentIndex-1+currentDeck.length) % currentDeck.length; flipped = false; renderCard(); }
+function shuffleCards() {
+  for (let i = currentDeck.length -1; i>0; i--) { const j = Math.floor(Math.random()*(i+1)); [currentDeck[i],currentDeck[j]]=[currentDeck[j],currentDeck[i]]; }
+  currentIndex = 0; flipped = false; renderCard();
+}
+function filterCards(ch, btn) {
+  document.querySelectorAll('#panel-flashcards .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentDeck = ch === 'all' ? FLASHCARDS_DATA.slice() : FLASHCARDS_DATA.filter(c=>c.ch===ch);
+  currentIndex = 0; flipped = false; renderCard();
+}
+function toggleMastered(idx) {
+  const item = currentDeck[idx];
+  const realIdx = FLASHCARDS_DATA.indexOf(item);
+  const mkey = getMasteryKey() + realIdx;
+  if (localStorage.getItem(mkey) === '1') localStorage.removeItem(mkey); else localStorage.setItem(mkey,'1');
+  renderCard();
+}
+
+/* ---------------- Quiz ---------------- */
+let quizDeck = QUIZ_DATA.slice();
+let quizAnswers = {};
+
+function setQuizFilter(ch, btn) {
+  document.querySelectorAll('#panel-quiz .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  quizDeck = ch === 'all' ? QUIZ_DATA.slice() : QUIZ_DATA.filter(q=>q.ch===ch);
+  quizAnswers = {};
+  document.getElementById('quiz-score').classList.remove('show');
+  renderQuiz();
+}
+function renderQuiz() {
+  const c = document.getElementById('quiz-container');
+  c.innerHTML = '';
+  quizDeck.forEach((q, qi) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-q';
+    let inner = '<div class="qtag">' + q.ch.toUpperCase() + ' · ' + (q.type==='mc'?'Multiple Choice':'Fill in the Blank') + '</div>';
+    inner += '<div class="qtext">' + (qi+1) + '. ' + q.q + '</div>';
+    if (q.type === 'mc') {
+      q.opts.forEach((opt, oi) => { inner += '<button class="mc-opt" id="mc-' + qi + '-' + oi + '" onclick="selectMC(' + qi + ',' + oi + ')">' + opt + '</button>'; });
+    } else {
+      inner += '<input type="text" class="fitb-input" id="fitb-' + qi + '" placeholder="Type your answer" oninput="storeFITB(' + qi + ')">';
+    }
+    inner += '<div class="exp-box" id="exp-' + qi + '"><strong>Explanation:</strong> ' + q.exp + '</div>';
+    div.innerHTML = inner;
+    c.appendChild(div);
+  });
+}
+function selectMC(qi, oi) {
+  quizAnswers[qi] = oi;
+  for (let i=0;i<quizDeck[qi].opts.length;i++) {
+    document.getElementById('mc-'+qi+'-'+i).classList.remove('selected');
+  }
+  document.getElementById('mc-'+qi+'-'+oi).classList.add('selected');
+}
+function storeFITB(qi) {
+  quizAnswers[qi] = document.getElementById('fitb-'+qi).value;
+}
+function submitQuiz() {
+  let correct = 0;
+  quizDeck.forEach((q, qi) => {
+    const expBox = document.getElementById('exp-'+qi);
+    expBox.classList.add('show');
+    if (q.type === 'mc') {
+      const given = quizAnswers[qi];
+      for (let i=0;i<q.opts.length;i++) {
+        const el = document.getElementById('mc-'+qi+'-'+i);
+        el.classList.remove('correct','incorrect');
+        if (i === q.ans) el.classList.add('correct');
+        else if (i === given) el.classList.add('incorrect');
+      }
+      if (given === q.ans) correct++;
+    } else {
+      const el = document.getElementById('fitb-'+qi);
+      const given = (quizAnswers[qi]||'').trim().toLowerCase();
+      const ok = q.ans.some(a => a.toLowerCase() === given);
+      el.classList.remove('correct','incorrect');
+      el.classList.add(ok ? 'correct' : 'incorrect');
+      el.disabled = true;
+      if (ok) correct++;
+    }
+  });
+  const pct = quizDeck.length ? Math.round((correct/quizDeck.length)*100) : 0;
+  const scoreBox = document.getElementById('quiz-score');
+  scoreBox.textContent = 'Score: ' + correct + ' / ' + quizDeck.length + ' (' + pct + '%)';
+  scoreBox.classList.add('show');
+}
+function resetQuiz() {
+  quizAnswers = {};
+  document.getElementById('quiz-score').classList.remove('show');
+  renderQuiz();
+}
+
+/* ---------------- Discussion ---------------- */
+function filterDisc(ch, btn) {
+  document.querySelectorAll('#panel-discussion .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDiscussion(ch);
+}
+function renderDiscussion(filterCh) {
+  const c = document.getElementById('disc-container');
+  c.innerHTML = '';
+  DISC_DATA.forEach((d, idx) => {
+    if (filterCh && filterCh !== 'all' && d.ch !== filterCh) return;
+    const div = document.createElement('div');
+    div.className = 'disc-q';
+    let inner = '<div class="qtag">' + d.ch.toUpperCase() + ' · Short Answer / Discussion</div>';
+    inner += '<div class="qtext">' + (idx+1) + '. ' + d.q + '</div>';
+    inner += '<textarea id="disc-ta-' + idx + '" aria-label="Your answer" placeholder="Write your answer here..."></textarea>';
+    inner += '<div class="disc-btn-row"><button class="primary" onclick="submitDisc(' + idx + ')">Submit &amp; Self-Grade</button><button onclick="resetDisc(' + idx + ')">Reset</button></div>';
+    inner += '<div class="disc-rubric" id="disc-rubric-' + idx + '">';
+    d.points.forEach((p, pi) => {
+      inner += '<label class="rubric-item"><input type="checkbox" onchange="updateDiscScore(' + idx + ')" id="disc-pt-' + idx + '-' + pi + '"> <span>' + p.text + '</span></label>';
+    });
+    inner += '<div class="disc-score" id="disc-score-' + idx + '">Score: 0%</div>';
+    inner += '<button class="model-toggle" onclick="toggleModel(' + idx + ')">Show model answer</button>';
+    inner += '<div class="model-answer" id="disc-model-' + idx + '">' + d.model + '</div>';
+    inner += '</div>';
+    div.innerHTML = inner;
+    c.appendChild(div);
+  });
+}
+function submitDisc(idx) {
+  document.getElementById('disc-ta-'+idx).disabled = true;
+  document.getElementById('disc-rubric-'+idx).classList.add('show');
+  updateDiscScore(idx);
+}
+function resetDisc(idx) {
+  const ta = document.getElementById('disc-ta-'+idx);
+  ta.disabled = false; ta.value = '';
+  document.getElementById('disc-rubric-'+idx).classList.remove('show');
+  DISC_DATA[idx].points.forEach((p,pi)=>{ const cb = document.getElementById('disc-pt-'+idx+'-'+pi); if (cb) cb.checked = false; });
+  const model = document.getElementById('disc-model-'+idx); model.classList.remove('show');
+}
+function updateDiscScore(idx) {
+  const total = DISC_DATA[idx].points.length;
+  let checked = 0;
+  DISC_DATA[idx].points.forEach((p,pi)=>{ const cb = document.getElementById('disc-pt-'+idx+'-'+pi); if (cb && cb.checked) checked++; });
+  const pct = total ? Math.round((checked/total)*100) : 0;
+  document.getElementById('disc-score-'+idx).textContent = 'Score: ' + checked + '/' + total + ' (' + pct + '%)';
+}
+function toggleModel(idx) {
+  document.getElementById('disc-model-'+idx).classList.toggle('show');
+}
+
+/* ---------------- Mastery reset ---------------- */
+function resetAllMastery() {
+  const prefix1 = getMasteryKey();
+  const prefix2 = prefix1.replace('mastery_','masteryobj_');
+  Object.keys(localStorage).forEach(k => {
+    if (k.indexOf(prefix1) === 0 || k.indexOf(prefix2) === 0) localStorage.removeItem(k);
+  });
+  renderCard(); initObjMastery();
+  document.querySelectorAll('.obj-master-btn').forEach(b=>b.classList.remove('done'));
+}
+
+/* ---------------- Init ---------------- */
+document.addEventListener('DOMContentLoaded', () => {
+  initObjMastery();
+  renderCard();
+  renderQuiz();
+  renderDiscussion('all');
+});
+</script>
+</body>
+</html>
