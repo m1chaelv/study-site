@@ -2830,7 +2830,696 @@ const QUIZ_DATA = [
     "exp": "Estimates run from ≥7% of Sun-like stars (conservative) to ~50% on average."
   }
 ];
-const DISC_DATA = [];
+const DISC_DATA = [
+  {
+    "ch": "ch11",
+    "q": "Describe Jupiter's position and orbit in the Solar System, and explain how its rotation affects its shape.",
+    "points": [
+      {
+        "text": "<strong>Position</strong> — identifies Jupiter as the 5th planet and innermost gas giant, ~5.2 AU from the Sun with an ~11.86-year orbit"
+      },
+      {
+        "text": "<strong>Rotation</strong> — describes its fast differential rotation (~9 h 55 min, the fastest-spinning planet) and that it spins faster at the equator than at the poles"
+      },
+      {
+        "text": "<strong>Consequence</strong> — connects the rapid spin to the planet's oblateness (equatorial radius 71,500 km vs polar 66,900 km)"
+      }
+    ],
+    "model": "Jupiter is the fifth planet from the Sun and the innermost jovian (gas giant) planet, orbiting at about 5.2 AU with a period of roughly 11.86 Earth years. It has the fastest rotation of any planet — a differential rotation of about 9 h 55 min, spinning faster at the equator than at the poles. That rapid spin flattens the planet noticeably, giving it a larger equatorial radius (71,500 km) than polar radius (66,900 km)."
+  },
+  {
+    "ch": "ch11",
+    "q": "What defines a gas giant, and why does Jupiter keep its hydrogen-and-helium composition?",
+    "points": [
+      {
+        "text": "<strong>Composition</strong> — states it is almost entirely hydrogen and helium (H₂ ≈86%, He ≈14%) with no solid surface"
+      },
+      {
+        "text": "<strong>Scale</strong> — gives the comparative figures (~320× Earth's mass, ~11× Earth's radius) rather than a raw kg value, and notes the low density (~1300 kg/m³)"
+      },
+      {
+        "text": "<strong>Why H/He</strong> — connects its massive gravity to its ability to retain light gases, keeping the composition H/He-dominated"
+      }
+    ],
+    "model": "A gas giant is composed almost entirely of hydrogen and helium (about 86% H₂ and 14% He) with no solid surface — the atmosphere transitions smoothly into a fluid interior. Rather than a raw kg mass, the key comparative figures are that Jupiter is about 320× Earth's mass and about 11× Earth's radius, yet has a low density near 1300 kg/m³. Its enormous gravity is what lets it retain even the lightest gases, which is why the composition stays hydrogen/helium-dominated. Jupiter is the prototype for the other jovian worlds and a model for exoplanetary gas giants."
+  },
+  {
+    "ch": "ch11",
+    "q": "Explain the banded appearance of Jupiter's atmosphere and describe the Great Red Spot.",
+    "points": [
+      {
+        "text": "<strong>Bands</strong> — distinguishes zones (bright, rising, high-pressure) from belts (dark, sinking, low-pressure) and describes the stable alternating zonal wind flow"
+      },
+      {
+        "text": "<strong>Great Red Spot</strong> — describes it as a long-lived (≥300 yr) anticyclonic storm ~2× Earth's size"
+      },
+      {
+        "text": "<strong>Energy &amp; color</strong> — notes Jupiter emits ~2× the energy it receives (still cooling from formation) and that colors come from trace-molecule photochemistry, not H/He"
+      }
+    ],
+    "model": "Jupiter's atmosphere shows alternating bands: bright zones are rising, high-pressure convective currents, while dark belts are sinking, low-pressure material, producing stable east–west (zonal) wind flow that is exaggerated by the rapid rotation. The Great Red Spot is a giant anticyclonic storm about twice Earth's size that has persisted for at least 300 years. The colors come from photochemistry of trace molecules rather than the hydrogen and helium themselves, and Jupiter emits roughly twice the energy it receives from the Sun because it is still cooling from formation."
+  },
+  {
+    "ch": "ch11",
+    "q": "Describe the interior structure of Jupiter from the center outward.",
+    "points": [
+      {
+        "text": "<strong>Layers</strong> — names the outward sequence — compact core → liquid metallic hydrogen → liquid molecular hydrogen → gaseous atmosphere — with gradual, not sharp, boundaries"
+      },
+      {
+        "text": "<strong>Core</strong> — states the core is ~5–10 Earth masses (possibly “dilute”/dissolved per Juno)"
+      },
+      {
+        "text": "<strong>Conditions</strong> — gives the central pressure (~100 million bars) and temperature (~20,000 K)"
+      }
+    ],
+    "model": "From the center outward, Jupiter has a compact core of about 5–10 Earth masses (possibly 'dilute'/dissolved according to Juno), surrounded by liquid metallic hydrogen, then liquid molecular hydrogen, then the gaseous atmosphere, with gradual rather than sharp boundaries between the layers. Conditions at the center are extreme — a pressure near 100 million bars and a temperature around 20,000 K."
+  },
+  {
+    "ch": "ch11",
+    "q": "Where does Jupiter's powerful magnetic field originate, and how large is its magnetosphere?",
+    "points": [
+      {
+        "text": "<strong>Source</strong> — attributes the field to electric currents in the conductive liquid metallic hydrogen layer, amplified by rapid rotation"
+      },
+      {
+        "text": "<strong>Strength/size</strong> — notes it is ~19,500× Earth's and that the magnetosphere extends beyond Saturn's orbit"
+      },
+      {
+        "text": "<strong>Io torus</strong> — describes the Io plasma torus as a ring of charged particles (Na, S) fed by Io's volcanoes"
+      }
+    ],
+    "model": "Jupiter's magnetic field is generated by electric currents flowing in its large, highly conductive liquid metallic hydrogen layer, amplified by the planet's rapid rotation. The field is about 19,500× Earth's, and the magnetosphere is enormous, extending beyond Saturn's orbit. Within it, the Io plasma torus is a ring of charged particles (sodium and sulfur) fed by Io's volcanoes."
+  },
+  {
+    "ch": "ch11",
+    "q": "Name Jupiter's four Galilean moons and summarize what makes each one distinct.",
+    "points": [
+      {
+        "text": "<strong>Galilean set</strong> — names the four Galilean moons (Io, Europa, Ganymede, Callisto) and notes the ~1:2:4 resonance"
+      },
+      {
+        "text": "<strong>Io &amp; Europa</strong> — identifies Io as the most volcanically active body in the Solar System and Europa as an ice-covered world with a probable subsurface salt-water ocean"
+      },
+      {
+        "text": "<strong>Ganymede &amp; Callisto</strong> — notes Ganymede is the largest moon in the Solar System (bigger than Mercury) and Callisto is old, heavily cratered, and geologically dead"
+      }
+    ],
+    "model": "The four Galilean moons — discovered by Galileo and visible in binoculars — are Io, Europa, Ganymede, and Callisto, orbiting near a 1:2:4 resonance. Io is the most volcanically active body in the Solar System, while Europa is ice-covered with a probable subsurface salt-water ocean that makes it a candidate for life. Ganymede is the largest moon in the Solar System (bigger than Mercury), and Callisto is old, heavily cratered, and geologically dead."
+  },
+  {
+    "ch": "ch11",
+    "q": "Explain the mechanism of tidal heating and the conditions required for it to occur.",
+    "points": [
+      {
+        "text": "<strong>Mechanism</strong> — explains that a varying tidal bulge flexes a moon's interior and the internal friction generates heat"
+      },
+      {
+        "text": "<strong>Two requirements</strong> — states that BOTH proximity to a massive planet AND a slightly eccentric orbit are needed"
+      },
+      {
+        "text": "<strong>Circular-orbit case</strong> — notes a perfectly circular orbit produces tidal bulges but NO tidal heating, and ranks Io (heated most) → Europa → Callisto (least)"
+      }
+    ],
+    "model": "Tidal heating happens when a moon on a slightly eccentric orbit close to a massive planet feels a tidal bulge that changes size as its distance varies; the repeated flexing creates internal friction, which generates heat. Two conditions are both required: proximity to a massive planet (for large tides) and a slightly eccentric orbit (so the bulge actually changes) — on a perfectly circular orbit there would still be tidal bulges but no tidal heating. Because the strength falls with distance, among the Galilean moons Io is heated the most and drives continuous volcanism, Europa is intermediate, and Callisto is heated the least."
+  },
+  {
+    "ch": "ch12",
+    "q": "Compare Saturn's interior and mass to Jupiter's, noting the key differences.",
+    "points": [
+      {
+        "text": "<strong>Basics</strong> — identifies Saturn as the 2nd gas giant, ~2× Jupiter's distance, with an ~29.4-yr orbit and ~10 h rotation"
+      },
+      {
+        "text": "<strong>Interior contrast</strong> — notes a larger solid core but a much thinner liquid metallic hydrogen zone than Jupiter, giving a weaker magnetic field"
+      },
+      {
+        "text": "<strong>Mass comparison</strong> — gives the comparative mass (~95 Earth masses vs Jupiter's ~320) rather than a raw kg value"
+      }
+    ],
+    "model": "Saturn is the second gas giant, orbiting about twice as far from the Sun as Jupiter, with a period near 29.4 years and a rapid rotation of about 10 hours. Its interior mirrors Jupiter's but has a larger solid core and a much thinner liquid metallic hydrogen zone, which gives it a weaker magnetic field. In comparative terms Saturn is about 95 Earth masses versus Jupiter's roughly 320 — only slightly smaller in size than Jupiter but far less massive."
+  },
+  {
+    "ch": "ch12",
+    "q": "Why is Saturn the least dense planet, and what is the source of its excess internal heat?",
+    "points": [
+      {
+        "text": "<strong>Density</strong> — states its mean density is ~700 kg/m³ — less than water — so Saturn would float"
+      },
+      {
+        "text": "<strong>Shape</strong> — connects fast rotation + low density to it being the flattest planet"
+      },
+      {
+        "text": "<strong>Excess heat</strong> — explains it radiates ~3× the energy it receives via helium precipitation (He condenses and sinks, heating the interior)"
+      }
+    ],
+    "model": "Saturn's mean density is only about 700 kg/m³ — less than water (1000 kg/m³) — so it would float, and its combination of fast rotation and low density makes it the flattest planet in the Solar System. It radiates roughly three times the energy it receives, more than formation heat alone can supply; the extra heat comes from helium precipitation, in which helium condenses and sinks through the liquid hydrogen, compressing and heating the interior (which leaves the upper atmosphere helium-depleted relative to Jupiter)."
+  },
+  {
+    "ch": "ch12",
+    "q": "Describe Saturn's rings and explain their connection to the Roche limit.",
+    "points": [
+      {
+        "text": "<strong>Ring nature</strong> — describes the rings as ~200,000 km wide but only tens of meters thick, made of countless mostly water-ice particles"
+      },
+      {
+        "text": "<strong>Roche limit</strong> — defines the Roche limit as the distance inside which tidal forces tear a moon apart, and notes the rings lie inside it"
+      },
+      {
+        "text": "<strong>Origin</strong> — connects this to a disrupted ~250 km body that could not re-form (Cassini data suggest the rings may be young, ~100 Myr)"
+      }
+    ],
+    "model": "Saturn's rings span about 200,000 km but are only tens of meters thick, made of countless small particles that are mostly water ice. The Roche limit is the distance inside which a planet's tidal forces would tear a moon apart, and Saturn's rings lie inside it — so the material cannot pull together into a moon. This points to an origin in a roughly 250 km body that was tidally disrupted and could not re-form; Cassini data even suggest the rings may be relatively young, on the order of 100 Myr."
+  },
+  {
+    "ch": "ch12",
+    "q": "What is unusual about Titan, and what are its surface and atmosphere like?",
+    "points": [
+      {
+        "text": "<strong>Atmosphere</strong> — notes Titan is the only moon with a thick, dense atmosphere (~N₂ 98% + CH₄ 2%), surface pressure ~1.6× Earth's"
+      },
+      {
+        "text": "<strong>Surface</strong> — describes liquid methane/ethane lakes and a surface temperature ~94 K"
+      },
+      {
+        "text": "<strong>Size/probe</strong> — notes it is the 2nd-largest moon and that the Huygens probe landed on solid icy ground"
+      }
+    ],
+    "model": "Titan is the second-largest moon in the Solar System and the only moon with a thick, dense atmosphere — roughly 98% nitrogen and 2% methane, with a surface pressure about 1.6× Earth's. Its surface has lakes of liquid methane and ethane at a temperature around 94 K. The Huygens probe landed on solid icy ground, and a water layer is thought to lie tens of km below the surface."
+  },
+  {
+    "ch": "ch12",
+    "q": "Why can Titan hold onto a thick atmosphere when larger moons like Ganymede cannot?",
+    "points": [
+      {
+        "text": "<strong>Key factor</strong> — explains that it is mass PLUS low temperature, not mass alone"
+      },
+      {
+        "text": "<strong>Mechanism</strong> — states that Titan's great distance and cold make gas molecules too slow to escape"
+      },
+      {
+        "text": "<strong>Contrast</strong> — notes that if moved to Ganymede's warmer distance Titan would lose its atmosphere, explaining why bigger, warmer moons lack one"
+      }
+    ],
+    "model": "The reason is not mass alone but mass combined with low temperature. Titan's great distance from the Sun keeps it so cold that its gas molecules move too slowly to escape, allowing it to retain a dense atmosphere. If Titan were moved to Ganymede's warmer distance it would lose that atmosphere — which is exactly why larger but warmer moons such as Ganymede and our own Moon lack thick atmospheres."
+  },
+  {
+    "ch": "ch12",
+    "q": "What evidence shows Enceladus is geologically active, and what powers that activity?",
+    "points": [
+      {
+        "text": "<strong>Plumes</strong> — describes cryo-volcanic plumes (mostly water vapor) from the south polar region, found by Cassini"
+      },
+      {
+        "text": "<strong>Heat source</strong> — attributes the activity to tidal heating sustained by a 2:1 resonance with Dione"
+      },
+      {
+        "text": "<strong>E-ring</strong> — notes Enceladus orbits in, and is the likely source of, the E-ring"
+      }
+    ],
+    "model": "Cassini discovered jet-like cryo-volcanic plumes — mostly water vapor — erupting from Enceladus's south polar region, direct evidence of geologic activity. The activity is powered by tidal heating that is sustained by a 2:1 orbital resonance with Dione, which keeps Enceladus's orbit slightly eccentric. Enceladus orbits within the densest part of Saturn's E-ring and is very likely the source of that ring's material."
+  },
+  {
+    "ch": "ch13",
+    "q": "What is an ice giant, and how does it differ from a gas giant like Jupiter?",
+    "points": [
+      {
+        "text": "<strong>Definition</strong> — states Uranus &amp; Neptune are ice giants — ~4× Earth's radius but &lt; 20 Earth masses (Uranus ~14, Neptune ~17)"
+      },
+      {
+        "text": "<strong>Composition</strong> — notes most of the mass (~80%) is an icy mantle of water/ammonia/methane over a rocky core, with only a modest H/He envelope"
+      },
+      {
+        "text": "<strong>Contrast</strong> — explains they are too dense to be pure H/He gas giants at that size"
+      }
+    ],
+    "model": "Uranus and Neptune are ice giants, not gas giants: each is about 4× Earth's radius but under 20 Earth masses (Uranus around 14, Neptune around 17). At that size they are too dense to be pure hydrogen and helium, so most of their mass — roughly 80% — is an icy mantle of water, ammonia, and methane compounds over a rocky core, with only a modest hydrogen/helium envelope on top. This is the key contrast with the gas giants Jupiter and Saturn, which are dominated by hydrogen and helium."
+  },
+  {
+    "ch": "ch13",
+    "q": "Describe the interior layers of Uranus and Neptune and explain why they lack a metallic-hydrogen zone.",
+    "points": [
+      {
+        "text": "<strong>Layers</strong> — names rocky core (~10 M⊕) → massive icy mantle → H/He gas atmosphere"
+      },
+      {
+        "text": "<strong>Mass fraction</strong> — states core + mantle ≈ 80% of total mass, central pressure ~100 million bars"
+      },
+      {
+        "text": "<strong>No metallic H</strong> — notes the absence of a thick metallic-hydrogen zone (unlike Jupiter/Saturn), which changes how the field is generated"
+      }
+    ],
+    "model": "From the center outward, Uranus and Neptune have a rocky core of about 10 Earth masses, a massive icy mantle of water, ammonia, and methane, and a hydrogen/helium gas atmosphere; the core plus mantle make up roughly 80% of the total mass, with a central pressure near 100 million bars. Unlike Jupiter and Saturn, they do not have a thick metallic-hydrogen zone, which is why their magnetic fields must be generated in a different way."
+  },
+  {
+    "ch": "ch13",
+    "q": "Describe Uranus's axis tilt and the seasonal effects it produces.",
+    "points": [
+      {
+        "text": "<strong>Tilt</strong> — states Uranus is tilted ~98°, essentially on its side"
+      },
+      {
+        "text": "<strong>Seasons</strong> — describes the resulting extreme seasons (a pole can face continuous sunlight for years, then continuous dark)"
+      },
+      {
+        "text": "<strong>Cause</strong> — notes a giant collision is the likely cause, but the moons' matching tilt complicates a single-impact explanation"
+      }
+    ],
+    "model": "Uranus's rotation axis is tilted about 98°, so the planet is essentially lying on its side. This produces extreme seasons: a pole can point almost directly at the Sun and receive continuous sunlight for years, then face continuous darkness. A giant collision is the likely cause, but the fact that the moons' orbits are tilted the same way complicates a simple single-impact explanation, and there is no direct evidence."
+  },
+  {
+    "ch": "ch13",
+    "q": "Why do Uranus and Neptune appear blue-green, and how do the two planets differ in appearance?",
+    "points": [
+      {
+        "text": "<strong>Methane</strong> — attributes the color to methane in the upper atmosphere absorbing red light and reflecting blue/green"
+      },
+      {
+        "text": "<strong>Uranus vs Neptune</strong> — contrasts featureless, heat-poor Uranus with the deeper-blue, dynamic Neptune"
+      },
+      {
+        "text": "<strong>Neptune's heat</strong> — notes Neptune radiates ~2.7× the energy it receives (a strong internal heat source)"
+      }
+    ],
+    "model": "Both planets look blue-green because methane in their upper atmospheres absorbs red wavelengths and reflects blue and green. Uranus is a fairly featureless blue-green with little internal heat, while Neptune is a deeper blue and surprisingly dynamic. Neptune has a strong internal heat source, radiating about 2.7× the energy it receives from the Sun."
+  },
+  {
+    "ch": "ch13",
+    "q": "What is strange about the magnetic fields of Uranus and Neptune, and how are they generated?",
+    "points": [
+      {
+        "text": "<strong>Odd geometry</strong> — states both fields are strongly tilted (Uranus ~60°, Neptune ~46°) and offset ~⅓ of the radius from center"
+      },
+      {
+        "text": "<strong>Source</strong> — attributes them to electric currents in a conducting ionic solution within the icy mantle (e.g., dissolved ammonia)"
+      },
+      {
+        "text": "<strong>Contrast</strong> — notes this differs from Earth's molten core or Jupiter's metallic hydrogen, explaining the misalignment and offset"
+      }
+    ],
+    "model": "The magnetic fields of both planets are strongly tilted relative to their rotation axes (about 60° for Uranus and 46° for Neptune) and offset from the planet's center by roughly a third of the radius. Rather than arising in a molten iron core (like Earth) or a metallic-hydrogen layer (like Jupiter), they are generated by electric currents in a conducting ionic solution within the icy mantle — for example dissolved ammonia. Generating the field out in the mantle rather than at the center is what explains the unusual misalignment and offset."
+  },
+  {
+    "ch": "ch13",
+    "q": "What features of Triton suggest it was captured, and what is its likely fate?",
+    "points": [
+      {
+        "text": "<strong>Retrograde/capture</strong> — states Triton has a retrograde, inclined orbit → almost certainly a captured Kuiper-belt object"
+      },
+      {
+        "text": "<strong>Surface</strong> — notes it is the coldest object yet visited (~37 K), with a thin N₂ atmosphere and nitrogen geysers"
+      },
+      {
+        "text": "<strong>Fate</strong> — describes it spiraling inward, to be tidally torn into a ring in ~100 Myr"
+      }
+    ],
+    "model": "Triton orbits Neptune in a retrograde, inclined orbit — opposite to Neptune's spin — which strongly implies it is a captured Kuiper-belt object rather than a moon that formed in place. It is the coldest object yet visited (about 37 K), with a thin nitrogen atmosphere and active nitrogen geysers. Its orbit is decaying, and in roughly 100 Myr it is expected to spiral in and be tidally torn apart into a ring."
+  },
+  {
+    "ch": "ch14",
+    "q": "How was Pluto discovered, and why is its discovery considered a lucky accident?",
+    "points": [
+      {
+        "text": "<strong>Motivation</strong> — explains astronomers searched for a “Planet X” to explain apparent irregularities in Uranus/Neptune's orbits"
+      },
+      {
+        "text": "<strong>Discovery</strong> — states Clyde Tombaugh discovered Pluto in 1930"
+      },
+      {
+        "text": "<strong>Twist</strong> — notes the irregularities were not real (Voyager 2 corrected Neptune's mass) and Pluto is far too small to have caused them — a lucky accident"
+      }
+    ],
+    "model": "Astronomers were searching for a 'Planet X' they believed was causing irregularities in the orbits of Uranus and Neptune, and Clyde Tombaugh discovered Pluto in 1930 during that search. But the supposed irregularities were not real — Voyager 2 later gave a corrected mass for Neptune and they disappeared — and Pluto is far too small to have caused them anyway. So the discovery was essentially a lucky accident."
+  },
+  {
+    "ch": "ch14",
+    "q": "Describe Pluto's orbit and explain how its resonance with Neptune protects it.",
+    "points": [
+      {
+        "text": "<strong>Orbit</strong> — gives key values: e=0.25, perihelion 29.7 AU / aphelion 49.3 AU, inclination 17.2°, period 248 yr"
+      },
+      {
+        "text": "<strong>Resonance</strong> — describes the 3:2 resonance with Neptune (2 Pluto orbits per 3 Neptune orbits)"
+      },
+      {
+        "text": "<strong>Protection</strong> — explains the resonance keeps their minimum separation &gt; 17 AU despite crossing orbits"
+      }
+    ],
+    "model": "Pluto has an eccentric, inclined orbit: eccentricity 0.25, perihelion 29.7 AU and aphelion 49.3 AU, inclination 17.2°, and a period of 248 years. It is locked in a 3:2 resonance with Neptune, completing two orbits for every three of Neptune's. That resonance is protective — even though Pluto's orbit crosses Neptune's, it keeps their minimum separation greater than 17 AU, so the two never come dangerously close."
+  },
+  {
+    "ch": "ch14",
+    "q": "What did New Horizons reveal about Pluto's surface and atmosphere?",
+    "points": [
+      {
+        "text": "<strong>Atmosphere</strong> — describes a tenuous N₂/CO atmosphere (traces of CH₄, ~44 K) that freezes out when far from the Sun"
+      },
+      {
+        "text": "<strong>New Horizons</strong> — notes the 2015 flyby revealed nitrogen-ice plains (Sputnik Planum) convecting like a lava lamp, plus water-ice hills"
+      },
+      {
+        "text": "<strong>Surface detail</strong> — mentions a brighter methane-frost south pole and haze layers"
+      }
+    ],
+    "model": "Pluto has a tenuous nitrogen and carbon-monoxide atmosphere (with traces of methane) at about 44 K that freezes out onto the surface when Pluto is far from the Sun. The 2015 New Horizons flyby revealed nitrogen-ice plains — Sputnik Planum — that convect slowly like a lava lamp, along with water-ice hills, haze layers, and a brighter methane-frost south polar cap."
+  },
+  {
+    "ch": "ch14",
+    "q": "Describe Pluto's moon system and the likely origin of Charon.",
+    "points": [
+      {
+        "text": "<strong>Charon</strong> — describes the large moon Charon, tidally locked with Pluto, orbiting a barycenter outside Pluto"
+      },
+      {
+        "text": "<strong>Small moons</strong> — names the smaller moons (Nix, Hydra, Kerberos, Styx)"
+      },
+      {
+        "text": "<strong>Origin</strong> — connects Charon's formation to a giant impact, analogous to the Earth–Moon system"
+      }
+    ],
+    "model": "Pluto's largest moon is Charon, which is tidally locked with Pluto so that the two orbit a common barycenter lying outside Pluto itself. Smaller moons — Nix, Hydra, Kerberos, and Styx — orbit farther out. Charon most likely formed in a giant impact, analogous to how the Earth–Moon system is thought to have formed."
+  },
+  {
+    "ch": "ch14",
+    "q": "Using the IAU definition of a planet, explain why Pluto was reclassified as a dwarf planet.",
+    "points": [
+      {
+        "text": "<strong>Definition</strong> — states the IAU 2006 definition's three conditions (orbits the Sun; ~spherical; has cleared its orbital neighborhood)"
+      },
+      {
+        "text": "<strong>Which it fails</strong> — notes Pluto meets conditions 1 and 2 but not 3"
+      },
+      {
+        "text": "<strong>Reason</strong> — explains Pluto is embedded in the Kuiper belt among many similar objects, so it hasn't cleared its neighborhood"
+      }
+    ],
+    "model": "The IAU's 2006 definition requires a planet to (1) orbit the Sun, (2) be massive enough to be roughly spherical, and (3) have cleared its orbital neighborhood. Pluto meets the first two conditions but fails the third: it is embedded in the Kuiper belt among many objects of similar size, so it has not cleared its neighborhood. Because 'clearing the neighborhood' means there is no comparable-size object nearby, Pluto is classified as a dwarf planet rather than a planet."
+  },
+  {
+    "ch": "ch14",
+    "q": "What is the Kuiper belt, where is it, and how did it form?",
+    "points": [
+      {
+        "text": "<strong>Location</strong> — describes a disk of icy planetesimals just beyond Neptune (&gt;100,000 members)"
+      },
+      {
+        "text": "<strong>Members</strong> — notes Pluto is one of the largest and names Eris and Sedna"
+      },
+      {
+        "text": "<strong>Origin</strong> — explains it is the residual planetesimal disk that never formed a major planet, later sculpted by ice-giant migration"
+      }
+    ],
+    "model": "The Kuiper belt is a disk of icy planetesimals lying just beyond Neptune, with more than 100,000 members. Pluto is one of the largest objects in it, and other notable members include Eris and Sedna. The belt is the residual planetesimal disk that never formed a major planet, later sculpted by the outward migration of the ice giants."
+  },
+  {
+    "ch": "ch14",
+    "q": "What is an asteroid, and why is it wrong to call asteroids the remains of a destroyed planet?",
+    "points": [
+      {
+        "text": "<strong>Definition</strong> — describes rocky minor planets in eccentric prograde orbits, mostly between Mars and Jupiter"
+      },
+      {
+        "text": "<strong>Not a broken planet</strong> — states asteroids are NOT fragments of a destroyed planet"
+      },
+      {
+        "text": "<strong>Origin</strong> — identifies them as primordial planetesimals that never accreted into a planet"
+      }
+    ],
+    "model": "Asteroids are rocky minor planets on eccentric, prograde orbits, found mostly between Mars and Jupiter. They are not fragments of a planet that broke apart; instead they are primordial planetesimals that never accreted into a planet in the first place, because Jupiter's gravity kept the region stirred up."
+  },
+  {
+    "ch": "ch14",
+    "q": "Where is the Main Asteroid Belt, and what happened to most of its original mass?",
+    "points": [
+      {
+        "text": "<strong>Location</strong> — states the belt lies between Mars and Jupiter"
+      },
+      {
+        "text": "<strong>Mass</strong> — notes the original mass was ~1 Earth mass but is now &lt; 0.1% of Earth's"
+      },
+      {
+        "text": "<strong>Clearing</strong> — connects the depleted mass to gravitational clearing over time"
+      }
+    ],
+    "model": "The Main Asteroid Belt lies between the orbits of Mars and Jupiter. Its original mass was roughly one Earth mass, but today it holds less than 0.1% of an Earth mass. That depletion is the result of gravitational clearing over time."
+  },
+  {
+    "ch": "ch14",
+    "q": "What are the Kirkwood Gaps, and what causes them?",
+    "points": [
+      {
+        "text": "<strong>What they are</strong> — describes depleted zones at specific orbital radii within the belt"
+      },
+      {
+        "text": "<strong>Cause</strong> — attributes them to orbital resonances with Jupiter"
+      },
+      {
+        "text": "<strong>Mechanism</strong> — explains asteroids at those periods get repeatedly tugged and cleared out"
+      }
+    ],
+    "model": "The Kirkwood Gaps are depleted zones at specific orbital radii within the asteroid belt. They are caused by orbital resonances with Jupiter: asteroids whose periods form simple ratios with Jupiter's get repeatedly tugged at the same points in their orbits and are gradually cleared out of those zones."
+  },
+  {
+    "ch": "ch14",
+    "q": "Describe the three main compositional types of asteroids and the trend across the belt.",
+    "points": [
+      {
+        "text": "<strong>Three types</strong> — names C-type (carbonaceous, ~75%, dark, most primitive), S-type (silicate/rocky, ~15%), and M-type (metallic, ~10%)"
+      },
+      {
+        "text": "<strong>Trend</strong> — notes composition trends from metallic/rocky in the inner belt to carbonaceous in the outer belt"
+      },
+      {
+        "text": "<strong>Primitive</strong> — connects C-types to material largely unchanged since ~4.6 Gyr"
+      }
+    ],
+    "model": "Asteroids fall into three main types: C-type (carbonaceous, dark and least reflective, about 75%, the most primitive), S-type (silicate/rocky, about 15%), and M-type (metallic nickel–iron, about 10%). There is a spatial trend — metallic and rocky bodies dominate the inner belt while carbonaceous bodies dominate the outer belt. The C-types are especially important because their material is largely unchanged since the Solar System formed about 4.6 billion years ago."
+  },
+  {
+    "ch": "ch14",
+    "q": "In what sense are asteroids leftover building blocks, and what did the Dawn mission show?",
+    "points": [
+      {
+        "text": "<strong>Leftovers</strong> — states asteroids are leftover planetesimals (rockier and less icy than Kuiper-belt objects)"
+      },
+      {
+        "text": "<strong>Jupiter's role</strong> — explains Jupiter's gravity prevented them from forming a planet"
+      },
+      {
+        "text": "<strong>Dawn</strong> — cites Dawn results — Ceres primitive and wet (~25% water), Vesta evolved, dry, and differentiated"
+      }
+    ],
+    "model": "Like Kuiper-belt objects but rockier and less icy, asteroids are leftover planetesimals — building blocks that Jupiter's gravity prevented from assembling into a planet. The Dawn mission illustrated their variety: Ceres is primitive and wet (about 25% water), while Vesta is evolved, dry, and differentiated into core, mantle, and crust."
+  },
+  {
+    "ch": "ch14",
+    "q": "What are Near Earth Asteroids, and what does the K/T impact tell us about the hazard?",
+    "points": [
+      {
+        "text": "<strong>NEAs</strong> — defines NEAs as asteroids coming within ~1 AU of Earth's orbit; ~1000 are potentially hazardous (≥150 m)"
+      },
+      {
+        "text": "<strong>K/T event</strong> — describes the ~10–15 km impactor 66 Myr ago → Chicxulub, with extinction driven by the following “nuclear winter,” not the blast"
+      },
+      {
+        "text": "<strong>Deflection</strong> — notes DART (2022) shortened Dimorphos's orbit by 32 min, showing deflection is feasible"
+      }
+    ],
+    "model": "Near Earth Asteroids are asteroids that come within about 1 AU of Earth's orbit; roughly 1000 are classified as potentially hazardous (at least 150 m across). The K/T event 66 million years ago involved a 10–15 km impactor that formed the Chicxulub crater, and the mass extinction was driven mainly by the 'nuclear winter' that followed rather than by the blast itself. The 2022 DART mission shortened the orbit of the moonlet Dimorphos by 32 minutes, demonstrating that deflection is feasible."
+  },
+  {
+    "ch": "ch14",
+    "q": "Define comet, meteoroid, meteor, and meteorite.",
+    "points": [
+      {
+        "text": "<strong>Comet</strong> — describes a comet as a small (few-km) icy “dirty snowball,” among the oldest and most primitive material"
+      },
+      {
+        "text": "<strong>Meteoroid/meteor/meteorite</strong> — distinguishes meteoroid (the debris), meteor (the streak of light), and meteorite (what reaches the ground)"
+      },
+      {
+        "text": "<strong>Light</strong> — notes comets emit only reflected sunlight"
+      }
+    ],
+    "model": "A comet is a small (few-km) icy 'dirty snowball' and among the oldest, most primitive material in the Solar System, visible only by reflected sunlight. A meteoroid is a small piece of rocky or metallic debris; a meteor is the streak of light it makes as it burns up in the atmosphere (a 'shooting star'); and a meteorite is the piece that survives to reach the ground."
+  },
+  {
+    "ch": "ch14",
+    "q": "How do comet orbits differ from those of planets and asteroids?",
+    "points": [
+      {
+        "text": "<strong>Orbits</strong> — states comet orbits are far more elliptical and occur at all inclinations and orientations (prograde and retrograde)"
+      },
+      {
+        "text": "<strong>Contrast</strong> — contrasts this with planets/asteroids/KBOs, which stay near the ecliptic and prograde"
+      },
+      {
+        "text": "<strong>Two classes</strong> — distinguishes short-period (P &lt; 200 yr, e.g. Halley) from long-period (Oort cloud) comets"
+      }
+    ],
+    "model": "Comet orbits are far more elliptical than planetary orbits and occur at all inclinations and orientations, both prograde and retrograde. This contrasts sharply with planets, asteroids, and Kuiper-belt objects, which stay close to the ecliptic and orbit in the prograde direction. Comets divide into short-period comets (periods under 200 years, such as Halley) and long-period comets from the Oort cloud."
+  },
+  {
+    "ch": "ch14",
+    "q": "Why do comets develop tails, and why does the tail point away from the Sun?",
+    "points": [
+      {
+        "text": "<strong>Sublimation</strong> — explains that near the Sun subsurface ice sublimates (solid → gas) forming a coma"
+      },
+      {
+        "text": "<strong>Push</strong> — attributes the tail to solar radiation pressure and the solar wind"
+      },
+      {
+        "text": "<strong>Direction</strong> — states the tail always points away from the Sun, not backward along the path"
+      }
+    ],
+    "model": "As a comet approaches the Sun (near about 1 AU), its subsurface ice sublimates — turning directly from solid to gas because of the low pressure — forming a surrounding coma. Solar radiation pressure and the solar wind then push this gas and dust outward. Because that push comes from the Sun, the tail always points away from the Sun rather than trailing backward along the comet's path."
+  },
+  {
+    "ch": "ch14",
+    "q": "Describe the physical properties of a cometary nucleus.",
+    "points": [
+      {
+        "text": "<strong>Nucleus</strong> — describes a few-km “dirty snowball” of ices + dust holding most of the comet's mass, with a very dark surface"
+      },
+      {
+        "text": "<strong>Mass</strong> — gives the rough mass range (~10¹²–10¹⁶ kg)"
+      },
+      {
+        "text": "<strong>Erosion</strong> — notes close solar passes erode comets over time (Halley/Hale-Bopp destroyed in a few thousand orbits)"
+      }
+    ],
+    "model": "A cometary nucleus is a few km across — a 'dirty snowball' of ices and dust that holds most of the comet's mass and has a very dark surface. Its mass is roughly in the range of 10¹² to 10¹⁶ kg. Repeated close passes by the Sun erode comets over time, so bodies like Halley and Hale-Bopp are expected to be destroyed after a few thousand orbits."
+  },
+  {
+    "ch": "ch14",
+    "q": "What did the Rosetta mission accomplish?",
+    "points": [
+      {
+        "text": "<strong>Mission</strong> — states ESA's Rosetta orbited comet 67P/Churyumov–Gerasimenko"
+      },
+      {
+        "text": "<strong>Landing</strong> — notes the Philae lander touched down 11/12/2014 — the first-ever comet landing"
+      },
+      {
+        "text": "<strong>Science</strong> — mentions it imaged gas jets near perihelion"
+      }
+    ],
+    "model": "ESA's Rosetta mission orbited comet 67P/Churyumov–Gerasimenko, and its Philae lander touched down on 11/12/2014 — the first-ever landing on a comet. Rosetta also imaged gas jets erupting from the comet as it neared perihelion."
+  },
+  {
+    "ch": "ch14",
+    "q": "Describe the structure and origin of the Oort cloud.",
+    "points": [
+      {
+        "text": "<strong>Structure</strong> — describes a vast spherical shell of trillions of icy comets out to ~100,000 AU (~5 Earth masses)"
+      },
+      {
+        "text": "<strong>Origin</strong> — explains it formed from icy planetesimals ejected outward by gravitational interactions with the young giant planets"
+      },
+      {
+        "text": "<strong>Long-period comets</strong> — connects it to the source of long-period comets"
+      }
+    ],
+    "model": "The Oort cloud is a vast spherical shell of trillions of icy comets extending out to about 100,000 AU, totaling roughly 5 Earth masses. It formed from icy planetesimals that were ejected outward onto long, eccentric orbits by gravitational interactions with the young giant planets. It is the source of the long-period comets."
+  },
+  {
+    "ch": "ch14",
+    "q": "What is a shooting star, and why do meteor showers happen at particular times of year?",
+    "points": [
+      {
+        "text": "<strong>Shooting star</strong> — defines it as a small dust particle burning up (~75–120 km altitude) from ram-pressure heating"
+      },
+      {
+        "text": "<strong>Meteor showers</strong> — explains they occur when Earth crosses a comet's debris stream, with meteors radiating from a “radiant”"
+      },
+      {
+        "text": "<strong>Examples</strong> — cites the Leonids (~Nov 16) and Geminids (~Dec 13)"
+      }
+    ],
+    "model": "A shooting star is a small dust particle burning up high in the atmosphere (about 75–120 km up) from ram-pressure heating. A meteor shower occurs when Earth crosses a stream of debris left along a comet's orbit, and the meteors appear to radiate from a single point called the radiant. Familiar examples are the Leonids (around Nov 16) and the Geminids (around Dec 13)."
+  },
+  {
+    "ch": "ch15",
+    "q": "What does indirect exoplanet detection mean, and why is it used instead of direct imaging?",
+    "points": [
+      {
+        "text": "<strong>Indirect vs direct</strong> — defines indirect detection as measuring the planet's effect on the star's light rather than imaging the planet"
+      },
+      {
+        "text": "<strong>Why indirect</strong> — explains direct imaging is extremely hard because the planet sits beside a vastly brighter star at huge distance"
+      },
+      {
+        "text": "<strong>The two methods</strong> — names radial velocity and transit as the two workhorse indirect methods"
+      }
+    ],
+    "model": "Indirect detection means measuring a planet's effect on its star's light rather than imaging the planet directly. Direct imaging is extremely hard because the planet sits right beside a vastly brighter star at an enormous distance, so its faint light is swamped. The two workhorse indirect methods are the radial velocity technique and the transit technique."
+  },
+  {
+    "ch": "ch15",
+    "q": "Explain how the radial velocity technique works and what it can measure.",
+    "points": [
+      {
+        "text": "<strong>Mechanism</strong> — explains the star wobbles around the common center of mass and the Doppler effect measures its velocity along the line of sight"
+      },
+      {
+        "text": "<strong>What it yields</strong> — states it gives minimum mass (M·sin i), period, and eccentricity — minimum mass because inclination is usually unknown"
+      },
+      {
+        "text": "<strong>51 Pegasi b</strong> — cites 51 Peg b (Mayor &amp; Queloz 1995) as the first, a surprising “hot Jupiter” (P=4.3 d, a=0.05 AU)"
+      }
+    ],
+    "model": "In the radial velocity method, the star and planet both orbit their common center of mass, so the star wobbles, and the Doppler effect is used to measure the star's velocity along the line of sight — only the star is observed, not the planet. It yields the planet's minimum mass (M·sin i), its orbital period, and its eccentricity; only a minimum mass because the orbital inclination is usually unknown. The first such discovery was 51 Pegasi b (Mayor and Queloz, 1995), a surprising 'hot Jupiter' with a period of just 4.3 days at 0.05 AU."
+  },
+  {
+    "ch": "ch15",
+    "q": "Explain the transit technique, what it measures, and what sets the transit probability.",
+    "points": [
+      {
+        "text": "<strong>Mechanism</strong> — explains an edge-on planet crossing its star causes a small periodic dip in brightness"
+      },
+      {
+        "text": "<strong>What it yields</strong> — states it gives radius (from ΔL/L ≈ (R_p/R_star)²), period, and duration — but not mass or eccentricity"
+      },
+      {
+        "text": "<strong>Probability/density</strong> — notes transit probability is set mainly by orbital distance (closer = higher; Mercury only ~1%) and that transit + RV together give mean density"
+      }
+    ],
+    "model": "In the transit method, a planet on an edge-on orbit crosses in front of its star and causes a small periodic dip in brightness. This yields the planet's radius (from the fractional dip, where ΔL/L ≈ (R_planet/R_star)²), its period, and the transit duration — but not its mass or eccentricity. The probability that a given planet transits is set mainly by its orbital distance (closer planets are more likely to transit; even Mercury's probability is only about 1%). Combining a transit radius with a radial-velocity mass gives the planet's mean density."
+  },
+  {
+    "ch": "ch15",
+    "q": "How did the Kepler mission detect planets, why did it have to be in space, and what was its main goal?",
+    "points": [
+      {
+        "text": "<strong>Method</strong> — describes a space telescope using the transit method on ~160,000 stars over ~4 years"
+      },
+      {
+        "text": "<strong>Why space</strong> — explains an Earth-size transit signal is smaller than the light-curve noise from Earth's atmosphere"
+      },
+      {
+        "text": "<strong>Goal</strong> — states its primary goal was the frequency of Earth-size planets in the habitable zone of Sun-like stars"
+      }
+    ],
+    "model": "Kepler was a space telescope that used the transit method, continuously monitoring about 160,000 stars for roughly four years. It had to operate in space because an Earth-size transit signal is smaller than the light-curve noise introduced by Earth's atmosphere, so the tiny dip could not be measured reliably from the ground. Its primary goal was to determine the frequency of Earth-size planets in the habitable zone of Sun-like stars."
+  },
+  {
+    "ch": "ch15",
+    "q": "What kinds of planets did the radial velocity and transit surveys and Kepler reveal?",
+    "points": [
+      {
+        "text": "<strong>RV finds</strong> — notes RV surveys found many close-in giant “hot Jupiters” with surprisingly high eccentricities"
+      },
+      {
+        "text": "<strong>Kepler finds</strong> — states Kepler's most common result was super-Earths and mini-Neptunes"
+      },
+      {
+        "text": "<strong>Frequency</strong> — cites the estimate of ~300 million potentially habitable worlds in the galaxy (examples: Proxima b, TRAPPIST-1)"
+      }
+    ],
+    "model": "Radial velocity surveys turned up many close-in giant planets — 'hot Jupiters' — often with surprisingly high eccentricities. Kepler's most common discoveries were super-Earths and mini-Neptunes, worlds intermediate in size between Earth and Neptune. These surveys led to an estimate of roughly 300 million potentially habitable worlds in the galaxy, with examples including Proxima b (around 1.3 Earth masses, at the nearest star) and the TRAPPIST-1 system."
+  }
+];
 
 function getMasteryKey() { return 'mastery_astr1304_unit3_'; }
 
