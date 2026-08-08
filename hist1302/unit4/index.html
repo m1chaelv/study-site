@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIST-1302 — Unit 4 Study Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #16161f;
+  --border: #1e1e2e;
+  --text: #e8e8f0;
+  --muted: #6b6b80;
+  --green: #22c55e;
+  --red: #ef4444;
+  --yellow: #eab308;
+  --purple: #a78bfa;
+  --orange: #f97316;
+  --accent: #3b82f6;              /* CHANGE PER COURSE */
+  --accent-dim: rgba(59,130,246,0.12); /* CHANGE PER COURSE */
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;
+  background-image:linear-gradient(rgba(59,130,246,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.025) 1px,transparent 1px);
+  background-size:40px 40px;pointer-events:none;z-index:0;}
+.container{max-width:960px;margin:0 auto;padding:0 20px;position:relative;z-index:1;}
+
+/* ── NAV ── */
+.topnav{display:flex;gap:6px;padding:14px 0;border-bottom:1px solid var(--border);margin-bottom:28px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.topnav::-webkit-scrollbar{display:none;}
+.nav-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:8px 13px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;letter-spacing:.05em;white-space:nowrap;flex-shrink:0;}
+.nav-btn:hover,.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+
+/* ── HEADER ── */
+header{padding:20px 0 28px;}
+.back-link{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;margin-bottom:10px;}
+.back-link:hover,.back-link:active{color:var(--accent);}
+.footer-back-link{margin-left:4px;}
+.breadcrumb{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:10px;}
+.breadcrumb a{color:var(--accent);text-decoration:none;}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);background:var(--accent-dim);padding:4px 10px;border-radius:4px;display:inline-block;margin-bottom:10px;}
+h1{font-size:clamp(24px,5vw,40px);font-weight:700;letter-spacing:-.02em;line-height:1.1;margin-bottom:10px;}
+.exam-pill{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid var(--orange);color:var(--orange);padding:6px 14px;border-radius:20px;background:rgba(249,115,22,.08);}
+.textbook-links{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;padding:10px 16px;border-radius:8px;background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);}
+.tb-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);font-weight:700;}
+.tb-link{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);text-decoration:none;transition:opacity .2s;}
+.tb-link:hover{opacity:.75;text-decoration:underline;}
+.tb-sep{color:var(--border);font-size:14px;}
+.tb-note{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);}
+
+/* ── MASTERY BAR ── */
+.mastery-bar{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;}
+.mastery-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.mastery-count{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--green);font-weight:700;}
+.mastery-track{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.mastery-fill{height:100%;background:var(--green);border-radius:3px;transition:width .4s;}
+.reset-mastery-btn{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:5px 10px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;}
+.reset-mastery-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* ── SECTION LABEL ── */
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ── PANELS ── */
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* ── OBJECTIVES ── */
+.obj-grid{display:grid;gap:10px;margin-bottom:28px;}
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:start;cursor:pointer;}
+.obj-card:focus{outline:2px solid var(--accent);outline-offset:2px;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);background:var(--accent-dim);width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
+.obj-text{font-size:13px;line-height:1.6;}
+.obj-chapter{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:4px;}
+.obj-detail{display:none;font-size:12px;line-height:1.7;color:#c8c8d8;margin-top:10px;}
+.obj-card.expanded .obj-detail{display:block;}
+.obj-body{display:none;font-size:12px;line-height:1.8;color:#c8c8d8;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
+.obj-body ul{padding-left:18px;}
+.obj-body li{margin-bottom:6px;}
+.obj-body strong{color:var(--text);}
+.obj-card[aria-expanded="true"] .obj-body{display:block;}
+.obj-master-btn{font-size:16px;background:none;border:none;cursor:pointer;padding:2px;line-height:1;flex-shrink:0;color:var(--muted);}
+.obj-master-btn.mastered{color:var(--green);}
+
+/* Chapter color classes */
+.ch1  .obj-num{color:#f97316;background:rgba(249,115,22,.12);}
+.ch2  .obj-num{color:#3b82f6;background:rgba(59,130,246,.12);}
+.ch17 .obj-num{color:#3b82f6;background:rgba(59,130,246,.12);}
+.ch18 .obj-num{color:#a78bfa;background:rgba(167,139,250,.12);}
+.ch19 .obj-num{color:#22c55e;background:rgba(34,197,94,.12);}
+.ch20 .obj-num{color:#f97316;background:rgba(249,115,22,.12);}
+.ch24 .obj-num{color:#3b82f6;background:rgba(59,130,246,.12);}
+.ch25 .obj-num{color:#a78bfa;background:rgba(167,139,250,.12);}
+.ch26 .obj-num{color:#22c55e;background:rgba(34,197,94,.12);}
+.ch27 .obj-num{color:#3b82f6;background:rgba(59,130,246,.12);}
+.ch28 .obj-num{color:#a78bfa;background:rgba(167,139,250,.12);}
+.ch29 .obj-num{color:#22c55e;background:rgba(34,197,94,.12);}
+.ch30 .obj-num{color:#f97316;background:rgba(249,115,22,.12);}
+.ch32 .obj-num{color:#ef4444;background:rgba(239,68,68,.12);}
+
+/* ── STUDY GUIDE ── */
+.chapter-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:18px;}
+.chapter-header{padding:14px 18px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background .2s;border-bottom:1px solid var(--border);}
+.chapter-header:hover{background:var(--surface2);}
+.chapter-title{font-size:15px;font-weight:700;}
+.chapter-subtitle{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:2px;}
+.chevron{color:var(--muted);font-size:13px;transition:transform .2s;flex-shrink:0;}
+.chapter-header.open .chevron{transform:rotate(180deg);}
+.chapter-body{padding:18px;display:none;}
+.chapter-body.open{display:block;}
+.concept-title{font-size:13px;font-weight:700;color:var(--accent);margin:18px 0 6px;display:flex;align-items:center;gap:8px;}
+.concept-title:first-child{margin-top:0;}
+.concept-title::before{content:'▸';font-size:10px;}
+.concept-body{font-size:13px;line-height:1.8;color:#c8c8d8;}
+.concept-body strong{color:var(--text);}
+.key-term{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--accent-dim);color:var(--accent);padding:2px 8px;border-radius:4px;margin:2px;}
+.key-term.blue{background:rgba(59,130,246,.12);color:#3b82f6;}
+.key-term.green{background:rgba(34,197,94,.12);color:var(--green);}
+.key-term.orange{background:rgba(249,115,22,.12);color:var(--orange);}
+.key-term.purple{background:rgba(167,139,250,.12);color:var(--purple);}
+.key-term.red{background:rgba(239,68,68,.12);color:var(--red);}
+.people-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:10px;}
+.person-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;}
+.person-name{font-size:13px;font-weight:700;margin-bottom:4px;}
+.person-role{font-size:12px;color:var(--muted);line-height:1.5;}
+.callout{background:rgba(59,130,246,.06);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:13px;color:var(--text);}
+.formula{display:inline-block;background:var(--accent-dim);border:1px solid var(--border);padding:2px 8px;border-radius:5px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);margin:3px 0;}
+
+/* ── FLASHCARDS ── */
+.fc-controls{display:flex;gap:10px;align-items:center;margin-bottom:18px;flex-wrap:wrap;}
+.fc-stat{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);}
+.btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:8px 14px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;transition:all .2s;letter-spacing:.05em;}
+.btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+.btn.primary:hover{opacity:.85;}
+.btn.mastered-btn{border-color:var(--green);color:var(--green);}
+.flashcard-area{perspective:1000px;margin-bottom:18px;}
+.flashcard{width:100%;min-height:200px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .5s;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;inset:0;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;backface-visibility:hidden;}
+.fc-back{transform:rotateY(180deg);background:var(--surface2);border-color:var(--accent);}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;margin-bottom:14px;}
+.fc-question{font-size:17px;font-weight:700;line-height:1.4;}
+.fc-answer{font-size:13px;line-height:1.7;color:#c8c8d8;}
+.fc-hint{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:10px;}
+.fc-chapter-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:3px 8px;border-radius:4px;margin-bottom:6px;}
+.fc-mastered-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);padding:2px 8px;border-radius:4px;margin-bottom:6px;display:none;}
+.fc-nav{display:flex;gap:10px;justify-content:center;align-items:center;}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);min-width:80px;text-align:center;}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.filter-btn{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:5px 12px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;}
+.filter-btn.active-filter{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+
+/* ── QUIZ ── */
+.quiz-area{max-width:700px;}
+.question-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:14px;}
+.q-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:8px;}
+.q-text{font-size:14px;font-weight:600;line-height:1.5;margin-bottom:14px;}
+.options{display:grid;gap:8px;}
+.option{padding:11px 14px;border-radius:8px;border:1px solid var(--border);cursor:pointer;font-size:13px;line-height:1.5;transition:all .2s;background:var(--surface2);display:flex;gap:12px;align-items:flex-start;}
+.option:hover:not(.answered){border-color:var(--accent);background:var(--accent-dim);}
+.option.correct{border-color:var(--green);background:rgba(34,197,94,.1);color:var(--green);}
+.option.wrong{border-color:var(--red);background:rgba(239,68,68,.1);color:var(--red);}
+.option.reveal{border-color:var(--green);background:rgba(34,197,94,.05);}
+.opt-letter{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;min-width:20px;color:var(--muted);}
+.explanation{margin-top:10px;padding:10px 14px;border-radius:8px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);font-size:12px;line-height:1.6;color:#a8b8d8;display:none;}
+.quiz-score{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;text-align:center;margin-bottom:18px;display:none;}
+.score-num{font-size:44px;font-weight:700;color:var(--accent);}
+.score-label{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);margin-top:6px;}
+.fitb-input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:14px;padding:8px 12px;width:100%;margin-top:10px;transition:border-color .2s;outline:none;}
+.fitb-input:focus{border-color:var(--accent);}
+.fitb-input.correct-input{border-color:var(--green);background:rgba(34,197,94,.08);color:var(--green);}
+.fitb-input.wrong-input{border-color:var(--red);background:rgba(239,68,68,.08);}
+.fitb-correct-answer{font-size:12px;margin-top:6px;color:var(--green);font-family:'IBM Plex Mono',monospace;display:none;}
+.q-type-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;margin-left:6px;vertical-align:middle;}
+.q-type-mc{background:rgba(59,130,246,.12);color:var(--accent);}
+.q-type-fitb{background:rgba(167,139,250,.12);color:var(--purple);}
+.q-ch-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 7px;border-radius:3px;margin-left:6px;vertical-align:middle;}
+
+/* ── DISCUSSION ── */
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden;}
+.disc-q-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:flex-start;}
+.disc-q-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--accent);background:var(--accent-dim);border-radius:4px;padding:2px 8px;flex-shrink:0;margin-top:2px;}
+.disc-q-text{font-size:14px;font-weight:600;color:var(--text);line-height:1.45;}
+.disc-q-body{padding:14px 16px;}
+.disc-textarea{width:100%;min-height:110px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;line-height:1.6;padding:12px;resize:vertical;font-family:'IBM Plex Sans',sans-serif;transition:border-color .2s;}
+.disc-textarea:focus{outline:none;border-color:var(--accent);}
+.disc-textarea.submitted{opacity:.75;}
+.disc-btn-row{display:flex;gap:10px;margin-top:10px;}
+.disc-rubric{display:none;margin-top:12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.disc-rubric.show{display:block;}
+.disc-rubric-title{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.disc-point{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;font-size:13px;}
+.disc-check{width:17px;height:17px;border-radius:4px;border:2px solid var(--border);flex-shrink:0;cursor:pointer;appearance:none;-webkit-appearance:none;background:var(--surface);margin-top:2px;transition:all .15s;}
+.disc-check:checked{background:var(--green);border-color:var(--green);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='%23000' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:10px;}
+.disc-point-text{color:var(--muted);line-height:1.5;}
+.disc-point-text strong{color:var(--text);}
+.disc-self-score{margin-top:12px;padding-top:12px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;font-size:13px;}
+.disc-score-display{font-size:18px;font-weight:800;color:var(--accent);}
+.disc-model{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);}
+.disc-model.show{display:block;}
+.disc-model-title{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.disc-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+
+/* ── NOTES ── */
+.notes-template{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:18px;}
+.notes-header{background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(167,139,250,.1));border-bottom:1px solid var(--border);padding:18px 22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.notes-title{font-size:15px;font-weight:700;}
+.notes-subtitle{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:2px;}
+.notes-body{padding:22px;}
+.notes-col-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.notes-col-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.notes-item{font-size:12px;line-height:1.8;padding:5px 0;border-bottom:1px dashed rgba(255,255,255,.04);display:flex;gap:8px;align-items:flex-start;}
+.notes-item::before{content:'›';color:var(--muted);flex-shrink:0;margin-top:1px;}
+.notes-tip{background:rgba(234,179,8,.08);border:1px solid rgba(234,179,8,.2);border-radius:8px;padding:12px 16px;margin-top:14px;font-size:12px;line-height:1.7;color:#d4b84a;}
+.notes-tip strong{color:var(--yellow);}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:22px 0;margin-top:36px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+footer a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);text-decoration:none;}
+
+/* ── MOBILE ── */
+@media(max-width:600px){
+  .notes-col-grid{grid-template-columns:1fr;}
+  .people-grid{grid-template-columns:1fr 1fr;}
+  .fc-question{font-size:15px;}
+  .topnav{gap:5px;}
+  .nav-btn{font-size:10px;padding:7px 10px;}
+  .textbook-links{gap:6px;}
+  .tb-note{display:none;}
+  h1{font-size:22px;}
+}
+
+/* ── PRINT (active tab only) ── */
+@media print{
+  body::before,.topnav,.exam-pill,.textbook-links,footer,
+  .fc-controls,.fc-nav,.filter-row,#submit-btn,#quiz-score,
+  .disc-btn-row,.disc-rubric,.obj-master-btn,.reset-mastery-btn,.mastery-bar{display:none!important;}
+  .panel{display:none!important;}
+  .panel.active{display:block!important;}
+  *,*::before,*::after{background:white!important;background-color:white!important;background-image:none!important;color:black!important;border-color:#bbb!important;box-shadow:none!important;-webkit-text-fill-color:black!important;}
+  body{font-size:12pt;}
+  .chapter-body{display:block!important;}
+  @page{margin:.75in;}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<nav class="topnav" role="tablist" aria-label="Study sections">
+  <button class="nav-btn active" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)" role="tab" aria-selected="false" aria-controls="panel-guide">📖 Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)" role="tab" aria-selected="false" aria-controls="panel-flashcards">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)" role="tab" aria-selected="false" aria-controls="panel-quiz">✏️ Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('discussion',this)" role="tab" aria-selected="false" aria-controls="panel-discussion">💬 Discussion</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes Template</button>
+</nav>
+
+<header>
+  <a class="back-link" href="../../index.html">← All courses</a>
+  <div class="breadcrumb"><a href="../../index.html">Study Hub</a> / HIST-1302 / Unit 4</div>
+  <div class="unit-badge">HIST-1302 · Unit 04 · Ch. 27–30 + 32.3</div>
+  <h1>Modern America: WWII, the Cold War &amp; the Late 20th Century</h1>
+  <div class="exam-pill">⏰ Exam: Friday, August 7, 2026 · check Blackboard for the window</div>
+  <div class="textbook-links">
+    <span class="tb-label">📚 Textbook (OpenStax, free)</span>
+    <a href="https://openstax.org/books/us-history/pages/27-introduction" target="_blank" class="tb-link">Ch.27 ↗</a>
+    <span class="tb-sep">·</span>
+    <a href="https://openstax.org/books/us-history/pages/28-introduction" target="_blank" class="tb-link">Ch.28 ↗</a>
+    <span class="tb-sep">·</span>
+    <a href="https://openstax.org/books/us-history/pages/29-introduction" target="_blank" class="tb-link">Ch.29 ↗</a>
+    <span class="tb-sep">·</span>
+    <a href="https://openstax.org/books/us-history/pages/30-introduction" target="_blank" class="tb-link">Ch.30 ↗</a>
+    <span class="tb-sep">·</span>
+    <a href="https://openstax.org/books/us-history/pages/32-3-new-century-old-disputes" target="_blank" class="tb-link">Ch.32.3 ↗</a>
+    <span class="tb-sep">·</span>
+    <span class="tb-note">Full first + last names required on all exam answers</span>
+  </div>
+</header>
+
+<!-- Mastery overview bar -->
+<div class="mastery-bar" id="mastery-bar" aria-label="Mastery progress">
+  <span class="mastery-label">Mastered</span>
+  <span class="mastery-count" id="mastery-count">0 / 0</span>
+  <div class="mastery-track" aria-hidden="true"><div class="mastery-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="reset-mastery-btn" onclick="resetAllMastery()" aria-label="Reset all mastery for this unit">Reset All</button>
+</div>
+
+<!-- ===== OBJECTIVES ===== -->
+<div id="panel-overview" class="panel active" role="tabpanel" aria-labelledby="panel-overview">
+  <div class="section-label">Learning Objectives — Prof. Walter's 24</div>
+  <div class="obj-grid" id="obj-grid">
+
+    <div class="obj-card ch27" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">1</div>
+      <div>
+        <div class="obj-text">Foreign events in 1930s Europe; the rise of Hitler &amp; Mussolini; German imperialism &amp; appeasement in Czechoslovakia; how WWII began with the invasion of Poland.</div>
+        <div class="obj-chapter">CH. 27</div>
+        <div class="obj-body"><ul>
+          <li><strong>Benito Mussolini</strong> built Fascism (Fasci Italiani di Combattimento, 1919) and became Italy's PM in 1922</li>
+          <li><strong>Adolf Hitler</strong> → chancellor Jan 1933 (appointed by <strong>Paul von Hindenburg</strong>) → Enabling Act made him dictator; Nuremberg Laws (1935)</li>
+          <li>Aggression: Rhineland (1936) → Austria (1938) → <strong>Munich Pact</strong> (1938, <strong>Neville Chamberlain</strong> + <strong>Édouard Daladier</strong>, Sudetenland, appeasement, "peace in our time")</li>
+          <li>WWII began with the <strong>Blitzkrieg on Poland, Sept 1, 1939</strong>; Britain &amp; France declared war Sept 3</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_1')" aria-label="Mark objective 1 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch27" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">2</div>
+      <div>
+        <div class="obj-text">Why the U.S. declared neutrality at the onset of WWII.</div>
+        <div class="obj-chapter">CH. 27</div>
+        <div class="obj-body"><ul>
+          <li>Strong isolationist tradition and bitter memory of World War I</li>
+          <li>Senator <strong>Gerald P. Nye</strong> argued bankers and industrialists had tricked the U.S. into WWI</li>
+          <li>The <strong>Neutrality Acts</strong> (1935, 1936, 1937) banned arms sales, loans, and travel/transport to belligerents</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_2')" aria-label="Mark objective 2 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch27" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">3</div>
+      <div>
+        <div class="obj-text">WWII before U.S. involvement, 1939–1941, by location (Europe &amp; Asia).</div>
+        <div class="obj-chapter">CH. 27</div>
+        <div class="obj-body"><ul>
+          <li><strong>Europe:</strong> German Blitzkrieg overran Poland then France (1940); Battle of Britain; FDR aided Britain via <strong>Cash and Carry</strong> (1939) and <strong>Lend-Lease</strong> (1941)</li>
+          <li><strong>Asia:</strong> Japan seized French Indochina → U.S. <strong>Export Control Act</strong> embargo (1940)</li>
+          <li>The <strong>Philippines</strong> (a U.S. territory) sat on Japan's oil route → rising tension → <strong>Pearl Harbor, Dec 7, 1941</strong></li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_3')" aria-label="Mark objective 3 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch27" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">4</div>
+      <div>
+        <div class="obj-text">WWII after the U.S. entered, by year and location.</div>
+        <div class="obj-chapter">CH. 27</div>
+        <div class="obj-body"><ul>
+          <li><strong>Europe:</strong> 1942 greatest German extent, Allies land in N. Africa (vs. <strong>Erwin Rommel</strong>); 1943 bombing + fall of Mussolini; 1944 <strong>D-Day</strong> (June 6) + Paris freed; 1945 Berlin, Hitler's suicide, surrender May 8</li>
+          <li><strong>Asia:</strong> Japan seized the Philippines; <strong>Douglas MacArthur</strong>; the navy turned the tide at <strong>Midway</strong> via <strong>island hopping</strong></li>
+          <li>1945 Pacific: <strong>Iwo Jima</strong>, <strong>Okinawa</strong>, sustained bombing of Japan</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_4')" aria-label="Mark objective 4 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch27" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">5</div>
+      <div>
+        <div class="obj-text">Truman's decision to drop the atomic bombs; the difficulties of demobilization; the "Fair Deal."</div>
+        <div class="obj-chapter">CH. 27 → 28</div>
+        <div class="obj-body"><ul>
+          <li><strong>Harry S. Truman</strong> dropped the bombs to force surrender and avoid a home-island invasion (projected up to ~250,000 U.S. deaths); a possible motive was signaling the USSR</li>
+          <li><strong>Demobilization</strong> was rushed — the military shrank from ~12 million to ~1.5 million by 1947</li>
+          <li>The <strong>Fair Deal</strong> (1949): higher minimum wage, Social Security expansion, public housing; Truman desegregated the armed forces by executive order (1948)</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_5')" aria-label="Mark objective 5 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch28" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">6</div>
+      <div>
+        <div class="obj-text">The term "Cold War" and the importance of the postwar conferences.</div>
+        <div class="obj-chapter">CH. 28</div>
+        <div class="obj-body"><ul>
+          <li>The <strong>Cold War</strong> = the U.S.–Soviet struggle for supremacy fought without direct combat (espionage, propaganda, arms race, proxy wars)</li>
+          <li><strong>Yalta</strong> (1945): Churchill &amp; Roosevelt made concessions strengthening Stalin in Eastern Europe</li>
+          <li><strong>Potsdam</strong> (1945): the Allies finalized the four-zone division of Germany</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_6')" aria-label="Mark objective 6 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch28" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">7</div>
+      <div>
+        <div class="obj-text">Soviet-controlled Eastern Europe; why the USSR held it; why the wartime allies became adversaries.</div>
+        <div class="obj-chapter">CH. 28</div>
+        <div class="obj-body"><ul>
+          <li><strong>Joseph Stalin</strong> installed Communist, pro-Soviet governments (e.g., Poland) to spread Communism <em>and</em> buffer the USSR against future invasion</li>
+          <li>The alliance collapsed over <strong>incompatible visions</strong> for postwar Europe — Soviet expansion/security vs. U.S. promotion of democracy and free markets</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_7')" aria-label="Mark objective 7 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch28" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">8</div>
+      <div>
+        <div class="obj-text">George Kennan's containment policy; the "Iron Curtain."</div>
+        <div class="obj-chapter">CH. 28</div>
+        <div class="obj-body"><ul>
+          <li><strong>George Kennan's</strong> "Long Telegram" (1946): the USSR couldn't accept coexistence, so it must be <strong>contained</strong>, mainly through economic policy</li>
+          <li>Containment was the core U.S. strategy for 30+ years</li>
+          <li>The <strong>"Iron Curtain"</strong> was <strong>Winston Churchill's</strong> 1946 phrase for the line dividing the free West from the Soviet-controlled East</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_8')" aria-label="Mark objective 8 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch28" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">9</div>
+      <div>
+        <div class="obj-text">Containment in Greece and Turkey; the "Truman Doctrine."</div>
+        <div class="obj-chapter">CH. 28</div>
+        <div class="obj-body"><ul>
+          <li>Britain could no longer fund the anti-Communist side in Greece's civil war (1947)</li>
+          <li>The <strong>Truman Doctrine</strong> pledged aid — money, weapons, advisors — to <strong>Greece and Turkey</strong></li>
+          <li>It was soon extended to any nation resisting a Communist takeover</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_9')" aria-label="Mark objective 9 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch28" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">10</div>
+      <div>
+        <div class="obj-text">The Marshall Plan; the reasons for the Berlin airlift.</div>
+        <div class="obj-chapter">CH. 28</div>
+        <div class="obj-body"><ul>
+          <li>The <strong>Marshall Plan</strong> (European Recovery Program, 1948–51, ~$13 billion) rebuilt Western Europe, blunted Communism, and boosted U.S. exports</li>
+          <li>Stalin's <strong>Berlin blockade</strong> (June 1948) cut land/water routes to West Berlin</li>
+          <li>The U.S., Britain, and France answered with the <strong>Berlin airlift</strong> (~2 million tons) until the Soviets relented (May 1949)</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_10')" aria-label="Mark objective 10 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch28" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">11</div>
+      <div>
+        <div class="obj-text">Containment in Asia: China, Korea, and the Korean War.</div>
+        <div class="obj-chapter">CH. 28</div>
+        <div class="obj-body"><ul>
+          <li><strong>China:</strong> <strong>Mao Zedong's</strong> Communists won in 1949; <strong>Chiang Kai-shek's</strong> Nationalists fled to Taiwan (a major setback)</li>
+          <li><strong>Korea:</strong> <strong>Kim Il Sung</strong> invaded across the <strong>38th parallel (June 25, 1950)</strong></li>
+          <li>UN/U.S. forces under <strong>Douglas MacArthur</strong> landed at Inchon; China (<strong>Zhou Enlai</strong>) intervened; MacArthur was relieved (1951); armistice <strong>July 27, 1953</strong></li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_11')" aria-label="Mark objective 11 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch28" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">12</div>
+      <div>
+        <div class="obj-text">The Rosenbergs, HUAC (Hollywood hearings), McCarthyism, and the rise &amp; fall of Sen. Joseph McCarthy.</div>
+        <div class="obj-chapter">CH. 28</div>
+        <div class="obj-body"><ul>
+          <li><strong>Julius Rosenberg</strong> and <strong>Ethel Rosenberg</strong> were executed in 1953 for alleged atomic spying</li>
+          <li><strong>HUAC</strong> investigated Hollywood, producing the <strong>blacklist</strong> (the Hollywood Ten)</li>
+          <li>Senator <strong>Joseph McCarthy</strong> built McCarthyism on unproven accusations; the televised <strong>Army-McCarthy Hearings</strong> (1954) led to his Senate censure</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_12')" aria-label="Mark objective 12 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch28" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">13</div>
+      <div>
+        <div class="obj-text">Postwar society: Eisenhower, suburbs, economy, baby boom, rock &amp; roll, television; early civil rights.</div>
+        <div class="obj-chapter">CH. 28</div>
+        <div class="obj-body"><ul>
+          <li><strong>Dwight D. Eisenhower</strong> (elected 1952) presided over prosperity and conformity</li>
+          <li>Suburbs boomed (<strong>William Levitt</strong> / Levittown; homeownership ~44% → 62%); the <strong>baby boom</strong> (1946–64); rock and roll (<strong>Alan Freed</strong>, <strong>Elvis Presley</strong>, <strong>Chuck Berry</strong>) + television</li>
+          <li>Early civil rights: <strong>Brown v. Board of Education</strong> (1954), the <strong>Little Rock Nine</strong> (1957), the <strong>Montgomery Bus Boycott</strong> (<strong>Rosa Parks</strong>, <strong>Martin Luther King, Jr.</strong>, 1955–56)</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_13')" aria-label="Mark objective 13 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch29" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">14</div>
+      <div>
+        <div class="obj-text">The important factors of the 1960 presidential election.</div>
+        <div class="obj-chapter">CH. 29</div>
+        <div class="obj-body"><ul>
+          <li><strong>John F. Kennedy</strong> vs. <strong>Richard M. Nixon</strong>; the first <strong>televised debate</strong> (Sept 26, 1960) favored the telegenic Kennedy</li>
+          <li>Kennedy's <strong>Roman Catholic</strong> faith worried Protestants; adding Protestant Texan <strong>Lyndon B. Johnson</strong> shored up the South</li>
+          <li>Kennedy won by the closest popular margin since 1888 and became the youngest elected president</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_14')" aria-label="Mark objective 14 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch29" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">15</div>
+      <div>
+        <div class="obj-text">Cold War events under JFK: Berlin Wall, Bay of Pigs, Cuban Missile Crisis, Peace Corps, Vietnam.</div>
+        <div class="obj-chapter">CH. 29</div>
+        <div class="obj-body"><ul>
+          <li><strong>Bay of Pigs</strong> (1961): a failed CIA-backed invasion by Cuban exiles after Kennedy cancelled air support</li>
+          <li><strong>Cuban Missile Crisis</strong> (Oct 1962): a naval <strong>"quarantine"</strong>; <strong>Nikita Khrushchev</strong> removed the missiles for a U.S. no-invasion pledge (plus a secret removal of U.S. missiles from Turkey)</li>
+          <li><strong>Peace Corps</strong> (1961) = Cold War "soft power"; in <strong>Vietnam</strong>, Kennedy expanded aid and advisors (~16,000 troops by 1963) to <strong>Ngo Dinh Diem</strong></li>
+          <li>⚠️ <strong>Berlin Wall</strong> (built 1961) — <em>flagged:</em> the provided Ch 29 text doesn't describe its construction; verify from Prof. Walter's materials</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_15')" aria-label="Mark objective 15 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch29" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">16</div>
+      <div>
+        <div class="obj-text">LBJ's "Great Society" programs: their purposes and goals.</div>
+        <div class="obj-chapter">CH. 29</div>
+        <div class="obj-body"><ul>
+          <li>The <strong>Great Society / war on poverty</strong> aimed to end poverty and racial injustice</li>
+          <li>Education: <strong>Elementary and Secondary Education Act</strong> + <strong>Higher Education Act</strong> (1965)</li>
+          <li>Health: <strong>Medicare</strong> and <strong>Medicaid</strong> (Social Security Act, 1965)</li>
+          <li>Anti-poverty: <strong>Economic Opportunity Act</strong> (1964 — Job Corps, Head Start, VISTA); <strong>Immigration and Nationality Act</strong> (1965)</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_16')" aria-label="Mark objective 16 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch29" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">17</div>
+      <div>
+        <div class="obj-text">How U.S. involvement escalated in Vietnam under LBJ: Gulf of Tonkin Resolution, Tet Offensive, My Lai.</div>
+        <div class="obj-chapter">CH. 29 → 30</div>
+        <div class="obj-body"><ul>
+          <li>The <strong>Gulf of Tonkin Resolution</strong> (Aug 1964) let Johnson wage war without a declaration; bombing + 200,000+ troops followed</li>
+          <li>The <strong>Tet Offensive</strong> (Jan 1968) turned public opinion against the war despite being militarily repelled</li>
+          <li>The <strong>My Lai massacre</strong> (March 16, 1968; <strong>Lt. William Calley</strong>) deepened disillusionment when exposed in 1969</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_17')" aria-label="Mark objective 17 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch29" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">18</div>
+      <div>
+        <div class="obj-text">Domestic society in the 1960s: civil rights (African Americans, women, American Indians, gays), counterculture.</div>
+        <div class="obj-chapter">CH. 29 → 30</div>
+        <div class="obj-body"><ul>
+          <li><strong>African Americans:</strong> sit-ins, Freedom Rides, the March on Washington → <strong>Black Power</strong> (<strong>Stokely Carmichael</strong>; the Black Panthers)</li>
+          <li><strong>Women:</strong> <strong>Betty Friedan</strong>'s <em>The Feminine Mystique</em>, the birth control pill (1960), and <strong>NOW</strong> (1966)</li>
+          <li><strong>American Indians:</strong> the <strong>American Indian Movement</strong> (1968) and Alcatraz; <strong>Gays/lesbians:</strong> the <strong>Stonewall</strong> uprising (1969); plus the hippie <strong>counterculture</strong> (Woodstock)</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_18')" aria-label="Mark objective 18 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch30" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">19</div>
+      <div>
+        <div class="obj-text">The 1968 election: LBJ pulls out, Democratic turmoil, Nixon's comeback, and the "Silent Majority."</div>
+        <div class="obj-chapter">CH. 30</div>
+        <div class="obj-body"><ul>
+          <li>After Tet and a strong showing by <strong>Eugene McCarthy</strong>, Johnson withdrew</li>
+          <li>The party split among <strong>Hubert Humphrey</strong>, McCarthy, and <strong>Robert Kennedy</strong> (assassinated in June); <strong>George Wallace</strong> ran as a segregationist third party</li>
+          <li>Amid the chaotic Chicago convention, <strong>Richard Nixon</strong> won using a <strong>southern strategy</strong> + law-and-order; his <strong>"Silent Majority"</strong> = northern, White, blue-collar voters</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_19')" aria-label="Mark objective 19 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch30" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">20</div>
+      <div>
+        <div class="obj-text">Nixon's "Vietnamization," his escalation into Cambodia, and his policy toward China.</div>
+        <div class="obj-chapter">CH. 30</div>
+        <div class="obj-body"><ul>
+          <li><strong>Vietnamization</strong> shifted combat to South Vietnamese forces while withdrawing U.S. troops</li>
+          <li>Nixon secretly bombed and then <strong>invaded Cambodia</strong> (1970) to hit supply routes</li>
+          <li>Toward <strong>China</strong>, he reversed two decades of hostility, visiting Beijing (Feb 1972) to meet <strong>Mao Zedong</strong> and <strong>Zhou Enlai</strong> — pressuring the USSR and isolating North Vietnam</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_20')" aria-label="Mark objective 20 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch30" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">21</div>
+      <div>
+        <div class="obj-text">Growth of the antiwar movement (Kent State, Pentagon Papers); how the war was "settled" and its aftermath.</div>
+        <div class="obj-chapter">CH. 30</div>
+        <div class="obj-body"><ul>
+          <li>The Cambodia invasion sparked protests — most tragically the <strong>Kent State</strong> shootings (May 4, 1970) and Jackson State</li>
+          <li>The <strong>Pentagon Papers</strong> (1971), leaked by <strong>Daniel Ellsberg</strong>, revealed government deception</li>
+          <li><strong>Henry Kissinger</strong> and <strong>Le Duc Tho</strong> signed the Paris accord (Jan 1973); U.S. troops left, but ~100,000 North Vietnamese remained and <strong>Saigon fell</strong> (April 1975)</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_21')" aria-label="Mark objective 21 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch30" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">22</div>
+      <div>
+        <div class="obj-text">Watergate: the break-in, the cover-up, the investigation, and the fall of Nixon.</div>
+        <div class="obj-chapter">CH. 30</div>
+        <div class="obj-body"><ul>
+          <li>Operatives from <strong>CREEP</strong> (and the "plumbers") broke into <strong>DNC headquarters at the Watergate complex</strong> (June 17, 1972)</li>
+          <li><strong>Bob Woodward</strong> and <strong>Carl Bernstein</strong> (source "Deep Throat" = <strong>Mark Felt</strong>) plus Senate hearings exposed the cover-up; the Saturday Night Massacre and the Oval Office tapes sealed it</li>
+          <li>Facing impeachment, <strong>Nixon resigned</strong> (Aug 1974); <strong>Gerald Ford</strong> then pardoned him</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_22')" aria-label="Mark objective 22 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch30" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">23</div>
+      <div>
+        <div class="obj-text">Jimmy Carter's personality and policies; the Iran hostage crisis.</div>
+        <div class="obj-chapter">CH. 30</div>
+        <div class="obj-body"><ul>
+          <li><strong>Jimmy Carter</strong> ran as a moral, "anti-Washington" outsider (born-again Christian, "I'll never lie")</li>
+          <li>Achievements: the <strong>Camp David Accords</strong> (1978, <strong>Menachem Begin</strong> &amp; <strong>Anwar Sadat</strong>), the Department of Energy, deregulation — but stagflation persisted</li>
+          <li>The <strong>Iran hostage crisis</strong>: the embassy in Tehran was seized (Nov 4, 1979); 52 held 444 days, freed as Reagan took office (Jan 1981)</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_23')" aria-label="Mark objective 23 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch32" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">24</div>
+      <div>
+        <div class="obj-text">21st-century disputes: climate change, immigration, and same-sex marriage.</div>
+        <div class="obj-chapter">CH. 32.3</div>
+        <div class="obj-body"><ul>
+          <li><strong>Climate change:</strong> the U.S. signed but never ratified the <strong>Kyoto Protocol</strong> (1998); President Bush objected on economic grounds; <strong>Al Gore</strong>'s <em>An Inconvenient Truth</em> (2006) countered denial</li>
+          <li><strong>Immigration:</strong> English-as-official-language pushes, the failed <strong>Comprehensive Immigration Reform Act</strong> (2006), and strict Arizona/Alabama enforcement laws</li>
+          <li><strong>Same-sex marriage:</strong> the <strong>Defense of Marriage Act</strong> (1996) → <strong>Massachusetts</strong> first to allow it (2004) → California's <strong>Prop 8</strong> (2008) → Supreme Court began overturning bans (2013)</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_24')" aria-label="Mark objective 24 as mastered">☐</button>
+    </div>
+
+  </div>
+</div>
+<!-- ===== STUDY GUIDE ===== -->
+<div id="panel-guide" class="panel" role="tabpanel" aria-labelledby="panel-guide">
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <div><div class="chapter-title" style="color:#3b82f6">Ch. 27 — Fighting the Good Fight in World War II</div><div class="chapter-subtitle">1941–1945</div></div>
+      <span class="chevron" aria-hidden="true">▼</span>
+    </div>
+    <div class="chapter-body">
+      <div class="concept-title">Origins: Dictators &amp; Appeasement</div>
+      <div class="concept-body"><strong>Benito Mussolini</strong> founded Fascism (Fasci Italiani di Combattimento, 1919) and became Italy's PM in 1922. <strong>Adolf Hitler</strong>'s Nazi Party grew during mass unemployment; <strong>Paul von Hindenburg</strong> appointed him chancellor in Jan 1933, and the Enabling Act made him dictator. The Nuremberg Laws (1935) stripped Jews of citizenship. Hitler remilitarized the Rhineland (1936) and annexed Austria (1938). At the <strong>Munich Conference (1938)</strong>, Britain's <strong>Neville Chamberlain</strong> and France's <strong>Édouard Daladier</strong> handed Germany the Sudetenland — the <strong>Munich Pact</strong>, a policy of <strong>appeasement</strong> ("peace in our time"). WWII began with the <strong>Blitzkrieg on Poland, Sept 1, 1939</strong>; Britain and France declared war Sept 3.</div>
+      <span class="key-term blue">Fascism</span><span class="key-term blue">appeasement</span><span class="key-term blue">Blitzkrieg</span>
+      <div class="callout"><strong>Confused pacts — keep straight:</strong> Four Power Treaty (1921) → Kellogg-Briand Pact (1928, war = "international crime") → Anti-Comintern Pact (1936, Japan+Germany; +Italy 1937 = the Axis) → Pact of Steel (May 1939, Ger-Italy military) → Nazi-Soviet nonaggression pact (Aug 1939, split Poland).</div>
+
+      <div class="concept-title">From Neutrality to Engagement</div>
+      <div class="concept-body">Senator <strong>Gerald P. Nye</strong> led the noninterventionists; the <strong>Neutrality Acts</strong> (1935, 1936, 1937) banned arms sales, loans, and travel to belligerents. As war spread, <strong>Franklin D. Roosevelt</strong> aided Britain: <strong>Cash and Carry</strong> (Nov 1939), the <strong>Export Control Act</strong> (July 1940, embargo of Japan), and <strong>Lend-Lease</strong> (March 1941, ~$45 billion, which "ended nonintervention"). The <strong>Atlantic Charter</strong> (Aug 1941) laid out Anglo-American aims. Japan's attack on <strong>Pearl Harbor (Dec 7, 1941)</strong> — "a date which will live in infamy" — brought the U.S. in; Germany and Italy declared war on the U.S. Dec 11.</div>
+      <span class="key-term green">Neutrality Acts</span><span class="key-term green">Lend-Lease</span><span class="key-term green">Pearl Harbor</span>
+      <div class="callout"><strong>U.S. neutrality steps, in order:</strong> Neutrality Acts (35/36/37) → Cash and Carry (1939) → Export Control Act (1940, embargo <em>Japan</em>) → Lend-Lease (1941). Don't blur these.</div>
+
+      <div class="concept-title">The Home Front</div>
+      <div class="concept-body">The first peacetime draft came in Sept 1940. <strong>A. Philip Randolph</strong> threatened a march → <strong>Executive Order 8802</strong> created the Fair Employment Practices Committee. The <strong>Double V</strong> campaign (Pittsburgh Courier) sought victory abroad and over racism at home; the <strong>Tuskegee Airmen</strong> and <strong>Navajo code talkers</strong> served with distinction. <strong>Rosie the Riveter</strong> (Norman Rockwell) symbolized women workers. But <strong>Executive Order 9066</strong> (Feb 19, 1942) forced ~120,000 people of Japanese ancestry into internment; the <strong>442nd Regimental Combat Team</strong> became the most decorated unit of its size.</div>
+      <span class="key-term orange">EO 8802</span><span class="key-term orange">EO 9066</span><span class="key-term orange">Double V</span>
+      <div class="callout"><strong>Three executive orders — don't mix up:</strong> EO 8802 (1941, fair employment / defense jobs) · EO 9066 (1942, Japanese internment) · EO 9835 (1947, loyalty program).</div>
+
+      <div class="concept-title">Victory in Europe &amp; the Pacific</div>
+      <div class="concept-body">The <strong>Big Three</strong> — <strong>Winston Churchill</strong>, <strong>Franklin D. Roosevelt</strong>, <strong>Joseph Stalin</strong> — met at Casablanca (1943, "unconditional surrender"), Tehran (1943), <strong>Yalta</strong> (1945), and <strong>Potsdam</strong> (1945). <strong>D-Day</strong> (June 6, 1944) opened the second front; the <strong>Battle of the Bulge</strong> (Dec 1944) was Germany's last offensive; Germany surrendered <strong>May 8, 1945</strong>. In the Pacific, <strong>Midway</strong> (June 1942) turned the tide, and <strong>Douglas MacArthur</strong> pursued <strong>island hopping</strong> through Iwo Jima and Okinawa. <strong>Harry S. Truman</strong> dropped "Little Boy" on <strong>Hiroshima</strong> (Aug 6) and "Fat Man" on <strong>Nagasaki</strong> (Aug 9); Emperor <strong>Hirohito</strong> surrendered.</div>
+      <span class="key-term red">D-Day</span><span class="key-term red">Midway</span><span class="key-term red">Manhattan Project</span>
+      <div class="callout"><strong>Turning points:</strong> Midway (Pacific) · Stalingrad (eastern front) · D-Day (western front) · Battle of the Bulge (Germany's <em>last</em> offensive). <strong>Bombs:</strong> Hiroshima Aug 6 / Nagasaki Aug 9; <strong>Kokura</strong> was the second bomb's intended primary but was cloud-covered.</div>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <div><div class="chapter-title" style="color:#a78bfa">Ch. 28 — Post-War Prosperity &amp; Cold War Fears</div><div class="chapter-subtitle">1945–1960</div></div>
+      <span class="chevron" aria-hidden="true">▼</span>
+    </div>
+    <div class="chapter-body">
+      <div class="concept-title">Peacetime, the GI Bill &amp; the Fair Deal</div>
+      <div class="concept-body">Demobilization shrank the military from ~12 million to ~1.5 million by 1947. The <strong>GI Bill</strong> (Servicemen's Readjustment Act, 1944) gave veterans unemployment pay, tuition, and home loans — though African American, gay, and some Mexican American vets were shut out. <strong>Harry S. Truman</strong>'s <strong>Fair Deal</strong> (1949) sought a higher minimum wage, Social Security expansion, and public housing; he desegregated the armed forces by executive order (1948). Congress passed the <strong>Taft-Hartley Act</strong> (limiting unions) over his veto.</div>
+      <span class="key-term blue">GI Bill</span><span class="key-term blue">Fair Deal</span><span class="key-term blue">Taft-Hartley Act</span>
+      <div class="callout"><strong>Three "Deals":</strong> FDR's New Deal → Truman's Fair Deal → LBJ's Great Society.</div>
+
+      <div class="concept-title">Containment &amp; the Cold War Abroad</div>
+      <div class="concept-body"><strong>George Kennan</strong>'s "Long Telegram" (1946) launched <strong>containment</strong>; <strong>Winston Churchill</strong> named the <strong>"Iron Curtain"</strong> (1946). The <strong>National Security Act</strong> (1947) created the NSC and CIA. The <strong>Truman Doctrine</strong> (1947) aided Greece and Turkey; the <strong>Marshall Plan</strong> (1948–51, ~$13 billion) rebuilt Western Europe. Stalin's Berlin blockade met the <strong>Berlin airlift</strong> (1948–49) → <strong>NATO</strong> (1949). Then in 1949 the USSR got the atomic bomb and <strong>Mao Zedong</strong>'s Communists won China (<strong>Chiang Kai-shek</strong> fled to Taiwan).</div>
+      <span class="key-term green">containment</span><span class="key-term green">Marshall Plan</span><span class="key-term green">NATO</span>
+      <div class="callout"><strong>Cold War doctrines:</strong> containment (Kennan's idea) → Truman Doctrine (<em>aid</em> Greece &amp; Turkey) → Marshall Plan (<em>rebuild</em> economies, $13B) → domino theory (Eisenhower framing).</div>
+
+      <div class="concept-title">Red Scare, Korea &amp; McCarthy</div>
+      <div class="concept-body"><strong>Executive Order 9835</strong> (1947) began the loyalty program; <strong>HUAC</strong> investigated Hollywood (the blacklist / Hollywood Ten); <strong>Julius and Ethel Rosenberg</strong> were executed (1953). In Korea, <strong>Kim Il Sung</strong> invaded across the <strong>38th parallel</strong> (June 25, 1950); <strong>Douglas MacArthur</strong>'s Inchon landing reversed the war until China (<strong>Zhou Enlai</strong>) intervened; MacArthur was relieved (1951); armistice July 27, 1953. Senator <strong>Joseph McCarthy</strong>'s crusade collapsed after the televised <strong>Army-McCarthy Hearings</strong> (1954) and Senate censure.</div>
+      <span class="key-term orange">HUAC</span><span class="key-term orange">Korean War</span><span class="key-term orange">McCarthyism</span>
+
+      <div class="concept-title">The American Dream &amp; Early Civil Rights</div>
+      <div class="concept-body"><strong>Dwight D. Eisenhower</strong> (elected 1952) embraced "massive retaliation" (MAD) and warned of the "military-industrial complex." Suburbs boomed (<strong>William Levitt</strong> / Levittown; homeownership ~44% → 62%); the <strong>baby boom</strong> (1946–64) and rock and roll (<strong>Alan Freed</strong>, <strong>Elvis Presley</strong>, <strong>Chuck Berry</strong>) reshaped culture; <strong>Sputnik</strong> (1957) spurred the National Defense Education Act (1958). Civil rights: <strong>Brown v. Board of Education</strong> (1954, <strong>Thurgood Marshall</strong>, Chief Justice <strong>Earl Warren</strong>), the <strong>Little Rock Nine</strong> (1957, Gov. <strong>Orval Faubus</strong>), <strong>Emmett Till</strong> (1955), and the <strong>Montgomery Bus Boycott</strong> (<strong>Rosa Parks</strong>, <strong>Martin Luther King, Jr.</strong>, 1955–56).</div>
+      <span class="key-term red">Brown v. Board</span><span class="key-term red">Little Rock Nine</span><span class="key-term red">Montgomery Bus Boycott</span>
+      <div class="callout"><strong>Cases:</strong> Plessy v. Ferguson (1896, "separate but equal") vs. Brown v. Board (1954, overturns it). <strong>Defense:</strong> Eisenhower = massive retaliation/MAD; Kennedy = flexible response.</div>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <div><div class="chapter-title" style="color:#22c55e">Ch. 29 — Contesting Futures: America in the 1960s</div><div class="chapter-subtitle">1960–1968</div></div>
+      <span class="chevron" aria-hidden="true">▼</span>
+    </div>
+    <div class="chapter-body">
+      <div class="concept-title">The Kennedy Promise</div>
+      <div class="concept-body"><strong>John F. Kennedy</strong>'s "New Frontier" opened with the first <strong>televised debate</strong> (Sept 26, 1960) over <strong>Richard M. Nixon</strong>. His defense used <strong>flexible response</strong> (<strong>Robert McNamara</strong>), the Green Berets, and the <strong>Peace Corps</strong> (1961). The <strong>Bay of Pigs</strong> (1961) failed, but Kennedy prevailed in the <strong>Cuban Missile Crisis</strong> (Oct 1962) — a naval <strong>"quarantine"</strong> that made <strong>Nikita Khrushchev</strong> withdraw the missiles. In Vietnam he backed <strong>Ngo Dinh Diem</strong> (~16,000 advisors by 1963). He was assassinated in Dallas (Nov 22, 1963) — <strong>Lee Harvey Oswald</strong>, then <strong>Jack Ruby</strong>; the Warren Commission followed.</div>
+      <span class="key-term blue">New Frontier</span><span class="key-term blue">Cuban Missile Crisis</span><span class="key-term blue">Peace Corps</span>
+      <div class="callout"><strong>Wording trap:</strong> Kennedy called it a "quarantine," <em>not</em> a "blockade" (a blockade is an act of war). ⚠️ The <strong>Berlin Wall</strong> (1961) is in Objective 15 but not described in the provided Ch 29 text — verify from lecture.</div>
+
+      <div class="concept-title">Johnson's Great Society</div>
+      <div class="concept-body"><strong>Lyndon B. Johnson</strong>'s <strong>Great Society / war on poverty</strong> delivered the Elementary and Secondary Education Act (1965), <strong>Medicare</strong> and <strong>Medicaid</strong> (Social Security Act, 1965), the <strong>Economic Opportunity Act</strong> (1964 — Job Corps, Head Start, VISTA), and the Immigration and Nationality Act (1965). Civil rights: the <strong>Civil Rights Act of 1964</strong> (Title VII), the <strong>24th Amendment</strong> (poll tax), and — after Selma's "Bloody Sunday" (Gov. <strong>George Wallace</strong>) — the <strong>Voting Rights Act of 1965</strong>. But the <strong>Gulf of Tonkin Resolution</strong> (1964) and the <strong>Tet Offensive</strong> (1968) drove escalation and public disillusionment.</div>
+      <span class="key-term green">Great Society</span><span class="key-term green">Voting Rights Act</span><span class="key-term green">Gulf of Tonkin</span>
+      <div class="callout"><strong>Civil-rights laws:</strong> CRA 1960 (voting referees) · CRA 1964 (public accommodations + jobs, Title VII) · Voting Rights Act 1965 (ends literacy tests) · 24th Amendment 1964 (poll tax) · CRA 1968 (housing). <strong>Tonkin:</strong> incident (Aug 1964) vs. Resolution (Aug 7, war without a declaration).</div>
+
+      <div class="concept-title">The Movement &amp; Challenging the Status Quo</div>
+      <div class="concept-body">Grassroots action drove change: the <strong>Greensboro sit-in</strong> (1960) → SNCC (<strong>Ella Baker</strong>); Freedom Rides (1961, <strong>John Lewis</strong>); the March on Washington ("I Have a Dream," 1963); the "Letter from Birmingham Jail"; Freedom Summer (1964). After <strong>Martin Luther King, Jr.</strong>'s assassination (April 1968), many turned to <strong>Black Power</strong> — <strong>Stokely Carmichael</strong>, <strong>Malcolm X</strong>, and the Black Panthers (<strong>Bobby Seale</strong>, <strong>Huey Newton</strong>). The <strong>Chicano movement</strong> (<strong>Cesar Chavez</strong>, <strong>Dolores Huerta</strong>), the New Left (<strong>SDS</strong> / Port Huron Statement), and the women's movement (<strong>Betty Friedan</strong>, the pill, <strong>NOW</strong>) all rose.</div>
+      <span class="key-term orange">SNCC</span><span class="key-term orange">Black Power</span><span class="key-term orange">NOW</span>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <div><div class="chapter-title" style="color:#f97316">Ch. 30 — Political Storms at Home &amp; Abroad</div><div class="chapter-subtitle">1968–1980</div></div>
+      <span class="chevron" aria-hidden="true">▼</span>
+    </div>
+    <div class="chapter-body">
+      <div class="concept-title">Identity Politics</div>
+      <div class="concept-body">The counterculture (hippies, communes, <strong>Woodstock</strong> 1969) rejected mainstream norms. The <strong>American Indian Movement</strong> (1968; <strong>Dennis Banks</strong>, <strong>Clyde Bellecourt</strong>) occupied Alcatraz (1969–71) and Wounded Knee (1973). The <strong>Stonewall</strong> uprising (June 28, 1969) launched gay liberation; <strong>Harvey Milk</strong> won office in 1977. Feminists won <strong>Roe v. Wade</strong> (1973) and Title IX (Education Amendments, 1972, <strong>Patsy Mink</strong>); <strong>Shirley Chisholm</strong> ran for president (1972). The <strong>ERA</strong> passed Congress (1972) but was never ratified.</div>
+      <span class="key-term blue">AIM</span><span class="key-term blue">Stonewall</span><span class="key-term blue">Roe v. Wade</span>
+
+      <div class="concept-title">Nixon: Politics, Economy &amp; Diplomacy</div>
+      <div class="concept-body"><strong>Richard Nixon</strong> won 1968 (over <strong>Hubert Humphrey</strong> and <strong>George Wallace</strong>) with a <strong>southern strategy</strong> and appeals to the <strong>"Silent Majority"</strong>; <strong>Spiro Agnew</strong> was his VP. The economy brought <strong>stagflation</strong>; the 1973 <strong>OAPEC oil embargo</strong> (after the Yom Kippur War) sent gas prices soaring. Diplomacy was his strength: the <strong>Nixon Doctrine</strong> (1969), the historic <strong>China visit</strong> (Feb 1972, <strong>Mao Zedong</strong>, <strong>Zhou Enlai</strong>), and <strong>détente</strong> + <strong>SALT</strong> with <strong>Leonid Brezhnev</strong> (Moscow, 1972).</div>
+      <span class="key-term green">Silent Majority</span><span class="key-term green">détente</span><span class="key-term green">SALT</span>
+      <div class="callout"><strong>Arms/détente by president:</strong> SALT I (Nixon, 1972) · Helsinki Accords (Ford, 1975) · SALT II (Carter). <strong>Doctrines:</strong> Nixon Doctrine (1969, allies self-defend) vs. Carter Doctrine (1980, force in the Middle East).</div>
+
+      <div class="concept-title">Vietnam's Downward Spiral</div>
+      <div class="concept-body">The <strong>My Lai massacre</strong> (March 16, 1968; <strong>Lt. William Calley</strong>), exposed in 1969, horrified the public. Nixon's <strong>Vietnamization</strong> withdrew troops while he bombed and then <strong>invaded Cambodia</strong> (1970) → the <strong>Kent State</strong> (May 4) and <strong>Jackson State</strong> (May 15) shootings. The <strong>Pentagon Papers</strong> (1971, <strong>Daniel Ellsberg</strong>) revealed deception. <strong>Henry Kissinger</strong> and <strong>Le Duc Tho</strong> signed the Paris accord (Jan 1973); <strong>Saigon fell</strong> April 30, 1975.</div>
+      <span class="key-term orange">Vietnamization</span><span class="key-term orange">Kent State</span><span class="key-term orange">Pentagon Papers</span>
+      <div class="callout"><strong>Two campus shootings:</strong> Kent State (May 4, 1970, Ohio, 4 killed) and Jackson State (May 15, 1970, Mississippi, 2 killed) — both after the Cambodia announcement.</div>
+
+      <div class="concept-title">Watergate, Ford &amp; Carter</div>
+      <div class="concept-body">The <strong>Watergate</strong> break-in (June 17, 1972) at DNC headquarters, exposed by <strong>Bob Woodward</strong> and <strong>Carl Bernstein</strong> (source "Deep Throat" = <strong>Mark Felt</strong>), brought down <strong>Nixon</strong> (resigned Aug 1974). <strong>Gerald Ford</strong> pardoned him. <strong>Jimmy Carter</strong> (elected 1976) brokered the <strong>Camp David Accords</strong> (1978, <strong>Menachem Begin</strong> &amp; <strong>Anwar Sadat</strong>), but stagflation and the <strong>Iran hostage crisis</strong> (Nov 4, 1979; 52 held 444 days) doomed his presidency.</div>
+      <span class="key-term red">Watergate</span><span class="key-term red">Deep Throat</span><span class="key-term red">Iran hostage crisis</span>
+      <div class="callout"><strong>Carter's Middle East:</strong> Camp David Accords (1978, framework) vs. the Egypt-Israel peace treaty (1979) — different things.</div>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <div><div class="chapter-title" style="color:#ef4444">Ch. 32.3 — New Century, Old Disputes</div><div class="chapter-subtitle">21st-Century Issues (this section only)</div></div>
+      <span class="chevron" aria-hidden="true">▼</span>
+    </div>
+    <div class="chapter-body">
+      <div class="concept-title">Immigration</div>
+      <div class="concept-body">As the White majority approached minority status, some pushed to make <strong>English the official language</strong> (Arizona, 2006). The <strong>Comprehensive Immigration Reform Act</strong> (2006) — border security + guest workers + a path to legal status — failed. During the Great Recession, Arizona and Alabama passed strict enforcement laws (partly struck down); in 2013 a surge of ~52,000 Central American children reached the border.</div>
+      <span class="key-term blue">official-language laws</span><span class="key-term blue">Comprehensive Immigration Reform Act (2006)</span>
+
+      <div class="concept-title">Same-Sex Marriage</div>
+      <div class="concept-body">The <strong>Defense of Marriage Act</strong> (1996) barred federal recognition. After Vermont's civil unions, <strong>Massachusetts</strong> became the first state to allow same-sex marriage (2004). Between 1998–2012, 30 states banned it (including California's <strong>Proposition 8</strong>, 2008), but courts — and the Supreme Court (2013) — began overturning the bans.</div>
+      <span class="key-term green">DOMA (1996)</span><span class="key-term green">Massachusetts 2004</span><span class="key-term green">Proposition 8</span>
+      <div class="callout"><strong>Keep straight:</strong> DOMA (1996, bars <em>federal</em> recognition) vs. Massachusetts (2004, first <em>state</em> to allow marriage) vs. Prop 8 (2008, California state ban).</div>
+
+      <div class="concept-title">Climate Change</div>
+      <div class="concept-body">The U.S. (~36% of greenhouse gases) signed the <strong>Kyoto Protocol</strong> (1998) but never ratified it; President Bush objected on economic grounds, and the administration was accused of suppressing climate science. <strong>Al Gore</strong>'s documentary <em>An Inconvenient Truth</em> (2006) and his 2007 Nobel Peace Prize (shared with the IPCC) pushed back.</div>
+      <span class="key-term orange">Kyoto Protocol (1998)</span><span class="key-term orange">An Inconvenient Truth</span>
+    </div>
+  </div>
+
+</div>
+<!-- ===== FLASHCARDS ===== -->
+<div id="panel-flashcards" class="panel" role="tabpanel" aria-labelledby="panel-flashcards">
+  <div class="filter-row">
+    <button class="filter-btn active-filter" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('ch27',this)">Ch.27</button>
+    <button class="filter-btn" onclick="filterCards('ch28',this)">Ch.28</button>
+    <button class="filter-btn" onclick="filterCards('ch29',this)">Ch.29</button>
+    <button class="filter-btn" onclick="filterCards('ch30',this)">Ch.30</button>
+    <button class="filter-btn" onclick="filterCards('ch32',this)">Ch.32.3</button>
+  </div>
+  <div class="fc-controls">
+    <button class="btn" onclick="shuffleCards()" aria-label="Shuffle flashcards">⇄ Shuffle</button>
+    <button class="btn" onclick="filterCards('unmastered',document.getElementById('unmasteredBtn'))" id="unmasteredBtn">⚡ Unmastered Only</button>
+    <span class="fc-stat" id="fc-stat" aria-live="polite">Card 1 of 0</span>
+  </div>
+  <div class="flashcard-area">
+    <div class="flashcard" id="flashcard" onclick="flipCard()" role="button" aria-label="Flashcard — tap to flip" tabindex="0">
+      <div class="fc-front">
+        <div id="fc-mastered-badge" class="fc-mastered-badge" aria-hidden="true">✅ MASTERED</div>
+        <div id="fc-chapter-tag" class="fc-chapter-tag" aria-hidden="true"></div>
+        <div class="fc-label" aria-hidden="true">TERM / CONCEPT</div>
+        <div class="fc-question" id="fc-question" aria-live="polite">Loading...</div>
+        <div class="fc-hint" aria-hidden="true">Tap to reveal answer</div>
+      </div>
+      <div class="fc-back">
+        <div class="fc-label" aria-hidden="true">ANSWER</div>
+        <div class="fc-answer" id="fc-answer" aria-live="polite">Loading...</div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-nav">
+    <button class="btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
+    <span class="fc-counter" id="fc-counter" aria-live="polite">1 / 0</span>
+    <button class="btn" onclick="nextCard()" aria-label="Next card">Next →</button>
+  </div>
+  <div style="display:flex;gap:10px;margin-top:12px;justify-content:center;">
+    <button class="btn mastered-btn" id="master-toggle-btn" onclick="toggleMastered(currentIndex)" aria-label="Toggle mastered status for current card">☐ Mark Mastered</button>
+    <button class="btn" onclick="window.print()" aria-label="Print active tab">🖨 Print</button>
+  </div>
+</div>
+
+<!-- ===== QUIZ ===== -->
+<div id="panel-quiz" class="panel" role="tabpanel" aria-labelledby="panel-quiz">
+  <div class="filter-row" id="quiz-filters">
+    <button class="filter-btn active-filter" onclick="setQuizFilter('all',this)">All Chapters</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch27',this)">Ch.27</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch28',this)">Ch.28</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch29',this)">Ch.29</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch30',this)">Ch.30</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch32',this)">Ch.32.3</button>
+    <span style="flex:1"></span>
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)" id="quiz-count" aria-live="polite"></span>
+  </div>
+  <div class="quiz-score" id="quiz-score" role="status">
+    <div class="score-num" id="score-display">0</div>
+    <div class="score-label">QUIZ COMPLETE</div>
+    <div id="score-breakdown" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px"></div>
+    <br>
+    <button class="btn primary" onclick="resetQuiz()">Retake Quiz</button>
+  </div>
+  <div class="quiz-area" id="quiz-area"></div>
+  <button class="btn primary" id="submit-btn" onclick="submitQuiz()" style="margin-top:18px;display:none">Submit Quiz</button>
+</div>
+
+<!-- ===== DISCUSSION ===== -->
+<div id="panel-discussion" class="panel" role="tabpanel" aria-labelledby="panel-discussion">
+  <div class="section-label">Discussion / Short Answer Practice</div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">Write your response, then submit to reveal the self-grading checklist. Check each point you covered to calculate your score.</p>
+  <div class="disc-filter" id="disc-filters">
+    <button class="filter-btn active-filter" onclick="filterDisc('all',this)">All</button>
+    <button class="filter-btn" onclick="filterDisc('ch27',this)">Ch.27</button>
+    <button class="filter-btn" onclick="filterDisc('ch28',this)">Ch.28</button>
+    <button class="filter-btn" onclick="filterDisc('ch29',this)">Ch.29</button>
+    <button class="filter-btn" onclick="filterDisc('ch30',this)">Ch.30</button>
+    <button class="filter-btn" onclick="filterDisc('ch32',this)">Ch.32.3</button>
+  </div>
+  <div id="disc-container"></div>
+</div>
+
+<!-- ===== NOTES ===== -->
+<div id="panel-notes" class="panel" role="tabpanel" aria-labelledby="panel-notes">
+  <div class="notes-template">
+    <div class="notes-header">
+      <div>
+        <div class="notes-title">2-Page Exam Notes — Unit 4</div>
+        <div class="notes-subtitle">HIST-1302 · Unit 04 · Exam: Fri Aug 7, 2026 · red = people · orange = dates/figures · purple = confused pairs</div>
+      </div>
+      <button class="btn" onclick="window.print()" aria-label="Print notes">🖨 Print</button>
+    </div>
+    <div class="notes-body">
+      <div class="notes-col-grid">
+        <div>
+          <div class="notes-col-title">Ch. 27 — World War II</div>
+          <div class="notes-item"><span class="key-term red">Benito Mussolini</span> Fascism <span class="key-term orange">1919</span>, PM <span class="key-term orange">1922</span>; <span class="key-term red">Adolf Hitler</span> chancellor <span class="key-term orange">Jan 1933</span> → Enabling Act</div>
+          <div class="notes-item">Munich Pact <span class="key-term orange">1938</span> (<span class="key-term red">Neville Chamberlain</span> + <span class="key-term red">Édouard Daladier</span>, Sudetenland, appeasement)</div>
+          <div class="notes-item">Poland invaded <span class="key-term orange">Sept 1, 1939</span>; Pearl Harbor <span class="key-term orange">Dec 7, 1941</span> (~<span class="key-term orange">2,400</span> killed)</div>
+          <div class="notes-item"><span class="key-term red">Gerald P. Nye</span> → Neutrality Acts <span class="key-term orange">35/36/37</span></div>
+          <div class="notes-item"><span class="key-term purple">Cash &amp; Carry (1939) → Export Control Act (1940, embargo Japan) → Lend-Lease (1941)</span></div>
+          <div class="notes-item">Home front: <span class="key-term red">A. Philip Randolph</span> → EO 8802; EO 9066 <span class="key-term orange">2/19/1942</span> (~<span class="key-term orange">120,000</span> interned); 442nd RCT</div>
+          <div class="notes-item"><span class="key-term purple">EO 8802 (1941 jobs) / EO 9066 (1942 internment) / EO 9835 (1947 loyalty)</span></div>
+          <div class="notes-item">Big Three <span class="key-term red">Churchill</span>/<span class="key-term red">Roosevelt</span>/<span class="key-term red">Stalin</span>; D-Day <span class="key-term orange">6/6/1944</span>; V-E <span class="key-term orange">5/8/1945</span></div>
+          <div class="notes-item"><span class="key-term purple">Conferences: Casablanca(43)/Tehran(43)/Yalta(45)/Potsdam(45)</span></div>
+          <div class="notes-item"><span class="key-term red">Douglas MacArthur</span> island-hopping; Midway <span class="key-term orange">Jun 1942</span>; Iwo Jima → Okinawa</div>
+          <div class="notes-item"><span class="key-term red">Truman</span>: Hiroshima <span class="key-term orange">Aug 6</span> / Nagasaki <span class="key-term orange">Aug 9</span>; <span class="key-term red">Hirohito</span> surrenders</div>
+          <div class="notes-item"><span class="key-term purple">Turning pts: Midway / Stalingrad / D-Day / Bulge (last Ger.)</span></div>
+        </div>
+        <div>
+          <div class="notes-col-title">Ch. 28 — Cold War</div>
+          <div class="notes-item">GI Bill <span class="key-term orange">1944</span>; <span class="key-term red">Truman</span> Fair Deal <span class="key-term orange">1949</span>; desegregates military <span class="key-term orange">1948</span>; Taft-Hartley</div>
+          <div class="notes-item"><span class="key-term red">George Kennan</span> Long Telegram <span class="key-term orange">1946</span> → containment; <span class="key-term red">Churchill</span> "Iron Curtain"</div>
+          <div class="notes-item">Truman Doctrine <span class="key-term orange">1947</span> (Greece+Turkey); Marshall Plan <span class="key-term orange">1948</span> <span class="key-term orange">$13B</span>; NATO <span class="key-term orange">1949</span></div>
+          <div class="notes-item"><span class="key-term purple">containment / Truman Doctrine (aid) / Marshall Plan (rebuild) / domino theory</span></div>
+          <div class="notes-item">Berlin airlift <span class="key-term orange">1948–49</span>; USSR A-bomb + <span class="key-term red">Mao Zedong</span> wins China <span class="key-term orange">1949</span></div>
+          <div class="notes-item">Korea: <span class="key-term red">Kim Il Sung</span> crosses 38th <span class="key-term orange">6/25/1950</span>; armistice <span class="key-term orange">7/27/1953</span></div>
+          <div class="notes-item"><span class="key-term red">Rosenbergs</span> executed <span class="key-term orange">1953</span>; <span class="key-term red">Joseph McCarthy</span> → Army-McCarthy <span class="key-term orange">1954</span> → censured</div>
+          <div class="notes-item"><span class="key-term red">Eisenhower</span> MAD; <span class="key-term red">William Levitt</span> suburbs (own <span class="key-term orange">44%→62%</span>); Sputnik <span class="key-term orange">1957</span></div>
+          <div class="notes-item">Rock&amp;roll <span class="key-term red">Alan Freed</span>/<span class="key-term red">Elvis Presley</span>; Brown v. Board <span class="key-term orange">1954</span> (<span class="key-term red">Thurgood Marshall</span>)</div>
+          <div class="notes-item">Little Rock Nine <span class="key-term orange">1957</span> (<span class="key-term red">Orval Faubus</span>); Montgomery boycott (<span class="key-term red">Rosa Parks</span>, <span class="key-term red">MLK</span>)</div>
+          <div class="notes-item"><span class="key-term purple">Plessy (1896) vs Brown (1954)</span></div>
+        </div>
+        <div>
+          <div class="notes-col-title">Ch. 29 — The 1960s</div>
+          <div class="notes-item"><span class="key-term red">JFK</span> v <span class="key-term red">Nixon</span>; TV debate <span class="key-term orange">9/26/1960</span>; adds <span class="key-term red">LBJ</span></div>
+          <div class="notes-item">Bay of Pigs <span class="key-term orange">1961</span>; Cuban Missile Crisis <span class="key-term orange">Oct 1962</span> (<span class="key-term red">Khrushchev</span>)</div>
+          <div class="notes-item"><span class="key-term purple">"quarantine" NOT "blockade"</span>; Peace Corps <span class="key-term orange">1961</span>; <span class="key-term red">Ngo Dinh Diem</span></div>
+          <div class="notes-item">JFK killed <span class="key-term orange">11/22/1963</span> (<span class="key-term red">Lee Harvey Oswald</span>, <span class="key-term red">Jack Ruby</span>)</div>
+          <div class="notes-item"><span class="key-term red">LBJ</span> Great Society: Medicare/Medicaid, ESEA <span class="key-term orange">1965</span>; Econ. Opportunity Act <span class="key-term orange">1964</span></div>
+          <div class="notes-item">CRA <span class="key-term orange">1964</span> (Title VII); 24th Amdt; Voting Rights Act <span class="key-term orange">1965</span> (Selma)</div>
+          <div class="notes-item"><span class="key-term purple">Tonkin incident (Aug 2&amp;4, 1964) vs Resolution (Aug 7)</span>; Tet <span class="key-term orange">Jan 1968</span></div>
+          <div class="notes-item">Greensboro sit-in <span class="key-term orange">1960</span> → SNCC (<span class="key-term red">Ella Baker</span>); MOW <span class="key-term orange">1963</span>; <span class="key-term red">MLK</span> killed <span class="key-term orange">4/4/1968</span></div>
+          <div class="notes-item">Black Power <span class="key-term red">Stokely Carmichael</span>, <span class="key-term red">Malcolm X</span>; Panthers <span class="key-term orange">1966</span> (<span class="key-term red">Bobby Seale</span>/<span class="key-term red">Huey Newton</span>)</div>
+          <div class="notes-item"><span class="key-term red">Cesar Chavez</span>/<span class="key-term red">Dolores Huerta</span> UFW; <span class="key-term red">Betty Friedan</span> pill <span class="key-term orange">1960</span>, NOW <span class="key-term orange">1966</span></div>
+        </div>
+        <div>
+          <div class="notes-col-title">Ch. 30 — 1968–1980</div>
+          <div class="notes-item"><span class="key-term red">Nixon</span> beats <span class="key-term red">Humphrey</span> + <span class="key-term red">George Wallace</span> <span class="key-term orange">1968</span>; "Silent Majority", southern strategy</div>
+          <div class="notes-item">AIM <span class="key-term orange">1968</span> (<span class="key-term red">Dennis Banks</span>); Stonewall <span class="key-term orange">6/28/1969</span>; Woodstock <span class="key-term orange">1969</span></div>
+          <div class="notes-item">Roe v. Wade <span class="key-term orange">1973</span>; Title IX <span class="key-term orange">1972</span> (<span class="key-term red">Patsy Mink</span>); ERA passed Congress <span class="key-term orange">1972</span></div>
+          <div class="notes-item">Stagflation; OAPEC embargo <span class="key-term orange">Oct 1973</span>; China visit <span class="key-term orange">Feb 1972</span> (<span class="key-term red">Mao</span>/<span class="key-term red">Zhou Enlai</span>); SALT I <span class="key-term orange">1972</span> (<span class="key-term red">Brezhnev</span>)</div>
+          <div class="notes-item">My Lai <span class="key-term orange">3/16/1968</span> (<span class="key-term red">William Calley</span>); Cambodia <span class="key-term orange">1970</span></div>
+          <div class="notes-item"><span class="key-term purple">Kent State (5/4/70, 4 killed) vs Jackson State (5/15/70, 2 killed)</span></div>
+          <div class="notes-item">Pentagon Papers <span class="key-term orange">1971</span> (<span class="key-term red">Daniel Ellsberg</span>); Paris accord <span class="key-term orange">1/1973</span> (<span class="key-term red">Kissinger</span>/<span class="key-term red">Le Duc Tho</span>); Saigon falls <span class="key-term orange">4/30/1975</span></div>
+          <div class="notes-item">Watergate break-in <span class="key-term orange">6/17/1972</span>; <span class="key-term red">Woodward</span>/<span class="key-term red">Bernstein</span>; "Deep Throat"=<span class="key-term red">Mark Felt</span>; Nixon resigns <span class="key-term orange">8/1974</span></div>
+          <div class="notes-item"><span class="key-term red">Gerald Ford</span> pardons Nixon; Helsinki Accords <span class="key-term orange">1975</span></div>
+          <div class="notes-item"><span class="key-term red">Jimmy Carter</span> <span class="key-term orange">1976</span>; Camp David <span class="key-term orange">1978</span> (<span class="key-term red">Begin</span>/<span class="key-term red">Sadat</span>); Iran hostages <span class="key-term orange">11/4/1979</span>, <span class="key-term orange">444</span> days</div>
+          <div class="notes-item"><span class="key-term purple">Camp David Accords (1978) vs Egypt-Israel treaty (1979)</span>; <span class="key-term purple">Nixon Doctrine vs Carter Doctrine</span></div>
+        </div>
+        <div>
+          <div class="notes-col-title">Ch. 32.3 — 21st-C Disputes</div>
+          <div class="notes-item">English-official pushes (Arizona <span class="key-term orange">2006</span>); Comprehensive Immigration Reform Act <span class="key-term orange">2006</span> (failed)</div>
+          <div class="notes-item">Same-sex marriage: DOMA <span class="key-term orange">1996</span> → Massachusetts 1st <span class="key-term orange">2004</span> → Prop 8 <span class="key-term orange">2008</span> → SCOTUS <span class="key-term orange">2013</span></div>
+          <div class="notes-item"><span class="key-term purple">DOMA (1996 federal) / Massachusetts (2004 first state) / Prop 8 (2008 CA ban)</span></div>
+          <div class="notes-item">Climate: Kyoto Protocol <span class="key-term orange">1998</span> (signed, never ratified; <span class="key-term red">George W. Bush</span> objected); US ~<span class="key-term orange">36%</span> of greenhouse gases</div>
+          <div class="notes-item"><span class="key-term red">Al Gore</span> <em>An Inconvenient Truth</em> <span class="key-term orange">2006</span>, Nobel <span class="key-term orange">2007</span></div>
+        </div>
+      </div>
+      <div class="notes-tip"><strong>Exam tip:</strong> Full first + last names always (e.g., <em>A. Philip Randolph</em>, <em>Orval Faubus</em>, not just "Randolph"/"Faubus"). Prof. Walter tests named laws and mechanisms, not just outcomes — know which act/order goes with which action. For negation questions, circle the negative word, eliminate the three true options first, and read the stem twice.</div>
+    </div>
+  </div>
+</div>
+<footer>
+  <a href="../../index.html">← Back to Study Hub</a>
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)">HIST-1302 · Unit 4 · ACC Summer 2026 · <a href="../../index.html" class="back-link footer-back-link">← Back to all courses</a></span>
+</footer>
+</div>
+
+<script>
+// ── MASTERY KEY (update per unit) ──
+function getMasteryKey() { return 'mastery_hist1302_unit4_'; }
+function getObjMasteryKey() { return 'masteryobj_hist1302_unit4_'; }
+
+// ── PANEL SWITCHING ──
+function showPanel(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+  if(id==='flashcards') renderCard();
+  if(id==='quiz') renderQuiz();
+  if(id==='discussion' && !discInit) { discInit=true; renderDiscussion(); }
+}
+
+// ── ACCORDION ──
+function toggleChapter(header) {
+  const body = header.nextElementSibling;
+  header.classList.toggle('open'); body.classList.toggle('open');
+  header.setAttribute('aria-expanded', header.classList.contains('open'));
+}
+function toggleObj(card) {
+  card.classList.toggle('expanded');
+  card.setAttribute('aria-expanded', card.classList.contains('expanded'));
+}
+
+// ── OBJECTIVE MASTERY ──
+function toggleObjMastery(btn, key) {
+  const fullKey = getObjMasteryKey() + key;
+  const isMastered = localStorage.getItem(fullKey) === '1';
+  if(isMastered) { localStorage.removeItem(fullKey); btn.textContent='☐'; btn.classList.remove('mastered'); btn.setAttribute('aria-label', btn.getAttribute('aria-label').replace('Unmark','Mark')); }
+  else { localStorage.setItem(fullKey,'1'); btn.textContent='✅'; btn.classList.add('mastered'); }
+  updateMasteryBar();
+}
+function loadObjMastery() {
+  const prefix = getObjMasteryKey();
+  document.querySelectorAll('.obj-master-btn').forEach(btn => {
+    const key = btn.getAttribute('aria-label').match(/\d+/)?.[0];
+    if(key && localStorage.getItem(prefix+'obj_'+key)==='1') { btn.textContent='✅'; btn.classList.add('mastered'); }
+  });
+}
+
+// ── MASTERY BAR ──
+function updateMasteryBar() {
+  const total = allCards.length;
+  const prefix = getMasteryKey();
+  const mastered = allCards.filter((_,i) => localStorage.getItem(prefix+i)==='1').length;
+  document.getElementById('mastery-count').textContent = mastered+' / '+total;
+  document.getElementById('mastery-fill').style.width = (total ? Math.round(mastered/total*100) : 0)+'%';
+}
+function resetAllMastery() {
+  const p1 = getMasteryKey(), p2 = getObjMasteryKey();
+  Object.keys(localStorage).filter(k => k.startsWith(p1)||k.startsWith(p2)).forEach(k => localStorage.removeItem(k));
+  document.querySelectorAll('.obj-master-btn').forEach(b => { b.textContent='☐'; b.classList.remove('mastered'); });
+  renderCard(); updateMasteryBar();
+  alert('All mastery for this unit has been reset.');
+}
+
+// ── FLASHCARDS ──
+const allCards = [
+  {ch:'ch27', q:'Who founded Fascism in Italy, and when did he become prime minister?', a:'Benito Mussolini founded Fascism (Fasci Italiani di Combattimento, 1919) and became PM in 1922.'},
+  {ch:'ch27', q:'Who appointed Adolf Hitler chancellor of Germany in January 1933?', a:'President Paul von Hindenburg. The Enabling Act then made Hitler a dictator.'},
+  {ch:'ch27', q:'What 1938 agreement handed Germany the Sudetenland, and who were the two Western leaders who appeased Hitler?', a:'The Munich Pact. Britain\'s Neville Chamberlain and France\'s Édouard Daladier ("peace in our time").'},
+  {ch:'ch27', q:'What event began World War II, and on what date?', a:'Germany\'s Blitzkrieg invasion of Poland, September 1, 1939. Britain and France declared war September 3.'},
+  {ch:'ch27', q:'Which senator led the isolationists and claimed bankers had tricked the U.S. into WWI?', a:'Senator Gerald P. Nye, whose committee helped produce the Neutrality Acts (1935–37).'},
+  {ch:'ch27', q:'Put the U.S. neutrality steps in order.', a:'Neutrality Acts (1935–37) → Cash and Carry (1939) → Export Control Act (1940, embargo of Japan) → Lend-Lease (1941).'},
+  {ch:'ch27', q:'What did Executive Order 8802 (1941) do, and who pressured FDR to issue it?', a:'It created the Fair Employment Practices Committee, banning discrimination in defense jobs. A. Philip Randolph, by threatening a march on Washington.'},
+  {ch:'ch27', q:'What did Executive Order 9066 (Feb 1942) authorize?', a:'The internment of ~120,000 people of Japanese ancestry (about two-thirds U.S.-born).'},
+  {ch:'ch27', q:'Which U.S. army unit, made up of Japanese Americans, became the most decorated of its size?', a:'The 442nd Regimental Combat Team.'},
+  {ch:'ch27', q:'Name the "Big Three" Allied leaders.', a:'Winston Churchill (UK), Franklin D. Roosevelt (US), and Joseph Stalin (USSR).'},
+  {ch:'ch27', q:'What happened on D-Day, June 6, 1944?', a:'The Allied amphibious invasion at Normandy opened the second front against Germany.'},
+  {ch:'ch27', q:'What was the turning-point battle in the Pacific, and what island strategy followed?', a:'The Battle of Midway (June 1942); the U.S. then pursued "island hopping" under Douglas MacArthur.'},
+  {ch:'ch27', q:'Name the two cities hit by atomic bombs and the dates.', a:'Hiroshima (Aug 6, 1945) and Nagasaki (Aug 9, 1945). Emperor Hirohito then surrendered.'},
+  {ch:'ch27', q:'Give Truman\'s main stated reason for dropping the atomic bombs.', a:'To force a quick Japanese surrender and avoid a costly invasion of the home islands (projected up to ~250,000 U.S. casualties).'},
+  {ch:'ch28', q:'What was Truman\'s domestic program called, and name two of its goals?', a:'The Fair Deal (1949) — e.g., a higher minimum wage, Social Security expansion, public housing. He also desegregated the armed forces (1948).'},
+  {ch:'ch28', q:'Who wrote the "Long Telegram," and what strategy did it launch?', a:'George Kennan; it launched the policy of containment.'},
+  {ch:'ch28', q:'Who coined the phrase "Iron Curtain," and in what year?', a:'Winston Churchill, in 1946.'},
+  {ch:'ch28', q:'What two nations did the Truman Doctrine (1947) aid?', a:'Greece and Turkey.'},
+  {ch:'ch28', q:'What was the Marshall Plan, and roughly how much did it cost?', a:'The European Recovery Program (1948–51), which rebuilt Western Europe — about $13 billion.'},
+  {ch:'ch28', q:'Why did the U.S. launch the Berlin airlift?', a:'To supply West Berlin by air after Stalin\'s 1948 blockade cut land and water routes. It lasted until May 1949.'},
+  {ch:'ch28', q:'What happened in China in 1949?', a:'Mao Zedong\'s Communists won the civil war; Chiang Kai-shek\'s Nationalists fled to Taiwan.'},
+  {ch:'ch28', q:'Who invaded across the 38th parallel on June 25, 1950, starting the Korean War?', a:'Kim Il Sung\'s North Korea. The armistice was signed July 27, 1953.'},
+  {ch:'ch28', q:'Which married couple was executed in 1953 for atomic espionage?', a:'Julius and Ethel Rosenberg.'},
+  {ch:'ch28', q:'What televised 1954 hearings led to Senator Joseph McCarthy\'s downfall?', a:'The Army-McCarthy Hearings; the Senate then censured him.'},
+  {ch:'ch28', q:'Who pioneered mass-produced suburbs, and what were they called?', a:'William Levitt; his developments were called Levittowns.'},
+  {ch:'ch28', q:'What 1957 Soviet satellite launch shocked the U.S. into education reform?', a:'Sputnik, which led to the National Defense Education Act (1958).'},
+  {ch:'ch28', q:'Which 1954 Supreme Court case overturned "separate but equal," and who argued it?', a:'Brown v. Board of Education; Thurgood Marshall argued it, under Chief Justice Earl Warren.'},
+  {ch:'ch28', q:'Which governor blocked the Little Rock Nine in 1957?', a:'Governor Orval Faubus of Arkansas; Eisenhower sent the 101st Airborne.'},
+  {ch:'ch29', q:'What factor in the 1960 election favored the telegenic Kennedy?', a:'The first televised presidential debate (Sept 26, 1960) against Richard Nixon.'},
+  {ch:'ch29', q:'What word did Kennedy use for the naval action in the Cuban Missile Crisis, and why?', a:'"Quarantine" — a "blockade" would legally be an act of war.'},
+  {ch:'ch29', q:'What secret concession helped end the Cuban Missile Crisis?', a:'The U.S. secretly agreed to remove its missiles from Turkey (plus a public no-invasion pledge for Cuba). Khrushchev withdrew the Soviet missiles.'},
+  {ch:'ch29', q:'Name the two big health programs of LBJ\'s Great Society (1965).', a:'Medicare and Medicaid, created through the Social Security Act of 1965.'},
+  {ch:'ch29', q:'What 1964 resolution let LBJ wage war in Vietnam without a declaration?', a:'The Gulf of Tonkin Resolution.'},
+  {ch:'ch29', q:'What 1968 offensive turned U.S. public opinion against the Vietnam War?', a:'The Tet Offensive (January 1968), even though it was militarily repelled.'},
+  {ch:'ch29', q:'Who led the Black Panther Party, founded in 1966?', a:'Bobby Seale and Huey Newton.'},
+  {ch:'ch29', q:'Who wrote The Feminine Mystique, and what organization did she help found?', a:'Betty Friedan; she helped found NOW (1966).'},
+  {ch:'ch29', q:'Which two leaders founded the farm-worker movement (NFWA/UFW)?', a:'Cesar Chavez and Dolores Huerta.'},
+  {ch:'ch30', q:'Whom did Nixon call the "Silent Majority," and what electoral approach targeted the South?', a:'Northern, White, blue-collar voters. The "southern strategy" appealed to White southern voters.'},
+  {ch:'ch30', q:'What did "Vietnamization" mean?', a:'Shifting combat to South Vietnamese forces while gradually withdrawing U.S. troops.'},
+  {ch:'ch30', q:'What did Nixon do regarding China in February 1972?', a:'He visited Beijing to meet Mao Zedong and Zhou Enlai, reversing two decades of hostility to pressure the USSR.'},
+  {ch:'ch30', q:'What 1970 event triggered the Kent State and Jackson State shootings?', a:'Nixon\'s announced invasion of Cambodia.'},
+  {ch:'ch30', q:'Who leaked the Pentagon Papers in 1971?', a:'Daniel Ellsberg.'},
+  {ch:'ch30', q:'Which two reporters exposed Watergate, and who was "Deep Throat"?', a:'Bob Woodward and Carl Bernstein; "Deep Throat" was Mark Felt.'},
+  {ch:'ch30', q:'When did Nixon resign, and who pardoned him?', a:'August 1974; his successor Gerald Ford pardoned him.'},
+  {ch:'ch30', q:'What 1978 agreement did Carter broker, and between whom?', a:'The Camp David Accords, between Menachem Begin (Israel) and Anwar Sadat (Egypt).'},
+  {ch:'ch30', q:'How long were the American hostages held in the Iran hostage crisis?', a:'444 days — from the embassy seizure on Nov 4, 1979 until January 1981.'},
+  {ch:'ch32', q:'Which climate treaty did the U.S. sign in 1998 but never ratify?', a:'The Kyoto Protocol; President Bush objected on economic grounds.'},
+  {ch:'ch32', q:'What 1996 law barred federal recognition of same-sex marriage, and which state first allowed it?', a:'The Defense of Marriage Act (DOMA, 1996); Massachusetts became the first state to allow same-sex marriage (2004).'},
+];
+let currentCards = [...allCards];
+let currentIndex = 0;
+
+function renderCard() {
+  const card = currentCards[currentIndex];
+  if(!card) return;
+  const tag = document.getElementById('fc-chapter-tag');
+  const colors = {ch27:'#3b82f6',ch28:'#a78bfa',ch29:'#22c55e',ch30:'#f97316',ch32:'#ef4444'};
+  const labels = {ch27:'CH.27',ch28:'CH.28',ch29:'CH.29',ch30:'CH.30',ch32:'CH.32.3'};
+  tag.textContent = labels[card.ch]||card.ch.toUpperCase();
+  tag.style.color = colors[card.ch]||'var(--accent)';
+  tag.style.background = (colors[card.ch]||'var(--accent)')+'20';
+  document.getElementById('fc-question').textContent = card.q;
+  document.getElementById('fc-answer').textContent = card.a;
+  document.getElementById('fc-counter').textContent = (currentIndex+1)+' / '+currentCards.length;
+  document.getElementById('fc-stat').textContent = 'Card '+(currentIndex+1)+' of '+currentCards.length;
+  document.getElementById('flashcard').classList.remove('flipped');
+  const origIdx = allCards.indexOf(card);
+  const isMastered = localStorage.getItem(getMasteryKey()+origIdx)==='1';
+  const badge = document.getElementById('fc-mastered-badge');
+  badge.style.display = isMastered ? 'inline-block' : 'none';
+  const masterBtn = document.getElementById('master-toggle-btn');
+  masterBtn.textContent = isMastered ? '✅ Mastered' : '☐ Mark Mastered';
+  masterBtn.style.borderColor = isMastered ? 'var(--green)' : '';
+  masterBtn.style.color = isMastered ? 'var(--green)' : '';
+}
+function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
+function nextCard() { currentIndex=(currentIndex+1)%currentCards.length; renderCard(); }
+function prevCard() { currentIndex=(currentIndex-1+currentCards.length)%currentCards.length; renderCard(); }
+function shuffleCards() {
+  for(let i=currentCards.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[currentCards[i],currentCards[j]]=[currentCards[j],currentCards[i]];}
+  currentIndex=0; renderCard();
+}
+function filterCards(ch, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active-filter'));
+  if(btn) btn.classList.add('active-filter');
+  const prefix = getMasteryKey();
+  if(ch==='all') currentCards=[...allCards];
+  else if(ch==='unmastered') currentCards=allCards.filter((_,i)=>localStorage.getItem(prefix+i)!=='1');
+  else currentCards=allCards.filter(c=>c.ch===ch);
+  currentIndex=0; renderCard();
+}
+function toggleMastered(idx) {
+  const origCard = currentCards[idx];
+  const origIdx = allCards.indexOf(origCard);
+  const key = getMasteryKey()+origIdx;
+  if(localStorage.getItem(key)==='1') localStorage.removeItem(key);
+  else localStorage.setItem(key,'1');
+  renderCard(); updateMasteryBar();
+}
+
+// ── QUIZ ──
+const allQuizData = [
+  {ch:'ch27',type:'mc',q:'Which senator led the 1930s investigation claiming arms manufacturers had pushed the U.S. into WWI?',opts:['Gerald P. Nye','Arthur Vandenberg','Robert Taft','Huey Long'],ans:0,exp:'The Nye Committee\'s findings fueled the Neutrality Acts.'},
+  {ch:'ch27',type:'mc',q:'The 1938 Munich Pact is the classic example of which foreign policy?',opts:['Containment','Appeasement','Massive retaliation','Isolationism'],ans:1,exp:'Chamberlain and Daladier appeased Hitler by ceding the Sudetenland.'},
+  {ch:'ch27',type:'fitb',q:'World War II began when Germany invaded ___ on September 1, 1939.',ans:['poland'],display:'Poland',exp:'Britain and France declared war two days later.'},
+  {ch:'ch27',type:'mc',q:'Which program let Britain obtain U.S. arms in 1941 by essentially borrowing them?',opts:['Cash and Carry','The Export Control Act','Lend-Lease','The Atlantic Charter'],ans:2,exp:'Lend-Lease (~$45B) effectively ended U.S. nonintervention.'},
+  {ch:'ch27',type:'mc',q:'Executive Order 9066 (1942) resulted in what?',opts:['Desegregation of defense plants','The internment of Japanese Americans','A federal loyalty program','The first peacetime draft'],ans:1,exp:'~120,000 people of Japanese ancestry were forced into camps.'},
+  {ch:'ch27',type:'fitb',q:'The Mexican ___ program (1942) brought agricultural laborers to the U.S. to fill wartime shortages.',ans:['bracero'],display:'bracero',exp:'A body-text detail beyond the objectives — the kind Prof. Walter tests.'},
+  {ch:'ch27',type:'mc',q:'Why was Iwo Jima a strategic target in 1945?',opts:['It held Japan\'s main fleet','It was a staging area for a home-island invasion and bomber support','It was Japan\'s capital','It contained the Manhattan Project'],ans:1,exp:'Its airfields supported the bombing campaign against Japan.'},
+  {ch:'ch27',type:'mc',q:'The Big Three met at Yalta (1945) and made concessions that strengthened which leader in Eastern Europe?',opts:['Winston Churchill','Charles de Gaulle','Joseph Stalin','Chiang Kai-shek'],ans:2,exp:'Yalta effectively conceded Soviet influence over Eastern Europe.'},
+  {ch:'ch28',type:'mc',q:'What was Truman\'s postwar domestic reform program called?',opts:['The New Deal','The Square Deal','The Fair Deal','The Great Society'],ans:2,exp:'The Fair Deal (1949) extended New Deal-style reforms.'},
+  {ch:'ch28',type:'mc',q:'George Kennan\'s "Long Telegram" argued the U.S. should do what?',opts:['Invade the USSR','Contain Soviet expansion','Share the atomic bomb','Withdraw from Europe'],ans:1,exp:'Containment became the core U.S. Cold War strategy.'},
+  {ch:'ch28',type:'fitb',q:'The ___ ___ (1948–51) was the ~$13 billion U.S. program to rebuild Western Europe.',ans:['marshall plan'],display:'Marshall Plan',exp:'It blunted Communism and boosted U.S. exports.'},
+  {ch:'ch28',type:'mc',q:'Which 1957 event pushed the U.S. to pass the National Defense Education Act?',opts:['The Berlin airlift','The launch of Sputnik','The Korean armistice','The U-2 incident'],ans:1,exp:'Sputnik sparked fears the U.S. was falling behind in science.'},
+  {ch:'ch28',type:'fitb',q:'Radio DJ ___ ___ is credited with popularizing the term "rock and roll."',ans:['alan freed'],display:'Alan Freed',exp:'A body-text name beyond the objectives.'},
+  {ch:'ch28',type:'mc',q:'Who argued Brown v. Board of Education before the Supreme Court?',opts:['A. Philip Randolph','Earl Warren','Thurgood Marshall','Roy Wilkins'],ans:2,exp:'Marshall later became the first Black Supreme Court justice.'},
+  {ch:'ch28',type:'mc',q:'Which governor tried to block the Little Rock Nine in 1957?',opts:['George Wallace','Orval Faubus','Strom Thurmond','Ross Barnett'],ans:1,exp:'Eisenhower federalized the National Guard and sent the 101st Airborne.'},
+  {ch:'ch28',type:'mc',q:'The Truman Doctrine (1947) provided aid specifically to which two nations first?',opts:['France and Italy','Greece and Turkey','West Germany and Austria','Japan and Korea'],ans:1,exp:'Britain could no longer fund anti-Communist Greece.'},
+  {ch:'ch29',type:'mc',q:'What word did Kennedy use for the U.S. naval action during the Cuban Missile Crisis?',opts:['Blockade','Quarantine','Embargo','Interdiction'],ans:1,exp:'"Blockade" would have been an act of war, so he said "quarantine."'},
+  {ch:'ch29',type:'fitb',q:'The 24th Amendment (1964) abolished the ___ ___ in federal elections.',ans:['poll tax','poll taxes'],display:'poll tax',exp:'It removed a barrier used to disenfranchise Black voters.'},
+  {ch:'ch29',type:'mc',q:'Which Great Society program provides health coverage for the poor?',opts:['Medicare','Medicaid','Social Security','Head Start'],ans:1,exp:'Medicaid covers low-income Americans; Medicare covers the elderly.'},
+  {ch:'ch29',type:'mc',q:'Which 1968 offensive turned U.S. opinion against the Vietnam War?',opts:['The Gulf of Tonkin','Operation Rolling Thunder','The Tet Offensive','The Cambodian incursion'],ans:2,exp:'Tet was repelled militarily but shattered claims the war was nearly won.'},
+  {ch:'ch29',type:'fitb',q:'The 1960 Greensboro protest at a segregated lunch counter is known as a ___-in.',ans:['sit'],display:'sit-in',exp:'It led to the founding of SNCC.'},
+  {ch:'ch29',type:'mc',q:'Which militant group, founded in 1966, created a Ten-Point Program?',opts:['SNCC','The Black Panthers','CORE','The Nation of Islam'],ans:1,exp:'Bobby Seale and Huey Newton founded the Black Panther Party.'},
+  {ch:'ch29',type:'mc',q:'Who founded the Crusade for Justice as part of the Chicano movement?',opts:['Cesar Chavez','Dolores Huerta','Rodolfo Gonzales','Reies López Tijerina'],ans:2,exp:'Rodolfo "Corky" Gonzales founded it in 1965.'},
+  {ch:'ch29',type:'mc',q:'Which New Left student organization issued the Port Huron Statement?',opts:['SNCC','SDS','the Weathermen','the Free Speech Movement'],ans:1,exp:'Students for a Democratic Society, drafted largely by Tom Hayden.'},
+  {ch:'ch30',type:'mc',q:'Who was a founder of the American Indian Movement (1968)?',opts:['Richard Oakes','Dennis Banks','Russell Means','Vine Deloria Jr.'],ans:1,exp:'Banks co-founded AIM in Minneapolis.'},
+  {ch:'ch30',type:'mc',q:'Roe v. Wade (1973) legalized abortion in which stage of pregnancy without restriction?',opts:['The first trimester','The second trimester','The entire pregnancy','Only to save the mother\'s life'],ans:0,exp:'The Court allowed states to regulate more in later trimesters.'},
+  {ch:'ch30',type:'fitb',q:'Nixon\'s policy of shifting combat to South Vietnamese forces while withdrawing U.S. troops was called ___.',ans:['vietnamization'],display:'Vietnamization',exp:'It paired with escalation into Cambodia in 1970.'},
+  {ch:'ch30',type:'mc',q:'The Kent State and Jackson State shootings (May 1970) followed which event?',opts:['The Tet Offensive','The invasion of Cambodia','The Pentagon Papers leak','The fall of Saigon'],ans:1,exp:'Nixon\'s announced Cambodia invasion set off nationwide protests.'},
+  {ch:'ch30',type:'mc',q:'Which reporter was NOT indicted, but instead helped expose Watergate?',opts:['G. Gordon Liddy','Bob Woodward','John Dean','H. R. Haldeman'],ans:1,exp:'Woodward and Bernstein of the Washington Post broke the story.'},
+  {ch:'ch30',type:'fitb',q:'Carter brokered the 1978 ___ ___ Accords between Israel and Egypt.',ans:['camp david'],display:'Camp David',exp:'They led to the 1979 Egypt-Israel peace treaty.'},
+  {ch:'ch30',type:'mc',q:'A central promise of Jimmy Carter\'s outsider campaign was that he would do what?',opts:['End all taxes','Never lie to the American people','Withdraw from NATO','Restore the gold standard'],ans:1,exp:'He ran as a moral corrective to Watergate-era Washington.'},
+  {ch:'ch32',type:'mc',q:'How did the U.S. treat the Kyoto Protocol?',opts:['Ratified and enforced it','Signed it but never ratified it','Refused to sign it','Withdrew after ratifying'],ans:1,exp:'President Bush objected on economic grounds; the U.S. never ratified.'},
+  {ch:'ch32',type:'fitb',q:'The 1996 ___ ___ ___ Act barred federal recognition of same-sex marriage.',ans:['defense of marriage'],display:'Defense of Marriage (DOMA)',exp:'Massachusetts became the first state to allow same-sex marriage in 2004.'},
+  {ch:'ch32',type:'mc',q:'Whose 2006 documentary raised alarm about climate change?',opts:['Michael Moore','Al Gore','Ken Burns','Rachel Carson'],ans:1,exp:'Al Gore\'s An Inconvenient Truth; he shared the 2007 Nobel Peace Prize.'},
+];
+let currentQuizFilter='all', activeQuizData=[...allQuizData], userAnswers={}, quizSubmitted=false;
+function setQuizFilter(ch,btn){
+  document.querySelectorAll('#quiz-filters .filter-btn').forEach(b=>b.classList.remove('active-filter'));
+  btn.classList.add('active-filter'); currentQuizFilter=ch; resetQuiz();
+}
+function renderQuiz(){
+  activeQuizData=currentQuizFilter==='all'?[...allQuizData]:allQuizData.filter(q=>q.ch===currentQuizFilter);
+  const chColors={ch27:'#3b82f6',ch28:'#a78bfa',ch29:'#22c55e',ch30:'#f97316',ch32:'#ef4444'};
+  const chLabels={ch27:'CH.27',ch28:'CH.28',ch29:'CH.29',ch30:'CH.30',ch32:'CH.32.3'};
+  document.getElementById('quiz-count').textContent=activeQuizData.length+' questions';
+  if(quizSubmitted) return;
+  const area=document.getElementById('quiz-area');
+  area.innerHTML=activeQuizData.map((q,i)=>{
+    const chBadge=`<span class="q-ch-badge" style="background:${chColors[q.ch]||'var(--accent)'}20;color:${chColors[q.ch]||'var(--accent)'}">${chLabels[q.ch]||q.ch}</span>`;
+    const typeBadge=q.type==='mc'?'<span class="q-type-badge q-type-mc">MC</span>':'<span class="q-type-badge q-type-fitb">Fill-in</span>';
+    if(q.type==='mc') return `<div class="question-block" id="qblock-${i}"><div class="q-num">Q${i+1} of ${activeQuizData.length} ${chBadge} ${typeBadge}</div><div class="q-text">${q.q}</div><div class="options">${q.opts.map((o,j)=>`<div class="option" id="opt-${i}-${j}" onclick="selectMC(${i},${j})" role="radio" aria-checked="false"><span class="opt-letter">${['A','B','C','D'][j]}</span><span>${o}</span></div>`).join('')}</div><div class="explanation" id="exp-${i}">${q.exp}</div></div>`;
+    return `<div class="question-block" id="qblock-${i}"><div class="q-num">Q${i+1} of ${activeQuizData.length} ${chBadge} ${typeBadge}</div><div class="q-text">${q.q}</div><input type="text" class="fitb-input" id="fitb-${i}" placeholder="Type your answer..." oninput="storeFITB(${i})" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Answer for question ${i+1}"><div class="fitb-correct-answer" id="fitb-ans-${i}">Correct: ${q.display}</div><div class="explanation" id="exp-${i}">${q.exp}</div></div>`;
+  }).join('');
+  document.getElementById('submit-btn').style.display='block';
+}
+function selectMC(qi,oi){
+  if(quizSubmitted) return;
+  document.querySelectorAll(`#qblock-${qi} .option`).forEach(o=>{o.style.borderColor='';o.style.background='';o.setAttribute('aria-checked','false');});
+  document.getElementById(`opt-${qi}-${oi}`).style.borderColor='var(--accent)';
+  document.getElementById(`opt-${qi}-${oi}`).style.background='var(--accent-dim)';
+  document.getElementById(`opt-${qi}-${oi}`).setAttribute('aria-checked','true');
+  userAnswers[qi]={type:'mc',val:oi};
+}
+function storeFITB(qi){ userAnswers[qi]={type:'fitb',val:document.getElementById(`fitb-${qi}`).value.trim().toLowerCase()}; }
+function submitQuiz(){
+  for(let i=0;i<activeQuizData.length;i++){
+    const q=activeQuizData[i];
+    if(!userAnswers[i]){
+      if(q.type==='mc'){alert(`Please answer question ${i+1}.`);return;}
+      else{const v=document.getElementById(`fitb-${i}`).value.trim();if(!v){alert(`Please answer question ${i+1}.`);return;}userAnswers[i]={type:'fitb',val:v.toLowerCase()};}
+    }
+  }
+  quizSubmitted=true;
+  let score=0,mcC=0,fitbC=0,mcT=0,fitbT=0;
+  activeQuizData.forEach((q,i)=>{
+    const ans=userAnswers[i];
+    if(q.type==='mc'){
+      mcT++;
+      document.querySelectorAll(`#qblock-${i} .option`).forEach(o=>{o.style.borderColor='';o.style.background='';o.classList.add('answered');});
+      if(ans.val===q.ans){score++;mcC++;document.getElementById(`opt-${i}-${ans.val}`).classList.add('correct');}
+      else{document.getElementById(`opt-${i}-${ans.val}`).classList.add('wrong');document.getElementById(`opt-${i}-${q.ans}`).classList.add('reveal');}
+    } else {
+      fitbT++;
+      const input=document.getElementById(`fitb-${i}`);
+      const correct=q.ans.some(a=>ans.val===a||ans.val.includes(a)||a.includes(ans.val));
+      if(correct){score++;fitbC++;input.classList.add('correct-input');}
+      else{input.classList.add('wrong-input');document.getElementById(`fitb-ans-${i}`).style.display='block';}
+    }
+    document.getElementById(`exp-${i}`).style.display='block';
+  });
+  const pct=Math.round(score/activeQuizData.length*100);
+  const grade=pct>=90?'A':pct>=80?'B':pct>=70?'C':'Keep studying!';
+  document.getElementById('score-display').textContent=score+' / '+activeQuizData.length;
+  document.getElementById('score-breakdown').innerHTML=`${pct}% &nbsp;·&nbsp; ${grade} &nbsp;·&nbsp; MC: ${mcC}/${mcT} &nbsp;·&nbsp; Fill-in: ${fitbC}/${fitbT}`;
+  document.getElementById('quiz-score').style.display='block';
+  document.getElementById('submit-btn').style.display='none';
+  document.getElementById('quiz-score').scrollIntoView({behavior:'smooth'});
+}
+function resetQuiz(){ userAnswers={};quizSubmitted=false;document.getElementById('quiz-score').style.display='none';document.getElementById('quiz-area').innerHTML='';renderQuiz(); }
+
+// ── DISCUSSION ──
+const DISC_QUESTIONS = [
+  {ch:'ch27',q:'Describe the foreign events in 1930s Europe: the rise of Hitler and Mussolini, German imperialism and appeasement, and how WWII began.',
+   points:[
+     {text:'<strong>Benito Mussolini</strong> built Fascism (1919) and became Italy\'s PM in 1922'},
+     {text:'<strong>Adolf Hitler</strong> → chancellor Jan 1933 (Hindenburg) → Enabling Act made him dictator; Nuremberg Laws (1935)'},
+     {text:'Rhineland (1936) → Austria (1938) → <strong>Munich Pact</strong> (Chamberlain + Daladier, appeasement)'},
+     {text:'WWII began with the <strong>invasion of Poland, Sept 1, 1939</strong>'},
+   ],
+   model:'In Italy, Benito Mussolini built the first Fascist state (PM by 1922); in Germany, Adolf Hitler was made chancellor in 1933 and used the Enabling Act to become dictator. Hitler expanded aggressively — the Rhineland, then Austria, then the Sudetenland, which Britain\'s Chamberlain and France\'s Daladier conceded at Munich in a failed policy of appeasement. When Germany invaded Poland on September 1, 1939, Britain and France finally declared war, beginning WWII.'},
+  {ch:'ch27',q:'Explain why the United States declared neutrality at the onset of World War II.',
+   points:[
+     {text:'Strong isolationist tradition and bitter memory of World War I'},
+     {text:'Senator <strong>Gerald P. Nye</strong> argued bankers and industrialists had tricked the U.S. into WWI'},
+     {text:'The <strong>Neutrality Acts</strong> (1935, 1936, 1937) banned arms sales, loans, and travel to belligerents'},
+   ],
+   model:'Americans, remembering the losses of WWI, embraced isolationism. Senator Gerald P. Nye\'s investigation reinforced the belief that arms makers and bankers had dragged the country into that war. Congress responded with the Neutrality Acts of 1935–37, which barred arms sales, loans, and travel to warring nations.'},
+  {ch:'ch27',q:'Summarize the course of WWII before U.S. involvement (1939–1941) in both Europe and Asia.',
+   points:[
+     {text:'<strong>Europe:</strong> Blitzkrieg overran Poland then France (1940); FDR aided Britain via <strong>Cash and Carry</strong> and <strong>Lend-Lease</strong>'},
+     {text:'<strong>Asia:</strong> Japan seized French Indochina → U.S. <strong>Export Control Act</strong> embargo (1940)'},
+     {text:'The <strong>Philippines</strong> sat on Japan\'s oil route → tension → <strong>Pearl Harbor, Dec 7, 1941</strong>'},
+   ],
+   model:'In Europe, German Blitzkrieg conquered Poland and then France by 1940, and FDR edged the U.S. toward involvement with Cash and Carry (1939) and Lend-Lease (1941). In Asia, Japan\'s expansion into Indochina drew a U.S. embargo under the Export Control Act. With the U.S.-held Philippines on Japan\'s oil route, tensions culminated in the attack on Pearl Harbor, December 7, 1941.'},
+  {ch:'ch27',q:'Trace the major developments of WWII after the U.S. entered, by year and location.',
+   points:[
+     {text:'<strong>Europe:</strong> Allies land in N. Africa (vs. Rommel); <strong>D-Day</strong> (June 6, 1944); Germany surrenders May 8, 1945'},
+     {text:'<strong>Asia:</strong> <strong>Midway</strong> turned the tide; <strong>MacArthur</strong> led island hopping'},
+     {text:'1945 Pacific: <strong>Iwo Jima</strong>, <strong>Okinawa</strong>, sustained bombing'},
+   ],
+   model:'In Europe, the Allies pushed from North Africa and Italy, launched D-Day on June 6, 1944, and forced Germany\'s surrender on May 8, 1945. In the Pacific, the Battle of Midway (1942) turned the tide, and Douglas MacArthur\'s island-hopping campaign advanced through Iwo Jima and Okinawa toward Japan by 1945.'},
+  {ch:'ch27',q:'Explain Truman\'s decision to drop the atomic bombs, the difficulties of demobilization, and the Fair Deal.',
+   points:[
+     {text:'<strong>Truman</strong> dropped the bombs to force surrender and avoid a costly invasion; possibly to signal the USSR'},
+     {text:'Demobilization was rushed — the military fell from ~12M to ~1.5M by 1947'},
+     {text:'The <strong>Fair Deal</strong> (1949): min wage, Social Security expansion, public housing; military desegregated (1948)'},
+   ],
+   model:'Truman authorized the atomic bombings of Hiroshima and Nagasaki to force a quick surrender and avoid a bloody invasion of Japan, with the added effect of signaling U.S. power to the Soviets. Demobilization was chaotic as the military shrank rapidly. Truman then pursued the Fair Deal (1949) — a higher minimum wage, expanded Social Security, and public housing — and desegregated the armed forces in 1948.'},
+  {ch:'ch28',q:'Define the "Cold War" and explain the importance of the postwar conferences.',
+   points:[
+     {text:'The <strong>Cold War</strong> = U.S.–Soviet struggle without direct combat (espionage, arms race, proxy wars)'},
+     {text:'<strong>Yalta</strong> (1945): concessions strengthened Stalin in Eastern Europe'},
+     {text:'<strong>Potsdam</strong> (1945): finalized the four-zone division of Germany'},
+   ],
+   model:'The Cold War was the decades-long struggle for supremacy between the U.S. and USSR, waged through espionage, propaganda, an arms race, and proxy wars rather than direct fighting. At Yalta, Allied concessions left Stalin dominant in Eastern Europe, and at Potsdam the powers divided Germany into four occupation zones — arrangements that hardened the coming divide.'},
+  {ch:'ch28',q:'Explain why the USSR controlled Eastern Europe and why the wartime allies became adversaries.',
+   points:[
+     {text:'<strong>Stalin</strong> installed pro-Soviet Communist governments to spread Communism and buffer against invasion'},
+     {text:'The alliance collapsed over <strong>incompatible visions</strong> — Soviet security/expansion vs. U.S. democracy and free markets'},
+   ],
+   model:'Stalin installed Communist, pro-Soviet regimes across Eastern Europe both to spread Communism and to create a defensive buffer against future invasion. The wartime alliance, always one of convenience, broke down because the two sides held fundamentally opposed visions for postwar Europe — Soviet expansion and security versus American democracy and open markets.'},
+  {ch:'ch28',q:'Explain George Kennan\'s containment policy and the meaning of the "Iron Curtain."',
+   points:[
+     {text:'<strong>Kennan\'s</strong> "Long Telegram" (1946): the USSR must be <strong>contained</strong>, mainly economically'},
+     {text:'Containment was the core U.S. strategy for 30+ years'},
+     {text:'The <strong>"Iron Curtain"</strong> was <strong>Churchill\'s</strong> 1946 phrase for the West/East divide'},
+   ],
+   model:'George Kennan\'s 1946 "Long Telegram" argued that the Soviet Union could not accept peaceful coexistence and therefore had to be contained, primarily through economic means. Containment became the guiding U.S. strategy for the next thirty years. Winston Churchill captured the divide in 1946 with his image of an "Iron Curtain" separating the free West from the Soviet-dominated East.'},
+  {ch:'ch28',q:'Describe containment in Greece and Turkey and the "Truman Doctrine."',
+   points:[
+     {text:'Britain could no longer fund anti-Communist Greece (1947)'},
+     {text:'The <strong>Truman Doctrine</strong> pledged aid to <strong>Greece and Turkey</strong>'},
+     {text:'It was extended to any nation resisting Communism'},
+   ],
+   model:'When Britain could no longer support the anti-Communist side in Greece\'s civil war, Truman stepped in. The Truman Doctrine (1947) promised money, arms, and advisors to Greece and Turkey, and more broadly committed the U.S. to aiding any nation resisting a Communist takeover — a cornerstone of containment.'},
+  {ch:'ch28',q:'Explain the Marshall Plan and the reasons for the Berlin airlift.',
+   points:[
+     {text:'The <strong>Marshall Plan</strong> (~$13B) rebuilt Western Europe, blunted Communism, boosted U.S. exports'},
+     {text:'Stalin\'s <strong>Berlin blockade</strong> (1948) cut routes to West Berlin'},
+     {text:'The <strong>Berlin airlift</strong> supplied the city until the Soviets relented (May 1949)'},
+   ],
+   model:'The Marshall Plan poured roughly $13 billion into rebuilding Western Europe, which stabilized democracies, weakened Communist appeal, and created markets for U.S. goods. When Stalin blockaded West Berlin in 1948, the Western allies responded with the Berlin airlift, flying in supplies until the Soviets lifted the blockade in May 1949.'},
+  {ch:'ch28',q:'Describe containment in Asia: China, Korea, and the Korean War.',
+   points:[
+     {text:'<strong>China:</strong> Mao\'s Communists won 1949; Chiang Kai-shek fled to Taiwan'},
+     {text:'<strong>Korea:</strong> Kim Il Sung invaded across the 38th parallel (June 25, 1950)'},
+     {text:'MacArthur landed at Inchon; China intervened; armistice July 27, 1953'},
+   ],
+   model:'Containment faltered in Asia when Mao Zedong\'s Communists won China in 1949 and Chiang Kai-shek fled to Taiwan. In 1950, North Korea\'s Kim Il Sung invaded across the 38th parallel; UN forces under MacArthur reversed the tide at Inchon until China intervened, and the war ended in a stalemate armistice on July 27, 1953.'},
+  {ch:'ch28',q:'Explain the Rosenbergs, HUAC, and the rise and fall of Sen. Joseph McCarthy.',
+   points:[
+     {text:'<strong>Julius and Ethel Rosenberg</strong> executed 1953 for alleged atomic spying'},
+     {text:'<strong>HUAC</strong> investigated Hollywood → the blacklist (Hollywood Ten)'},
+     {text:'<strong>McCarthy</strong>\'s crusade collapsed after the televised Army-McCarthy Hearings (1954) → censure'},
+   ],
+   model:'Cold War fear drove a domestic Red Scare: the Rosenbergs were executed in 1953 for atomic espionage, and HUAC\'s Hollywood investigations produced the blacklist. Senator Joseph McCarthy exploited the panic with sweeping, unproven accusations until the televised Army-McCarthy Hearings of 1954 exposed his bullying and led to his Senate censure.'},
+  {ch:'ch28',q:'Describe postwar American society and the early civil rights movement.',
+   points:[
+     {text:'<strong>Eisenhower</strong>; suburbs (<strong>Levitt</strong>/Levittown); baby boom; rock &amp; roll + TV'},
+     {text:'<strong>Brown v. Board</strong> (1954); <strong>Little Rock Nine</strong> (1957)'},
+     {text:'<strong>Montgomery Bus Boycott</strong> (Rosa Parks, MLK, 1955–56)'},
+   ],
+   model:'The Eisenhower years brought prosperity, suburban growth (Levittowns), a baby boom, and a youth culture built on rock and roll and television. At the same time, the civil rights movement gained force: Brown v. Board (1954) struck down school segregation, the Little Rock Nine tested it in 1957, and the Montgomery Bus Boycott (1955–56) launched Martin Luther King, Jr. to national leadership.'},
+  {ch:'ch29',q:'Discuss the important factors of the 1960 presidential election.',
+   points:[
+     {text:'The first <strong>televised debate</strong> (Sept 26, 1960) favored the telegenic Kennedy'},
+     {text:'Kennedy\'s <strong>Catholic</strong> faith worried Protestants; adding <strong>LBJ</strong> shored up the South'},
+     {text:'Kennedy won by the closest popular margin since 1888'},
+   ],
+   model:'The 1960 race between Kennedy and Nixon turned partly on the first televised debate, where the poised, telegenic Kennedy outshone a sweating Nixon. Kennedy\'s Roman Catholicism alarmed some Protestants, so he balanced the ticket with Protestant Texan Lyndon Johnson. He won by the narrowest popular-vote margin since 1888.'},
+  {ch:'ch29',q:'Discuss the Cold War events of the Kennedy administration.',
+   points:[
+     {text:'<strong>Bay of Pigs</strong> (1961) failed'},
+     {text:'<strong>Cuban Missile Crisis</strong> (1962): "quarantine"; Khrushchev withdrew missiles (secret Turkey deal)'},
+     {text:'<strong>Peace Corps</strong> (1961); Vietnam aid/advisors (~16,000) to <strong>Ngo Dinh Diem</strong>'},
+     {text:'⚠️ <strong>Berlin Wall</strong> (1961) — flagged: not in the provided Ch 29 text; verify from lecture'},
+   ],
+   model:'Kennedy\'s Cold War record was mixed. The Bay of Pigs invasion failed embarrassingly in 1961, but he managed the Cuban Missile Crisis in 1962 by imposing a "quarantine" and securing Soviet withdrawal (with a secret pledge to pull U.S. missiles from Turkey). He launched the Peace Corps as soft power and deepened U.S. involvement in Vietnam under Ngo Dinh Diem. (Note: the Berlin Wall appears in this objective but isn\'t described in the assigned Ch 29 text, so confirm details from lecture.)'},
+  {ch:'ch29',q:'Explain the purposes and goals of LBJ\'s Great Society programs.',
+   points:[
+     {text:'War on poverty and racial injustice'},
+     {text:'Education: <strong>ESEA</strong> + Higher Education Act (1965)'},
+     {text:'Health: <strong>Medicare</strong> and <strong>Medicaid</strong> (1965)'},
+     {text:'Anti-poverty: <strong>Economic Opportunity Act</strong> (Job Corps, Head Start, VISTA)'},
+   ],
+   model:'Johnson\'s Great Society aimed to eliminate poverty and racial injustice. It funded education through the Elementary and Secondary Education Act and Higher Education Act, created Medicare and Medicaid for the elderly and poor, and launched the war on poverty via the Economic Opportunity Act, which established Job Corps, Head Start, and VISTA.'},
+  {ch:'ch29',q:'Explain how U.S. involvement escalated in Vietnam under LBJ (Tonkin, Tet, My Lai).',
+   points:[
+     {text:'<strong>Gulf of Tonkin Resolution</strong> (1964) → war without a declaration'},
+     {text:'The <strong>Tet Offensive</strong> (1968) turned public opinion'},
+     {text:'The <strong>My Lai massacre</strong> (1968, <strong>Lt. William Calley</strong>), exposed 1969'},
+   ],
+   model:'Citing a clash in the Gulf of Tonkin, LBJ won the 1964 Gulf of Tonkin Resolution, which let him wage war without a formal declaration, and he poured in troops. The 1968 Tet Offensive, though repelled, shattered official optimism and turned public opinion against the war, and revelations of the My Lai massacre deepened Americans\' disillusionment.'},
+  {ch:'ch29',q:'Describe domestic society in the 1960s: civil rights and the counterculture.',
+   points:[
+     {text:'<strong>African Americans:</strong> sit-ins, Freedom Rides, March on Washington → <strong>Black Power</strong>'},
+     {text:'<strong>Women:</strong> <strong>Betty Friedan</strong>, the pill, <strong>NOW</strong> (1966)'},
+     {text:'<strong>American Indians:</strong> <strong>AIM</strong> (1968); <strong>Gays:</strong> <strong>Stonewall</strong> (1969); counterculture/Woodstock'},
+   ],
+   model:'The 1960s saw overlapping movements for change. African Americans used sit-ins, Freedom Rides, and the March on Washington, and after 1965 many embraced Black Power. Women organized around Betty Friedan and NOW, American Indians formed AIM, and gay Americans launched the modern movement at Stonewall (1969) — all alongside a youth counterculture that peaked at Woodstock.'},
+  {ch:'ch30',q:'Discuss the 1968 election: LBJ\'s withdrawal, Democratic turmoil, Nixon\'s comeback, and the "Silent Majority."',
+   points:[
+     {text:'After Tet and a strong <strong>Eugene McCarthy</strong> showing, LBJ withdrew'},
+     {text:'The party split (<strong>Humphrey</strong>, McCarthy, <strong>RFK</strong> [killed June]); <strong>George Wallace</strong> ran third party'},
+     {text:'<strong>Nixon</strong> won via <strong>southern strategy</strong> + law-and-order; <strong>"Silent Majority"</strong> = northern White blue-collar voters'},
+   ],
+   model:'Weakened by Tet and Eugene McCarthy\'s strong primary showing, Johnson dropped out. The Democrats fractured among Humphrey, McCarthy, and Robert Kennedy (assassinated in June), while George Wallace ran a segregationist third-party campaign. Nixon capitalized on the chaos with a "southern strategy" and law-and-order appeals to what he called the "Silent Majority" of northern, White, blue-collar voters.'},
+  {ch:'ch30',q:'Explain Nixon\'s "Vietnamization," his escalation into Cambodia, and his China policy.',
+   points:[
+     {text:'<strong>Vietnamization</strong> = shift combat to South Vietnam + withdraw U.S. troops'},
+     {text:'Secretly bombed then <strong>invaded Cambodia</strong> (1970)'},
+     {text:'<strong>China visit</strong> (Feb 1972, Mao/Zhou) to pressure the USSR'},
+   ],
+   model:'Nixon\'s "Vietnamization" transferred the ground war to South Vietnamese forces while pulling out U.S. troops. At the same time he widened the conflict, secretly bombing and then invading Cambodia in 1970. His boldest move was diplomatic: visiting Beijing in February 1972 to meet Mao and Zhou Enlai, using the opening to China to pressure the Soviet Union.'},
+  {ch:'ch30',q:'Discuss the antiwar movement (Kent State, Pentagon Papers), how the war was settled, and its aftermath.',
+   points:[
+     {text:'Cambodia invasion → <strong>Kent State</strong> (May 4, 1970) + Jackson State'},
+     {text:'<strong>Pentagon Papers</strong> (1971, <strong>Daniel Ellsberg</strong>) revealed deception'},
+     {text:'<strong>Kissinger</strong> + <strong>Le Duc Tho</strong> signed Paris accord (1973); <strong>Saigon fell</strong> (1975)'},
+   ],
+   model:'The Cambodia invasion ignited protests, culminating in the deadly Kent State and Jackson State shootings of 1970. The 1971 Pentagon Papers, leaked by Daniel Ellsberg, exposed years of government deception. Kissinger and Le Duc Tho reached a Paris settlement in 1973 and U.S. troops left, but the peace collapsed and Saigon fell to the North in April 1975.'},
+  {ch:'ch30',q:'Explain Watergate: the break-in, the cover-up, the investigation, and Nixon\'s fall.',
+   points:[
+     {text:'<strong>CREEP</strong>/plumbers broke into <strong>DNC headquarters</strong> (June 17, 1972)'},
+     {text:'<strong>Woodward &amp; Bernstein</strong> (source "Deep Throat" = <strong>Mark Felt</strong>) + Senate hearings exposed it'},
+     {text:'Facing impeachment, <strong>Nixon resigned</strong> (1974); <strong>Ford</strong> pardoned him'},
+   ],
+   model:'Operatives tied to Nixon\'s reelection committee broke into Democratic headquarters at the Watergate complex in June 1972, and the White House tried to cover it up. Reporters Woodward and Bernstein — aided by the source "Deep Throat" (Mark Felt) — and Senate hearings uncovered the scheme, and the Oval Office tapes proved Nixon\'s involvement. Facing certain impeachment, Nixon resigned in August 1974, and Gerald Ford pardoned him.'},
+  {ch:'ch30',q:'Describe Jimmy Carter\'s personality and policies and the Iran hostage crisis.',
+   points:[
+     {text:'Ran as a moral, "anti-Washington" outsider'},
+     {text:'<strong>Camp David Accords</strong> (1978, Begin &amp; Sadat); Dept. of Energy; deregulation — but stagflation'},
+     {text:'<strong>Iran hostage crisis</strong> (embassy seized Nov 4, 1979; 52 held 444 days)'},
+   ],
+   model:'Carter presented himself as an honest, born-again outsider untainted by Washington. His biggest success was brokering the 1978 Camp David Accords between Begin and Sadat; he also created the Department of Energy and pursued deregulation, though stagflation dogged him. His presidency was ultimately crippled by the Iran hostage crisis, in which 52 Americans were held for 444 days.'},
+  {ch:'ch32',q:'Discuss the major 21st-century disputes: climate change, immigration, and same-sex marriage.',
+   points:[
+     {text:'<strong>Climate:</strong> U.S. signed but never ratified the <strong>Kyoto Protocol</strong> (1998); <strong>Al Gore</strong>\'s <em>An Inconvenient Truth</em> (2006)'},
+     {text:'<strong>Immigration:</strong> English-official pushes; failed <strong>Comprehensive Immigration Reform Act</strong> (2006); AZ/AL laws'},
+     {text:'<strong>Same-sex marriage:</strong> <strong>DOMA</strong> (1996) → <strong>Massachusetts</strong> first (2004) → <strong>Prop 8</strong> (2008) → Supreme Court (2013)'},
+   ],
+   model:'On climate, the U.S. signed but never ratified the Kyoto Protocol, and debate intensified after Al Gore\'s 2006 documentary. On immigration, efforts to make English official and to pass the 2006 Comprehensive Immigration Reform Act failed, while Arizona and Alabama passed tough enforcement laws. On same-sex marriage, the 1996 Defense of Marriage Act gave way to Massachusetts legalizing it in 2004, California\'s Prop 8 in 2008, and Supreme Court rulings that began striking down bans in 2013.'},
+];
+let discInit=false;
+function renderDiscussion(){
+  const container=document.getElementById('disc-container');
+  container.innerHTML=DISC_QUESTIONS.map((dq,idx)=>renderDiscQ(dq,idx)).join('');
+}
+function renderDiscQ(dq,idx){
+  const chLabel=dq.ch.replace('ch','Ch ');
+  const pointsHTML=dq.points.map((p,pi)=>`<div class="disc-point"><input type="checkbox" class="disc-check" id="chk-${idx}-${pi}" onchange="updateDiscScore(${idx})" aria-label="Covered: ${p.text.replace(/<[^>]+>/g,'')}"><label class="disc-point-text" for="chk-${idx}-${pi}">${p.text}</label></div>`).join('');
+  return `<div class="disc-q" id="disc-${idx}" data-ch="${dq.ch}"><div class="disc-q-header"><span class="disc-q-num">${chLabel} · Q${idx+1}</span><div class="disc-q-text">${dq.q}</div></div><div class="disc-q-body"><textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Write your response here…" rows="5" aria-label="Your response to question ${idx+1}"></textarea><div class="disc-btn-row"><button class="btn primary" onclick="submitDisc(${idx})">Submit &amp; Grade</button><button class="btn" onclick="resetDisc(${idx})">↺ Reset</button></div><div class="disc-rubric" id="disc-rubric-${idx}"><div class="disc-rubric-title">✅ Content Checklist — check each point you covered</div>${pointsHTML}<div class="disc-self-score"><span>Your score:</span><span class="disc-score-display" id="disc-score-${idx}">0 / ${dq.points.length}</span><span style="color:var(--muted);font-size:12px" id="disc-grade-${idx}"></span></div><div class="disc-model" id="disc-model-${idx}"><div class="disc-model-title">📋 Model Answer</div><p style="color:var(--muted);font-size:13px;line-height:1.7">${dq.model}</p></div><button class="btn" style="margin-top:10px;font-size:12px" onclick="toggleModel(${idx})">Show / Hide Model Answer</button></div></div></div>`;
+}
+function submitDisc(idx){
+  const ta=document.getElementById(`disc-ta-${idx}`);
+  if(!ta.value.trim()){ta.style.borderColor='var(--red)';return;}
+  ta.classList.add('submitted');ta.readOnly=true;
+  document.getElementById(`disc-rubric-${idx}`).classList.add('show');
+}
+function resetDisc(idx){
+  const ta=document.getElementById(`disc-ta-${idx}`);
+  ta.value='';ta.readOnly=false;ta.style.borderColor='';ta.classList.remove('submitted');
+  document.getElementById(`disc-rubric-${idx}`).classList.remove('show');
+  document.getElementById(`disc-model-${idx}`).classList.remove('show');
+  document.querySelectorAll(`[id^="chk-${idx}-"]`).forEach(c=>c.checked=false);
+  updateDiscScore(idx);
+}
+function updateDiscScore(idx){
+  const dq=DISC_QUESTIONS[idx];
+  const checked=document.querySelectorAll(`[id^="chk-${idx}-"]:checked`).length;
+  const total=dq.points.length;
+  const pct=Math.round(checked/total*100);
+  document.getElementById(`disc-score-${idx}`).textContent=`${checked} / ${total}`;
+  const grade=pct>=90?'🌟 Excellent':pct>=70?'👍 Good':pct>=50?'📚 Needs work':'🔄 Review material';
+  document.getElementById(`disc-grade-${idx}`).textContent=grade;
+}
+function toggleModel(idx){ document.getElementById(`disc-model-${idx}`).classList.toggle('show'); }
+function filterDisc(ch,btn){
+  document.querySelectorAll('.disc-filter .filter-btn').forEach(b=>b.classList.remove('active-filter'));
+  btn.classList.add('active-filter');
+  document.querySelectorAll('.disc-q').forEach(el=>{el.style.display=(ch==='all'||el.dataset.ch===ch)?'block':'none';});
+}
+
+// ── INIT ──
+window.addEventListener('DOMContentLoaded',()=>{
+  renderCard(); updateMasteryBar(); loadObjMastery();
+  document.getElementById('flashcard').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')flipCard();});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIST-1302 — Unit 3 Study Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #16161f;
+  --border: #1e1e2e;
+  --text: #e8e8f0;
+  --muted: #6b6b80;
+  --green: #22c55e;
+  --red: #ef4444;
+  --yellow: #eab308;
+  --purple: #a78bfa;
+  --orange: #f97316;
+  --accent: #3b82f6;              /* CHANGE PER COURSE */
+  --accent-dim: rgba(59,130,246,0.12); /* CHANGE PER COURSE */
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;
+  background-image:linear-gradient(rgba(59,130,246,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.025) 1px,transparent 1px);
+  background-size:40px 40px;pointer-events:none;z-index:0;}
+.container{max-width:960px;margin:0 auto;padding:0 20px;position:relative;z-index:1;}
+
+/* ── NAV ── */
+.topnav{display:flex;gap:6px;padding:14px 0;border-bottom:1px solid var(--border);margin-bottom:28px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.topnav::-webkit-scrollbar{display:none;}
+.nav-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:8px 13px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;letter-spacing:.05em;white-space:nowrap;flex-shrink:0;}
+.nav-btn:hover,.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+
+/* ── HEADER ── */
+header{padding:20px 0 28px;}
+.back-link{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;margin-bottom:10px;}
+.back-link:hover,.back-link:active{color:var(--accent);}
+.footer-back-link{margin-left:4px;}
+.breadcrumb{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:10px;}
+.breadcrumb a{color:var(--accent);text-decoration:none;}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);background:var(--accent-dim);padding:4px 10px;border-radius:4px;display:inline-block;margin-bottom:10px;}
+h1{font-size:clamp(24px,5vw,40px);font-weight:700;letter-spacing:-.02em;line-height:1.1;margin-bottom:10px;}
+.exam-pill{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;border:1px solid var(--orange);color:var(--orange);padding:6px 14px;border-radius:20px;background:rgba(249,115,22,.08);}
+.textbook-links{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;padding:10px 16px;border-radius:8px;background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);}
+.tb-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);font-weight:700;}
+.tb-link{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);text-decoration:none;transition:opacity .2s;}
+.tb-link:hover{opacity:.75;text-decoration:underline;}
+.tb-sep{color:var(--border);font-size:14px;}
+.tb-note{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);}
+
+/* ── MASTERY BAR ── */
+.mastery-bar{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;}
+.mastery-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.mastery-count{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--green);font-weight:700;}
+.mastery-track{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.mastery-fill{height:100%;background:var(--green);border-radius:3px;transition:width .4s;}
+.reset-mastery-btn{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:5px 10px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;}
+.reset-mastery-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* ── SECTION LABEL ── */
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ── PANELS ── */
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* ── OBJECTIVES ── */
+.obj-grid{display:grid;gap:10px;margin-bottom:28px;}
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:start;cursor:pointer;}
+.obj-card:focus{outline:2px solid var(--accent);outline-offset:2px;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);background:var(--accent-dim);width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
+.obj-text{font-size:13px;line-height:1.6;}
+.obj-chapter{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:4px;}
+.obj-detail{display:none;font-size:12px;line-height:1.7;color:#c8c8d8;margin-top:10px;}
+.obj-card.expanded .obj-detail{display:block;}
+.obj-body{display:none;font-size:12px;line-height:1.8;color:#c8c8d8;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
+.obj-body ul{padding-left:18px;}
+.obj-body li{margin-bottom:6px;}
+.obj-body strong{color:var(--text);}
+.obj-card[aria-expanded="true"] .obj-body{display:block;}
+.obj-master-btn{font-size:16px;background:none;border:none;cursor:pointer;padding:2px;line-height:1;flex-shrink:0;color:var(--muted);}
+.obj-master-btn.mastered{color:var(--green);}
+
+/* Chapter color classes */
+.ch1  .obj-num{color:#f97316;background:rgba(249,115,22,.12);}
+.ch2  .obj-num{color:#3b82f6;background:rgba(59,130,246,.12);}
+.ch17 .obj-num{color:#3b82f6;background:rgba(59,130,246,.12);}
+.ch18 .obj-num{color:#a78bfa;background:rgba(167,139,250,.12);}
+.ch19 .obj-num{color:#22c55e;background:rgba(34,197,94,.12);}
+.ch20 .obj-num{color:#f97316;background:rgba(249,115,22,.12);}
+.ch24 .obj-num{color:#3b82f6;background:rgba(59,130,246,.12);}
+.ch25 .obj-num{color:#a78bfa;background:rgba(167,139,250,.12);}
+.ch26 .obj-num{color:#22c55e;background:rgba(34,197,94,.12);}
+
+/* ── STUDY GUIDE ── */
+.chapter-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:18px;}
+.chapter-header{padding:14px 18px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background .2s;border-bottom:1px solid var(--border);}
+.chapter-header:hover{background:var(--surface2);}
+.chapter-title{font-size:15px;font-weight:700;}
+.chapter-subtitle{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:2px;}
+.chevron{color:var(--muted);font-size:13px;transition:transform .2s;flex-shrink:0;}
+.chapter-header.open .chevron{transform:rotate(180deg);}
+.chapter-body{padding:18px;display:none;}
+.chapter-body.open{display:block;}
+.concept-title{font-size:13px;font-weight:700;color:var(--accent);margin:18px 0 6px;display:flex;align-items:center;gap:8px;}
+.concept-title:first-child{margin-top:0;}
+.concept-title::before{content:'▸';font-size:10px;}
+.concept-body{font-size:13px;line-height:1.8;color:#c8c8d8;}
+.concept-body strong{color:var(--text);}
+.key-term{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--accent-dim);color:var(--accent);padding:2px 8px;border-radius:4px;margin:2px;}
+.key-term.blue{background:rgba(59,130,246,.12);color:#3b82f6;}
+.key-term.green{background:rgba(34,197,94,.12);color:var(--green);}
+.key-term.orange{background:rgba(249,115,22,.12);color:var(--orange);}
+.key-term.purple{background:rgba(167,139,250,.12);color:var(--purple);}
+.key-term.red{background:rgba(239,68,68,.12);color:var(--red);}
+.people-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:10px;}
+.person-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;}
+.person-name{font-size:13px;font-weight:700;margin-bottom:4px;}
+.person-role{font-size:12px;color:var(--muted);line-height:1.5;}
+.callout{background:rgba(59,130,246,.06);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:13px;color:var(--text);}
+.formula{display:inline-block;background:var(--accent-dim);border:1px solid var(--border);padding:2px 8px;border-radius:5px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);margin:3px 0;}
+
+/* ── FLASHCARDS ── */
+.fc-controls{display:flex;gap:10px;align-items:center;margin-bottom:18px;flex-wrap:wrap;}
+.fc-stat{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);}
+.btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:8px 14px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;transition:all .2s;letter-spacing:.05em;}
+.btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+.btn.primary:hover{opacity:.85;}
+.btn.mastered-btn{border-color:var(--green);color:var(--green);}
+.flashcard-area{perspective:1000px;margin-bottom:18px;}
+.flashcard{width:100%;min-height:200px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .5s;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;inset:0;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;backface-visibility:hidden;}
+.fc-back{transform:rotateY(180deg);background:var(--surface2);border-color:var(--accent);}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;margin-bottom:14px;}
+.fc-question{font-size:17px;font-weight:700;line-height:1.4;}
+.fc-answer{font-size:13px;line-height:1.7;color:#c8c8d8;}
+.fc-hint{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:10px;}
+.fc-chapter-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:3px 8px;border-radius:4px;margin-bottom:6px;}
+.fc-mastered-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);padding:2px 8px;border-radius:4px;margin-bottom:6px;display:none;}
+.fc-nav{display:flex;gap:10px;justify-content:center;align-items:center;}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);min-width:80px;text-align:center;}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.filter-btn{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:5px 12px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;}
+.filter-btn.active-filter{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+
+/* ── QUIZ ── */
+.quiz-area{max-width:700px;}
+.question-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:14px;}
+.q-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:8px;}
+.q-text{font-size:14px;font-weight:600;line-height:1.5;margin-bottom:14px;}
+.options{display:grid;gap:8px;}
+.option{padding:11px 14px;border-radius:8px;border:1px solid var(--border);cursor:pointer;font-size:13px;line-height:1.5;transition:all .2s;background:var(--surface2);display:flex;gap:12px;align-items:flex-start;}
+.option:hover:not(.answered){border-color:var(--accent);background:var(--accent-dim);}
+.option.correct{border-color:var(--green);background:rgba(34,197,94,.1);color:var(--green);}
+.option.wrong{border-color:var(--red);background:rgba(239,68,68,.1);color:var(--red);}
+.option.reveal{border-color:var(--green);background:rgba(34,197,94,.05);}
+.opt-letter{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;min-width:20px;color:var(--muted);}
+.explanation{margin-top:10px;padding:10px 14px;border-radius:8px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);font-size:12px;line-height:1.6;color:#a8b8d8;display:none;}
+.quiz-score{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;text-align:center;margin-bottom:18px;display:none;}
+.score-num{font-size:44px;font-weight:700;color:var(--accent);}
+.score-label{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);margin-top:6px;}
+.fitb-input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:14px;padding:8px 12px;width:100%;margin-top:10px;transition:border-color .2s;outline:none;}
+.fitb-input:focus{border-color:var(--accent);}
+.fitb-input.correct-input{border-color:var(--green);background:rgba(34,197,94,.08);color:var(--green);}
+.fitb-input.wrong-input{border-color:var(--red);background:rgba(239,68,68,.08);}
+.fitb-correct-answer{font-size:12px;margin-top:6px;color:var(--green);font-family:'IBM Plex Mono',monospace;display:none;}
+.q-type-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;margin-left:6px;vertical-align:middle;}
+.q-type-mc{background:rgba(59,130,246,.12);color:var(--accent);}
+.q-type-fitb{background:rgba(167,139,250,.12);color:var(--purple);}
+.q-ch-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 7px;border-radius:3px;margin-left:6px;vertical-align:middle;}
+
+/* ── DISCUSSION ── */
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden;}
+.disc-q-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:flex-start;}
+.disc-q-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--accent);background:var(--accent-dim);border-radius:4px;padding:2px 8px;flex-shrink:0;margin-top:2px;}
+.disc-q-text{font-size:14px;font-weight:600;color:var(--text);line-height:1.45;}
+.disc-q-body{padding:14px 16px;}
+.disc-textarea{width:100%;min-height:110px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;line-height:1.6;padding:12px;resize:vertical;font-family:'IBM Plex Sans',sans-serif;transition:border-color .2s;}
+.disc-textarea:focus{outline:none;border-color:var(--accent);}
+.disc-textarea.submitted{opacity:.75;}
+.disc-btn-row{display:flex;gap:10px;margin-top:10px;}
+.disc-rubric{display:none;margin-top:12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.disc-rubric.show{display:block;}
+.disc-rubric-title{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.disc-point{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;font-size:13px;}
+.disc-check{width:17px;height:17px;border-radius:4px;border:2px solid var(--border);flex-shrink:0;cursor:pointer;appearance:none;-webkit-appearance:none;background:var(--surface);margin-top:2px;transition:all .15s;}
+.disc-check:checked{background:var(--green);border-color:var(--green);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 12 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='%23000' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:10px;}
+.disc-point-text{color:var(--muted);line-height:1.5;}
+.disc-point-text strong{color:var(--text);}
+.disc-self-score{margin-top:12px;padding-top:12px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;font-size:13px;}
+.disc-score-display{font-size:18px;font-weight:800;color:var(--accent);}
+.disc-model{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);}
+.disc-model.show{display:block;}
+.disc-model-title{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.disc-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+
+/* ── NOTES ── */
+.notes-template{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:18px;}
+.notes-header{background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(167,139,250,.1));border-bottom:1px solid var(--border);padding:18px 22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.notes-title{font-size:15px;font-weight:700;}
+.notes-subtitle{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:2px;}
+.notes-body{padding:22px;}
+.notes-col-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.notes-col-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.notes-item{font-size:12px;line-height:1.8;padding:5px 0;border-bottom:1px dashed rgba(255,255,255,.04);display:flex;gap:8px;align-items:flex-start;}
+.notes-item::before{content:'›';color:var(--muted);flex-shrink:0;margin-top:1px;}
+.notes-tip{background:rgba(234,179,8,.08);border:1px solid rgba(234,179,8,.2);border-radius:8px;padding:12px 16px;margin-top:14px;font-size:12px;line-height:1.7;color:#d4b84a;}
+.notes-tip strong{color:var(--yellow);}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:22px 0;margin-top:36px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+footer a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);text-decoration:none;}
+
+/* ── MOBILE ── */
+@media(max-width:600px){
+  .notes-col-grid{grid-template-columns:1fr;}
+  .people-grid{grid-template-columns:1fr 1fr;}
+  .fc-question{font-size:15px;}
+  .topnav{gap:5px;}
+  .nav-btn{font-size:10px;padding:7px 10px;}
+  .textbook-links{gap:6px;}
+  .tb-note{display:none;}
+  h1{font-size:22px;}
+}
+
+/* ── PRINT (active tab only) ── */
+@media print{
+  body::before,.topnav,.exam-pill,.textbook-links,footer,
+  .fc-controls,.fc-nav,.filter-row,#submit-btn,#quiz-score,
+  .disc-btn-row,.disc-rubric,.obj-master-btn,.reset-mastery-btn,.mastery-bar{display:none!important;}
+  .panel{display:none!important;}
+  .panel.active{display:block!important;}
+  *,*::before,*::after{background:white!important;background-color:white!important;background-image:none!important;color:black!important;border-color:#bbb!important;box-shadow:none!important;-webkit-text-fill-color:black!important;}
+  body{font-size:12pt;}
+  .chapter-body{display:block!important;}
+  @page{margin:.75in;}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<nav class="topnav" role="tablist" aria-label="Study sections">
+  <button class="nav-btn active" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)" role="tab" aria-selected="false" aria-controls="panel-guide">📖 Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)" role="tab" aria-selected="false" aria-controls="panel-flashcards">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)" role="tab" aria-selected="false" aria-controls="panel-quiz">✏️ Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('discussion',this)" role="tab" aria-selected="false" aria-controls="panel-discussion">💬 Discussion</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes Template</button>
+</nav>
+
+<header>
+  <a class="back-link" href="../../index.html">← All courses</a>
+  <div class="breadcrumb"><a href="../../index.html">Study Hub</a> / HIST-1302 / Unit 3</div>
+  <div class="unit-badge">HIST-1302 · Unit 03 · Ch. 24–26</div>
+  <h1>The Jazz Age, the Great Depression &amp; the New Deal</h1>
+  <div class="exam-pill">⏰ Exam: Thursday, July 23, 2026 · Noon–Midnight</div>
+  <div class="textbook-links">
+    <span class="tb-label">📚 Textbook (OpenStax, free)</span>
+    <a href="https://openstax.org/books/us-history/pages/24-introduction" target="_blank" class="tb-link">Ch.24 ↗</a>
+    <span class="tb-sep">·</span>
+    <a href="https://openstax.org/books/us-history/pages/25-introduction" target="_blank" class="tb-link">Ch.25 ↗</a>
+    <span class="tb-sep">·</span>
+    <a href="https://openstax.org/books/us-history/pages/26-introduction" target="_blank" class="tb-link">Ch.26 ↗</a>
+    <span class="tb-sep">·</span>
+    <span class="tb-note">Full first + last names required on all exam answers</span>
+  </div>
+</header>
+
+<!-- Mastery overview bar -->
+<div class="mastery-bar" id="mastery-bar" aria-label="Mastery progress">
+  <span class="mastery-label">Mastered</span>
+  <span class="mastery-count" id="mastery-count">0 / 0</span>
+  <div class="mastery-track" aria-hidden="true"><div class="mastery-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="reset-mastery-btn" onclick="resetAllMastery()" aria-label="Reset all mastery for this unit">Reset All</button>
+</div>
+
+<!-- ===== OBJECTIVES ===== -->
+<div id="panel-overview" class="panel active" role="tabpanel" aria-labelledby="panel-overview">
+  <div class="section-label">Learning Objectives</div>
+  <div class="obj-grid" id="obj-grid">
+
+    <div class="obj-card ch24" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">1</div>
+      <div>
+        <div class="obj-text">Discuss the U.S. economy after World War I.</div>
+        <div class="obj-chapter">CH. 24</div>
+        <div class="obj-body"><ul>
+          <li>Mass production (esp. automobiles) drove one of the most prosperous decades in U.S. history</li>
+          <li><strong>Henry Ford</strong> perfected the moving assembly line — Model T price fell from $850 (1908) to $300 (1924)</li>
+          <li>By 1929, 23M+ automobiles on American roads</li>
+          <li>Store credit and installment plans expanded consumer buying power</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_1')" aria-label="Mark objective 1 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch24" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">2</div>
+      <div>
+        <div class="obj-text">Explain the growth of leisure time during the 1920s.</div>
+        <div class="obj-chapter">CH. 24</div>
+        <div class="obj-body"><ul>
+          <li>Movie palaces drew up to 90M weekly attendance by decade's end</li>
+          <li>1927: <strong>The Jazz Singer</strong> (Al Jolson) — first successful "talkie," Warner Bros.</li>
+          <li>Commercial radio created national celebrities and boosted the sports industry</li>
+          <li><strong>Charles Lindbergh</strong> — first solo transatlantic flight, 1927</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_2')" aria-label="Mark objective 2 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch24" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">3</div>
+      <div>
+        <div class="obj-text">Discuss the "Roaring '20s" in the cities, and the rise of nativism and intolerance in rural areas.</div>
+        <div class="obj-chapter">CH. 24</div>
+        <div class="obj-body"><ul>
+          <li><strong>Flapper</strong> culture, "new morality" — influenced by popularized ideas of <strong>Sigmund Freud</strong></li>
+          <li>19th Amendment (1920) — women's suffrage; <strong>Alice Paul</strong> drafted the Equal Rights Amendment (ERA)</li>
+          <li>Harlem Renaissance — <strong>Langston Hughes</strong>, <strong>Claude McKay</strong>, <strong>Zora Neale Hurston</strong>; <strong>Marcus Garvey</strong> & <strong>W. E. B. Du Bois</strong> and Negro nationalism</li>
+          <li>Second Ku Klux Klan — anti-Black, anti-immigrant, anti-Catholic, anti-Jewish nativism</li>
+          <li>Immigration Act of 1924 (3% quota / 1910 census) &amp; National Origins Act of 1924 (2% quota / 1890 census)</li>
+          <li><strong>Nicola Sacco</strong> &amp; <strong>Bartolomeo Vanzetti</strong> — executed 1927; Scopes Trial (1925) — <strong>John Scopes</strong>, <strong>William Jennings Bryan</strong>, <strong>Clarence Darrow</strong></li>
+          <li>18th Amendment (1919) — Prohibition — fueled bootlegging &amp; organized crime</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_3')" aria-label="Mark objective 3 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch24" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">4</div>
+      <div>
+        <div class="obj-text">Discuss politics of the 1920s: Harding, Coolidge, and Hoover.</div>
+        <div class="obj-chapter">CH. 24</div>
+        <div class="obj-body"><ul>
+          <li><strong>Warren G. Harding</strong> — "return to normalcy," won 1920 vs. <strong>James Cox</strong>; Emergency Tariff of 1921</li>
+          <li>Teapot Dome Scandal — <strong>Albert B. Fall</strong> (Sec. of Interior), $300,000 bribe, fined $100,000 + 1 yr prison</li>
+          <li>Harding died 1923 → <strong>Calvin Coolidge</strong> — "the business of America is business"; won 1924, declined to run 1928</li>
+          <li><strong>Herbert Hoover</strong> won 1928 vs. <strong>Al Smith</strong>, 21M to 15M votes</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_4')" aria-label="Mark objective 4 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch25" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">5</div>
+      <div>
+        <div class="obj-text">Describe the isolationist foreign policy during the 1920s and early '30s, including Kellogg-Briand, and Good Neighbor.</div>
+        <div class="obj-chapter">CH. 24–26</div>
+        <div class="obj-body"><ul>
+          <li>Kellogg-Briand Pact (1928) — Sec. of State <strong>Frank Kellogg</strong> &amp; French FM <strong>Aristide Briand</strong> — renounced war as national policy [outside your provided Ch.24 excerpt — verify against your actual textbook page]</li>
+          <li>Hoover's Clark Memorandum (1930) — repudiated the Roosevelt Corollary, de-emphasized military intervention in Latin America</li>
+          <li>Hoover-Stimson Doctrine — U.S. would not recognize territory seized by force (response to Japan/Manchuria)</li>
+          <li>Laid groundwork for FDR's "Good Neighbor" policy in the 1930s</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_5')" aria-label="Mark objective 5 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch25" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">6</div>
+      <div>
+        <div class="obj-text">Explain the U.S. economy in the last few years of the 1920s, focusing on the large speculation in the stock market and the problem of poor income distribution.</div>
+        <div class="obj-chapter">CH. 25</div>
+        <div class="obj-body"><ul>
+          <li>Buying stock "on margin" — small down payment + borrowed money</li>
+          <li>Dow Jones Industrial Average peaked at 381 points, Sept. 1929 (~10x its 1920 value)</li>
+          <li>80% of American families had virtually no savings; 0.5–1% of Americans controlled over 1/3 of all wealth</li>
+          <li>No new buyers left to sustain the market once speculation slowed</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_6')" aria-label="Mark objective 6 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch25" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">7</div>
+      <div>
+        <div class="obj-text">Explain how these factors led to the stock market crash of 1929, and the continued downward economic cycle that occurred from 1929–1932.</div>
+        <div class="obj-chapter">CH. 25</div>
+        <div class="obj-body"><ul>
+          <li>Oct. 24, 1929 "Black Thursday" — NYSE lost 11%; Oct. 29, 1929 "Black Tuesday" — 16M+ shares traded, $14 billion lost in one day</li>
+          <li>Sept–Nov 1929: market value fell from $64B to ~$30B</li>
+          <li>Causes: international war-debt defaults, poor income distribution, psychology of panic/contagion</li>
+          <li>Only 10% of households had stock, but 90%+ of banks had invested in the market → banks failed en masse</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_7')" aria-label="Mark objective 7 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch25" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">8</div>
+      <div>
+        <div class="obj-text">Describe how Pres. Herbert Hoover responded to the Depression: public works, Reconstruction Finance Corporation, tariffs, and balanced budgets.</div>
+        <div class="obj-chapter">CH. 25</div>
+        <div class="obj-body"><ul>
+          <li>Believed in "American individualism" — voluntary action over direct federal relief</li>
+          <li>Reconstruction Finance Corporation (RFC), 1932 — $2 billion to rescue banks/institutions, not direct aid to people</li>
+          <li>Emergency Relief and Construction Act (Sen. Robert Wagner), 1932 — $1.5B for state public works</li>
+          <li>Smoot-Hawley Tariff (1930) — raised import tariffs, triggered foreign retaliation, worsened the Depression</li>
+          <li>Clung to balanced-budget orthodoxy rather than deficit spending</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_8')" aria-label="Mark objective 8 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch25" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">9</div>
+      <div>
+        <div class="obj-text">Explain the "Bonus Army" controversy, and how it exemplified how bad things had become.</div>
+        <div class="obj-chapter">CH. 25</div>
+        <div class="obj-body"><ul>
+          <li>Spring 1932 — ~15,000 WWI veterans marched on D.C. demanding early payment of bonuses not due until 1945</li>
+          <li>Camped at Anacostia Flats; Senate rejected the bonus in July 1932</li>
+          <li>Hoover ordered police eviction → 2 veterans killed; then sent Gen. <strong>Douglas MacArthur</strong> with aides <strong>Dwight Eisenhower</strong> &amp; <strong>George Patton</strong></li>
+          <li>Military burned the camp, injured dozens, killed a 12-week-old infant — cemented Hoover's political collapse</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_9')" aria-label="Mark objective 9 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch25" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">10</div>
+      <div>
+        <div class="obj-text">Describe a "Hooverville."</div>
+        <div class="obj-chapter">CH. 25</div>
+        <div class="obj-body"><ul>
+          <li>Homeless shantytown, named mockingly after Hoover</li>
+          <li>Related terms: "Hoover blanket" (newspaper used for warmth), "Hoover flag" (empty pocket turned inside out)</li>
+          <li>Symbol of Hoover's unpopularity and the era's mass homelessness</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_10')" aria-label="Mark objective 10 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch26" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">11</div>
+      <div>
+        <div class="obj-text">Explain the presidential election of 1932, FDR vs. Hoover. Describe FDR's background, and how he campaigned for his "New Deal" program to deal with the Depression.</div>
+        <div class="obj-chapter">CH. 26</div>
+        <div class="obj-body"><ul>
+          <li><strong>Franklin D. Roosevelt</strong> beat <strong>Herbert Hoover</strong> in a landslide, Nov. 1932; inaugurated 3/4/1933</li>
+          <li>Advised by the "Brains Trust": <strong>Rexford Tugwell</strong>, <strong>Raymond Moley</strong>, <strong>Adolph Berle</strong></li>
+          <li>Did not campaign on specific policy details — pragmatic, experimental approach vs. Hoover's rigid individualism</li>
+          <li>"The only thing we have to fear is fear itself" — first inaugural address</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_11')" aria-label="Mark objective 11 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch26" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">12</div>
+      <div>
+        <div class="obj-text">Describe the various New Deal programs: their goals, successes, and failures. Financial: Bank holiday, FDIC, Federal Reserve Board, SEC, FHA. Business: NRA, repeal of Prohibition, RFC. Unemployment: Social Security, CCC, WPA. Labor: Wagner Act/NLRB, FLSA. Agriculture: AAA, TVA.</div>
+        <div class="obj-chapter">CH. 26</div>
+        <div class="obj-body"><ul>
+          <li>Emergency Banking Act (3/9/1933) — took U.S. off gold standard; bank holiday; FDIC insured deposits up to $2,500</li>
+          <li>Banking Act of 1935 — created 7-member Federal Reserve Board of Governors; Securities Act of 1933 created the SEC</li>
+          <li>CCC (1933–42) — conservation jobs for young men, 250,000 in first 2 months; CWA/WPA — <strong>Harry Hopkins</strong>, WPA employed 8M+ (funded via 1935 Emergency Relief Appropriation Act, $4.8B)</li>
+          <li>NIRA/NRA (<strong>Hugh S. Johnson</strong>, "Blue Eagle") + PWA (<strong>Harold Ickes</strong>, $3.3B) — struck down by Supreme Court 1935, along with the AAA</li>
+          <li>Social Security Act (1935) — aid to elderly/unemployed/disabled; Wagner Act (1935) — created NLRB; Fair Labor Standards Act (1938) — minimum wage, 40-hr week, banned child labor</li>
+          <li>TVA (1933) — dams/flood control, displaced ~15,000 families</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_12')" aria-label="Mark objective 12 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch26" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">13</div>
+      <div>
+        <div class="obj-text">Describe criticisms of the New Deal, both from conservatives who felt that it was too radical, and from liberals who felt that it did not provide enough help to those who needed it. Identify critics such as Francis Townsend, Fr. Charles Coughlin, and Huey "Kingfish" Long.</div>
+        <div class="obj-chapter">CH. 26</div>
+        <div class="obj-body"><ul>
+          <li><strong>Francis E. Townsend</strong> — retired dentist; Townsend Plan proposed $200/month pension for citizens over 60</li>
+          <li>Father <strong>Charles Coughlin</strong> — "radio priest," formed National Union for Social Justice, said FDR didn't go far enough</li>
+          <li><strong>Huey P. Long</strong> ("Kingfish") — LA senator; Share Our Wealth plan: $5,000/family + $2,500/worker via liquidating large fortunes; 4M+ followers by 1935; assassinated before challenging FDR in 1936</li>
+          <li>Conservatives (Supreme Court, business groups) said New Deal overreached federal authority — struck down AAA &amp; NIRA in 1935</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_13')" aria-label="Mark objective 13 as mastered">☐</button>
+    </div>
+
+    <div class="obj-card ch26" onclick="toggleObj(this)" role="button" tabindex="0" aria-expanded="false">
+      <div class="obj-num" aria-hidden="true">14</div>
+      <div>
+        <div class="obj-text">Explain the reasons for FDR's "court packing" plan, and the results of this attempt.</div>
+        <div class="obj-chapter">CH. 26</div>
+        <div class="obj-body"><ul>
+          <li>FDR beat <strong>Alf Landon</strong> in 1936, Electoral College 523–8</li>
+          <li>"Supreme Court Packing Plan" — add 1 justice per sitting justice over age 70 who wouldn't retire, up to 6 more (bench 9→15)</li>
+          <li>Reason: retaliate against the Court for striking down AAA/NIRA and pressure it against challenging the Second New Deal</li>
+          <li>Result: plan failed in Congress (even his own party opposed it), but the Court began upholding New Deal laws afterward anyway (Wagner Act, Social Security Act)</li>
+        </ul></div>
+      </div>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_14')" aria-label="Mark objective 14 as mastered">☐</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== STUDY GUIDE ===== -->
+<div id="panel-guide" class="panel" role="tabpanel" aria-labelledby="panel-guide">
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <div><div class="chapter-title" style="color:#3b82f6">Ch. 24 — The Jazz Age</div><div class="chapter-subtitle">Redefining the Nation, 1919–1929</div></div>
+      <span class="chevron" aria-hidden="true">▼</span>
+    </div>
+    <div class="chapter-body">
+      <div class="concept-title">Prosperity &amp; Leisure</div>
+      <div class="concept-body"><strong>Henry Ford</strong> perfected the moving assembly line, dropping the Model T's price from $850 (1908) to $300 (1924) — putting car ownership within reach of the average American. By 1929 there were 23M+ cars on U.S. roads. "Movie palaces" drew up to 90M weekly attendees by decade's end, and 1927 brought the first successful "talkie," <em>The Jazz Singer</em> (Al Jolson, Warner Bros.). Commercial radio nationalized culture and created celebrities. <strong>Charles Lindbergh</strong> completed the first solo transatlantic flight in 1927.</div>
+      <span class="key-term blue">Model T</span><span class="key-term blue">moving assembly line</span><span class="key-term blue">Charles Lindbergh</span>
+
+      <div class="concept-title">Nativism &amp; Backlash</div>
+      <div class="concept-body">Rural, Protestant Americans reacted to urbanization and immigration with fear and intolerance. The <strong>Second Ku Klux Klan</strong> rose as a nationwide movement expressing racism, nativism, anti-Semitism, and anti-Catholicism. The Immigration Act of 1924 set quotas at 3% of a nationality's 1910 census population; the National Origins Act of 1924 tightened this further to 2% of the 1890 census, deliberately targeting southern and eastern Europeans. <strong>Nicola Sacco</strong> and <strong>Bartolomeo Vanzetti</strong>, Italian immigrant anarchists, were convicted (7/14/1921) on thin evidence and executed (8/23/1927). The Scopes Trial (1925, Dayton, TN) pitted the Butler Act (banning the teaching of evolution) against the ACLU — defendant <strong>John Scopes</strong>, prosecutor <strong>William Jennings Bryan</strong>, defense attorney <strong>Clarence Darrow</strong>. Scopes was found guilty and fined $100.</div>
+      <span class="key-term orange">Second KKK</span><span class="key-term orange">Immigration Act of 1924</span><span class="key-term orange">Scopes Trial</span>
+
+      <div class="concept-title">A New Generation</div>
+      <div class="concept-body">The <strong>flapper</strong> embodied the era's "new morality," fueled in part by the popularized ideas of <strong>Sigmund Freud</strong>. The 19th Amendment (1920) secured women's suffrage; <strong>Alice Paul</strong> went further, drafting the Equal Rights Amendment. In Harlem, the <strong>Harlem Renaissance</strong> produced a flowering of Black art and literature: poets <strong>Langston Hughes</strong> (the movement's "poet laureate") and <strong>Claude McKay</strong> ("If We Must Die"), and novelist <strong>Zora Neale Hurston</strong>. <strong>Marcus Garvey</strong> and <strong>W. E. B. Du Bois</strong> championed different visions of Negro nationalism and civil rights. The 18th Amendment (1919) established Prohibition, spurring bootlegging and organized crime.</div>
+      <div class="people-grid">
+        <div class="person-card"><div class="person-name">Langston Hughes</div><div class="person-role">Harlem Renaissance "poet laureate"</div></div>
+        <div class="person-card"><div class="person-name">Claude McKay</div><div class="person-role">Poet, "If We Must Die"</div></div>
+        <div class="person-card"><div class="person-name">Zora Neale Hurston</div><div class="person-role">Novelist, <em>Their Eyes Were Watching God</em> (1937)</div></div>
+        <div class="person-card"><div class="person-name">Marcus Garvey</div><div class="person-role">Negro nationalism, "Back to Africa"</div></div>
+      </div>
+      <span class="key-term purple">Harlem Renaissance</span><span class="key-term purple">flapper</span><span class="key-term purple">Alice Paul / ERA</span>
+
+      <div class="concept-title">Politics: Harding → Coolidge → Hoover</div>
+      <div class="concept-body"><strong>Warren G. Harding</strong> won 1920 on a promise to "return to normalcy" but was undone by scandal: Sec. of Interior <strong>Albert B. Fall</strong> took $300,000 in bribes in the Teapot Dome scandal (fined $100,000, 1 yr prison). Harding died in office (1923); <strong>Calvin Coolidge</strong> succeeded him, governing under the philosophy "the business of America is business." <strong>Herbert Hoover</strong> won the 1928 election over <strong>Al Smith</strong>, 21M to 15M votes, entering office at the height of Republican prosperity.</div>
+      <span class="key-term green">Teapot Dome</span><span class="key-term green">Return to Normalcy</span>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <div><div class="chapter-title" style="color:#a78bfa">Ch. 25 — The Great Depression</div><div class="chapter-subtitle">Brother, Can You Spare a Dime? 1929–1932</div></div>
+      <span class="chevron" aria-hidden="true">▼</span>
+    </div>
+    <div class="chapter-body">
+      <div class="concept-title">The Crash of 1929</div>
+      <div class="concept-body">Buying stock "on margin" (small down payment + borrowed money) fueled speculation that pushed the Dow Jones Industrial Average to a peak of 381 points in September 1929. On <strong>"Black Thursday" (Oct. 24, 1929)</strong> the NYSE lost 11% of its value; on <strong>"Black Tuesday" (Oct. 29, 1929)</strong>, 16M+ shares traded and $14 billion was lost in a single day. Between September and November 1929, the market's total value fell from $64 billion to roughly $30 billion.</div>
+      <span class="key-term orange">Black Tuesday</span><span class="key-term orange">buying on margin</span>
+
+      <div class="concept-title">Causes of the Crash</div>
+      <div class="concept-body">Three underlying causes compounded the panic: (1) international war debt — Allies couldn't repay U.S. loans, defaulted German/Austrian reparations rippled back to American banks; (2) poor income distribution — 80% of families had no savings, while 0.5–1% of Americans controlled over a third of the nation's wealth, leaving no new buyers to sustain the market; (3) psychological contagion — panic selling fed on itself. Only about 10% of households held stock, but over 90% of banks had invested in the market, causing mass bank failures.</div>
+
+      <div class="concept-title">Hoover's Response</div>
+      <div class="concept-body">Hoover's philosophy of "American individualism" made him reluctant to authorize direct federal relief. His Reconstruction Finance Corporation (RFC, 1932) set aside $2 billion to rescue banks and institutions — not a form of direct aid to individuals. The Emergency Relief and Construction Act (sponsored by Sen. <strong>Robert Wagner</strong>, 1932) allotted $1.5 billion for state public works. The Smoot-Hawley Tariff (1930) raised import tariffs, triggering foreign retaliation that shrank global trade and deepened the Depression.</div>
+      <span class="key-term blue">Reconstruction Finance Corporation</span><span class="key-term blue">Smoot-Hawley Tariff</span>
+
+      <div class="concept-title">Bonus Army &amp; Hoovervilles</div>
+      <div class="concept-body">In spring 1932, roughly 15,000 WWI veterans — the Bonus Expeditionary Force — marched on Washington demanding early payment of bonuses not due until 1945. After the Senate rejected their request, Hoover ordered police to clear their camps; when 2 veterans were killed, Hoover sent Gen. <strong>Douglas MacArthur</strong> (with aides <strong>Dwight Eisenhower</strong> and <strong>George Patton</strong>) to forcibly remove them — the camp was burned and an infant killed by tear gas, cementing Hoover's unpopularity. Homeless shantytowns known as "Hoovervilles" spread across the country.</div>
+      <span class="key-term green">Bonus Army</span><span class="key-term green">Hooverville</span>
+
+      <div class="concept-title">Foreign Policy</div>
+      <div class="concept-body">Hoover's Clark Memorandum (1930) repudiated the Roosevelt Corollary and de-emphasized military intervention in Latin America, laying groundwork for FDR's later "Good Neighbor" policy. The Hoover-Stimson Doctrine (with Sec. of State <strong>Henry Stimson</strong>) declared the U.S. would not recognize territory seized by force, in response to Japan's invasion of Manchuria.</div>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <div><div class="chapter-title" style="color:#22c55e">Ch. 26 — FDR &amp; the New Deal</div><div class="chapter-subtitle">Franklin Roosevelt and the New Deal, 1932–1941</div></div>
+      <span class="chevron" aria-hidden="true">▼</span>
+    </div>
+    <div class="chapter-body">
+      <div class="concept-title">Rise of FDR</div>
+      <div class="concept-body"><strong>Franklin D. Roosevelt</strong> defeated Hoover in a landslide in November 1932 and was inaugurated March 4, 1933. He relied on an informal group of advisors — the "Brains Trust" (<strong>Rexford Tugwell</strong>, <strong>Raymond Moley</strong>, <strong>Adolph Berle</strong>) — and famously declared in his inaugural address, "The only thing we have to fear is fear itself."</div>
+
+      <div class="concept-title">First New Deal — Banking &amp; Relief</div>
+      <div class="concept-body">Within 48 hours of taking office, FDR declared a bank holiday. The Emergency Banking Act (3/9/1933) took the U.S. off the gold standard and had federal examiners certify banks before reopening — 70% were declared solvent by 3/15/1933. His first "fireside chat" radio address followed on 3/12/1933. FERA (Federal Emergency Relief Act, 1933) sent direct monetary relief to states. The CWA (Civil Works Administration) and CCC (Civilian Conservation Corps, 1933–1942, headed in spirit by <strong>Harry Hopkins</strong>) put people directly to work — the CCC employed 250,000 men within its first two months.</div>
+      <span class="key-term blue">Emergency Banking Act</span><span class="key-term blue">FERA</span><span class="key-term blue">CCC</span>
+
+      <div class="concept-title">First New Deal — Industry &amp; Agriculture</div>
+      <div class="concept-body">The NIRA suspended antitrust laws so industries could jointly set prices, production levels, and wages; it created the NRA ("Blue Eagle" logo, headed by <strong>Hugh S. Johnson</strong>) and the PWA ($3.3 billion for public projects, run by <strong>Harold Ickes</strong>). The AAA (Agricultural Adjustment Act) paid farmers to reduce production. In 1935, the Supreme Court struck down both the AAA and the NIRA as unconstitutional overreach.</div>
+      <span class="key-term orange">NIRA / NRA</span><span class="key-term orange">AAA</span>
+
+      <div class="concept-title">Critics of the New Deal</div>
+      <div class="concept-body">From the left, <strong>Francis E. Townsend</strong> (a retired dentist) proposed the Townsend Plan — a $200/month pension for citizens over 60. Father <strong>Charles Coughlin</strong>, a "radio priest," argued FDR hadn't gone far enough on labor and monetary reform. <strong>Huey P. Long</strong> ("Kingfish"), a Louisiana senator, proposed "Share Our Wealth" — liquidating large fortunes to fund $5,000 per family and $2,500 per worker; he had 4M+ followers by 1935 before being assassinated. From the right, conservatives and the Supreme Court argued the New Deal overreached federal authority.</div>
+      <div class="people-grid">
+        <div class="person-card"><div class="person-name">Francis E. Townsend</div><div class="person-role">Townsend Plan — elderly pension</div></div>
+        <div class="person-card"><div class="person-name">Charles Coughlin</div><div class="person-role">"Radio priest" — wanted more radical reform</div></div>
+        <div class="person-card"><div class="person-name">Huey P. Long</div><div class="person-role">"Share Our Wealth" — assassinated 1935</div></div>
+      </div>
+      <span class="key-term purple">Townsend Plan</span><span class="key-term purple">Share Our Wealth</span>
+
+      <div class="concept-title">Second New Deal (from 1935)</div>
+      <div class="concept-body">The Banking Act of 1935 created a 7-member Federal Reserve Board of Governors. The Emergency Relief Appropriation Act (1935, $4.8 billion) funded the WPA (Works Progress Administration, run by <strong>Harry Hopkins</strong>), which employed 8M+ Americans and was the first New Deal agency to openly hire women. The Social Security Act (1935) provided aid to the elderly, unemployed, and disabled, partly borrowing ideas from the Townsend Plan. The Wagner Act (1935) created the NLRB to protect collective bargaining, upheld by the Supreme Court in 1937. The Fair Labor Standards Act (1938) established a minimum wage, 40-hour workweek, and banned child labor. The TVA (Tennessee Valley Authority, 1933) built dams for flood control and power, displacing roughly 15,000 families. The FDIC insured bank deposits up to $2,500, and the Securities Act of 1933 created the SEC.</div>
+      <span class="key-term green">WPA</span><span class="key-term green">Social Security Act</span><span class="key-term green">Wagner Act / NLRB</span><span class="key-term green">TVA</span>
+
+      <div class="concept-title">Women &amp; Race in the New Deal</div>
+      <div class="concept-body"><strong>Frances Perkins</strong>, Secretary of Labor, was the first female Cabinet member and championed the FLSA. <strong>Mary McLeod Bethune</strong> directed the NYA's Division of Negro Affairs. The Indian Reorganization Act (1934), pushed by Commissioner <strong>John Collier</strong>, ended the Dawes Act's assimilation policy and returned roughly 2 million acres to tribes.</div>
+
+      <div class="concept-title">Court-Packing Plan &amp; the Deficit</div>
+      <div class="concept-body">After winning re-election in 1936 (over <strong>Alf Landon</strong>, Electoral College 523–8), FDR proposed the "Supreme Court Packing Plan": adding one justice for every sitting justice over age 70 who refused to retire, up to six more (expanding the bench from 9 to 15). The plan failed in Congress — even his own party balked — but the Court began upholding New Deal laws afterward anyway. FDR abandoned his earlier commitment to a balanced budget in favor of deficit spending on relief programs.</div>
+      <span class="key-term red">Supreme Court Packing Plan</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== FLASHCARDS ===== -->
+<div id="panel-flashcards" class="panel" role="tabpanel" aria-labelledby="panel-flashcards">
+  <div class="filter-row">
+    <button class="filter-btn active-filter" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('ch24',this)">Ch.24</button>
+    <button class="filter-btn" onclick="filterCards('ch25',this)">Ch.25</button>
+    <button class="filter-btn" onclick="filterCards('ch26',this)">Ch.26</button>
+  </div>
+  <div class="fc-controls">
+    <button class="btn" onclick="shuffleCards()" aria-label="Shuffle flashcards">⇄ Shuffle</button>
+    <button class="btn" onclick="filterCards('unmastered',document.getElementById('unmasteredBtn'))" id="unmasteredBtn">⚡ Unmastered Only</button>
+    <span class="fc-stat" id="fc-stat" aria-live="polite">Card 1 of 0</span>
+  </div>
+  <div class="flashcard-area">
+    <div class="flashcard" id="flashcard" onclick="flipCard()" role="button" aria-label="Flashcard — tap to flip" tabindex="0">
+      <div class="fc-front">
+        <div id="fc-mastered-badge" class="fc-mastered-badge" aria-hidden="true">✅ MASTERED</div>
+        <div id="fc-chapter-tag" class="fc-chapter-tag" aria-hidden="true"></div>
+        <div class="fc-label" aria-hidden="true">TERM / CONCEPT</div>
+        <div class="fc-question" id="fc-question" aria-live="polite">Loading...</div>
+        <div class="fc-hint" aria-hidden="true">Tap to reveal answer</div>
+      </div>
+      <div class="fc-back">
+        <div class="fc-label" aria-hidden="true">ANSWER</div>
+        <div class="fc-answer" id="fc-answer" aria-live="polite">Loading...</div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-nav">
+    <button class="btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
+    <span class="fc-counter" id="fc-counter" aria-live="polite">1 / 0</span>
+    <button class="btn" onclick="nextCard()" aria-label="Next card">Next →</button>
+  </div>
+  <div style="display:flex;gap:10px;margin-top:12px;justify-content:center;">
+    <button class="btn mastered-btn" id="master-toggle-btn" onclick="toggleMastered(currentIndex)" aria-label="Toggle mastered status for current card">☐ Mark Mastered</button>
+    <button class="btn" onclick="window.print()" aria-label="Print active tab">🖨 Print</button>
+  </div>
+</div>
+
+<!-- ===== QUIZ ===== -->
+<div id="panel-quiz" class="panel" role="tabpanel" aria-labelledby="panel-quiz">
+  <div class="filter-row" id="quiz-filters">
+    <button class="filter-btn active-filter" onclick="setQuizFilter('all',this)">All Chapters</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch24',this)">Ch.24</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch25',this)">Ch.25</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch26',this)">Ch.26</button>
+    <span style="flex:1"></span>
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)" id="quiz-count" aria-live="polite"></span>
+  </div>
+  <div class="quiz-score" id="quiz-score" role="status">
+    <div class="score-num" id="score-display">0</div>
+    <div class="score-label">QUIZ COMPLETE</div>
+    <div id="score-breakdown" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px"></div>
+    <br>
+    <button class="btn primary" onclick="resetQuiz()">Retake Quiz</button>
+  </div>
+  <div class="quiz-area" id="quiz-area"></div>
+  <button class="btn primary" id="submit-btn" onclick="submitQuiz()" style="margin-top:18px;display:none">Submit Quiz</button>
+</div>
+
+<!-- ===== DISCUSSION ===== -->
+<div id="panel-discussion" class="panel" role="tabpanel" aria-labelledby="panel-discussion">
+  <div class="section-label">Discussion / Short Answer Practice</div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">Write your response, then submit to reveal the self-grading checklist. Check each point you covered to calculate your score.</p>
+  <div class="disc-filter" id="disc-filters">
+    <button class="filter-btn active-filter" onclick="filterDisc('all',this)">All</button>
+    <button class="filter-btn" onclick="filterDisc('ch24',this)">Ch.24</button>
+    <button class="filter-btn" onclick="filterDisc('ch25',this)">Ch.25</button>
+    <button class="filter-btn" onclick="filterDisc('ch26',this)">Ch.26</button>
+  </div>
+  <div id="disc-container"></div>
+</div>
+
+<!-- ===== NOTES ===== -->
+<div id="panel-notes" class="panel" role="tabpanel" aria-labelledby="panel-notes">
+  <div class="notes-template">
+    <div class="notes-header">
+      <div>
+        <div class="notes-title">2-Page Exam Notes — Unit 3</div>
+        <div class="notes-subtitle">HIST-1302 · Unit 03 · Exam: Thu Jul 23, 2026</div>
+      </div>
+      <button class="btn" onclick="window.print()" aria-label="Print notes">🖨 Print</button>
+    </div>
+    <div class="notes-body">
+      <div class="notes-col-grid">
+        <div>
+          <div class="notes-col-title">Ch. 24 — Jazz Age</div>
+          <div class="notes-item"><span class="key-term red">Henry Ford</span> assembly line → Model T <span class="key-term orange">$850(1908)→$300(1924)</span></div>
+          <div class="notes-item">1st talkie <span class="key-term orange">1927</span> "Jazz Singer" (Al Jolson)</div>
+          <div class="notes-item"><span class="key-term red">Charles Lindbergh</span> solo transatlantic flight <span class="key-term orange">1927</span></div>
+          <div class="notes-item"><span class="key-term red">Sacco</span> &amp; <span class="key-term red">Vanzetti</span> executed <span class="key-term orange">8/23/1927</span></div>
+          <div class="notes-item">Immigration Act <span class="key-term orange">1924</span>: 3%/1910 census; National Origins Act: 2%/1890</div>
+          <div class="notes-item">Scopes Trial <span class="key-term orange">1925</span>: <span class="key-term red">Bryan</span> (pros.) v <span class="key-term red">Darrow</span> (def.) → fined <span class="key-term orange">$100</span></div>
+          <div class="notes-item">19th Amdt <span class="key-term orange">1920</span> suffrage; <span class="key-term red">Alice Paul</span> → ERA</div>
+          <div class="notes-item">Harlem Renaissance: <span class="key-term red">Hughes</span>, <span class="key-term red">McKay</span>, <span class="key-term red">Hurston</span>, <span class="key-term red">Garvey</span>, <span class="key-term red">Du Bois</span></div>
+          <div class="notes-item">18th Amdt <span class="key-term orange">1919</span> Prohibition → bootlegging/crime</div>
+          <div class="notes-item"><span class="key-term red">Harding</span> "normalcy" wins <span class="key-term orange">1920</span> → Teapot Dome (<span class="key-term red">Albert B. Fall</span>, <span class="key-term orange">$300,000</span> bribe)</div>
+          <div class="notes-item"><span class="key-term red">Coolidge</span> succeeds <span class="key-term orange">1923</span>; <span class="key-term red">Hoover</span> wins <span class="key-term orange">1928</span> v <span class="key-term red">Al Smith</span> (21M–15M)</div>
+        </div>
+        <div>
+          <div class="notes-col-title">Ch. 25 — Great Depression</div>
+          <div class="notes-item">Dow peaked <span class="key-term orange">381</span> pts, Sept <span class="key-term orange">1929</span></div>
+          <div class="notes-item">Black Thursday <span class="key-term orange">10/24/1929</span> (-11%); Black Tuesday <span class="key-term orange">10/29/1929</span> (<span class="key-term orange">$14B</span> lost, 16M+ shares)</div>
+          <div class="notes-item">Market $<span class="key-term orange">64B→$30B</span>, Sept–Nov 1929</div>
+          <div class="notes-item">Causes: war debt, income gap (0.5–1% held 1/3 wealth), panic psychology</div>
+          <div class="notes-item"><span class="key-term red">Hoover</span> → RFC <span class="key-term orange">1932</span> ($2B, banks not people)</div>
+          <div class="notes-item">Emergency Relief &amp; Construction Act (<span class="key-term red">Robert Wagner</span>) $1.5B public works</div>
+          <div class="notes-item">Smoot-Hawley Tariff <span class="key-term orange">1930</span> → worsened global trade</div>
+          <div class="notes-item">Bonus Army <span class="key-term orange">1932</span>: ~15,000 vets → <span class="key-term red">MacArthur</span>/<span class="key-term red">Eisenhower</span>/<span class="key-term red">Patton</span> forcibly cleared camp</div>
+          <div class="notes-item">Hooverville = shantytown; Dust Bowl = overfarming + drought (<span class="key-term orange">1931</span>+)</div>
+          <div class="notes-item">Clark Memorandum <span class="key-term orange">1930</span> + Hoover-Stimson Doctrine (<span class="key-term red">Henry Stimson</span>) → basis for Good Neighbor</div>
+        </div>
+        <div>
+          <div class="notes-col-title">Ch. 26 — New Deal</div>
+          <div class="notes-item"><span class="key-term red">FDR</span> beats <span class="key-term red">Hoover</span> <span class="key-term orange">1932</span>; inaug <span class="key-term orange">3/4/1933</span>; Brains Trust: <span class="key-term red">Tugwell</span>, <span class="key-term red">Moley</span>, <span class="key-term red">Berle</span></div>
+          <div class="notes-item">Emergency Banking Act <span class="key-term orange">3/9/1933</span> → off gold standard</div>
+          <div class="notes-item">FERA (relief) · CWA/CCC (jobs, <span class="key-term orange">250,000</span> first 2mo) · NIRA/NRA (<span class="key-term red">Hugh Johnson</span>) + PWA (<span class="key-term red">Harold Ickes</span>, <span class="key-term orange">$3.3B</span>) · AAA</div>
+          <div class="notes-item">1935: SCOTUS struck down AAA + NIRA</div>
+          <div class="notes-item">Critics: <span class="key-term red">Francis Townsend</span> ($200/mo pension) · <span class="key-term red">Charles Coughlin</span> (radio priest) · <span class="key-term red">Huey Long</span> (Share Our Wealth, $5,000/family)</div>
+          <div class="notes-item">2nd New Deal <span class="key-term orange">1935</span>: WPA (<span class="key-term red">Harry Hopkins</span>, 8M+ jobs, $4.8B) · Social Security · Wagner Act/NLRB</div>
+          <div class="notes-item">FLSA <span class="key-term orange">1938</span> min wage/40hr; TVA <span class="key-term orange">1933</span>; FDIC $2,500 insured; SEC via Securities Act 1933</div>
+          <div class="notes-item"><span class="key-term red">Frances Perkins</span> 1st female Cabinet; <span class="key-term red">Mary McLeod Bethune</span> → NYA Div. of Negro Affairs</div>
+          <div class="notes-item">Indian Reorg. Act <span class="key-term orange">1934</span> (<span class="key-term red">John Collier</span>) → ~2M acres returned</div>
+          <div class="notes-item">1936 election: FDR v <span class="key-term red">Alf Landon</span>, <span class="key-term orange">523–8</span> EC</div>
+          <div class="notes-item">Court Packing Plan: +1 justice/justice over <span class="key-term orange">70</span> → 9→15 seats — FAILED in Congress</div>
+        </div>
+      </div>
+      <div class="notes-tip"><strong>Exam tip:</strong> Full first + last names always (e.g. Albert B. Fall, not just "Fall"). Prof. Walter tests named laws and mechanisms, not just outcomes — know which act/law goes with which action, not just that "something happened."</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="../../index.html">← Back to Study Hub</a>
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)">HIST-1302 · Unit 3 · ACC Summer 2026 · <a href="../../index.html" class="back-link footer-back-link">← Back to all courses</a></span>
+</footer>
+</div>
+
+<script>
+// ── MASTERY KEY (update per unit) ──
+function getMasteryKey() { return 'mastery_hist1302_unit3_'; }
+function getObjMasteryKey() { return 'masteryobj_hist1302_unit3_'; }
+
+// ── PANEL SWITCHING ──
+function showPanel(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+  if(id==='flashcards') renderCard();
+  if(id==='quiz') renderQuiz();
+  if(id==='discussion' && !discInit) { discInit=true; renderDiscussion(); }
+}
+
+// ── ACCORDION ──
+function toggleChapter(header) {
+  const body = header.nextElementSibling;
+  header.classList.toggle('open'); body.classList.toggle('open');
+  header.setAttribute('aria-expanded', header.classList.contains('open'));
+}
+function toggleObj(card) {
+  card.classList.toggle('expanded');
+  card.setAttribute('aria-expanded', card.classList.contains('expanded'));
+}
+
+// ── OBJECTIVE MASTERY ──
+function toggleObjMastery(btn, key) {
+  const fullKey = getObjMasteryKey() + key;
+  const isMastered = localStorage.getItem(fullKey) === '1';
+  if(isMastered) { localStorage.removeItem(fullKey); btn.textContent='☐'; btn.classList.remove('mastered'); btn.setAttribute('aria-label', btn.getAttribute('aria-label').replace('Unmark','Mark')); }
+  else { localStorage.setItem(fullKey,'1'); btn.textContent='✅'; btn.classList.add('mastered'); }
+  updateMasteryBar();
+}
+function loadObjMastery() {
+  const prefix = getObjMasteryKey();
+  document.querySelectorAll('.obj-master-btn').forEach(btn => {
+    const key = btn.getAttribute('aria-label').match(/\d+/)?.[0];
+    if(key && localStorage.getItem(prefix+'obj_'+key)==='1') { btn.textContent='✅'; btn.classList.add('mastered'); }
+  });
+}
+
+// ── MASTERY BAR ──
+function updateMasteryBar() {
+  const total = allCards.length;
+  const prefix = getMasteryKey();
+  const mastered = allCards.filter((_,i) => localStorage.getItem(prefix+i)==='1').length;
+  document.getElementById('mastery-count').textContent = mastered+' / '+total;
+  document.getElementById('mastery-fill').style.width = (total ? Math.round(mastered/total*100) : 0)+'%';
+}
+function resetAllMastery() {
+  const p1 = getMasteryKey(), p2 = getObjMasteryKey();
+  Object.keys(localStorage).filter(k => k.startsWith(p1)||k.startsWith(p2)).forEach(k => localStorage.removeItem(k));
+  document.querySelectorAll('.obj-master-btn').forEach(b => { b.textContent='☐'; b.classList.remove('mastered'); });
+  renderCard(); updateMasteryBar();
+  alert('All mastery for this unit has been reset.');
+}
+
+// ── FLASHCARDS ──
+const allCards = [
+  {ch:'ch24', q:'What did Henry Ford perfect that transformed the automobile industry?', a:'The moving assembly line — it let him drop the Model T\'s price from $850 (1908) to $300 (1924).'},
+  {ch:'ch24', q:'What was the first successful "talkie" (sound film), released in 1927?', a:'The Jazz Singer, starring Al Jolson, produced by Warner Brothers.'},
+  {ch:'ch24', q:'Who completed the first solo transatlantic flight in 1927?', a:'Charles Lindbergh.'},
+  {ch:'ch24', q:'Define "flapper."', a:'A young, modern woman who embraced the new morality and fashions of the Jazz Age.'},
+  {ch:'ch24', q:'Whose ideas about sex being natural and healthy helped fuel the 1920s "new morality"?', a:'Sigmund Freud (along with sexologist Havelock Ellis).'},
+  {ch:'ch24', q:'What did the 19th Amendment (1920) accomplish?', a:'Guaranteed women the right to vote.'},
+  {ch:'ch24', q:'Who drafted the Equal Rights Amendment (ERA) in the 1920s?', a:'Alice Paul.'},
+  {ch:'ch24', q:'What was the Harlem Renaissance?', a:'A 1920s flowering of Black artistic, literary, and political expression centered in Harlem, NYC.'},
+  {ch:'ch24', q:'Who was nicknamed the "poet laureate" of the Harlem Renaissance?', a:'Langston Hughes.'},
+  {ch:'ch24', q:'Which Harlem Renaissance poet wrote "If We Must Die"?', a:'Claude McKay.'},
+  {ch:'ch24', q:'Which Harlem Renaissance author wrote Their Eyes Were Watching God (1937)?', a:'Zora Neale Hurston.'},
+  {ch:'ch24', q:'Name two leaders who championed different visions of Black nationalism/civil rights in the 1920s.', a:'Marcus Garvey and W. E. B. Du Bois.'},
+  {ch:'ch24', q:'Describe the Second Ku Klux Klan.', a:'A nationwide 1920s movement (unlike the Reconstruction-era Klan) expressing racism, nativism, anti-Semitism, and anti-Catholicism.'},
+  {ch:'ch24', q:'What quota did the Immigration Act of 1924 set?', a:'3% of a nationality\'s population per the 1910 census.'},
+  {ch:'ch24', q:'What quota did the National Origins Act of 1924 set, and who did it target?', a:'2% of the 1890 census — deliberately targeted southern and eastern Europeans, who had only begun arriving in large numbers after 1890.'},
+  {ch:'ch24', q:'Who were Nicola Sacco and Bartolomeo Vanzetti, and what happened to them?', a:'Italian immigrant anarchists convicted (7/14/1921) on thin evidence and executed (8/23/1927).'},
+  {ch:'ch24', q:'What law was at the center of the 1925 Scopes Monkey Trial?', a:'Tennessee\'s Butler Act, which banned teaching evolution in public schools.'},
+  {ch:'ch24', q:'Who prosecuted and who defended in the Scopes Trial?', a:'Prosecution: William Jennings Bryan. Defense: Clarence Darrow. Defendant: John Scopes, found guilty, fined $100.'},
+  {ch:'ch24', q:'What did the 18th Amendment (1919) establish, and what was one major consequence?', a:'Prohibition — banning alcohol; it fueled bootlegging and the rise of organized crime.'},
+  {ch:'ch24', q:'What was Warren Harding\'s 1920 campaign promise?', a:'"Return to normalcy."'},
+  {ch:'ch24', q:'What was the Teapot Dome Scandal, and who was responsible?', a:'Secretary of the Interior Albert B. Fall secretly leased navy oil reserves in exchange for $300,000 in bribes; fined $100,000 and served 1 year in prison.'},
+  {ch:'ch24', q:'What was Calvin Coolidge\'s governing philosophy?', a:'"The business of America is business" — minimal government interference, favoring business interests.'},
+  {ch:'ch24', q:'Who did Herbert Hoover defeat in the 1928 presidential election, and by what vote margin?', a:'Al Smith — Hoover won roughly 21 million votes to Smith\'s 15 million.'},
+
+  {ch:'ch25', q:'What does it mean to buy stock "on margin"?', a:'Buying with a small down payment plus borrowed money, intending to sell quickly at a profit before the remaining balance came due.'},
+  {ch:'ch25', q:'What was the peak value of the Dow Jones Industrial Average in September 1929?', a:'381 points — roughly 10 times its value at the start of the 1920s.'},
+  {ch:'ch25', q:'What happened on "Black Thursday," October 24, 1929?', a:'The NYSE lost 11% of its value in a single day.'},
+  {ch:'ch25', q:'What happened on "Black Tuesday," October 29, 1929?', a:'16+ million shares traded; over $14 billion in wealth was lost in one day.'},
+  {ch:'ch25', q:'By how much did the total stock market value fall between September and November 1929?', a:'From about $64 billion to about $30 billion — over half its value.'},
+  {ch:'ch25', q:'Name the three primary causes of the 1929 crash discussed in your textbook.', a:'International war-debt defaults, poor income distribution, and the psychological "contagion" of panic selling.'},
+  {ch:'ch25', q:'What percentage of American wealth was controlled by the top 0.5–1% of Americans in the 1920s?', a:'Over one-third (roughly 1/3) of all wealth.'},
+  {ch:'ch25', q:'What was the Reconstruction Finance Corporation (RFC), and when was it created?', a:'A 1932 Hoover program that set aside $2 billion to rescue banks/institutions — not direct relief to individuals.'},
+  {ch:'ch25', q:'What did the Emergency Relief and Construction Act (1932) authorize, and who sponsored it?', a:'Sponsored by Sen. Robert Wagner; allotted $1.5 billion to states for public works projects.'},
+  {ch:'ch25', q:'What was the Smoot-Hawley Tariff (1930), and what was its effect?', a:'Raised tariffs on imported goods; triggered foreign retaliation, shrinking global trade and worsening the Depression.'},
+  {ch:'ch25', q:'What was the "Bonus Army"?', a:'~15,000 WWI veterans who marched on Washington, D.C. in spring 1932 demanding early payment of bonuses not due until 1945.'},
+  {ch:'ch25', q:'Who did Hoover send to forcibly clear the Bonus Army camp, and what happened?', a:'Gen. Douglas MacArthur, with aides Dwight Eisenhower and George Patton; the camp was burned, dozens injured, and an infant killed by tear gas.'},
+  {ch:'ch25', q:'What is a "Hooverville"?', a:'A homeless shantytown, named mockingly after President Hoover.'},
+  {ch:'ch25', q:'What caused the Dust Bowl?', a:'Over-cultivation of grassland during the WWI wheat boom, poor farming/irrigation practices, and a severe drought beginning in 1931 — NOT decreased demand.'},
+  {ch:'ch25', q:'What was the Clark Memorandum (1930), and what did it lead to?', a:'Repudiated the Roosevelt Corollary and de-emphasized U.S. military intervention in Latin America — laid the groundwork for FDR\'s "Good Neighbor" policy.'},
+  {ch:'ch25', q:'What was the Hoover-Stimson Doctrine?', a:'A declaration (with Sec. of State Henry Stimson) that the U.S. would not recognize territory seized by force, in response to Japan\'s invasion of Manchuria.'},
+  {ch:'ch25', q:'Who did Herbert Hoover lose the 1932 election to, and how?', a:'Franklin D. Roosevelt, in a landslide.'},
+
+  {ch:'ch26', q:'Name FDR\'s "Brains Trust" advisors.', a:'Rexford Tugwell, Raymond Moley, and Adolph Berle.'},
+  {ch:'ch26', q:'What did the Emergency Banking Act (3/9/1933) do?', a:'Took the U.S. off the gold standard and had federal examiners certify banks as solvent before reopening.'},
+  {ch:'ch26', q:'What was FERA, and what did it provide?', a:'The Federal Emergency Relief Act (1933) — sent direct monetary relief straight to states.'},
+  {ch:'ch26', q:'What did the CCC (Civilian Conservation Corps) do, and how many did it employ initially?', a:'Employed young men in conservation work; put 250,000 to work within its first two months (1933–1942).'},
+  {ch:'ch26', q:'What did the NIRA create, and who ran the NRA?', a:'The NIRA suspended antitrust laws to let industries set prices/production/wages; created the NRA ("Blue Eagle" logo), run by Hugh S. Johnson.'},
+  {ch:'ch26', q:'What was the PWA, and who ran it?', a:'The Public Works Administration — $3.3 billion for public projects, run by Secretary of the Interior Harold Ickes.'},
+  {ch:'ch26', q:'What did the AAA do, and what happened to it in 1935?', a:'The Agricultural Adjustment Act paid farmers to reduce production; the Supreme Court struck it down in 1935, along with the NIRA.'},
+  {ch:'ch26', q:'What was the Townsend Plan, and who proposed it?', a:'Proposed by Dr. Francis E. Townsend (a retired dentist) — a $200/month pension for every citizen over 60 who retired.'},
+  {ch:'ch26', q:'Who was Father Charles Coughlin, and what was his criticism of the New Deal?', a:'A "radio priest" from Michigan who argued FDR hadn\'t gone far enough on labor protection and monetary reform.'},
+  {ch:'ch26', q:'What was Huey Long\'s "Share Our Wealth" plan?', a:'Liquidate large personal fortunes to fund direct payments — $5,000 per family, $2,500 per worker. Long had 4M+ followers by 1935 before being assassinated.'},
+  {ch:'ch26', q:'What did the 1935 Emergency Relief Appropriation Act fund, and how much did it authorize?', a:'$4.8 billion — the largest single expenditure in U.S. history to that point; about 1/3 went to creating the WPA.'},
+  {ch:'ch26', q:'What was the WPA, who ran it, and what distinction did it hold for women?', a:'Works Progress Administration, run by Harry Hopkins, employed 8M+ Americans — the first New Deal agency to openly hire women.'},
+  {ch:'ch26', q:'What did the Social Security Act (1935) provide, and where did some of its ideas come from?', a:'Aid to the elderly, unemployed, and disabled — it borrowed some ideas from the Townsend Plan.'},
+  {ch:'ch26', q:'What did the Wagner Act (1935) create?', a:'The National Labor Relations Board (NLRB) — protected workers\' rights to organize and use collective bargaining; upheld by the Supreme Court in 1937.'},
+  {ch:'ch26', q:'What did the Fair Labor Standards Act (1938) establish?', a:'A minimum wage, a 40-hour workweek, and a ban on child labor — the last major piece of New Deal legislation.'},
+  {ch:'ch26', q:'What was the TVA, and what was one criticism of it?', a:'The Tennessee Valley Authority (1933) — built dams for flood control/power; displaced roughly 15,000 families.'},
+  {ch:'ch26', q:'What did the FDIC do, and up to what amount did it insure deposits?', a:'The Federal Deposit Insurance Corporation insured personal bank deposits up to $2,500.'},
+  {ch:'ch26', q:'What law created the SEC, and when?', a:'The Securities Act of 1933.'},
+  {ch:'ch26', q:'Who was Frances Perkins, and what was her significance?', a:'FDR\'s Secretary of Labor — the first female member of any presidential Cabinet; championed minimum wage laws and the FLSA.'},
+  {ch:'ch26', q:'Who was Mary McLeod Bethune, and what role did she hold?', a:'Director of the Division of Negro Affairs for the National Youth Administration (NYA).'},
+  {ch:'ch26', q:'What did the Indian Reorganization Act (1934) do, and who pushed for it?', a:'Ended the Dawes Act\'s assimilation policy; Commissioner John Collier helped return roughly 2 million acres of land to tribes.'},
+  {ch:'ch26', q:'Who did FDR defeat in the 1936 election, and by what Electoral College margin?', a:'Alf Landon — FDR won 523 electoral votes to Landon\'s 8.'},
+  {ch:'ch26', q:'What was FDR\'s "Supreme Court Packing Plan," and did it succeed?', a:'A proposal to add one justice for every sitting justice over 70 who wouldn\'t retire (up to 6 more, expanding the bench from 9 to 15). It failed in Congress, but the Court began upholding New Deal laws anyway afterward.'},
+];
+let currentCards = [...allCards];
+let currentIndex = 0;
+
+function renderCard() {
+  const card = currentCards[currentIndex];
+  if(!card) return;
+  const tag = document.getElementById('fc-chapter-tag');
+  const colors = {ch24:'#3b82f6',ch25:'#a78bfa',ch26:'#22c55e'};
+  const labels = {ch24:'CH.24',ch25:'CH.25',ch26:'CH.26'};
+  tag.textContent = labels[card.ch]||card.ch.toUpperCase();
+  tag.style.color = colors[card.ch]||'var(--accent)';
+  tag.style.background = (colors[card.ch]||'var(--accent)')+'20';
+  document.getElementById('fc-question').textContent = card.q;
+  document.getElementById('fc-answer').textContent = card.a;
+  document.getElementById('fc-counter').textContent = (currentIndex+1)+' / '+currentCards.length;
+  document.getElementById('fc-stat').textContent = 'Card '+(currentIndex+1)+' of '+currentCards.length;
+  document.getElementById('flashcard').classList.remove('flipped');
+  const origIdx = allCards.indexOf(card);
+  const isMastered = localStorage.getItem(getMasteryKey()+origIdx)==='1';
+  const badge = document.getElementById('fc-mastered-badge');
+  badge.style.display = isMastered ? 'inline-block' : 'none';
+  const masterBtn = document.getElementById('master-toggle-btn');
+  masterBtn.textContent = isMastered ? '✅ Mastered' : '☐ Mark Mastered';
+  masterBtn.style.borderColor = isMastered ? 'var(--green)' : '';
+  masterBtn.style.color = isMastered ? 'var(--green)' : '';
+}
+function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
+function nextCard() { currentIndex=(currentIndex+1)%currentCards.length; renderCard(); }
+function prevCard() { currentIndex=(currentIndex-1+currentCards.length)%currentCards.length; renderCard(); }
+function shuffleCards() {
+  for(let i=currentCards.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[currentCards[i],currentCards[j]]=[currentCards[j],currentCards[i]];}
+  currentIndex=0; renderCard();
+}
+function filterCards(ch, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active-filter'));
+  if(btn) btn.classList.add('active-filter');
+  const prefix = getMasteryKey();
+  if(ch==='all') currentCards=[...allCards];
+  else if(ch==='unmastered') currentCards=allCards.filter((_,i)=>localStorage.getItem(prefix+i)!=='1');
+  else currentCards=allCards.filter(c=>c.ch===ch);
+  currentIndex=0; renderCard();
+}
+function toggleMastered(idx) {
+  const origCard = currentCards[idx];
+  const origIdx = allCards.indexOf(origCard);
+  const key = getMasteryKey()+origIdx;
+  if(localStorage.getItem(key)==='1') localStorage.removeItem(key);
+  else localStorage.setItem(key,'1');
+  renderCard(); updateMasteryBar();
+}
+
+// ── QUIZ ──
+const allQuizData = [
+  {ch:'ch24',type:'mc',q:'What innovation allowed Henry Ford to drop the Model T\'s price from $850 to $300?',opts:['The moving assembly line','Government subsidies','Outsourced labor','Steel rationing'],ans:0,exp:'Ford perfected the moving assembly line, reducing labor costs and letting the price fall dramatically between 1908 and 1924.'},
+  {ch:'ch24',type:'mc',q:'Which 1927 film is considered the first successful "talkie"?',opts:['The Birth of a Nation','The Great Gatsby','The Jazz Singer','The Clansman'],ans:2,exp:'The Jazz Singer, starring Al Jolson, was released by Warner Bros. in 1927.'},
+  {ch:'ch24',type:'fitb',q:'The Second ___ ___ ___ was a nationwide 1920s movement expressing racism, nativism, anti-Semitism, and anti-Catholicism.',ans:['ku klux klan'],display:'Ku Klux Klan',exp:'The Second KKK differed from the Reconstruction-era Klan in being a broad, national movement.'},
+  {ch:'ch24',type:'mc',q:'The 1924 National Origins Act set immigration quotas at what percentage of the 1890 census population?',opts:['10%','5%','3%','2%'],ans:3,exp:'2% of the 1890 census — deliberately designed to curb southern and eastern European immigration.'},
+  {ch:'ch24',type:'fitb',q:'___ and ___ were Italian immigrant anarchists convicted on thin evidence and executed in 1927.',ans:['sacco and vanzetti','nicola sacco and bartolomeo vanzetti'],display:'Nicola Sacco and Bartolomeo Vanzetti',exp:'Their trial and execution reflected the era\'s nativist and anti-radical anxieties.'},
+  {ch:'ch24',type:'mc',q:'What law was at the center of the 1925 Scopes Monkey Trial?',opts:['The Volstead Act','The Butler Act','The National Origins Act','The Espionage Act'],ans:1,exp:'Tennessee\'s Butler Act banned teaching evolution in public schools.'},
+  {ch:'ch24',type:'mc',q:'Who defended John Scopes at the 1925 Scopes Trial?',opts:['William Jennings Bryan','Clarence Darrow','Albert Fall','Robert Wagner'],ans:1,exp:'Clarence Darrow led the defense; William Jennings Bryan argued for the prosecution.'},
+  {ch:'ch24',type:'fitb',q:'The ___ Amendment, ratified in 1919, established Prohibition.',ans:['18th','eighteenth'],display:'18th (Eighteenth)',exp:'The 18th Amendment banned alcohol; it was later repealed by the 21st Amendment under FDR.'},
+  {ch:'ch24',type:'mc',q:'Which Harlem Renaissance writer was known as the movement\'s "poet laureate"?',opts:['Claude McKay','Zora Neale Hurston','Langston Hughes','W. E. B. Du Bois'],ans:2,exp:'Langston Hughes was widely regarded as the poet laureate of the Harlem Renaissance.'},
+  {ch:'ch24',type:'mc',q:'Who drafted the Equal Rights Amendment (ERA) in the 1920s?',opts:['Margaret Sanger','Alice Paul','Zora Neale Hurston','Frances Perkins'],ans:1,exp:'Alice Paul pushed further than the 19th Amendment, seeking to end all sex discrimination.'},
+  {ch:'ch24',type:'fitb',q:'The Teapot Dome Scandal involved Secretary of the Interior ___ ___ ___ accepting bribes.',ans:['albert b fall','albert fall'],display:'Albert B. Fall',exp:'Fall accepted $300,000 in bribes for leasing navy oil reserves; he was fined $100,000 and served a year in prison.'},
+  {ch:'ch24',type:'mc',q:'What was Calvin Coolidge\'s well-known governing philosophy?',opts:['"A chicken in every pot"','"The business of America is business"','"Speak softly and carry a big stick"','"Return to normalcy"'],ans:1,exp:'"Return to normalcy" was Harding\'s slogan; Coolidge\'s philosophy centered on pro-business minimalism.'},
+  {ch:'ch24',type:'mc',q:'Who did Herbert Hoover defeat in the 1928 presidential election?',opts:['James Cox','Al Smith','Franklin Roosevelt','Alf Landon'],ans:1,exp:'Hoover beat Al Smith roughly 21 million votes to 15 million.'},
+
+  {ch:'ch25',type:'mc',q:'What is meant by buying stock "on margin"?',opts:['Paying the full price up front','A small down payment plus borrowed money','Buying only government bonds','Buying stock through a bank loan guaranteed by the FDIC'],ans:1,exp:'Margin buying let speculators control more stock than they could afford outright, amplifying both gains and losses.'},
+  {ch:'ch25',type:'fitb',q:'"___ ___," October 29, 1929, saw over 16 million shares traded and $14 billion lost in a single day.',ans:['black tuesday'],display:'Black Tuesday',exp:'Black Thursday (Oct. 24) preceded it with an 11% single-day loss.'},
+  {ch:'ch25',type:'mc',q:'What percentage of American wealth was controlled by the top 0.5–1% of Americans in the late 1920s?',opts:['About 10%','About 20%','Over one-third','About 50%'],ans:2,exp:'This extreme concentration of wealth meant there were no new buyers to sustain the stock market.'},
+  {ch:'ch25',type:'mc',q:'Which of the following was NOT a key factor in the conditions that led to the Dust Bowl?',opts:['Previous overcultivation of farmland','Decreasing American demand for farm produce','Unfavorable weather conditions (drought)','Poor farming techniques'],ans:1,exp:'The Dust Bowl was driven by over-farming, poor practices, and drought — not falling consumer demand.'},
+  {ch:'ch25',type:'fitb',q:'Hoover created the ___ ___ ___ (RFC) in 1932, setting aside $2 billion to rescue banks and institutions.',ans:['reconstruction finance corporation'],display:'Reconstruction Finance Corporation',exp:'The RFC was not direct relief to individuals — critics noted most aid went to a handful of large banks.'},
+  {ch:'ch25',type:'mc',q:'What was the effect of the Smoot-Hawley Tariff (1930)?',opts:['It lowered prices on imported goods','It triggered foreign retaliation and shrank global trade','It ended the Depression early','It was never actually signed into law'],ans:1,exp:'Raising tariffs led other nations to raise their own tariffs on American goods, worsening the global downturn.'},
+  {ch:'ch25',type:'mc',q:'Approximately how many WWI veterans marched on Washington as the "Bonus Army" in 1932?',opts:['1,500','5,000','15,000','50,000'],ans:2,exp:'About 15,000 veterans camped at Anacostia Flats demanding early payment of bonuses not due until 1945.'},
+  {ch:'ch25',type:'fitb',q:'General ___ ___, along with aides Eisenhower and Patton, forcibly removed the Bonus Army from Washington.',ans:['douglas macarthur'],display:'Douglas MacArthur',exp:'The raid burned the veterans\' camp and killed an infant with tear gas, badly damaging Hoover\'s public image.'},
+  {ch:'ch25',type:'mc',q:'What was a "Hooverville"?',opts:['A federal relief office','A homeless shantytown','A New Deal jobs program','A stock brokerage firm'],ans:1,exp:'Hoovervilles became a mocking symbol of Hoover\'s unpopularity during the Depression.'},
+  {ch:'ch25',type:'mc',q:'What did Hoover\'s Clark Memorandum (1930) lead to?',opts:['The Kellogg-Briand Pact','Increased military intervention in Latin America','The groundwork for FDR\'s "Good Neighbor" policy','U.S. entry into the League of Nations'],ans:2,exp:'The Clark Memorandum repudiated the Roosevelt Corollary and de-emphasized intervention, setting up FDR\'s later approach.'},
+
+  {ch:'ch26',type:'mc',q:'Which three advisors made up FDR\'s "Brains Trust"?',opts:['Perkins, Ickes, Hopkins','Tugwell, Moley, and Berle','Wagner, Stimson, and Fall','MacArthur, Eisenhower, and Patton'],ans:1,exp:'Rexford Tugwell, Raymond Moley, and Adolph Berle advised FDR in shaping early New Deal legislation.'},
+  {ch:'ch26',type:'fitb',q:'The Emergency Banking Act, signed March 9, 1933, took the U.S. off the ___ ___.',ans:['gold standard'],display:'gold standard',exp:'This gave the federal government more flexibility over the money supply.'},
+  {ch:'ch26',type:'mc',q:'Which agency was headed by Harry Hopkins and eventually employed over 8 million Americans?',opts:['The NRA','The AAA','The WPA','The TVA'],ans:2,exp:'The Works Progress Administration, funded by the 1935 Emergency Relief Appropriation Act ($4.8 billion).'},
+  {ch:'ch26',type:'mc',q:'Which New Deal agency suspended antitrust laws and let industries jointly set prices and production levels?',opts:['The AAA','The NIRA (via the NRA)','The FDIC','The TVA'],ans:1,exp:'The National Industrial Recovery Act created the NRA, symbolized by the "Blue Eagle" logo.'},
+  {ch:'ch26',type:'mc',q:'What did the Supreme Court do to the AAA and NIRA in 1935?',opts:['Expanded their authority','Struck them down as unconstitutional','Merged them into one agency','Renamed them under the Second New Deal'],ans:1,exp:'The Court ruled both programs overreached federal authority, prompting FDR\'s later Second New Deal and Court-Packing Plan.'},
+  {ch:'ch26',type:'fitb',q:'Dr. Francis E. Townsend, a retired dentist, proposed the ___ ___ — a $200/month pension for citizens over 60.',ans:['townsend plan'],display:'Townsend Plan',exp:'Some of its ideas were later incorporated into the Social Security Act.'},
+  {ch:'ch26',type:'mc',q:'What was Huey Long\'s "Share Our Wealth" plan?',opts:['A tax cut for the wealthy','Liquidating large fortunes to fund direct payments to families','A federal jobs program for veterans','A plan to repeal the Wagner Act'],ans:1,exp:'Long proposed $5,000 per family and $2,500 per worker, funded by liquidating large personal fortunes.'},
+  {ch:'ch26',type:'mc',q:'Which act created the National Labor Relations Board (NLRB)?',opts:['The Wagner Act','The Fair Labor Standards Act','The NIRA','The Social Security Act'],ans:0,exp:'The Wagner Act (1935) protected workers\' right to organize and use collective bargaining.'},
+  {ch:'ch26',type:'mc',q:'What did the Fair Labor Standards Act (1938) establish?',opts:['Social Security pensions','A minimum wage, 40-hour workweek, and a ban on child labor','Federal deposit insurance','The Securities and Exchange Commission'],ans:1,exp:'The FLSA was the last major piece of New Deal legislation, championed by Frances Perkins.'},
+  {ch:'ch26',type:'fitb',q:'The ___ ___ ___ (TVA), created in 1933, built dams for flood control and hydroelectric power, displacing about 15,000 families.',ans:['tennessee valley authority'],display:'Tennessee Valley Authority',exp:'The TVA is often cited as one of the New Deal\'s most lasting regional achievements.'},
+  {ch:'ch26',type:'mc',q:'Who was the first female member of any U.S. presidential Cabinet?',opts:['Eleanor Roosevelt','Frances Perkins','Mary McLeod Bethune','Mary Dewson'],ans:1,exp:'Frances Perkins served as Secretary of Labor throughout FDR\'s presidency.'},
+  {ch:'ch26',type:'mc',q:'Mary McLeod Bethune directed which New Deal division?',opts:['The NYA\'s Division of Negro Affairs','The WPA\'s Federal Art Project','The Social Security Administration','The Indian Reorganization Bureau'],ans:0,exp:'Bethune was a prominent Black educator brought in by FDR to lead this division of the National Youth Administration.'},
+  {ch:'ch26',type:'mc',q:'By what Electoral College margin did FDR defeat Alf Landon in 1936?',opts:['331–207','523–8','282–190','449–82'],ans:1,exp:'FDR won an overwhelming 523 to 8 electoral vote landslide in his 1936 re-election.'},
+  {ch:'ch26',type:'fitb',q:'FDR\'s proposal to add up to six more Supreme Court justices became known as the "___ ___ ___ ___."',ans:['supreme court packing plan','court packing plan'],display:'Supreme Court Packing Plan',exp:'The plan failed in Congress, though the Court began upholding New Deal legislation shortly after anyway.'},
+];
+let currentQuizFilter='all', activeQuizData=[...allQuizData], userAnswers={}, quizSubmitted=false;
+function setQuizFilter(ch,btn){
+  document.querySelectorAll('#quiz-filters .filter-btn').forEach(b=>b.classList.remove('active-filter'));
+  btn.classList.add('active-filter'); currentQuizFilter=ch; resetQuiz();
+}
+function renderQuiz(){
+  activeQuizData=currentQuizFilter==='all'?[...allQuizData]:allQuizData.filter(q=>q.ch===currentQuizFilter);
+  const chColors={ch24:'#3b82f6',ch25:'#a78bfa',ch26:'#22c55e'};
+  const chLabels={ch24:'CH.24',ch25:'CH.25',ch26:'CH.26'};
+  document.getElementById('quiz-count').textContent=activeQuizData.length+' questions';
+  if(quizSubmitted) return;
+  const area=document.getElementById('quiz-area');
+  area.innerHTML=activeQuizData.map((q,i)=>{
+    const chBadge=`<span class="q-ch-badge" style="background:${chColors[q.ch]||'var(--accent)'}20;color:${chColors[q.ch]||'var(--accent)'}">${chLabels[q.ch]||q.ch}</span>`;
+    const typeBadge=q.type==='mc'?'<span class="q-type-badge q-type-mc">MC</span>':'<span class="q-type-badge q-type-fitb">Fill-in</span>';
+    if(q.type==='mc') return `<div class="question-block" id="qblock-${i}"><div class="q-num">Q${i+1} of ${activeQuizData.length} ${chBadge} ${typeBadge}</div><div class="q-text">${q.q}</div><div class="options">${q.opts.map((o,j)=>`<div class="option" id="opt-${i}-${j}" onclick="selectMC(${i},${j})" role="radio" aria-checked="false"><span class="opt-letter">${['A','B','C','D'][j]}</span><span>${o}</span></div>`).join('')}</div><div class="explanation" id="exp-${i}">${q.exp}</div></div>`;
+    return `<div class="question-block" id="qblock-${i}"><div class="q-num">Q${i+1} of ${activeQuizData.length} ${chBadge} ${typeBadge}</div><div class="q-text">${q.q}</div><input type="text" class="fitb-input" id="fitb-${i}" placeholder="Type your answer..." oninput="storeFITB(${i})" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Answer for question ${i+1}"><div class="fitb-correct-answer" id="fitb-ans-${i}">Correct: ${q.display}</div><div class="explanation" id="exp-${i}">${q.exp}</div></div>`;
+  }).join('');
+  document.getElementById('submit-btn').style.display='block';
+}
+function selectMC(qi,oi){
+  if(quizSubmitted) return;
+  document.querySelectorAll(`#qblock-${qi} .option`).forEach(o=>{o.style.borderColor='';o.style.background='';o.setAttribute('aria-checked','false');});
+  document.getElementById(`opt-${qi}-${oi}`).style.borderColor='var(--accent)';
+  document.getElementById(`opt-${qi}-${oi}`).style.background='var(--accent-dim)';
+  document.getElementById(`opt-${qi}-${oi}`).setAttribute('aria-checked','true');
+  userAnswers[qi]={type:'mc',val:oi};
+}
+function storeFITB(qi){ userAnswers[qi]={type:'fitb',val:document.getElementById(`fitb-${qi}`).value.trim().toLowerCase()}; }
+function submitQuiz(){
+  for(let i=0;i<activeQuizData.length;i++){
+    const q=activeQuizData[i];
+    if(!userAnswers[i]){
+      if(q.type==='mc'){alert(`Please answer question ${i+1}.`);return;}
+      else{const v=document.getElementById(`fitb-${i}`).value.trim();if(!v){alert(`Please answer question ${i+1}.`);return;}userAnswers[i]={type:'fitb',val:v.toLowerCase()};}
+    }
+  }
+  quizSubmitted=true;
+  let score=0,mcC=0,fitbC=0,mcT=0,fitbT=0;
+  activeQuizData.forEach((q,i)=>{
+    const ans=userAnswers[i];
+    if(q.type==='mc'){
+      mcT++;
+      document.querySelectorAll(`#qblock-${i} .option`).forEach(o=>{o.style.borderColor='';o.style.background='';o.classList.add('answered');});
+      if(ans.val===q.ans){score++;mcC++;document.getElementById(`opt-${i}-${ans.val}`).classList.add('correct');}
+      else{document.getElementById(`opt-${i}-${ans.val}`).classList.add('wrong');document.getElementById(`opt-${i}-${q.ans}`).classList.add('reveal');}
+    } else {
+      fitbT++;
+      const input=document.getElementById(`fitb-${i}`);
+      const correct=q.ans.some(a=>ans.val===a||ans.val.includes(a)||a.includes(ans.val));
+      if(correct){score++;fitbC++;input.classList.add('correct-input');}
+      else{input.classList.add('wrong-input');document.getElementById(`fitb-ans-${i}`).style.display='block';}
+    }
+    document.getElementById(`exp-${i}`).style.display='block';
+  });
+  const pct=Math.round(score/activeQuizData.length*100);
+  const grade=pct>=90?'A':pct>=80?'B':pct>=70?'C':'Keep studying!';
+  document.getElementById('score-display').textContent=score+' / '+activeQuizData.length;
+  document.getElementById('score-breakdown').innerHTML=`${pct}% &nbsp;·&nbsp; ${grade} &nbsp;·&nbsp; MC: ${mcC}/${mcT} &nbsp;·&nbsp; Fill-in: ${fitbC}/${fitbT}`;
+  document.getElementById('quiz-score').style.display='block';
+  document.getElementById('submit-btn').style.display='none';
+  document.getElementById('quiz-score').scrollIntoView({behavior:'smooth'});
+}
+function resetQuiz(){ userAnswers={};quizSubmitted=false;document.getElementById('quiz-score').style.display='none';document.getElementById('quiz-area').innerHTML='';renderQuiz(); }
+
+// ── DISCUSSION ──
+const DISC_QUESTIONS = [
+  {
+    ch:'ch24',
+    q:'Discuss the U.S. economy after World War I.',
+    points:[
+      {text:'<strong>Mass production</strong> (especially automobiles) drove one of the most prosperous decades in U.S. history'},
+      {text:'<strong>Henry Ford</strong> perfected the moving assembly line — Model T price fell from $850 (1908) to $300 (1924)'},
+      {text:'By 1929, 23M+ automobiles were on American roads'},
+      {text:'Store credit and installment plans expanded consumer buying power'},
+    ],
+    model:'The 1920s brought unprecedented prosperity, driven largely by mass production. Henry Ford\'s moving assembly line cut the Model T\'s price from $850 in 1908 to $300 in 1924, putting car ownership within reach of average Americans — by 1929 there were over 23 million cars on U.S. roads. New credit and installment-buying options let consumers purchase goods they couldn\'t previously afford outright, fueling a consumer economy built on rising wages and easy debt.'
+  },
+  {
+    ch:'ch24',
+    q:'Explain the growth of leisure time during the 1920s.',
+    points:[
+      {text:'Movie palaces drew up to <strong>90M weekly</strong> attendance by decade\'s end'},
+      {text:'1927: <strong>The Jazz Singer</strong> (Al Jolson) — first successful "talkie"'},
+      {text:'Commercial radio created national celebrities and boosted the sports industry'},
+      {text:'<strong>Charles Lindbergh</strong> — first solo transatlantic flight, 1927'},
+    ],
+    model:'Rising disposable income let Americans spend more on entertainment. "Movie palaces" could seat thousands, and by the end of the decade weekly movie attendance reached roughly 90 million. 1927 marked a turning point with The Jazz Singer, the first successful sound film. Commercial radio nationalized culture, turning athletes and entertainers into celebrities recognized across the country. Aviation captured the public imagination too, especially after Charles Lindbergh\'s solo transatlantic flight in 1927.'
+  },
+  {
+    ch:'ch24',
+    q:'Discuss the "Roaring \'20s" in the cities, and the rise of nativism and intolerance in rural areas.',
+    points:[
+      {text:'<strong>Flapper</strong> culture and "new morality," influenced by popularized ideas of <strong>Sigmund Freud</strong>'},
+      {text:'19th Amendment (1920) and <strong>Alice Paul\'s</strong> Equal Rights Amendment'},
+      {text:'Harlem Renaissance — <strong>Langston Hughes</strong>, <strong>Claude McKay</strong>, <strong>Zora Neale Hurston</strong>, <strong>Marcus Garvey</strong>, <strong>W. E. B. Du Bois</strong>'},
+      {text:'Second Ku Klux Klan — anti-Black, anti-immigrant, anti-Catholic, anti-Jewish nativism'},
+      {text:'Immigration Act (1924, 3%/1910 census) and National Origins Act (1924, 2%/1890 census)'},
+      {text:'<strong>Sacco and Vanzetti</strong> executed 1927; Scopes Trial (1925) — <strong>Bryan</strong> v. <strong>Darrow</strong>'},
+    ],
+    model:'Urban and rural America diverged sharply in the 1920s. City dwellers embraced the "flapper" and a more permissive "new morality," partly inspired by Sigmund Freud\'s ideas about sexuality. Women gained the vote via the 19th Amendment, and Alice Paul pushed further with an Equal Rights Amendment. In Harlem, Black writers and artists — Langston Hughes, Claude McKay, Zora Neale Hurston — created a cultural renaissance, while Marcus Garvey and W. E. B. Du Bois offered competing visions of Black political empowerment. Rural, Protestant Americans reacted to these changes — plus rising immigration — with fear and intolerance: the Second Ku Klux Klan targeted Black Americans, Catholics, Jews, and immigrants; Congress passed restrictive immigration quotas in 1924; and the Sacco and Vanzetti case and the Scopes Trial both exposed deep anxieties about foreigners, radicalism, and modern science challenging traditional belief.'
+  },
+  {
+    ch:'ch24',
+    q:'Discuss politics of the 1920s: Harding, Coolidge, and Hoover.',
+    points:[
+      {text:'<strong>Warren G. Harding</strong> — "return to normalcy," won 1920 vs. <strong>James Cox</strong>'},
+      {text:'Teapot Dome Scandal — <strong>Albert B. Fall</strong> took bribes worth $300,000'},
+      {text:'<strong>Calvin Coolidge</strong> succeeds Harding (1923) — "the business of America is business"'},
+      {text:'<strong>Herbert Hoover</strong> won 1928 vs. <strong>Al Smith</strong>, continuing Republican dominance'},
+    ],
+    model:'Three Republican presidents dominated the decade. Warren Harding won in 1920 promising a "return to normalcy" after WWI, but his administration was marred by scandal — most notably Teapot Dome, in which Secretary of the Interior Albert B. Fall accepted $300,000 in bribes for illegally leasing federal oil reserves. After Harding\'s death in 1923, Calvin Coolidge took over, governing under the belief that "the business of America is business" — minimal regulation, pro-business policy. Herbert Hoover extended this era of Republican dominance by defeating Al Smith in 1928, entering office just as the decade\'s prosperity was about to collapse.'
+  },
+  {
+    ch:'ch25',
+    q:'Describe the isolationist foreign policy during the 1920s and early \'30s, including Kellogg-Briand and Good Neighbor.',
+    points:[
+      {text:'Kellogg-Briand Pact (1928) renounced war as an instrument of national policy'},
+      {text:'Hoover\'s Clark Memorandum (1930) repudiated the Roosevelt Corollary'},
+      {text:'Hoover-Stimson Doctrine — refused to recognize territory seized by force'},
+      {text:'Laid groundwork for FDR\'s later "Good Neighbor" policy'},
+    ],
+    model:'U.S. foreign policy in this era leaned isolationist but wasn\'t entirely disengaged. The Kellogg-Briand Pact (1928) saw the U.S. join other nations in formally renouncing war as a tool of national policy, though it had no enforcement mechanism. Under Hoover, the Clark Memorandum (1930) walked back the interventionist Roosevelt Corollary, and the Hoover-Stimson Doctrine refused to recognize territorial gains achieved through force (a response to Japan\'s invasion of Manchuria). Together, these set the stage for Franklin Roosevelt\'s more fully developed "Good Neighbor" policy of reduced intervention in Latin America during the 1930s.'
+  },
+  {
+    ch:'ch25',
+    q:'Explain the U.S. economy in the last few years of the 1920s, focusing on stock market speculation and poor income distribution.',
+    points:[
+      {text:'Buying stock "on margin" — small down payment plus borrowed money'},
+      {text:'Dow Jones peaked at 381 points, September 1929'},
+      {text:'80% of families had virtually no savings'},
+      {text:'0.5–1% of Americans controlled over 1/3 of all wealth'},
+    ],
+    model:'By the late 1920s, speculation had overtaken sound investment. Buyers purchased stock "on margin" — a small down payment plus borrowed money — betting on continued price increases; this pushed the Dow to a peak of 381 points in September 1929. Underneath the boom, income distribution was badly skewed: roughly 80% of American families had virtually no savings, while just 0.5–1% of the population controlled over a third of the nation\'s wealth. This meant there were too few new buyers to sustain the market once speculation slowed — a structural weakness that made a crash almost inevitable.'
+  },
+  {
+    ch:'ch25',
+    q:'Explain how these factors led to the stock market crash of 1929, and the continued downward economic cycle from 1929–1932.',
+    points:[
+      {text:'Black Thursday (10/24/1929) and Black Tuesday (10/29/1929)'},
+      {text:'Market value fell from $64B to ~$30B, Sept–Nov 1929'},
+      {text:'International war-debt defaults, income inequality, and psychological panic'},
+      {text:'90%+ of banks had invested in the market — mass bank failures followed'},
+    ],
+    model:'The crash unfolded over about a week in late October 1929: "Black Thursday" (Oct. 24) saw an 11% single-day loss, and "Black Tuesday" (Oct. 29) saw over 16 million shares traded and $14 billion lost in one day. Between September and November, the market\'s total value collapsed from roughly $64 billion to $30 billion. The crash wasn\'t caused by a single factor — international debt defaults from WWI, the income-distribution problem, and a self-reinforcing psychological panic all played a role. Because over 90% of banks had themselves invested in the market, the crash triggered a wave of bank failures that spread the damage far beyond the small share of Americans (about 10%) who actually owned stock, dragging the whole economy into a downward spiral through 1932.'
+  },
+  {
+    ch:'ch25',
+    q:'Describe how President Hoover responded to the Depression: public works, RFC, tariffs, and balanced budgets.',
+    points:[
+      {text:'Believed in "American individualism" over direct federal relief'},
+      {text:'Reconstruction Finance Corporation (RFC, 1932) — $2 billion to rescue institutions, not people'},
+      {text:'Emergency Relief and Construction Act — $1.5B for state public works'},
+      {text:'Smoot-Hawley Tariff (1930) worsened the Depression'},
+    ],
+    model:'Hoover\'s response was constrained by his deep belief in "American individualism" — the idea that voluntary, private action, not federal handouts, was the proper path to recovery. When conditions worsened, he reluctantly created the Reconstruction Finance Corporation (1932), setting aside $2 billion to shore up banks and financial institutions, though this did little for individuals directly (most of the earliest loans went to just three large banks). He later authorized $1.5 billion for state public works projects. Meanwhile, the Smoot-Hawley Tariff (1930), meant to protect American industry, backfired by triggering foreign retaliation that shrank global trade. Hoover also clung to balanced-budget orthodoxy rather than embracing deficit spending, which many historians argue delayed meaningful relief.'
+  },
+  {
+    ch:'ch25',
+    q:'Explain the "Bonus Army" controversy, and how it exemplified how bad things had become.',
+    points:[
+      {text:'~15,000 WWI veterans marched on D.C. demanding early bonus payment'},
+      {text:'Senate rejected the bonus in July 1932'},
+      {text:'Hoover sent <strong>MacArthur</strong>, <strong>Eisenhower</strong>, and <strong>Patton</strong> to clear the camp'},
+      {text:'Camp burned, dozens injured, an infant killed — cemented Hoover\'s political collapse'},
+    ],
+    model:'In spring 1932, roughly 15,000 desperate WWI veterans marched on Washington as the "Bonus Expeditionary Force," demanding early payment of bonuses not due until 1945. After the Senate rejected their request in July, Hoover ordered police to clear their makeshift camps, and when the resulting clash killed two veterans, he escalated further — sending General Douglas MacArthur, with aides Dwight Eisenhower and George Patton, to forcibly remove the remaining protesters. The military burned the camp and injured dozens, including a twelve-week-old infant killed by tear gas. The spectacle of the U.S. Army attacking its own veterans captured just how desperate the country had become, and it permanently damaged Hoover\'s public standing heading into the 1932 election.'
+  },
+  {
+    ch:'ch25',
+    q:'Describe a "Hooverville."',
+    points:[
+      {text:'A homeless shantytown, named mockingly after Hoover'},
+      {text:'Related slang: "Hoover blanket" (newspaper), "Hoover flag" (empty turned-out pocket)'},
+      {text:'Symbol of mass homelessness and Hoover\'s unpopularity'},
+    ],
+    model:'A "Hooverville" was a makeshift shantytown of the homeless and unemployed, built from scrap materials on the outskirts of major cities. The name mockingly blamed President Hoover for the crisis, and similar slang spread alongside it — a "Hoover blanket" was a newspaper used for warmth, and a "Hoover flag" was an empty pocket turned inside out. Together these terms captured the depth of public resentment toward a president seen as indifferent to mass suffering.'
+  },
+  {
+    ch:'ch26',
+    q:'Explain the 1932 election (FDR vs. Hoover), FDR\'s background, and how he campaigned for the New Deal.',
+    points:[
+      {text:'<strong>FDR</strong> beat <strong>Hoover</strong> in a landslide, November 1932'},
+      {text:'Advised by the "Brains Trust": <strong>Tugwell</strong>, <strong>Moley</strong>, <strong>Berle</strong>'},
+      {text:'Pragmatic, experimental approach vs. Hoover\'s rigid individualism'},
+      {text:'"The only thing we have to fear is fear itself" — inaugural address'},
+    ],
+    model:'By 1932, Hoover\'s unpopularity was so severe that Franklin D. Roosevelt won the presidency in a landslide. Roosevelt did not campaign on a detailed policy blueprint; instead he promised active, flexible government experimentation, guided by an informal group of advisors known as the "Brains Trust" (Rexford Tugwell, Raymond Moley, and Adolph Berle). This pragmatism stood in sharp contrast to Hoover\'s rigid commitment to individualism. Roosevelt was inaugurated in March 1933, delivering his famous line, "The only thing we have to fear is fear itself," signaling a new, hopeful tone of decisive federal action.'
+  },
+  {
+    ch:'ch26',
+    q:'Describe the various New Deal programs — their goals, successes, and failures.',
+    points:[
+      {text:'Financial: Bank holiday, Emergency Banking Act, <strong>FDIC</strong>, Federal Reserve Board, <strong>SEC</strong>'},
+      {text:'Business/Unemployment: <strong>NRA</strong>, RFC continuation, <strong>CCC</strong>, <strong>WPA</strong>, Social Security'},
+      {text:'Labor: <strong>Wagner Act/NLRB</strong>, Fair Labor Standards Act'},
+      {text:'Agriculture: <strong>AAA</strong>, <strong>TVA</strong>'},
+      {text:'Successes and failures: struck down programs (AAA/NIRA, 1935) vs. lasting programs (Social Security, FDIC, TVA)'},
+    ],
+    model:'FDR\'s New Deal unfolded in waves. On banking, the Emergency Banking Act (1933) took the country off the gold standard and restored confidence, while the FDIC insured deposits up to $2,500 and the SEC (created via the Securities Act of 1933) regulated stock trading. To fight unemployment, the CCC put young men to work on conservation projects, and later the WPA employed over 8 million Americans under Harry Hopkins. The NRA tried to stabilize industry through fair-practice codes, and the AAA paid farmers to cut production — but the Supreme Court struck down both the NRA (via the NIRA) and the AAA in 1935 as federal overreach. Labor gained lasting protections through the Wagner Act (collective bargaining) and the Fair Labor Standards Act (minimum wage, 40-hour week, no child labor). The TVA brought electricity and flood control to the Tennessee Valley, though it displaced thousands of families. Overall, the New Deal didn\'t fully end the Depression, but it fundamentally expanded the federal government\'s role in economic life — a legacy that outlasted the programs the courts struck down.'
+  },
+  {
+    ch:'ch26',
+    q:'Describe criticisms of the New Deal from both conservatives and liberals, including Townsend, Coughlin, and Huey Long.',
+    points:[
+      {text:'<strong>Francis Townsend</strong> — Townsend Plan, $200/month pension for over-60s'},
+      {text:'<strong>Charles Coughlin</strong> — "radio priest," said FDR didn\'t go far enough'},
+      {text:'<strong>Huey Long</strong> — "Share Our Wealth," $5,000/family from liquidated fortunes'},
+      {text:'Conservatives/Supreme Court — said the New Deal overreached federal authority'},
+    ],
+    model:'The New Deal drew fire from both directions. On the left, critics said FDR hadn\'t done enough: Dr. Francis Townsend proposed a $200-a-month pension for everyone over 60 (the Townsend Plan); Father Charles Coughlin, a hugely popular "radio priest," argued FDR had stopped short on labor rights and monetary reform; and Louisiana Senator Huey "Kingfish" Long proposed "Share Our Wealth," which would liquidate large personal fortunes to guarantee every family $5,000 and every worker $2,500 — a plan that drew over four million followers before Long\'s assassination in 1935. On the right, conservatives and eventually the Supreme Court argued the New Deal had unconstitutionally expanded federal power, striking down the AAA and NIRA in 1935. This pressure from both sides pushed FDR toward the more aggressive "Second New Deal."'
+  },
+  {
+    ch:'ch26',
+    q:'Explain the reasons for FDR\'s "court packing" plan, and the results of this attempt.',
+    points:[
+      {text:'FDR beat <strong>Alf Landon</strong> in 1936, Electoral College 523–8'},
+      {text:'Plan: add 1 justice per justice over 70 who wouldn\'t retire, up to 6 more (bench 9→15)'},
+      {text:'Reason: retaliate against the Court for striking down AAA/NIRA, pressure it on the Second New Deal'},
+      {text:'Result: FAILED in Congress, even within FDR\'s own party — but the Court began upholding New Deal laws anyway afterward'},
+    ],
+    model:'Fresh off a landslide re-election in 1936 (523 to 8 electoral votes over Alf Landon), FDR sought to protect his Second New Deal from further Supreme Court challenges after the Court had struck down the AAA and NIRA in 1935. His "Supreme Court Packing Plan" proposed adding one new justice for every sitting justice over age 70 who refused to retire, which could have expanded the bench from nine to fifteen. The plan provoked fierce, bipartisan opposition — even members of FDR\'s own party saw it as a dangerous overreach — and it ultimately failed in Congress. Ironically, though, the Court soon began upholding key New Deal laws like the Wagner Act and Social Security Act anyway, leading some historians to call this "the switch in time that saved nine."'
+  },
+];
+let discInit=false;
+function renderDiscussion(){
+  const container=document.getElementById('disc-container');
+  container.innerHTML=DISC_QUESTIONS.map((dq,idx)=>renderDiscQ(dq,idx)).join('');
+}
+function renderDiscQ(dq,idx){
+  const chLabel=dq.ch.replace('ch','Ch ');
+  const pointsHTML=dq.points.map((p,pi)=>`<div class="disc-point"><input type="checkbox" class="disc-check" id="chk-${idx}-${pi}" onchange="updateDiscScore(${idx})" aria-label="Covered: ${p.text.replace(/<[^>]+>/g,'')}"><label class="disc-point-text" for="chk-${idx}-${pi}">${p.text}</label></div>`).join('');
+  return `<div class="disc-q" id="disc-${idx}" data-ch="${dq.ch}"><div class="disc-q-header"><span class="disc-q-num">${chLabel} · Q${idx+1}</span><div class="disc-q-text">${dq.q}</div></div><div class="disc-q-body"><textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Write your response here…" rows="5" aria-label="Your response to question ${idx+1}"></textarea><div class="disc-btn-row"><button class="btn primary" onclick="submitDisc(${idx})">Submit &amp; Grade</button><button class="btn" onclick="resetDisc(${idx})">↺ Reset</button></div><div class="disc-rubric" id="disc-rubric-${idx}"><div class="disc-rubric-title">✅ Content Checklist — check each point you covered</div>${pointsHTML}<div class="disc-self-score"><span>Your score:</span><span class="disc-score-display" id="disc-score-${idx}">0 / ${dq.points.length}</span><span style="color:var(--muted);font-size:12px" id="disc-grade-${idx}"></span></div><div class="disc-model" id="disc-model-${idx}"><div class="disc-model-title">📋 Model Answer</div><p style="color:var(--muted);font-size:13px;line-height:1.7">${dq.model}</p></div><button class="btn" style="margin-top:10px;font-size:12px" onclick="toggleModel(${idx})">Show / Hide Model Answer</button></div></div></div>`;
+}
+function submitDisc(idx){
+  const ta=document.getElementById(`disc-ta-${idx}`);
+  if(!ta.value.trim()){ta.style.borderColor='var(--red)';return;}
+  ta.classList.add('submitted');ta.readOnly=true;
+  document.getElementById(`disc-rubric-${idx}`).classList.add('show');
+}
+function resetDisc(idx){
+  const ta=document.getElementById(`disc-ta-${idx}`);
+  ta.value='';ta.readOnly=false;ta.style.borderColor='';ta.classList.remove('submitted');
+  document.getElementById(`disc-rubric-${idx}`).classList.remove('show');
+  document.getElementById(`disc-model-${idx}`).classList.remove('show');
+  document.querySelectorAll(`[id^="chk-${idx}-"]`).forEach(c=>c.checked=false);
+  updateDiscScore(idx);
+}
+function updateDiscScore(idx){
+  const dq=DISC_QUESTIONS[idx];
+  const checked=document.querySelectorAll(`[id^="chk-${idx}-"]:checked`).length;
+  const total=dq.points.length;
+  const pct=Math.round(checked/total*100);
+  document.getElementById(`disc-score-${idx}`).textContent=`${checked} / ${total}`;
+  const grade=pct>=90?'🌟 Excellent':pct>=70?'👍 Good':pct>=50?'📚 Needs work':'🔄 Review material';
+  document.getElementById(`disc-grade-${idx}`).textContent=grade;
+}
+function toggleModel(idx){ document.getElementById(`disc-model-${idx}`).classList.toggle('show'); }
+function filterDisc(ch,btn){
+  document.querySelectorAll('.disc-filter .filter-btn').forEach(b=>b.classList.remove('active-filter'));
+  btn.classList.add('active-filter');
+  document.querySelectorAll('.disc-q').forEach(el=>{el.style.display=(ch==='all'||el.dataset.ch===ch)?'block':'none';});
+}
+
+// ── INIT ──
+window.addEventListener('DOMContentLoaded',()=>{
+  renderCard(); updateMasteryBar(); loadObjMastery();
+  document.getElementById('flashcard').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')flipCard();});
+});
+</script>
+</body>
+</html>
