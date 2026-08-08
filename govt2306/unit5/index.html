@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GOVT 2306 — Unit 5: Executive, Judicial &amp; Criminal Justice</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#0a0a0f; --surface:#12121a; --surface2:#16161f; --border:#1e1e2e;
+  --text:#e8e8f0; --muted:#6b6b80; --green:#22c55e; --red:#ef4444;
+  --yellow:#eab308; --purple:#a78bfa; --orange:#f97316;
+  --accent:#f97316; --accent-dim:rgba(249,115,22,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(249,115,22,0.025) 39px,rgba(249,115,22,0.025) 40px),
+  repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(249,115,22,0.025) 39px,rgba(249,115,22,0.025) 40px);}
+body::before{content:'GOVT 2306 · Unit 5 · Chapters 9 · 10 · 13';position:fixed;top:0;left:0;right:0;
+  background:rgba(10,10,15,0.95);border-bottom:1px solid var(--border);padding:10px 16px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);z-index:100;letter-spacing:.05em;}
+.topnav{display:flex;gap:4px;padding:48px 12px 8px;overflow-x:auto;position:sticky;top:0;
+  background:rgba(10,10,15,0.97);z-index:90;border-bottom:1px solid var(--border);}
+.nav-btn{flex-shrink:0;background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:7px 13px;border-radius:6px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:11px;transition:all .15s;}
+.nav-btn:hover{color:var(--text);border-color:var(--accent);}
+.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.nav-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.panel{display:none;padding:20px 16px 60px;max-width:860px;margin:0 auto;}
+.panel.active{display:block;}
+h1{font-size:1.4rem;font-weight:600;color:var(--accent);margin-bottom:4px;}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;display:block;}
+.exam-pill{display:inline-block;background:rgba(234,179,8,0.15);border:1px solid var(--yellow);
+  color:var(--yellow);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;
+  border-radius:20px;margin-bottom:20px;}
+.textbook-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.textbook-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;
+  transition:all .15s;}
+.textbook-links a:hover{color:var(--accent);border-color:var(--accent);}
+
+/* Objectives — one color class per chapter: ch9 orange, ch10 purple, ch13 orange */
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  margin-bottom:10px;cursor:pointer;transition:border-color .15s;}
+.obj-card:hover{border-color:var(--accent);}
+.obj-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.obj-header{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;
+  padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.ch9 .obj-num{color:var(--orange);background:rgba(249,115,22,0.12);}
+.ch10 .obj-num{color:var(--purple);background:rgba(167,139,250,0.12);}
+.ch13 .obj-num{color:var(--orange);background:rgba(249,115,22,0.12);}
+.obj-title{font-size:.88rem;font-weight:500;flex:1;}
+.obj-expand{color:var(--muted);font-size:12px;transition:transform .2s;}
+.obj-body{display:none;padding:0 16px 14px;font-size:.84rem;line-height:1.65;color:#b0b0c8;}
+.obj-body.open{display:block;}
+.obj-body p{margin-bottom:8px;}
+.obj-master-btn{margin-top:10px;background:transparent;border:1px solid var(--border);
+  color:var(--muted);padding:5px 12px;border-radius:4px;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;transition:all .15s;}
+.obj-master-btn.mastered{border-color:var(--green);color:var(--green);background:rgba(34,197,94,0.08);}
+.mastery-bar{background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  height:6px;margin-bottom:20px;overflow:hidden;}
+.mastery-fill{height:100%;background:var(--green);border-radius:20px;transition:width .4s;}
+.reset-mastery-btn{display:block;margin-bottom:20px;background:transparent;
+  border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:4px;
+  cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;}
+.reset-mastery-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* Study Guide */
+.chapter-block{margin-bottom:16px;}
+.chapter-header{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;
+  align-items:center;font-weight:500;font-size:.9rem;transition:border-color .15s;}
+.chapter-header:hover{border-color:var(--accent);}
+.chapter-body{display:none;background:var(--surface2);border:1px solid var(--border);
+  border-top:none;border-radius:0 0 8px 8px;padding:16px;}
+.chapter-body h3{font-size:.82rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px;}
+.chapter-body h3:first-child{margin-top:0;}
+.chapter-body p,.chapter-body li{font-size:.84rem;line-height:1.7;color:#b0b0c8;margin-bottom:6px;}
+.chapter-body ul{padding-left:18px;}
+.chapter-body strong{color:var(--text);}
+.flag-note{display:block;background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.3);
+  border-radius:6px;padding:8px 12px;font-size:.78rem;color:var(--yellow);margin:8px 0;}
+
+/* Flashcards */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:5px 12px;border-radius:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;transition:all .15s;}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.fc-wrap{perspective:1000px;margin-bottom:16px;}
+.fc-card{width:100%;min-height:220px;position:relative;transform-style:preserve-3d;
+  transition:transform .5s;cursor:pointer;}
+.fc-card.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  display:flex;flex-direction:column;justify-content:center;padding:24px;}
+.fc-back{transform:rotateY(180deg);border-color:var(--accent);background:var(--accent-dim);}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
+.fc-q,.fc-a{font-size:1rem;line-height:1.6;color:var(--text);}
+.fc-a{color:var(--accent);}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);
+  text-align:center;margin-bottom:12px;}
+.fc-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+.fc-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);
+  padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82rem;transition:all .15s;}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent);}
+.fc-btn.mastered-btn{border-color:var(--green);color:var(--green);}
+.fc-nav{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+.fc-empty{text-align:center;padding:40px;color:var(--muted);font-size:.9rem;}
+
+/* Quiz */
+.quiz-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.quiz-q-text{font-size:.9rem;margin-bottom:12px;line-height:1.6;}
+.quiz-opts label{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;
+  border-radius:5px;cursor:pointer;font-size:.85rem;line-height:1.5;transition:background .1s;}
+.quiz-opts label:hover{background:rgba(255,255,255,0.04);}
+.quiz-opts input{margin-top:3px;flex-shrink:0;accent-color:var(--accent);}
+.fitb-input{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:8px 12px;border-radius:5px;font-size:.85rem;margin-top:8px;}
+.fitb-input:focus{outline:none;border-color:var(--accent);}
+.q-correct{border-color:var(--green)!important;background:rgba(34,197,94,0.06)!important;}
+.q-wrong{border-color:var(--red)!important;background:rgba(239,68,68,0.06)!important;}
+.q-exp{font-size:.8rem;color:#9090b0;margin-top:8px;padding-top:8px;
+  border-top:1px solid var(--border);display:none;}
+.q-exp.show{display:block;}
+#submit-btn,#reset-btn{padding:10px 22px;border-radius:6px;cursor:pointer;
+  font-size:.88rem;font-weight:500;transition:all .15s;border:1px solid;}
+#submit-btn{background:var(--accent);border-color:var(--accent);color:#fff;margin-right:8px;}
+#submit-btn:hover{opacity:.85;}
+#reset-btn{background:transparent;border-color:var(--border);color:var(--muted);}
+#reset-btn:hover{border-color:var(--red);color:var(--red);}
+#quiz-score{margin-top:16px;padding:14px;background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;font-size:.9rem;display:none;}
+
+/* Discussion */
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.disc-q-text{font-size:.9rem;line-height:1.6;margin-bottom:12px;font-weight:500;}
+.disc-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:10px 12px;border-radius:5px;font-size:.84rem;
+  min-height:120px;resize:vertical;font-family:'IBM Plex Sans',sans-serif;line-height:1.6;}
+.disc-textarea:focus{outline:none;border-color:var(--accent);}
+.disc-btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.disc-btn{padding:6px 14px;border-radius:5px;cursor:pointer;font-size:.82rem;
+  border:1px solid var(--border);background:var(--surface2);color:var(--muted);transition:all .15s;}
+.disc-btn:hover{color:var(--text);}
+.disc-btn.primary{border-color:var(--accent);color:var(--accent);}
+.disc-rubric{display:none;margin-top:12px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:6px;padding:12px;}
+.disc-rubric.show{display:block;}
+.rubric-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;
+  border-bottom:1px solid var(--border);font-size:.82rem;}
+.rubric-item:last-child{border-bottom:none;}
+.rubric-item input[type=checkbox]{flex-shrink:0;margin-top:2px;accent-color:var(--green);}
+.disc-score{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--green);
+  margin-top:8px;}
+.model-answer{display:none;margin-top:10px;font-size:.82rem;line-height:1.65;
+  color:#9090b0;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.2);
+  border-radius:6px;padding:12px;}
+.model-answer.show{display:block;}
+
+/* Notes */
+.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.notes-grid{grid-template-columns:1fr;}}
+.note-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.note-card h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.note-lines{display:flex;flex-direction:column;gap:8px;}
+.note-line{border-bottom:1px solid var(--border);min-height:28px;}
+.video-block{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:14px 16px;margin-bottom:12px;}
+.video-block h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.video-link{display:flex;align-items:center;gap:8px;padding:7px 0;font-size:.84rem;
+  border-bottom:1px solid var(--border);}
+.video-link:last-child{border-bottom:none;}
+.video-link a{color:var(--text);text-decoration:none;flex:1;}
+.video-link a:hover{color:var(--accent);}
+.video-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);
+  border:1px solid var(--border);padding:2px 6px;border-radius:10px;flex-shrink:0;}
+.video-note{font-size:.74rem;color:var(--muted);margin-top:8px;line-height:1.5;}
+.source-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+.source-list a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;}
+.source-list a:hover{color:var(--accent);border-color:var(--accent);}
+footer{text-align:center;padding:30px 16px;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;color:var(--muted);}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}
+  .fc-card{transition:none!important;}}
+@media print{
+  body::before,.topnav,.exam-pill,.textbook-links,footer,.fc-controls,.fc-nav,.filter-row,
+  #submit-btn,#quiz-score,.disc-btn-row,.disc-rubric,.obj-master-btn,.reset-mastery-btn,
+  .mastery-bar{display:none!important;}
+  .panel{display:none!important;}.panel.active{display:block!important;}
+  *,*::before,*::after{background:white!important;background-color:white!important;
+    background-image:none!important;color:black!important;border-color:#bbb!important;
+    box-shadow:none!important;-webkit-text-fill-color:black!important;}
+  body{font-size:12pt;}.chapter-body{display:block!important;}
+  @page{margin:.75in;}
+}
+</style>
+</head>
+<body>
+<nav class="topnav" role="tablist" aria-label="Study sections">
+  <button class="nav-btn active" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)" role="tab" aria-selected="false" aria-controls="panel-guide">📖 Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)" role="tab" aria-selected="false" aria-controls="panel-flashcards">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)" role="tab" aria-selected="false" aria-controls="panel-quiz">✏️ Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('discussion',this)" role="tab" aria-selected="false" aria-controls="panel-discussion">💬 Discussion</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes Template</button>
+</nav>
+<div class="panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+  <span class="unit-badge">GOVT 2306 · Unit 5 (Final)</span>
+  <h1>Executive, Judicial &amp; Criminal Justice</h1>
+  <span class="exam-pill">📅 Chapters 9 · 10 · 13 — Final Aug 6–8 (check Blackboard)</span>
+  <div class="textbook-links">
+    <a href="#">Ch. 9: The Executive Branch</a>
+    <a href="#">Ch. 10: The Judicial Branch</a>
+    <a href="#">Ch. 13: The Criminal Justice System</a>
+  </div>
+  <div class="flag-note">📌 Three-chapter final. Watch the contrast pairs the review loves: <strong>full vs. conditional pardon</strong>, <strong>grand jury vs. petit jury</strong>, <strong>original vs. appellate jurisdiction</strong>, <strong>who runs county jails (sheriff) vs. who oversees them (Jail Standards Commission)</strong>, and <strong>civil-procedure rules (Supreme Court) vs. criminal-procedure rules (legislature)</strong>. One ⚠️ trap flagged in LO 10.4 / Ch.13 study guide: the review's "counsel for the poor in <em>civil</em> cases" — there's no such constitutional right; the intended answer is the <strong>Sixth Amendment</strong> (criminal).</div>
+  <div class="mastery-bar"><div class="mastery-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="reset-mastery-btn" onclick="resetAllMastery()">↺ Reset All Mastery</button>
+
+  <div class="obj-card ch9" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 9.1</span>
+      <span class="obj-title">Checks &amp; balances on the governor's executive power</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Explain the effect of checks and balances on the executive powers of the governor.</p>
+<p><strong>Key concepts:</strong> Texas has a <strong>plural executive</strong> — Article IV creates a multi-headed executive branch, so power is <strong>fragmented</strong> among several <em>independently elected</em> officials the governor does <strong>not</strong> control. This makes the Texas governor <strong>constitutionally weak</strong> compared to the U.S. president. <strong>Qualifications:</strong> at least <strong>30 years old</strong>, a <strong>U.S. citizen</strong>, and a <strong>Texas resident for the 5 years</strong> immediately before election. <strong>Term:</strong> <strong>4 years</strong>, with <strong>no term limits</strong> in Texas (one of 14 states with none). <strong>Appointive power</strong> — the governor's single most important power; but most major appointments need <strong>two-thirds consent of the senators present</strong> ("advice and consent"), and the governor honors <strong>senatorial courtesy</strong> (clears a nominee with the senator from the nominee's home district first). <strong>Removal of appointees</strong> is limited — the governor can remove <em>his or her own</em> appointees only <strong>with two-thirds Senate consent</strong>, not those of prior governors. <strong>Removing the governor:</strong> the only constitutional method is <strong>impeachment by the House and conviction by the Senate</strong> (e.g., "Pa" Ferguson).</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit5_91')" aria-label="Mark LO 9.1 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card ch9" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 9.2</span>
+      <span class="obj-title">Power shared with the legislature</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Analyze the shared power of the executive and legislative branches.</p>
+<p><strong>Key concepts — legislative powers of the governor:</strong> (1) <strong>Veto</strong> — reject an entire bill; hard to override (needs two-thirds of both chambers, and the session is usually over). After the legislature adjourns, the governor has <strong>20 days</strong> to veto pending bills (Texas has <strong>no pocket veto</strong> — an unsigned bill still becomes law). (2) <strong>Line-item veto</strong> — the governor's <strong>strongest budget weapon</strong>: strike individual spending items from the <em>appropriations</em> bill while keeping the rest. (3) <strong>Message power</strong> — the State of the State address and messages that set the legislative agenda and build a harmonious relationship with legislators. (4) <strong>Special session</strong> — <strong>only the governor</strong> can call one; it lasts <strong>up to 30 days</strong>, there is <strong>no limit on the number</strong>, and the <strong>governor sets the agenda</strong>. <strong>Budget:</strong> the governor's <em>only</em> significant constitutional budget power is the <strong>line-item veto</strong>; in practice the <strong>Legislative Budget Board (LBB)</strong>, chaired by the lieutenant governor, dominates budget-writing.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit5_92')" aria-label="Mark LO 9.2 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card ch9" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 9.3</span>
+      <span class="obj-title">Powers over the judicial branch</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Illustrate powers the governor exercises over the judicial branch of state government.</p>
+<p><strong>Key concepts:</strong> The governor <strong>fills vacancies on state (but not county or city) courts</strong> caused by death, resignation, or the creation of new courts — those appointees then run in the next election, so most Texas appellate judges first reach the bench by <em>appointment</em>. <strong>Executive clemency</strong>: acting <strong>only on a recommendation from the Board of Pardons and Paroles (BPP)</strong>, the governor may grant a <strong>full pardon</strong> (restores all civil rights, no strings) or a <strong>conditional pardon</strong> (restores rights but with a restriction attached — e.g., may never again practice a licensed profession), or a <strong>commutation of sentence</strong>. <strong>Independent power:</strong> in a death-penalty case the governor may act <em>alone</em> to grant <strong>one 30-day reprieve</strong> (a temporary delay of execution) — but cannot commute a death sentence without a BPP recommendation. The BPP can grant parole and (some) clemency <em>without</em> the governor.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit5_93')" aria-label="Mark LO 9.3 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card ch9" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 9.4</span>
+      <span class="obj-title">Informal powers of the governor</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Discuss the informal powers of the governor.</p>
+<p><strong>Key concepts:</strong> <strong>Informal powers</strong> are influence tools <em>not</em> spelled out in the constitution but flowing from the office's visibility. They include: leadership of the <strong>state political party</strong>; use of <strong>mass media and social media</strong> to shape opinion and pressure the legislature (e.g., Gov. Perry's social-media outreach); and <strong>pork-barrel politics / bargaining</strong> — trading support (e.g., promising not to line-item-veto a senator's pet project in exchange for a vote on a bill the governor favors). Informal power grows or shrinks with the governor's <strong>personal popularity, political skill, and relationships</strong>, which is how Texas governors partly overcome a constitutionally weak office.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit5_94')" aria-label="Mark LO 9.4 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card ch9" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 9.5</span>
+      <span class="obj-title">Resources, succession &amp; removal</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Summarize how the constitution and laws of Texas provide resources, succession, and removal procedures for the governor.</p>
+<p><strong>Key concepts:</strong> The governor commands a sizable <strong>staff and office budget</strong> (including the Office of Budget and Policy) and earns a set salary. <strong>Succession:</strong> if the governorship becomes vacant (death, resignation, removal) or the governor-elect can't serve, the <strong>lieutenant governor is first in line</strong> and serves the remainder of the 4-year term. If <em>both</em> the governor and lieutenant governor are unavailable, the acting-governor line runs <strong>President pro tempore of the Senate</strong>, then <strong>Speaker of the House, attorney general, and the chief justices of the courts of appeals</strong>. (When the governor is merely <em>out of state</em>, the lieutenant governor becomes <strong>acting governor</strong> temporarily.) <strong>Removal</strong> is only by <strong>impeachment (House) + conviction (Senate)</strong>.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit5_95')" aria-label="Mark LO 9.5 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card ch9" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 9.6</span>
+      <span class="obj-title">Elections &amp; campaign money</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Analyze gubernatorial elections and the impact of campaign funds on the politics of the governorship.</p>
+<p><strong>Key concepts:</strong> Running for governor is <strong>extremely expensive</strong>, so candidates depend on large donors. A recurring pattern: <strong>donors who give large amounts are often appointed to key policymaking boards and positions</strong> — a legal but criticized link between money and appointments (and a reason the appointive power matters so much). Because <strong>Texas has no term limits</strong>, an incumbent can build a long fundraising and appointment network (e.g., long-serving governors). Elections are <strong>partisan</strong>, held in non-presidential ("off") even years.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit5_96')" aria-label="Mark LO 9.6 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card ch9" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 9.7</span>
+      <span class="obj-title">Elected department heads &amp; the secretary of state</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Describe the powers of the elected department heads and the appointed secretary of state.</p>
+<p><strong>Key concepts — the plural executive:</strong> <strong>Lieutenant governor</strong> — elected separately; presides over the Senate and chairs the LBB; widely considered the <strong>single most powerful official in Texas state government</strong>. <strong>Attorney general</strong> — the state's chief <em>civil</em> lawyer (represents the state, issues advisory opinions, enforces child-support). <strong>Comptroller of Public Accounts</strong> — the state's chief <strong>accounting officer and tax collector</strong>; certifies revenue for the budget. <strong>Commissioner of the General Land Office</strong> — manages state lands and <strong>awards oil, gas, and sulfur leases</strong> on state-owned land. <strong>Commissioner of Agriculture</strong> and the three-member elected <strong>Railroad Commission</strong> (which today regulates the <strong>oil and gas industry</strong>, not railroads) round out the elected executives. The <strong>Secretary of State</strong> is the one department head <strong>appointed by the governor</strong> (chief elections officer). <span class="flag-note">📌 Review pairs to lock in: "single most powerful person in state government" → <strong>lieutenant governor</strong>; "chief accounting officer and tax collector" → <strong>comptroller</strong>; "awards oil/gas/sulfur leases" → <strong>land commissioner</strong>.</span></p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit5_97')" aria-label="Mark LO 9.7 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card ch9" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 9.8</span>
+      <span class="obj-title">The bureaucracy</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Describe the role of the bureaucracy in governing the state of Texas.</p>
+<p><strong>Key concepts:</strong> Most day-to-day governing is done by <strong>appointed boards, commissions, and agencies</strong> — a fragmented bureaucracy the governor only partly controls. The <strong>Sunset Advisory Commission</strong> periodically reviews agencies and recommends to the legislature whether each should be <strong>abolished, merged, reorganized, or retained</strong> (the "sunset" review; abolishing the Texas Youth Commission led to today's Texas Juvenile Justice Department). Examples: the <strong>Texas Education Agency (TEA)</strong> oversees statewide school testing; the <strong>State Board of Education</strong>; the <strong>Texas Commission on Environmental Quality</strong>; the <strong>Public Utility Commission</strong>. Fragmentation + independent elected heads = a governor who <em>influences</em> more than <em>commands</em> the bureaucracy.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit5_98')" aria-label="Mark LO 9.8 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card ch10" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" style="margin-top:20px;">
+    <div class="obj-header">
+      <span class="obj-num">LO 10.1</span>
+      <span class="obj-title">Sources of Texas law</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Identify the sources of Texas law.</p>
+<p><strong>Key concepts:</strong> Texas courts apply four sources of law: (1) <strong>constitutional law</strong> (state and U.S. constitutions); (2) <strong>statutory law</strong> — statutes enacted by the legislature and organized into <strong>codes</strong> (a <strong>code</strong> is a systematic arrangement of laws by subject; the <strong>Texas Legislative Council</strong> has been re-codifying Texas law since <strong>1963</strong>); (3) <strong>administrative law</strong> — agency regulations, gathered in the Texas Administrative Code; and (4) <strong>common law</strong> (also called <strong>judge-made law</strong>) — legal principles built up from individual court decisions, refined mainly by <em>appellate</em> courts. An <strong>ordinance</strong> is a law passed by a <em>local</em> government (city/county). <strong>Civil law</strong> governs disputes between private parties (contracts, divorce/family, personal-injury torts); <strong>criminal law</strong> covers offenses against the state. Crimes are graded: a <strong>misdemeanor</strong> is a minor offense (jail/fine); a <strong>felony</strong> is serious (prison + possible fine).</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit5_101')" aria-label="Mark LO 10.1 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card ch10" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 10.2</span>
+      <span class="obj-title">Participants &amp; the court system</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Compare the functions of all participants in the justice system.</p>
+<p><strong>Key concepts — the 8 types of Texas courts</strong> (lowest→highest): <strong>Municipal courts</strong> and <strong>Justice of the Peace (JP) courts</strong> (local trial courts — traffic, minor misdemeanors, small claims; <em>most are not courts of record</em>, so appeals are <strong>trial de novo</strong>); <strong>Constitutional county courts</strong>, <strong>county courts-at-law</strong> (mostly misdemeanors), and <strong>probate courts</strong>; <strong>District courts</strong> (the principal trial courts — try both civil and criminal, exclusive jurisdiction over felonies, divorce, land title); <strong>Courts of Appeals</strong> (intermediate); and two highest courts — the <strong>Supreme Court of Texas</strong> (highest <em>civil</em> and juvenile, 9 justices, 6-year terms) and the <strong>Court of Criminal Appeals</strong> (highest <em>criminal</em>, 9 judges; <strong>death-penalty appeals go directly here</strong>). <span class="flag-note">📌 "Court <em>not</em> mentioned in the Texas Constitution" → the legislatively created <strong>statutory courts</strong>: <strong>county courts-at-law</strong>, <strong>municipal courts</strong>, and statutory probate courts.</span> <strong>Jurisdiction</strong> = a court's authority to hear a case: <strong>original</strong> (first time / trial), <strong>appellate</strong> (on appeal), <strong>exclusive</strong> (only that court may hear it), <strong>concurrent</strong> (more than one court may hear it). A <strong>court of record</strong> keeps a full transcript. <strong>Almost all Texas judges are elected in partisan elections</strong> (municipal judges are usually appointed) — critics say elected judges may rule with an eye on donors and voters. Participants include the <strong>State Bar of Texas</strong> (mandatory attorney organization), the <strong>grand jury</strong> (<strong>12</strong> citizens; <strong>at least 9</strong> must agree to <strong>indict</strong>), the <strong>petit (trial) jury</strong> (<strong>12</strong> in district court, <strong>6</strong> in lower courts), the <strong>venire</strong> (the pool of prospective jurors), and <strong>voir dire</strong> (questioning to select jurors).</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit5_102')" aria-label="Mark LO 10.2 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card ch10" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 10.3</span>
+      <span class="obj-title">Civil adjudication</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Describe the judicial procedure for the adjudication of civil lawsuits.</p>
+<p><strong>Key concepts:</strong> A civil suit is filed by the <strong>plaintiff</strong> (the party bringing the case) against the <strong>defendant</strong>. A <strong>tort</strong> is a civil wrong (other than breach of contract) — e.g., a personal-injury or product-defect claim — for which the plaintiff seeks a remedy. The <strong>most common remedy</strong> is <strong>monetary damages</strong> (financial compensation), not jail. Most civil cases are decided by a <strong>bench trial</strong> (judge alone). If there is a jury, the <strong>jury decides the facts</strong> and the <strong>judge applies the law</strong>. The jury returns a <strong>verdict</strong> (its finding); the court's final written decision is the <strong>judgment</strong>. To relieve crowded dockets, counties may use <strong>alternative dispute resolution (ADR)</strong> — mediation/arbitration outside a full trial. The <strong>Supreme Court of Texas</strong> writes the <strong>rules of civil procedure</strong>. A party unhappy with a trial-court result appeals to a <strong>court of appeals</strong>.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit5_103')" aria-label="Mark LO 10.3 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card ch10" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 10.4</span>
+      <span class="obj-title">Criminal adjudication &amp; defendants' rights</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Describe the judicial procedure for the adjudication of criminal cases.</p>
+<p><strong>Key concepts:</strong> A felony charge requires an <strong>indictment</strong> — a formal accusation returned by a <strong>grand jury</strong> (12 members; ≥9 to indict) that sends the accused to trial. Texas constitutional guarantees for the accused: to be <strong>advised of their rights</strong> (right to remain silent, right to an attorney) after arrest and before questioning; the <strong>right to appointed counsel if indigent</strong>; and the <strong>right to trial by jury</strong>. A criminal <strong>verdict must be unanimous</strong>; if jurors are hopelessly split the result is a <strong>hung jury</strong> and the judge declares a <strong>mistrial</strong>. <strong>Indigent defense</strong> is paid mostly by <strong>county governments</strong> (counties fund ~90% of the ~$300M cost; overseen by the Texas Indigent Defense Commission under the Fair Defense Act). The <strong>legislature makes the rules of criminal procedure</strong> (contrast: the Supreme Court makes <em>civil</em> procedure rules). <strong>Appeals in death-penalty cases go directly to the Court of Criminal Appeals.</strong> <span class="flag-note">⚠️ Review Ch.13 asks which amendment "guarantees legal representation to the poor in <em>civil</em> cases." There is <strong>no</strong> U.S. constitutional right to counsel in <em>civil</em> cases — the <strong>Sixth Amendment</strong> (via <em>Gideon v. Wainwright</em>, 1963) guarantees appointed counsel in <em>criminal</em> cases. Treat the intended exam answer as the <strong>Sixth Amendment</strong>, but know the "civil" wording is imprecise (this is why Texas funds civil legal aid separately, e.g., the Access to Justice Commission). Sourced externally / logic-checked; the chapters cover indigent <em>criminal</em> defense.</span></p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit5_104')" aria-label="Mark LO 10.4 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card ch13" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" style="margin-top:20px;">
+    <div class="obj-header">
+      <span class="obj-num">LO 13.1</span>
+      <span class="obj-title">Classifications of criminal offenses</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Describe the different classifications of criminal offenses.</p>
+<p><strong>Key concepts:</strong> The <strong>Texas Penal Code</strong> is the codified body of law defining crimes and punishments. It uses <strong>graded penalties</strong>: offenses are ranked by seriousness — <strong>misdemeanors</strong> (Classes C, B, A, least→most serious; fines and/or county-jail time) and <strong>felonies</strong> (state-jail, then third-, second-, first-degree, up to <strong>capital felony</strong>). <strong>Enhanced punishment</strong> means an offender is punished <strong>as if they had committed the next-higher degree of felony</strong> — triggered by <strong>organized criminal activity, being a repeat offender, or committing a hate crime</strong>. In Texas the top two motivations for reported hate crimes are <strong>race and sexual orientation</strong>. Punishment level is based on the <strong>classification/grade of the offense</strong> (and enhancements), not the judge's mood.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit5_131')" aria-label="Mark LO 13.1 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card ch13" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 13.2</span>
+      <span class="obj-title">The death penalty in Texas</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Analyze issues of the death penalty in Texas.</p>
+<p><strong>Key concepts:</strong> Murder becomes a <strong>capital felony</strong> under specific aggravating circumstances — e.g., killing a <strong>police officer or firefighter on duty</strong>, murder during another felony (robbery, etc.), or a victim <strong>younger than 10</strong>. The <strong>minimum</strong> sentence for a capital felony is <strong>life imprisonment without parole</strong>; the maximum is <strong>death</strong>. In the penalty phase, <strong>all 12 jurors must unanimously agree</strong> before a death sentence can be imposed (and must find future dangerousness). Texas executes by <strong>lethal injection</strong> and <strong>leads the nation in executions</strong>. When FDA-approved injection drugs run short, Texas may <strong>obtain drugs from another state and repay in kind</strong>. Despite the American Bar Association urging a <strong>moratorium</strong>, Texas legislators have <strong>consistently rejected</strong> it. Death-row inmates are held in <strong>administrative segregation</strong> (long-term solitary confinement), which critics say violates <strong>international human-rights standards and the U.S. Constitution</strong>.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit5_132')" aria-label="Mark LO 13.2 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card ch13" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 13.3</span>
+      <span class="obj-title">Jails, prisons &amp; corrections</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Explain the role of Texas's jail and prison system in handling corrections and community supervision.</p>
+<p><strong>Key concepts:</strong> The <strong>Texas Department of Criminal Justice (TDCJ)</strong> runs state prisons. <strong>County jails</strong> are <em>run day-to-day by the county sheriff</em>, but the <strong>Texas Commission on Jail Standards</strong> has <strong>oversight</strong> responsibility for them. Texas has <strong>more privately operated incarceration facilities than any other state</strong>; about <strong>10% of Texas inmates</strong> are housed in <strong>private prisons</strong> (current-edition figure). <strong>Community supervision</strong> (serving all or part of a sentence outside prison) is handled by two TDCJ units: the <strong>Community Justice Assistance Division</strong> (probation/community supervision) and the <strong>Parole Division</strong> (parole and mandatory supervision). <strong>Recidivism</strong> = relapse into crime that returns a released offender to prison (Gregory released in June, re-arrested for robbery in December = recidivism). Common prison problems: <strong>overcrowding</strong> (a driver of inmate-on-inmate violence <em>and</em> use of force by officers), <strong>staff shortages</strong>, lack of <strong>air conditioning</strong>, and contraband — the most common contraband today is the <strong>cell phone</strong>.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit5_133')" aria-label="Mark LO 13.3 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card ch13" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 13.4</span>
+      <span class="obj-title">Juvenile vs. adult justice</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Compare the juvenile justice system to the adult correctional system.</p>
+<p><strong>Key concepts:</strong> In Texas the <strong>age of adulthood for criminal matters is 17</strong>. Juveniles are handled in <strong>juvenile courts</strong>, which are <strong>civil, not criminal</strong> — a trial there is called an <strong>adjudication hearing</strong>, and appeals go to a court with <strong>civil</strong> jurisdiction (ultimately the Texas Supreme Court, not the Court of Criminal Appeals). The system emphasizes <strong>rehabilitation</strong> over punishment. <strong>Status offenders</strong> are juveniles cited for acts that are only illegal because of age — <strong>running away, truancy (skipping school), curfew violations</strong> — as opposed to <strong>delinquent</strong> children who commit acts that would be crimes for an adult. In 2011 the legislature abolished the Texas Youth Commission and Texas Juvenile Probation Commission (via <strong>sunset review</strong>) and created the <strong>Texas Juvenile Justice Department (TJJD)</strong>.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit5_134')" aria-label="Mark LO 13.4 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card ch13" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header">
+      <span class="obj-num">LO 13.5</span>
+      <span class="obj-title">Is Texas's justice system fair?</span>
+      <span class="obj-expand">▼</span>
+    </div>
+    <div class="obj-body">
+      <p>Evaluate the fairness of Texas's justice system.</p>
+<p><strong>Key concepts:</strong> <strong>DNA testing</strong> is the scientific development that has <strong>exonerated</strong> people convicted of serious crimes (including murder), revealing wrongful convictions. Ironically, <strong>eyewitness testimony</strong> — the evidence juries trust <em>most</em> — is among the <strong>least reliable</strong> and a leading cause of the errors DNA later exposes. Texas <strong>compensates the wrongfully incarcerated $80,000 for each year</strong> imprisoned. The <strong>Texas Forensic Science Commission</strong> investigates negligence and misconduct in DNA/forensic evidence. <strong>Racial profiling</strong> — targeting members of historically marginalized groups for stops and searches — is a central fairness concern, along with disparities in drug enforcement, indigent-defense quality, and death-penalty application. The <strong>Innocence Project</strong> works to exonerate the wrongfully convicted.</p>
+      <button class="obj-master-btn" onclick="toggleObjMastery(this,'obj_govt2306_unit5_135')" aria-label="Mark LO 13.5 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+</div>
+<div class="panel" id="panel-guide" role="tabpanel" aria-labelledby="tab-guide">
+  <h1>Study Guide</h1>
+  <span class="unit-badge">Unit 5 · Chapters 9 · 10 · 13 — 100% review coverage</span>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🏛️ Chapter 9: The Executive Branch</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+
+      <h3>LO 9.1 — A weak governor &amp; the plural executive</h3>
+      <ul>
+        <li><strong>Plural executive</strong> — Article IV creates a <strong>multi-headed</strong> executive branch: power is split among several <em>independently elected</em> officials the governor does not control. This is why the Texas governor is a <strong>weak (constitutionally limited) executive</strong>, unlike the U.S. president.</li>
+        <li><strong>Constitutional qualifications</strong> — at least <strong>30 years old</strong>, a <strong>U.S. citizen</strong>, and a <strong>Texas resident for the 5 years</strong> immediately preceding the election.</li>
+        <li><strong>Term &amp; term limits</strong> — <strong>4-year term</strong>; Texas places <strong>no term limits</strong> on the governor (one of 14 states with none).</li>
+        <li><strong>Appointive power</strong> — the governor's <em>single most important</em> formal power: naming supporters/allies to boards and commissions. <em>Limited</em> by: (a) most appointments need <strong>two-thirds consent of senators present</strong> ("advice and consent"); (b) <strong>senatorial courtesy</strong> — the governor clears a nominee with the senator from the nominee's home district first.</li>
+        <li><strong>Removal of appointees</strong> — the governor may remove <em>his/her own</em> appointees only <strong>with two-thirds Senate consent</strong>, and <strong>cannot</strong> remove appointees of a previous governor. So the governor does <strong>not</strong> have independent removal power.</li>
+        <li><strong>Removing the governor</strong> — the <em>only</em> constitutional method is <strong>impeachment by the House + conviction by the Senate</strong> (like "Pa" Ferguson).
+        <span class="flag-note">📌 Review: "Is the governor weak or strong? Why?" → <strong>weak</strong>, because of the plural executive, limited appointment/removal power, a short list of formal powers, and a fragmented bureaucracy.</span></li>
+        <li><strong>Executive order</strong> — a directive the governor issues to state agencies (used, e.g., for emergency/disaster management, as in the March 2020 COVID-19 state of emergency). Governors also use <strong>proclamations</strong> to call special sessions/elections.</li>
+      </ul>
+
+      <h3>LO 9.2 — Legislative powers (shared with the legislature)</h3>
+      <ul>
+        <li><strong>Legislative power (overview)</strong> — the governor's tools to shape lawmaking: veto, line-item veto, message power, and the special-session call.</li>
+        <li><strong>Veto</strong> — reject a whole bill; override needs two-thirds of both chambers (rare, since the session is usually over). After adjournment the governor has <strong>20 days</strong> to veto. <strong>No pocket veto in Texas</strong> — an unsigned bill still becomes law.</li>
+        <li><strong>Line-item veto</strong> — strike individual items from the <em>appropriations (budget)</em> bill while approving the rest. This is the governor's <strong>strongest legislative/budget weapon</strong> and the <strong>only significant constitutional budget power</strong> the governor has.</li>
+        <li><strong>Message power</strong> — the State of the State address and formal messages that set the agenda and build goodwill with legislators.</li>
+        <li><strong>Special session</strong> — <strong>only the governor</strong> can call one; <strong>up to 30 days</strong>; <strong>no limit on the number</strong>; the <strong>governor sets the agenda</strong> (legislators may consider only what the governor lists).
+        <span class="flag-note">📌 Review: "strongest legislative power regarding the legislature" → the <strong>veto / line-item veto</strong>. "Only significant constitutional budget power" → the <strong>line-item veto</strong>. Note the <strong>Legislative Budget Board (LBB)</strong>, chaired by the lieutenant governor, actually writes the budget.</span></li>
+      </ul>
+
+      <h3>LO 9.3 — Powers over the judiciary</h3>
+      <ul>
+        <li><strong>Judicial appointments</strong> — the governor <strong>fills vacancies on state (not county or city) courts</strong> from death, resignation, or new-court creation; appointees then face the next election.</li>
+        <li><strong>Executive clemency (needs a BPP recommendation):</strong> a <strong>full pardon</strong> restores all civil rights with no conditions; a <strong>conditional pardon</strong> restores rights but attaches a restriction (e.g., can never again practice a licensed profession). Also <strong>commutation</strong> (reducing a sentence).</li>
+        <li><strong>Independent death-penalty power</strong> — acting <em>alone</em>, the governor may grant <strong>one 30-day reprieve</strong> (a temporary delay of execution); a full commutation of a death sentence still requires a <strong>Board of Pardons and Paroles</strong> recommendation.
+        <span class="flag-note">📌 Review: "power over judges extends to" → <strong>filling vacancies on state courts</strong>. "In a death-sentence case, what can the governor independently do?" → grant one <strong>30-day reprieve</strong>. "Full vs. conditional pardon?" → full = no strings; conditional = rights restored <em>with</em> a restriction.</span></li>
+      </ul>
+
+      <h3>LO 9.4 — Informal powers</h3>
+      <ul>
+        <li><strong>Informal powers</strong> — influence <em>not</em> in the constitution: leading the <strong>state party</strong>, using <strong>mass/social media</strong> to shape opinion and pressure the legislature, and <strong>pork-barrel bargaining</strong> (trading favors — e.g., promising not to line-item-veto a project in exchange for a vote). Strength depends on <strong>popularity and political skill</strong>.</li>
+      </ul>
+
+      <h3>LO 9.5 — Resources, succession &amp; removal</h3>
+      <ul>
+        <li><strong>Succession</strong> — the <strong>lieutenant governor is first in line</strong> if the governorship is vacant, and serves out the term. If both governor and lt. gov. are gone, the acting-governor order is <strong>President pro tem of the Senate → Speaker → attorney general → chief justices of the courts of appeals</strong>.</li>
+        <li><strong>Military power / commander-in-chief</strong> — the governor is <strong>Commander-in-Chief of the state's military forces</strong> (Texas Army &amp; Air National Guard, Texas State Guard) — <em>except</em> when they are called into <strong>federal</strong> service. May deploy them for disasters, riots, border operations, etc.
+        <span class="flag-note">📌 Review: "as commander-in-chief the governor may use the Guard for all of the following EXCEPT ___" → the exception is any power the governor lacks, e.g., using them <em>while they are in federal service</em> or for a purely federal military mission.</span></li>
+        <li><strong>Law enforcement</strong> — the governor is <em>not</em> the state's main cop. In Texas, <strong>most law enforcement is done by local police and county sheriffs</strong>; the governor's only direct law-enforcement power is to <strong>use the Texas Rangers / DPS and call out the Guard</strong> in emergencies.
+        <span class="flag-note">📌 Review: "primary responsibility for enforcing the law" → <strong>local police &amp; county sheriffs</strong> (not the governor). "Direct law-enforcement power of the governor" → deploy the <strong>Texas Rangers/DPS and National Guard</strong> in emergencies.</span></li>
+      </ul>
+
+      <h3>LO 9.6 — Elections &amp; campaign money</h3>
+      <ul>
+        <li><strong>Campaign funds &amp; appointments</strong> — gubernatorial campaigns are costly, so governors rely on big donors; <strong>large donors are often appointed to key policymaking positions</strong> (legal but criticized). No term limits let incumbents build long fundraising/appointment networks.</li>
+      </ul>
+
+      <h3>LO 9.7 — The plural executive: elected heads + secretary of state</h3>
+      <ul>
+        <li><strong>Lieutenant governor</strong> — elected separately; presides over the Senate, chairs the LBB; often called the <strong>single most powerful official in Texas state government</strong>. <strong>First in line of succession.</strong></li>
+        <li><strong>Attorney general</strong> — chief <em>civil</em> lawyer for the state; represents Texas in court, issues advisory opinions, enforces child-support.</li>
+        <li><strong>Comptroller of Public Accounts</strong> — chief <strong>accounting officer and tax collector</strong>; certifies how much revenue is available (the budget must fit within it).</li>
+        <li><strong>Commissioner of the General Land Office</strong> — manages state-owned lands and <strong>awards oil, gas, and sulfur leases</strong> on them.</li>
+        <li><strong>Commissioner of Agriculture</strong> &amp; the three elected members of the <strong>Railroad Commission</strong> (today it regulates the <strong>oil &amp; gas industry</strong>, not railroads).</li>
+        <li><strong>Secretary of State</strong> — the one department head <strong>appointed by the governor</strong>; the state's <strong>chief elections officer</strong>.
+        <span class="flag-note">📌 Review pairs: "single most powerful person in state government" → <strong>lieutenant governor</strong>. "Chief accounting officer &amp; tax collector" → <strong>comptroller</strong>. "Awards oil/gas/sulfur leases" → <strong>land commissioner</strong>.</span></li>
+      </ul>
+
+      <h3>LO 9.8 — The bureaucracy</h3>
+      <ul>
+        <li><strong>Sunset Advisory Commission</strong> — reviews agencies and recommends whether each be <strong>abolished, merged, reorganized, or retained</strong>.</li>
+        <li><strong>Texas Education Agency (TEA)</strong> — oversees statewide school testing; other key bodies: State Board of Education, TCEQ, Public Utility Commission. Fragmentation means the governor <em>influences</em> more than <em>commands</em> the bureaucracy.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>⚖️ Chapter 10: The Judicial Branch</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+
+      <h3>LO 10.1 — Sources of Texas law &amp; types of law</h3>
+      <ul>
+        <li><strong>Civil law</strong> — governs disputes between private parties: <strong>contracts, divorce/family issues, personal-injury (tort) claims</strong>. The loser typically owes money, not jail time.</li>
+        <li><strong>Criminal law</strong> — offenses against the state (the government prosecutes); punishable by fines and/or incarceration.</li>
+        <li><strong>Misdemeanor</strong> — a minor offense (Classes C/B/A); punished by fine and/or up to a year in <strong>county jail</strong>.</li>
+        <li><strong>Felony</strong> — a serious offense; punishable by <strong>state prison</strong> (and possibly a fine). <em>Characteristic:</em> felonies are punishable by a prison sentence and a fine.</li>
+        <li><strong>Common law / judge-made law</strong> — legal principles built from individual court decisions; shaped mainly by <em>appellate</em> courts.</li>
+        <li><strong>Statutory law</strong> — laws enacted by the legislature.</li>
+        <li><strong>Code</strong> — a systematic, subject-by-subject arrangement of statutes. The <strong>Texas Legislative Council</strong> has been re-codifying Texas law since <strong>1963</strong>.</li>
+        <li><strong>Ordinance</strong> — a law passed by a <em>local</em> government (city/county).
+        <span class="flag-note">📌 Review: 1963 Legislative Council project → <strong>reorganizing Texas laws into a systematic arrangement of legal codes</strong>.</span></li>
+      </ul>
+
+      <h3>LO 10.2 — The court system &amp; participants</h3>
+      <ul>
+        <li><strong>The 8 types of Texas courts</strong> (low→high): <strong>Municipal</strong> courts; <strong>Justice of the Peace (JP)</strong> courts; <strong>Constitutional County</strong> courts; <strong>County courts-at-law</strong>; <strong>Probate</strong> courts; <strong>District</strong> courts; <strong>Courts of Appeals</strong>; and the two highest — <strong>Supreme Court of Texas</strong> and <strong>Court of Criminal Appeals</strong>.</li>
+        <li><strong>Jurisdiction</strong> — a court's authority to hear a particular case. <strong>Original jurisdiction</strong> = hears a case <em>for the first time</em> (trial). <strong>Appellate jurisdiction</strong> = reviews a lower court's decision on appeal. <strong>Exclusive jurisdiction</strong> = only that court may hear it. <strong>Concurrent jurisdiction</strong> = more than one court may hear the same type of case.</li>
+        <li><strong>Court of record</strong> — a court that keeps a full transcript. <strong>Most municipal and JP courts are NOT courts of record</strong>, so their appeals are heard by <strong>trial de novo</strong> (a brand-new trial) in a county-level court.</li>
+        <li><strong>Justice of the peace (JP) court</strong> — local trial court: small civil claims, minor criminal (Class C) cases, traffic. <strong>Small claims court</strong> functions were folded into the JP courts (self-represented, low-dollar disputes).
+        <span class="flag-note">📌 Review: "owed $8,000 and want to represent yourself" → file in the <strong>Justice of the Peace (small-claims) court</strong> (JP civil jurisdiction up to $20,000).</span></li>
+        <li><strong>District courts</strong> — the <strong>principal trial courts</strong>; try <strong>both civil and criminal</strong> cases; exclusive original jurisdiction over felonies, divorce, and land title.</li>
+        <li><strong>Constitutional county court</strong> — one per county; limited civil/criminal jurisdiction plus administrative duties (the county judge also runs the commissioners court). <strong>County courts-at-law</strong> were created to relieve them and hear mostly <strong>misdemeanors</strong>.</li>
+        <li><strong>Probate</strong> — matters of decedents' estates: primarily establishing the <strong>validity of a will</strong>; probate courts also handle <strong>guardianship and mental-competency</strong> determinations.
+        <span class="flag-note">📌 Review: court with original jurisdiction over <em>both</em> a will's validity <em>and</em> mental competency → <strong>probate court</strong>. Contested will's validity → decided by a <strong>probate court</strong>.</span></li>
+        <li><strong>Supreme Court of Texas</strong> — highest court for <strong>civil</strong> (and juvenile) cases; <strong>9 justices</strong>, <strong>6-year</strong> terms; makes the <strong>rules of civil procedure</strong>.</li>
+        <li><strong>Court of Criminal Appeals</strong> — highest court for <strong>criminal</strong> cases; <strong>death-penalty appeals go directly here</strong>.
+        <span class="flag-note">📌 Review: "court NOT mentioned in the Texas Constitution" → the legislatively created <strong>statutory courts</strong> (county courts-at-law, municipal courts, statutory probate courts). "Highest civil court" → <strong>Supreme Court of Texas</strong>; "case appealed directly to the Court of Criminal Appeals" → a <strong>death-penalty</strong> case.</span></li>
+        <li><strong>Elected judges</strong> — <strong>almost all Texas judges are elected in partisan elections</strong> (municipal judges are usually appointed). Critics argue this influences rulings (donors, re-election). <strong>District judges</strong> can be removed by the voters, by the State Commission on Judicial Conduct, or by impeachment/address.</li>
+        <li><strong>State Bar of Texas</strong> — the mandatory organization all licensed Texas attorneys must join; sets professional standards.</li>
+        <li><strong>Grand jury</strong> — <strong>12</strong> citizens chosen from a pool of 20–125; if <strong>at least 9</strong> agree there is enough evidence, they return an <strong>indictment</strong>.</li>
+        <li><strong>Petit jury</strong> — the <strong>trial jury</strong> that decides guilt/liability: <strong>12 members in district court</strong>, <strong>6 in lower (county/JP) courts</strong>.</li>
+        <li><strong>Venire</strong> — the panel/pool of prospective jurors summoned for possible service.</li>
+        <li><strong>Voir dire</strong> — the questioning of the venire by judge and attorneys to select (and strike) jurors.
+        <span class="flag-note">📌 Review numbers: grand jury indicts if <strong>≥9 of 12</strong> agree. Petit juries = <strong>6 or 12</strong> members (12 in district court). Criminal verdict must be <strong>unanimous</strong>. Are all Texas judges elected? → <strong>yes, except municipal</strong> (partisan elections).</span></li>
+      </ul>
+
+      <h3>LO 10.3 — Civil adjudication</h3>
+      <ul>
+        <li><strong>Plaintiff</strong> — the party who <em>files</em> the civil suit. <strong>Defendant</strong> — the party being sued.</li>
+        <li><strong>Tort</strong> — a civil wrong (other than breach of contract), such as a personal-injury or defective-product claim (e.g., the defective-steering-wheel lawsuit = a tort).</li>
+        <li><strong>Remedy</strong> — the <strong>most common remedy is monetary damages</strong> (financial compensation), not jail.</li>
+        <li><strong>How civil cases are tried</strong> — most are <strong>bench trials</strong> (judge decides). If a jury sits, the <strong>jury finds the facts</strong> and the <strong>judge applies the law</strong>.</li>
+        <li><strong>Verdict</strong> — the jury's finding. <strong>Judgment</strong> — the court's final written decision that resolves the case.</li>
+        <li><strong>Alternative dispute resolution (ADR)</strong> — mediation/arbitration used to settle disputes and relieve crowded dockets without a full trial.
+        <span class="flag-note">📌 Review: who makes the <strong>rules of civil procedure</strong>? → the <strong>Supreme Court of Texas</strong>. Dissatisfied civil party proceeds next to a <strong>court of appeals</strong>.</span></li>
+      </ul>
+
+      <h3>LO 10.4 — Criminal adjudication &amp; rights</h3>
+      <ul>
+        <li><strong>Indictment</strong> — the formal instrument (from a <strong>grand jury</strong>) accusing someone of a <strong>felony</strong> and ordering them to trial. (A lesser charge can proceed by <em>information</em>.)</li>
+        <li><strong>Constitutional jury rights / rights of the accused</strong> — after arrest and before questioning, police must advise a suspect of the <strong>right to remain silent and to have an attorney</strong>; the accused has the <strong>right to appointed counsel if indigent</strong> and the <strong>right to trial by jury</strong>.</li>
+        <li><strong>Unanimous verdict / hung jury</strong> — a criminal verdict must be <strong>unanimous</strong>; if jurors can't agree it's a <strong>hung jury</strong> → the judge declares a <strong>mistrial</strong>.</li>
+        <li><strong>Indigent defense</strong> — paid mostly by <strong>county governments</strong> (~90% of the ~$300M cost). Rules of <strong>criminal</strong> procedure are made by the <strong>legislature</strong>.
+        <span class="flag-note">📌 Review: instrument that formally accuses of a felony and orders trial → <strong>indictment</strong>. Criminal-verdict agreement → <strong>all jurors (unanimous)</strong>. Purpose of jail/prison → punishment, deterrence, incapacitation, and (ideally) rehabilitation.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🔒 Chapter 13: The Criminal Justice System</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+
+      <h3>LO 13.1 — Classifications of criminal offenses</h3>
+      <ul>
+        <li><strong>Texas Penal Code</strong> — the codified body of laws defining <strong>crimes and punishments</strong> in Texas.</li>
+        <li><strong>Graded penalties</strong> — offenses are ranked by seriousness: <strong>misdemeanors</strong> (Classes C→A) and <strong>felonies</strong> (state-jail → 3rd → 2nd → 1st degree → <strong>capital</strong>). Punishment is <strong>based on the grade/classification</strong> of the offense.</li>
+        <li><strong>Enhanced punishment</strong> — punishing an offender <strong>as though they had committed the next-higher degree of felony</strong>; triggered by <strong>organized criminal activity, being a repeat offender, or a hate crime</strong>. (Top two hate-crime motivations in Texas: <strong>race and sexual orientation</strong>.)</li>
+        <li><strong>Capital felony</strong> — the most serious class (e.g., killing a police officer during a robbery); punishable by <strong>life without parole or death</strong>.
+        <span class="flag-note">📌 Review: "how is punishment based?" → on the <strong>graded classification of the offense</strong> (plus enhancements). Historic Texas approach to drug offenses → <strong>incarceration</strong>.</span></li>
+      </ul>
+
+      <h3>LO 13.2 — The death penalty</h3>
+      <ul>
+        <li><strong>Capital felony circumstances</strong> — murder of a <strong>peace officer/firefighter on duty</strong>, murder during another felony (robbery, etc.), multiple victims, or a victim <strong>under 10</strong>.</li>
+        <li><strong>Minimum sentence for a capital felony</strong> — <strong>life imprisonment without parole</strong> (maximum = death).</li>
+        <li><strong>Jury unanimity for death</strong> — after a guilty verdict, <strong>all 12 jurors must unanimously agree</strong> (and find future dangerousness) before a death sentence is imposed.</li>
+        <li><strong>Method &amp; drug supply</strong> — execution is by <strong>lethal injection</strong>; if FDA-approved drugs run short, Texas may <strong>get drugs from another state and repay in kind</strong>. Texas <strong>leads the nation in executions</strong>.</li>
+        <li><strong>Moratorium</strong> — despite the American Bar Association urging one, Texas legislators have <strong>consistently rejected</strong> a death-penalty moratorium.
+        <span class="flag-note">📌 Review: minimum capital sentence → <strong>life without parole</strong>. Jurors needed for a death sentence → <strong>all 12 (unanimous)</strong>.</span></li>
+      </ul>
+
+      <h3>LO 13.3 — Jails, prisons &amp; community supervision</h3>
+      <ul>
+        <li><strong>Texas Department of Criminal Justice (TDCJ)</strong> — runs the state prison system.</li>
+        <li><strong>County jails</strong> — <strong>run day-to-day by the county sheriff</strong>, but the <strong>Texas Commission on Jail Standards</strong> has <strong>oversight</strong> responsibility.</li>
+        <li><strong>Private prisons</strong> — Texas has <strong>more privately operated incarceration facilities than any other state</strong>; about <strong>10% of Texas inmates</strong> are in private prisons.</li>
+        <li><strong>Two community-supervision agencies</strong> (serving a sentence in the community, not prison): the <strong>Community Justice Assistance Division</strong> (probation/community supervision) and the <strong>Parole Division</strong> (parole &amp; mandatory supervision) — both within TDCJ.</li>
+        <li><strong>Recidivism</strong> — relapse into criminal behavior that returns a released offender to prison (release in June, re-arrested robbing a bank in December = recidivism).</li>
+        <li><strong>Administrative segregation</strong> — long-term <strong>solitary confinement</strong> (death-row inmates are held this way the whole time); criticized as violating <strong>international human-rights standards and the U.S. Constitution</strong>.</li>
+        <li><strong>Prison problems</strong> — <strong>overcrowding</strong> and <strong>staff shortages</strong> drive both inmate-on-inmate violence and use of force by officers; lack of <strong>air conditioning</strong>; the most common contraband is now the <strong>cell phone</strong>.
+        <span class="flag-note">📌 Review: oversight of county jails → <strong>Texas Commission on Jail Standards</strong>; who <em>directs</em> most county jails → the <strong>county sheriff</strong>. % inmates in private prisons → <strong>~10%</strong>. Two community agencies → <strong>Community Justice Assistance Division + Parole Division</strong>.</span></li>
+      </ul>
+
+      <h3>LO 13.4 — Juvenile justice</h3>
+      <ul>
+        <li><strong>Age of adulthood</strong> — in Texas, criminal adulthood begins at <strong>17</strong>.</li>
+        <li><strong>Adjudication hearing</strong> — the term for a trial in <strong>juvenile court</strong>; juvenile courts are <strong>civil, not criminal</strong>, so appeals go to a court with <strong>civil</strong> jurisdiction (ultimately the Texas Supreme Court).</li>
+        <li><strong>Status offenders vs. delinquents</strong> — <strong>status offenders</strong> commit acts illegal only because of age (<strong>running away, truancy, curfew violations</strong>); <strong>delinquent</strong> children commit acts that would be crimes for an adult.</li>
+        <li><strong>Texas Juvenile Justice Department (TJJD)</strong> — created in 2011 (via <strong>sunset review</strong>) to replace the abolished Texas Youth Commission and Texas Juvenile Probation Commission.
+        <span class="flag-note">📌 Review: juvenile offenders handled under → <strong>juvenile (civil) courts</strong> via <strong>adjudication hearings</strong>. Agency that replaced TYC/TJPC → <strong>Texas Juvenile Justice Department</strong>.</span></li>
+      </ul>
+
+      <h3>LO 13.5 — Fairness, exoneration &amp; reform</h3>
+      <ul>
+        <li><strong>DNA testing</strong> — the scientific development that has <strong>exonerated</strong> people convicted of serious crimes, including murder.</li>
+        <li><strong>Eyewitness testimony</strong> — the <strong>least reliable</strong> evidence yet the <strong>most trusted</strong> by juries; a leading cause of wrongful convictions.</li>
+        <li><strong>Compensation</strong> — Texas pays the wrongfully incarcerated <strong>$80,000 for each year</strong> imprisoned.</li>
+        <li><strong>Texas Forensic Science Commission</strong> — investigates charges of <strong>negligence and misconduct related to DNA/forensic evidence</strong>.</li>
+        <li><strong>Racial profiling</strong> — targeting members of <strong>historically marginalized groups for stops and searches</strong>; a core fairness concern.</li>
+        <li><strong>Who prosecutes</strong> — the <strong>district attorney (DA)</strong> represents the <strong>State of Texas in criminal cases</strong>. The <strong>plea bargain</strong> is the principal <strong>short-term</strong> method for relieving overcrowded court dockets.
+        <span class="flag-note">📌 Review: scientific development freeing the innocent → <strong>DNA testing</strong>. Who represents the State in criminal cases → the <strong>district attorney</strong>. Short-term docket relief → <strong>plea bargaining</strong>.</span>
+        <span class="flag-note">⚠️ Review Ch.13: "Which amendment guarantees legal representation to the poor in <em>civil</em> cases?" — there is <strong>no</strong> constitutional right to counsel in <em>civil</em> cases; the <strong>Sixth Amendment</strong> (via <em>Gideon v. Wainwright</em>, 1963) covers <em>criminal</em> cases. Answer the intended item as the <strong>Sixth Amendment</strong>, but the "civil" wording is imprecise. Sourced externally / logic-checked against the chapters' indigent-<em>criminal</em>-defense coverage.</span></li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+<div class="panel" id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards">
+  <h1>Flashcards</h1>
+  <div class="filter-row" role="group" aria-label="Filter flashcards by chapter">
+    <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('ch9',this)">Ch. 9</button>
+    <button class="filter-btn" onclick="filterCards('ch10',this)">Ch. 10</button>
+    <button class="filter-btn" onclick="filterCards('ch13',this)">Ch. 13</button>
+  </div>
+  <div class="fc-counter" id="fc-counter" aria-live="polite"></div>
+  <div class="fc-wrap">
+    <div class="fc-card" id="fc-card" onclick="flipCard()" aria-label="Flashcard — click to flip">
+      <div class="fc-front"><div class="fc-label">Question</div><div class="fc-q" id="fc-q" aria-live="polite"></div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a" id="fc-a" aria-live="polite"></div></div>
+    </div>
+  </div>
+  <div class="fc-controls">
+    <button class="fc-btn" onclick="flipCard()" aria-label="Flip card">↩ Flip</button>
+    <button class="fc-btn mastered-btn" id="fc-master-btn" onclick="toggleMastered(currentIdx)" aria-label="Toggle mastered">☐ Mastered</button>
+    <button class="fc-btn" onclick="shuffleCards()" aria-label="Shuffle deck">🔀 Shuffle</button>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
+    <button class="fc-btn" onclick="nextCard()" aria-label="Next card">Next →</button>
+  </div>
+  <div class="fc-empty" id="fc-empty" style="display:none">No cards in this filter.</div>
+</div>
+<div class="panel" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+  <h1>Practice Quiz</h1>
+  <div class="filter-row" role="group" aria-label="Filter quiz by chapter">
+    <button class="filter-btn active" onclick="setQuizFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch9',this)">Ch. 9</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch10',this)">Ch. 10</button>
+    <button class="filter-btn" onclick="setQuizFilter('ch13',this)">Ch. 13</button>
+  </div>
+  <div id="quiz-container"></div>
+  <div style="margin-top:16px;">
+    <button id="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <button id="reset-btn" onclick="resetQuiz()">Reset</button>
+  </div>
+  <div id="quiz-score"></div>
+</div>
+<div class="panel" id="panel-discussion" role="tabpanel" aria-labelledby="tab-discussion">
+  <h1>Discussion Board Prep</h1>
+  <div class="filter-row" role="group" aria-label="Filter discussion by chapter">
+    <button class="filter-btn active" onclick="filterDisc('all',this)">All</button>
+    <button class="filter-btn" onclick="filterDisc('ch9',this)">Ch. 9</button>
+    <button class="filter-btn" onclick="filterDisc('ch10',this)">Ch. 10</button>
+    <button class="filter-btn" onclick="filterDisc('ch13',this)">Ch. 13</button>
+  </div>
+  <div id="disc-container"></div>
+</div>
+<div class="panel" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes">
+  <h1>Notes Template</h1>
+  <span class="unit-badge">Unit 5 · Chapters 9 · 10 · 13 — print this tab for study notes</span>
+
+  <div class="video-block">
+    <h4>📺 Ch. 13 Videos (from the Ch. 10 lecture deck)</h4>
+    <div class="video-link"><span class="video-tag">DEATH PENALTY</span><a href="https://www.youtube.com/watch?v=pqbpBYPQPL0" target="_blank" rel="noopener">Death Penalty</a></div>
+    <div class="video-link"><span class="video-tag">LETHAL INJECTION</span><a href="https://www.youtube.com/watch?v=dprfHZ7gYvw" target="_blank" rel="noopener">Lethal Injection</a></div>
+    <div class="video-note">⚠️ These two links are embedded on slide 3 of the Ch. 10 lecture deck (labeled "Death penalty" / "Lethal injection"). They map to Ch. 13's death-penalty material. Titles shown are the deck's labels — the linked video content was not independently verified in this build.</div>
+    <div class="source-list">
+      <a href="https://www.texastribune.org/" target="_blank" rel="noopener">Texas Tribune</a>
+      <a href="https://www.kut.org/" target="_blank" rel="noopener">KUT</a>
+      <a href="https://www.tdcj.texas.gov/" target="_blank" rel="noopener">TDCJ</a>
+      <a href="https://www.txcourts.gov/" target="_blank" rel="noopener">Texas Courts</a>
+      <a href="https://www.allsides.com/media-bias/media-bias-chart" target="_blank" rel="noopener">AllSides Bias Chart</a>
+    </div>
+  </div>
+
+  <div class="notes-grid">
+    <div class="note-card"><h4>Plural Executive (9.7)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Governor's Legislative Powers (9.2)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Clemency: Pardon / Reprieve (9.3)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Jurisdiction Types (10.2)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Grand vs. Petit Jury (10.2/10.4)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Civil vs. Criminal Procedure (10.3/10.4)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Graded / Enhanced Penalties (13.1)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Death Penalty Process (13.2)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Corrections &amp; Recidivism (13.3)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Juvenile vs. Adult (13.4)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Fairness / Exoneration (13.5)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Contrast Pairs to Drill</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+  </div>
+</div>
+<footer>GOVT 2306 · Unit 5 (Final) · study.imichaelv.com · Built from Ch. 9, 10 &amp; 13 source materials</footer>
+<script>
+
+// ─── MASTERY ───
+function getMasteryKey(){return 'mastery_govt2306_unit5_';}
+function resetAllMastery(){
+  Object.keys(localStorage).filter(k=>k.startsWith(getMasteryKey())).forEach(k=>localStorage.removeItem(k));
+  Object.keys(localStorage).filter(k=>k.startsWith('obj_govt2306_unit5_')).forEach(k=>localStorage.removeItem(k));
+  document.querySelectorAll('.obj-master-btn').forEach(b=>{b.textContent='☐ Mark Mastered';b.classList.remove('mastered');});
+  document.querySelectorAll('.fc-card').forEach((_,i)=>localStorage.removeItem(getMasteryKey()+i));
+  renderCard();updateMasteryBar();
+}
+function updateMasteryBar(){
+  const total=document.querySelectorAll('.obj-master-btn').length;
+  const done=Object.keys(localStorage).filter(k=>k.startsWith('obj_govt2306_unit5_')).length;
+  const pct=total?Math.round(done/total*100):0;
+  const f=document.getElementById('mastery-fill');
+  if(f)f.style.width=pct+'%';
+}
+function toggleObjMastery(btn,key){
+  const is=localStorage.getItem(key);
+  if(is){localStorage.removeItem(key);btn.textContent='☐ Mark Mastered';btn.classList.remove('mastered');}
+  else{localStorage.setItem(key,'1');btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  updateMasteryBar();
+}
+function toggleObj(card){
+  const body=card.querySelector('.obj-body');
+  const arrow=card.querySelector('.obj-expand');
+  const open=body.classList.toggle('open');
+  arrow.style.transform=open?'rotate(180deg)':'';
+  card.setAttribute('aria-expanded',open);
+}
+function toggleChapter(header){
+  const body=header.nextElementSibling;
+  const arrow=header.querySelector('span:last-child');
+  const open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  arrow.style.transform=open?'':'rotate(180deg)';
+  header.setAttribute('aria-expanded',!open);
+}
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+}
+
+// ─── FLASHCARD DATA ───
+const allCards=[{"ch": "ch9", "q": "What is a plural executive, and why does it make the Texas governor weak?", "a": "A multi-headed executive branch (Art. IV) in which power is split among several INDEPENDENTLY ELECTED officials the governor does not control. It fragments executive power, so the Texas governor is constitutionally weak vs. the U.S. president."}, {"ch": "ch9", "q": "Constitutional qualifications to be Texas governor?", "a": "At least 30 years old, a U.S. citizen, and a Texas resident for the 5 years immediately before election."}, {"ch": "ch9", "q": "Term length and term limits for the Texas governor?", "a": "4-year term; NO term limits (Texas is one of 14 states with none)."}, {"ch": "ch9", "q": "What is the governor's appointive power, and what limits it?", "a": "Naming supporters/allies to boards and commissions — the governor's single most important power. Limited by two-thirds Senate consent ('advice and consent') and senatorial courtesy."}, {"ch": "ch9", "q": "What is senatorial courtesy?", "a": "Tradition where the governor first clears a nominee with the state senator from the nominee's home district before sending the name to the Senate, to avoid rejection."}, {"ch": "ch9", "q": "Does the governor have independent power to remove appointees?", "a": "No. The governor can remove only his/her OWN appointees, and only with two-thirds Senate consent — not appointees of a previous governor."}, {"ch": "ch9", "q": "What is the only constitutional way to remove a Texas governor from office?", "a": "Impeachment by the House of Representatives and conviction by the Senate (e.g., 'Pa' Ferguson)."}, {"ch": "ch9", "q": "What is an executive order in Texas?", "a": "A directive the governor issues to state agencies, used mainly for emergencies/disasters (e.g., the March 2020 COVID-19 state of emergency)."}, {"ch": "ch9", "q": "After the legislature adjourns, how long does the governor have to veto pending bills?", "a": "20 days. (There is NO pocket veto in Texas — an unsigned bill still becomes law.)"}, {"ch": "ch9", "q": "What is the line-item veto, and why is it important?", "a": "Power to strike individual items from the appropriations (budget) bill while approving the rest. It's the governor's strongest budget weapon and the ONLY significant constitutional budget power."}, {"ch": "ch9", "q": "What is the governor's message power?", "a": "The State of the State address and formal messages that set the legislative agenda and build goodwill with legislators."}, {"ch": "ch9", "q": "Rules for a special session in Texas (who calls, length, number, agenda)?", "a": "ONLY the governor calls it; up to 30 days; NO limit on number; the governor sets the agenda (legislators may consider only listed items)."}, {"ch": "ch9", "q": "What is the governor's only significant constitutional budget power?", "a": "The line-item veto. (The Legislative Budget Board, chaired by the lieutenant governor, actually writes the budget.)"}, {"ch": "ch9", "q": "How does the governor's power over judges work?", "a": "The governor FILLS VACANCIES on state (not county or city) courts caused by death, resignation, or new-court creation; those appointees then face the next election."}, {"ch": "ch9", "q": "Full pardon vs. conditional pardon?", "a": "Both need a Board of Pardons and Paroles recommendation. FULL = restores all civil rights with no strings. CONDITIONAL = restores rights but attaches a restriction (e.g., can never practice a licensed profession again)."}, {"ch": "ch9", "q": "In a death-penalty case, what can the Texas governor do independently?", "a": "Grant ONE 30-day reprieve (a temporary delay of execution). A full commutation still requires a Board of Pardons and Paroles recommendation."}, {"ch": "ch9", "q": "What are the governor's informal powers?", "a": "Influence NOT in the constitution: leading the state party, using mass/social media to shape opinion and pressure the legislature, and pork-barrel bargaining. Strength depends on popularity and political skill."}, {"ch": "ch9", "q": "Who is first in line to succeed the Texas governor?", "a": "The lieutenant governor, who serves out the remainder of the 4-year term."}, {"ch": "ch9", "q": "Full acting-governor succession line if both governor and lt. governor are unavailable?", "a": "President pro tempore of the Senate → Speaker of the House → attorney general → chief justices of the courts of appeals."}, {"ch": "ch9", "q": "Describe the governor's military power.", "a": "The governor is Commander-in-Chief of the state's military forces (Texas Army & Air National Guard, Texas State Guard) — EXCEPT when they are called into federal service."}, {"ch": "ch9", "q": "In Texas, who has primary responsibility for enforcing the law?", "a": "Local police departments and county sheriffs — NOT the governor. The governor's only direct law-enforcement power is deploying the Texas Rangers/DPS and the National Guard in emergencies."}, {"ch": "ch9", "q": "How do campaign funds connect to the governor's power?", "a": "Campaigns are costly, so governors rely on big donors — and large donors are often appointed to key policymaking positions (legal but criticized)."}, {"ch": "ch9", "q": "Who is often called the single most powerful person in Texas state government, and why?", "a": "The lieutenant governor — presides over the Senate, chairs the Legislative Budget Board, and is first in line of succession."}, {"ch": "ch9", "q": "What does the Texas attorney general do?", "a": "Serves as the state's chief CIVIL lawyer: represents Texas in court, issues advisory legal opinions, and enforces child-support."}, {"ch": "ch9", "q": "Who is the state's chief accounting officer and tax collector?", "a": "The Comptroller of Public Accounts, who also certifies available revenue for the budget."}, {"ch": "ch9", "q": "Which official awards oil, gas, and sulfur leases on state-owned land?", "a": "The Commissioner of the General Land Office."}, {"ch": "ch9", "q": "What does the Railroad Commission of Texas regulate today?", "a": "The oil and gas industry (NOT railroads, despite the name)."}, {"ch": "ch9", "q": "Which executive department head is appointed by the governor, and what is their main role?", "a": "The Secretary of State — the state's chief elections officer."}, {"ch": "ch9", "q": "What does the Sunset Advisory Commission do?", "a": "Reviews state agencies and recommends to the legislature whether each should be abolished, merged, reorganized, or retained."}, {"ch": "ch9", "q": "Which agency oversees statewide school testing in Texas?", "a": "The Texas Education Agency (TEA)."}, {"ch": "ch9", "q": "Governor vs. lieutenant governor in one line?", "a": "Governor = constitutionally WEAK head of a plural executive; lieutenant governor = often the single MOST powerful official (Senate + budget)."}, {"ch": "ch10", "q": "Civil law vs. criminal law?", "a": "CIVIL = disputes between private parties (contracts, divorce/family, personal-injury torts); loser usually pays money. CRIMINAL = offenses against the state; the government prosecutes, punishment is fines/incarceration."}, {"ch": "ch10", "q": "Misdemeanor vs. felony?", "a": "MISDEMEANOR = minor offense (Classes C/B/A; fine and/or up to a year in county jail). FELONY = serious offense (state prison, possibly a fine)."}, {"ch": "ch10", "q": "What is jurisdiction?", "a": "A court's authority to hear and decide a particular case."}, {"ch": "ch10", "q": "Original vs. appellate jurisdiction?", "a": "ORIGINAL = authority to hear a case for the FIRST time (trial). APPELLATE = authority to review a lower court's decision on appeal."}, {"ch": "ch10", "q": "Exclusive vs. concurrent jurisdiction?", "a": "EXCLUSIVE = only that court may hear the case. CONCURRENT = more than one court may hear the same type of case."}, {"ch": "ch10", "q": "What is a court of record, and which Texas courts usually are NOT ones?", "a": "A court that keeps a full transcript. Most MUNICIPAL and JUSTICE OF THE PEACE courts are NOT courts of record — their appeals are heard by trial de novo (a new trial) in a county-level court."}, {"ch": "ch10", "q": "List the 8 types of Texas courts (low to high).", "a": "Municipal; Justice of the Peace; Constitutional County; County courts-at-law; Probate; District; Courts of Appeals; and the two highest — Supreme Court of Texas and Court of Criminal Appeals."}, {"ch": "ch10", "q": "Which court would you use to sue for $8,000 while representing yourself?", "a": "The Justice of the Peace (small-claims) court — JP civil jurisdiction runs up to $20,000 and small-claims matters are handled there."}, {"ch": "ch10", "q": "What are the principal trial courts in Texas, and what do they hear?", "a": "District courts — they try BOTH civil and criminal cases and have exclusive original jurisdiction over felonies, divorce, and land title."}, {"ch": "ch10", "q": "What does a probate court do?", "a": "Handles decedents' estates — primarily establishing the VALIDITY OF A WILL — plus guardianship and MENTAL-COMPETENCY determinations."}, {"ch": "ch10", "q": "Which court is Texas's highest for civil cases, and what else does it do?", "a": "The Supreme Court of Texas — highest civil (and juvenile) court; 9 justices, 6-year terms; it also makes the rules of CIVIL procedure."}, {"ch": "ch10", "q": "Which court hears death-penalty appeals, and what is it the highest court for?", "a": "The Court of Criminal Appeals — Texas's highest court for CRIMINAL cases; death-penalty appeals go directly to it."}, {"ch": "ch10", "q": "Which court is NOT mentioned in the Texas Constitution?", "a": "The legislatively created statutory courts — county courts-at-law, municipal courts, and statutory probate courts."}, {"ch": "ch10", "q": "How are almost all Texas judges chosen, and why is that criticized?", "a": "By PARTISAN election (municipal judges are usually appointed). Critics say elected judges may rule with an eye on donors and re-election."}, {"ch": "ch10", "q": "What is the State Bar of Texas?", "a": "The mandatory organization every licensed Texas attorney must join; it sets and enforces professional standards."}, {"ch": "ch10", "q": "How many people are on a grand jury, and how many must agree to indict?", "a": "12 citizens; at least 9 must agree there is enough evidence to return an indictment."}, {"ch": "ch10", "q": "How many members are on a petit (trial) jury in Texas?", "a": "12 in district court; 6 in lower (county/JP) courts."}, {"ch": "ch10", "q": "Venire vs. voir dire?", "a": "VENIRE = the pool/panel of prospective jurors summoned. VOIR DIRE = the questioning of that pool by judge and attorneys to select jurors."}, {"ch": "ch10", "q": "What is a tort? Give an example.", "a": "A civil wrong (other than breach of contract) — e.g., a personal-injury or defective-product claim, like suing a carmaker over a defective steering wheel."}, {"ch": "ch10", "q": "Plaintiff vs. defendant?", "a": "PLAINTIFF = the party who files the civil suit. DEFENDANT = the party being sued (or accused)."}, {"ch": "ch10", "q": "What is the most common remedy sought in civil lawsuits?", "a": "Monetary damages (financial compensation) — not jail time."}, {"ch": "ch10", "q": "How are most civil cases tried, and who does what if there's a jury?", "a": "Most are bench trials (judge alone). If a jury sits, the JURY finds the facts and the JUDGE applies the law."}, {"ch": "ch10", "q": "Verdict vs. judgment?", "a": "VERDICT = the jury's finding. JUDGMENT = the court's final written decision that resolves the case."}, {"ch": "ch10", "q": "What is alternative dispute resolution (ADR)?", "a": "Mediation/arbitration used to settle disputes and relieve crowded dockets without a full trial."}, {"ch": "ch10", "q": "What is an indictment?", "a": "A formal accusation returned by a grand jury charging someone with a FELONY and ordering them to trial. (A lesser charge can proceed by 'information.')"}, {"ch": "ch10", "q": "What rights does someone accused of a crime have in Texas?", "a": "To be advised (right to remain silent, right to an attorney) after arrest and before questioning; the right to appointed counsel if indigent; and the right to trial by jury."}, {"ch": "ch10", "q": "What happens when a criminal jury can't agree, and how many must agree to convict?", "a": "A criminal verdict must be UNANIMOUS; if jurors are hopelessly split it's a HUNG JURY and the judge declares a mistrial."}, {"ch": "ch10", "q": "Who pays most of the cost of indigent defense in Texas?", "a": "County governments (about 90% of the ~$300 million cost)."}, {"ch": "ch10", "q": "Who makes the rules of criminal procedure vs. civil procedure?", "a": "The LEGISLATURE makes CRIMINAL procedure rules; the SUPREME COURT OF TEXAS makes CIVIL procedure rules."}, {"ch": "ch10", "q": "Common law vs. statutory law vs. code vs. ordinance?", "a": "COMMON LAW = judge-made law from court decisions. STATUTORY LAW = laws enacted by the legislature. CODE = a systematic subject-by-subject arrangement of statutes. ORDINANCE = a law passed by a LOCAL government."}, {"ch": "ch10", "q": "What project did the Texas Legislative Council start in 1963?", "a": "Reorganizing Texas laws into a systematic arrangement of legal codes (still ongoing)."}, {"ch": "ch10", "q": "Grand jury vs. petit jury?", "a": "GRAND JURY (12; ≥9) decides whether to INDICT (send to trial). PETIT/TRIAL JURY (12 in district court, 6 in lower courts) decides GUILT or liability at trial."}, {"ch": "ch13", "q": "What is the Texas Penal Code?", "a": "The codified body of laws defining crimes and their punishments in Texas."}, {"ch": "ch13", "q": "What are graded penalties?", "a": "A system that ranks offenses by seriousness — misdemeanors (Classes C→A) and felonies (state-jail → 3rd → 2nd → 1st → capital) — so punishment is based on the grade of the offense."}, {"ch": "ch13", "q": "What is enhanced punishment, and what triggers it?", "a": "Punishing an offender as though they committed the NEXT-HIGHER degree of felony. Triggered by organized criminal activity, being a repeat offender, or committing a hate crime."}, {"ch": "ch13", "q": "Top two motivations for hate crimes in Texas?", "a": "Race and sexual orientation."}, {"ch": "ch13", "q": "What is a capital felony, and what is the minimum sentence?", "a": "The most serious offense class (e.g., killing a police officer during a robbery). MINIMUM sentence = life imprisonment WITHOUT parole; maximum = death."}, {"ch": "ch13", "q": "How many jurors must agree to impose a death sentence in Texas?", "a": "All 12 — the jury must UNANIMOUSLY agree (and find future dangerousness) after a guilty verdict."}, {"ch": "ch13", "q": "How does Texas execute, and what does it do when injection drugs run short?", "a": "By lethal injection. When FDA-approved drugs run short, Texas may obtain drugs from another state and repay in kind."}, {"ch": "ch13", "q": "How have Texas legislators responded to the ABA's call for a death-penalty moratorium?", "a": "They have consistently REJECTED the idea."}, {"ch": "ch13", "q": "Who runs county jails day-to-day, and who has oversight responsibility?", "a": "The county SHERIFF runs them day-to-day; the Texas Commission on Jail Standards has OVERSIGHT responsibility."}, {"ch": "ch13", "q": "What share of Texas inmates are in private prisons, and how does Texas rank?", "a": "About 10% of inmates are in private prisons, and Texas has MORE privately operated incarceration facilities than any other state."}, {"ch": "ch13", "q": "Which two agencies handle offenders serving sentences in the community rather than prison?", "a": "The Community Justice Assistance Division (probation/community supervision) and the Parole Division — both within TDCJ."}, {"ch": "ch13", "q": "What is recidivism? Give an example.", "a": "Relapse into crime that returns a released offender to prison — e.g., released in June, re-arrested for robbery in December."}, {"ch": "ch13", "q": "What is administrative segregation, and why is it controversial?", "a": "Long-term solitary confinement (death-row inmates are held this way the whole time). Critics say it violates international human-rights standards and the U.S. Constitution."}, {"ch": "ch13", "q": "Which prison problem drives BOTH inmate-on-inmate violence and use of force by officers?", "a": "Overcrowded facilities (staff shortages are a related driver)."}, {"ch": "ch13", "q": "What is now the most common contraband item in Texas prisons?", "a": "Cell phones."}, {"ch": "ch13", "q": "What is the age of adulthood for criminal matters in Texas?", "a": "17."}, {"ch": "ch13", "q": "What is an adjudication hearing?", "a": "A trial in JUVENILE court. Juvenile courts are civil (not criminal), so appeals go to a court with civil jurisdiction (ultimately the Texas Supreme Court)."}, {"ch": "ch13", "q": "Status offender vs. delinquent child?", "a": "STATUS OFFENDER = a juvenile cited for acts illegal only because of age (running away, truancy, curfew violations). DELINQUENT = a child who commits acts that would be crimes for an adult."}, {"ch": "ch13", "q": "Which agency replaced the Texas Youth Commission and Texas Juvenile Probation Commission in 2011?", "a": "The Texas Juvenile Justice Department (TJJD), created through sunset review."}, {"ch": "ch13", "q": "What scientific development has proven convicted people (including murderers) innocent?", "a": "DNA testing, which has led to exonerations."}, {"ch": "ch13", "q": "Which evidence is least reliable yet most trusted in exoneration cases?", "a": "Eyewitness testimony."}, {"ch": "ch13", "q": "How does Texas compensate the wrongfully incarcerated?", "a": "$80,000 for each year the person was wrongly imprisoned."}, {"ch": "ch13", "q": "What does the Texas Forensic Science Commission investigate?", "a": "Charges of negligence and misconduct related to DNA/forensic evidence."}, {"ch": "ch13", "q": "What is racial profiling?", "a": "Targeting members of historically marginalized groups for stops and searches."}, {"ch": "ch13", "q": "Who has the job of representing the State of Texas in criminal cases?", "a": "The district attorney (DA)."}, {"ch": "ch13", "q": "What is the principal SHORT-TERM method for relieving overcrowded court dockets?", "a": "Plea bargaining."}, {"ch": "ch13", "q": "Historically, how has Texas dealt with drug offenses?", "a": "Through incarceration."}, {"ch": "ch13", "q": "What is the purpose of putting people in jail/prison?", "a": "Punishment, deterrence, incapacitation (protecting the public), and — ideally — rehabilitation."}];
+// ─── FLASHCARD ENGINE ───
+let deck=[],currentIdx=0,flipped=false;
+function filterCards(ch,btn){
+  document.querySelectorAll('#panel-flashcards .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  deck=ch==='all'?[...allCards]:allCards.filter(c=>c.ch===ch);
+  currentIdx=0;flipped=false;renderCard();
+}
+function renderCard(){
+  const empty=document.getElementById('fc-empty');
+  if(!deck.length){empty.style.display='block';document.getElementById('fc-counter').textContent='';
+    document.getElementById('fc-q').textContent='';document.getElementById('fc-a').textContent='';return;}
+  empty.style.display='none';
+  const c=deck[currentIdx];
+  document.getElementById('fc-q').textContent=c.q;
+  document.getElementById('fc-a').textContent=c.a;
+  document.getElementById('fc-counter').textContent=(currentIdx+1)+' / '+deck.length;
+  const card=document.getElementById('fc-card');
+  card.classList.remove('flipped');flipped=false;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+  else{mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+}
+function flipCard(){document.getElementById('fc-card').classList.toggle('flipped');flipped=!flipped;}
+function nextCard(){if(!deck.length)return;currentIdx=(currentIdx+1)%deck.length;renderCard();}
+function prevCard(){if(!deck.length)return;currentIdx=(currentIdx-1+deck.length)%deck.length;renderCard();}
+function shuffleCards(){for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}currentIdx=0;renderCard();}
+function toggleMastered(idx){
+  const c=deck[idx];if(!c)return;const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){localStorage.removeItem(key);mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+  else{localStorage.setItem(key,'1');mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+}
+
+// ─── QUIZ DATA ───
+const allQuizData=[{"ch": "ch9", "type": "mc", "q": "When Governor Abbott declared a state of emergency during the COVID-19 outbreak in March 2020, what power was he exercising?", "opts": ["Judicial", "Legislative", "Executive", "Informal"], "ans": 2, "exp": "EXECUTIVE — declaring emergencies and directing agencies is a formal executive power. It is not judicial (courts), not legislative (making law), and more than merely informal (media/persuasion)."}, {"ch": "ch9", "type": "mc", "q": "Which power lets the governor nominate friends and supporters for state positions?", "opts": ["Removal power", "Appointive power", "Executive veto power", "Informal power"], "ans": 1, "exp": "APPOINTIVE power — the governor's most important formal power. Removal power is about firing appointees (and is limited); veto is a legislative tool; informal power is persuasion, not appointment."}, {"ch": "ch9", "type": "mc", "q": "How does the legislature limit the governor's control over the state bureaucracy?", "opts": ["By denying the governor military power", "By limiting the governor's law-enforcement power", "By denying the governor executive veto power", "By limiting the governor's independent removal power"], "ans": 3, "exp": "Limiting INDEPENDENT REMOVAL power — the governor can't freely fire appointees (needs two-thirds Senate consent and can't touch a prior governor's appointees), so agencies aren't fully under the governor. The others aren't the mechanism described."}, {"ch": "ch9", "type": "mc", "q": "Who is Commander-in-Chief of Texas's state military forces?", "opts": ["The lieutenant governor", "The attorney general", "The governor", "The Speaker of the House"], "ans": 2, "exp": "The GOVERNOR — except when the forces are called into federal service. The lt. governor leads the Senate, the AG is the state's lawyer, and the Speaker leads the House — none command the Guard."}, {"ch": "ch9", "type": "mc", "q": "Who does most of the law-enforcement work in Texas?", "opts": ["The Texas Rangers", "The lieutenant governor", "City police departments and county sheriffs' departments", "The Texas Department of Public Safety"], "ans": 2, "exp": "LOCAL police and county SHERIFFS handle most law enforcement. The Rangers/DPS are specialized/statewide but small; the lt. governor has no law-enforcement role."}, {"ch": "ch9", "type": "mc", "q": "The line-item veto gives the governor control over which aspect of state government?", "opts": ["Judicial appointments", "Budget spending", "Education enrollment", "Medicare costs"], "ans": 1, "exp": "BUDGET SPENDING — the line-item veto strikes individual items from the appropriations bill. It has nothing to do with appointments, enrollment, or Medicare."}, {"ch": "ch9", "type": "mc", "q": "The governor's State of the State address, meant to build a good relationship with legislators, is an example of which power?", "opts": ["Veto power", "Message power", "Special session power", "Signing power"], "ans": 1, "exp": "MESSAGE power — formally communicating an agenda to the legislature. Veto/signing act on finished bills; the special-session power is the call to convene."}, {"ch": "ch9", "type": "mc", "q": "After the legislature adjourns, how long does the governor have to veto pending bills?", "opts": ["10 days", "20 days", "3 months", "6 months"], "ans": 1, "exp": "20 DAYS after adjournment. (During the session it's 10 days, and an unsigned bill still becomes law — Texas has no pocket veto.)"}, {"ch": "ch9", "type": "mc", "q": "A governor promises not to line-item-veto a senator's pet project in exchange for the senator's vote on the governor's bill. This tactic is called:", "opts": ["Gerrymandering", "Pork-barrel politics", "Nonpartisan politics", "Filibustering"], "ans": 1, "exp": "PORK-BARREL politics — trading spending favors for political support (an informal/bargaining power). Gerrymandering is district-drawing; the others don't fit."}, {"ch": "ch9", "type": "mc", "q": "What restriction applies to the governor's special-session power?", "opts": ["Only 5 special sessions per term", "Each special session is limited to 30 days", "A two-thirds vote is required to call one", "The Speaker can also call one"], "ans": 1, "exp": "Each session is capped at 30 DAYS. There is NO limit on the number, no vote requirement, and ONLY the governor can call one and set its agenda."}, {"ch": "ch9", "type": "mc", "q": "The Board of Pardons and Paroles can grant which clemency WITHOUT action by the governor?", "opts": ["Full pardons", "Reprieves", "Commutation of sentence", "Paroles"], "ans": 3, "exp": "PAROLES — the BPP grants these on its own. Full pardons/commutations require the governor acting on a BPP recommendation; the governor grants reprieves."}, {"ch": "ch9", "type": "mc", "q": "A governor restores a person's rights but bars them from ever practicing medicine again. Which clemency is this?", "opts": ["Reprieve", "Conditional pardon", "Full pardon", "Parole"], "ans": 1, "exp": "CONDITIONAL pardon — rights restored WITH a restriction attached. A full pardon has no strings; a reprieve only delays a sentence; parole is supervised release."}, {"ch": "ch9", "type": "mc", "q": "In a death-sentence case, what can the Texas governor do independently to temporarily suspend execution?", "opts": ["Line-item veto", "Conditional pardon", "Grant a 30-day reprieve", "Order a new trial"], "ans": 2, "exp": "Grant a 30-DAY REPRIEVE — the one death-penalty action the governor takes alone. A commutation needs a BPP recommendation; the other options don't apply."}, {"ch": "ch9", "type": "mc", "q": "Should the governorship become vacant, who is first in line of succession?", "opts": ["Speaker of the House", "Attorney general", "President pro tempore of the Senate", "Lieutenant governor"], "ans": 3, "exp": "The LIEUTENANT GOVERNOR, who serves out the term. The others come later (and only as ACTING governor if both top offices are empty)."}, {"ch": "ch9", "type": "mc", "q": "What is the only constitutional method for forcing a Texas governor from office before the term ends?", "opts": ["A majority vote of Texas voters", "Impeachment by the House and conviction by the Senate", "A grand-jury indictment", "Action by the U.S. president"], "ans": 1, "exp": "IMPEACHMENT (House) + CONVICTION (Senate). Recall by voters and presidential action don't exist for this; an indictment alone doesn't remove the governor."}, {"ch": "ch9", "type": "mc", "q": "What is Texas's policy on gubernatorial term limits?", "opts": ["Limited to one term", "Limited to two consecutive terms", "Texas does not place term limits on governors", "Same as most other states"], "ans": 2, "exp": "Texas has NO term limits (one of 14 states with none). The others misstate the rule."}, {"ch": "ch9", "type": "mc", "q": "Which statement about gubernatorial campaign donors is true?", "opts": ["Large donors are barred from key appointments", "Large donors must cap gifts at $2,000 to qualify", "Large donors are often appointed to key policymaking positions", "Donors have no influence on appointments"], "ans": 2, "exp": "Large donors are OFTEN appointed to key policymaking positions — a legal but criticized money-and-appointments link. The other options are false."}, {"ch": "ch9", "type": "mc", "q": "Who is the state's chief accounting officer and tax collector?", "opts": ["The secretary of state", "The attorney general", "The comptroller of public accounts", "The lieutenant governor"], "ans": 2, "exp": "The COMPTROLLER of Public Accounts, who also certifies available revenue. The AG is the state's lawyer; the secretary of state runs elections; the lt. gov leads the Senate."}, {"ch": "ch9", "type": "mc", "q": "Which official awards oil, gas, and sulfur leases on state-owned land?", "opts": ["The commissioner of the General Land Office", "The commissioner of agriculture", "The secretary of state", "The lieutenant governor"], "ans": 0, "exp": "The Commissioner of the GENERAL LAND OFFICE manages state lands and these leases. The others have unrelated duties."}, {"ch": "ch9", "type": "mc", "q": "Which body recommends whether a state agency should be abolished, merged, reorganized, or retained?", "opts": ["The General Land Office", "The Sunset Advisory Commission", "The lieutenant governor's office", "The Texas Ethics Commission"], "ans": 1, "exp": "The SUNSET ADVISORY COMMISSION runs the sunset review. The others don't perform this function."}, {"ch": "ch9", "type": "fitb", "q": "A ___ executive means Texas's executive power is split among several independently elected officials the governor doesn't control.", "ans": ["plural"], "display": "plural (executive)", "exp": "PLURAL executive (Art. IV) — the core reason the Texas governor is constitutionally weak."}, {"ch": "ch9", "type": "fitb", "q": "To avoid a Senate rejection, the governor honors ___ ___ by clearing a nominee with the senator from the nominee's home district.", "ans": ["senatorial courtesy", "senatorial"], "display": "senatorial courtesy", "exp": "SENATORIAL COURTESY — a key limit on the appointive power."}, {"ch": "ch10", "type": "mc", "q": "Which body of law handles business contracts, divorces, and personal-injury claims?", "opts": ["Public law", "Criminal law", "Civil law", "Private law"], "ans": 2, "exp": "CIVIL law governs disputes between private parties. Criminal law is offenses against the state; 'public/private law' aren't the category asked."}, {"ch": "ch10", "type": "mc", "q": "Which is a characteristic of felony crimes?", "opts": ["They are always tried by bench trial", "They are punishable by a prison sentence and a fine", "They never involve a fine", "They are handled in civil courts"], "ans": 1, "exp": "Felonies are punishable by PRISON and possibly a FINE. They're criminal (not civil), can involve juries, and can carry fines."}, {"ch": "ch10", "type": "mc", "q": "What term describes a court's authority to hear and decide a particular case?", "opts": ["Adjudication", "Municipality", "Jurisdiction", "Legislation"], "ans": 2, "exp": "JURISDICTION. Adjudication is the act of judging a case; the others are unrelated."}, {"ch": "ch10", "type": "mc", "q": "In 1963 the Texas Legislative Council was charged with what still-ongoing project?", "opts": ["Analyzing crime statistics", "Writing a judicial history of Texas", "Reorganizing Texas laws into a systematic arrangement of legal codes", "Studying the effect of specific laws"], "ans": 2, "exp": "Re-CODIFYING Texas law into legal codes. The other options were never the assignment."}, {"ch": "ch10", "type": "mc", "q": "Susan's will may be invalid because it isn't notarized. Which court validates a will?", "opts": ["Appellate court", "Justice of the peace court", "Probate court", "Court of record"], "ans": 2, "exp": "PROBATE court handles wills (and guardianship/mental competency). Appellate courts hear appeals; JP courts handle small/minor matters; 'court of record' is a feature, not a court type."}, {"ch": "ch10", "type": "mc", "q": "What does it mean when a court has ORIGINAL jurisdiction?", "opts": ["It hears the case on appeal", "It has the power to try cases for the first time", "It decides which lower court hears the case", "It is the only court allowed to hear the case"], "ans": 1, "exp": "ORIGINAL jurisdiction = try a case for the FIRST time. Hearing on appeal = appellate; only-court = exclusive."}, {"ch": "ch10", "type": "mc", "q": "Which cases are handled by local trial courts (municipal and JP courts)?", "opts": ["Murders", "Traffic violations", "Appeals from lower courts", "Wills and estates"], "ans": 1, "exp": "TRAFFIC and minor (Class C) cases. Felonies/murders go to district courts, wills to probate, and appeals to higher courts."}, {"ch": "ch10", "type": "mc", "q": "How long is a Texas Supreme Court justice's term?", "opts": ["2 years", "4 years", "6 years", "Life"], "ans": 2, "exp": "6 YEARS (9 justices). Texas elects its high-court judges — they don't serve for life like federal judges."}, {"ch": "ch10", "type": "mc", "q": "To what does CONCURRENT jurisdiction refer?", "opts": ["Class C misdemeanor authority", "The authority of more than one court to try a case", "Exclusive authority to hear a case first", "Small-claims authority"], "ans": 1, "exp": "CONCURRENT = MORE THAN ONE court may try the case. The others describe different concepts (exclusive/original/small claims)."}, {"ch": "ch10", "type": "mc", "q": "County courts-at-law almost exclusively hear which cases?", "opts": ["Capital murder cases", "Misdemeanors", "Probate issues", "Second-degree murder cases"], "ans": 1, "exp": "MISDEMEANORS — they were created to relieve constitutional county courts. Felonies go to district courts; probate to probate courts."}, {"ch": "ch10", "type": "mc", "q": "Which are the principal trial courts that can hear both civil and criminal cases?", "opts": ["Courts of appeals", "District courts", "Constitutional county courts", "Probate courts"], "ans": 1, "exp": "DISTRICT courts are the principal trial courts for both civil and criminal cases. Courts of appeals are appellate; county/probate courts are limited."}, {"ch": "ch10", "type": "mc", "q": "What is Texas's highest court with CIVIL jurisdiction?", "opts": ["Court of Criminal Appeals", "Commissioners Court", "Supreme Court of Texas", "Civil District Court of Austin"], "ans": 2, "exp": "The SUPREME COURT OF TEXAS is highest for civil (and juvenile) cases. The Court of Criminal Appeals is highest for CRIMINAL cases; commissioners court is county government."}, {"ch": "ch10", "type": "mc", "q": "How are all Texas judges (except municipal judges) chosen?", "opts": ["Gubernatorial appointment", "Partisan elections", "Nonpartisan elections", "Commissioner recommendation"], "ans": 1, "exp": "PARTISAN elections. Municipal judges are usually appointed; the governor only fills vacancies, and elections here are partisan, not nonpartisan."}, {"ch": "ch10", "type": "mc", "q": "According to the Texas Bill of Rights, how may a person be charged with a felony?", "opts": ["Judgment from the attorney general", "Indictment by a grand jury", "Trial before a petit jury", "Judgment from the Supreme Court"], "ans": 1, "exp": "By INDICTMENT from a GRAND JURY. A petit jury decides guilt at trial; the AG/Supreme Court don't charge felonies."}, {"ch": "ch10", "type": "mc", "q": "A couple sues a carmaker over a defective steering wheel that caused a crash. This is which kind of civil case?", "opts": ["Contract", "Family law", "Tort", "Domestic relations"], "ans": 2, "exp": "A TORT — a civil wrong causing injury (product defect). It's not a contract dispute or family matter."}, {"ch": "ch10", "type": "mc", "q": "What is the most common remedy plaintiffs seek in civil lawsuits?", "opts": ["Jail time for the defendant", "Financial compensation for damages", "Community service for the defendant", "A reduced sentence"], "ans": 1, "exp": "MONETARY DAMAGES (financial compensation). Civil suits aren't about jailing anyone."}, {"ch": "ch10", "type": "mc", "q": "How are the majority of civil cases tried?", "opts": ["A jury decides the facts and the judge applies the law", "A judge hears the case and rules — a bench trial", "The case is dismissed", "The plaintiff withdraws the suit"], "ans": 1, "exp": "By BENCH TRIAL (judge alone). When there IS a jury, the jury finds facts and the judge applies the law — but most civil cases are bench trials."}, {"ch": "ch10", "type": "mc", "q": "In a civil case, the court's final written decision is called the:", "opts": ["Verdict", "Judgment", "Discovery", "Special issue"], "ans": 1, "exp": "JUDGMENT — the court's final decision. The VERDICT is the jury's finding; discovery is evidence exchange."}, {"ch": "ch10", "type": "mc", "q": "Who makes the rules of CRIMINAL procedure in Texas?", "opts": ["The Supreme Court", "The legislature", "The governor", "The district attorney"], "ans": 1, "exp": "The LEGISLATURE makes criminal-procedure rules. (The SUPREME COURT makes CIVIL-procedure rules — a classic contrast.)"}, {"ch": "ch10", "type": "mc", "q": "In death-penalty cases, appeals go directly to which court?", "opts": ["Justice of the Peace Court", "Texas Court of Criminal Appeals", "U.S. Supreme Court", "The governor"], "ans": 1, "exp": "The COURT OF CRIMINAL APPEALS — Texas's highest criminal court. Death appeals skip the intermediate courts."}, {"ch": "ch10", "type": "fitb", "q": "A grand jury of 12 must have at least ___ members agree there is enough evidence to return an indictment.", "ans": ["nine", "9"], "display": "nine (9)", "exp": "At least 9 of 12 grand jurors. (Don't confuse with the petit/trial jury: 12 in district court, 6 in lower courts.)"}, {"ch": "ch10", "type": "fitb", "q": "A criminal verdict of guilty or not guilty must be ___; if jurors can't agree, the result is a hung jury.", "ans": ["unanimous"], "display": "unanimous", "exp": "UNANIMOUS — all jurors must agree; otherwise a hung jury and a mistrial."}, {"ch": "ch10", "type": "fitb", "q": "The instrument that formally accuses a person of a felony and orders them to trial is a(n) ___.", "ans": ["indictment"], "display": "indictment", "exp": "INDICTMENT — returned by a grand jury (≥9 of 12)."}, {"ch": "ch13", "type": "mc", "q": "What is Texas's codified body of laws covering crime and punishment?", "opts": ["Texas Statutes of Justice", "Texas legislative agenda", "Texas Penal Code", "State Corrections Authority"], "ans": 2, "exp": "The TEXAS PENAL CODE. The other names are invented/unrelated."}, {"ch": "ch13", "type": "mc", "q": "Punishing repeat offenders or hate-crime offenders as if they committed the next-higher degree of felony is called:", "opts": ["Three strikes", "Enhanced punishment", "Capital felony", "Penal punishment"], "ans": 1, "exp": "ENHANCED PUNISHMENT — bumping the offense up one degree. 'Three strikes' is a different (federal/other-state) concept; capital felony is an offense class."}, {"ch": "ch13", "type": "mc", "q": "Which scenario is a capital felony?", "opts": ["Killing a man in a drunk-driving accident", "Shooting and killing a police officer while robbing a bank", "Raping a 40-year-old and lying in court", "Illegally picketing a clinic"], "ans": 1, "exp": "Killing a POLICE OFFICER during a robbery = capital felony (on-duty officer + another felony). The others are serious but not capital as described."}, {"ch": "ch13", "type": "mc", "q": "What is the minimum sentence for a capital felony in Texas?", "opts": ["The death penalty", "Life imprisonment without parole", "Life with the chance of parole", "50 years in a maximum-security prison"], "ans": 1, "exp": "LIFE WITHOUT PAROLE is the MINIMUM (death is the maximum). Note it's WITHOUT parole, not with."}, {"ch": "ch13", "type": "mc", "q": "After a guilty verdict in a capital case, how many jurors must agree for a death sentence?", "opts": ["A simple majority", "Two-thirds of the jury", "All 12 (unanimous)", "At least 9 of 12"], "ans": 2, "exp": "ALL 12 must UNANIMOUSLY agree (and find future dangerousness). Anything less than unanimous means no death sentence."}, {"ch": "ch13", "type": "mc", "q": "How have Texas legislators responded to the ABA's call for a death-penalty moratorium?", "opts": ["They agreed to a moratorium", "They put it on the ballot", "They have consistently rejected it", "They remain evenly split"], "ans": 2, "exp": "They have CONSISTENTLY REJECTED it. Texas continues to lead the nation in executions."}, {"ch": "ch13", "type": "mc", "q": "Gregory was released in June and returned to prison in December after a new robbery. This is an example of:", "opts": ["Parole", "A moratorium", "Recidivism", "Exoneration"], "ans": 2, "exp": "RECIDIVISM — relapse into crime returning someone to prison. Parole is supervised release; exoneration is being cleared."}, {"ch": "ch13", "type": "mc", "q": "Who directs the operation of most Texas county jails?", "opts": ["County sheriff", "Lieutenant governor", "Texas Department of Criminal Justice", "Private firms"], "ans": 0, "exp": "The county SHERIFF runs county jails day-to-day. (The Texas Commission on Jail Standards only OVERSEES them.)"}, {"ch": "ch13", "type": "mc", "q": "Texas has more of which type of incarceration facility than any other state?", "opts": ["Juvenile", "Privately operated", "Maximum security", "County"], "ans": 1, "exp": "PRIVATELY OPERATED facilities — Texas leads the nation; ~10% of inmates are in private prisons."}, {"ch": "ch13", "type": "mc", "q": "What designation do children who run away, skip school, or break curfew get from the juvenile system?", "opts": ["Delinquent children", "Recidivists", "Status offenders", "Future offenders"], "ans": 2, "exp": "STATUS OFFENDERS — acts illegal only because of age. DELINQUENTS commit acts that would be crimes for an adult."}, {"ch": "ch13", "type": "mc", "q": "When the legislature abolished the Texas Youth Commission and Texas Juvenile Probation Commission in 2011 via sunset review, which agency replaced them?", "opts": ["Texas Department of Corrections", "Texas Juvenile Justice Department", "Texas Department of Criminal Justice", "Texas Division of Juvenile Crimes"], "ans": 1, "exp": "The TEXAS JUVENILE JUSTICE DEPARTMENT (TJJD). The others are wrong/nonexistent."}, {"ch": "ch13", "type": "mc", "q": "When are adjudication hearings used?", "opts": ["Trials in criminal cases", "Trials in probate courts", "Trials in juvenile courts", "Death-penalty trials"], "ans": 2, "exp": "In JUVENILE courts (which are civil, not criminal), a trial is an adjudication hearing."}, {"ch": "ch13", "type": "mc", "q": "What is the age of adulthood for criminal matters in Texas?", "opts": ["16", "17", "18", "14"], "ans": 1, "exp": "17. At 17, a person is treated as an adult in Texas criminal law."}, {"ch": "ch13", "type": "mc", "q": "Which reason is cited for BOTH inmate-on-inmate violence and use of force by officers?", "opts": ["Staff surpluses", "Overcrowded facilities", "More violent offenders", "Better food"], "ans": 1, "exp": "OVERCROWDING (with staff shortages) drives both problems."}, {"ch": "ch13", "type": "mc", "q": "Who investigates negligence and misconduct related to DNA evidence?", "opts": ["The FBI", "The Texas Forensic Science Commission", "The Texas Department of Criminal Justice", "A crime-scene unit"], "ans": 1, "exp": "The TEXAS FORENSIC SCIENCE COMMISSION. The FBI/TDCJ don't perform this state oversight role."}, {"ch": "ch13", "type": "mc", "q": "What is now the most common contraband item in Texas prisons?", "opts": ["Drugs", "Cell phones", "Cigarettes", "Alcohol"], "ans": 1, "exp": "CELL PHONES are now the most common contraband."}, {"ch": "ch13", "type": "mc", "q": "How does Texas compensate someone wrongfully incarcerated?", "opts": ["$80,000 for each year wrongly incarcerated", "$160,000 per year", "No financial compensation", "A guaranteed job only"], "ans": 0, "exp": "$80,000 PER YEAR wrongfully imprisoned."}, {"ch": "ch13", "type": "mc", "q": "Which evidence is least reliable, though typically most trusted, in exoneration cases?", "opts": ["Eyewitness testimony", "Ballistics", "Expert testimony", "DNA testing"], "ans": 0, "exp": "EYEWITNESS TESTIMONY — trusted by juries but frequently wrong. DNA is highly reliable (and often the tool of exoneration)."}, {"ch": "ch13", "type": "mc", "q": "What is racial profiling?", "opts": ["Separating racial groups in prison to reduce violence", "Targeting members of historically marginalized groups for stops and searches", "Considering race in parole decisions", "Selecting White offenders for parole"], "ans": 1, "exp": "Targeting historically MARGINALIZED groups for stops/searches — a core fairness concern."}, {"ch": "ch13", "type": "mc", "q": "Who represents the State of Texas in criminal cases?", "opts": ["The attorney general", "The district attorney", "The governor", "The sheriff"], "ans": 1, "exp": "The DISTRICT ATTORNEY (DA). (The attorney general is the state's chief CIVIL lawyer.)"}, {"ch": "ch13", "type": "fitb", "q": "The principal SHORT-TERM method for relieving overcrowded court dockets is ___ ___.", "ans": ["plea bargaining", "plea bargain", "plea-bargaining"], "display": "plea bargaining", "exp": "PLEA BARGAINING resolves most cases without trial, easing crowded dockets."}, {"ch": "ch13", "type": "fitb", "q": "Long-term solitary confinement, used for death-row inmates, is called administrative ___.", "ans": ["segregation"], "display": "administrative segregation", "exp": "ADMINISTRATIVE SEGREGATION — criticized as violating international human-rights standards and the U.S. Constitution."}, {"ch": "ch13", "type": "fitb", "q": "Two TDCJ units handle offenders in the community: the Parole Division and the Community Justice ___ Division.", "ans": ["assistance"], "display": "Community Justice Assistance Division", "exp": "The COMMUNITY JUSTICE ASSISTANCE DIVISION handles probation/community supervision; the PAROLE DIVISION handles parole."}];
+// ─── QUIZ ENGINE ───
+let quizFilter='all',userAnswers={};
+function setQuizFilter(ch,btn){
+  document.querySelectorAll('#panel-quiz .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');quizFilter=ch;resetQuiz();
+}
+function getQuizDeck(){return quizFilter==='all'?allQuizData:allQuizData.filter(q=>q.ch===quizFilter);}
+function renderQuiz(){
+  const deck=getQuizDeck();
+  const c=document.getElementById('quiz-container');c.innerHTML='';userAnswers={};
+  deck.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='quiz-q';div.id='qq'+i;
+    if(q.type==='mc'){
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <div class="quiz-opts">${q.opts.map((o,oi)=>`<label><input type="radio" name="q${i}" onclick="selectMC(${i},${oi})"> ${o}</label>`).join('')}</div>
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    } else {
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <input class="fitb-input" id="fitb${i}" placeholder="Type your answer..." oninput="storeFITB(${i})">
+        <div class="q-exp" id="exp${i}"><strong>Answer:</strong> ${q.display}. ${q.exp}</div>`;
+    }
+    c.appendChild(div);
+  });
+  document.getElementById('quiz-score').style.display='none';
+}
+function selectMC(qi,oi){userAnswers[qi]=oi;}
+function storeFITB(qi){userAnswers[qi]=document.getElementById('fitb'+qi).value.trim().toLowerCase();}
+function submitQuiz(){
+  const deck=getQuizDeck();let correct=0;
+  deck.forEach((q,i)=>{
+    const el=document.getElementById('qq'+i);
+    const exp=document.getElementById('exp'+i);exp.classList.add('show');
+    if(q.type==='mc'){
+      const ua=userAnswers[i];
+      if(ua===q.ans){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    } else {
+      const ua=(userAnswers[i]||'').toLowerCase();
+      const ok=ua&&q.ans.some(a=>ua.includes(a.toLowerCase()));
+      if(ok){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    }
+  });
+  const sc=document.getElementById('quiz-score');
+  const pct=deck.length?Math.round(correct/deck.length*100):0;
+  sc.style.display='block';
+  sc.style.borderColor=pct>=70?'var(--green)':'var(--red)';
+  sc.innerHTML=`<strong>Score: ${correct}/${deck.length} (${pct}%)</strong> — ${pct>=90?'Excellent! 🎉':pct>=70?'Good work — review the flagged ones.':'Keep studying — focus on the red ones.'}`;
+  sc.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function resetQuiz(){renderQuiz();}
+
+// ─── DISCUSSION DATA ───
+const DISC_QUESTIONS=[{"ch": "ch9", "q": "Is the Texas governor a weak or strong executive? Explain why, using the governor's formal powers and their limits.", "points": [{"text": "<strong>Take a clear position</strong> — the Texas governor is constitutionally WEAK relative to the U.S. president."}, {"text": "<strong>Plural executive</strong> — power is split among independently elected officials (lt. gov, AG, comptroller, land commissioner, etc.) the governor doesn't control."}, {"text": "<strong>Limited appointment/removal</strong> — appointments need two-thirds Senate consent and honor senatorial courtesy; the governor can't freely remove appointees or touch a prior governor's."}, {"text": "<strong>Short list of formal powers</strong> — mainly veto/line-item veto, message power, the special-session call, clemency (needs BPP), and the one 30-day reprieve."}, {"text": "<strong>How governors compensate</strong> — informal powers: popularity, media/social media, party leadership, pork-barrel bargaining, and no term limits to build a long network."}], "model": "The Texas governor is weak on paper. The 1876 Constitution set up a plural executive, so the real power is spread across separately elected officials — the lieutenant governor, attorney general, comptroller, land commissioner — and the governor can't fire any of them. Even the governor's best tool, appointments, is boxed in: the Senate has to sign off by two-thirds, and senatorial courtesy means you clear a name with the appointee's home senator first. Removal is just as limited — you can only remove your own appointees, and only with the Senate's OK. The formal powers that are real are the veto and line-item veto (the strongest one, since it lets the governor cut single budget items), message power, and calling special sessions where the governor sets the agenda. In a death case the governor can grant one 30-day reprieve alone, but anything bigger needs the Board of Pardons and Paroles. So how do Texas governors still matter? Informal power. A popular governor uses the media, leads the party, and trades favors, and with no term limits can build influence over years. Bottom line: weak office, but a skilled governor can punch above it."}, {"ch": "ch10", "q": "Almost all Texas judges are chosen in partisan elections. Does electing judges this way affect how they rule? Should Texas keep the system?", "points": [{"text": "<strong>State the system</strong> — nearly all Texas judges are elected in PARTISAN elections (municipal judges are usually appointed)."}, {"text": "<strong>The concern</strong> — judges must raise campaign money (often from lawyers/parties who appear before them) and face voters, which can create real or perceived bias."}, {"text": "<strong>Straight-ticket / name effects</strong> — partisan waves can sweep qualified judges out and unknowns in, based on party rather than merit."}, {"text": "<strong>The counterargument</strong> — elections keep judges accountable to the public and are more democratic than appointment."}, {"text": "<strong>Alternatives</strong> — nonpartisan elections, merit selection ('Missouri Plan'), or appointment-then-retention; weigh accountability vs. independence."}], "model": "Texas elects almost all its judges in partisan races, and yes, that shapes the bench. Judges have to run campaigns, which means raising money — often from the same attorneys and interests who later stand in front of them. Even if a judge stays honest, it looks bad, and that hurts trust. The bigger problem is party voting: in a wave year, good judges lose and untested ones win just because of the letter next to their name, not their record. The flip side is accountability — voters can remove a judge they think is unfair, and that's more democratic than letting a governor hand out seats. My view: the accountability argument is real, but partisan money races are the worst version of it. I'd rather see something like merit selection with retention elections, or at least nonpartisan ballots, so judges answer to the public without having to fundraise from the lawyers in their own courtroom."}, {"ch": "ch13", "q": "Analyze the death penalty in Texas: when a murder becomes capital, how a death sentence is imposed, and the main criticisms.", "points": [{"text": "<strong>Capital felony triggers</strong> — murder of an on-duty officer/firefighter, murder during another felony, multiple victims, or a victim under 10."}, {"text": "<strong>Sentencing range</strong> — minimum is life without parole; maximum is death."}, {"text": "<strong>Jury unanimity</strong> — after a guilty verdict, all 12 jurors must unanimously agree (and find future dangerousness) for death."}, {"text": "<strong>Method &amp; drug issue</strong> — lethal injection; when FDA drugs run short Texas can get them from another state and repay in kind; Texas leads the nation in executions."}, {"text": "<strong>Criticisms</strong> — ABA moratorium rejected; DNA exonerations show wrongful convictions; eyewitness error; administrative segregation on death row; racial disparities."}], "model": "In Texas a murder becomes a capital felony under specific circumstances — killing an on-duty cop or firefighter, killing during another felony like robbery, multiple victims, or a victim under 10. Once someone's convicted of a capital offense, the sentence is either life without parole (the minimum) or death. Death isn't automatic: after the guilty verdict the same jury has a punishment phase, and all 12 have to agree unanimously and find the person would be a future danger. Executions are by lethal injection, and when the approved drugs run low Texas has swapped with other states to keep going. Texas executes more people than any other state, and that's exactly where the criticism lands. The American Bar Association asked for a moratorium and the legislature said no. DNA testing has freed people who were convicted on bad evidence — especially eyewitness testimony, which juries trust but is often wrong — so the risk of executing an innocent person is real. Add long-term solitary (administrative segregation) on death row and racial disparities in who gets charged and sentenced, and you've got a system that's efficient but hard to call fair."}, {"ch": "ch13", "q": "Compare the juvenile justice system to the adult correctional system in Texas. How are their goals and procedures different?", "points": [{"text": "<strong>Age line</strong> — criminal adulthood in Texas begins at 17; below that, cases go to the juvenile system."}, {"text": "<strong>Civil, not criminal</strong> — juvenile courts are civil; a trial is an adjudication hearing, and appeals go to civil courts (up to the Texas Supreme Court)."}, {"text": "<strong>Goal difference</strong> — juvenile system emphasizes rehabilitation; adult system emphasizes punishment/incapacitation."}, {"text": "<strong>Status offenders</strong> — juveniles can be cited for age-based acts (running away, truancy, curfew) that aren't crimes for adults; delinquents commit adult-type offenses."}, {"text": "<strong>Oversight</strong> — the Texas Juvenile Justice Department (created 2011 via sunset review) oversees juvenile corrections; TDCJ runs adult prisons."}], "model": "The dividing line is age: 17 and up is handled as an adult in Texas, and younger than that goes to the juvenile system. The biggest difference is that juvenile courts are civil, not criminal — a trial there is called an adjudication hearing, and appeals go to civil courts, even up to the Texas Supreme Court, instead of the Court of Criminal Appeals. The goals differ too. The juvenile side is built around rehabilitation — getting a kid back on track — while the adult side leans on punishment and keeping the public safe. Juveniles can also get caught for things that aren't even crimes for adults, like running away, skipping school, or breaking curfew; those are status offenders, versus delinquents who do things that would be actual crimes at any age. On the back end, the Texas Juvenile Justice Department runs juvenile corrections — it replaced the old Youth Commission and Juvenile Probation Commission back in 2011 through sunset review — while TDCJ runs the adult prisons. Same idea of consequences, very different philosophy."}, {"ch": "ch13", "q": "Is the Texas criminal justice system fair? Use exonerations, evidence reliability, compensation, and profiling in your answer.", "points": [{"text": "<strong>DNA exonerations</strong> — DNA testing has proven convicted people, even murderers, innocent, exposing wrongful convictions."}, {"text": "<strong>Evidence reliability</strong> — eyewitness testimony is the least reliable yet most trusted evidence and a top cause of wrongful convictions."}, {"text": "<strong>Compensation &amp; oversight</strong> — Texas pays the wrongfully incarcerated $80,000 per year; the Texas Forensic Science Commission investigates DNA/forensic misconduct."}, {"text": "<strong>Racial profiling &amp; disparities</strong> — targeting marginalized groups for stops/searches, plus disparities in drug enforcement and indigent-defense quality."}, {"text": "<strong>Balanced verdict</strong> — note reforms (compensation, forensic oversight, TJJD) alongside ongoing problems; take a defensible position."}], "model": "Texas has made real fixes, but I wouldn't call the system fully fair yet. The strongest evidence of the problem is DNA — it's cleared people who were locked up for years, including for murder, which means the courts got it flat wrong. A lot of those cases rode on eyewitness testimony, which juries believe more than anything else even though it's actually the least reliable evidence there is. To its credit, Texas does try to make amends: $80,000 for every year someone was wrongly imprisoned, and a Forensic Science Commission that investigates bad DNA and lab work. Those are real reforms, same as creating the TJJD for juveniles. But the fairness gaps are still there — racial profiling in who gets stopped and searched, disparities in drug enforcement, and the fact that if you're poor your defense depends on a county-funded system that varies a lot in quality. So my take: the system is fairer than it used to be and clearly capable of correcting itself, but 'capable of correcting itself' isn't the same as fair. As long as the wrong people keep getting convicted on weak evidence, there's work left."}];
+// ─── DISCUSSION ENGINE ───
+let discFilter='all';
+function filterDisc(ch,btn){
+  document.querySelectorAll('#panel-discussion .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');discFilter=ch;renderDiscussion();
+}
+function renderDiscussion(){
+  const list=discFilter==='all'?DISC_QUESTIONS:DISC_QUESTIONS.filter(d=>d.ch===discFilter);
+  const c=document.getElementById('disc-container');c.innerHTML='';
+  list.forEach((d,i)=>{
+    const idx=DISC_QUESTIONS.indexOf(d);
+    const div=document.createElement('div');div.className='disc-q';
+    div.innerHTML=`<div class="disc-q-text">${i+1}. ${d.q}</div>
+      <textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Draft your response here..." aria-label="Discussion response"></textarea>
+      <div class="disc-btn-row">
+        <button class="disc-btn primary" onclick="submitDisc(${idx})">Submit &amp; Self-Grade</button>
+        <button class="disc-btn" onclick="toggleModel(${idx})">Show Model Answer</button>
+        <button class="disc-btn" onclick="resetDisc(${idx})">Reset</button>
+      </div>
+      <div class="disc-rubric" id="disc-rubric-${idx}">
+        <strong style="font-size:.82rem;color:var(--text)">Self-Grading Rubric</strong>
+        <div style="margin-top:8px;">${d.points.map((p,pi)=>`<div class="rubric-item"><input type="checkbox" id="rub-${idx}-${pi}" onchange="updateDiscScore(${idx})"><label for="rub-${idx}-${pi}">${p.text}</label></div>`).join('')}</div>
+        <div class="disc-score" id="disc-score-${idx}">Score: 0 / ${d.points.length}</div>
+      </div>
+      <div class="model-answer" id="disc-model-${idx}">${d.model}</div>`;
+    c.appendChild(div);
+  });
+}
+function submitDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);
+  ta.disabled=true;
+  document.getElementById('disc-rubric-'+idx).classList.add('show');
+}
+function resetDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);ta.disabled=false;ta.value='';
+  document.getElementById('disc-rubric-'+idx).classList.remove('show');
+  document.getElementById('disc-model-'+idx).classList.remove('show');
+  document.querySelectorAll(`[id^="rub-${idx}-"]`).forEach(cb=>cb.checked=false);
+  document.getElementById('disc-score-'+idx).textContent='Score: 0 / '+DISC_QUESTIONS[idx].points.length;
+}
+function updateDiscScore(idx){
+  const total=DISC_QUESTIONS[idx].points.length;
+  const checked=document.querySelectorAll(`[id^="rub-${idx}-"]:checked`).length;
+  document.getElementById('disc-score-'+idx).textContent=`Score: ${checked} / ${total} (${Math.round(checked/total*100)}%)`;
+}
+function toggleModel(idx){document.getElementById('disc-model-'+idx).classList.toggle('show');}
+
+// ─── KEYBOARD SUPPORT (obj cards) ───
+document.addEventListener('keydown',e=>{
+  if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('obj-card')){
+    e.preventDefault();toggleObj(e.target);}
+});
+
+// ─── INIT ───
+window.addEventListener('DOMContentLoaded',()=>{
+  deck=[...allCards];renderCard();renderQuiz();renderDiscussion();updateMasteryBar();
+  document.querySelectorAll('.obj-master-btn').forEach(btn=>{
+    const m=btn.getAttribute('onclick').match(/'([^']+)'/);
+    const key=m?m[1]:null;
+    if(key&&localStorage.getItem(key)){btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  });
+});
+
+</script>
+</body>
+</html>
