@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CSIS 3352 — Module 1: Artificial Intelligence and Cybersecurity (Foundations and Overview)</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#0a0a0f; --surface:#12121a; --surface2:#16161f; --border:#1e1e2e;
+  --text:#e8e8f0; --muted:#6b6b80; --green:#22c55e; --red:#ef4444;
+  --yellow:#eab308; --purple:#a78bfa; --orange:#f97316;
+  --accent:#a855f7; --accent-dim:rgba(168,85,247,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(168,85,247,0.025) 39px,rgba(168,85,247,0.025) 40px),
+  repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(168,85,247,0.025) 39px,rgba(168,85,247,0.025) 40px);}
+body::before{content:'CSIS 3352 · Module 1 · Lecture 1 — Foundations and Overview';position:fixed;top:0;left:0;right:0;
+  background:rgba(10,10,15,0.95);border-bottom:1px solid var(--border);padding:10px 16px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);z-index:100;letter-spacing:.05em;}
+.topnav{display:flex;gap:4px;padding:48px 12px 8px;overflow-x:auto;position:sticky;top:0;
+  background:rgba(10,10,15,0.97);z-index:90;border-bottom:1px solid var(--border);}
+.nav-btn{flex-shrink:0;background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:7px 13px;border-radius:6px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:11px;transition:all .15s;}
+.nav-btn:hover{color:var(--text);border-color:var(--accent);}
+.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.panel{display:none;padding:20px 16px 60px;max-width:860px;margin:0 auto;}
+.panel.active{display:block;}
+h1{font-size:1.4rem;font-weight:600;color:var(--accent);margin-bottom:4px;}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;display:block;}
+.exam-pill{display:inline-block;background:rgba(234,179,8,0.15);border:1px solid var(--yellow);
+  color:var(--yellow);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;
+  border-radius:20px;margin-bottom:20px;}
+.back-link{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;margin-bottom:10px;}
+.back-link:hover,.back-link:active{color:var(--accent);}
+.textbook-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.textbook-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;
+  transition:all .15s;}
+.textbook-links a:hover{color:var(--accent);border-color:var(--accent);}
+
+/* Objectives — .p1 = Part I Artificial Intelligence (purple), .p2 = Part II Cybersecurity (orange) */
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  margin-bottom:10px;cursor:pointer;transition:border-color .15s;}
+.obj-card:hover{border-color:var(--accent);}
+.obj-header{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;
+  padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.p1 .obj-num{color:var(--accent);background:rgba(168,85,247,0.12);}
+.p2 .obj-num{color:var(--orange);background:rgba(249,115,22,0.12);}
+.obj-title{font-size:.88rem;font-weight:500;flex:1;}
+.obj-expand{color:var(--muted);font-size:12px;transition:transform .2s;}
+.obj-body{display:none;padding:0 16px 14px;font-size:.84rem;line-height:1.65;color:#b0b0c8;}
+.obj-body.open{display:block;}
+.obj-body ul{padding-left:18px;margin:8px 0;}
+.obj-body li{margin-bottom:5px;}
+.obj-master-btn{margin-top:10px;background:transparent;border:1px solid var(--border);
+  color:var(--muted);padding:5px 12px;border-radius:4px;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;transition:all .15s;}
+.obj-master-btn.mastered{border-color:var(--green);color:var(--green);background:rgba(34,197,94,0.08);}
+.mastery-bar{background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  height:6px;margin-bottom:20px;overflow:hidden;}
+.mastery-fill{height:100%;background:var(--green);border-radius:20px;transition:width .4s;}
+.reset-mastery-btn{display:block;margin-bottom:20px;background:transparent;
+  border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:4px;
+  cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;}
+.reset-mastery-btn:hover{border-color:var(--red);color:var(--red);}
+.part-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin:24px 0 10px;display:block;}
+
+/* Study Guide */
+.chapter-block{margin-bottom:16px;}
+.chapter-header{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;
+  align-items:center;font-weight:500;font-size:.9rem;transition:border-color .15s;}
+.chapter-header:hover{border-color:var(--accent);}
+.chapter-body{display:none;background:var(--surface2);border:1px solid var(--border);
+  border-top:none;border-radius:0 0 8px 8px;padding:16px;}
+.chapter-body h3{font-size:.82rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px;}
+.chapter-body h3:first-child{margin-top:0;}
+.chapter-body p,.chapter-body li{font-size:.84rem;line-height:1.7;color:#b0b0c8;margin-bottom:6px;}
+.chapter-body ul{padding-left:18px;}
+.chapter-body strong{color:var(--text);}
+.sg-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.8rem;}
+.sg-table th{font-family:'IBM Plex Mono',monospace;font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.05em;color:var(--accent);text-align:left;padding:7px 8px;border-bottom:1px solid var(--border);}
+.sg-table td{padding:7px 8px;border-bottom:1px solid var(--border);color:#b0b0c8;line-height:1.5;vertical-align:top;}
+.sg-table tr:last-child td{border-bottom:none;}
+.flag-note{background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.3);
+  border-radius:6px;padding:8px 12px;font-size:.78rem;color:var(--yellow);margin:8px 0;line-height:1.6;}
+
+/* Flashcards */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:5px 12px;border-radius:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;transition:all .15s;}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.fc-wrap{perspective:1000px;margin-bottom:16px;}
+.fc-card{width:100%;min-height:220px;position:relative;transform-style:preserve-3d;
+  transition:transform .5s;cursor:pointer;}
+.fc-card.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;flex-direction:column;justify-content:center;padding:24px;border-radius:10px;}
+.fc-back{transform:rotateY(180deg);border-color:var(--accent);background:var(--accent-dim);}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
+.fc-q,.fc-a{font-size:1rem;line-height:1.6;color:var(--text);}
+.fc-a{color:var(--accent);}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);
+  text-align:center;margin-bottom:12px;}
+.fc-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+.fc-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);
+  padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82rem;transition:all .15s;}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent);}
+.fc-btn.mastered-btn{border-color:var(--green);color:var(--green);}
+.fc-nav{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+.fc-empty{text-align:center;padding:40px;color:var(--muted);font-size:.9rem;}
+
+/* Quiz */
+.quiz-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.quiz-q-text{font-size:.9rem;margin-bottom:12px;line-height:1.6;}
+.quiz-opts label{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;
+  border-radius:5px;cursor:pointer;font-size:.85rem;line-height:1.5;transition:background .1s;}
+.quiz-opts label:hover{background:rgba(255,255,255,0.04);}
+.quiz-opts input{margin-top:3px;flex-shrink:0;accent-color:var(--accent);}
+.fitb-input{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:8px 12px;border-radius:5px;font-size:.85rem;margin-top:8px;}
+.fitb-input:focus{outline:none;border-color:var(--accent);}
+.q-correct{border-color:var(--green)!important;background:rgba(34,197,94,0.06)!important;}
+.q-wrong{border-color:var(--red)!important;background:rgba(239,68,68,0.06)!important;}
+.q-exp{font-size:.8rem;color:#9090b0;margin-top:8px;padding-top:8px;
+  border-top:1px solid var(--border);display:none;}
+.q-exp.show{display:block;}
+#submit-btn,#reset-btn{padding:10px 22px;border-radius:6px;cursor:pointer;
+  font-size:.88rem;font-weight:500;transition:all .15s;border:1px solid;}
+#submit-btn{background:var(--accent);border-color:var(--accent);color:#fff;margin-right:8px;}
+#submit-btn:hover{opacity:.85;}
+#reset-btn{background:transparent;border-color:var(--border);color:var(--muted);}
+#reset-btn:hover{border-color:var(--red);color:var(--red);}
+#quiz-score{margin-top:16px;padding:14px;background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;font-size:.9rem;display:none;}
+
+/* Discussion */
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.disc-q-text{font-size:.9rem;line-height:1.6;margin-bottom:12px;font-weight:500;}
+.disc-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:10px 12px;border-radius:5px;font-size:.84rem;
+  min-height:120px;resize:vertical;font-family:'IBM Plex Sans',sans-serif;line-height:1.6;}
+.disc-textarea:focus{outline:none;border-color:var(--accent);}
+.disc-btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.disc-btn{padding:6px 14px;border-radius:5px;cursor:pointer;font-size:.82rem;
+  border:1px solid var(--border);background:var(--surface2);color:var(--muted);transition:all .15s;}
+.disc-btn:hover{color:var(--text);}
+.disc-btn.primary{border-color:var(--accent);color:var(--accent);}
+.disc-rubric{display:none;margin-top:12px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:6px;padding:12px;}
+.disc-rubric.show{display:block;}
+.rubric-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;
+  border-bottom:1px solid var(--border);font-size:.82rem;}
+.rubric-item:last-child{border-bottom:none;}
+.rubric-item input[type=checkbox]{flex-shrink:0;margin-top:2px;accent-color:var(--green);}
+.disc-score{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--green);margin-top:8px;}
+.model-answer{display:none;margin-top:10px;font-size:.82rem;line-height:1.65;
+  color:#9090b0;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.2);
+  border-radius:6px;padding:12px;}
+.model-answer.show{display:block;}
+
+/* Notes */
+.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.notes-grid{grid-template-columns:1fr;}}
+.note-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.note-card h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.note-lines{display:flex;flex-direction:column;gap:8px;}
+.note-line{border-bottom:1px solid var(--border);min-height:28px;}
+.video-block{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:14px 16px;margin-bottom:12px;}
+.video-block h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.source-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.source-list a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;}
+.source-list a:hover{color:var(--accent);border-color:var(--accent);}
+footer{text-align:center;padding:30px 16px;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;color:var(--muted);}
+@media print{
+  body::before,.topnav,.exam-pill,.textbook-links,footer,.fc-controls,.fc-nav,.filter-row,
+  #submit-btn,#quiz-score,.disc-btn-row,.disc-rubric,.obj-master-btn,.reset-mastery-btn,
+  .mastery-bar{display:none!important;}
+  .panel{display:none!important;}.panel.active{display:block!important;}
+  *,*::before,*::after{background:white!important;background-color:white!important;
+    background-image:none!important;color:black!important;border-color:#bbb!important;
+    box-shadow:none!important;-webkit-text-fill-color:black!important;}
+  body{font-size:12pt;}.chapter-body{display:block!important;}
+  @page{margin:.75in;}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav" role="tablist" aria-label="Study sections">
+  <button class="nav-btn active" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)" role="tab" aria-selected="false" aria-controls="panel-guide">📖 Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)" role="tab" aria-selected="false" aria-controls="panel-flashcards">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)" role="tab" aria-selected="false" aria-controls="panel-quiz">✏️ Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('discussion',this)" role="tab" aria-selected="false" aria-controls="panel-discussion">💬 Discussion</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes Template</button>
+</nav>
+
+<!-- ═══════════════ OBJECTIVES ═══════════════ -->
+<div class="panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+  <a class="back-link" href="../../index.html">← All courses</a>
+  <span class="unit-badge">CSIS 3352 · Module 1</span>
+  <h1>Artificial Intelligence and Cybersecurity</h1>
+  <span class="exam-pill">📅 Quiz 1 — due 8/25 · Covered on Midterm (Modules 1–9), Oct 20</span>
+  <div class="textbook-links">
+    <a href="#">Part I · Artificial Intelligence (slides 2–25)</a>
+    <a href="#">Part II · Cybersecurity (slides 26–40)</a>
+  </div>
+  <div class="flag-note">📌 Lecture 1 does not print a numbered list of learning objectives. The 16 objectives below were derived from the deck's own section structure and slide titles, so the wording is not the professor's. Every fact underneath them comes only from the slides.</div>
+  <div class="mastery-bar"><div class="mastery-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="reset-mastery-btn" onclick="resetAllMastery()">↺ Reset All Mastery</button>
+
+  <span class="part-label">Part I · Artificial Intelligence</span>
+
+  <div class="obj-card p1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 1</span><span class="obj-title">Define AI and explain why it is needed</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Define artificial intelligence, list what AI systems can do, and explain the data-volume problem that motivates AI.</p>
+      <ul>
+        <li><strong>Definition</strong> — AI is the ability of computers or machines to perform tasks that normally require human intelligence.</li>
+        <li><strong>Capabilities</strong> — learn from data, recognize patterns, make predictions, understand language, recognize images, solve problems and make decisions, automate repetitive tasks.</li>
+        <li><strong>Motivation</strong> — humans generate more data every day than people can examine by hand.</li>
+        <li><strong>What AI helps with</strong> — analyzing large amounts of data quickly, finding hidden patterns, automating repetition, faster and more accurate decisions, detecting unusual activity, reducing workload.</li>
+        <li><strong>Worked example</strong> — an analyst cannot review millions of network events by hand; an AI system scans all of them and flags suspicious ones in seconds rather than weeks.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_1')" aria-label="Mark LO 1 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card p1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 2</span><span class="obj-title">Trace the four stages of an AI system</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Describe the four connected stages of a simple AI system and walk them through the spam-detection example.</p>
+      <ul>
+        <li><strong>The four stages</strong> — Data → Learning → Model → Prediction.</li>
+        <li><strong>Stage 1, Data</strong> — thousands of past emails are collected.</li>
+        <li><strong>Stage 2, Learning</strong> — the system analyzes the words and patterns inside them.</li>
+        <li><strong>Stage 3, Model</strong> — it learns the typical characteristics of spam.</li>
+        <li><strong>Stage 4, Prediction</strong> — a brand-new email is classified as Spam or Not Spam.</li>
+        <li><strong>Key idea</strong> — data is one of the most important ingredients of any modern AI system; better data generally means a better model.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_2')" aria-label="Mark LO 2 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card p1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 3</span><span class="obj-title">Distinguish the three levels of AI capability</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Separate Narrow AI, General AI, and Superintelligence by status and example.</p>
+      <ul>
+        <li><strong>Narrow AI — in use today</strong> — designed for one specific task. Examples: spam detection, facial recognition, chatbots, recommendation systems, malware detection.</li>
+        <li><strong>General AI — theoretical</strong> — capable of performing many intellectual tasks like a human. Still a research goal, not yet achieved.</li>
+        <li><strong>Superintelligence — hypothetical</strong> — would exceed human intelligence across many areas. Discussed in long-term AI safety research.</li>
+        <li><strong>Bottom line</strong> — today, almost all practical AI systems in use are Narrow AI.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_3')" aria-label="Mark LO 3 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card p1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 4</span><span class="obj-title">Identify the major areas of AI and the course focus</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>List the eight major areas of artificial intelligence and state the narrowing path this course follows.</p>
+      <ul>
+        <li><strong>The eight areas</strong> — Machine Learning, Deep Learning, Computer Vision, Natural Language Processing, Robotics, Expert Systems, Knowledge Representation, Search &amp; Optimization.</li>
+        <li><strong>Course focus</strong> — Artificial Intelligence → Machine Learning → Cybersecurity Applications.</li>
+        <li><strong>Why it matters</strong> — the course narrows from the broad field down to the ML techniques that get applied to security problems.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_4')" aria-label="Mark LO 4 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card p1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 5</span><span class="obj-title">Map the nested relationship of AI, ML, and DL</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Explain how AI, Machine Learning, and Deep Learning nest inside one another.</p>
+      <ul>
+        <li><strong>Nested circles</strong> — Deep Learning sits inside Machine Learning, which sits inside AI.</li>
+        <li><strong>AI is the broadest field</strong> — the overall goal is to build systems that behave intelligently.</li>
+        <li><strong>ML is a subset of AI</strong> — a technique where computers learn patterns directly from data.</li>
+        <li><strong>DL is a subset of ML</strong> — uses multi-layer neural networks for complex data like images and text.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_5')" aria-label="Mark LO 5 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card p1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 6</span><span class="obj-title">Contrast traditional programming with machine learning</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>State the two formulas that separate hand-written rules from learned rules.</p>
+      <ul>
+        <li><strong>AI vs ML</strong> — AI is the broad goal of creating systems capable of intelligent behavior; ML is a technique that lets computers learn patterns from data instead of being explicitly programmed for every situation.</li>
+        <li><strong>Traditional programming</strong> — Data + Rules → Output.</li>
+        <li><strong>Machine learning</strong> — Data + Expected Outputs → Learning → Model.</li>
+        <li><strong>Then, in ML</strong> — New Data + Model → Prediction. The trained model makes predictions on data it has never seen before.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_6')" aria-label="Mark LO 6 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card p1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 7</span><span class="obj-title">Explain machine learning and the phishing example</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Define ML, list common applications, and walk the phishing-detection worked example.</p>
+      <ul>
+        <li><strong>Definition</strong> — ML lets computers learn patterns from data and use those patterns to make predictions or decisions. Simply: learning patterns from data.</li>
+        <li><strong>Instead of hand-written rules</strong> — the system studies many examples and works out the rules itself.</li>
+        <li><strong>Common examples</strong> — predict spam, detect fraudulent transactions, predict house prices, recognize malicious network traffic, recommend movies or products, detect malware.</li>
+        <li><strong>Phishing setup</strong> — 10,000 emails, some Normal and some Phishing, given to the algorithm as labeled examples.</li>
+        <li><strong>Patterns learned</strong> — suspicious words in the message, unusual or fake-looking URLs, sender information that looks wrong, odd message structure.</li>
+        <li><strong>Outcome</strong> — a new email passes through the ML model and comes out classified Phishing or Legitimate.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_7')" aria-label="Mark LO 7 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card p1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 8</span><span class="obj-title">Compare Machine Learning and Deep Learning</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Define Deep Learning and separate it from general ML across six dimensions.</p>
+      <ul>
+        <li><strong>DL definition</strong> — a specialized type of ML that uses artificial neural networks with multiple layers; powerful for images, text, audio, video, and large-scale datasets with millions of examples.</li>
+        <li><strong>Relationship</strong> — ML is a subset of AI; DL is a subset of ML.</li>
+        <li><strong>Learns from</strong> — ML finds patterns with algorithms; DL uses multi-layer neural networks.</li>
+        <li><strong>Works best with</strong> — ML on structured, tabular data; DL on complex or unstructured data such as images and text.</li>
+        <li><strong>Feature engineering</strong> — ML often needs manual feature selection; DL can automatically learn complex features.</li>
+        <li><strong>Dataset size and compute</strong> — ML can work with smaller datasets and is usually less computationally expensive; DL often benefits from very large datasets and requires more computing power.</li>
+        <li><strong>In cybersecurity</strong> — both can be useful; the right choice depends on the data available and the problem being solved.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_8')" aria-label="Mark LO 8 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card p1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 9</span><span class="obj-title">Distinguish Computer Vision from Natural Language Processing</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Define CV and NLP, list what each works with, and match the technique to the data type.</p>
+      <ul>
+        <li><strong>Computer Vision</strong> — enables computers to understand and analyze visual information. Works with images, videos, camera feeds, scanned documents.</li>
+        <li><strong>CV examples</strong> — face recognition, object detection, medical image analysis, license-plate recognition, security-camera analysis; also face detection, object recognition, image classification.</li>
+        <li><strong>Natural Language Processing</strong> — enables computers to understand, analyze, and generate human language. Works with text and documents, emails and messages, speech converted to text.</li>
+        <li><strong>NLP examples</strong> — chatbots, language translation, sentiment analysis, email classification, phishing-email detection, text summarization.</li>
+        <li><strong>Matching rule</strong> — Text → NLP; Images / Video → Computer Vision. Both are important areas of modern AI and many real systems combine them.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_9')" aria-label="Mark LO 9 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card p1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 10</span><span class="obj-title">Compare the three major types of machine learning</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Separate supervised, unsupervised, and reinforcement learning by data, goal, and cybersecurity use.</p>
+      <ul>
+        <li><strong>Supervised</strong> — learns from labeled data where the correct answer is already known; model learns Input → Known Output, then predicts the label of brand-new unseen data. Cybersecurity: malware classification, spam vs legitimate email, fraud vs legitimate transaction, malicious vs normal traffic.</li>
+        <li><strong>Unsupervised</strong> — works with data that has no predefined labels; discovers groups of similar data, hidden patterns, similarities and differences, unusual behavior. An anomaly signals a possible security threat.</li>
+        <li><strong>Reinforcement</strong> — an agent learns by interacting with an environment through the loop Observes → Takes Action → Receives Reward/Penalty → Learns.</li>
+        <li><strong>RL security example</strong> — the system observes a possible attack and can allow the traffic, block the traffic, or request additional verification; good decisions earn rewards, bad ones earn penalties, and over time it learns better defensive strategies.</li>
+        <li><strong>Summary table</strong> — Supervised: labeled data, predict known classes, malware classification. Unsupervised: unlabeled data, discover patterns, anomaly detection. Reinforcement: rewards/penalties, learn actions, adaptive cyber defense.</li>
+        <li><strong>Memory hook</strong> — supervised = learn with answers; unsupervised = find patterns without answers; reinforcement = learn from rewards.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_10')" aria-label="Mark LO 10 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card p1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 11</span><span class="obj-title">Define data and distinguish structured from unstructured</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Define data, separate the two types with cybersecurity examples, and state the quality principle.</p>
+      <ul>
+        <li><strong>Definition</strong> — data is information collected and stored so it can be analyzed or used by computer systems. It can represent numbers and text, images/video/audio, network traffic, user activities and computer logs, and transactions.</li>
+        <li><strong>Key idea</strong> — Data → Learning → Model → Prediction. AI depends heavily on data; poor-quality data leads to poor-quality models — "garbage in, garbage out."</li>
+        <li><strong>Structured data</strong> — organized in a predefined format, often rows and columns. Examples: database tables, Excel files, transaction records, customer information.</li>
+        <li><strong>Unstructured data</strong> — data without a simple tabular structure. Examples: images and videos, emails and documents, audio, social media posts.</li>
+        <li><strong>Structured security example</strong> — a table of IP address, failed logins, data transfer, and threat label; ML uses those features to detect suspicious behavior without a human reviewing every row.</li>
+        <li><strong>Unstructured security example</strong> — phishing email text, security reports and PDFs, screenshots and images, malware files, chat messages, audio/video evidence.</li>
+        <li><strong>Bottom line</strong> — AI techniques can work with both types, often in the same system.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_11')" aria-label="Mark LO 11 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card p1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 12</span><span class="obj-title">List the seven steps of the AI / ML pipeline</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Recite the seven pipeline steps in order and apply them to a cybersecurity problem.</p>
+      <ul>
+        <li><strong>Step 1</strong> — Collect Data.</li>
+        <li><strong>Step 2</strong> — Clean &amp; Prepare Data.</li>
+        <li><strong>Step 3</strong> — Select Useful Features.</li>
+        <li><strong>Step 4</strong> — Train a Model.</li>
+        <li><strong>Step 5</strong> — Evaluate the Model.</li>
+        <li><strong>Step 6</strong> — Make Predictions.</li>
+        <li><strong>Step 7</strong> — Deploy &amp; Monitor.</li>
+        <li><strong>Security application</strong> — Network Logs → Prepare Data → Train Model → Detect Attacks. The same pipeline that predicts house prices or recommends movies can be pointed at network logs; only the data and the goal change.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_12')" aria-label="Mark LO 12 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <span class="part-label">Part II · Cybersecurity</span>
+
+  <div class="obj-card p2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 13</span><span class="obj-title">Define cybersecurity and explain why it matters</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Define cybersecurity, list what it protects, and explain the stakes.</p>
+      <ul>
+        <li><strong>Definition</strong> — cybersecurity protects digital systems and information from unauthorized access, damage, disruption, and attack.</li>
+        <li><strong>What it protects</strong> — computers, servers, and mobile devices; networks and cloud systems; applications; personal information; organizational data.</li>
+        <li><strong>Why it matters</strong> — modern society depends heavily on digital systems: banking, healthcare, education, government, transportation, communication, business, national infrastructure.</li>
+        <li><strong>What attacks cause</strong> — financial loss, data theft, privacy violations, service disruption, reputation damage, national security risks.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_13')" aria-label="Mark LO 13 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card p2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 14</span><span class="obj-title">Explain the CIA Triad</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Name the three foundational goals and define each.</p>
+      <ul>
+        <li><strong>Confidentiality</strong> — only authorized users should access information.</li>
+        <li><strong>Integrity</strong> — information should not be changed without authorization.</li>
+        <li><strong>Availability</strong> — systems and information should be available when needed.</li>
+        <li><strong>Framing</strong> — CIA Triad = Confidentiality + Integrity + Availability, one of the foundational models of cybersecurity.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_14')" aria-label="Mark LO 14 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card p2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 15</span><span class="obj-title">Distinguish threat, vulnerability, and risk</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Separate the three related terms and state the relationship between them.</p>
+      <ul>
+        <li><strong>Threat</strong> — something that can potentially cause harm. Example: a hacker, malware, or a phishing attack.</li>
+        <li><strong>Vulnerability</strong> — a weakness that can be exploited. Example: a weak password or outdated software.</li>
+        <li><strong>Risk</strong> — the potential for loss or damage when a threat exploits a vulnerability. Example: the combined danger to the organization.</li>
+        <li><strong>Relationship</strong> — Threat + Vulnerability → Risk.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_15')" aria-label="Mark LO 15 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card p2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 16</span><span class="obj-title">Define cyberattack and identify malware types</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Define a cyberattack, list attacker goals and entry points, and name the seven malware types.</p>
+      <ul>
+        <li><strong>Cyberattack</strong> — a deliberate attempt to compromise, damage, disrupt, or gain unauthorized access to a computer system or network.</li>
+        <li><strong>Attacker goals</strong> — steal information or passwords, damage or disrupt systems, install malware, demand money (extortion), spy on users, gain unauthorized access.</li>
+        <li><strong>Entry points</strong> — phishing emails, malicious websites, malicious downloads, infected USB drives.</li>
+        <li><strong>Malware</strong> — malicious software designed to harm, disrupt, spy on, or gain unauthorized access to systems.</li>
+        <li><strong>The seven types</strong> — Virus, Worm, Trojan, Ransomware, Spyware, Adware, Rootkit.</li>
+        <li><strong>Ransomware example</strong> — encrypts a victim's files and demands payment for recovery, locking the owner out of their own data with no guarantee the files will ever be restored.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_16')" aria-label="Mark LO 16 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card p2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 17</span><span class="obj-title">Identify common threats, phishing, and social engineering</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>List the ten common cyber threats and define the two human-targeted attack families.</p>
+      <ul>
+        <li><strong>Ten common threats</strong> — malware, phishing, ransomware, password attacks, social engineering, denial-of-service attacks, web attacks, insider threats, data breaches, identity theft. Attack techniques keep evolving.</li>
+        <li><strong>Phishing</strong> — a social-engineering attack where an attacker pretends to be a trusted person or organization to trick a victim.</li>
+        <li><strong>Phishing targets</strong> — passwords, credit card information, banking information, personal information, login credentials.</li>
+        <li><strong>Phishing mechanism</strong> — an urgent message such as an account-closure warning leads to a link, and the link leads to a fake website designed to steal the victim's real login details.</li>
+        <li><strong>Social engineering</strong> — attacks people rather than relying only on technical vulnerabilities; manipulates victims into revealing passwords, clicking malicious links, downloading malware, sending money, or providing confidential information.</li>
+        <li><strong>Common forms</strong> — phishing, spear phishing (targeted phishing), pretexting (inventing a false scenario), impersonation, baiting. Key idea: humans can be a target, not just machines.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_17')" aria-label="Mark LO 17 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card p2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 18</span><span class="obj-title">Explain fraud detection, authentication, and access control</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Define fraud and its detection, then separate authentication from access control.</p>
+      <ul>
+        <li><strong>Fraud</strong> — intentional deception for financial or personal gain. Examples: credit card fraud, banking fraud, insurance fraud, identity theft, online payment fraud.</li>
+        <li><strong>Fraud detection in action</strong> — a user normally buys from one city; suddenly several unusual transactions occur from different countries within minutes of each other. Security systems analyze transaction and behavior patterns and flag the activity as suspicious for review.</li>
+        <li><strong>Authentication — who are you?</strong> — verifies your identity. Examples: password, fingerprint, face recognition, security token / one-time code.</li>
+        <li><strong>Access control — what can you do?</strong> — determines what you are allowed to access. Example: a student can view course materials but cannot modify financial records.</li>
+        <li><strong>Pairing</strong> — Authentication → Who are you? Authorization → What can you do?</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_18')" aria-label="Mark LO 18 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card p2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 19</span><span class="obj-title">Compare network, offensive, and defensive security</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Identify network security technologies and contrast the offensive and defensive disciplines.</p>
+      <ul>
+        <li><strong>Network security</strong> — protects computer networks and the data traveling through them. Technologies: firewalls, Intrusion Detection Systems (IDS), Intrusion Prevention Systems (IPS), VPNs, encryption, network monitoring.</li>
+        <li><strong>Offensive security</strong> — finds and exploits security weaknesses, with authorization, before malicious attackers can. Activities: penetration testing, vulnerability assessment, ethical hacking, red teaming, security testing.</li>
+        <li><strong>Offensive goal and limit</strong> — think like an attacker to identify weaknesses first; professionals must always operate within explicit legal and organizational authorization.</li>
+        <li><strong>Defensive security</strong> — protects systems and responds to attacks. Activities: monitoring networks, detecting attacks, configuring firewalls, managing vulnerabilities, incident response, malware analysis.</li>
+        <li><strong>Defensive goal</strong> — prevent, detect, contain, and respond to cyberattacks, keeping systems running safely day to day.</li>
+        <li><strong>Side by side</strong> — Offensive finds weaknesses, simulates attacks, penetration testing, Red Team, ethical hacking, thinks like an attacker. Defensive protects systems, detects attacks, security monitoring, Blue Team, incident response, thinks like a defender.</li>
+        <li><strong>Why both</strong> — organizations need to understand how attacks happen AND how they can be prevented or detected.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module01_19')" aria-label="Mark LO 19 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STUDY GUIDE ═══════════════ -->
+<div class="panel" id="panel-guide" role="tabpanel" aria-labelledby="tab-guide">
+  <h1>Study Guide</h1>
+  <span class="unit-badge">Module 1 · Lecture 1 — Parts I &amp; II</span>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🧠 Part I · Artificial Intelligence</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <h3>Defining AI</h3>
+      <ul>
+        <li><strong>Artificial Intelligence</strong> — the ability of computers or machines to perform tasks that normally require human intelligence.</li>
+        <li><strong>What AI systems can do</strong> — learn from data, recognize patterns, make predictions, understand language, recognize images, solve problems and make decisions, automate repetitive tasks.</li>
+        <li><strong>Why we need it</strong> — humans generate enormous amounts of data every day, far more than people can examine by hand.</li>
+        <li><strong>What AI helps us do</strong> — analyze large amounts of data quickly, find hidden patterns humans might miss, automate repetitive tasks, make faster and more accurate decisions, detect unusual or suspicious activity, reduce human workload on complex problems.</li>
+        <li><strong>Scale example</strong> — a human analyst may struggle to review millions of network events by hand; an AI system scans them all automatically and flags the suspicious ones in seconds, not weeks.</li>
+      </ul>
+
+      <h3>How an AI system works</h3>
+      <p>A simple AI system is four connected stages: <strong>Data → Learning → Model → Prediction</strong>.</p>
+      <ul>
+        <li><strong>Data</strong> — thousands of emails collected.</li>
+        <li><strong>Learning</strong> — analyze words and patterns.</li>
+        <li><strong>Model</strong> — learn what spam looks like.</li>
+        <li><strong>Prediction</strong> — Spam or Not Spam?</li>
+        <li><strong>Key idea</strong> — data is one of the most important ingredients of any modern AI system; better data generally means a better model.</li>
+      </ul>
+
+      <h3>Three levels of AI capability</h3>
+      <table class="sg-table">
+        <tr><th>Level</th><th>Status</th><th>Definition &amp; examples</th></tr>
+        <tr><td><strong>Narrow AI</strong></td><td>In use today</td><td>Designed for one specific task. Spam detection, facial recognition, chatbots, recommendation systems, malware detection.</td></tr>
+        <tr><td><strong>General AI</strong></td><td>Theoretical</td><td>Capable of performing many intellectual tasks like a human. Still a research goal — not yet achieved.</td></tr>
+        <tr><td><strong>Superintelligence</strong></td><td>Hypothetical</td><td>Would exceed human intelligence across many areas. Discussed in long-term AI safety research.</td></tr>
+      </table>
+      <p>Today, almost all practical AI systems in use are <strong>Narrow AI</strong>.</p>
+
+      <h3>Major areas of AI</h3>
+      <ul>
+        <li>Machine Learning · Deep Learning · Computer Vision · Natural Language Processing</li>
+        <li>Robotics · Expert Systems · Knowledge Representation · Search &amp; Optimization</li>
+        <li><strong>Course focus</strong> — Artificial Intelligence → Machine Learning → Cybersecurity Applications.</li>
+      </ul>
+
+      <h3>AI, Machine Learning, and Deep Learning</h3>
+      <ul>
+        <li><strong>Nested circles</strong> — Deep Learning inside Machine Learning inside AI.</li>
+        <li><strong>AI is the broadest field</strong> — the overall goal is to build systems that behave intelligently.</li>
+        <li><strong>ML is a subset of AI</strong> — a technique where computers learn patterns directly from data.</li>
+        <li><strong>DL is a subset of ML</strong> — uses multi-layer neural networks for complex data like images and text.</li>
+      </ul>
+
+      <h3>AI vs Machine Learning — the two formulas</h3>
+      <ul>
+        <li><strong>Artificial Intelligence</strong> — the broad goal of creating systems capable of intelligent behavior.</li>
+        <li><strong>Machine Learning</strong> — a technique that lets computers learn patterns from data, instead of being explicitly programmed for every situation.</li>
+        <li><strong>Traditional programming</strong> — Data + Rules → Output.</li>
+        <li><strong>Machine learning</strong> — Data + Expected Outputs → Learning → Model.</li>
+        <li><strong>Then</strong> — New Data + Model → Prediction. The trained model can now make predictions on data it has never seen before.</li>
+      </ul>
+
+      <h3>What is Machine Learning?</h3>
+      <ul>
+        <li><strong>Definition</strong> — ML lets computers learn patterns from data and use those patterns to make predictions or decisions.</li>
+        <li><strong>Simple definition</strong> — Machine Learning = learning patterns from data. Instead of a programmer writing every rule by hand, the system studies many examples and works out the rules itself.</li>
+        <li><strong>Common examples</strong> — predict whether an email is spam, detect fraudulent transactions, predict house prices, recognize malicious network traffic, recommend movies or products, detect malware.</li>
+      </ul>
+
+      <h3>Worked example — detecting phishing emails</h3>
+      <ul>
+        <li><strong>Setup</strong> — suppose we have 10,000 emails; some are Normal and some are Phishing. We give these labeled examples to a Machine Learning algorithm.</li>
+        <li><strong>Patterns the algorithm learns</strong> — suspicious words in the message, unusual or fake-looking URLs, sender information that looks wrong, odd message structure.</li>
+        <li><strong>Then a new email arrives</strong> — New Email → ML Model → Phishing or Legitimate.</li>
+        <li><strong>Why it matters</strong> — this is one of the clearest ways AI supports cybersecurity: learning from past examples to judge brand-new emails.</li>
+      </ul>
+
+      <h3>Deep Learning</h3>
+      <ul>
+        <li><strong>Definition</strong> — a specialized type of Machine Learning that uses artificial neural networks with multiple layers.</li>
+        <li><strong>Especially powerful for</strong> — images, text, audio, video, large-scale datasets with millions of examples.</li>
+        <li><strong>Where you'll see it</strong> — face recognition, speech recognition, large language models (like chatbots), medical image analysis, advanced malware detection.</li>
+      </ul>
+
+      <h3>Machine Learning vs Deep Learning</h3>
+      <table class="sg-table">
+        <tr><th></th><th>Machine Learning</th><th>Deep Learning</th></tr>
+        <tr><td><strong>Relationship</strong></td><td>Subset of AI</td><td>Subset of Machine Learning</td></tr>
+        <tr><td><strong>Learns from</strong></td><td>Data, with patterns found by algorithms</td><td>Data, using multi-layer neural networks</td></tr>
+        <tr><td><strong>Works best with</strong></td><td>Structured, tabular data</td><td>Complex / unstructured data (images, text)</td></tr>
+        <tr><td><strong>Feature engineering</strong></td><td>Often needs manual feature selection</td><td>Can automatically learn complex features</td></tr>
+        <tr><td><strong>Dataset size</strong></td><td>Can work with smaller datasets</td><td>Often benefits from very large datasets</td></tr>
+        <tr><td><strong>Compute cost</strong></td><td>Usually less computationally expensive</td><td>Often requires more computing power</td></tr>
+      </table>
+      <p>Both can be useful in cybersecurity — the right choice depends on the data available and the problem being solved.</p>
+
+      <h3>Computer Vision and Natural Language Processing</h3>
+      <ul>
+        <li><strong>Computer Vision (CV)</strong> — enables computers to understand and analyze visual information. Works with images, videos, camera feeds, scanned documents.</li>
+        <li><strong>CV examples</strong> — face recognition, object detection, medical image analysis, license-plate recognition, security-camera analysis, image classification.</li>
+        <li><strong>Natural Language Processing (NLP)</strong> — enables computers to understand, analyze, and generate human language. Works with text and documents, emails and messages, speech converted to text.</li>
+        <li><strong>NLP examples</strong> — chatbots, language translation, sentiment analysis, email classification, phishing-email detection, text summarization.</li>
+        <li><strong>Side by side</strong> — CV primarily works with images and videos; NLP primarily works with text, messages, emails, and language. Both are important application areas of modern AI and many real systems combine them.</li>
+      </ul>
+
+      <h3>Three major types of Machine Learning</h3>
+      <ul>
+        <li><strong>Supervised Learning</strong> — learn from labeled data; the correct answer is already known. The model learns Input → Known Output, then predicts the label of brand-new, unseen data. Cybersecurity examples: malware vs benign software, spam vs legitimate email, fraud vs legitimate transaction, malicious vs normal network traffic.</li>
+        <li><strong>Unsupervised Learning</strong> — works with data that has no predefined labels. The system tries to discover groups of similar data, hidden patterns, similarities and differences, and unusual behavior. An anomaly points to a possible security threat.</li>
+        <li><strong>Reinforcement Learning</strong> — an agent learns by interacting with an environment: Observes → Takes Action → Receives Reward/Penalty → Learns, then loops. Security example: the system observes a possible attack and can allow the traffic, block the traffic, or request additional verification. Good decisions receive positive rewards, bad decisions receive penalties, and over time the system learns better defensive strategies.</li>
+      </ul>
+      <table class="sg-table">
+        <tr><th>Type</th><th>Data / Feedback</th><th>Main goal</th><th>Cybersecurity example</th></tr>
+        <tr><td><strong>Supervised</strong></td><td>Labeled data</td><td>Predict known classes</td><td>Malware classification</td></tr>
+        <tr><td><strong>Unsupervised</strong></td><td>Unlabeled data</td><td>Discover patterns</td><td>Anomaly detection</td></tr>
+        <tr><td><strong>Reinforcement</strong></td><td>Rewards / Penalties</td><td>Learn actions</td><td>Adaptive cyber defense</td></tr>
+      </table>
+      <p><strong>Easy way to remember:</strong> Supervised = learn with answers · Unsupervised = find patterns without answers · Reinforcement = learn from rewards.</p>
+
+      <h3>Data</h3>
+      <ul>
+        <li><strong>Definition</strong> — data is information collected and stored so it can be analyzed or used by computer systems.</li>
+        <li><strong>Data can represent</strong> — numbers and text; images, video, and audio; network traffic; user activities and computer logs; transactions.</li>
+        <li><strong>Key idea</strong> — Data → Learning → Model → Prediction. AI depends heavily on data. Poor-quality data leads to poor-quality AI models — "garbage in, garbage out."</li>
+        <li><strong>Structured data</strong> — organized in a predefined format, often rows and columns. Examples: database tables, Excel files, transaction records, customer information.</li>
+        <li><strong>Unstructured data</strong> — data without a simple tabular structure. Examples: images and videos, emails and documents, audio, social media posts.</li>
+        <li>AI techniques can work with both types — often in the same system.</li>
+      </ul>
+
+      <h3>Structured data — security example</h3>
+      <table class="sg-table">
+        <tr><th>IP address</th><th>Failed logins</th><th>Data transfer</th><th>Threat</th></tr>
+        <tr><td>192.168.1.10</td><td>2</td><td>15 MB</td><td>Normal</td></tr>
+        <tr><td>192.168.1.25</td><td>145</td><td>4.8 GB</td><td>Suspicious</td></tr>
+        <tr><td>192.168.1.30</td><td>1</td><td>22 MB</td><td>Normal</td></tr>
+      </table>
+      <p>Because this information has defined rows and columns, it is structured data. Machine Learning can use these features — failed logins, data transferred, and more — to detect suspicious behavior automatically, without a human reviewing every row.</p>
+
+      <h3>Unstructured data — security example</h3>
+      <ul>
+        <li>Cybersecurity also produces large amounts of unstructured or semi-structured information: phishing email text, security reports and PDF documents, screenshots and images, malware files, chat messages, audio / video evidence.</li>
+        <li><strong>Matching AI technique to data</strong> — Text → Natural Language Processing. Images / Video → Computer Vision. Different AI techniques suit different data types.</li>
+      </ul>
+
+      <h3>The AI / ML pipeline — seven steps</h3>
+      <ul>
+        <li><strong>1. Collect Data → 2. Clean &amp; Prepare Data → 3. Select Useful Features → 4. Train a Model → 5. Evaluate the Model → 6. Make Predictions → 7. Deploy &amp; Monitor</strong></li>
+        <li><strong>Cybersecurity example</strong> — Network Logs → Prepare Data → Train Model → Detect Attacks.</li>
+        <li>The same seven-step pipeline that predicts house prices or recommends movies can be pointed at network logs to automatically detect cyberattacks — the process is the same, only the data and the goal change.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🛡️ Part II · Cybersecurity</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <h3>What is cybersecurity?</h3>
+      <ul>
+        <li><strong>Definition</strong> — cybersecurity protects digital systems and information from unauthorized access, damage, disruption, and attack.</li>
+        <li><strong>Cybersecurity protects</strong> — computers, servers, and mobile devices; networks and cloud systems; applications; personal information; organizational data.</li>
+      </ul>
+
+      <h3>Why is cybersecurity important?</h3>
+      <ul>
+        <li><strong>We use computers for</strong> — banking, healthcare, education, government, transportation, communication, business, national infrastructure.</li>
+        <li><strong>Cyberattacks can cause</strong> — financial loss, data theft, privacy violations, service disruption, reputation damage, national security risks.</li>
+      </ul>
+
+      <h3>The CIA Triad</h3>
+      <ul>
+        <li><strong>Confidentiality</strong> — only authorized users should access information.</li>
+        <li><strong>Integrity</strong> — information should not be changed without authorization.</li>
+        <li><strong>Availability</strong> — systems and information should be available when needed.</li>
+        <li><strong>CIA Triad</strong> = Confidentiality + Integrity + Availability — one of the foundational models of cybersecurity.</li>
+      </ul>
+
+      <h3>Threat, vulnerability, and risk</h3>
+      <table class="sg-table">
+        <tr><th>Term</th><th>Definition</th><th>Example</th></tr>
+        <tr><td><strong>Threat</strong></td><td>Something that can potentially cause harm.</td><td>A hacker, malware, or a phishing attack.</td></tr>
+        <tr><td><strong>Vulnerability</strong></td><td>A weakness that can be exploited.</td><td>A weak password or outdated software.</td></tr>
+        <tr><td><strong>Risk</strong></td><td>The potential for loss or damage when a threat exploits a vulnerability.</td><td>The combined danger to the organization.</td></tr>
+      </table>
+      <p><strong>Simple relationship:</strong> Threat + Vulnerability → Risk.</p>
+
+      <h3>What is a cyberattack?</h3>
+      <ul>
+        <li><strong>Definition</strong> — a deliberate attempt to compromise, damage, disrupt, or gain unauthorized access to a computer system or network.</li>
+        <li><strong>Attackers may try to</strong> — steal information or passwords, damage or disrupt systems, install malware, demand money (extortion), spy on users, gain unauthorized access.</li>
+        <li><strong>Entry points</strong> — phishing emails, malicious websites, malicious downloads, infected USB drives.</li>
+        <li><strong>Consequences</strong> — cyberattacks can lead to data loss, financial loss, reputational damage, and reduced trust. Strong cybersecurity helps prevent these threats.</li>
+      </ul>
+
+      <h3>Malware</h3>
+      <ul>
+        <li><strong>Malware = Malicious Software</strong> — designed to harm, disrupt, spy on, or gain unauthorized access to systems.</li>
+        <li><strong>Seven types listed</strong> — Virus, Worm, Trojan, Ransomware, Spyware, Adware, Rootkit.</li>
+        <li><strong>Ransomware example</strong> — can encrypt a victim's files and then demand payment for their recovery, locking the owner out of their own data until they pay, with no guarantee the files will ever be restored.</li>
+      </ul>
+      <div class="flag-note">⚠️ The slide lists the seven malware types by name only — it gives no individual definitions for virus, worm, Trojan, spyware, adware, or rootkit. Only ransomware is explained. If the quiz asks you to define the others, that definition is not in this deck.</div>
+
+      <h3>Common cyber threats</h3>
+      <ul>
+        <li>Malware · Phishing · Ransomware · Password attacks · Social engineering</li>
+        <li>Denial-of-Service attacks · Web attacks · Insider threats · Data breaches · Identity theft</li>
+        <li>Organizations face many types of cyber threats, and attack techniques keep evolving.</li>
+      </ul>
+
+      <h3>Phishing</h3>
+      <ul>
+        <li><strong>Definition</strong> — a social-engineering attack where an attacker pretends to be a trusted person or organization to trick a victim.</li>
+        <li><strong>Attackers may try to steal</strong> — passwords, credit card information, banking information, personal information, login credentials.</li>
+        <li><strong>Example message</strong> — a warning that the account will be closed and a demand to click through immediately to verify the password.</li>
+        <li><strong>What happens next</strong> — the link leads to a fake website designed to steal the victim's real login details.</li>
+      </ul>
+
+      <h3>Social engineering</h3>
+      <ul>
+        <li><strong>Definition</strong> — attacks people rather than relying only on technical vulnerabilities.</li>
+        <li><strong>Attackers manipulate victims into</strong> — revealing passwords, clicking malicious links, downloading malware, sending money, providing confidential information.</li>
+        <li><strong>Common forms</strong> — phishing, spear phishing (targeted phishing), pretexting (inventing a false scenario), impersonation, baiting.</li>
+        <li><strong>Key idea</strong> — humans can be a target in cybersecurity, not just machines.</li>
+      </ul>
+
+      <h3>Fraud and fraud detection</h3>
+      <ul>
+        <li><strong>Fraud</strong> — intentional deception for financial or personal gain.</li>
+        <li><strong>Common examples</strong> — credit card fraud, banking fraud, insurance fraud, identity theft, online payment fraud.</li>
+        <li><strong>Detection in action</strong> — a user normally makes purchases from one city; suddenly several unusual transactions occur from different countries within minutes of each other. Security systems analyze transaction and behavior patterns and flag this activity as suspicious for review.</li>
+      </ul>
+
+      <h3>Authentication and access control</h3>
+      <ul>
+        <li><strong>Authentication — "Who are you?"</strong> — verifies your identity. Examples: password, fingerprint, face recognition, security token / one-time code.</li>
+        <li><strong>Access control — "What can you do?"</strong> — determines what you are allowed to access. Example: a student can view course materials but cannot modify financial records.</li>
+        <li><strong>The pairing</strong> — Authentication → Who are you? Authorization → What can you do?</li>
+      </ul>
+      <div class="flag-note">⚠️ The slide title says "Access Control" but the summary bar underneath pairs Authentication with <em>Authorization</em>. The deck treats the two labels as the same idea — the "what can you do" half of the pair. Expect either word on a quiz.</div>
+
+      <h3>Network security</h3>
+      <ul>
+        <li><strong>Definition</strong> — network security protects computer networks and the data traveling through them.</li>
+        <li><strong>Firewall</strong> — blocks unauthorized access and filters traffic.</li>
+        <li><strong>Intrusion Detection System (IDS)</strong> — monitors network traffic and detects suspicious activities.</li>
+        <li><strong>Intrusion Prevention System (IPS)</strong> — automatically blocks or prevents detected threats.</li>
+        <li><strong>VPN</strong> — creates a secure, encrypted connection over the internet.</li>
+        <li><strong>Encryption</strong> — protects data in transit and at rest.</li>
+        <li><strong>Network monitoring</strong> — continuously monitors network health and traffic.</li>
+      </ul>
+
+      <h3>Offensive security</h3>
+      <ul>
+        <li><strong>Definition</strong> — finds and exploits security weaknesses, with authorization, before malicious attackers can.</li>
+        <li><strong>Activities</strong> — penetration testing, vulnerability assessment, ethical hacking, red teaming, security testing.</li>
+        <li><strong>Goal</strong> — think like an attacker to identify weaknesses before real attackers do.</li>
+        <li><strong>Important</strong> — professionals must always operate within explicit legal and organizational authorization.</li>
+      </ul>
+
+      <h3>Defensive security</h3>
+      <ul>
+        <li><strong>Definition</strong> — focuses on protecting systems and responding to attacks.</li>
+        <li><strong>Activities</strong> — monitoring networks, detecting attacks, configuring firewalls, managing vulnerabilities, incident response, malware analysis.</li>
+        <li><strong>Goal</strong> — prevent, detect, contain, and respond to cyberattacks, keeping systems running safely day to day.</li>
+      </ul>
+
+      <h3>Offensive vs defensive security</h3>
+      <table class="sg-table">
+        <tr><th>Offensive Security</th><th>Defensive Security</th></tr>
+        <tr><td>Finds weaknesses</td><td>Protects systems</td></tr>
+        <tr><td>Simulates attacks</td><td>Detects attacks</td></tr>
+        <tr><td>Penetration testing</td><td>Security monitoring</td></tr>
+        <tr><td>Red Team</td><td>Blue Team</td></tr>
+        <tr><td>Ethical hacking</td><td>Incident response</td></tr>
+        <tr><td>Thinks like an attacker</td><td>Thinks like a defender</td></tr>
+      </table>
+      <p>Both are important. Organizations need to understand how attacks happen AND how they can be prevented or detected.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FLASHCARDS ═══════════════ -->
+<div class="panel" id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards">
+  <h1>Flashcards</h1>
+  <div class="filter-row" role="group" aria-label="Filter flashcards by part">
+    <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('p1',this)">Part I · AI</button>
+    <button class="filter-btn" onclick="filterCards('p2',this)">Part II · Cyber</button>
+  </div>
+  <div class="fc-counter" id="fc-counter" aria-live="polite"></div>
+  <div class="fc-wrap">
+    <div class="fc-card" id="fc-card" onclick="flipCard()" aria-label="Flashcard — click to flip">
+      <div class="fc-front"><div class="fc-label">Question</div><div class="fc-q" id="fc-q" aria-live="polite"></div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a" id="fc-a" aria-live="polite"></div></div>
+    </div>
+  </div>
+  <div class="fc-controls">
+    <button class="fc-btn" onclick="flipCard()" aria-label="Flip card">↩ Flip</button>
+    <button class="fc-btn mastered-btn" id="fc-master-btn" onclick="toggleMastered(currentIdx)" aria-label="Toggle mastered">☐ Mastered</button>
+    <button class="fc-btn" onclick="shuffleCards()" aria-label="Shuffle deck">🔀 Shuffle</button>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
+    <button class="fc-btn" onclick="nextCard()" aria-label="Next card">Next →</button>
+  </div>
+  <div class="fc-empty" id="fc-empty" style="display:none">No cards in this filter.</div>
+</div>
+
+<!-- ═══════════════ QUIZ ═══════════════ -->
+<div class="panel" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+  <h1>Practice Quiz</h1>
+  <div class="filter-row" role="group" aria-label="Filter quiz by part">
+    <button class="filter-btn active" onclick="setQuizFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setQuizFilter('p1',this)">Part I · AI</button>
+    <button class="filter-btn" onclick="setQuizFilter('p2',this)">Part II · Cyber</button>
+  </div>
+  <div id="quiz-container"></div>
+  <div style="margin-top:16px;">
+    <button id="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <button id="reset-btn" onclick="resetQuiz()">Reset</button>
+  </div>
+  <div id="quiz-score"></div>
+</div>
+
+<!-- ═══════════════ DISCUSSION ═══════════════ -->
+<div class="panel" id="panel-discussion" role="tabpanel" aria-labelledby="tab-discussion">
+  <h1>Discussion Board Prep</h1>
+  <div class="filter-row" role="group" aria-label="Filter discussion by part">
+    <button class="filter-btn active" onclick="filterDisc('all',this)">All</button>
+    <button class="filter-btn" onclick="filterDisc('p1',this)">Part I · AI</button>
+    <button class="filter-btn" onclick="filterDisc('p2',this)">Part II · Cyber</button>
+  </div>
+  <div id="disc-container"></div>
+</div>
+
+<!-- ═══════════════ NOTES ═══════════════ -->
+<div class="panel" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes">
+  <h1>Notes Template</h1>
+  <span class="unit-badge">Module 1 · Lecture 1 — Print this tab for in-class notes</span>
+
+  <div class="video-block">
+    <h4>📌 Module 1 source material</h4>
+    <p style="font-size:.84rem;color:#b0b0c8;line-height:1.7;">Everything on this page comes from <strong>Lecture 1 — Artificial Intelligence and Cybersecurity (Foundations and Overview)</strong>, 40 slides, posted to Blackboard. The professor's instruction: review the Lecture 1 materials carefully before attempting Quiz 1.</p>
+    <div class="source-list">
+      <a href="https://www.austincc.edu/" target="_blank" rel="noopener">ACC</a>
+      <a href="https://acconline.austincc.edu/" target="_blank" rel="noopener">Blackboard</a>
+      <a href="https://www.ucertify.com/" target="_blank" rel="noopener">uCertify</a>
+    </div>
+  </div>
+
+  <div class="notes-grid">
+    <div class="note-card"><h4>AI definition &amp; capabilities</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Data → Learning → Model → Prediction</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Narrow / General / Super</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>AI ⊃ ML ⊃ DL</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Traditional programming vs ML</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>ML vs DL — six dimensions</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Computer Vision vs NLP</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Supervised / Unsupervised / RL</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Structured vs unstructured data</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Seven-step ML pipeline</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>CIA Triad</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Threat + Vulnerability → Risk</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Malware types</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Phishing &amp; social engineering</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Authentication vs access control</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Offensive vs defensive security</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+  </div>
+</div>
+
+<footer>CSIS 3352 · Module 1 · study.imichaelv.com · Built from Lecture 1 source slides · <a href="../../index.html" class="back-link footer-back-link">← Back to all courses</a></footer>
+
+<script>
+// ─── MASTERY ───
+function getMasteryKey(){return 'mastery_csis3352_module01_';}
+function resetAllMastery(){
+  Object.keys(localStorage).filter(k=>k.startsWith(getMasteryKey())).forEach(k=>localStorage.removeItem(k));
+  Object.keys(localStorage).filter(k=>k.startsWith('obj_csis3352_module01_')).forEach(k=>localStorage.removeItem(k));
+  document.querySelectorAll('.obj-master-btn').forEach(b=>{b.textContent='☐ Mark Mastered';b.classList.remove('mastered');});
+  document.querySelectorAll('.fc-card').forEach((_,i)=>localStorage.removeItem(getMasteryKey()+i));
+  renderCard();updateMasteryBar();
+}
+function updateMasteryBar(){
+  const total=document.querySelectorAll('.obj-master-btn').length;
+  const done=Object.keys(localStorage).filter(k=>k.startsWith('obj_csis3352_module01_')).length;
+  const pct=total?Math.round(done/total*100):0;
+  const f=document.getElementById('mastery-fill');
+  if(f)f.style.width=pct+'%';
+}
+function toggleObjMastery(btn,key){
+  const is=localStorage.getItem(key);
+  if(is){localStorage.removeItem(key);btn.textContent='☐ Mark Mastered';btn.classList.remove('mastered');}
+  else{localStorage.setItem(key,'1');btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  updateMasteryBar();
+}
+function toggleObj(card){
+  const body=card.querySelector('.obj-body');
+  const arrow=card.querySelector('.obj-expand');
+  const open=body.classList.toggle('open');
+  arrow.style.transform=open?'rotate(180deg)':'';
+  card.setAttribute('aria-expanded',open);
+}
+function toggleChapter(header){
+  const body=header.nextElementSibling;
+  const arrow=header.querySelector('span:last-child');
+  const open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  arrow.style.transform=open?'':'rotate(180deg)';
+  header.setAttribute('aria-expanded',!open);
+}
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+}
+// scope filter highlighting to the row that was clicked, so the three panels do not clear each other
+function activateFilter(btn){
+  const row=btn.closest('.filter-row');
+  if(row)row.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ─── FLASHCARD DATA ───  {ch:'p1'|'p2', q, a}
+const allCards=[
+  {ch:'p1',q:"What is Artificial Intelligence?",a:"The ability of computers or machines to perform tasks that normally require human intelligence."},
+  {ch:'p1',q:"Name the seven things AI systems can do.",a:"Learn from data, recognize patterns, make predictions, understand language, recognize images, solve problems and make decisions, automate repetitive tasks."},
+  {ch:'p1',q:"Why do we need AI?",a:"Humans generate enormous amounts of data every day — far more than people can examine by hand."},
+  {ch:'p1',q:"List the six things AI helps us do.",a:"Analyze large amounts of data quickly, find hidden patterns humans might miss, automate repetitive tasks, make faster and more accurate decisions, detect unusual or suspicious activity, reduce human workload on complex problems."},
+  {ch:'p1',q:"Give the lecture's example of AI's scale advantage over a human analyst.",a:"A human analyst may struggle to review millions of network events by hand. An AI system can scan all of them automatically and flag the suspicious ones in seconds, not weeks."},
+  {ch:'p1',q:"What are the four connected stages of a simple AI system?",a:"Data → Learning → Model → Prediction."},
+  {ch:'p1',q:"In the spam-detection example, what happens at the Data stage?",a:"Thousands of past emails are collected."},
+  {ch:'p1',q:"In the spam-detection example, what happens at the Learning stage?",a:"The system analyzes the words and patterns inside the emails."},
+  {ch:'p1',q:"In the spam-detection example, what happens at the Model stage?",a:"It learns the typical characteristics of spam — what spam looks like."},
+  {ch:'p1',q:"In the spam-detection example, what happens at the Prediction stage?",a:"A brand-new email is classified as Spam or Not Spam."},
+  {ch:'p1',q:"What is the key idea about data in modern AI systems?",a:"Data is one of the most important ingredients of any modern AI system — better data generally means a better model."},
+  {ch:'p1',q:"What are the three levels of AI capability?",a:"Narrow AI (in use today), General AI (theoretical), and Superintelligence (hypothetical)."},
+  {ch:'p1',q:"Define Narrow AI and give examples.",a:"AI designed for one specific task. Examples: spam detection, facial recognition, chatbots, recommendation systems, malware detection."},
+  {ch:'p1',q:"Define General AI. What is its status?",a:"A theoretical AI capable of performing many intellectual tasks like a human. Still a research goal — not yet achieved."},
+  {ch:'p1',q:"Define Superintelligence. What is its status?",a:"A hypothetical AI that would exceed human intelligence across many areas. Discussed in long-term AI safety research."},
+  {ch:'p1',q:"Which type of AI describes almost all practical systems in use today?",a:"Narrow AI."},
+  {ch:'p1',q:"Name the eight major areas of Artificial Intelligence.",a:"Machine Learning, Deep Learning, Computer Vision, Natural Language Processing, Robotics, Expert Systems, Knowledge Representation, Search & Optimization."},
+  {ch:'p1',q:"What is the stated focus path of this course?",a:"Artificial Intelligence → Machine Learning → Cybersecurity Applications."},
+  {ch:'p1',q:"How do AI, Machine Learning, and Deep Learning relate?",a:"As nested circles — Deep Learning sits inside Machine Learning, which sits inside AI."},
+  {ch:'p1',q:"What is the overall goal of AI as the broadest field?",a:"To build systems that behave intelligently."},
+  {ch:'p1',q:"Why is Machine Learning called a subset of AI?",a:"It is a technique where computers learn patterns directly from data."},
+  {ch:'p1',q:"Why is Deep Learning called a subset of Machine Learning?",a:"It uses multi-layer neural networks for complex data like images and text."},
+  {ch:'p1',q:"Distinguish AI from Machine Learning in one line each.",a:"AI is the broad goal of creating systems capable of intelligent behavior. ML is a technique that lets computers learn patterns from data instead of being explicitly programmed for every situation."},
+  {ch:'p1',q:"What is the traditional programming formula?",a:"Data + Rules → Output."},
+  {ch:'p1',q:"What is the machine learning formula?",a:"Data + Expected Outputs → Learning → Model."},
+  {ch:'p1',q:"Once an ML model is trained, what is the prediction formula?",a:"New Data + Model → Prediction. The trained model can make predictions on data it has never seen before."},
+  {ch:'p1',q:"Define Machine Learning.",a:"ML lets computers learn patterns from data and use those patterns to make predictions or decisions."},
+  {ch:'p1',q:"Give the lecture's simple definition of Machine Learning.",a:"Machine Learning = learning patterns from data. Instead of a programmer writing every rule by hand, the system studies many examples and works out the rules itself."},
+  {ch:'p1',q:"List six common examples of Machine Learning applications.",a:"Predict whether an email is spam, detect fraudulent transactions, predict house prices, recognize malicious network traffic, recommend movies or products, detect malware."},
+  {ch:'p1',q:"In the phishing example, how many emails are used and how are they labeled?",a:"10,000 emails — some Normal and some Phishing — given to the algorithm as labeled examples."},
+  {ch:'p1',q:"What four patterns does the phishing algorithm learn?",a:"Suspicious words in the message, unusual or fake-looking URLs, sender information that looks wrong, odd message structure."},
+  {ch:'p1',q:"In the phishing example, what are the two possible outputs for a new email?",a:"Phishing or Legitimate."},
+  {ch:'p1',q:"Why is phishing detection called one of the clearest ways AI supports cybersecurity?",a:"Because it learns from past examples to judge brand-new emails."},
+  {ch:'p1',q:"Define Deep Learning.",a:"A specialized type of Machine Learning that uses artificial neural networks with multiple layers."},
+  {ch:'p1',q:"What five kinds of complex data is Deep Learning especially powerful for?",a:"Images, text, audio, video, and large-scale datasets with millions of examples."},
+  {ch:'p1',q:"Where will you see Deep Learning in practice?",a:"Face recognition, speech recognition, large language models (like chatbots), medical image analysis, and advanced malware detection."},
+  {ch:'p1',q:"ML vs DL — what data does each work best with?",a:"ML works best with structured, tabular data. DL works best with complex or unstructured data such as images and text."},
+  {ch:'p1',q:"ML vs DL — how do they differ on feature engineering?",a:"ML often needs manual feature selection. DL can automatically learn complex features."},
+  {ch:'p1',q:"ML vs DL — how do they differ on dataset size and compute cost?",a:"ML can work with smaller datasets and is usually less computationally expensive. DL often benefits from very large datasets and requires more computing power."},
+  {ch:'p1',q:"In cybersecurity, is ML or DL better?",a:"Both can be useful — the right choice depends on the data available and the problem being solved."},
+  {ch:'p1',q:"Define Computer Vision.",a:"Computer Vision (CV) enables computers to understand and analyze visual information."},
+  {ch:'p1',q:"What visual data does Computer Vision work with?",a:"Images, videos, camera feeds, and scanned documents."},
+  {ch:'p1',q:"Give five examples of Computer Vision applications from the lecture.",a:"Face recognition, object detection, medical image analysis, license-plate recognition, security-camera analysis."},
+  {ch:'p1',q:"Define Natural Language Processing.",a:"NLP enables computers to understand, analyze, and generate human language."},
+  {ch:'p1',q:"What does NLP work with?",a:"Text and documents, emails and messages, and speech converted to text."},
+  {ch:'p1',q:"Give six examples of NLP applications from the lecture.",a:"Chatbots, language translation, sentiment analysis, email classification, phishing-email detection, and text summarization."},
+  {ch:'p1',q:"Match the AI technique to the data type.",a:"Text → Natural Language Processing. Images / Video → Computer Vision."},
+  {ch:'p1',q:"What are the three major types of Machine Learning?",a:"Supervised Learning, Unsupervised Learning, and Reinforcement Learning."},
+  {ch:'p1',q:"Define Supervised Learning.",a:"Learning from labeled data where the correct answer is already known. The model learns Input → Known Output, then predicts the label of brand-new, unseen data."},
+  {ch:'p1',q:"Give four cybersecurity examples of Supervised Learning.",a:"Malware vs benign software, spam vs legitimate email, fraud vs legitimate transaction, malicious vs normal network traffic."},
+  {ch:'p1',q:"Define Unsupervised Learning.",a:"Learning that works with data that has no predefined labels."},
+  {ch:'p1',q:"What five things does an unsupervised system try to discover?",a:"Groups of similar data, hidden patterns, similarities and differences, unusual behavior, and anomalies that signal a possible security threat."},
+  {ch:'p1',q:"Define Reinforcement Learning.",a:"RL lets an agent learn by interacting with an environment."},
+  {ch:'p1',q:"What is the four-step Reinforcement Learning loop?",a:"Observes → Takes Action → Receives Reward / Penalty → Learns, then repeats."},
+  {ch:'p1',q:"In the RL security example, what three actions can the system take?",a:"Allow the traffic, block the traffic, or request additional verification."},
+  {ch:'p1',q:"How does an RL security system improve over time?",a:"Good decisions receive positive rewards and bad decisions receive penalties, so over time the system learns better defensive strategies."},
+  {ch:'p1',q:"Comparison table — Supervised: data, goal, and cybersecurity example?",a:"Labeled data · Predict known classes · Malware classification."},
+  {ch:'p1',q:"Comparison table — Unsupervised: data, goal, and cybersecurity example?",a:"Unlabeled data · Discover patterns · Anomaly detection."},
+  {ch:'p1',q:"Comparison table — Reinforcement: feedback, goal, and cybersecurity example?",a:"Rewards / Penalties · Learn actions · Adaptive cyber defense."},
+  {ch:'p1',q:"What is the easy way to remember the three learning types?",a:"Supervised = learn with answers. Unsupervised = find patterns without answers. Reinforcement = learn from rewards."},
+  {ch:'p1',q:"Define data.",a:"Information collected and stored so it can be analyzed or used by computer systems."},
+  {ch:'p1',q:"What five things can data represent?",a:"Numbers and text; images, video, and audio; network traffic; user activities and computer logs; transactions."},
+  {ch:'p1',q:"What phrase captures AI's dependence on data quality?",a:"Garbage in, garbage out — poor-quality data leads to poor-quality AI models."},
+  {ch:'p1',q:"Define structured data and give four examples.",a:"Data organized in a predefined format, often rows and columns. Examples: database tables, Excel files, transaction records, customer information."},
+  {ch:'p1',q:"Define unstructured data and give four examples.",a:"Data without a simple tabular structure. Examples: images and videos, emails and documents, audio, social media posts."},
+  {ch:'p1',q:"In the structured-data security table, which IP is labeled Suspicious and why?",a:"192.168.1.25 — it shows 145 failed logins and 4.8 GB of data transfer, versus 1–2 failed logins and 15–22 MB for the normal rows."},
+  {ch:'p1',q:"Why does structured security data matter for ML?",a:"ML can use features like failed logins and data transferred to detect suspicious behavior automatically, without a human reviewing every row."},
+  {ch:'p1',q:"Give six examples of unstructured cybersecurity data.",a:"Phishing email text, security reports and PDF documents, screenshots and images, malware files, chat messages, audio / video evidence."},
+  {ch:'p1',q:"Can AI work with both structured and unstructured data?",a:"Yes — AI techniques can work with both types, often in the same system."},
+  {ch:'p1',q:"List the seven steps of the AI / ML pipeline in order.",a:"1. Collect Data, 2. Clean & Prepare Data, 3. Select Useful Features, 4. Train a Model, 5. Evaluate the Model, 6. Make Predictions, 7. Deploy & Monitor."},
+  {ch:'p1',q:"What is step 3 of the ML pipeline?",a:"Select Useful Features."},
+  {ch:'p1',q:"What is step 7 — the final step — of the ML pipeline?",a:"Deploy & Monitor."},
+  {ch:'p1',q:"Give the cybersecurity version of the ML pipeline.",a:"Network Logs → Prepare Data → Train Model → Detect Attacks."},
+  {ch:'p1',q:"What is the key point about applying the ML pipeline to security?",a:"The same seven-step pipeline that predicts house prices or recommends movies can be pointed at network logs — the process is the same, only the data and the goal change."},
+  {ch:'p2',q:"Define cybersecurity.",a:"Cybersecurity protects digital systems and information from unauthorized access, damage, disruption, and attack."},
+  {ch:'p2',q:"What five things does cybersecurity protect?",a:"Computers, servers, and mobile devices; networks and cloud systems; applications; personal information; organizational data."},
+  {ch:'p2',q:"Name the eight areas of modern life that depend on digital systems.",a:"Banking, healthcare, education, government, transportation, communication, business, and national infrastructure."},
+  {ch:'p2',q:"What six harms can cyberattacks cause?",a:"Financial loss, data theft, privacy violations, service disruption, reputation damage, and national security risks."},
+  {ch:'p2',q:"What are the three goals of the CIA Triad?",a:"Confidentiality, Integrity, and Availability."},
+  {ch:'p2',q:"Define Confidentiality.",a:"Only authorized users should access information."},
+  {ch:'p2',q:"Define Integrity.",a:"Information should not be changed without authorization."},
+  {ch:'p2',q:"Define Availability.",a:"Systems and information should be available when needed."},
+  {ch:'p2',q:"Why is the CIA Triad significant?",a:"It is one of the foundational models of cybersecurity."},
+  {ch:'p2',q:"Define a threat and give an example.",a:"Something that can potentially cause harm — for example a hacker, malware, or a phishing attack."},
+  {ch:'p2',q:"Define a vulnerability and give an example.",a:"A weakness that can be exploited — for example a weak password or outdated software."},
+  {ch:'p2',q:"Define risk and give an example.",a:"The potential for loss or damage when a threat exploits a vulnerability — the combined danger to the organization."},
+  {ch:'p2',q:"State the simple relationship between threat, vulnerability, and risk.",a:"Threat + Vulnerability → Risk."},
+  {ch:'p2',q:"Define a cyberattack.",a:"A deliberate attempt to compromise, damage, disrupt, or gain unauthorized access to a computer system or network."},
+  {ch:'p2',q:"What six things may attackers try to do?",a:"Steal information or passwords, damage or disrupt systems, install malware, demand money (extortion), spy on users, gain unauthorized access."},
+  {ch:'p2',q:"Name the four attack entry points shown in the lecture.",a:"Phishing emails, malicious websites, malicious downloads, and infected USB drives."},
+  {ch:'p2',q:"What does malware stand for, and what is it designed to do?",a:"Malicious Software — designed to harm, disrupt, spy on, or gain unauthorized access to systems."},
+  {ch:'p2',q:"Name the seven types of malware listed in the lecture.",a:"Virus, Worm, Trojan, Ransomware, Spyware, Adware, and Rootkit."},
+  {ch:'p2',q:"What does ransomware do?",a:"It can encrypt a victim's files and then demand payment for their recovery, locking the owner out of their own data until they pay — with no guarantee the files will ever be restored."},
+  {ch:'p2',q:"List the ten common cyber threats from the lecture.",a:"Malware, phishing, ransomware, password attacks, social engineering, denial-of-service attacks, web attacks, insider threats, data breaches, and identity theft."},
+  {ch:'p2',q:"What does the lecture say about how attack techniques change?",a:"Organizations face many types of cyber threats, and attack techniques keep evolving."},
+  {ch:'p2',q:"Define phishing.",a:"A social-engineering attack where an attacker pretends to be a trusted person or organization to trick a victim."},
+  {ch:'p2',q:"What five things do phishing attackers try to steal?",a:"Passwords, credit card information, banking information, personal information, and login credentials."},
+  {ch:'p2',q:"In the phishing example message, what happens after the victim clicks the link?",a:"The link leads to a fake website designed to steal the victim's real login details."},
+  {ch:'p2',q:"Define social engineering.",a:"Attacks that target people rather than relying only on technical vulnerabilities."},
+  {ch:'p2',q:"What five things do social engineers manipulate victims into doing?",a:"Revealing passwords, clicking malicious links, downloading malware, sending money, and providing confidential information."},
+  {ch:'p2',q:"Name the five common forms of social engineering.",a:"Phishing, spear phishing (targeted phishing), pretexting (inventing a false scenario), impersonation, and baiting."},
+  {ch:'p2',q:"What is spear phishing?",a:"Targeted phishing — a form of social engineering aimed at a specific victim."},
+  {ch:'p2',q:"What is pretexting?",a:"Inventing a false scenario in order to manipulate a victim — a form of social engineering."},
+  {ch:'p2',q:"What is the key idea about humans in cybersecurity?",a:"Humans can be a target in cybersecurity — not just machines."},
+  {ch:'p2',q:"Define fraud.",a:"Intentional deception for financial or personal gain."},
+  {ch:'p2',q:"Give five common examples of fraud.",a:"Credit card fraud, banking fraud, insurance fraud, identity theft, and online payment fraud."},
+  {ch:'p2',q:"Describe the fraud-detection scenario from the lecture.",a:"A user normally makes purchases from one city, then several unusual transactions suddenly occur from different countries within minutes of each other."},
+  {ch:'p2',q:"How do security systems catch that fraud pattern?",a:"They analyze transaction and behavior patterns and flag the activity as suspicious for review."},
+  {ch:'p2',q:"What question does authentication answer, and what does it do?",a:"Who are you? — it verifies your identity."},
+  {ch:'p2',q:"Give four examples of authentication.",a:"Password, fingerprint, face recognition, and security token / one-time code."},
+  {ch:'p2',q:"What question does access control answer, and what does it do?",a:"What can you do? — it determines what you are allowed to access."},
+  {ch:'p2',q:"Give the lecture's access control example.",a:"A student can view course materials but cannot modify financial records."},
+  {ch:'p2',q:"State the authentication / authorization pairing.",a:"Authentication → Who are you? Authorization → What can you do?"},
+  {ch:'p2',q:"Define network security.",a:"Network security protects computer networks and the data traveling through them."},
+  {ch:'p2',q:"Name the six common network security technologies.",a:"Firewalls, Intrusion Detection Systems (IDS), Intrusion Prevention Systems (IPS), VPNs, encryption, and network monitoring."},
+  {ch:'p2',q:"What does a firewall do?",a:"Blocks unauthorized access and filters traffic."},
+  {ch:'p2',q:"What does an Intrusion Detection System (IDS) do?",a:"Monitors network traffic and detects suspicious activities."},
+  {ch:'p2',q:"What does an Intrusion Prevention System (IPS) do?",a:"Automatically blocks or prevents detected threats."},
+  {ch:'p2',q:"What is the difference between an IDS and an IPS?",a:"An IDS monitors and detects suspicious activity; an IPS goes further and automatically blocks or prevents detected threats."},
+  {ch:'p2',q:"What does a VPN do?",a:"Creates a secure, encrypted connection over the internet."},
+  {ch:'p2',q:"What does encryption protect?",a:"Data in transit and at rest."},
+  {ch:'p2',q:"What does network monitoring do?",a:"Continuously monitors network health and traffic."},
+  {ch:'p2',q:"Define offensive security.",a:"Offensive security finds and exploits security weaknesses — with authorization — before malicious attackers can."},
+  {ch:'p2',q:"Name the five offensive security activities.",a:"Penetration testing, vulnerability assessment, ethical hacking, red teaming, and security testing."},
+  {ch:'p2',q:"What is the goal of offensive security?",a:"To think like an attacker and identify weaknesses before real attackers do."},
+  {ch:'p2',q:"What legal constraint applies to offensive security work?",a:"Professionals must always operate within explicit legal and organizational authorization."},
+  {ch:'p2',q:"Define defensive security.",a:"Defensive security focuses on protecting systems and responding to attacks."},
+  {ch:'p2',q:"Name the six defensive security activities.",a:"Monitoring networks, detecting attacks, configuring firewalls, managing vulnerabilities, incident response, and malware analysis."},
+  {ch:'p2',q:"What is the goal of defensive security?",a:"Prevent, detect, contain, and respond to cyberattacks — keeping systems running safely day to day."},
+  {ch:'p2',q:"Which team color goes with offensive security, and which with defensive?",a:"Red Team = offensive. Blue Team = defensive."},
+  {ch:'p2',q:"Offensive vs defensive — how does each one think?",a:"Offensive thinks like an attacker. Defensive thinks like a defender."},
+  {ch:'p2',q:"Offensive vs defensive — pair the activities for testing and monitoring.",a:"Offensive does penetration testing; defensive does security monitoring."},
+  {ch:'p2',q:"Why do organizations need both offensive and defensive security?",a:"They need to understand how attacks happen AND how those attacks can be prevented or detected."}
+];
+// ─── FLASHCARD ENGINE ───
+let deck=[],currentIdx=0,flipped=false;
+function filterCards(ch,btn){
+  activateFilter(btn);
+  deck=ch==='all'?[...allCards]:allCards.filter(c=>c.ch===ch);
+  currentIdx=0;flipped=false;renderCard();
+}
+function renderCard(){
+  const empty=document.getElementById('fc-empty');
+  if(!deck.length){empty.style.display='block';document.getElementById('fc-counter').textContent='';return;}
+  empty.style.display='none';
+  const c=deck[currentIdx];
+  document.getElementById('fc-q').textContent=c.q;
+  document.getElementById('fc-a').textContent=c.a;
+  document.getElementById('fc-counter').textContent=(currentIdx+1)+' / '+deck.length;
+  const card=document.getElementById('fc-card');
+  card.classList.remove('flipped');flipped=false;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+  else{mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+}
+function flipCard(){document.getElementById('fc-card').classList.toggle('flipped');flipped=!flipped;}
+function nextCard(){if(!deck.length)return;currentIdx=(currentIdx+1)%deck.length;renderCard();}
+function prevCard(){if(!deck.length)return;currentIdx=(currentIdx-1+deck.length)%deck.length;renderCard();}
+function shuffleCards(){for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}currentIdx=0;renderCard();}
+function toggleMastered(idx){
+  const c=deck[idx];if(!c)return;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){localStorage.removeItem(key);mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+  else{localStorage.setItem(key,'1');mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+}
+
+// ─── QUIZ DATA ───
+const allQuizData=[
+  {ch:'p1',type:'mc',q:"Which definition matches Artificial Intelligence as given in Lecture 1?",opts:["The ability of computers or machines to perform tasks that normally require human intelligence","Any software that stores and retrieves large amounts of data","A network of servers that share processing power","A programming language designed for statistics"],ans:0,exp:"AI is the ability of computers or machines to perform tasks that normally require human intelligence."},
+  {ch:'p1',type:'mc',q:"Which of these is NOT listed as something AI systems can do?",opts:["Recognize patterns","Understand language","Guarantee error-free output","Automate repetitive tasks"],ans:2,exp:"The seven listed capabilities are: learn from data, recognize patterns, make predictions, understand language, recognize images, solve problems and make decisions, and automate repetitive tasks. Guaranteed error-free output is not among them."},
+  {ch:'p1',type:'fitb',q:"The four connected stages of a simple AI system are Data → ___ → Model → Prediction.",ans:["learning"],display:"Learning",exp:"The four stages are Data → Learning → Model → Prediction."},
+  {ch:'p1',type:'mc',q:"In the spam-detection worked example, what happens at the Model stage?",opts:["Thousands of emails are collected","The system analyzes words and patterns","It learns the typical characteristics of spam","A new email is classified Spam or Not Spam"],ans:2,exp:"Data collects the emails, Learning analyzes words and patterns, Model learns what spam looks like, and Prediction classifies a brand-new email."},
+  {ch:'p1',type:'mc',q:"Which statement about data in AI systems does the lecture make?",opts:["Data matters less once a model is trained","Better data generally means a better model","Model architecture matters more than data quality","All datasets produce equivalent results"],ans:1,exp:"Data is one of the most important ingredients of any modern AI system — better data generally means a better model."},
+  {ch:'p1',type:'mc',q:"Which level of AI is described as 'in use today'?",opts:["Narrow AI","General AI","Superintelligence","All three equally"],ans:0,exp:"Narrow AI is in use today. General AI is theoretical and Superintelligence is hypothetical."},
+  {ch:'p1',type:'mc',q:"General AI is best described as:",opts:["Designed for one specific task","A theoretical AI capable of many intellectual tasks like a human","An AI exceeding human intelligence across many areas","The most common type of deployed AI"],ans:1,exp:"General AI is theoretical — capable of performing many intellectual tasks like a human, but still a research goal, not yet achieved."},
+  {ch:'p1',type:'fitb',q:"An AI that would exceed human intelligence across many areas, discussed in long-term AI safety research, is called ___.",ans:["superintelligence"],display:"Superintelligence",exp:"Superintelligence is the hypothetical level of AI capability."},
+  {ch:'p1',type:'mc',q:"Which is given as an example of Narrow AI?",opts:["A system matching human ability across all intellectual tasks","Spam detection","An AI exceeding human intelligence","A hypothetical future system"],ans:1,exp:"Narrow AI examples include spam detection, facial recognition, chatbots, recommendation systems, and malware detection."},
+  {ch:'p1',type:'mc',q:"Which is NOT one of the eight major areas of AI listed?",opts:["Robotics","Expert Systems","Quantum Cryptography","Search & Optimization"],ans:2,exp:"The eight areas are Machine Learning, Deep Learning, Computer Vision, NLP, Robotics, Expert Systems, Knowledge Representation, and Search & Optimization."},
+  {ch:'p1',type:'fitb',q:"The stated course focus path is Artificial Intelligence → ___ → Cybersecurity Applications.",ans:["machine learning"],display:"Machine Learning",exp:"The course narrows from AI, through Machine Learning, to Cybersecurity Applications."},
+  {ch:'p1',type:'mc',q:"Which nesting is correct?",opts:["AI inside Machine Learning inside Deep Learning","Deep Learning inside Machine Learning inside AI","Machine Learning inside Deep Learning inside AI","All three are separate, non-overlapping fields"],ans:1,exp:"Think of them as nested circles: Deep Learning sits inside Machine Learning, which sits inside AI."},
+  {ch:'p1',type:'mc',q:"What is the traditional programming formula?",opts:["Data + Expected Outputs → Learning → Model","Data + Rules → Output","New Data + Model → Prediction","Rules + Model → Data"],ans:1,exp:"Traditional programming is Data + Rules → Output. Machine learning is Data + Expected Outputs → Learning → Model."},
+  {ch:'p1',type:'fitb',q:"In machine learning, the formula is Data + Expected Outputs → Learning → ___.",ans:["model"],display:"Model",exp:"Machine learning: Data + Expected Outputs → Learning → Model. Then New Data + Model → Prediction."},
+  {ch:'p1',type:'mc',q:"Once a model is trained, what does the lecture say it can do?",opts:["Rewrite its own training data","Make predictions on data it has never seen before","Operate without any input data","Replace the need for evaluation"],ans:1,exp:"New Data + Model → Prediction. The trained model can now make predictions on data it has never seen before."},
+  {ch:'p1',type:'mc',q:"Which is the lecture's simple definition of Machine Learning?",opts:["Writing every rule by hand","Learning patterns from data","Storing data in tables","Encrypting data in transit"],ans:1,exp:"Machine Learning = learning patterns from data. Instead of a programmer writing every rule by hand, the system studies many examples and works out the rules itself."},
+  {ch:'p1',type:'fitb',q:"In the phishing worked example, the algorithm is given ___ labeled emails.",ans:["10,000","10000","ten thousand"],display:"10,000",exp:"The example supposes 10,000 emails, some Normal and some Phishing."},
+  {ch:'p1',type:'mc',q:"Which is NOT one of the four patterns the phishing algorithm learns?",opts:["Suspicious words in the message","Unusual or fake-looking URLs","The recipient's password strength","Odd message structure"],ans:2,exp:"The four patterns are suspicious words, unusual or fake-looking URLs, sender information that looks wrong, and odd message structure."},
+  {ch:'p1',type:'mc',q:"Deep Learning is defined as a specialized type of Machine Learning that uses:",opts:["Decision trees with pruning","Artificial neural networks with multiple layers","Rule-based expert systems","Structured query languages"],ans:1,exp:"Deep Learning uses artificial neural networks with multiple layers."},
+  {ch:'p1',type:'mc',q:"Which data type does Deep Learning work best with?",opts:["Structured, tabular data","Complex / unstructured data such as images and text","Only numeric data","Only labeled data"],ans:1,exp:"ML works best with structured, tabular data; DL works best with complex or unstructured data like images and text."},
+  {ch:'p1',type:'mc',q:"On feature engineering, how do ML and DL differ?",opts:["Both require manual feature selection","ML learns features automatically; DL needs manual selection","ML often needs manual feature selection; DL can learn complex features automatically","Neither uses features"],ans:2,exp:"ML often needs manual feature selection. DL can automatically learn complex features."},
+  {ch:'p1',type:'mc',q:"Which statement about compute cost is correct?",opts:["DL is usually cheaper to run than ML","ML is usually less computationally expensive than DL","Both cost the same","Compute cost was not discussed"],ans:1,exp:"ML is usually less computationally expensive; DL often requires more computing power."},
+  {ch:'p1',type:'fitb',q:"Computer Vision enables computers to understand and analyze ___ information.",ans:["visual"],display:"Visual",exp:"Computer Vision (CV) enables computers to understand and analyze visual information."},
+  {ch:'p1',type:'mc',q:"Which pairing is correct?",opts:["Text → Computer Vision; Images → NLP","Text → NLP; Images / Video → Computer Vision","Both text and images → NLP","Both text and images → Computer Vision"],ans:1,exp:"Matching AI technique to data: Text → Natural Language Processing. Images / Video → Computer Vision."},
+  {ch:'p1',type:'mc',q:"Which is listed as an NLP example rather than a CV example?",opts:["License-plate recognition","Security-camera analysis","Sentiment analysis","Object detection"],ans:2,exp:"NLP examples include chatbots, language translation, sentiment analysis, email classification, phishing-email detection, and text summarization."},
+  {ch:'p1',type:'mc',q:"Supervised Learning learns from:",opts:["Data with no predefined labels","Data where the correct answer is already known","Rewards and penalties","Randomly generated data"],ans:1,exp:"Supervised Learning learns from data where the correct answer (label) is already known."},
+  {ch:'p1',type:'fitb',q:"Unsupervised Learning works with data that has no predefined ___.",ans:["labels","label"],display:"Labels",exp:"Unsupervised Learning works with data that has no predefined labels."},
+  {ch:'p1',type:'mc',q:"In Unsupervised Learning, an anomaly points to:",opts:["A labeling error","A possible security threat","A hardware failure","A training shortcut"],ans:1,exp:"The system discovers unusual behavior, and an anomaly indicates a possible security threat."},
+  {ch:'p1',type:'mc',q:"What is the correct Reinforcement Learning loop?",opts:["Observes → Takes Action → Receives Reward/Penalty → Learns","Learns → Observes → Predicts → Repeats","Collects → Cleans → Trains → Deploys","Labels → Trains → Tests → Deploys"],ans:0,exp:"The RL agent observes, takes action, receives a reward or penalty, and learns — then loops."},
+  {ch:'p1',type:'mc',q:"In the RL security example, which is NOT one of the three available actions?",opts:["Allow the traffic","Block the traffic","Request additional verification","Delete the network logs"],ans:3,exp:"The three actions are allow the traffic, block the traffic, or request additional verification."},
+  {ch:'p1',type:'mc',q:"Which cybersecurity example is paired with Unsupervised Learning in the comparison table?",opts:["Malware classification","Anomaly detection","Adaptive cyber defense","Password rotation"],ans:1,exp:"Supervised → malware classification. Unsupervised → anomaly detection. Reinforcement → adaptive cyber defense."},
+  {ch:'p1',type:'fitb',q:"In the comparison table, Reinforcement Learning is paired with the cybersecurity example 'adaptive cyber ___'.",ans:["defense","defence"],display:"Defense",exp:"Reinforcement: Rewards / Penalties · Learn actions · Adaptive cyber defense."},
+  {ch:'p1',type:'mc',q:"Which memory hook matches Unsupervised Learning?",opts:["Learn with answers","Find patterns without answers","Learn from rewards","Learn from rules"],ans:1,exp:"Supervised = learn with answers. Unsupervised = find patterns without answers. Reinforcement = learn from rewards."},
+  {ch:'p1',type:'mc',q:"Which is an example of structured data?",opts:["Social media posts","Database tables","Audio recordings","Screenshots"],ans:1,exp:"Structured data examples: database tables, Excel files, transaction records, customer information."},
+  {ch:'p1',type:'fitb',q:"The phrase used to describe AI's dependence on data quality is 'garbage in, garbage ___.'",ans:["out"],display:"Out",exp:"Poor-quality data leads to poor-quality AI models — garbage in, garbage out."},
+  {ch:'p1',type:'mc',q:"In the structured-data security table, which row is labeled Suspicious?",opts:["192.168.1.10 — 2 failed logins, 15 MB","192.168.1.25 — 145 failed logins, 4.8 GB","192.168.1.30 — 1 failed login, 22 MB","None of the rows"],ans:1,exp:"192.168.1.25 shows 145 failed logins and 4.8 GB transferred and is labeled Suspicious."},
+  {ch:'p1',type:'mc',q:"Which is an example of unstructured cybersecurity data?",opts:["A transaction record table","A spreadsheet of failed logins","Phishing email text","A customer information database"],ans:2,exp:"Unstructured cybersecurity data includes phishing email text, security reports and PDFs, screenshots, malware files, chat messages, and audio/video evidence."},
+  {ch:'p1',type:'fitb',q:"Step 3 of the seven-step AI/ML pipeline is 'Select Useful ___.'",ans:["features","feature"],display:"Features",exp:"The pipeline is: Collect Data, Clean & Prepare Data, Select Useful Features, Train a Model, Evaluate the Model, Make Predictions, Deploy & Monitor."},
+  {ch:'p1',type:'mc',q:"What is the final step of the AI/ML pipeline?",opts:["Make Predictions","Evaluate the Model","Deploy & Monitor","Train a Model"],ans:2,exp:"Step 7 — the final step — is Deploy & Monitor."},
+  {ch:'p1',type:'mc',q:"How many steps are in the basic Machine Learning pipeline?",opts:["Four","Five","Six","Seven"],ans:3,exp:"A basic Machine Learning pipeline has seven steps."},
+  {ch:'p1',type:'mc',q:"What is the cybersecurity version of the ML pipeline?",opts:["Network Logs → Prepare Data → Train Model → Detect Attacks","Firewall → IDS → IPS → VPN","Threat → Vulnerability → Risk → Response","Collect → Encrypt → Store → Audit"],ans:0,exp:"Network Logs → Prepare Data → Train Model → Detect Attacks. Only the data and the goal change."},
+  {ch:'p2',type:'mc',q:"Cybersecurity protects digital systems and information from:",opts:["Hardware wear and power loss only","Unauthorized access, damage, disruption, and attack","Software licensing violations","Slow network performance"],ans:1,exp:"Cybersecurity protects digital systems and information from unauthorized access, damage, disruption, and attack."},
+  {ch:'p2',type:'mc',q:"Which is NOT listed as a consequence of cyberattacks?",opts:["Financial loss","Reputation damage","Improved system performance","National security risks"],ans:2,exp:"Cyberattacks can cause financial loss, data theft, privacy violations, service disruption, reputation damage, and national security risks."},
+  {ch:'p2',type:'fitb',q:"The CIA Triad stands for Confidentiality, Integrity, and ___.",ans:["availability"],display:"Availability",exp:"CIA Triad = Confidentiality + Integrity + Availability."},
+  {ch:'p2',type:'mc',q:"Which CIA Triad goal means information should not be changed without authorization?",opts:["Confidentiality","Integrity","Availability","Authentication"],ans:1,exp:"Integrity — information should not be changed without authorization."},
+  {ch:'p2',type:'mc',q:"Which CIA Triad goal means only authorized users should access information?",opts:["Confidentiality","Integrity","Availability","Authorization"],ans:0,exp:"Confidentiality — only authorized users should access information."},
+  {ch:'p2',type:'mc',q:"A weak password or outdated software is an example of a:",opts:["Threat","Vulnerability","Risk","Countermeasure"],ans:1,exp:"A vulnerability is a weakness that can be exploited — for example a weak password or outdated software."},
+  {ch:'p2',type:'mc',q:"A hacker, malware, or a phishing attack is an example of a:",opts:["Threat","Vulnerability","Risk","Control"],ans:0,exp:"A threat is something that can potentially cause harm."},
+  {ch:'p2',type:'fitb',q:"The simple relationship is Threat + Vulnerability → ___.",ans:["risk"],display:"Risk",exp:"Risk is the potential for loss or damage when a threat exploits a vulnerability."},
+  {ch:'p2',type:'mc',q:"Which is NOT listed as an attack entry point?",opts:["Phishing emails","Malicious downloads","Infected USB drives","Encrypted backups"],ans:3,exp:"The four entry points shown are phishing emails, malicious websites, malicious downloads, and infected USB drives."},
+  {ch:'p2',type:'mc',q:"Which is NOT one of the seven malware types listed?",opts:["Worm","Trojan","Rootkit","Botnet"],ans:3,exp:"The seven types listed are Virus, Worm, Trojan, Ransomware, Spyware, Adware, and Rootkit. Botnet is not on the slide."},
+  {ch:'p2',type:'fitb',q:"Malware that encrypts a victim's files and demands payment for their recovery is called ___.",ans:["ransomware"],display:"Ransomware",exp:"Ransomware encrypts files and demands payment, with no guarantee the files will ever be restored."},
+  {ch:'p2',type:'mc',q:"Which is NOT among the ten common cyber threats listed?",opts:["Insider threats","Supply chain compromise","Denial-of-Service attacks","Identity theft"],ans:1,exp:"The ten listed are malware, phishing, ransomware, password attacks, social engineering, denial-of-service, web attacks, insider threats, data breaches, and identity theft."},
+  {ch:'p2',type:'mc',q:"Phishing is defined as a type of:",opts:["Denial-of-service attack","Social-engineering attack","Network scanning technique","Encryption failure"],ans:1,exp:"Phishing is a social-engineering attack where an attacker pretends to be a trusted person or organization to trick a victim."},
+  {ch:'p2',type:'mc',q:"In the phishing example, what does the link actually lead to?",opts:["A legitimate password reset page","A fake website designed to steal real login details","An encrypted vault","The attacker's mail server"],ans:1,exp:"The link leads to a fake website designed to steal the victim's real login details."},
+  {ch:'p2',type:'fitb',q:"Targeted phishing aimed at a specific victim is called ___ phishing.",ans:["spear"],display:"Spear",exp:"Spear phishing is targeted phishing — one of the five common forms of social engineering."},
+  {ch:'p2',type:'fitb',q:"Inventing a false scenario to manipulate a victim is called ___.",ans:["pretexting"],display:"Pretexting",exp:"Pretexting means inventing a false scenario. The five forms are phishing, spear phishing, pretexting, impersonation, and baiting."},
+  {ch:'p2',type:'mc',q:"What is the key idea about social engineering?",opts:["Only machines can be targeted","Humans can be a target in cybersecurity, not just machines","It requires no deception","It only works against large organizations"],ans:1,exp:"Social engineering attacks people rather than relying only on technical vulnerabilities — humans can be a target, not just machines."},
+  {ch:'p2',type:'mc',q:"Fraud is defined as:",opts:["Accidental data loss","Intentional deception for financial or personal gain","Unauthorized software installation","A failure of the CIA Triad"],ans:1,exp:"Fraud involves intentional deception for financial or personal gain."},
+  {ch:'p2',type:'mc',q:"In the fraud-detection example, what triggers the flag?",opts:["A single large purchase","Several unusual transactions from different countries within minutes","A failed login attempt","An expired credit card"],ans:1,exp:"The user normally buys from one city, then several unusual transactions occur from different countries within minutes of each other."},
+  {ch:'p2',type:'fitb',q:"Authentication answers the question 'Who are you?' — access control answers 'What can you ___?'",ans:["do"],display:"Do",exp:"Authentication → Who are you? Authorization → What can you do?"},
+  {ch:'p2',type:'mc',q:"Which is an example of authentication rather than access control?",opts:["A student can view course materials","A student cannot modify financial records","A fingerprint scan","A role-based permission list"],ans:2,exp:"Authentication examples: password, fingerprint, face recognition, security token / one-time code."},
+  {ch:'p2',type:'mc',q:"Which network security technology automatically blocks or prevents detected threats?",opts:["IDS","IPS","VPN","Network monitoring"],ans:1,exp:"An IDS monitors traffic and detects suspicious activity; an IPS automatically blocks or prevents detected threats."},
+  {ch:'p2',type:'mc',q:"What does a VPN do?",opts:["Filters traffic at the perimeter","Creates a secure, encrypted connection over the internet","Detects suspicious activity","Monitors network health"],ans:1,exp:"A VPN creates a secure, encrypted connection over the internet."},
+  {ch:'p2',type:'fitb',q:"The network security technology that blocks unauthorized access and filters traffic is a ___.",ans:["firewall"],display:"Firewall",exp:"A firewall blocks unauthorized access and filters traffic."},
+  {ch:'p2',type:'mc',q:"Offensive security is defined as finding and exploiting weaknesses:",opts:["Without needing permission","With authorization, before malicious attackers can","Only after a breach occurs","Only in test environments"],ans:1,exp:"Offensive security finds and exploits security weaknesses — with authorization — before malicious attackers can."},
+  {ch:'p2',type:'mc',q:"Which is an offensive security activity?",opts:["Incident response","Malware analysis","Red teaming","Configuring firewalls"],ans:2,exp:"Offensive activities: penetration testing, vulnerability assessment, ethical hacking, red teaming, security testing."},
+  {ch:'p2',type:'mc',q:"Which is a defensive security activity?",opts:["Penetration testing","Ethical hacking","Vulnerability assessment","Incident response"],ans:3,exp:"Defensive activities: monitoring networks, detecting attacks, configuring firewalls, managing vulnerabilities, incident response, malware analysis."},
+  {ch:'p2',type:'fitb',q:"In the offensive vs defensive comparison, offensive security is the Red Team and defensive security is the ___ Team.",ans:["blue"],display:"Blue",exp:"Red Team = offensive. Blue Team = defensive."},
+  {ch:'p2',type:'mc',q:"What legal constraint applies to offensive security professionals?",opts:["None, if the intent is good","They must operate within explicit legal and organizational authorization","They need only verbal approval","Authorization is required only for external targets"],ans:1,exp:"Professionals must always operate within explicit legal and organizational authorization."},
+  {ch:'p2',type:'mc',q:"What is the stated goal of defensive security?",opts:["Simulate attacks to find gaps","Prevent, detect, contain, and respond to cyberattacks","Exploit weaknesses before attackers do","Think like an attacker"],ans:1,exp:"Defensive security aims to prevent, detect, contain, and respond to cyberattacks — keeping systems running safely day to day."},
+  {ch:'p2',type:'mc',q:"Why does the lecture say both offensive and defensive security matter?",opts:["Regulations require both","Organizations need to understand how attacks happen AND how they can be prevented or detected","Offensive is a prerequisite for defensive","Insurance requires both"],ans:1,exp:"Both are important. Organizations need to understand how attacks happen AND how they can be prevented or detected."}
+];
+// ─── QUIZ ENGINE ───
+let quizFilter='all',userAnswers={};
+function setQuizFilter(ch,btn){
+  activateFilter(btn);quizFilter=ch;resetQuiz();
+}
+function getQuizDeck(){return quizFilter==='all'?allQuizData:allQuizData.filter(q=>q.ch===quizFilter);}
+function renderQuiz(){
+  const deck=getQuizDeck();
+  const c=document.getElementById('quiz-container');c.innerHTML='';userAnswers={};
+  deck.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='quiz-q';div.id='qq'+i;
+    if(q.type==='mc'){
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <div class="quiz-opts">${q.opts.map((o,oi)=>`<label><input type="radio" name="q${i}" onclick="selectMC(${i},${oi})"> ${o}</label>`).join('')}</div>
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    } else {
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <input class="fitb-input" id="fitb${i}" placeholder="Type your answer..." aria-label="Answer for question ${i+1}" oninput="storeFITB(${i})">
+        <div class="q-exp" id="exp${i}"><strong>Answer: ${q.display}</strong> — ${q.exp}</div>`;
+    }
+    c.appendChild(div);
+  });
+  document.getElementById('quiz-score').style.display='none';
+}
+function selectMC(qi,oi){userAnswers[qi]=oi;}
+function storeFITB(qi){userAnswers[qi]=document.getElementById('fitb'+qi).value.trim().toLowerCase();}
+function submitQuiz(){
+  const deck=getQuizDeck();let correct=0;
+  deck.forEach((q,i)=>{
+    const el=document.getElementById('qq'+i);
+    const exp=document.getElementById('exp'+i);exp.classList.add('show');
+    el.classList.remove('q-correct','q-wrong');
+    if(q.type==='mc'){
+      const ua=userAnswers[i];
+      if(ua===q.ans){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    } else {
+      const ua=(userAnswers[i]||'').toLowerCase();
+      const ok=ua!==''&&q.ans.some(a=>ua.includes(a.toLowerCase()));
+      if(ok){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    }
+  });
+  const sc=document.getElementById('quiz-score');
+  const pct=Math.round(correct/deck.length*100);
+  sc.style.display='block';
+  sc.style.borderColor=pct>=70?'var(--green)':'var(--red)';
+  sc.innerHTML=`<strong>Score: ${correct}/${deck.length} (${pct}%)</strong> — ${pct>=90?'Excellent! 🎉':pct>=70?'Good work — review flagged questions.':'Keep studying — focus on the red ones.'}`;
+}
+function resetQuiz(){renderQuiz();}
+
+// ─── DISCUSSION DATA ───  one entry per learning objective, in the same order
+const DISC_QUESTIONS=[
+  {ch:'p1',q:"Define artificial intelligence, list what AI systems can do, and explain the problem that motivates using AI in the first place.",
+   points:[
+     {text:"<strong>Definition</strong> — AI is the ability of computers or machines to perform tasks that normally require human intelligence."},
+     {text:"<strong>Capabilities</strong> — learn from data, recognize patterns, make predictions, understand language, recognize images, solve problems and make decisions, automate repetitive tasks."},
+     {text:"<strong>Motivation</strong> — humans generate more data every day than people can examine by hand."},
+     {text:"<strong>What AI helps with</strong> — analyzing large amounts of data quickly, finding hidden patterns, automating repetition, faster and more accurate decisions, detecting unusual activity, reducing workload."},
+     {text:"<strong>Worked example</strong> — an analyst cannot review millions of network events by hand; an AI system scans all of them and flags suspicious ones in seconds rather than weeks."}
+   ],
+   model:"AI is the ability of computers or machines to perform tasks that normally require human intelligence. AI systems learn from data, recognize patterns, make predictions, understand language, recognize images, solve problems and make decisions, and automate repetitive tasks. The reason we need it is scale: humans generate enormous amounts of data every day, far more than people can examine by hand. AI helps by analyzing large amounts of data quickly, finding hidden patterns humans might miss, automating repetitive tasks, making faster and more accurate decisions, detecting unusual or suspicious activity, and reducing human workload on complex problems. The lecture's example makes the point concrete — a human analyst may struggle to review millions of network events by hand, but an AI system can scan all of them automatically and flag the suspicious ones in seconds, not weeks."},
+
+  {ch:'p1',q:"Walk through the four stages of a simple AI system using the email spam-detection example, and state what the lecture says about the role of data.",
+   points:[
+     {text:"<strong>The four stages</strong> — Data → Learning → Model → Prediction."},
+     {text:"<strong>Stage 1, Data</strong> — thousands of past emails are collected."},
+     {text:"<strong>Stage 2, Learning</strong> — the system analyzes the words and patterns inside them."},
+     {text:"<strong>Stage 3, Model</strong> — it learns the typical characteristics of spam."},
+     {text:"<strong>Stage 4, Prediction</strong> — a brand-new email is classified as Spam or Not Spam."},
+     {text:"<strong>Key idea</strong> — data is one of the most important ingredients of any modern AI system; better data generally means a better model."}
+   ],
+   model:"A simple AI system can be viewed as four connected stages: Data, Learning, Model, and Prediction. In the spam example, the Data stage collects thousands of past emails. The Learning stage studies the words and patterns inside them. The Model stage produces something that has learned the typical characteristics of spam. The Prediction stage takes a brand-new email and classifies it as Spam or Not Spam. The key idea underneath all four stages is that data is one of the most important ingredients of any modern AI system — better data generally means a better model."},
+
+  {ch:'p1',q:"Compare Narrow AI, General AI, and Superintelligence by status and example, and state which one describes the systems actually in use.",
+   points:[
+     {text:"<strong>Narrow AI — in use today</strong> — designed for one specific task. Examples: spam detection, facial recognition, chatbots, recommendation systems, malware detection."},
+     {text:"<strong>General AI — theoretical</strong> — capable of performing many intellectual tasks like a human. Still a research goal, not yet achieved."},
+     {text:"<strong>Superintelligence — hypothetical</strong> — would exceed human intelligence across many areas. Discussed in long-term AI safety research."},
+     {text:"<strong>Bottom line</strong> — today, almost all practical AI systems in use are Narrow AI."}
+   ],
+   model:"AI is broadly discussed in three levels of capability. Narrow AI is in use today and is designed for one specific task — spam detection, facial recognition, chatbots, recommendation systems, and malware detection are all examples. General AI is theoretical: an AI capable of performing many intellectual tasks like a human. It is still a research goal and has not been achieved. Superintelligence is hypothetical: an AI that would exceed human intelligence across many areas, and it comes up mainly in long-term AI safety research. The takeaway is that today, almost all practical AI systems in use are Narrow AI."},
+
+  {ch:'p1',q:"List the major areas of artificial intelligence and explain how this course narrows from the broad field down to its actual subject.",
+   points:[
+     {text:"<strong>The eight areas</strong> — Machine Learning, Deep Learning, Computer Vision, Natural Language Processing, Robotics, Expert Systems, Knowledge Representation, Search &amp; Optimization."},
+     {text:"<strong>Course focus</strong> — Artificial Intelligence → Machine Learning → Cybersecurity Applications."},
+     {text:"<strong>Why it matters</strong> — the course narrows from the broad field down to the ML techniques that get applied to security problems."}
+   ],
+   model:"The lecture lists eight major areas of artificial intelligence: Machine Learning, Deep Learning, Computer Vision, Natural Language Processing, Robotics, Expert Systems, Knowledge Representation, and Search & Optimization. The course does not cover all eight equally. The stated focus is a narrowing path: Artificial Intelligence → Machine Learning → Cybersecurity Applications. In other words, we start from the broad field, concentrate on machine learning as the technique, and then apply that technique to security problems."},
+
+  {ch:'p1',q:"Explain how AI, Machine Learning, and Deep Learning relate to one another, and define each level.",
+   points:[
+     {text:"<strong>Nested circles</strong> — Deep Learning sits inside Machine Learning, which sits inside AI."},
+     {text:"<strong>AI is the broadest field</strong> — the overall goal is to build systems that behave intelligently."},
+     {text:"<strong>ML is a subset of AI</strong> — a technique where computers learn patterns directly from data."},
+     {text:"<strong>DL is a subset of ML</strong> — uses multi-layer neural networks for complex data like images and text."}
+   ],
+   model:"The three terms are best pictured as nested circles, each one sitting inside the next. AI is the broadest field, and its overall goal is to build systems that behave intelligently. Machine Learning is a subset of AI — a technique where computers learn patterns directly from data rather than being told the rules. Deep Learning is a subset of Machine Learning, and it uses multi-layer neural networks to handle complex data like images and text. So every deep learning system is a machine learning system, and every machine learning system is an AI system, but not the reverse."},
+
+  {ch:'p1',q:"Contrast traditional programming with machine learning using the formulas from the lecture, and explain what a trained model can do.",
+   points:[
+     {text:"<strong>AI vs ML</strong> — AI is the broad goal of creating systems capable of intelligent behavior; ML is a technique that lets computers learn patterns from data instead of being explicitly programmed for every situation."},
+     {text:"<strong>Traditional programming</strong> — Data + Rules → Output."},
+     {text:"<strong>Machine learning</strong> — Data + Expected Outputs → Learning → Model."},
+     {text:"<strong>Then, in ML</strong> — New Data + Model → Prediction. The trained model makes predictions on data it has never seen before."}
+   ],
+   model:"Artificial Intelligence is the broad goal of creating systems capable of intelligent behavior. Machine Learning is a specific technique that lets computers learn patterns from data instead of being explicitly programmed for every situation. The difference shows up cleanly in the formulas. In traditional programming, a developer supplies Data plus Rules, and the program produces Output. In machine learning, you supply Data plus Expected Outputs, the system goes through Learning, and what comes out the other end is a Model. After that, the relationship flips: New Data plus the Model produces a Prediction. The point is that the trained model can now make predictions on data it has never seen before."},
+
+  {ch:'p1',q:"Define machine learning and walk through the phishing-detection example in full.",
+   points:[
+     {text:"<strong>Definition</strong> — ML lets computers learn patterns from data and use those patterns to make predictions or decisions. Simply: learning patterns from data."},
+     {text:"<strong>Instead of hand-written rules</strong> — the system studies many examples and works out the rules itself."},
+     {text:"<strong>Common examples</strong> — predict spam, detect fraudulent transactions, predict house prices, recognize malicious network traffic, recommend movies or products, detect malware."},
+     {text:"<strong>Phishing setup</strong> — 10,000 emails, some Normal and some Phishing, given to the algorithm as labeled examples."},
+     {text:"<strong>Patterns learned</strong> — suspicious words in the message, unusual or fake-looking URLs, sender information that looks wrong, odd message structure."},
+     {text:"<strong>Outcome</strong> — a new email passes through the ML model and comes out classified Phishing or Legitimate."}
+   ],
+   model:"Machine Learning lets computers learn patterns from data and use those patterns to make predictions or decisions. The simple version is that ML is learning patterns from data: instead of a programmer writing every rule by hand, the system studies many examples and works out the rules itself. Common applications include predicting whether an email is spam, detecting fraudulent transactions, predicting house prices, recognizing malicious network traffic, recommending movies or products, and detecting malware. The phishing example works like this. Suppose we have 10,000 emails, some Normal and some Phishing, and we give these labeled examples to a Machine Learning algorithm. The algorithm learns patterns such as suspicious words in the message, unusual or fake-looking URLs, sender information that looks wrong, and odd message structure. Then a new email arrives, passes through the ML model, and comes out classified as either Phishing or Legitimate. This is one of the clearest ways AI supports cybersecurity — learning from past examples to judge brand-new emails."},
+
+  {ch:'p1',q:"Define Deep Learning and compare it to general Machine Learning across every dimension the lecture gives.",
+   points:[
+     {text:"<strong>DL definition</strong> — a specialized type of ML that uses artificial neural networks with multiple layers; powerful for images, text, audio, video, and large-scale datasets with millions of examples."},
+     {text:"<strong>Relationship</strong> — ML is a subset of AI; DL is a subset of ML."},
+     {text:"<strong>Learns from</strong> — ML finds patterns with algorithms; DL uses multi-layer neural networks."},
+     {text:"<strong>Works best with</strong> — ML on structured, tabular data; DL on complex or unstructured data such as images and text."},
+     {text:"<strong>Feature engineering</strong> — ML often needs manual feature selection; DL can automatically learn complex features."},
+     {text:"<strong>Dataset size and compute</strong> — ML can work with smaller datasets and is usually less computationally expensive; DL often benefits from very large datasets and requires more computing power."},
+     {text:"<strong>In cybersecurity</strong> — both can be useful; the right choice depends on the data available and the problem being solved."}
+   ],
+   model:"Deep Learning is a specialized type of Machine Learning that uses artificial neural networks with multiple layers. It is especially powerful for complex data such as images, text, audio, video, and large-scale datasets with millions of examples — which is why face recognition, speech recognition, large language models, medical image analysis, and advanced malware detection all rely on it. Comparing the two directly: ML is a subset of AI while DL is a subset of ML. ML finds patterns using algorithms; DL uses multi-layer neural networks. ML works best with structured, tabular data; DL works best with complex or unstructured data like images and text. ML often needs manual feature selection; DL can automatically learn complex features. ML can work with smaller datasets and is usually less computationally expensive; DL often benefits from very large datasets and requires more computing power. In cybersecurity both can be useful, and the right choice depends on the data available and the problem being solved."},
+
+  {ch:'p1',q:"Distinguish Computer Vision from Natural Language Processing, and explain how you decide which technique fits a given data type.",
+   points:[
+     {text:"<strong>Computer Vision</strong> — enables computers to understand and analyze visual information. Works with images, videos, camera feeds, scanned documents."},
+     {text:"<strong>CV examples</strong> — face recognition, object detection, medical image analysis, license-plate recognition, security-camera analysis; also face detection, object recognition, image classification."},
+     {text:"<strong>Natural Language Processing</strong> — enables computers to understand, analyze, and generate human language. Works with text and documents, emails and messages, speech converted to text."},
+     {text:"<strong>NLP examples</strong> — chatbots, language translation, sentiment analysis, email classification, phishing-email detection, text summarization."},
+     {text:"<strong>Matching rule</strong> — Text → NLP; Images / Video → Computer Vision. Both are important areas of modern AI and many real systems combine them."}
+   ],
+   model:"Computer Vision enables computers to understand and analyze visual information, and it works with images, videos, camera feeds, and scanned documents. Its examples include face recognition, object detection, medical image analysis, license-plate recognition, security-camera analysis, and image classification. Natural Language Processing enables computers to understand, analyze, and generate human language, and it works with text and documents, emails and messages, and speech converted to text. Its examples include chatbots, language translation, sentiment analysis, email classification, phishing-email detection, and text summarization. The rule for matching the technique to the data is simple: text goes to NLP, images and video go to Computer Vision. Both are important application areas of modern AI, and many real systems combine them."},
+
+  {ch:'p1',q:"Compare supervised, unsupervised, and reinforcement learning by the data each uses, its main goal, and its cybersecurity application.",
+   points:[
+     {text:"<strong>Supervised</strong> — learns from labeled data where the correct answer is already known; model learns Input → Known Output, then predicts the label of brand-new unseen data. Cybersecurity: malware classification, spam vs legitimate email, fraud vs legitimate transaction, malicious vs normal traffic."},
+     {text:"<strong>Unsupervised</strong> — works with data that has no predefined labels; discovers groups of similar data, hidden patterns, similarities and differences, unusual behavior. An anomaly signals a possible security threat."},
+     {text:"<strong>Reinforcement</strong> — an agent learns by interacting with an environment through the loop Observes → Takes Action → Receives Reward/Penalty → Learns."},
+     {text:"<strong>RL security example</strong> — the system observes a possible attack and can allow the traffic, block the traffic, or request additional verification; good decisions earn rewards, bad ones earn penalties, and over time it learns better defensive strategies."},
+     {text:"<strong>Summary table</strong> — Supervised: labeled data, predict known classes, malware classification. Unsupervised: unlabeled data, discover patterns, anomaly detection. Reinforcement: rewards/penalties, learn actions, adaptive cyber defense."},
+     {text:"<strong>Memory hook</strong> — supervised = learn with answers; unsupervised = find patterns without answers; reinforcement = learn from rewards."}
+   ],
+   model:"Machine Learning is commonly divided into three categories. Supervised Learning learns from labeled data where the correct answer is already known — the model learns Input to Known Output, then predicts the label of brand-new, unseen data. Its cybersecurity uses are malware versus benign software, spam versus legitimate email, fraud versus legitimate transaction, and malicious versus normal network traffic. Unsupervised Learning works with data that has no predefined labels; the system tries to discover groups of similar data, hidden patterns, similarities and differences, and unusual behavior, where an anomaly points to a possible security threat. Reinforcement Learning lets an agent learn by interacting with an environment: it observes, takes an action, receives a reward or penalty, and learns, then loops. In the security example, the system observes a possible attack and can allow the traffic, block the traffic, or request additional verification — good decisions receive positive rewards and bad ones receive penalties, so over time it learns better defensive strategies. Summarized: supervised uses labeled data to predict known classes and does malware classification; unsupervised uses unlabeled data to discover patterns and does anomaly detection; reinforcement uses rewards and penalties to learn actions and does adaptive cyber defense. The easy way to remember it is that supervised learns with answers, unsupervised finds patterns without answers, and reinforcement learns from rewards."},
+
+  {ch:'p1',q:"Define data, distinguish structured from unstructured data with cybersecurity examples, and explain why data quality matters.",
+   points:[
+     {text:"<strong>Definition</strong> — data is information collected and stored so it can be analyzed or used by computer systems. It can represent numbers and text, images/video/audio, network traffic, user activities and computer logs, and transactions."},
+     {text:"<strong>Key idea</strong> — Data → Learning → Model → Prediction. AI depends heavily on data; poor-quality data leads to poor-quality models — 'garbage in, garbage out.'"},
+     {text:"<strong>Structured data</strong> — organized in a predefined format, often rows and columns. Examples: database tables, Excel files, transaction records, customer information."},
+     {text:"<strong>Unstructured data</strong> — data without a simple tabular structure. Examples: images and videos, emails and documents, audio, social media posts."},
+     {text:"<strong>Structured security example</strong> — a table of IP address, failed logins, data transfer, and threat label; ML uses those features to detect suspicious behavior without a human reviewing every row."},
+     {text:"<strong>Unstructured security example</strong> — phishing email text, security reports and PDFs, screenshots and images, malware files, chat messages, audio/video evidence."},
+     {text:"<strong>Bottom line</strong> — AI techniques can work with both types, often in the same system."}
+   ],
+   model:"Data is information collected and stored so it can be analyzed or used by computer systems, and it can represent numbers and text, images, video and audio, network traffic, user activities and computer logs, and transactions. The key idea is the chain Data to Learning to Model to Prediction: AI depends heavily on data, and poor-quality data leads to poor-quality AI models — garbage in, garbage out. Structured data is organized in a predefined format, usually rows and columns, and includes database tables, Excel files, transaction records, and customer information. The security version is a table of IP addresses, failed login counts, data transferred, and a threat label; because it has defined rows and columns it is structured, and Machine Learning can use those features to detect suspicious behavior automatically without a human reviewing every row. Unstructured data has no simple tabular structure and includes images and videos, emails and documents, audio, and social media posts. In cybersecurity that means phishing email text, security reports and PDF documents, screenshots and images, malware files, chat messages, and audio or video evidence. AI techniques can work with both types, often in the same system."},
+
+  {ch:'p1',q:"List the seven steps of the AI/ML pipeline in order and show how the same pipeline applies to a cybersecurity problem.",
+   points:[
+     {text:"<strong>Step 1</strong> — Collect Data."},
+     {text:"<strong>Step 2</strong> — Clean &amp; Prepare Data."},
+     {text:"<strong>Step 3</strong> — Select Useful Features."},
+     {text:"<strong>Step 4</strong> — Train a Model."},
+     {text:"<strong>Step 5</strong> — Evaluate the Model."},
+     {text:"<strong>Step 6</strong> — Make Predictions."},
+     {text:"<strong>Step 7</strong> — Deploy &amp; Monitor."},
+     {text:"<strong>Security application</strong> — Network Logs → Prepare Data → Train Model → Detect Attacks. The same pipeline that predicts house prices or recommends movies can be pointed at network logs; only the data and the goal change."}
+   ],
+   model:"A basic Machine Learning pipeline has seven steps, in order: Collect Data, Clean and Prepare Data, Select Useful Features, Train a Model, Evaluate the Model, Make Predictions, and Deploy and Monitor. Applied to security, the same pipeline becomes Network Logs, then Prepare Data, then Train Model, then Detect Attacks. The important point is that the seven-step pipeline that predicts house prices or recommends movies can be pointed at network logs to automatically detect cyberattacks — the process is the same, and only the data and the goal change."},
+
+  {ch:'p2',q:"Define cybersecurity, identify what it protects, and explain why it matters to modern society.",
+   points:[
+     {text:"<strong>Definition</strong> — cybersecurity protects digital systems and information from unauthorized access, damage, disruption, and attack."},
+     {text:"<strong>What it protects</strong> — computers, servers, and mobile devices; networks and cloud systems; applications; personal information; organizational data."},
+     {text:"<strong>Why it matters</strong> — modern society depends heavily on digital systems: banking, healthcare, education, government, transportation, communication, business, national infrastructure."},
+     {text:"<strong>What attacks cause</strong> — financial loss, data theft, privacy violations, service disruption, reputation damage, national security risks."}
+   ],
+   model:"Cybersecurity protects digital systems and information from unauthorized access, damage, disruption, and attack. What it protects is broad: computers, servers, and mobile devices; networks and cloud systems; applications; personal information; and organizational data. It matters because modern society depends heavily on digital systems — we use computers for banking, healthcare, education, government, transportation, communication, business, and national infrastructure. The stakes follow from that dependence: cyberattacks can cause financial loss, data theft, privacy violations, service disruption, reputation damage, and national security risks."},
+
+  {ch:'p2',q:"Explain the CIA Triad and define each of its three goals.",
+   points:[
+     {text:"<strong>Confidentiality</strong> — only authorized users should access information."},
+     {text:"<strong>Integrity</strong> — information should not be changed without authorization."},
+     {text:"<strong>Availability</strong> — systems and information should be available when needed."},
+     {text:"<strong>Framing</strong> — CIA Triad = Confidentiality + Integrity + Availability, one of the foundational models of cybersecurity."}
+   ],
+   model:"Three fundamental cybersecurity goals form the CIA Triad. Confidentiality means only authorized users should access information. Integrity means information should not be changed without authorization. Availability means systems and information should be available when needed. Put together, CIA Triad equals Confidentiality plus Integrity plus Availability, and it is one of the foundational models of cybersecurity."},
+
+  {ch:'p2',q:"Distinguish threat, vulnerability, and risk, give an example of each, and state how they relate.",
+   points:[
+     {text:"<strong>Threat</strong> — something that can potentially cause harm. Example: a hacker, malware, or a phishing attack."},
+     {text:"<strong>Vulnerability</strong> — a weakness that can be exploited. Example: a weak password or outdated software."},
+     {text:"<strong>Risk</strong> — the potential for loss or damage when a threat exploits a vulnerability. Example: the combined danger to the organization."},
+     {text:"<strong>Relationship</strong> — Threat + Vulnerability → Risk."}
+   ],
+   model:"These three terms are related but different. A threat is something that can potentially cause harm — a hacker, malware, or a phishing attack. A vulnerability is a weakness that can be exploited — a weak password or outdated software. Risk is the potential for loss or damage when a threat exploits a vulnerability, which is the combined danger to the organization. The simple relationship is Threat plus Vulnerability produces Risk: a threat with nothing to exploit and a weakness with nothing exploiting it both carry less risk than the two together."},
+
+  {ch:'p2',q:"Define a cyberattack, describe what attackers try to achieve and how they get in, and identify the types of malware.",
+   points:[
+     {text:"<strong>Cyberattack</strong> — a deliberate attempt to compromise, damage, disrupt, or gain unauthorized access to a computer system or network."},
+     {text:"<strong>Attacker goals</strong> — steal information or passwords, damage or disrupt systems, install malware, demand money (extortion), spy on users, gain unauthorized access."},
+     {text:"<strong>Entry points</strong> — phishing emails, malicious websites, malicious downloads, infected USB drives."},
+     {text:"<strong>Malware</strong> — malicious software designed to harm, disrupt, spy on, or gain unauthorized access to systems."},
+     {text:"<strong>The seven types</strong> — Virus, Worm, Trojan, Ransomware, Spyware, Adware, Rootkit."},
+     {text:"<strong>Ransomware example</strong> — encrypts a victim's files and demands payment for recovery, locking the owner out of their own data with no guarantee the files will ever be restored."}
+   ],
+   model:"A cyberattack is a deliberate attempt to compromise, damage, disrupt, or gain unauthorized access to a computer system or network. Attackers may try to steal information or passwords, damage or disrupt systems, install malware, demand money through extortion, spy on users, or gain unauthorized access. The common entry points are phishing emails, malicious websites, malicious downloads, and infected USB drives. Malware is malicious software designed to harm, disrupt, spy on, or gain unauthorized access to systems, and the lecture names seven types: Virus, Worm, Trojan, Ransomware, Spyware, Adware, and Rootkit. Ransomware is the one explained in detail — it can encrypt a victim's files and then demand payment for their recovery, locking the owner out of their own data until they pay, with no guarantee the files will ever be restored."},
+
+  {ch:'p2',q:"Identify the common cyber threats, then define phishing and social engineering and explain how they work.",
+   points:[
+     {text:"<strong>Ten common threats</strong> — malware, phishing, ransomware, password attacks, social engineering, denial-of-service attacks, web attacks, insider threats, data breaches, identity theft. Attack techniques keep evolving."},
+     {text:"<strong>Phishing</strong> — a social-engineering attack where an attacker pretends to be a trusted person or organization to trick a victim."},
+     {text:"<strong>Phishing targets</strong> — passwords, credit card information, banking information, personal information, login credentials."},
+     {text:"<strong>Phishing mechanism</strong> — an urgent message such as an account-closure warning leads to a link, and the link leads to a fake website designed to steal the victim's real login details."},
+     {text:"<strong>Social engineering</strong> — attacks people rather than relying only on technical vulnerabilities; manipulates victims into revealing passwords, clicking malicious links, downloading malware, sending money, or providing confidential information."},
+     {text:"<strong>Common forms</strong> — phishing, spear phishing (targeted phishing), pretexting (inventing a false scenario), impersonation, baiting. Key idea: humans can be a target, not just machines."}
+   ],
+   model:"Organizations face many types of cyber threats, and the lecture lists ten: malware, phishing, ransomware, password attacks, social engineering, denial-of-service attacks, web attacks, insider threats, data breaches, and identity theft — with the note that attack techniques keep evolving. Phishing is a social-engineering attack where an attacker pretends to be a trusted person or organization to trick a victim, and the goal is usually to steal passwords, credit card information, banking information, personal information, or login credentials. The mechanism is an urgent message — for instance a warning that the account will be closed unless the password is verified immediately — attached to a link that leads to a fake website designed to steal the victim's real login details. Social engineering is the broader family: it attacks people rather than relying only on technical vulnerabilities, manipulating victims into revealing passwords, clicking malicious links, downloading malware, sending money, or providing confidential information. Its common forms are phishing, spear phishing or targeted phishing, pretexting which means inventing a false scenario, impersonation, and baiting. The key idea is that humans can be a target in cybersecurity, not just machines."},
+
+  {ch:'p2',q:"Explain fraud and how it is detected, then distinguish authentication from access control.",
+   points:[
+     {text:"<strong>Fraud</strong> — intentional deception for financial or personal gain. Examples: credit card fraud, banking fraud, insurance fraud, identity theft, online payment fraud."},
+     {text:"<strong>Fraud detection in action</strong> — a user normally buys from one city; suddenly several unusual transactions occur from different countries within minutes of each other. Security systems analyze transaction and behavior patterns and flag the activity as suspicious for review."},
+     {text:"<strong>Authentication — who are you?</strong> — verifies your identity. Examples: password, fingerprint, face recognition, security token / one-time code."},
+     {text:"<strong>Access control — what can you do?</strong> — determines what you are allowed to access. Example: a student can view course materials but cannot modify financial records."},
+     {text:"<strong>Pairing</strong> — Authentication → Who are you? Authorization → What can you do?"}
+   ],
+   model:"Fraud involves intentional deception for financial or personal gain, and common examples are credit card fraud, banking fraud, insurance fraud, identity theft, and online payment fraud. The lecture's detection scenario shows how it gets caught: a user normally makes purchases from one city, then suddenly several unusual transactions occur from different countries within minutes of each other. Security systems analyze transaction and behavior patterns and flag that activity as suspicious for review. Authentication and access control are a related pair but answer different questions. Authentication asks who are you and verifies your identity, using a password, fingerprint, face recognition, or a security token or one-time code. Access control asks what can you do and determines what you are allowed to access — a student can view course materials but cannot modify financial records. Stated as a pair: Authentication is who are you, Authorization is what can you do."},
+
+  {ch:'p2',q:"Identify the technologies used in network security, then compare offensive and defensive security and explain why an organization needs both.",
+   points:[
+     {text:"<strong>Network security</strong> — protects computer networks and the data traveling through them. Technologies: firewalls, Intrusion Detection Systems (IDS), Intrusion Prevention Systems (IPS), VPNs, encryption, network monitoring."},
+     {text:"<strong>Offensive security</strong> — finds and exploits security weaknesses, with authorization, before malicious attackers can. Activities: penetration testing, vulnerability assessment, ethical hacking, red teaming, security testing."},
+     {text:"<strong>Offensive goal and limit</strong> — think like an attacker to identify weaknesses first; professionals must always operate within explicit legal and organizational authorization."},
+     {text:"<strong>Defensive security</strong> — protects systems and responds to attacks. Activities: monitoring networks, detecting attacks, configuring firewalls, managing vulnerabilities, incident response, malware analysis."},
+     {text:"<strong>Defensive goal</strong> — prevent, detect, contain, and respond to cyberattacks, keeping systems running safely day to day."},
+     {text:"<strong>Side by side</strong> — Offensive finds weaknesses, simulates attacks, penetration testing, Red Team, ethical hacking, thinks like an attacker. Defensive protects systems, detects attacks, security monitoring, Blue Team, incident response, thinks like a defender."},
+     {text:"<strong>Why both</strong> — organizations need to understand how attacks happen AND how they can be prevented or detected."}
+   ],
+   model:"Network security protects computer networks and the data traveling through them, using firewalls to block unauthorized access and filter traffic, Intrusion Detection Systems to monitor traffic and detect suspicious activity, Intrusion Prevention Systems to automatically block or prevent detected threats, VPNs to create a secure encrypted connection over the internet, encryption to protect data in transit and at rest, and network monitoring to continuously watch network health and traffic. Offensive security finds and exploits security weaknesses, with authorization, before malicious attackers can. Its activities are penetration testing, vulnerability assessment, ethical hacking, red teaming, and security testing, and its goal is to think like an attacker to identify weaknesses before real attackers do — with the important constraint that professionals must always operate within explicit legal and organizational authorization. Defensive security focuses on protecting systems and responding to attacks through monitoring networks, detecting attacks, configuring firewalls, managing vulnerabilities, incident response, and malware analysis, aiming to prevent, detect, contain, and respond to cyberattacks and keep systems running safely day to day. Side by side, offensive finds weaknesses, simulates attacks, runs penetration tests, is the Red Team, does ethical hacking, and thinks like an attacker, while defensive protects systems, detects attacks, does security monitoring, is the Blue Team, handles incident response, and thinks like a defender. Both matter, because organizations need to understand how attacks happen and how they can be prevented or detected."}
+];
+// ─── DISCUSSION ENGINE ───
+let discFilter='all';
+function filterDisc(ch,btn){
+  activateFilter(btn);discFilter=ch;renderDiscussion();
+}
+function renderDiscussion(){
+  const list=discFilter==='all'?DISC_QUESTIONS:DISC_QUESTIONS.filter(d=>d.ch===discFilter);
+  const c=document.getElementById('disc-container');c.innerHTML='';
+  list.forEach((d,i)=>{
+    const idx=DISC_QUESTIONS.indexOf(d);
+    const div=document.createElement('div');div.className='disc-q';
+    div.innerHTML=`<div class="disc-q-text">${i+1}. ${d.q}</div>
+      <textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Draft your response here..." aria-label="Discussion response ${i+1}"></textarea>
+      <div class="disc-btn-row">
+        <button class="disc-btn primary" onclick="submitDisc(${idx})">Submit &amp; Self-Grade</button>
+        <button class="disc-btn" onclick="toggleModel(${idx})">Show Model Answer</button>
+        <button class="disc-btn" onclick="resetDisc(${idx})">Reset</button>
+      </div>
+      <div class="disc-rubric" id="disc-rubric-${idx}">
+        <strong style="font-size:.82rem;color:var(--text)">Self-Grading Rubric</strong>
+        <div style="margin-top:8px;">${d.points.map((p,pi)=>`<div class="rubric-item"><input type="checkbox" id="rub-${idx}-${pi}" onchange="updateDiscScore(${idx})"><label for="rub-${idx}-${pi}">${p.text}</label></div>`).join('')}</div>
+        <div class="disc-score" id="disc-score-${idx}">Score: 0 / ${d.points.length}</div>
+      </div>
+      <div class="model-answer" id="disc-model-${idx}">${d.model}</div>`;
+    c.appendChild(div);
+  });
+}
+function submitDisc(idx){
+  document.getElementById('disc-ta-'+idx).disabled=true;
+  document.getElementById('disc-rubric-'+idx).classList.add('show');
+}
+function resetDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);ta.disabled=false;ta.value='';
+  document.getElementById('disc-rubric-'+idx).classList.remove('show');
+  document.getElementById('disc-model-'+idx).classList.remove('show');
+  document.querySelectorAll(`[id^="rub-${idx}-"]`).forEach(cb=>cb.checked=false);
+  document.getElementById('disc-score-'+idx).textContent='Score: 0 / '+DISC_QUESTIONS[idx].points.length;
+}
+function updateDiscScore(idx){
+  const total=DISC_QUESTIONS[idx].points.length;
+  const checked=document.querySelectorAll(`[id^="rub-${idx}-"]:checked`).length;
+  document.getElementById('disc-score-'+idx).textContent=`Score: ${checked} / ${total} (${Math.round(checked/total*100)}%)`;
+}
+function toggleModel(idx){document.getElementById('disc-model-'+idx).classList.toggle('show');}
+
+// ─── INIT ───
+window.addEventListener('DOMContentLoaded',()=>{
+  deck=[...allCards];renderCard();renderQuiz();renderDiscussion();updateMasteryBar();
+  document.querySelectorAll('.obj-master-btn').forEach(btn=>{
+    const key=btn.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+    if(key&&localStorage.getItem(key)){btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  });
+  document.querySelectorAll('.obj-card').forEach(card=>{
+    card.addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleObj(card);}
+    });
+  });
+});
+</script>
+</body>
+</html>
