@@ -28,6 +28,10 @@ jobs:
             --exclude ".github/*" \
             --exclude "README.md" \
             --exclude ".gitignore" \
+            --exclude "_versions/*" \
+            --exclude "TEMPLATE.md" \
+            --exclude "TEMPLATE_unit.html" \
+            --exclude "*/.gitkeep" \
             --delete
 
       - name: Invalidate CloudFront cache
