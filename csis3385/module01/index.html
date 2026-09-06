@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CSIS 3385 — Module 1: The Internet and the World Wide Web</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#0a0a0f; --surface:#12121a; --surface2:#16161f; --border:#1e1e2e;
+  --text:#e8e8f0; --muted:#6b6b80; --green:#22c55e; --red:#ef4444;
+  --yellow:#eab308; --purple:#a78bfa; --orange:#f97316;
+  --accent:#f43f5e; --accent-dim:rgba(244,63,94,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(244,63,94,0.025) 39px,rgba(244,63,94,0.025) 40px),
+  repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(244,63,94,0.025) 39px,rgba(244,63,94,0.025) 40px);}
+body::before{content:'CSIS 3385 · Module 1 · Chapter 1 — The Internet and the World Wide Web';position:fixed;top:0;left:0;right:0;
+  background:rgba(10,10,15,0.95);border-bottom:1px solid var(--border);padding:10px 16px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);z-index:100;letter-spacing:.05em;}
+.topnav{display:flex;gap:4px;padding:48px 12px 8px;overflow-x:auto;position:sticky;top:0;
+  background:rgba(10,10,15,0.97);z-index:90;border-bottom:1px solid var(--border);}
+.nav-btn{flex-shrink:0;background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:7px 13px;border-radius:6px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:11px;transition:all .15s;}
+.nav-btn:hover{color:var(--text);border-color:var(--accent);}
+.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.panel{display:none;padding:20px 16px 60px;max-width:860px;margin:0 auto;}
+.panel.active{display:block;}
+h1{font-size:1.4rem;font-weight:600;color:var(--accent);margin-bottom:4px;}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;display:block;}
+.exam-pill{display:inline-block;background:rgba(234,179,8,0.15);border:1px solid var(--yellow);
+  color:var(--yellow);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;
+  border-radius:20px;margin-bottom:20px;}
+.back-link{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;margin-bottom:10px;}
+.back-link:hover,.back-link:active{color:var(--accent);}
+.textbook-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.textbook-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;
+  transition:all .15s;}
+.textbook-links a:hover{color:var(--accent);border-color:var(--accent);}
+
+/* Objectives — .k1 = Data/Computing (rose), .k2 = Internet/Web (purple), .k3 = Servers/Cloud (green) */
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  margin-bottom:10px;cursor:pointer;transition:border-color .15s;}
+.obj-card:hover{border-color:var(--accent);}
+.obj-header{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;
+  padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.k1 .obj-num{color:var(--accent);background:rgba(244,63,94,0.12);}
+.k2 .obj-num{color:var(--purple);background:rgba(167,139,250,0.12);}
+.k3 .obj-num{color:var(--green);background:rgba(34,197,94,0.12);}
+.obj-title{font-size:.88rem;font-weight:500;flex:1;}
+.obj-expand{color:var(--muted);font-size:12px;transition:transform .2s;}
+.obj-body{display:none;padding:0 16px 14px;font-size:.84rem;line-height:1.65;color:#b0b0c8;}
+.obj-body.open{display:block;}
+.obj-body ul{padding-left:18px;margin:8px 0;}
+.obj-body li{margin-bottom:5px;}
+.obj-master-btn{margin-top:10px;background:transparent;border:1px solid var(--border);
+  color:var(--muted);padding:5px 12px;border-radius:4px;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;transition:all .15s;}
+.obj-master-btn.mastered{border-color:var(--green);color:var(--green);background:rgba(34,197,94,0.08);}
+.mastery-bar{background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  height:6px;margin-bottom:20px;overflow:hidden;}
+.mastery-fill{height:100%;background:var(--green);border-radius:20px;transition:width .4s;}
+.reset-mastery-btn{display:block;margin-bottom:20px;background:transparent;
+  border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:4px;
+  cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;}
+.reset-mastery-btn:hover{border-color:var(--red);color:var(--red);}
+.part-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin:24px 0 10px;display:block;}
+
+/* Study Guide */
+.chapter-block{margin-bottom:16px;}
+.chapter-header{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;
+  align-items:center;font-weight:500;font-size:.9rem;transition:border-color .15s;}
+.chapter-header:hover{border-color:var(--accent);}
+.chapter-body{display:none;background:var(--surface2);border:1px solid var(--border);
+  border-top:none;border-radius:0 0 8px 8px;padding:16px;}
+.chapter-body h3{font-size:.82rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px;}
+.chapter-body h3:first-child{margin-top:0;}
+.chapter-body p,.chapter-body li{font-size:.84rem;line-height:1.7;color:#b0b0c8;margin-bottom:6px;}
+.chapter-body ul{padding-left:18px;}
+.chapter-body strong{color:var(--text);}
+.sg-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.8rem;}
+.sg-table th{font-family:'IBM Plex Mono',monospace;font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.05em;color:var(--accent);text-align:left;padding:7px 8px;border-bottom:1px solid var(--border);}
+.sg-table td{padding:7px 8px;border-bottom:1px solid var(--border);color:#b0b0c8;line-height:1.5;vertical-align:top;}
+.sg-table tr:last-child td{border-bottom:none;}
+.flag-note{background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.3);
+  border-radius:6px;padding:8px 12px;font-size:.78rem;color:var(--yellow);margin:8px 0;line-height:1.6;}
+
+/* Flashcards */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:5px 12px;border-radius:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;transition:all .15s;}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.fc-wrap{perspective:1000px;margin-bottom:16px;}
+.fc-card{width:100%;min-height:220px;position:relative;transform-style:preserve-3d;
+  transition:transform .5s;cursor:pointer;}
+.fc-card.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;flex-direction:column;justify-content:center;padding:24px;border-radius:10px;}
+.fc-back{transform:rotateY(180deg);border-color:var(--accent);background:var(--accent-dim);}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
+.fc-q,.fc-a{font-size:1rem;line-height:1.6;color:var(--text);}
+.fc-a{color:var(--accent);}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);
+  text-align:center;margin-bottom:12px;}
+.fc-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+.fc-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);
+  padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82rem;transition:all .15s;}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent);}
+.fc-btn.mastered-btn{border-color:var(--green);color:var(--green);}
+.fc-nav{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+.fc-empty{text-align:center;padding:40px;color:var(--muted);font-size:.9rem;}
+
+/* Quiz */
+.quiz-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.quiz-q-text{font-size:.9rem;margin-bottom:12px;line-height:1.6;}
+.quiz-opts label{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;
+  border-radius:5px;cursor:pointer;font-size:.85rem;line-height:1.5;transition:background .1s;}
+.quiz-opts label:hover{background:rgba(255,255,255,0.04);}
+.quiz-opts input{margin-top:3px;flex-shrink:0;accent-color:var(--accent);}
+.fitb-input{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:8px 12px;border-radius:5px;font-size:.85rem;margin-top:8px;}
+.fitb-input:focus{outline:none;border-color:var(--accent);}
+.q-correct{border-color:var(--green)!important;background:rgba(34,197,94,0.06)!important;}
+.q-wrong{border-color:var(--red)!important;background:rgba(239,68,68,0.06)!important;}
+.q-exp{font-size:.8rem;color:#9090b0;margin-top:8px;padding-top:8px;
+  border-top:1px solid var(--border);display:none;}
+.q-exp.show{display:block;}
+#submit-btn,#reset-btn{padding:10px 22px;border-radius:6px;cursor:pointer;
+  font-size:.88rem;font-weight:500;transition:all .15s;border:1px solid;}
+#submit-btn{background:var(--accent);border-color:var(--accent);color:#fff;margin-right:8px;}
+#submit-btn:hover{opacity:.85;}
+#reset-btn{background:transparent;border-color:var(--border);color:var(--muted);}
+#reset-btn:hover{border-color:var(--red);color:var(--red);}
+#quiz-score{margin-top:16px;padding:14px;background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;font-size:.9rem;display:none;}
+
+/* Discussion */
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.disc-q-text{font-size:.9rem;line-height:1.6;margin-bottom:12px;font-weight:500;}
+.disc-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:10px 12px;border-radius:5px;font-size:.84rem;
+  min-height:120px;resize:vertical;font-family:'IBM Plex Sans',sans-serif;line-height:1.6;}
+.disc-textarea:focus{outline:none;border-color:var(--accent);}
+.disc-btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.disc-btn{padding:6px 14px;border-radius:5px;cursor:pointer;font-size:.82rem;
+  border:1px solid var(--border);background:var(--surface2);color:var(--muted);transition:all .15s;}
+.disc-btn:hover{color:var(--text);}
+.disc-btn.primary{border-color:var(--accent);color:var(--accent);}
+.disc-rubric{display:none;margin-top:12px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:6px;padding:12px;}
+.disc-rubric.show{display:block;}
+.rubric-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;
+  border-bottom:1px solid var(--border);font-size:.82rem;}
+.rubric-item:last-child{border-bottom:none;}
+.rubric-item input[type=checkbox]{flex-shrink:0;margin-top:2px;accent-color:var(--green);}
+.disc-score{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--green);margin-top:8px;}
+.model-answer{display:none;margin-top:10px;font-size:.82rem;line-height:1.65;
+  color:#9090b0;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.2);
+  border-radius:6px;padding:12px;}
+.model-answer.show{display:block;}
+
+/* Notes */
+.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.notes-grid{grid-template-columns:1fr;}}
+.note-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.note-card h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.note-lines{display:flex;flex-direction:column;gap:8px;}
+.note-line{border-bottom:1px solid var(--border);min-height:28px;}
+.video-block{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:14px 16px;margin-bottom:12px;}
+.video-block h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.source-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.source-list a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;}
+.source-list a:hover{color:var(--accent);border-color:var(--accent);}
+footer{text-align:center;padding:30px 16px;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;color:var(--muted);}
+@media print{
+  body::before,.topnav,.exam-pill,.textbook-links,footer,.fc-controls,.fc-nav,.filter-row,
+  #submit-btn,#quiz-score,.disc-btn-row,.disc-rubric,.obj-master-btn,.reset-mastery-btn,
+  .mastery-bar{display:none!important;}
+  .panel{display:none!important;}.panel.active{display:block!important;}
+  *,*::before,*::after{background:white!important;background-color:white!important;
+    background-image:none!important;color:black!important;border-color:#bbb!important;
+    box-shadow:none!important;-webkit-text-fill-color:black!important;}
+  body{font-size:12pt;}.chapter-body{display:block!important;}
+  @page{margin:.75in;}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav" role="tablist" aria-label="Study sections">
+  <button class="nav-btn active" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)" role="tab" aria-selected="false" aria-controls="panel-guide">📖 Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)" role="tab" aria-selected="false" aria-controls="panel-flashcards">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)" role="tab" aria-selected="false" aria-controls="panel-quiz">✏️ Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('discussion',this)" role="tab" aria-selected="false" aria-controls="panel-discussion">💬 Discussion</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes Template</button>
+</nav>
+
+<!-- ═══════════════ OBJECTIVES ═══════════════ -->
+<div class="panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+  <a class="back-link" href="../../index.html">← All courses</a>
+  <span class="unit-badge">CSIS 3385 · Module 1</span>
+  <h1>The Internet and the World Wide Web</h1>
+  <span class="exam-pill">📅 Assessment #1 (Test) — due 9/5 · open book · one attempt only</span>
+  <div class="textbook-links">
+    <a href="#">Group 1 · Data &amp; Computing History</a>
+    <a href="#">Group 2 · Internet &amp; the Web</a>
+    <a href="#">Group 3 · Servers, Virtualization &amp; Cloud</a>
+    <a href="#">Harwood &amp; Price · Ch. 1 (3rd ed.)</a>
+  </div>
+  <div class="flag-note">📌 The seven objectives below are the chapter’s <strong>own stated learning objectives</strong> (“When you complete this chapter, you will be able to…”), grouped into three topic sets. Every fact underneath them comes only from Chapter 1 of the textbook. One internal date conflict in the source is flagged in the Study Guide.</div>
+  <div class="mastery-bar"><div class="mastery-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="reset-mastery-btn" onclick="resetAllMastery()">↺ Reset All Mastery</button>
+
+  <span class="part-label">Group 1 · Data, Information &amp; Computing History</span>
+  <div class="obj-card k1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 1</span><span class="obj-title">Explain the importance and differences of data and information</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Separate <em>datum</em>, <em>data</em>, and <em>information</em>, and show how processing turns one into the next.</p>
+      <ul>
+        <li><strong>Data are the fuel of computing</strong> — data are the reason for computing, networking, automation, and all digital processing; we constantly take in data through our senses.</li>
+        <li><strong>Datum vs data</strong> — a datum is a single value, attribute, characteristic, or identity of something (Merriam-Webster: “something given…as a basis for reasoning”); data is the plural of datum, so two datums are data.</li>
+        <li><strong>Information</strong> — the result or product of data being processed; it has context relevant to an inquiry. “Information without context is just data.”</li>
+        <li><strong>Context gives meaning</strong> — “blue” and “sky” are each a datum with little meaning alone; combined as “blue sky” they gain context and can answer “What color is the sky?”</li>
+        <li><strong>IPO model</strong> — the most basic model for processing data into information is Input → Process → Output; even complex programs break down into IPO steps.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3385_module01_1')" aria-label="Mark LO 1 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card k1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 2</span><span class="obj-title">Discuss the history of computers and their uses</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Trace the five computer generations and separate “computing” from “computers.”</p>
+      <ul>
+        <li><strong>Miniaturization trend</strong> — computers started large and shrank as technology advanced; what once filled a university gymnasium now fits in a pocket.</li>
+        <li><strong>Five generations</strong> — First (1940–1956, vacuum tubes); Second (1956–1963, transistors); Third (1964–1971, integrated circuits + operating systems); Fourth (1971–2010, microprocessor, IBM PC, Apple Macintosh, GUI); Fifth (2010–present, artificial intelligence).</li>
+        <li><strong>Computing vs computers</strong> — computing is a processing operation (like the IPO model); computers are the people, machines, and devices that perform the processing.</li>
+        <li><strong>“Computers” as a job title</strong> — the term once described people who “computed” accounts into ledgers.</li>
+        <li><strong>Birth of the modern computer</strong> — historians generally place its relevant birth around 1940, though earlier developments also contributed.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3385_module01_2')" aria-label="Mark LO 2 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <span class="part-label">Group 2 · The Internet &amp; the World Wide Web</span>
+  <div class="obj-card k2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 3</span><span class="obj-title">Explain why there was a need for the internet</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Connect the 1957 Sputnik launch to the Cold War need for a survivable communications network.</p>
+      <ul>
+        <li><strong>Sputnik trigger</strong> — in 1957 the USSR launched Sputnik (about 23 in. in diameter, ~190 lb), energizing the technology boom and putting space, satellites, and science on the public’s mind.</li>
+        <li><strong>Cold War fear</strong> — if the Soviets could orbit a satellite, they might launch a missile that could take down U.S. telephone communications; what was needed was a system that could withstand an attack and stay operational.</li>
+        <li><strong>Agencies formed</strong> — the U.S. government began research grants and formed agencies such as NASA and DARPA to investigate advanced technologies (rockets, weapons, computers).</li>
+        <li><strong>Licklider’s “galactic network”</strong> — in 1962 MIT scientist J.C.R. Licklider proposed a network of interconnected computers that could communicate should the phone system be destroyed.</li>
+        <li><strong>Survivability via packet switching</strong> — Paul Baran and Donald Davies independently devised transmitting “packets” across a switched network; Davies’s term “packet switching” stuck, and it was the key to a network that could not be taken down by a single site’s destruction.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3385_module01_3')" aria-label="Mark LO 3 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card k2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 4</span><span class="obj-title">Discuss the early developments of internetworking</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Follow ARPANET through TCP/IP to the networks that became today’s internet.</p>
+      <ul>
+        <li><strong>ARPANET</strong> — designed by Licklider’s team in 1966 and ready for testing in October 1969; the first message “LOGIN” (UCLA → Stanford) failed after “L” and “O,” but it proved the Interface Message Processor (IMP), the early precursor to a router.</li>
+        <li><strong>From internetwork to “internet”</strong> — as ARPAnet added nodes (going international in 1971), it became an internetwork — a network of networks interconnected for communication; “internetwork” was shortened to “internet.”</li>
+        <li><strong>TCP/IP</strong> — Vint Cerf and Bob Kahn developed TCP (originally including IP’s functions) in the early 1970s; in the early 1980s TCP/IP replaced the Network Control Protocol (NCP) and made a worldwide network possible.</li>
+        <li><strong>TCP/IP model layers</strong> — the four-layer reference model, top to bottom: Application, Transport, Internet (Network), and Link (Network Interface/Access).</li>
+        <li><strong>Key protocols</strong> — TCP (connection-oriented, guarantees delivery), IP (addressing), HTTP (transfers webpage content), UDP (loss-tolerant, no guarantee), POP3/SMTP (email), and FTP (file transfer).</li>
+        <li><strong>NSFnet and others</strong> — NSFnet (1986) grew and replaced the older, slower ARPAnet in the late 1980s; NSFnet shut down in 1995 and control was privatized, opening the network to commercial use.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3385_module01_4')" aria-label="Mark LO 4 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card k2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 5</span><span class="obj-title">Identify the key developments and developers of the web</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Name the people and pieces that turned hypertext into the World Wide Web.</p>
+      <ul>
+        <li><strong>Hypertext pioneers</strong> — Vannevar Bush conceived “Memex” (“As We May Think,” 1945); Ted Nelson coined “hypertext” in 1965 (part of “Xanadu”); Doug Engelbart demonstrated NLS in the 1968 “Mother of All Demonstrations” and is credited as the “inventor” of hypertext (also the mouse and GUI); Brown University (Andries van Dam) built HES (1967) and FRES (1968).</li>
+        <li><strong>Tim Berners-Lee &amp; CERN</strong> — frustrated by fragmented information, Berners-Lee (an engineer at CERN) proposed “Mesh,” then with Robert Cailliau a formal “WorldWideWeb” (W3) project: a web of hypermedia documents viewed with a browser on a client/server architecture.</li>
+        <li><strong>Three central web elements</strong> — HTML (a web markup language based on SGML), the Universal Document Identifier (UDI, foundation for the URL/URI), and HTTP (with four design principles: client/server, request, response, termination).</li>
+        <li><strong>Free to everyone</strong> — CERN announced the web would be free to everyone, just as the University of Minnesota announced Gopher would start charging fees — spiking interest in the web.</li>
+        <li><strong>Browsers</strong> — Nicola Pellow built the Line Mode Browser (libWWW), the first generally available browser; Mosaic (Marc Andreessen &amp; Eric Bina, NCSA, 1993) was the first generally available browser to display text and graphics together; Andreessen then founded Netscape (Navigator, 1994), and Microsoft licensed Mosaic code to build Internet Explorer (1995).</li>
+        <li><strong>Web phases</strong> — Web 1.0 (Static/Read-Only), Web 2.0 (Social/Read-Write — sharing, blogs, wikis, social networking), Web 3.0 (Semantic Web — one large database, blockchain, decentralization), Web 4.0 (Intelligent/pervasive/ubiquitous Web).</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3385_module01_5')" aria-label="Mark LO 5 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <span class="part-label">Group 3 · Clients, Servers, Virtualization &amp; Cloud</span>
+  <div class="obj-card k3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 6</span><span class="obj-title">Explain servers, clients, and network virtualization</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Define the client/server relationship and how virtualization simulates hardware in software.</p>
+      <ul>
+        <li><strong>Client/server</strong> — like ordering in a diner: a client (a network host) requests a resource, and a server (specialized software on a centralized system) retrieves it and sends it back.</li>
+        <li><strong>A server is software</strong> — it performs, manages, or controls special functions on a network; one physical computer can run multiple servers, and a server can also act as a client. Types include application, mail, proxy, virtual, and web servers.</li>
+        <li><strong>Client types</strong> — thin clients have very few on-board resources and run apps on servers; thick (fat/rich) clients have all resources on-board; hybrid clients lean thick but rely on servers for centralized services.</li>
+        <li><strong>Virtualization</strong> — a virtual object (machine, server, router) is the simulation of its functions through software; creating virtual devices via software is called virtualization.</li>
+        <li><strong>Hypervisor</strong> — the key element of a virtual environment, also called the virtual machine manager (VMM); it is essentially the OS for the virtual environment. Type 1 runs “bare metal” directly on hardware; Type 2 runs on top of a host OS.</li>
+        <li><strong>Network virtualization</strong> — virtualizing a network splits bandwidth into manageable channels assigned in real time; storage virtualization makes resources on multiple servers appear as one entity; server virtualization makes multiple servers appear as one.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3385_module01_6')" aria-label="Mark LO 6 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card k3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 7</span><span class="obj-title">Identify the service types and delivery modes of cloud computing</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Separate cloud service <em>delivery</em> models (the “what”) from <em>deployment</em> models (the “who”).</p>
+      <ul>
+        <li><strong>Cloud computing</strong> — access to resources or processing located beyond the local firewall, provided by dedicated (typically virtualized) internet-based servers; it shifts local processing to remote providers over the internet.</li>
+        <li><strong>Why “the cloud”</strong> — telephone diagrams used a cloud image for switching between central offices (POTS/PSTN); the cloud came to represent the randomized switching of the internet.</li>
+        <li><strong>Delivery models (the “what”)</strong> — NIST defines three: SaaS (subscribers access applications on a CSP’s servers via the browser), PaaS (customized programming/testing/modeling environments), and IaaS (servers, storage, networking, and virtualization delivered over the internet, pay-per-use).</li>
+        <li><strong>Other “aaS” offerings</strong> — AIaaS, BaaS (backup), CaaS (a “full meal” combining SaaS/PaaS/IaaS), DaaS (desktop), NaaS (network), UaaS (unified communications), and VaaS (video-conferencing).</li>
+        <li><strong>Deployment models (the “who”)</strong> — NIST defines three: private (restricted access, in-house or via a CSP), public (a private cloud offered over a public network; membership is the constant), and hybrid (public deployment with private-cloud restrictions). A community cloud is a common variation.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3385_module01_7')" aria-label="Mark LO 7 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STUDY GUIDE ═══════════════ -->
+<div class="panel" id="panel-guide" role="tabpanel" aria-labelledby="tab-guide">
+  <h1>Study Guide</h1>
+  <span class="unit-badge">Module 1 · Chapter 1 — The Internet and the World Wide Web</span>
+
+  <!-- GROUP 1 -->
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🗄️ Group 1 · Data, Information &amp; Computing History</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <h3>Data and Information</h3>
+      <ul>
+        <li><strong>Data</strong> — the fuel and reason for computing, networking, automation, and all digital processing; we take in data constantly through our senses.</li>
+        <li><strong>Datum</strong> — a single value, attribute, characteristic, or identity of something (Merriam-Webster: “something given…as a basis for reasoning or inference”). “Data” is the plural of “datum,” so two datums are data.</li>
+        <li><strong>Information</strong> — the result or product of data being <em>processed</em>; it carries context relevant to a question. Information without context is just data.</li>
+        <li><strong>“Blue sky” example</strong> — “blue” and “sky” are each a datum with little meaning alone; together they gain context and can answer “What color is the sky?”</li>
+      </ul>
+      <h3>The IPO model</h3>
+      <p>The most basic model for processing data into information is <strong>IPO — Input → Process → Output</strong>. An input source is fed into a processing element that produces information. Even extremely complicated programs break down into a series of IPO steps, and the input or output of one process often feeds another.</p>
+      <h3>The five generations of computers (Table 1-1)</h3>
+      <table class="sg-table">
+        <tr><th>Generation</th><th>Period</th><th>Input</th><th>Key technology</th><th>Output</th></tr>
+        <tr><td><strong>First</strong></td><td>1940–1956</td><td>Punched cards &amp; paper tape</td><td>Vacuum tubes; thermionic valves</td><td>Printouts</td></tr>
+        <tr><td><strong>Second</strong></td><td>1956–1963</td><td>Punched cards</td><td>Transistors</td><td>Printouts</td></tr>
+        <tr><td><strong>Third</strong></td><td>1964–1971</td><td>Keyboards</td><td>Integrated circuits; operating systems</td><td>Monitors</td></tr>
+        <tr><td><strong>Fourth</strong></td><td>1971–2010</td><td>Keyboards, mouse, handheld devices</td><td>Microprocessor; IBM PC; Apple Macintosh</td><td>GUI; CD; DVD</td></tr>
+        <tr><td><strong>Fifth</strong></td><td>2010–present</td><td>Consumer experience; day-event dataset</td><td>Artificial intelligence</td><td>Score; probability; percentile</td></tr>
+      </table>
+      <h3>Computing vs. computers</h3>
+      <ul>
+        <li><strong>Computing</strong> — a processing operation (like the IPO model).</li>
+        <li><strong>Computers</strong> — the people, machines, and devices that provide the processing. “Computers” was once a job title for people who computed accounts into ledgers.</li>
+        <li><strong>Birth of the modern computer</strong> — historians generally place it around 1940, though earlier developments contributed.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- GROUP 2 -->
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🌐 Group 2 · The Internet &amp; the World Wide Web</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <h3>Why the internet was needed</h3>
+      <ul>
+        <li><strong>Sputnik (1957)</strong> — the USSR’s satellite (~23 in., ~190 lb) energized the tech boom and led the U.S. to form agencies such as <strong>NASA</strong> and <strong>DARPA</strong>.</li>
+        <li><strong>Cold War concern</strong> — a survivable communications system was needed in case a missile took down the U.S. telephone network.</li>
+        <li><strong>Licklider (1962)</strong> — proposed a “galactic network” of interconnected computers.</li>
+        <li><strong>Packet switching</strong> — Paul Baran and Donald Davies independently devised it; Davies’s term stuck. It let a network survive the destruction of any single site.</li>
+      </ul>
+      <h3>ARPANET and the growth of the network (Table 1-2)</h3>
+      <p>The ARPANET project (designed 1966, tested Oct 1969) sent the first message “LOGIN” from UCLA toward Stanford — it failed after “L” and “O,” but proved the <strong>Interface Message Processor (IMP)</strong>, the early precursor to a router. As nodes were added (international in 1971), ARPAnet became an <strong>internetwork</strong> — shortened to <strong>internet</strong>.</p>
+      <table class="sg-table">
+        <tr><th>Date</th><th>Total nodes</th></tr>
+        <tr><td>October 1969</td><td>2</td></tr>
+        <tr><td>December 1969</td><td>4</td></tr>
+        <tr><td>June 1970</td><td>9</td></tr>
+        <tr><td>December 1970</td><td>13</td></tr>
+        <tr><td>September 1971</td><td>18</td></tr>
+        <tr><td>August 1972</td><td>29</td></tr>
+        <tr><td>September 1973</td><td>40</td></tr>
+        <tr><td>June 1974</td><td>46</td></tr>
+        <tr><td>July 1975</td><td>57</td></tr>
+        <tr><td>June 1981</td><td>213</td></tr>
+      </table>
+      <h3>Legacy technologies developed for/because of ARPANET</h3>
+      <ul>
+        <li><strong>Email (1971)</strong> — Ray Tomlinson; chose the @ sign to separate local from global addresses.</li>
+        <li><strong>Telnet (1972)</strong> — bidirectional link to work at a remote device’s command prompt.</li>
+        <li><strong>FTP (1973)</strong> — Abhay Bhushan; transfer of files and bulk data between nodes.</li>
+        <li><strong>IS-IS (1980s)</strong> — Radia Perlman; she also developed Spanning Tree Protocol (STP).</li>
+        <li><strong>DNS (1983)</strong> — Paul Mockapetris and John Klensin.</li>
+        <li><strong>OSI Reference Model (1984)</strong> — issued by ISO and ITU; the suite failed but the model endured.</li>
+        <li><strong>NSFnet (1986)</strong> — NSF’s competing network; replaced ARPAnet in the late 1980s and shut down in 1995, after which control was privatized for commercial use.</li>
+      </ul>
+      <h3>The TCP/IP model — four layers</h3>
+      <ul>
+        <li><strong>Application</strong> — where a host/server interacts with the network (email, FTP, Telnet); identifies senders/receivers and requests content.</li>
+        <li><strong>Transport</strong> — packages/unpackages messages; flow control, error control, segmenting/desegmenting.</li>
+        <li><strong>Internet (Network) Layer</strong> — addressing, forwarding, and routing to physically move messages between hosts.</li>
+        <li><strong>Link (Network Interface/Access)</strong> — packages a message for the physical medium; local physical-level addressing.</li>
+      </ul>
+      <table class="sg-table">
+        <tr><th>Layer</th><th>Example protocols (Figure 1-5)</th></tr>
+        <tr><td><strong>Application</strong></td><td>HTTP, SMTP, RTP, DNS</td></tr>
+        <tr><td><strong>Transport</strong></td><td>TCP, UDP</td></tr>
+        <tr><td><strong>Internet</strong></td><td>IP, ICMP</td></tr>
+        <tr><td><strong>Link</strong></td><td>DSL, Ethernet, 802.11</td></tr>
+      </table>
+      <h3>Primary TCP/IP protocols</h3>
+      <ul>
+        <li><strong>TCP</strong> — Transport Layer; connection-oriented; guarantees delivery of message segments.</li>
+        <li><strong>IP</strong> — defines network addressing; in use as IPv4 and IPv6.</li>
+        <li><strong>HTTP</strong> — transfers webpage content host-to-host (does not define the content); HTTPS is the secure version; client/server.</li>
+        <li><strong>UDP</strong> — does not guarantee delivery; used for loss-tolerant streams (“fire hose” vs. TCP’s verified transmission).</li>
+        <li><strong>Email</strong> — POP3 receives incoming mail; SMTP sends and distributes mail.</li>
+        <li><strong>FTP</strong> — transfers files, especially large files (increasingly embedded in browsers).</li>
+      </ul>
+      <h3>Hypertext and its pioneers</h3>
+      <ul>
+        <li><strong>Vannevar Bush</strong> — conceived “Memex” in “As We May Think” (1945).</li>
+        <li><strong>Ted Nelson</strong> — coined “hypertext” (1965), part of “Xanadu.”</li>
+        <li><strong>Doug Engelbart</strong> — demonstrated NLS in the 1968 “Mother of All Demonstrations”; credited as “inventor” of hypertext; also invented the mouse, GUI, and bitmapped displays.</li>
+        <li><strong>Brown University</strong> (Andries van Dam) — built HES (1967, first working hypertext system) and FRES (1968).</li>
+      </ul>
+      <h3>The World Wide Web</h3>
+      <ul>
+        <li><strong>Tim Berners-Lee</strong> — CERN engineer; proposed “Mesh,” then (with Robert Cailliau) the “WorldWideWeb” (W3) project.</li>
+        <li><strong>Three central elements</strong> — HTML (markup based on SGML), UDI (basis for URL/URI), and HTTP.</li>
+        <li><strong>HTTP’s four design principles</strong> — client/server, request, response, termination.</li>
+        <li><strong>Free web</strong> — CERN made the web free; Minnesota began charging for Gopher.</li>
+        <li><strong>Browsers</strong> — Line Mode Browser / libWWW (Nicola Pellow, first generally available); Mosaic (Andreessen &amp; Bina, NCSA, 1993, first to show text + graphics together).</li>
+      </ul>
+      <h3>Battle of the browsers (timeline)</h3>
+      <ul>
+        <li><strong>1994</strong> Netscape Navigator · <strong>1995</strong> Internet Explorer; JavaScript (Netscape + Sun)</li>
+        <li><strong>1996</strong> IE 3.0 with CSS · <strong>1999</strong> Navigator source released as Mozilla</li>
+        <li><strong>2002</strong> Firefox · <strong>2004</strong> Safari · <strong>2008</strong> Chrome</li>
+        <li><strong>2015</strong> Edge · <strong>2017</strong> Firefox 54 (WebVR) · <strong>2021</strong> Chrome Manifest extensions</li>
+      </ul>
+      <h3>Phases of the web (Table 1-3)</h3>
+      <table class="sg-table">
+        <tr><th>Phase</th><th>Span</th><th>Characterization</th><th>Focus</th></tr>
+        <tr><td><strong>Web 1.0</strong></td><td>1994–2000</td><td>The Information Web; Static / Read-Only Web</td><td>Static pages; frames/framesets; HTML forms sent via email</td></tr>
+        <tr><td><strong>Web 2.0</strong></td><td>2000–2010</td><td>The Social Web; Read-Write Web</td><td>Sharing content; blogs and wikis; web applications</td></tr>
+        <tr><td><strong>Web 3.0</strong></td><td>2010–2020</td><td>The Semantic Web; The Personalized Web</td><td>On-demand dynamic content; active user involvement; mobile access</td></tr>
+        <tr><td><strong>Web 4.0</strong></td><td>2020–</td><td>Intelligent Web</td><td>Focus on individuals; internet as world computer</td></tr>
+      </table>
+      <div class="flag-note">⚠️ <strong>Internal conflict in the source.</strong> Table 1-3 gives Web 2.0 as <strong>2000–2010</strong>, but the body text states Web 2.0 “began (and Web 1.0 ended) somewhere between <strong>2004 and 2006</strong>.” The chapter also notes the phases are not hard versions with fixed dates. Both figures are shown here as they appear in the source; the table values are used in the quiz.</div>
+      <h3>Search, SSI, and CGI</h3>
+      <ul>
+        <li><strong>Search engine</strong> — software that locates and categorizes searchable content and returns a search engine results page (SERP); it uses <strong>web crawlers</strong> (spiders) to scan content and follow links.</li>
+        <li><strong>SEO</strong> — improves the chance of a first-page SERP listing via link building, title tags, content optimization, meta descriptions, and keyword research. (Fewer than ~6% of searchers reach page two.)</li>
+        <li><strong>Early search tools</strong> — Archie (first; FTP files), Yahoo!, AltaVista (natural language), Lycos (categories/keywords), Ask Jeeves. Google handles ~99% of searches.</li>
+        <li><strong>SSI</strong> — Server-Side Includes; an interpreted scripting language to merge files into a page (.shtml, .stm, .shtm).</li>
+        <li><strong>CGI</strong> — Common Gateway Interface; rules/processes that let a page interact with servers (e.g., processing form data).</li>
+      </ul>
+      <h3>Web 3.0 and blockchain</h3>
+      <ul>
+        <li><strong>Blockchain</strong> — a peer-to-peer, decentralized, distributed ledger with no third-party authority. Benefits: availability, immutability, security (cryptography), and transparency; no single point of failure.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- GROUP 3 -->
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🖥️ Group 3 · Clients, Servers, Virtualization &amp; Cloud</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <h3>Client/server computing</h3>
+      <ul>
+        <li><strong>The relationship</strong> — like a diner: a client (network host) requests a resource; a server (specialized software on a centralized system) retrieves it and returns it.</li>
+        <li><strong>A server is software</strong> — it performs, manages, or controls special functions; one physical computer can run several servers, and a server can also be a client.</li>
+      </ul>
+      <table class="sg-table">
+        <tr><th>Server type</th><th>Role</th></tr>
+        <tr><td><strong>Application</strong></td><td>Provides processing services to clients (often thin clients); a “middleware” link to resources such as a database.</td></tr>
+        <tr><td><strong>Mail</strong></td><td>Collects, forwards, and manages email (e.g., Microsoft Exchange, Enstar Mailtraq).</td></tr>
+        <tr><td><strong>Proxy</strong></td><td>Sits between clients and other servers to filter requests, cache content, and optimize communications.</td></tr>
+        <tr><td><strong>Virtual</strong></td><td>Software-based emulation of a physical computer; today there are more virtual servers than physical ones.</td></tr>
+        <tr><td><strong>Web</strong></td><td>Essentially file servers that provide content in response to browser (client) requests.</td></tr>
+      </table>
+      <h3>Types of clients</h3>
+      <table class="sg-table">
+        <tr><th>Client</th><th>Description</th></tr>
+        <tr><td><strong>Thin</strong></td><td>Very few on-board resources; runs applications on servers; minimal RAM/storage.</td></tr>
+        <tr><td><strong>Thick (fat/rich)</strong></td><td>Has all hardware and resources on-board to perform nearly all functions itself.</td></tr>
+        <tr><td><strong>Hybrid</strong></td><td>More like a thick client, but relies on servers for centralized services (database/file).</td></tr>
+      </table>
+      <h3>Virtualization</h3>
+      <ul>
+        <li><strong>Virtualization</strong> — creating virtual devices (machine, server, router) by simulating their functions in software.</li>
+        <li><strong>Roots</strong> — 1960s mainframe time-sharing; the hypervisor concept (IBM’s Don Skiba, 1969); VMware Virtual Platform (1999).</li>
+        <li><strong>Virtual memory</strong> — an early application: hard-disk space extends main memory.</li>
+      </ul>
+      <table class="sg-table">
+        <tr><th>Hypervisor type</th><th>Installation</th></tr>
+        <tr><td><strong>Type 1 (“bare metal”)</strong></td><td>Installed directly on the hardware, taking the place of an operating system.</td></tr>
+        <tr><td><strong>Type 2</strong></td><td>Installed on top of a native (host) operating system.</td></tr>
+      </table>
+      <p>The <strong>hypervisor</strong> (virtual machine manager, VMM) is essentially the OS of the virtual environment: it allocates physical resources (RAM, disk, etc.) to each VM per its configuration. Network virtualization splits bandwidth into channels; storage virtualization makes many servers appear as one store; server virtualization makes many servers appear as one.</p>
+      <h3>Cloud computing</h3>
+      <ul>
+        <li><strong>Definition</strong> — access to resources/processing beyond the local firewall, via dedicated (typically virtualized) internet-based servers; shifts local processing to remote providers.</li>
+        <li><strong>Why “cloud”</strong> — telephone diagrams drew a cloud for switching between central offices (POTS/PSTN); reused for the internet’s randomized switching.</li>
+        <li><strong>Load balancing</strong> — CSPs often front applications with a load balancer to route a request to the fastest-responding server.</li>
+      </ul>
+      <h3>Cloud service delivery models (NIST) — the “what”</h3>
+      <table class="sg-table">
+        <tr><th>Model</th><th>Description</th></tr>
+        <tr><td><strong>SaaS</strong></td><td>Applications accessed on a CSP’s servers via the internet, typically through a browser; reduced licensing and no special hardware.</td></tr>
+        <tr><td><strong>PaaS</strong></td><td>Customized hardware/software environments for programming, testing, prototyping, and modeling.</td></tr>
+        <tr><td><strong>IaaS</strong></td><td>Servers, storage, networking, and virtualization delivered over the internet; typically pay-per-use.</td></tr>
+      </table>
+      <p><strong>Other “aaS” offerings:</strong> AIaaS, BaaS (backup), CaaS (a “full meal” of SaaS + PaaS + IaaS), DaaS (desktop), NaaS (network), UaaS (unified communications), VaaS (video-conferencing). The overall goal is Everything-as-a-Service (EaaS / XaaS).</p>
+      <h3>Cloud service deployment models (NIST) — the “who”</h3>
+      <table class="sg-table">
+        <tr><th>Model</th><th>Description</th></tr>
+        <tr><td><strong>Private</strong></td><td>Restricted access (group/company); hosted in-house or via a CSP.</td></tr>
+        <tr><td><strong>Public</strong></td><td>Essentially a private cloud offered over a public network; membership is the constant.</td></tr>
+        <tr><td><strong>Hybrid</strong></td><td>Combines public deployment with private-cloud restrictions.</td></tr>
+        <tr><td><strong>Community</strong> (variation)</td><td>Formed around shared areas of concern, action, or support.</td></tr>
+      </table>
+      <div class="flag-note">📌 Source note: the chapter expands NIST as “National Institute of Systems Technology.” Reproduced here as written in the source.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FLASHCARDS ═══════════════ -->
+<div class="panel" id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards">
+  <h1>Flashcards</h1>
+  <div class="filter-row" role="group" aria-label="Filter flashcards by topic">
+    <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('k1',this)">Data &amp; Computing</button>
+    <button class="filter-btn" onclick="filterCards('k2',this)">Internet &amp; Web</button>
+    <button class="filter-btn" onclick="filterCards('k3',this)">Servers &amp; Cloud</button>
+  </div>
+  <div class="fc-counter" id="fc-counter" aria-live="polite"></div>
+  <div class="fc-wrap">
+    <div class="fc-card" id="fc-card" onclick="flipCard()" aria-label="Flashcard — click to flip">
+      <div class="fc-front"><div class="fc-label">Question</div><div class="fc-q" id="fc-q" aria-live="polite"></div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a" id="fc-a" aria-live="polite"></div></div>
+    </div>
+  </div>
+  <div class="fc-controls">
+    <button class="fc-btn" onclick="flipCard()" aria-label="Flip card">↩ Flip</button>
+    <button class="fc-btn mastered-btn" id="fc-master-btn" onclick="toggleMastered(currentIdx)" aria-label="Toggle mastered">☐ Mastered</button>
+    <button class="fc-btn" onclick="shuffleCards()" aria-label="Shuffle deck">🔀 Shuffle</button>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
+    <button class="fc-btn" onclick="nextCard()" aria-label="Next card">Next →</button>
+  </div>
+  <div class="fc-empty" id="fc-empty" style="display:none">No cards in this filter.</div>
+</div>
+
+<!-- ═══════════════ QUIZ ═══════════════ -->
+<div class="panel" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+  <h1>Practice Quiz</h1>
+  <div class="filter-row" role="group" aria-label="Filter quiz by topic">
+    <button class="filter-btn active" onclick="setQuizFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setQuizFilter('k1',this)">Data &amp; Computing</button>
+    <button class="filter-btn" onclick="setQuizFilter('k2',this)">Internet &amp; Web</button>
+    <button class="filter-btn" onclick="setQuizFilter('k3',this)">Servers &amp; Cloud</button>
+  </div>
+  <div id="quiz-container"></div>
+  <div style="margin-top:16px;">
+    <button id="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <button id="reset-btn" onclick="resetQuiz()">Reset</button>
+  </div>
+  <div id="quiz-score"></div>
+</div>
+
+<!-- ═══════════════ DISCUSSION ═══════════════ -->
+<div class="panel" id="panel-discussion" role="tabpanel" aria-labelledby="tab-discussion">
+  <h1>Discussion Board Prep</h1>
+  <div class="filter-row" role="group" aria-label="Filter discussion by topic">
+    <button class="filter-btn active" onclick="filterDisc('all',this)">All</button>
+    <button class="filter-btn" onclick="filterDisc('k1',this)">Data &amp; Computing</button>
+    <button class="filter-btn" onclick="filterDisc('k2',this)">Internet &amp; Web</button>
+    <button class="filter-btn" onclick="filterDisc('k3',this)">Servers &amp; Cloud</button>
+  </div>
+  <div id="disc-container"></div>
+</div>
+
+<!-- ═══════════════ NOTES ═══════════════ -->
+<div class="panel" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes">
+  <h1>Notes Template</h1>
+  <span class="unit-badge">Module 1 · Chapter 1 — Print this tab for study notes</span>
+
+  <div class="video-block">
+    <h4>📌 Module 1 source material</h4>
+    <p style="font-size:.84rem;color:#b0b0c8;line-height:1.7;">Everything on this page comes from <strong>Chapter 1 — The Internet and the World Wide Web</strong> of <em>Internet and Web Application Security, 3rd ed.</em> (Harwood &amp; Price). Review the chapter before Assessment #1 (open book, one attempt).</p>
+    <div class="source-list">
+      <a href="https://www.austincc.edu/" target="_blank" rel="noopener">ACC</a>
+      <a href="https://acconline.austincc.edu/" target="_blank" rel="noopener">Blackboard</a>
+    </div>
+  </div>
+
+  <div class="notes-grid">
+    <div class="note-card"><h4>Data vs. information &amp; the IPO model</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Five generations of computers</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Computing vs. computers</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Sputnik → DARPA / NASA</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Packet switching &amp; survivability</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>ARPANET, IMP &amp; the first message</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Internetwork → internet</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>TCP/IP &amp; the four layers</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Key protocols (TCP, IP, HTTP, UDP, FTP)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Hypertext pioneers (Bush, Nelson, Engelbart)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Berners-Lee, CERN &amp; the W3 project</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>HTML / UDI / HTTP</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Browsers &amp; the browser battle</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Web 1.0 → 4.0 phases</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Search engines, SSI &amp; CGI</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Client/server &amp; server types</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Thin / thick / hybrid clients</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Virtualization &amp; the hypervisor (Type 1/2)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Cloud delivery: SaaS / PaaS / IaaS</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Cloud deployment: private / public / hybrid</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+  </div>
+</div>
+
+<footer>CSIS 3385 · Module 1 · study.imichaelv.com · Built from Chapter 1 source text · <a href="../../index.html" class="back-link footer-back-link">← Back to all courses</a></footer>
+
+
+<script>
+// ─── MASTERY ───
+function getMasteryKey(){return 'mastery_csis3385_module01_';}
+function resetAllMastery(){
+  Object.keys(localStorage).filter(k=>k.startsWith(getMasteryKey())).forEach(k=>localStorage.removeItem(k));
+  Object.keys(localStorage).filter(k=>k.startsWith('obj_csis3385_module01_')).forEach(k=>localStorage.removeItem(k));
+  document.querySelectorAll('.obj-master-btn').forEach(b=>{b.textContent='☐ Mark Mastered';b.classList.remove('mastered');});
+  document.querySelectorAll('.fc-card').forEach((_,i)=>localStorage.removeItem(getMasteryKey()+i));
+  renderCard();updateMasteryBar();
+}
+function updateMasteryBar(){
+  const total=document.querySelectorAll('.obj-master-btn').length;
+  const done=Object.keys(localStorage).filter(k=>k.startsWith('obj_csis3385_module01_')).length;
+  const pct=total?Math.round(done/total*100):0;
+  const f=document.getElementById('mastery-fill');
+  if(f)f.style.width=pct+'%';
+}
+function toggleObjMastery(btn,key){
+  const is=localStorage.getItem(key);
+  if(is){localStorage.removeItem(key);btn.textContent='☐ Mark Mastered';btn.classList.remove('mastered');}
+  else{localStorage.setItem(key,'1');btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  updateMasteryBar();
+}
+function toggleObj(card){
+  const body=card.querySelector('.obj-body');
+  const arrow=card.querySelector('.obj-expand');
+  const open=body.classList.toggle('open');
+  arrow.style.transform=open?'rotate(180deg)':'';
+  card.setAttribute('aria-expanded',open);
+}
+function toggleChapter(header){
+  const body=header.nextElementSibling;
+  const arrow=header.querySelector('span:last-child');
+  const open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  arrow.style.transform=open?'':'rotate(180deg)';
+  header.setAttribute('aria-expanded',!open);
+}
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+}
+// scope filter highlighting to the row that was clicked, so the three panels do not clear each other
+function activateFilter(btn){
+  const row=btn.closest('.filter-row');
+  if(row)row.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ─── FLASHCARD DATA ───  {ch:'p1'|'p2', q, a}
+const allCards=[
+  {"ch": "k1", "q": "Data", "a": "The fuel and reason for computing, networking, automation, and all digital processing. “Data” is the plural of “datum.”"},
+  {"ch": "k1", "q": "Datum", "a": "A single value, attribute, characteristic, or identity of something — per Merriam-Webster, “something given…as a basis for reasoning or inference.” Two datums make data."},
+  {"ch": "k1", "q": "Information", "a": "The result or product of data being processed. It carries context relevant to a question; information without context is just data."},
+  {"ch": "k1", "q": "IPO model", "a": "The most basic model for processing data into information: Input → Process → Output. Complex programs reduce to chains of IPO steps."},
+  {"ch": "k1", "q": "Difference between computing and computers", "a": "Computing is a processing operation (like IPO). Computers are the people, machines, and devices that perform the processing."},
+  {"ch": "k1", "q": "First generation of computers (1940–1956)", "a": "Key technology: vacuum tubes (thermionic valves). Input via punched cards and paper tape; output as printouts."},
+  {"ch": "k1", "q": "Second generation of computers (1956–1963)", "a": "Key technology: transistors. Punched-card input; printout output."},
+  {"ch": "k1", "q": "Third generation of computers (1964–1971)", "a": "Key technology: integrated circuits and operating systems. Keyboard input; monitor output."},
+  {"ch": "k1", "q": "Fourth generation of computers (1971–2010)", "a": "Key technology: the microprocessor, the IBM PC, and the Apple Macintosh. GUI, CD, and DVD as output; keyboard/mouse/handheld input."},
+  {"ch": "k1", "q": "Fifth generation of computers (2010–present)", "a": "Key technology: artificial intelligence. Output described as score, probability, and percentile."},
+  {"ch": "k2", "q": "What launch triggered the technology boom that led to the internet?", "a": "The USSR’s launch of the Sputnik satellite in 1957 (~23 in. diameter, ~190 lb)."},
+  {"ch": "k2", "q": "DARPA (and NASA)", "a": "U.S. agencies formed after Sputnik to investigate advanced technologies (rockets, weapons, computers). DARPA = Defense Advanced Research Projects Agency; it initiated the project that led to the internet."},
+  {"ch": "k2", "q": "Licklider’s “galactic network” (1962)", "a": "MIT scientist J.C.R. Licklider’s proposal for interconnected computers that could communicate should the Soviets destroy the phone system."},
+  {"ch": "k2", "q": "Packet switching", "a": "A method (Paul Baran and Donald Davies, independently) to transmit “packets” across a switched network. Davies’s term stuck. It let a network survive the loss of any single site."},
+  {"ch": "k2", "q": "ARPAnet", "a": "The network project designed by Licklider’s team (1966), tested Oct 1969. It grew into an internetwork and laid the foundation for today’s internet."},
+  {"ch": "k2", "q": "First ARPANET message / IMP", "a": "“LOGIN” sent UCLA→Stanford; it failed after “L” and “O” but proved the Interface Message Processor (IMP), the early precursor to a router."},
+  {"ch": "k2", "q": "Internetwork", "a": "A network of networks interconnected for communication. The term was shortened to “internet.”"},
+  {"ch": "k2", "q": "Who developed TCP (and originally IP)?", "a": "Vint Cerf and Bob Kahn, early 1970s. TCP originally included the functions later split off as IP. TCP/IP replaced NCP in the early 1980s."},
+  {"ch": "k2", "q": "Transmission Control Protocol (TCP)", "a": "A Transport-Layer, connection-oriented protocol that manages the session and segmentation and guarantees delivery of message segments."},
+  {"ch": "k2", "q": "Internet Protocol (IP)", "a": "Defines the structure, assignment, and interpretation of network addressing (IPv4 and IPv6). Key to delivering messages to the intended destination."},
+  {"ch": "k2", "q": "Transmission Control Protocol/Internet Protocol (TCP/IP)", "a": "The standard suite of protocols for connecting and interconnecting computers and networks into the internet — the working parts that make the internet work."},
+  {"ch": "k2", "q": "The four layers of the TCP/IP model (top to bottom)", "a": "Application, Transport, Internet (Network), and Link (Network Interface/Access). Physical is NOT one of them."},
+  {"ch": "k2", "q": "Hypertext Transfer Protocol (HTTP)", "a": "Transfers webpage content from one host to another (it does not define the content). Client/server; HTTPS is the secure version."},
+  {"ch": "k2", "q": "File Transfer Protocol (FTP)", "a": "Facilitates the transfer of files, especially large files, between computers. Originally developed for NCP (Abhay Bhushan, 1973)."},
+  {"ch": "k2", "q": "Telnet", "a": "Teletype network (1972): a bidirectional communications link that lets a local device work at the command prompt of a remote device."},
+  {"ch": "k2", "q": "NSFnet", "a": "The National Science Foundation’s competing network (1986). It outperformed and replaced the older, slower ARPAnet; shut down in 1995, after which control was privatized."},
+  {"ch": "k2", "q": "Protocol", "a": "A set of requirements, guidelines, or rules that prescribe how an event, action, or process is performed — standardizing a process so every program does it the same way."},
+  {"ch": "k2", "q": "Hypertext", "a": "The ability to move from one document to another on a network by clicking an embedded link."},
+  {"ch": "k2", "q": "Who conceived “Memex”, and who coined “hypertext”?", "a": "Vannevar Bush conceived “Memex” (“As We May Think,” 1945). Ted Nelson coined “hypertext” (1965), part of “Xanadu.”"},
+  {"ch": "k2", "q": "Doug Engelbart", "a": "Demonstrated NLS in the 1968 “Mother of All Demonstrations”; credited as the “inventor” of hypertext. Also invented the mouse, GUI, and bitmapped displays."},
+  {"ch": "k2", "q": "Who is recognized as the inventor of the World Wide Web?", "a": "Tim Berners-Lee, an engineer at CERN. With Robert Cailliau he proposed the “WorldWideWeb” (W3) project."},
+  {"ch": "k2", "q": "World Wide Web", "a": "A “web” of hypermedia documents viewed with a browser on a client/server architecture. “WorldWideWeb” first named the browser; the network took the name."},
+  {"ch": "k2", "q": "Hypertext Markup Language (HTML)", "a": "A markup language for formatting documents for the web, based on the structure and syntax of SGML. A single standard removed conflicting formats."},
+  {"ch": "k2", "q": "HTTP’s four original design principles", "a": "Client/server, Request (ASCII string ending in CRLF), Response (ASCII formatted in HTML), and Termination (session closes after the response)."},
+  {"ch": "k2", "q": "First generally available web browser", "a": "The Line Mode Browser (libWWW), reprogrammed by CERN intern Nicola Pellow from the Nexus design."},
+  {"ch": "k2", "q": "Mosaic", "a": "The first generally available browser to display text and graphics together (Marc Andreessen &amp; Eric Bina, NCSA at UIUC, 1993)."},
+  {"ch": "k2", "q": "Archie", "a": "The internet’s first search engine; used by Gopher to maintain and index file systems on remote machines (updated ~monthly). Named after the comic character."},
+  {"ch": "k2", "q": "Gopher", "a": "A system (University of Minnesota, 1991) that organized text files hierarchically so remote users could search for content on a server."},
+  {"ch": "k2", "q": "Veronica", "a": "Very Easy Rodent-Oriented Netwide Index of Computerized Archives — a search engine that updated its indexes frequently and referenced other resources."},
+  {"ch": "k2", "q": "Groupware", "a": "Any collaborative software package or workgroup support system that lets group members collaborate regardless of location. Early email was essentially a form of groupware."},
+  {"ch": "k2", "q": "Social networking", "a": "Websites (a big part of Web 2.0) that let users gather individually or in groups to share news, events, and opinions based on common interests."},
+  {"ch": "k2", "q": "Web 1.0", "a": "The “Static” or “Read-Only” Web (1994–2000): noninteractive pages, infrequent updates, frames/framesets, limited open source."},
+  {"ch": "k2", "q": "Web 2.0", "a": "The “Social” or “Read-Write” Web: user-generated content, sharing, blogs, wikis, and web applications. Its common trait is interactivity."},
+  {"ch": "k2", "q": "Web 3.0", "a": "The “Semantic Web”: the web as one very large online database, with technologies such as blockchain and decentralization."},
+  {"ch": "k2", "q": "Web 4.0", "a": "The “Intelligent” (pervasive/ubiquitous) Web: always-on, symbiotic human–computer interaction, AI that anticipates users, the internet as a world computer."},
+  {"ch": "k3", "q": "Client", "a": "A network host that requests a resource from a server. In common use “client” refers to both the hardware and its requesting software as a unit."},
+  {"ch": "k3", "q": "Server", "a": "Software that performs, manages, or controls one or more special functions on a network. One physical computer can run multiple servers; a server can also be a client."},
+  {"ch": "k3", "q": "Client/server", "a": "A network relationship (like a diner) where a client requests a resource and a server retrieves it and sends it back."},
+  {"ch": "k3", "q": "Thin vs. thick vs. hybrid client", "a": "Thin: few on-board resources, runs apps on servers. Thick (fat/rich): all resources on-board. Hybrid: mostly thick but relies on servers for centralized services."},
+  {"ch": "k3", "q": "Virtualization", "a": "Creating virtual devices (machine, server, router) by simulating their functions through software."},
+  {"ch": "k3", "q": "Hypervisor", "a": "The virtual machine manager (VMM) — essentially the OS of the virtual environment. Type 1 runs “bare metal” on hardware; Type 2 runs on top of a host OS."},
+  {"ch": "k3", "q": "Cloud computing", "a": "Access to resources or processing located beyond the local firewall, via dedicated (typically virtualized) internet-based servers; shifts local processing to remote providers."},
+  {"ch": "k3", "q": "Software as a Service (SaaS)", "a": "Applications accessed on a CSP’s servers over the internet, typically through a browser. Reduced licensing; no special hardware."},
+  {"ch": "k3", "q": "Platform as a Service (PaaS)", "a": "Customized hardware/software environments configured for a subscriber — commonly for programming, testing, prototyping, or modeling."},
+  {"ch": "k3", "q": "Infrastructure as a Service (IaaS)", "a": "Delivery of infrastructure (servers, storage, networking, virtualization) over the internet; the CSP maintains it and the subscriber typically pays per usage."},
+  {"ch": "k3", "q": "NIST’s three cloud service delivery models", "a": "SaaS, PaaS, and IaaS."},
+  {"ch": "k3", "q": "NIST’s cloud deployment models", "a": "Private (restricted access), Public (a private cloud over a public network; membership is the constant), and Hybrid. Community cloud is a common variation."}
+];
+// ─── FLASHCARD ENGINE ───
+let deck=[],currentIdx=0,flipped=false;
+function filterCards(ch,btn){
+  activateFilter(btn);
+  deck=ch==='all'?[...allCards]:allCards.filter(c=>c.ch===ch);
+  currentIdx=0;flipped=false;renderCard();
+}
+function renderCard(){
+  const empty=document.getElementById('fc-empty');
+  if(!deck.length){empty.style.display='block';document.getElementById('fc-counter').textContent='';return;}
+  empty.style.display='none';
+  const c=deck[currentIdx];
+  document.getElementById('fc-q').textContent=c.q;
+  document.getElementById('fc-a').textContent=c.a;
+  document.getElementById('fc-counter').textContent=(currentIdx+1)+' / '+deck.length;
+  const card=document.getElementById('fc-card');
+  card.classList.remove('flipped');flipped=false;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+  else{mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+}
+function flipCard(){document.getElementById('fc-card').classList.toggle('flipped');flipped=!flipped;}
+function nextCard(){if(!deck.length)return;currentIdx=(currentIdx+1)%deck.length;renderCard();}
+function prevCard(){if(!deck.length)return;currentIdx=(currentIdx-1+deck.length)%deck.length;renderCard();}
+function shuffleCards(){for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}currentIdx=0;renderCard();}
+function toggleMastered(idx){
+  const c=deck[idx];if(!c)return;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){localStorage.removeItem(key);mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+  else{localStorage.setItem(key,'1');mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+}
+
+// ─── QUIZ DATA ───
+const allQuizData=[
+  {"ch": "k1", "type": "mc", "q": "How does the chapter distinguish data from information?", "opts": ["They are identical terms", "Information is the result of data being processed", "Data always has context; information never does", "Information is stored, data is not"], "ans": 1, "exp": "Information is the result or product of data being processed; it carries context. Data without context is just data."},
+  {"ch": "k1", "type": "fitb", "q": "A single value, attribute, or characteristic of something is a ___; its plural is “data.”", "ans": ["datum"], "display": "Datum", "exp": "A datum is a single value; two datums are data."},
+  {"ch": "k1", "type": "fitb", "q": "The most basic model for processing data into information is the ___ model (Input, Process, Output).", "ans": ["ipo"], "display": "IPO", "exp": "IPO = Input → Process → Output."},
+  {"ch": "k1", "type": "mc", "q": "Which key technology defines the First generation of computers (1940–1956)?", "opts": ["Transistors", "Integrated circuits", "Vacuum tubes", "Microprocessors"], "ans": 2, "exp": "The First generation used vacuum tubes (thermionic valves)."},
+  {"ch": "k1", "type": "mc", "q": "Which generation is defined by the microprocessor, the IBM PC, and the Apple Macintosh?", "opts": ["Second", "Third", "Fourth", "Fifth"], "ans": 2, "exp": "The Fourth generation (1971–2010) is defined by the microprocessor, IBM PC, and Apple Macintosh."},
+  {"ch": "k1", "type": "mc", "q": "The Fifth generation of computers (2010–present) is defined by which key technology?", "opts": ["Integrated circuits", "Artificial intelligence", "Transistors", "Operating systems"], "ans": 1, "exp": "The Fifth generation is defined by artificial intelligence."},
+  {"ch": "k1", "type": "mc", "q": "According to the chapter, what is the difference between “computing” and “computers”?", "opts": ["They mean the same thing", "Computing is a processing operation; computers are the people/machines/devices that process", "Computers are software; computing is hardware", "Computing only refers to modern PCs"], "ans": 1, "exp": "Computing is a processing operation (IPO); computers are the people, machines, and devices that provide the processing."},
+  {"ch": "k2", "type": "mc", "q": "(Assessment #1) What U.S. military agency initiated the project that led to what we know as the internet?", "opts": ["U.S. Navy", "DARPA", "FCC", "SEC"], "ans": 1, "exp": "DARPA (Defense Advanced Research Projects Agency)."},
+  {"ch": "k2", "type": "mc", "q": "(Assessment #2) Which one of the following is NOT a layer in the TCP/IP Reference Model?", "opts": ["Physical", "Link", "Internet", "Transport"], "ans": 0, "exp": "The four layers are Application, Transport, Internet, and Link. Physical is not one of them."},
+  {"ch": "k2", "type": "mc", "q": "(Assessment #3) What protocol transfers webpage content from one network host to another over the internet?", "opts": ["TCP", "IP", "HTTP", "FTP"], "ans": 2, "exp": "HTTP transfers webpage content host-to-host."},
+  {"ch": "k2", "type": "mc", "q": "(Assessment #4) What is the name of the embedded link used to move from one document to another on the web?", "opts": ["Memex", "NLS", "HTML", "Hypertext"], "ans": 3, "exp": "Hypertext is the embedded link that moves you between documents."},
+  {"ch": "k2", "type": "mc", "q": "(Assessment #5) Who is recognized as the inventor of the World Wide Web?", "opts": ["Tim Berners-Lee", "Nolan Bushnell", "Doug Engelbart", "Ted Nelson"], "ans": 0, "exp": "Tim Berners-Lee, at CERN."},
+  {"ch": "k2", "type": "mc", "q": "(Assessment #6) What markup language is the standard for coding webpages?", "opts": ["SGML", "XML", "HTML", "HTTP"], "ans": 2, "exp": "HTML — based on SGML, but HTML is the standard for coding webpages."},
+  {"ch": "k2", "type": "mc", "q": "(Assessment #7) What was the first generally available web browser to display text and graphics together?", "opts": ["Internet Explorer", "Gopher", "Chrome", "Mosaic"], "ans": 3, "exp": "Mosaic (1993) was the first generally available browser to show text and graphics together."},
+  {"ch": "k2", "type": "fitb", "q": "Paul Baran and Donald Davies independently developed ___ switching, the key to a network that could survive the loss of a single site.", "ans": ["packet"], "display": "Packet", "exp": "Packet switching — Davies’s term stuck."},
+  {"ch": "k2", "type": "fitb", "q": "A network of networks interconnected for communication is called an ___; the term was shortened to “internet.”", "ans": ["internetwork"], "display": "Internetwork", "exp": "Internetwork → internet."},
+  {"ch": "k2", "type": "mc", "q": "The first ARPANET message attempt (“LOGIN”, UCLA→Stanford) proved which device, the precursor to a router?", "opts": ["The modem", "The Interface Message Processor (IMP)", "The acoustic coupler", "The hypervisor"], "ans": 1, "exp": "It proved the Interface Message Processor (IMP), the early precursor to a router, though it failed after “L” and “O.”"},
+  {"ch": "k2", "type": "mc", "q": "Which pair developed TCP (which originally also contained IP’s functions)?", "opts": ["Bush and Nelson", "Cerf and Kahn", "Andreessen and Bina", "Mockapetris and Klensin"], "ans": 1, "exp": "Vint Cerf and Bob Kahn developed TCP in the early 1970s."},
+  {"ch": "k2", "type": "mc", "q": "Which protocol does NOT guarantee delivery and is used for loss-tolerant streams?", "opts": ["TCP", "UDP", "FTP", "SMTP"], "ans": 1, "exp": "UDP does not guarantee delivery (compared to a “fire hose”), unlike TCP."},
+  {"ch": "k2", "type": "fitb", "q": "For email, POP3 receives incoming mail and ___ sends and distributes mail.", "ans": ["smtp"], "display": "SMTP", "exp": "POP3 receives; SMTP sends/distributes."},
+  {"ch": "k2", "type": "mc", "q": "Who conceived the “Memex” in the 1945 essay “As We May Think”?", "opts": ["Ted Nelson", "Doug Engelbart", "Vannevar Bush", "Tim Berners-Lee"], "ans": 2, "exp": "Vannevar Bush conceived the Memex."},
+  {"ch": "k2", "type": "mc", "q": "Who coined the term “hypertext” (1965) as part of “Xanadu”?", "opts": ["Ted Nelson", "Andries van Dam", "Robert Cailliau", "Nicola Pellow"], "ans": 0, "exp": "Ted Nelson coined “hypertext” in 1965."},
+  {"ch": "k2", "type": "mc", "q": "HTML was strongly based on the structure and syntax of which existing markup language?", "opts": ["XML", "SGML", "JSON", "CSS"], "ans": 1, "exp": "HTML relied on the structure and syntax of SGML."},
+  {"ch": "k2", "type": "fitb", "q": "The internet’s first search engine, used by Gopher to index remote file systems, was ___.", "ans": ["archie"], "display": "Archie", "exp": "Archie was the first search engine, named after the comic character."},
+  {"ch": "k2", "type": "mc", "q": "According to Table 1-3, what is the span given for Web 2.0?", "opts": ["1994–2000", "2000–2010", "2004–2006", "2010–2020"], "ans": 1, "exp": "Table 1-3 lists Web 2.0 as 2000–2010. (The body text separately says it began between 2004 and 2006 — an internal conflict flagged in the Study Guide.)"},
+  {"ch": "k2", "type": "mc", "q": "Which web phase is known as the “Semantic Web” and treats the web as one large online database?", "opts": ["Web 1.0", "Web 2.0", "Web 3.0", "Web 4.0"], "ans": 2, "exp": "Web 3.0 is the Semantic Web, with blockchain and decentralization."},
+  {"ch": "k2", "type": "fitb", "q": "CERN made the World Wide Web ___ to everyone, just as Minnesota began charging fees for Gopher.", "ans": ["free"], "display": "Free", "exp": "CERN announced the web would be free to everyone."},
+  {"ch": "k3", "type": "mc", "q": "(Assessment #8) What is the name given to network workstations that have very little computing power?", "opts": ["Fat clients", "Thick clients", "Thin clients", "Skinny clients"], "ans": 2, "exp": "Thin clients have very few on-board resources and run apps on servers."},
+  {"ch": "k3", "type": "mc", "q": "(Assessment #9) In a virtualized computing environment, what is the controlling system called?", "opts": ["Virtual machine", "Virtual server", "Hypervisor", "Supervisor"], "ans": 2, "exp": "The hypervisor (virtual machine manager) controls the virtual environment."},
+  {"ch": "k3", "type": "mc", "q": "(Assessment #10) Which of the following is a service deployment model for cloud computing?", "opts": ["Commercial", "Municipal", "Private", "Group"], "ans": 2, "exp": "The deployment models are private, public, and hybrid (with community as a variation)."},
+  {"ch": "k3", "type": "mc", "q": "According to the chapter, a server is best described as:", "opts": ["Always a dedicated physical computer", "Software that performs, manages, or controls special functions on a network", "A type of thin client", "A load balancer"], "ans": 1, "exp": "A server is software; one physical computer can run several servers, and a server can also be a client."},
+  {"ch": "k3", "type": "fitb", "q": "A ___ hypervisor is installed directly on the hardware (“bare metal”), taking the place of an operating system.", "ans": ["type 1", "type1"], "display": "Type 1", "exp": "Type 1 = bare metal, directly on hardware. Type 2 sits on top of a host OS."},
+  {"ch": "k3", "type": "mc", "q": "Which cloud service DELIVERY model provides applications accessed through a browser on a provider’s servers?", "opts": ["IaaS", "PaaS", "SaaS", "DaaS"], "ans": 2, "exp": "SaaS — Software as a Service."},
+  {"ch": "k3", "type": "mc", "q": "Which delivery model provides servers, storage, networking, and virtualization over the internet on a pay-per-use basis?", "opts": ["SaaS", "PaaS", "IaaS", "CaaS"], "ans": 2, "exp": "IaaS — Infrastructure as a Service."},
+  {"ch": "k3", "type": "fitb", "q": "Cloud service DELIVERY models answer the “what”; deployment models answer the “___.”", "ans": ["who"], "display": "Who", "exp": "Delivery = the “what”; deployment = the “who.”"},
+  {"ch": "k3", "type": "mc", "q": "Which is described as “essentially a private cloud offered over a public network,” where membership is the constant?", "opts": ["Private cloud", "Public cloud", "Community cloud", "Hybrid cloud"], "ans": 1, "exp": "A public cloud is essentially a private cloud offered over a public network; membership is the constant factor."},
+  {"ch": "k3", "type": "mc", "q": "How does the chapter explain the name “the cloud”?", "opts": ["Because servers float in data centers", "From telephone diagrams that drew a cloud for switching between central offices", "Because early servers were named after clouds", "From weather-prediction software"], "ans": 1, "exp": "Telephone-company diagrams used a cloud image for POTS/PSTN switching; it was reused for the internet’s randomized switching."}
+];
+// ─── QUIZ ENGINE ───
+let quizFilter='all',userAnswers={};
+function setQuizFilter(ch,btn){
+  activateFilter(btn);quizFilter=ch;resetQuiz();
+}
+function getQuizDeck(){return quizFilter==='all'?allQuizData:allQuizData.filter(q=>q.ch===quizFilter);}
+function renderQuiz(){
+  const deck=getQuizDeck();
+  const c=document.getElementById('quiz-container');c.innerHTML='';userAnswers={};
+  deck.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='quiz-q';div.id='qq'+i;
+    if(q.type==='mc'){
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <div class="quiz-opts">${q.opts.map((o,oi)=>`<label><input type="radio" name="q${i}" onclick="selectMC(${i},${oi})"> ${o}</label>`).join('')}</div>
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    } else {
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <input class="fitb-input" id="fitb${i}" placeholder="Type your answer..." aria-label="Answer for question ${i+1}" oninput="storeFITB(${i})">
+        <div class="q-exp" id="exp${i}"><strong>Answer: ${q.display}</strong> — ${q.exp}</div>`;
+    }
+    c.appendChild(div);
+  });
+  document.getElementById('quiz-score').style.display='none';
+}
+function selectMC(qi,oi){userAnswers[qi]=oi;}
+function storeFITB(qi){userAnswers[qi]=document.getElementById('fitb'+qi).value.trim().toLowerCase();}
+function submitQuiz(){
+  const deck=getQuizDeck();let correct=0;
+  deck.forEach((q,i)=>{
+    const el=document.getElementById('qq'+i);
+    const exp=document.getElementById('exp'+i);exp.classList.add('show');
+    el.classList.remove('q-correct','q-wrong');
+    if(q.type==='mc'){
+      const ua=userAnswers[i];
+      if(ua===q.ans){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    } else {
+      const ua=(userAnswers[i]||'').toLowerCase();
+      const ok=ua!==''&&q.ans.some(a=>ua.includes(a.toLowerCase()));
+      if(ok){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    }
+  });
+  const sc=document.getElementById('quiz-score');
+  const pct=Math.round(correct/deck.length*100);
+  sc.style.display='block';
+  sc.style.borderColor=pct>=70?'var(--green)':'var(--red)';
+  sc.innerHTML=`<strong>Score: ${correct}/${deck.length} (${pct}%)</strong> — ${pct>=90?'Excellent! 🎉':pct>=70?'Good work — review flagged questions.':'Keep studying — focus on the red ones.'}`;
+}
+function resetQuiz(){renderQuiz();}
+
+// ─── DISCUSSION DATA ───  one entry per learning objective, in the same order
+const DISC_QUESTIONS=[
+  {"ch": "k1", "q": "Explain the importance of data and how data differs from information. Use the chapter's examples and the IPO model in your answer.", "points": [{"text": "<strong>Data are the fuel of computing</strong> — data are the reason for computing, networking, automation, and all digital processing; we constantly take in data through our senses."}, {"text": "<strong>Datum vs data</strong> — a datum is a single value, attribute, characteristic, or identity of something (Merriam-Webster: “something given…as a basis for reasoning”); data is the plural of datum, so two datums are data."}, {"text": "<strong>Information</strong> — the result or product of data being processed; it has context relevant to an inquiry. “Information without context is just data.”"}, {"text": "<strong>Context gives meaning</strong> — “blue” and “sky” are each a datum with little meaning alone; combined as “blue sky” they gain context and can answer “What color is the sky?”"}, {"text": "<strong>IPO model</strong> — the most basic model for processing data into information is Input → Process → Output; even complex programs break down into IPO steps."}], "model": "Data and information are often used interchangeably, but the chapter is careful to separate them. Data are the fuel and reason for computing — without data there would be no computers, networks, or web — and we take in data constantly through our senses. Technically, “data” is the plural of “datum,” where a datum is a single value, attribute, characteristic, or identity of something (Merriam-Webster defines it as “something given…as a basis for reasoning or inference”). Information is different: it is the result or product of data being processed, and it carries context relevant to a question. The “blue sky” example shows this — “blue” alone and “sky” alone are each just a datum, but combined they have context and can answer “What color is the sky?” The most basic description of that transformation is the IPO model: Input is fed into a Process that produces Output (information), and even very complex programs reduce to chains of IPO steps."},
+  {"ch": "k1", "q": "Discuss the history of computers and their uses. Cover the five generations, the difference between computing and computers, and the miniaturization trend.", "points": [{"text": "<strong>Miniaturization trend</strong> — computers started large and shrank as technology advanced; what once filled a university gymnasium now fits in a pocket."}, {"text": "<strong>Five generations</strong> — First (1940–1956, vacuum tubes); Second (1956–1963, transistors); Third (1964–1971, integrated circuits + operating systems); Fourth (1971–2010, microprocessor, IBM PC, Apple Macintosh, GUI); Fifth (2010–present, artificial intelligence)."}, {"text": "<strong>Computing vs computers</strong> — computing is a processing operation (like the IPO model); computers are the people, machines, and devices that perform the processing."}, {"text": "<strong>“Computers” as a job title</strong> — the term once described people who “computed” accounts into ledgers."}, {"text": "<strong>Birth of the modern computer</strong> — historians generally place its relevant birth around 1940, though earlier developments also contributed."}], "model": "The history of computers is a story of rapid advancement and shrinking size: what once filled a university gymnasium now fits in a shirt pocket. The chapter organizes that history into five generations, each tied to a defining technology — the First generation (1940–1956) used vacuum tubes with punched-card and paper-tape input; the Second (1956–1963) introduced transistors; the Third (1964–1971) brought integrated circuits and operating systems; the Fourth (1971–2010) delivered the microprocessor, the IBM PC, the Apple Macintosh, and the GUI; and the Fifth (2010–present) is defined by artificial intelligence. The chapter also draws a distinction between computing and computers: computing is a processing operation (the IPO model), while computers are the people, machines, and devices that do the processing — in fact “computers” was once a job title for people who computed accounts into ledgers. Historians generally date the relevant birth of the modern computer to roughly 1940, while acknowledging that earlier work contributed."},
+  {"ch": "k2", "q": "Explain why there was a need for the internet. Include Sputnik, the Cold War concern, the agencies formed, Licklider's proposal, and packet switching.", "points": [{"text": "<strong>Sputnik trigger</strong> — in 1957 the USSR launched Sputnik (about 23 in. in diameter, ~190 lb), energizing the technology boom and putting space, satellites, and science on the public’s mind."}, {"text": "<strong>Cold War fear</strong> — if the Soviets could orbit a satellite, they might launch a missile that could take down U.S. telephone communications; what was needed was a system that could withstand an attack and stay operational."}, {"text": "<strong>Agencies formed</strong> — the U.S. government began research grants and formed agencies such as NASA and DARPA to investigate advanced technologies (rockets, weapons, computers)."}, {"text": "<strong>Licklider’s “galactic network”</strong> — in 1962 MIT scientist J.C.R. Licklider proposed a network of interconnected computers that could communicate should the phone system be destroyed."}, {"text": "<strong>Survivability via packet switching</strong> — Paul Baran and Donald Davies independently devised transmitting “packets” across a switched network; Davies’s term “packet switching” stuck, and it was the key to a network that could not be taken down by a single site’s destruction."}], "model": "The need for the internet began, oddly, with a satellite. In 1957 the USSR launched Sputnik, and the shock energized a technology boom — schools expanded science curricula and the U.S. government funded research and created agencies such as NASA and DARPA. Military planners worried that if the Soviets could orbit a satellite, they could also launch a missile capable of destroying the U.S. telephone system, so what was needed was a communications system that could survive an attack and keep operating. In 1962, MIT scientist J.C.R. Licklider proposed a “galactic network” of interconnected computers that could stand in if the phone system were destroyed. The technology to make it survivable came from Paul Baran and Donald Davies, who independently developed a way to send “packets” across a switched network; Davies’s name “packet switching” caught on, and it was the key idea that let a network keep working even if a single site was destroyed."},
+  {"ch": "k2", "q": "Discuss the early developments of internetworking: ARPANET, the shift from internetwork to “internet,” TCP/IP and its model layers, key protocols, and the networks that followed.", "points": [{"text": "<strong>ARPANET</strong> — designed by Licklider’s team in 1966 and ready for testing in October 1969; the first message “LOGIN” (UCLA → Stanford) failed after “L” and “O,” but it proved the Interface Message Processor (IMP), the early precursor to a router."}, {"text": "<strong>From internetwork to “internet”</strong> — as ARPAnet added nodes (going international in 1971), it became an internetwork — a network of networks interconnected for communication; “internetwork” was shortened to “internet.”"}, {"text": "<strong>TCP/IP</strong> — Vint Cerf and Bob Kahn developed TCP (originally including IP’s functions) in the early 1970s; in the early 1980s TCP/IP replaced the Network Control Protocol (NCP) and made a worldwide network possible."}, {"text": "<strong>TCP/IP model layers</strong> — the four-layer reference model, top to bottom: Application, Transport, Internet (Network), and Link (Network Interface/Access)."}, {"text": "<strong>Key protocols</strong> — TCP (connection-oriented, guarantees delivery), IP (addressing), HTTP (transfers webpage content), UDP (loss-tolerant, no guarantee), POP3/SMTP (email), and FTP (file transfer)."}, {"text": "<strong>NSFnet and others</strong> — NSFnet (1986) grew and replaced the older, slower ARPAnet in the late 1980s; NSFnet shut down in 1995 and control was privatized, opening the network to commercial use."}], "model": "Internetworking grew out of the ARPANET project, designed by Licklider’s team in 1966 and ready for testing in October 1969. The famous first attempt to send “LOGIN” from UCLA to Stanford failed after only “L” and “O,” but it proved the concept of the Interface Message Processor, the early precursor to today’s router. As ARPAnet added nodes and went international in 1971, it became an internetwork — a network of networks — and the word was shortened to “internet.” The protocol breakthrough came from Vint Cerf and Bob Kahn, who built TCP (which originally also contained IP’s functions); in the early 1980s the TCP/IP suite replaced the older Network Control Protocol and made a truly worldwide network possible. TCP/IP is organized as a four-layer model — Application, Transport, Internet, and Link — and carries protocols including TCP (connection-oriented, guarantees delivery), IP (addressing), HTTP (webpage content), UDP (loss-tolerant), POP3/SMTP (email), and FTP (files). Finally, NSFnet (1986) outgrew and replaced the slower ARPAnet by the late 1980s; when NSFnet itself shut down in 1995, control of the internetwork was privatized and the network opened to commercial use."},
+  {"ch": "k2", "q": "Identify the key developments and developers of the World Wide Web: the hypertext pioneers, Tim Berners-Lee and CERN, the three central web elements, the browsers, and the web’s phases.", "points": [{"text": "<strong>Hypertext pioneers</strong> — Vannevar Bush conceived “Memex” (“As We May Think,” 1945); Ted Nelson coined “hypertext” in 1965 (part of “Xanadu”); Doug Engelbart demonstrated NLS in the 1968 “Mother of All Demonstrations” and is credited as the “inventor” of hypertext (also the mouse and GUI); Brown University (Andries van Dam) built HES (1967) and FRES (1968)."}, {"text": "<strong>Tim Berners-Lee &amp; CERN</strong> — frustrated by fragmented information, Berners-Lee (an engineer at CERN) proposed “Mesh,” then with Robert Cailliau a formal “WorldWideWeb” (W3) project: a web of hypermedia documents viewed with a browser on a client/server architecture."}, {"text": "<strong>Three central web elements</strong> — HTML (a web markup language based on SGML), the Universal Document Identifier (UDI, foundation for the URL/URI), and HTTP (with four design principles: client/server, request, response, termination)."}, {"text": "<strong>Free to everyone</strong> — CERN announced the web would be free to everyone, just as the University of Minnesota announced Gopher would start charging fees — spiking interest in the web."}, {"text": "<strong>Browsers</strong> — Nicola Pellow built the Line Mode Browser (libWWW), the first generally available browser; Mosaic (Marc Andreessen &amp; Eric Bina, NCSA, 1993) was the first generally available browser to display text and graphics together; Andreessen then founded Netscape (Navigator, 1994), and Microsoft licensed Mosaic code to build Internet Explorer (1995)."}, {"text": "<strong>Web phases</strong> — Web 1.0 (Static/Read-Only), Web 2.0 (Social/Read-Write — sharing, blogs, wikis, social networking), Web 3.0 (Semantic Web — one large database, blockchain, decentralization), Web 4.0 (Intelligent/pervasive/ubiquitous Web)."}], "model": "The web rests on decades of hypertext work. Vannevar Bush imagined the “Memex” in his 1945 essay “As We May Think”; Ted Nelson coined the word “hypertext” in 1965 as part of his “Xanadu” design; Doug Engelbart demonstrated NLS in the 1968 “Mother of All Demonstrations” and is credited as hypertext’s “inventor” (he also invented the mouse and GUI); and Brown University, under Andries van Dam, built HES (1967) and FRES (1968). The web itself came from Tim Berners-Lee, a CERN engineer frustrated by information scattered across separate computers. He proposed “Mesh,” then with Robert Cailliau a formal “WorldWideWeb” (W3) project — a web of hypermedia documents viewed through a browser on a client/server architecture. His design brought together three central elements: HTML (a markup language based on SGML), the Universal Document Identifier (the basis for the URL/URI), and HTTP (built on four principles: client/server, request, response, and termination). CERN’s decision to make the web free to everyone — announced just as the University of Minnesota began charging for Gopher — drove a surge of interest. Browsers followed: Nicola Pellow’s Line Mode Browser (libWWW) was the first generally available browser, and Mosaic (Marc Andreessen and Eric Bina at NCSA, 1993) was the first to show text and graphics together. Andreessen went on to found Netscape (Navigator, 1994), and Microsoft licensed Mosaic’s code to build Internet Explorer (1995). Over time the web moved through phases: Web 1.0 (static, read-only), Web 2.0 (social, read-write — sharing, blogs, wikis, social networking), Web 3.0 (the Semantic Web — one large database, blockchain, decentralization), and Web 4.0 (the intelligent, pervasive, “always-on” web)."},
+  {"ch": "k3", "q": "Explain servers, clients, and virtualization. Define the client/server relationship, the types of servers and clients, the hypervisor, and what it means to virtualize a network.", "points": [{"text": "<strong>Client/server</strong> — like ordering in a diner: a client (a network host) requests a resource, and a server (specialized software on a centralized system) retrieves it and sends it back."}, {"text": "<strong>A server is software</strong> — it performs, manages, or controls special functions on a network; one physical computer can run multiple servers, and a server can also act as a client. Types include application, mail, proxy, virtual, and web servers."}, {"text": "<strong>Client types</strong> — thin clients have very few on-board resources and run apps on servers; thick (fat/rich) clients have all resources on-board; hybrid clients lean thick but rely on servers for centralized services."}, {"text": "<strong>Virtualization</strong> — a virtual object (machine, server, router) is the simulation of its functions through software; creating virtual devices via software is called virtualization."}, {"text": "<strong>Hypervisor</strong> — the key element of a virtual environment, also called the virtual machine manager (VMM); it is essentially the OS for the virtual environment. Type 1 runs “bare metal” directly on hardware; Type 2 runs on top of a host OS."}, {"text": "<strong>Network virtualization</strong> — virtualizing a network splits bandwidth into manageable channels assigned in real time; storage virtualization makes resources on multiple servers appear as one entity; server virtualization makes multiple servers appear as one."}], "model": "Client/server computing is the foundation of the internet and web. The chapter uses a diner analogy: a client (a network host) requests a resource, and a server retrieves it and sends it back. Importantly, a server is software — it performs, manages, or controls special functions on a network — so one physical computer can run several servers, and a server can itself act as a client. Common types include application, mail, proxy, virtual, and web servers. Clients come in three kinds: thin clients have very few on-board resources and run their applications on servers; thick (fat or rich) clients have everything on-board; and hybrid clients are mostly thick but still rely on servers for centralized services like databases and files. Virtualization is the simulation of a device’s functions in software — a virtual machine, server, or router. Its key element is the hypervisor (the virtual machine manager), which acts as the operating system of the virtual environment; a Type 1 hypervisor runs “bare metal” directly on the hardware, while a Type 2 runs on top of a host OS. Virtualization also applies to networks (splitting bandwidth into channels), storage (making many servers look like one store), and servers (making many servers appear as one)."},
+  {"ch": "k3", "q": "Identify the service types and delivery modes of cloud computing. Define cloud computing, the NIST delivery models, the NIST deployment models, and the other “aaS” offerings.", "points": [{"text": "<strong>Cloud computing</strong> — access to resources or processing located beyond the local firewall, provided by dedicated (typically virtualized) internet-based servers; it shifts local processing to remote providers over the internet."}, {"text": "<strong>Why “the cloud”</strong> — telephone diagrams used a cloud image for switching between central offices (POTS/PSTN); the cloud came to represent the randomized switching of the internet."}, {"text": "<strong>Delivery models (the “what”)</strong> — NIST defines three: SaaS (subscribers access applications on a CSP’s servers via the browser), PaaS (customized programming/testing/modeling environments), and IaaS (servers, storage, networking, and virtualization delivered over the internet, pay-per-use)."}, {"text": "<strong>Other “aaS” offerings</strong> — AIaaS, BaaS (backup), CaaS (a “full meal” combining SaaS/PaaS/IaaS), DaaS (desktop), NaaS (network), UaaS (unified communications), and VaaS (video-conferencing)."}, {"text": "<strong>Deployment models (the “who”)</strong> — NIST defines three: private (restricted access, in-house or via a CSP), public (a private cloud offered over a public network; membership is the constant), and hybrid (public deployment with private-cloud restrictions). A community cloud is a common variation."}], "model": "Cloud computing lets users access resources or processing located beyond their local firewall — dedicated, usually virtualized, internet-based servers — shifting local processing to remote providers over the internet. The name comes from old telephone diagrams that drew a cloud to represent the switching between central offices; the same cloud image was reused for the randomized switching of the internet. The chapter separates two model families. Service delivery models are the “what” of the cloud, and NIST defines three: Software as a Service (applications reached through a browser on a provider’s servers), Platform as a Service (customized environments for programming, testing, and modeling), and Infrastructure as a Service (servers, storage, networking, and virtualization delivered over the internet on a pay-per-use basis). Many other “aaS” offerings extend these — AIaaS, BaaS, CaaS, DaaS, NaaS, UaaS, and VaaS. Service deployment models are the “who”: NIST defines private (restricted access, hosted in-house or by a CSP), public (essentially a private cloud offered over a public network, where membership is the constant), and hybrid (public deployment combined with private restrictions), with the community cloud as a common variation."}
+];
+// ─── DISCUSSION ENGINE ───
+let discFilter='all';
+function filterDisc(ch,btn){
+  activateFilter(btn);discFilter=ch;renderDiscussion();
+}
+function renderDiscussion(){
+  const list=discFilter==='all'?DISC_QUESTIONS:DISC_QUESTIONS.filter(d=>d.ch===discFilter);
+  const c=document.getElementById('disc-container');c.innerHTML='';
+  list.forEach((d,i)=>{
+    const idx=DISC_QUESTIONS.indexOf(d);
+    const div=document.createElement('div');div.className='disc-q';
+    div.innerHTML=`<div class="disc-q-text">${i+1}. ${d.q}</div>
+      <textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Draft your response here..." aria-label="Discussion response ${i+1}"></textarea>
+      <div class="disc-btn-row">
+        <button class="disc-btn primary" onclick="submitDisc(${idx})">Submit &amp; Self-Grade</button>
+        <button class="disc-btn" onclick="toggleModel(${idx})">Show Model Answer</button>
+        <button class="disc-btn" onclick="resetDisc(${idx})">Reset</button>
+      </div>
+      <div class="disc-rubric" id="disc-rubric-${idx}">
+        <strong style="font-size:.82rem;color:var(--text)">Self-Grading Rubric</strong>
+        <div style="margin-top:8px;">${d.points.map((p,pi)=>`<div class="rubric-item"><input type="checkbox" id="rub-${idx}-${pi}" onchange="updateDiscScore(${idx})"><label for="rub-${idx}-${pi}">${p.text}</label></div>`).join('')}</div>
+        <div class="disc-score" id="disc-score-${idx}">Score: 0 / ${d.points.length}</div>
+      </div>
+      <div class="model-answer" id="disc-model-${idx}">${d.model}</div>`;
+    c.appendChild(div);
+  });
+}
+function submitDisc(idx){
+  document.getElementById('disc-ta-'+idx).disabled=true;
+  document.getElementById('disc-rubric-'+idx).classList.add('show');
+}
+function resetDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);ta.disabled=false;ta.value='';
+  document.getElementById('disc-rubric-'+idx).classList.remove('show');
+  document.getElementById('disc-model-'+idx).classList.remove('show');
+  document.querySelectorAll(`[id^="rub-${idx}-"]`).forEach(cb=>cb.checked=false);
+  document.getElementById('disc-score-'+idx).textContent='Score: 0 / '+DISC_QUESTIONS[idx].points.length;
+}
+function updateDiscScore(idx){
+  const total=DISC_QUESTIONS[idx].points.length;
+  const checked=document.querySelectorAll(`[id^="rub-${idx}-"]:checked`).length;
+  document.getElementById('disc-score-'+idx).textContent=`Score: ${checked} / ${total} (${Math.round(checked/total*100)}%)`;
+}
+function toggleModel(idx){document.getElementById('disc-model-'+idx).classList.toggle('show');}
+
+// ─── INIT ───
+window.addEventListener('DOMContentLoaded',()=>{
+  deck=[...allCards];renderCard();renderQuiz();renderDiscussion();updateMasteryBar();
+  document.querySelectorAll('.obj-master-btn').forEach(btn=>{
+    const key=btn.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+    if(key&&localStorage.getItem(key)){btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  });
+  document.querySelectorAll('.obj-card').forEach(card=>{
+    card.addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleObj(card);}
+    });
+  });
+});
+</script>
+</body>
+</html>
