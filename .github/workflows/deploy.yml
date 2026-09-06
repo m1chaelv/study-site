@@ -30,6 +30,7 @@ jobs:
             --exclude ".gitignore" \
             --exclude "_versions/*" \
             --exclude "TEMPLATE.md" \
+            --exclude "BUILD_PROMPT.md" \
             --exclude "TEMPLATE_unit.html" \
             --exclude "*/.gitkeep" \
             --delete
