@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CSIS 3352 — Module 2: Data Preparation and Preprocessing for Artificial Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#0a0a0f; --surface:#12121a; --surface2:#16161f; --border:#1e1e2e;
+  --text:#e8e8f0; --muted:#6b6b80; --green:#22c55e; --red:#ef4444;
+  --yellow:#eab308; --purple:#a78bfa; --orange:#f97316;
+  --accent:#a855f7; --accent-dim:rgba(168,85,247,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(168,85,247,0.025) 39px,rgba(168,85,247,0.025) 40px),
+  repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(168,85,247,0.025) 39px,rgba(168,85,247,0.025) 40px);}
+body::before{content:'CSIS 3352 · Module 2 · Lecture 2 — Data Preparation & Preprocessing';position:fixed;top:0;left:0;right:0;
+  background:rgba(10,10,15,0.95);border-bottom:1px solid var(--border);padding:10px 16px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);z-index:100;letter-spacing:.05em;}
+.topnav{display:flex;gap:4px;padding:48px 12px 8px;overflow-x:auto;position:sticky;top:0;
+  background:rgba(10,10,15,0.97);z-index:90;border-bottom:1px solid var(--border);}
+.nav-btn{flex-shrink:0;background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:7px 13px;border-radius:6px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:11px;transition:all .15s;}
+.nav-btn:hover{color:var(--text);border-color:var(--accent);}
+.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.panel{display:none;padding:20px 16px 60px;max-width:860px;margin:0 auto;}
+.panel.active{display:block;}
+h1{font-size:1.4rem;font-weight:600;color:var(--accent);margin-bottom:4px;}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;display:block;}
+.exam-pill{display:inline-block;background:rgba(234,179,8,0.15);border:1px solid var(--yellow);
+  color:var(--yellow);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;
+  border-radius:20px;margin-bottom:20px;}
+.back-link{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;margin-bottom:10px;}
+.back-link:hover,.back-link:active{color:var(--accent);}
+.textbook-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.textbook-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;
+  transition:all .15s;}
+.textbook-links a:hover{color:var(--accent);border-color:var(--accent);}
+
+/* Objectives — .s1 = Data Quality & Cleaning (purple), .s2 = Encoding & Scaling (orange), .s3 = Correctness/Validation/Integrity (violet) */
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  margin-bottom:10px;cursor:pointer;transition:border-color .15s;}
+.obj-card:hover{border-color:var(--accent);}
+.obj-header{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;
+  padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.s1 .obj-num{color:var(--accent);background:rgba(168,85,247,0.12);}
+.s2 .obj-num{color:var(--orange);background:rgba(249,115,22,0.12);}
+.s3 .obj-num{color:var(--purple);background:rgba(167,139,250,0.12);}
+.obj-title{font-size:.88rem;font-weight:500;flex:1;}
+.obj-expand{color:var(--muted);font-size:12px;transition:transform .2s;}
+.obj-body{display:none;padding:0 16px 14px;font-size:.84rem;line-height:1.65;color:#b0b0c8;}
+.obj-body.open{display:block;}
+.obj-body ul{padding-left:18px;margin:8px 0;}
+.obj-body li{margin-bottom:5px;}
+.obj-master-btn{margin-top:10px;background:transparent;border:1px solid var(--border);
+  color:var(--muted);padding:5px 12px;border-radius:4px;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;transition:all .15s;}
+.obj-master-btn.mastered{border-color:var(--green);color:var(--green);background:rgba(34,197,94,0.08);}
+.mastery-bar{background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  height:6px;margin-bottom:20px;overflow:hidden;}
+.mastery-fill{height:100%;background:var(--green);border-radius:20px;transition:width .4s;}
+.reset-mastery-btn{display:block;margin-bottom:20px;background:transparent;
+  border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:4px;
+  cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;}
+.reset-mastery-btn:hover{border-color:var(--red);color:var(--red);}
+.part-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin:24px 0 10px;display:block;}
+
+/* Study Guide */
+.chapter-block{margin-bottom:16px;}
+.chapter-header{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;
+  align-items:center;font-weight:500;font-size:.9rem;transition:border-color .15s;}
+.chapter-header:hover{border-color:var(--accent);}
+.chapter-body{display:none;background:var(--surface2);border:1px solid var(--border);
+  border-top:none;border-radius:0 0 8px 8px;padding:16px;}
+.chapter-body h3{font-size:.82rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px;}
+.chapter-body h3:first-child{margin-top:0;}
+.chapter-body p,.chapter-body li{font-size:.84rem;line-height:1.7;color:#b0b0c8;margin-bottom:6px;}
+.chapter-body ul{padding-left:18px;}
+.chapter-body strong{color:var(--text);}
+.sg-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.8rem;}
+.sg-table th{font-family:'IBM Plex Mono',monospace;font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.05em;color:var(--accent);text-align:left;padding:7px 8px;border-bottom:1px solid var(--border);}
+.sg-table td{padding:7px 8px;border-bottom:1px solid var(--border);color:#b0b0c8;line-height:1.5;vertical-align:top;}
+.sg-table tr:last-child td{border-bottom:none;}
+.eqn{font-family:'IBM Plex Mono',monospace;background:var(--surface);border:1px solid var(--border);
+  border-radius:6px;padding:9px 12px;margin:8px 0;font-size:.82rem;color:var(--accent);display:block;overflow-x:auto;}
+.flag-note{background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.3);
+  border-radius:6px;padding:8px 12px;font-size:.78rem;color:var(--yellow);margin:8px 0;line-height:1.6;}
+
+/* Flashcards */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:5px 12px;border-radius:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;transition:all .15s;}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.fc-wrap{perspective:1000px;margin-bottom:16px;}
+.fc-card{width:100%;min-height:220px;position:relative;transform-style:preserve-3d;
+  transition:transform .5s;cursor:pointer;}
+.fc-card.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;flex-direction:column;justify-content:center;padding:24px;border-radius:10px;}
+.fc-back{transform:rotateY(180deg);border-color:var(--accent);background:var(--accent-dim);}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
+.fc-q,.fc-a{font-size:1rem;line-height:1.6;color:var(--text);}
+.fc-a{color:var(--accent);}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);
+  text-align:center;margin-bottom:12px;}
+.fc-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+.fc-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);
+  padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82rem;transition:all .15s;}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent);}
+.fc-btn.mastered-btn{border-color:var(--green);color:var(--green);}
+.fc-nav{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+.fc-empty{text-align:center;padding:40px;color:var(--muted);font-size:.9rem;}
+
+/* Quiz */
+.quiz-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.quiz-q-text{font-size:.9rem;margin-bottom:12px;line-height:1.6;}
+.quiz-opts label{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;
+  border-radius:5px;cursor:pointer;font-size:.85rem;line-height:1.5;transition:background .1s;}
+.quiz-opts label:hover{background:rgba(255,255,255,0.04);}
+.quiz-opts input{margin-top:3px;flex-shrink:0;accent-color:var(--accent);}
+.fitb-input{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:8px 12px;border-radius:5px;font-size:.85rem;margin-top:8px;}
+.fitb-input:focus{outline:none;border-color:var(--accent);}
+.q-correct{border-color:var(--green)!important;background:rgba(34,197,94,0.06)!important;}
+.q-wrong{border-color:var(--red)!important;background:rgba(239,68,68,0.06)!important;}
+.q-exp{font-size:.8rem;color:#9090b0;margin-top:8px;padding-top:8px;
+  border-top:1px solid var(--border);display:none;}
+.q-exp.show{display:block;}
+#submit-btn,#reset-btn{padding:10px 22px;border-radius:6px;cursor:pointer;
+  font-size:.88rem;font-weight:500;transition:all .15s;border:1px solid;}
+#submit-btn{background:var(--accent);border-color:var(--accent);color:#fff;margin-right:8px;}
+#submit-btn:hover{opacity:.85;}
+#reset-btn{background:transparent;border-color:var(--border);color:var(--muted);}
+#reset-btn:hover{border-color:var(--red);color:var(--red);}
+#quiz-score{margin-top:16px;padding:14px;background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;font-size:.9rem;display:none;}
+
+/* Discussion */
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.disc-q-text{font-size:.9rem;line-height:1.6;margin-bottom:12px;font-weight:500;}
+.disc-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:10px 12px;border-radius:5px;font-size:.84rem;
+  min-height:120px;resize:vertical;font-family:'IBM Plex Sans',sans-serif;line-height:1.6;}
+.disc-textarea:focus{outline:none;border-color:var(--accent);}
+.disc-btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.disc-btn{padding:6px 14px;border-radius:5px;cursor:pointer;font-size:.82rem;
+  border:1px solid var(--border);background:var(--surface2);color:var(--muted);transition:all .15s;}
+.disc-btn:hover{color:var(--text);}
+.disc-btn.primary{border-color:var(--accent);color:var(--accent);}
+.disc-rubric{display:none;margin-top:12px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:6px;padding:12px;}
+.disc-rubric.show{display:block;}
+.rubric-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;
+  border-bottom:1px solid var(--border);font-size:.82rem;}
+.rubric-item:last-child{border-bottom:none;}
+.rubric-item input[type=checkbox]{flex-shrink:0;margin-top:2px;accent-color:var(--green);}
+.disc-score{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--green);margin-top:8px;}
+.model-answer{display:none;margin-top:10px;font-size:.82rem;line-height:1.65;
+  color:#9090b0;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.2);
+  border-radius:6px;padding:12px;}
+.model-answer.show{display:block;}
+
+/* Notes */
+.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.notes-grid{grid-template-columns:1fr;}}
+.note-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.note-card h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.note-lines{display:flex;flex-direction:column;gap:8px;}
+.note-line{border-bottom:1px solid var(--border);min-height:28px;}
+.video-block{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:14px 16px;margin-bottom:12px;}
+.video-block h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.source-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.source-list a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;}
+.source-list a:hover{color:var(--accent);border-color:var(--accent);}
+footer{text-align:center;padding:30px 16px;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;color:var(--muted);}
+@media print{
+  body::before,.topnav,.exam-pill,.textbook-links,footer,.fc-controls,.fc-nav,.filter-row,
+  #submit-btn,#quiz-score,.disc-btn-row,.disc-rubric,.obj-master-btn,.reset-mastery-btn,
+  .mastery-bar{display:none!important;}
+  .panel{display:none!important;}.panel.active{display:block!important;}
+  *,*::before,*::after{background:white!important;background-color:white!important;
+    background-image:none!important;color:black!important;border-color:#bbb!important;
+    box-shadow:none!important;-webkit-text-fill-color:black!important;}
+  body{font-size:12pt;}.chapter-body{display:block!important;}
+  @page{margin:.75in;}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav" role="tablist" aria-label="Study sections">
+  <button class="nav-btn active" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)" role="tab" aria-selected="false" aria-controls="panel-guide">📖 Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)" role="tab" aria-selected="false" aria-controls="panel-flashcards">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)" role="tab" aria-selected="false" aria-controls="panel-quiz">✏️ Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('discussion',this)" role="tab" aria-selected="false" aria-controls="panel-discussion">💬 Discussion</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes Template</button>
+</nav>
+
+<!-- ═══════════════ OBJECTIVES ═══════════════ -->
+<div class="panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+  <a class="back-link" href="../../index.html">← All courses</a>
+  <span class="unit-badge">CSIS 3352 · Module 2</span>
+  <h1>Data Preparation and Preprocessing for AI</h1>
+  <span class="exam-pill">📅 Quiz 2 — due 9/1 · Covered on Midterm (Modules 1–9), Oct 20</span>
+  <div class="textbook-links">
+    <a href="#">§1 · Data Quality, Missing Values, Duplicates &amp; Outliers</a>
+    <a href="#">§2 · Encoding &amp; Scaling</a>
+    <a href="#">§3 · Incorrect Data, Noise, Validation &amp; Integrity</a>
+  </div>
+  <div class="flag-note">📌 Lecture 2 does not print a numbered list of learning objectives. The 14 objectives below were derived from the deck's own section structure and slide titles, so the wording is not the professor's. Every fact underneath them comes only from the Lecture 2 slides.</div>
+  <div class="flag-note">⚠️ Source inconsistency: the Hands-on Activity slide (slide 19) is footer-labeled "Lecture 4 — Data Quality &amp; Data Cleaning," but this deck is Lecture 2 / Module 2, titled "Data Preparation and Preprocessing for Artificial Intelligence." The Module 2 labeling here follows the deck's title slide and the syllabus.</div>
+  <div class="mastery-bar"><div class="mastery-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="reset-mastery-btn" onclick="resetAllMastery()">↺ Reset All Mastery</button>
+
+  <span class="part-label">Section 1 · Data Quality, Missing Values, Duplicates &amp; Outliers</span>
+
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 1</span><span class="obj-title">Explain why data quality matters and name the six dimensions</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>State why data quality matters and describe the six common data quality dimensions.</p>
+      <ul>
+        <li><strong>Why it matters</strong> — bad data leads to bad decisions, broken models, and wasted time ("garbage in, garbage out"); poor data quality is estimated to cost organizations millions of dollars every year, and cleaning is usually the single largest time investment in a real data science project.</li>
+        <li><strong>Accuracy &amp; Completeness</strong> — Accuracy = data correctly reflects real-world values and events; Completeness = all required data is present and nothing important is missing.</li>
+        <li><strong>Consistency &amp; Timeliness</strong> — Consistency = data is uniform across systems and formats ("USA" / "U.S." / "United States"); Timeliness = data is up-to-date and available when it is needed.</li>
+        <li><strong>Uniqueness &amp; Validity</strong> — Uniqueness = each piece of data is unique and not duplicated unnecessarily; Validity = data conforms to defined rules, formats, and business constraints (a birth date is a valid date).</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module02_1')" aria-label="Mark LO 1 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 2</span><span class="obj-title">Define missing values, their causes, and three types</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Define missing values, give their common causes, and name the three types of missingness.</p>
+      <ul>
+        <li><strong>Definition</strong> — missing values are empty or null cells where data should exist.</li>
+        <li><strong>Common causes</strong> — a skipped form field, sensor failure, a merge between mismatched sources, or a system error.</li>
+        <li><strong>Three types</strong> — Missing Completely at Random (MCAR), Missing at Random (MAR), and Missing Not at Random (MNAR).</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module02_2')" aria-label="Mark LO 2 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 3</span><span class="obj-title">Choose a method for handling missing values</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Describe the methods for handling missing values and what should guide the choice.</p>
+      <ul>
+        <li><strong>Deletion</strong> — drop rows/columns with too many missing values, but use it carefully because you lose data.</li>
+        <li><strong>Imputation</strong> — fill in a statistically reasonable replacement using the mean, median, or mode.</li>
+        <li><strong>Forward-fill / backward-fill</strong> — carry the nearest known value forward or backward; common in time series.</li>
+        <li><strong>Cause first</strong> — understand why the value is missing before deciding how to handle it; the cause should drive the fix.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module02_3')" aria-label="Mark LO 3 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 4</span><span class="obj-title">Detect and remove duplicate records</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Explain what duplicate records are, why they matter, and how to detect and remove them.</p>
+      <ul>
+        <li><strong>What &amp; why</strong> — the same real-world entity appears more than once; common causes are repeated form submissions, merging multiple sources, or system syncing errors, and duplicates can silently bias analysis and inflate counts, averages, and totals.</li>
+        <li><strong>Exact vs. near-duplicates</strong> — exact duplicates are identical across every column (easy to drop); near-duplicates differ slightly (typos, spacing, formatting) and often need fuzzy matching.</li>
+        <li><strong>Tools &amp; caution</strong> — in pandas, .duplicated() finds them and .drop_duplicates() removes them; always double-check what actually counts as a duplicate before removing anything.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module02_4')" aria-label="Mark LO 4 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 5</span><span class="obj-title">Define outliers and detect them (IQR &amp; Z-score)</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Define an outlier and explain how to detect one using the IQR and Z-score methods.</p>
+      <ul>
+        <li><strong>Definition</strong> — a data point that differs significantly from the rest of the dataset; it can be a genuine rare event or an error (e.g., one $500,000 order where the average is $50).</li>
+        <li><strong>IQR method</strong> — flag x if x &lt; Q1 − 1.5×IQR or x &gt; Q3 + 1.5×IQR, where IQR = Q3 − Q1; more robust to extreme values.</li>
+        <li><strong>Z-score method</strong> — z = (x − μ) / σ; commonly flag |z| &gt; 3; assumes a roughly normal distribution.</li>
+        <li><strong>Visual methods</strong> — box plots and scatter plots make outliers easy to spot by eye.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module02_5')" aria-label="Mark LO 5 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 6</span><span class="obj-title">Decide how to handle an outlier</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>List and explain the options for handling an outlier once it is found.</p>
+      <ul>
+        <li><strong>Investigate first</strong> — decide whether it is a genuine extreme value or a data-entry / sensor error.</li>
+        <li><strong>Remove or cap</strong> — remove it if it is clearly an error that would distort the analysis, or cap/limit it (winsorizing) by pulling extremes toward a reasonable boundary.</li>
+        <li><strong>Transform or keep</strong> — transform the data (e.g., a log transform) to reduce the influence of extremes, or keep it if it is a genuine, meaningful data point for your question.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module02_6')" aria-label="Mark LO 6 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <span class="part-label">Section 2 · Encoding &amp; Scaling</span>
+
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 7</span><span class="obj-title">Explain why categorical data must be encoded</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Explain why categorical data must be encoded and why the choice of method matters.</p>
+      <ul>
+        <li><strong>Why encode</strong> — machine learning models need numbers, not text labels, so categories like "Red", "Blue", "Green" must be converted to a numeric form.</li>
+        <li><strong>Why the method matters</strong> — a poor encoding choice can introduce a false sense of order or relationship between categories.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module02_7')" aria-label="Mark LO 7 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 8</span><span class="obj-title">Compare label encoding and one-hot encoding</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Compare label encoding and one-hot encoding, including when to use each.</p>
+      <ul>
+        <li><strong>Label encoding</strong> — assigns each category an integer (Red=0, Blue=1, Green=2); simple, but implies a false order, so it is best for ordinal data (e.g., Low/Medium/High).</li>
+        <li><strong>One-hot encoding</strong> — creates a separate binary (0/1) column per category; no false order but adds more columns, so it is best for nominal data (no natural order).</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module02_8')" aria-label="Mark LO 8 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 9</span><span class="obj-title">Explain why features are scaled and where it matters</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Explain why features are scaled and where scaling matters most.</p>
+      <ul>
+        <li><strong>The problem</strong> — features on very different scales (e.g., Age 0–100 vs. Income 0–200,000) can distort many ML models.</li>
+        <li><strong>The fix</strong> — scaling puts all features on a comparable range so no single feature unfairly dominates.</li>
+        <li><strong>Where it matters</strong> — especially for distance-based models (k-NN, k-means) and gradient-based models (neural networks).</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module02_9')" aria-label="Mark LO 9 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 10</span><span class="obj-title">Apply min-max normalization and z-score standardization</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Give the min-max normalization and z-score standardization formulas and explain when to use each.</p>
+      <ul>
+        <li><strong>Min-max normalization</strong> — x' = (x − min(x)) / (max(x) − min(x)); rescales into a fixed [0, 1] range but is sensitive to outliers.</li>
+        <li><strong>Z-score standardization</strong> — z = (x − μ) / σ; centers data at mean 0 with standard deviation 1 and is more robust when outliers are present.</li>
+        <li><strong>When to use each</strong> — use min-max when you need a strictly bounded range (e.g., neural network inputs); use standardization when data may contain outliers or is not uniformly distributed.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module02_10')" aria-label="Mark LO 10 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <span class="part-label">Section 3 · Incorrect Data, Noise, Validation &amp; Integrity</span>
+
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 11</span><span class="obj-title">Recognize incorrect data</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Define incorrect data, give examples, and explain what is needed to catch it.</p>
+      <ul>
+        <li><strong>Definition</strong> — data that is present but wrong: typos, wrong units, or impossible values.</li>
+        <li><strong>Examples</strong> — age = 250, a negative price, "Februaryy" instead of "February", and inconsistent date formats.</li>
+        <li><strong>Catching it</strong> — requires domain knowledge and clear validation rules.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module02_11')" aria-label="Mark LO 11 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 12</span><span class="obj-title">Distinguish noise from outliers</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Define noise, distinguish it from outliers, and explain where it appears and why it matters.</p>
+      <ul>
+        <li><strong>Definition</strong> — noise is random variation or fluctuation in data that is not meaningful signal.</li>
+        <li><strong>Vs. outliers</strong> — noise is small and everywhere; outliers are extreme and isolated.</li>
+        <li><strong>Where &amp; why</strong> — common in sensor data, audio/image data, and survey responses; too much noise can hide the real underlying pattern.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module02_12')" aria-label="Mark LO 12 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 13</span><span class="obj-title">Apply the four data validation checks</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Define data validation, list the four checks, and state when validation should happen.</p>
+      <ul>
+        <li><strong>Definition</strong> — checking that data meets defined rules before it is used.</li>
+        <li><strong>Four checks</strong> — type check (is it the expected number/date/text?), range check (e.g., age 0–120, percentage 0–100), format check (email, phone, or date properly formatted), and consistency check (e.g., end date after start date).</li>
+        <li><strong>When</strong> — as early as possible, ideally right at the point of collection.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module02_13')" aria-label="Mark LO 13 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 14</span><span class="obj-title">Explain data integrity as an ongoing practice</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Define data integrity and explain the practices that maintain it.</p>
+      <ul>
+        <li><strong>Definition</strong> — the overall accuracy, consistency, and reliability of data across its entire lifecycle.</li>
+        <li><strong>Ongoing, not one-time</strong> — it is an ongoing responsibility, not a one-time cleaning step.</li>
+        <li><strong>Practices</strong> — access controls, audit trails, backups, validation pipelines, and clear data governance.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module02_14')" aria-label="Mark LO 14 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STUDY GUIDE ═══════════════ -->
+<div class="panel" id="panel-guide" role="tabpanel" aria-labelledby="tab-guide">
+  <h1>Study Guide</h1>
+  <span class="unit-badge">Module 2 · Lecture 2 — Data Preparation &amp; Preprocessing</span>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🧹 Section 1 · Data Quality, Missing Values, Duplicates &amp; Outliers</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <h3>Why data quality matters</h3>
+      <ul>
+        <li><strong>Garbage in, garbage out</strong> — bad data leads to bad decisions, broken models, and wasted time.</li>
+        <li><strong>Cost</strong> — poor data quality is estimated to cost organizations millions of dollars every year.</li>
+        <li><strong>Effort</strong> — cleaning is usually the single largest time investment in a real data science project.</li>
+      </ul>
+
+      <h3>The six data quality dimensions</h3>
+      <table class="sg-table">
+        <tr><th>Dimension</th><th>Meaning</th><th>Example</th></tr>
+        <tr><td><strong>Accuracy</strong></td><td>Data correctly reflects the real-world values and events it represents.</td><td>A customer's email address is spelled correctly.</td></tr>
+        <tr><td><strong>Completeness</strong></td><td>All required data is present and nothing important is missing.</td><td>Every customer record has an email, phone number, and address.</td></tr>
+        <tr><td><strong>Consistency</strong></td><td>Data is uniform across different systems and formats.</td><td>"USA", "U.S.", and "United States" are used consistently.</td></tr>
+        <tr><td><strong>Timeliness</strong></td><td>Data is up-to-date and available when it is needed.</td><td>Inventory levels are updated in real time as items are sold.</td></tr>
+        <tr><td><strong>Uniqueness</strong></td><td>Each piece of data is unique and not duplicated unnecessarily.</td><td>No duplicate customer profiles exist in the database.</td></tr>
+        <tr><td><strong>Validity</strong></td><td>Data conforms to defined rules, formats, and business constraints.</td><td>A date of birth is a valid date (e.g., not 02/30/2024).</td></tr>
+      </table>
+      <p>High-quality data builds trust, improves decisions, reduces costs, and drives better business outcomes.</p>
+
+      <h3>Missing values</h3>
+      <ul>
+        <li><strong>What</strong> — empty or null cells where data should exist.</li>
+        <li><strong>Common causes</strong> — a skipped form field, sensor failure, a merge between mismatched sources, or a system error.</li>
+        <li><strong>Three types</strong> — Missing Completely at Random (MCAR), Missing at Random (MAR), and Missing Not at Random (MNAR).</li>
+      </ul>
+      <div class="flag-note">⚠️ The deck names three types of missing data — MCAR, MAR, and MNAR — and expands the acronyms, but it does not define or differentiate them. Those definitions are absent from the source, so none is supplied here.</div>
+      <p><strong>Handling missing values:</strong></p>
+      <ul>
+        <li><strong>Deletion</strong> — drop rows/columns with too many missing values (use carefully; you lose data).</li>
+        <li><strong>Mean / median / mode imputation</strong> — fill in a statistically reasonable replacement value.</li>
+        <li><strong>Forward-fill / backward-fill</strong> — carry the nearest known value forward or backward (common in time series).</li>
+        <li><strong>Understand why first</strong> — the cause should drive the fix.</li>
+      </ul>
+
+      <h3>Duplicate records</h3>
+      <ul>
+        <li><strong>What</strong> — the same real-world entity appears more than once in the dataset.</li>
+        <li><strong>Common causes</strong> — repeated form submissions, merging multiple data sources, or system syncing errors.</li>
+        <li><strong>Impact</strong> — can silently bias analysis and inflate counts, averages, and totals.</li>
+        <li><strong>Exact duplicates</strong> — identical across every column; easy to detect and safely drop.</li>
+        <li><strong>Near-duplicates</strong> — slightly different (typos, spacing, formatting); harder to catch, often needs fuzzy matching.</li>
+        <li><strong>In pandas</strong> — .duplicated() to find them, .drop_duplicates() to remove them.</li>
+        <li><strong>Caution</strong> — always double-check what actually counts as a "duplicate" before removing anything.</li>
+      </ul>
+      <div class="flag-note">⚠️ "Fuzzy matching" is named as the technique for catching near-duplicates but is not defined in the deck; no definition is supplied here.</div>
+
+      <h3>Outliers</h3>
+      <ul>
+        <li><strong>What</strong> — data points that differ significantly from the rest of the dataset.</li>
+        <li><strong>Origin</strong> — can be genuine (a real, rare event) or an error (a data-entry mistake or sensor glitch).</li>
+        <li><strong>Example</strong> — one $500,000 order in a dataset where the average order is $50.</li>
+      </ul>
+      <p><strong>Detection methods:</strong></p>
+      <table class="sg-table">
+        <tr><th>Method</th><th>Rule</th><th>Note</th></tr>
+        <tr><td><strong>IQR (Interquartile Range)</strong></td><td>Flag x if x &lt; Q1 − 1.5×IQR or x &gt; Q3 + 1.5×IQR, where IQR = Q3 − Q1.</td><td>More robust to extreme values.</td></tr>
+        <tr><td><strong>Z-score</strong></td><td>z = (x − μ) / σ; commonly flag |z| &gt; 3 (μ = mean, σ = standard deviation).</td><td>Assumes a roughly normal distribution.</td></tr>
+      </table>
+      <p>Visual methods work too: box plots and scatter plots make outliers easy to spot by eye.</p>
+      <p><strong>Handling outliers:</strong> investigate first (genuine vs. error); remove it (if clearly an error that would distort analysis); cap or limit it (winsorizing — pull extremes toward a reasonable boundary); transform the data (e.g., a log transform); or keep it (if it is a genuine, meaningful data point for your question).</p>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🔢 Section 2 · Encoding &amp; Scaling</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <h3>Encoding categorical data — why we need it</h3>
+      <ul>
+        <li>Machine learning models need numbers, not text labels.</li>
+        <li>Categorical data — like "Red", "Blue", "Green" — must be converted, or encoded, into a numeric form.</li>
+        <li>The encoding method matters: a poor choice can introduce a false sense of order or relationship between categories.</li>
+      </ul>
+
+      <h3>Label encoding vs. one-hot encoding</h3>
+      <table class="sg-table">
+        <tr><th>Aspect</th><th>Label Encoding</th><th>One-Hot Encoding</th></tr>
+        <tr><td><strong>How it works</strong></td><td>Assigns each category an integer (Red=0, Blue=1, Green=2).</td><td>Creates a separate binary (0/1) column for each category.</td></tr>
+        <tr><td><strong>Order</strong></td><td>Implies a false order — e.g., Red (0) &lt; Blue (1) &lt; Green (2).</td><td>No ordinal relationship — each category is independent.</td></tr>
+        <tr><td><strong>Trade-off</strong></td><td>Simple, but the implied order can mislead.</td><td>No false order, but adds more columns.</td></tr>
+        <tr><td><strong>Best for</strong></td><td>Ordinal data (e.g., Low/Medium/High).</td><td>Nominal data (no natural order).</td></tr>
+      </table>
+
+      <h3>Normalization &amp; standardization — why scale data?</h3>
+      <ul>
+        <li>Features on very different scales (e.g., Age 0–100 vs. Income 0–200,000) can distort many ML models.</li>
+        <li>Scaling puts all features on a comparable range, so no single feature unfairly dominates.</li>
+        <li>Especially important for distance-based models (k-NN, k-means) and gradient-based models (neural networks).</li>
+      </ul>
+
+      <h3>The scaling equations</h3>
+      <table class="sg-table">
+        <tr><th>Method</th><th>Formula</th><th>Notes</th></tr>
+        <tr><td><strong>Min-Max Normalization</strong></td><td>x' = (x − min(x)) / (max(x) − min(x))</td><td>Rescales values into a fixed [0, 1] range. Sensitive to outliers. Use when you need a strictly bounded range (e.g., neural network inputs).</td></tr>
+        <tr><td><strong>Z-Score Standardization</strong></td><td>z = (x − μ) / σ</td><td>Centers data around a mean of 0 with a standard deviation of 1. More robust when outliers are present. Use when data may contain outliers or is not uniformly distributed.</td></tr>
+      </table>
+      <span class="eqn">Min-Max:  x' = (x − min(x)) / (max(x) − min(x))  →  [0, 1]</span>
+      <span class="eqn">Z-Score:  z = (x − μ) / σ  →  mean 0, std 1</span>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🛡️ Section 3 · Incorrect Data, Noise, Validation &amp; Integrity</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <h3>Incorrect data</h3>
+      <ul>
+        <li><strong>What</strong> — data that is present, but wrong: typos, wrong units, or impossible values.</li>
+        <li><strong>Examples</strong> — age = 250, a negative price, "Februaryy" instead of "February", inconsistent date formats.</li>
+        <li><strong>Catching it</strong> — requires domain knowledge and clear validation rules.</li>
+      </ul>
+      <table class="sg-table">
+        <tr><th>Issue</th><th>Example from the lecture</th></tr>
+        <tr><td><strong>Impossible age</strong></td><td>250, 1500</td></tr>
+        <tr><td><strong>Negative price</strong></td><td>−$10.00</td></tr>
+        <tr><td><strong>Misspelled month</strong></td><td>"Februarry" instead of "February" (bullet text: "Februaryy")</td></tr>
+        <tr><td><strong>Invalid date</strong></td><td>13/32/2026</td></tr>
+        <tr><td><strong>Inconsistent units / values</strong></td><td>Leads to errors and bad insights.</td></tr>
+      </table>
+
+      <h3>Noise in data</h3>
+      <ul>
+        <li><strong>What</strong> — random variation or fluctuation in data that is not meaningful signal.</li>
+        <li><strong>Different from outliers</strong> — noise is small and everywhere; outliers are extreme and isolated.</li>
+        <li><strong>Where</strong> — common in sensor data, audio/image data, and survey responses.</li>
+        <li><strong>Why it matters</strong> — too much noise can hide the real underlying pattern.</li>
+      </ul>
+
+      <h3>Data validation</h3>
+      <p>Data validation is checking that data meets defined rules before it is used.</p>
+      <table class="sg-table">
+        <tr><th>Check</th><th>Question it asks</th></tr>
+        <tr><td><strong>Type check</strong></td><td>Is this actually a number, date, or text as expected?</td></tr>
+        <tr><td><strong>Range check</strong></td><td>Is age between 0 and 120? Is a percentage between 0 and 100?</td></tr>
+        <tr><td><strong>Format check</strong></td><td>Is the email address, phone number, or date properly formatted?</td></tr>
+        <tr><td><strong>Consistency check</strong></td><td>Does the end date come after the start date?</td></tr>
+      </table>
+      <p>Validation should happen as early as possible — ideally right at the point of collection.</p>
+
+      <h3>Data integrity</h3>
+      <ul>
+        <li><strong>What</strong> — the overall accuracy, consistency, and reliability of data across its entire lifecycle.</li>
+        <li><strong>Ongoing</strong> — not a one-time cleaning step; it is an ongoing responsibility.</li>
+        <li><strong>Practices</strong> — access controls, audit trails, backups, validation pipelines, and clear data governance.</li>
+      </ul>
+
+      <h3>Hands-on activity — inspect a messy dataset</h3>
+      <ul>
+        <li>In groups, you receive a deliberately messy dataset — missing values, duplicates, outliers, bad encodings, and typos included.</li>
+        <li>Task: identify and list every data quality issue you can find.</li>
+        <li>Discuss: what would you do to fix each one, and why?</li>
+        <li>Findings are reviewed together as a class.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FLASHCARDS ═══════════════ -->
+<div class="panel" id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards">
+  <h1>Flashcards</h1>
+  <div class="filter-row" role="group" aria-label="Filter flashcards by section">
+    <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('s1',this)">Quality &amp; Cleaning</button>
+    <button class="filter-btn" onclick="filterCards('s2',this)">Encoding &amp; Scaling</button>
+    <button class="filter-btn" onclick="filterCards('s3',this)">Validation &amp; Integrity</button>
+  </div>
+  <div class="fc-counter" id="fc-counter" aria-live="polite"></div>
+  <div class="fc-wrap">
+    <div class="fc-card" id="fc-card" onclick="flipCard()" aria-label="Flashcard — click to flip">
+      <div class="fc-front"><div class="fc-label">Question</div><div class="fc-q" id="fc-q" aria-live="polite"></div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a" id="fc-a" aria-live="polite"></div></div>
+    </div>
+  </div>
+  <div class="fc-controls">
+    <button class="fc-btn" onclick="flipCard()" aria-label="Flip card">↩ Flip</button>
+    <button class="fc-btn mastered-btn" id="fc-master-btn" onclick="toggleMastered(currentIdx)" aria-label="Toggle mastered">☐ Mastered</button>
+    <button class="fc-btn" onclick="shuffleCards()" aria-label="Shuffle deck">🔀 Shuffle</button>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
+    <button class="fc-btn" onclick="nextCard()" aria-label="Next card">Next →</button>
+  </div>
+  <div class="fc-empty" id="fc-empty" style="display:none">No cards in this filter.</div>
+</div>
+
+<!-- ═══════════════ QUIZ ═══════════════ -->
+<div class="panel" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+  <h1>Practice Quiz</h1>
+  <div class="filter-row" role="group" aria-label="Filter quiz by section">
+    <button class="filter-btn active" onclick="setQuizFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setQuizFilter('s1',this)">Quality &amp; Cleaning</button>
+    <button class="filter-btn" onclick="setQuizFilter('s2',this)">Encoding &amp; Scaling</button>
+    <button class="filter-btn" onclick="setQuizFilter('s3',this)">Validation &amp; Integrity</button>
+  </div>
+  <div id="quiz-container"></div>
+  <div style="margin-top:16px;">
+    <button id="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <button id="reset-btn" onclick="resetQuiz()">Reset</button>
+  </div>
+  <div id="quiz-score"></div>
+</div>
+
+<!-- ═══════════════ DISCUSSION ═══════════════ -->
+<div class="panel" id="panel-discussion" role="tabpanel" aria-labelledby="tab-discussion">
+  <h1>Discussion Board Prep</h1>
+  <div class="filter-row" role="group" aria-label="Filter discussion by section">
+    <button class="filter-btn active" onclick="filterDisc('all',this)">All</button>
+    <button class="filter-btn" onclick="filterDisc('s1',this)">Quality &amp; Cleaning</button>
+    <button class="filter-btn" onclick="filterDisc('s2',this)">Encoding &amp; Scaling</button>
+    <button class="filter-btn" onclick="filterDisc('s3',this)">Validation &amp; Integrity</button>
+  </div>
+  <div id="disc-container"></div>
+</div>
+
+<!-- ═══════════════ NOTES ═══════════════ -->
+<div class="panel" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes">
+  <h1>Notes Template</h1>
+  <span class="unit-badge">Module 2 · Lecture 2 — Print this tab for in-class notes</span>
+
+  <div class="video-block">
+    <h4>📌 Module 2 source material</h4>
+    <p style="font-size:.84rem;color:#b0b0c8;line-height:1.7;">Everything on this page comes from <strong>Lecture 2 — Data Preparation and Preprocessing for Artificial Intelligence</strong> (Dr. Al Amin), 20 slides, posted to Blackboard. Quiz 2 is due 9/1. This module is covered on the Midterm (Modules 1–9), Oct 20.</p>
+    <div class="source-list">
+      <a href="https://www.austincc.edu/" target="_blank" rel="noopener">ACC</a>
+      <a href="https://acconline.austincc.edu/" target="_blank" rel="noopener">Blackboard</a>
+      <a href="https://www.ucertify.com/" target="_blank" rel="noopener">uCertify</a>
+    </div>
+  </div>
+
+  <div class="notes-grid">
+    <div class="note-card"><h4>Six data quality dimensions</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Missing values — causes &amp; types</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Handling missing values</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Duplicates — exact vs. near</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Outliers — what &amp; example</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>IQR vs. Z-score detection</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Handling outliers (5 options)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Why encode categorical data</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Label vs. one-hot encoding</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Why scale — where it matters</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Min-max vs. z-score equations</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Incorrect data — examples</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Noise vs. outliers</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Four validation checks</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Data integrity practices</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Hands-on: messy dataset</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+  </div>
+</div>
+
+<footer>CSIS 3352 · Module 2 · study.imichaelv.com · Built from Lecture 2 source slides · <a href="../../index.html" class="back-link footer-back-link">← Back to all courses</a></footer>
+
+<script>
+// ─── MASTERY ───
+function getMasteryKey(){return 'mastery_csis3352_module02_';}
+function resetAllMastery(){
+  Object.keys(localStorage).filter(k=>k.startsWith(getMasteryKey())).forEach(k=>localStorage.removeItem(k));
+  Object.keys(localStorage).filter(k=>k.startsWith('obj_csis3352_module02_')).forEach(k=>localStorage.removeItem(k));
+  document.querySelectorAll('.obj-master-btn').forEach(b=>{b.textContent='☐ Mark Mastered';b.classList.remove('mastered');});
+  document.querySelectorAll('.fc-card').forEach((_,i)=>localStorage.removeItem(getMasteryKey()+i));
+  renderCard();updateMasteryBar();
+}
+function updateMasteryBar(){
+  const total=document.querySelectorAll('.obj-master-btn').length;
+  const done=Object.keys(localStorage).filter(k=>k.startsWith('obj_csis3352_module02_')).length;
+  const pct=total?Math.round(done/total*100):0;
+  const f=document.getElementById('mastery-fill');
+  if(f)f.style.width=pct+'%';
+}
+function toggleObjMastery(btn,key){
+  const is=localStorage.getItem(key);
+  if(is){localStorage.removeItem(key);btn.textContent='☐ Mark Mastered';btn.classList.remove('mastered');}
+  else{localStorage.setItem(key,'1');btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  updateMasteryBar();
+}
+function toggleObj(card){
+  const body=card.querySelector('.obj-body');
+  const arrow=card.querySelector('.obj-expand');
+  const open=body.classList.toggle('open');
+  arrow.style.transform=open?'rotate(180deg)':'';
+  card.setAttribute('aria-expanded',open);
+}
+function toggleChapter(header){
+  const body=header.nextElementSibling;
+  const arrow=header.querySelector('span:last-child');
+  const open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  arrow.style.transform=open?'':'rotate(180deg)';
+  header.setAttribute('aria-expanded',!open);
+}
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+}
+// scope filter highlighting to the row that was clicked, so the three panels do not clear each other
+function activateFilter(btn){
+  const row=btn.closest('.filter-row');
+  if(row)row.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ─── FLASHCARD DATA ───  {ch:'s1'|'s2'|'s3', q, a}
+const allCards=[
+  {ch:'s1',q:"What does 'garbage in, garbage out' mean for data quality?",a:"Bad data leads to bad decisions, broken models, and wasted time — poor input produces poor output."},
+  {ch:'s1',q:"What is poor data quality estimated to cost organizations?",a:"Millions of dollars every year."},
+  {ch:'s1',q:"Which task is usually the single largest time investment in a real data science project?",a:"Data cleaning."},
+  {ch:'s1',q:"Name the six common data quality dimensions.",a:"Accuracy, Completeness, Consistency, Timeliness, Uniqueness, and Validity."},
+  {ch:'s1',q:"Which dimension means data correctly reflects the real-world values and events it represents?",a:"Accuracy."},
+  {ch:'s1',q:"Which dimension means all required data is present and nothing important is missing?",a:"Completeness."},
+  {ch:'s1',q:"Which dimension means data is uniform across different systems and formats (e.g., 'USA' vs 'U.S.' vs 'United States')?",a:"Consistency."},
+  {ch:'s1',q:"Which dimension means data is up-to-date and available when it is needed?",a:"Timeliness."},
+  {ch:'s1',q:"Which dimension means each piece of data is unique and not duplicated unnecessarily?",a:"Uniqueness."},
+  {ch:'s1',q:"Which dimension means data conforms to defined rules, formats, and constraints (e.g., a birth date is a valid date)?",a:"Validity."},
+  {ch:'s1',q:"What are missing values?",a:"Empty or null cells where data should exist."},
+  {ch:'s1',q:"List common causes of missing values.",a:"A skipped form field, sensor failure, a merge between mismatched sources, or a system error."},
+  {ch:'s1',q:"What are the three types of missing data?",a:"Missing Completely at Random (MCAR), Missing at Random (MAR), and Missing Not at Random (MNAR)."},
+  {ch:'s1',q:"Name four ways to handle missing values.",a:"Deletion; mean/median/mode imputation; forward-fill/backward-fill; and understanding why it's missing before deciding."},
+  {ch:'s1',q:"What is the risk of deleting rows or columns with missing values?",a:"You lose data, so it must be used carefully."},
+  {ch:'s1',q:"Which missing-value technique carries the nearest known value forward or backward, and where is it common?",a:"Forward-fill / backward-fill — common in time series data."},
+  {ch:'s1',q:"Before deciding how to handle a missing value, what should you do first?",a:"Understand why it's missing — the cause should drive the fix."},
+  {ch:'s1',q:"What is a duplicate record?",a:"The same real-world entity appearing more than once in the dataset."},
+  {ch:'s1',q:"List common causes of duplicate records.",a:"Repeated form submissions, merging multiple data sources, or system syncing errors."},
+  {ch:'s1',q:"How can duplicates harm analysis?",a:"They can silently bias analysis and inflate counts, averages, and totals."},
+  {ch:'s1',q:"What is an exact duplicate, and how is it handled?",a:"A record identical across every column — easy to detect and safe to drop."},
+  {ch:'s1',q:"What is a near-duplicate, and why is it harder to catch?",a:"A record that's slightly different (typos, spacing, formatting); it's harder to catch and often needs fuzzy matching."},
+  {ch:'s1',q:"Which pandas methods find and remove duplicates?",a:".duplicated() finds them; .drop_duplicates() removes them."},
+  {ch:'s1',q:"What should you always do before removing duplicates?",a:"Double-check what actually counts as a 'duplicate.'"},
+  {ch:'s1',q:"What is an outlier?",a:"A data point that differs significantly from the rest of the dataset."},
+  {ch:'s1',q:"Give the two possible origins of an outlier.",a:"It can be genuine — a real, rare event — or an error, like a data-entry mistake or sensor glitch."},
+  {ch:'s1',q:"What is the lecture's example of an outlier?",a:"One $500,000 order in a dataset where the average order is $50."},
+  {ch:'s1',q:"State the IQR outlier rule.",a:"Flag x if x < Q1 − 1.5×IQR or x > Q3 + 1.5×IQR, where IQR = Q3 − Q1."},
+  {ch:'s1',q:"State the Z-score outlier rule.",a:"z = (x − μ) / σ; commonly |z| > 3 is flagged as an outlier (μ = mean, σ = standard deviation)."},
+  {ch:'s1',q:"How do IQR and Z-score differ in robustness and assumptions?",a:"IQR is more robust to extreme values; Z-score assumes a roughly normal distribution."},
+  {ch:'s1',q:"Which visual methods help spot outliers?",a:"Box plots and scatter plots."},
+  {ch:'s1',q:"List the five options for handling an outlier.",a:"Investigate first; remove it; cap/limit it (winsorizing); transform the data (e.g., log transform); or keep it."},
+  {ch:'s1',q:"What is winsorizing?",a:"Capping or limiting an outlier by pulling extreme values in toward a reasonable boundary."},
+  {ch:'s2',q:"Why must categorical data be encoded?",a:"Machine learning models need numbers, not text labels."},
+  {ch:'s2',q:"Why does the choice of encoding method matter?",a:"A poor choice can introduce a false sense of order or relationship between categories."},
+  {ch:'s2',q:"What is label encoding?",a:"It assigns each category an integer (e.g., Red=0, Blue=1, Green=2)."},
+  {ch:'s2',q:"What is the drawback of label encoding, and when is it best used?",a:"It implies a false order, so it's best for ordinal data (e.g., Low/Medium/High)."},
+  {ch:'s2',q:"What is one-hot encoding?",a:"It creates a separate binary (0/1) column for each category."},
+  {ch:'s2',q:"What is the trade-off of one-hot encoding, and when is it best used?",a:"It avoids false order but adds more columns; best for nominal data (no natural order)."},
+  {ch:'s2',q:"Why do we scale data?",a:"Features on very different scales can distort many ML models; scaling puts them on a comparable range so no single feature dominates."},
+  {ch:'s2',q:"Which model families make scaling especially important?",a:"Distance-based models (k-NN, k-means) and gradient-based models (neural networks)."},
+  {ch:'s2',q:"State the min-max normalization formula and its output range.",a:"x' = (x − min(x)) / (max(x) − min(x)); rescales values into a fixed [0, 1] range."},
+  {ch:'s2',q:"What is a weakness of min-max normalization?",a:"It is sensitive to outliers."},
+  {ch:'s2',q:"State the z-score standardization formula and what it produces.",a:"z = (x − μ) / σ; centers data around a mean of 0 with a standard deviation of 1."},
+  {ch:'s2',q:"When should you use min-max vs standardization?",a:"Min-max when you need a strictly bounded range (e.g., neural network inputs); standardization when data may contain outliers or isn't uniformly distributed."},
+  {ch:'s3',q:"What is incorrect data?",a:"Data that is present but wrong — typos, wrong units, or impossible values."},
+  {ch:'s3',q:"Give examples of incorrect data.",a:"Age = 250, a negative price, 'Februaryy' instead of 'February', and inconsistent date formats."},
+  {ch:'s3',q:"What does catching incorrect data require?",a:"Domain knowledge and clear validation rules."},
+  {ch:'s3',q:"What is noise in data?",a:"Random variation or fluctuation in data that isn't meaningful signal."},
+  {ch:'s3',q:"How does noise differ from an outlier?",a:"Noise is small and everywhere; outliers are extreme and isolated."},
+  {ch:'s3',q:"Where is noise common?",a:"Sensor data, audio/image data, and survey responses."},
+  {ch:'s3',q:"Why does noise matter?",a:"Too much noise can hide the real underlying pattern."},
+  {ch:'s3',q:"What is data validation?",a:"Checking that data meets defined rules before it's used."},
+  {ch:'s3',q:"Name the four validation checks.",a:"Type check, range check, format check, and consistency check."},
+  {ch:'s3',q:"Give an example of a range check.",a:"Is age between 0 and 120? Is a percentage between 0 and 100?"},
+  {ch:'s3',q:"Give an example of a consistency check.",a:"Does the end date come after the start date?"},
+  {ch:'s3',q:"When should validation happen?",a:"As early as possible — ideally right at the point of collection."},
+  {ch:'s3',q:"What is data integrity?",a:"The overall accuracy, consistency, and reliability of data across its entire lifecycle."},
+  {ch:'s3',q:"Is data integrity a one-time step?",a:"No — it's an ongoing responsibility, not a one-time cleaning step."},
+  {ch:'s3',q:"List the data integrity practices.",a:"Access controls, audit trails, backups, validation pipelines, and clear data governance."}
+];
+// ─── FLASHCARD ENGINE ───
+let deck=[],currentIdx=0,flipped=false;
+function filterCards(ch,btn){
+  activateFilter(btn);
+  deck=ch==='all'?[...allCards]:allCards.filter(c=>c.ch===ch);
+  currentIdx=0;flipped=false;renderCard();
+}
+function renderCard(){
+  const empty=document.getElementById('fc-empty');
+  if(!deck.length){empty.style.display='block';document.getElementById('fc-counter').textContent='';return;}
+  empty.style.display='none';
+  const c=deck[currentIdx];
+  document.getElementById('fc-q').textContent=c.q;
+  document.getElementById('fc-a').textContent=c.a;
+  document.getElementById('fc-counter').textContent=(currentIdx+1)+' / '+deck.length;
+  const card=document.getElementById('fc-card');
+  card.classList.remove('flipped');flipped=false;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+  else{mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+}
+function flipCard(){document.getElementById('fc-card').classList.toggle('flipped');flipped=!flipped;}
+function nextCard(){if(!deck.length)return;currentIdx=(currentIdx+1)%deck.length;renderCard();}
+function prevCard(){if(!deck.length)return;currentIdx=(currentIdx-1+deck.length)%deck.length;renderCard();}
+function shuffleCards(){for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}currentIdx=0;renderCard();}
+function toggleMastered(idx){
+  const c=deck[idx];if(!c)return;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){localStorage.removeItem(key);mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+  else{localStorage.setItem(key,'1');mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+}
+
+// ─── QUIZ DATA ───
+const allQuizData=[
+  {ch:'s1',type:'mc',q:"Which phrase captures the idea that bad input data produces bad results?",opts:["Garbage in, garbage out","First in, first out","Fail fast","Measure twice, cut once"],ans:0,exp:"'Garbage in, garbage out' — bad data leads to bad decisions, broken models, and wasted time."},
+  {ch:'s1',type:'mc',q:"Which of these is NOT one of the six data quality dimensions?",opts:["Accuracy","Completeness","Scalability","Validity"],ans:2,exp:"The six dimensions are Accuracy, Completeness, Consistency, Timeliness, Uniqueness, and Validity. Scalability is not among them."},
+  {ch:'s1',type:'fitb',q:"The data quality dimension meaning data is uniform across different systems and formats is ___.",ans:["consistency"],display:"Consistency",exp:"Consistency — e.g., using 'USA', 'U.S.', and 'United States' the same way."},
+  {ch:'s1',type:'mc',q:"'A date of birth is a valid date (not 02/30/2024)' is an example of which dimension?",opts:["Timeliness","Validity","Uniqueness","Accuracy"],ans:1,exp:"Validity — data conforms to defined rules, formats, and business constraints."},
+  {ch:'s1',type:'mc',q:"According to the lecture, cleaning is usually the:",opts:["Smallest task in a project","Single largest time investment in a real data science project","Final optional step","Same effort as modeling"],ans:1,exp:"Cleaning is usually the single largest time investment in a real data science project."},
+  {ch:'s1',type:'fitb',q:"Empty or null cells where data should exist are called ___ values.",ans:["missing"],display:"Missing",exp:"Missing values are empty or null cells where data should exist."},
+  {ch:'s1',type:'mc',q:"Which is NOT listed as a common cause of missing values?",opts:["A skipped form field","Sensor failure","A merge between mismatched sources","Encrypting the database"],ans:3,exp:"Listed causes: a skipped form field, sensor failure, a merge between mismatched sources, or a system error."},
+  {ch:'s1',type:'mc',q:"The three types of missing data are:",opts:["MCAR, MAR, MNAR","MC, MA, MN","Random, Fixed, Hybrid","MCAR, MBAR, MCNR"],ans:0,exp:"Missing Completely at Random (MCAR), Missing at Random (MAR), and Missing Not at Random (MNAR)."},
+  {ch:'s1',type:'mc',q:"Which missing-value method is described as common in time series?",opts:["Deletion","Mean/median/mode imputation","Forward-fill / backward-fill","One-hot encoding"],ans:2,exp:"Forward-fill/backward-fill carries the nearest known value forward or backward and is common in time series."},
+  {ch:'s1',type:'mc',q:"Before choosing how to handle a missing value, you should first:",opts:["Delete the whole column","Understand why it's missing","Replace it with zero","Duplicate the row"],ans:1,exp:"Understand why it's missing before deciding how to handle it — the cause should drive the fix."},
+  {ch:'s1',type:'fitb',q:"The same real-world entity appearing more than once in a dataset is a ___ record.",ans:["duplicate"],display:"Duplicate",exp:"A duplicate record is the same real-world entity appearing more than once."},
+  {ch:'s1',type:'mc',q:"How can duplicate records harm analysis?",opts:["They encrypt the data","They inflate counts, averages, and totals","They always delete themselves","They improve accuracy"],ans:1,exp:"Duplicates can silently bias analysis and inflate counts, averages, and totals."},
+  {ch:'s1',type:'mc',q:"Which pandas method removes duplicates?",opts:[".duplicated()",".drop_duplicates()",".fillna()",".dropna()"],ans:1,exp:".duplicated() finds duplicates; .drop_duplicates() removes them."},
+  {ch:'s1',type:'mc',q:"Near-duplicates (typos, spacing, formatting) often require:",opts:["Exact matching","Fuzzy matching","One-hot encoding","Winsorizing"],ans:1,exp:"Near-duplicates are harder to catch and often need fuzzy matching."},
+  {ch:'s1',type:'mc',q:"An outlier is best defined as:",opts:["A missing value","A data point that differs significantly from the rest","A duplicate row","A text label"],ans:1,exp:"An outlier is a data point that differs significantly from the rest of the dataset."},
+  {ch:'s1',type:'mc',q:"The lecture's outlier example is:",opts:["A $50 order among $500,000 orders","One $500,000 order where the average order is $50","A missing email field","A duplicate customer record"],ans:1,exp:"One $500,000 order in a dataset where the average order is $50."},
+  {ch:'s1',type:'fitb',q:"In the IQR method, IQR = Q3 − ___.",ans:["q1"],display:"Q1",exp:"IQR = Q3 − Q1; flag points below Q1 − 1.5×IQR or above Q3 + 1.5×IQR."},
+  {ch:'s1',type:'fitb',q:"In the Z-score method, a point is commonly flagged as an outlier when the absolute value of z is greater than ___.",ans:["3"],display:"3",exp:"Commonly, |z| > 3 is flagged as an outlier."},
+  {ch:'s1',type:'mc',q:"Which statement about IQR vs Z-score is correct?",opts:["Z-score is more robust to extreme values","IQR assumes a normal distribution","IQR is more robust to extreme values; Z-score assumes a roughly normal distribution","Both require a normal distribution"],ans:2,exp:"IQR is more robust to extreme values; Z-score assumes a roughly normal distribution."},
+  {ch:'s1',type:'mc',q:"Capping extreme values toward a reasonable boundary is called:",opts:["Imputation","Winsorizing","Encoding","Normalization"],ans:1,exp:"Winsorizing caps or limits extreme values by pulling them toward a reasonable boundary."},
+  {ch:'s2',type:'mc',q:"Why must categorical data be encoded?",opts:["To compress the file","Because ML models need numbers, not text labels","To remove duplicates","To hide the data"],ans:1,exp:"Machine learning models need numbers, not text labels."},
+  {ch:'s2',type:'fitb',q:"Assigning each category an integer (Red=0, Blue=1, Green=2) is called ___ encoding.",ans:["label"],display:"Label",exp:"Label encoding assigns each category an integer."},
+  {ch:'s2',type:'mc',q:"A drawback of label encoding is that it:",opts:["Adds many columns","Implies a false order","Deletes categories","Requires normalization"],ans:1,exp:"Label encoding implies a false order, so it's best for ordinal data."},
+  {ch:'s2',type:'mc',q:"One-hot encoding is best for:",opts:["Ordinal data with natural order","Nominal data with no natural order","Time series data","Missing values"],ans:1,exp:"One-hot encoding avoids false order and is best for nominal data (no natural order)."},
+  {ch:'s2',type:'mc',q:"The trade-off of one-hot encoding is that it:",opts:["Implies false order","Adds more columns","Loses data","Requires deletion"],ans:1,exp:"One-hot encoding adds a separate binary column per category, so it adds more columns."},
+  {ch:'s2',type:'mc',q:"Why do we scale features?",opts:["So one feature doesn't unfairly dominate","To create duplicates","To add noise","To encode text"],ans:0,exp:"Scaling puts all features on a comparable range so no single feature unfairly dominates."},
+  {ch:'s2',type:'mc',q:"Scaling is especially important for:",opts:["Distance-based (k-NN, k-means) and gradient-based (neural network) models","Only decision trees","Only text data","Only duplicate detection"],ans:0,exp:"It matters most for distance-based models (k-NN, k-means) and gradient-based models (neural networks)."},
+  {ch:'s2',type:'fitb',q:"Min-max normalization rescales values into a fixed range of 0 to ___.",ans:["1"],display:"1 (the [0, 1] range)",exp:"Min-max normalization rescales values into a fixed [0, 1] range."},
+  {ch:'s2',type:'mc',q:"Which scaling method is described as sensitive to outliers?",opts:["Z-score standardization","Min-max normalization","Label encoding","Forward-fill"],ans:1,exp:"Min-max normalization is sensitive to outliers."},
+  {ch:'s2',type:'mc',q:"Z-score standardization centers data around:",opts:["A mean of 1 and SD of 0","A mean of 0 and a standard deviation of 1","A median of 0","A range of [0,1]"],ans:1,exp:"Standardization centers data around a mean of 0 with a standard deviation of 1."},
+  {ch:'s2',type:'mc',q:"Use standardization (over min-max) when:",opts:["You need a strictly bounded range","Data may contain outliers or isn't uniformly distributed","Feeding neural network inputs that need [0,1]","The data is categorical"],ans:1,exp:"Use standardization when data may contain outliers or isn't uniformly distributed; use min-max when you need a strictly bounded range."},
+  {ch:'s3',type:'mc',q:"Incorrect data is:",opts:["Empty cells","Data present but wrong (typos, wrong units, impossible values)","Duplicate rows","Scaled features"],ans:1,exp:"Incorrect data is present but wrong — typos, wrong units, or impossible values."},
+  {ch:'s3',type:'mc',q:"Which is an example of incorrect data from the lecture?",opts:["A missing email","Age = 250","A $50 order","A [0,1] scaled value"],ans:1,exp:"Examples include age = 250, a negative price, 'Februaryy', and inconsistent date formats."},
+  {ch:'s3',type:'fitb',q:"Random variation or fluctuation in data that isn't meaningful signal is called ___.",ans:["noise"],display:"Noise",exp:"Noise is random variation or fluctuation that isn't meaningful signal."},
+  {ch:'s3',type:'mc',q:"How does noise differ from outliers?",opts:["Noise is extreme and isolated; outliers are everywhere","Noise is small and everywhere; outliers are extreme and isolated","They are identical","Noise only appears in text data"],ans:1,exp:"Noise is small and everywhere; outliers are extreme and isolated."},
+  {ch:'s3',type:'mc',q:"Which is NOT one of the four validation checks?",opts:["Type check","Range check","Format check","Encoding check"],ans:3,exp:"The four checks are type, range, format, and consistency checks."},
+  {ch:'s3',type:'mc',q:"'Does the end date come after the start date?' is an example of a:",opts:["Type check","Range check","Consistency check","Format check"],ans:2,exp:"That is a consistency check."},
+  {ch:'s3',type:'fitb',q:"Validation should happen as early as possible — ideally right at the point of ___.",ans:["collection"],display:"Collection",exp:"Validation should happen ideally right at the point of collection."},
+  {ch:'s3',type:'mc',q:"Data integrity is:",opts:["A one-time cleaning step","The overall accuracy, consistency, and reliability of data across its entire lifecycle","The same as encoding","A type of outlier"],ans:1,exp:"Data integrity is the overall accuracy, consistency, and reliability of data across its lifecycle — an ongoing responsibility."},
+  {ch:'s3',type:'mc',q:"Which is a data integrity practice listed in the lecture?",opts:["Access controls and audit trails","One-hot encoding","Winsorizing","Forward-fill"],ans:0,exp:"Practices: access controls, audit trails, backups, validation pipelines, and clear data governance."}
+];
+// ─── QUIZ ENGINE ───
+let quizFilter='all',userAnswers={};
+function setQuizFilter(ch,btn){
+  activateFilter(btn);quizFilter=ch;resetQuiz();
+}
+function getQuizDeck(){return quizFilter==='all'?allQuizData:allQuizData.filter(q=>q.ch===quizFilter);}
+function renderQuiz(){
+  const deck=getQuizDeck();
+  const c=document.getElementById('quiz-container');c.innerHTML='';userAnswers={};
+  deck.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='quiz-q';div.id='qq'+i;
+    if(q.type==='mc'){
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <div class="quiz-opts">${q.opts.map((o,oi)=>`<label><input type="radio" name="q${i}" onclick="selectMC(${i},${oi})"> ${o}</label>`).join('')}</div>
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    } else {
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <input class="fitb-input" id="fitb${i}" placeholder="Type your answer..." aria-label="Answer for question ${i+1}" oninput="storeFITB(${i})">
+        <div class="q-exp" id="exp${i}"><strong>Answer: ${q.display}</strong> — ${q.exp}</div>`;
+    }
+    c.appendChild(div);
+  });
+  document.getElementById('quiz-score').style.display='none';
+}
+function selectMC(qi,oi){userAnswers[qi]=oi;}
+function storeFITB(qi){userAnswers[qi]=document.getElementById('fitb'+qi).value.trim().toLowerCase();}
+function submitQuiz(){
+  const deck=getQuizDeck();let correct=0;
+  deck.forEach((q,i)=>{
+    const el=document.getElementById('qq'+i);
+    const exp=document.getElementById('exp'+i);exp.classList.add('show');
+    el.classList.remove('q-correct','q-wrong');
+    if(q.type==='mc'){
+      const ua=userAnswers[i];
+      if(ua===q.ans){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    } else {
+      const ua=(userAnswers[i]||'').toLowerCase();
+      const ok=ua!==''&&q.ans.some(a=>ua.includes(a.toLowerCase()));
+      if(ok){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    }
+  });
+  const sc=document.getElementById('quiz-score');
+  const pct=Math.round(correct/deck.length*100);
+  sc.style.display='block';
+  sc.style.borderColor=pct>=70?'var(--green)':'var(--red)';
+  sc.innerHTML=`<strong>Score: ${correct}/${deck.length} (${pct}%)</strong> — ${pct>=90?'Excellent! 🎉':pct>=70?'Good work — review flagged questions.':'Keep studying — focus on the red ones.'}`;
+}
+function resetQuiz(){renderQuiz();}
+
+// ─── DISCUSSION DATA ───  one entry per learning objective, in the same order
+const DISC_QUESTIONS=[
+  {ch:'s1',q:"Explain why data quality matters and describe the six common data quality dimensions.",
+   points:[
+     {text:"<strong>Why it matters</strong> — bad data leads to bad decisions, broken models, and wasted time (\"garbage in, garbage out\"); poor data quality is estimated to cost organizations millions of dollars every year, and cleaning is usually the single largest time investment in a real data science project."},
+     {text:"<strong>Accuracy &amp; Completeness</strong> — Accuracy = data correctly reflects real-world values and events; Completeness = all required data is present and nothing important is missing."},
+     {text:"<strong>Consistency &amp; Timeliness</strong> — Consistency = data is uniform across systems and formats (\"USA\" / \"U.S.\" / \"United States\"); Timeliness = data is up-to-date and available when it is needed."},
+     {text:"<strong>Uniqueness &amp; Validity</strong> — Uniqueness = each piece of data is unique and not duplicated unnecessarily; Validity = data conforms to defined rules, formats, and business constraints (a birth date is a valid date)."}
+   ],
+   model:"Data quality matters because bad data leads to bad decisions and broken models — garbage in, garbage out — and it's estimated to cost organizations millions of dollars a year, which is why cleaning is usually the biggest time investment in a data project. The six dimensions are accuracy (data reflects reality), completeness (nothing important missing), consistency (uniform across systems), timeliness (up to date when needed), uniqueness (no unnecessary duplicates), and validity (conforms to defined rules and formats)."},
+  {ch:'s1',q:"Define missing values, give their common causes, and name the three types of missingness.",
+   points:[
+     {text:"<strong>Definition</strong> — missing values are empty or null cells where data should exist."},
+     {text:"<strong>Common causes</strong> — a skipped form field, sensor failure, a merge between mismatched sources, or a system error."},
+     {text:"<strong>Three types</strong> — Missing Completely at Random (MCAR), Missing at Random (MAR), and Missing Not at Random (MNAR)."}
+   ],
+   model:"Missing values are empty or null cells where data should exist. Common causes include a skipped form field, a sensor failure, a merge between mismatched data sources, or a system error. The lecture names three types of missingness: Missing Completely at Random (MCAR), Missing at Random (MAR), and Missing Not at Random (MNAR)."},
+  {ch:'s1',q:"Describe the methods for handling missing values and what should guide the choice.",
+   points:[
+     {text:"<strong>Deletion</strong> — drop rows/columns with too many missing values, but use it carefully because you lose data."},
+     {text:"<strong>Imputation</strong> — fill in a statistically reasonable replacement using the mean, median, or mode."},
+     {text:"<strong>Forward-fill / backward-fill</strong> — carry the nearest known value forward or backward; common in time series."},
+     {text:"<strong>Cause first</strong> — understand why the value is missing before deciding how to handle it; the cause should drive the fix."}
+   ],
+   model:"There are a few options: deletion (drop rows or columns with too many missing values, used carefully because you lose data), mean/median/mode imputation (fill a statistically reasonable value), and forward-fill/backward-fill (carry the nearest known value forward or backward, common in time series). Most importantly, understand why the data is missing before choosing — the cause should drive the fix."},
+  {ch:'s1',q:"Explain what duplicate records are, why they matter, and how to detect and remove them.",
+   points:[
+     {text:"<strong>What &amp; why</strong> — the same real-world entity appears more than once; common causes are repeated form submissions, merging multiple sources, or system syncing errors, and duplicates can silently bias analysis and inflate counts, averages, and totals."},
+     {text:"<strong>Exact vs. near-duplicates</strong> — exact duplicates are identical across every column (easy to drop); near-duplicates differ slightly (typos, spacing, formatting) and often need fuzzy matching."},
+     {text:"<strong>Tools &amp; caution</strong> — in pandas, .duplicated() finds them and .drop_duplicates() removes them; always double-check what actually counts as a duplicate before removing anything."}
+   ],
+   model:"A duplicate record is the same real-world entity appearing more than once, often from repeated form submissions, merged sources, or syncing errors — and it can quietly inflate counts, averages, and totals. Exact duplicates match on every column and are safe to drop; near-duplicates differ slightly (typos, spacing) and usually need fuzzy matching. In pandas, .duplicated() finds them and .drop_duplicates() removes them, but you should always confirm what really counts as a duplicate first."},
+  {ch:'s1',q:"Define an outlier and explain how to detect one using the IQR and Z-score methods.",
+   points:[
+     {text:"<strong>Definition</strong> — a data point that differs significantly from the rest of the dataset; it can be a genuine rare event or an error (e.g., one $500,000 order where the average is $50)."},
+     {text:"<strong>IQR method</strong> — flag x if x &lt; Q1 − 1.5×IQR or x &gt; Q3 + 1.5×IQR, where IQR = Q3 − Q1; more robust to extreme values."},
+     {text:"<strong>Z-score method</strong> — z = (x − μ) / σ; commonly flag |z| &gt; 3; assumes a roughly normal distribution."},
+     {text:"<strong>Visual methods</strong> — box plots and scatter plots make outliers easy to spot by eye."}
+   ],
+   model:"An outlier is a data point that differs significantly from the rest — it may be a genuine rare event or an error like a data-entry mistake, e.g., one $500,000 order when the average is $50. The IQR method flags anything below Q1 − 1.5×IQR or above Q3 + 1.5×IQR (IQR = Q3 − Q1) and is robust to extremes; the Z-score method computes z = (x − μ)/σ and commonly flags |z| > 3, assuming a roughly normal distribution. Box plots and scatter plots also reveal outliers visually."},
+  {ch:'s1',q:"List and explain the options for handling an outlier once it is found.",
+   points:[
+     {text:"<strong>Investigate first</strong> — decide whether it is a genuine extreme value or a data-entry / sensor error."},
+     {text:"<strong>Remove or cap</strong> — remove it if it is clearly an error that would distort the analysis, or cap/limit it (winsorizing) by pulling extremes toward a reasonable boundary."},
+     {text:"<strong>Transform or keep</strong> — transform the data (e.g., a log transform) to reduce the influence of extremes, or keep it if it is a genuine, meaningful data point for your question."}
+   ],
+   model:"First investigate whether the outlier is a real extreme value or an error. If it's clearly an error that would distort the analysis, remove it; or cap/limit it (winsorizing) by pulling extremes toward a reasonable boundary. You can also transform the data — e.g., a log transform — to reduce the influence of extremes, or simply keep it if it's a genuine, meaningful point for your question."},
+  {ch:'s2',q:"Explain why categorical data must be encoded and why the choice of method matters.",
+   points:[
+     {text:"<strong>Why encode</strong> — machine learning models need numbers, not text labels, so categories like \"Red\", \"Blue\", \"Green\" must be converted to a numeric form."},
+     {text:"<strong>Why the method matters</strong> — a poor encoding choice can introduce a false sense of order or relationship between categories."}
+   ],
+   model:"Machine learning models need numbers, not text labels, so categorical values like 'Red', 'Blue', and 'Green' have to be converted into a numeric form. The method matters because a poor choice can introduce a false sense of order or relationship between categories that doesn't really exist."},
+  {ch:'s2',q:"Compare label encoding and one-hot encoding, including when to use each.",
+   points:[
+     {text:"<strong>Label encoding</strong> — assigns each category an integer (Red=0, Blue=1, Green=2); simple, but implies a false order, so it is best for ordinal data (e.g., Low/Medium/High)."},
+     {text:"<strong>One-hot encoding</strong> — creates a separate binary (0/1) column per category; no false order but adds more columns, so it is best for nominal data (no natural order)."}
+   ],
+   model:"Label encoding assigns each category an integer (Red=0, Blue=1, Green=2). It's simple but implies a false order, so it fits ordinal data like Low/Medium/High. One-hot encoding creates a separate binary 0/1 column for each category, which avoids implying any order but adds more columns, so it's best for nominal data with no natural order."},
+  {ch:'s2',q:"Explain why features are scaled and where scaling matters most.",
+   points:[
+     {text:"<strong>The problem</strong> — features on very different scales (e.g., Age 0–100 vs. Income 0–200,000) can distort many ML models."},
+     {text:"<strong>The fix</strong> — scaling puts all features on a comparable range so no single feature unfairly dominates."},
+     {text:"<strong>Where it matters</strong> — especially for distance-based models (k-NN, k-means) and gradient-based models (neural networks)."}
+   ],
+   model:"Features on very different scales — say Age from 0–100 versus Income from 0–200,000 — can distort many ML models by letting the large-range feature dominate. Scaling puts everything on a comparable range so no single feature unfairly dominates. It matters most for distance-based models like k-NN and k-means and gradient-based models like neural networks."},
+  {ch:'s2',q:"Give the min-max normalization and z-score standardization formulas and explain when to use each.",
+   points:[
+     {text:"<strong>Min-max normalization</strong> — x' = (x − min(x)) / (max(x) − min(x)); rescales into a fixed [0, 1] range but is sensitive to outliers."},
+     {text:"<strong>Z-score standardization</strong> — z = (x − μ) / σ; centers data at mean 0 with standard deviation 1 and is more robust when outliers are present."},
+     {text:"<strong>When to use each</strong> — use min-max when you need a strictly bounded range (e.g., neural network inputs); use standardization when data may contain outliers or is not uniformly distributed."}
+   ],
+   model:"Min-max normalization uses x' = (x − min(x)) / (max(x) − min(x)) to rescale values into a fixed [0, 1] range, but it's sensitive to outliers. Z-score standardization uses z = (x − μ) / σ to center data at a mean of 0 with a standard deviation of 1, and it's more robust when outliers are present. Use min-max when you need a strictly bounded range (like neural network inputs) and standardization when the data may contain outliers or isn't uniformly distributed."},
+  {ch:'s3',q:"Define incorrect data, give examples, and explain what is needed to catch it.",
+   points:[
+     {text:"<strong>Definition</strong> — data that is present but wrong: typos, wrong units, or impossible values."},
+     {text:"<strong>Examples</strong> — age = 250, a negative price, \"Februaryy\" instead of \"February\", and inconsistent date formats."},
+     {text:"<strong>Catching it</strong> — requires domain knowledge and clear validation rules."}
+   ],
+   model:"Incorrect data is data that's present but wrong — typos, wrong units, or impossible values. Examples from the lecture include an age of 250, a negative price, 'Februaryy' instead of 'February', and inconsistent date formats. Catching it takes domain knowledge and clear validation rules, since the values are there but don't make sense."},
+  {ch:'s3',q:"Define noise, distinguish it from outliers, and explain where it appears and why it matters.",
+   points:[
+     {text:"<strong>Definition</strong> — noise is random variation or fluctuation in data that is not meaningful signal."},
+     {text:"<strong>Vs. outliers</strong> — noise is small and everywhere; outliers are extreme and isolated."},
+     {text:"<strong>Where &amp; why</strong> — common in sensor data, audio/image data, and survey responses; too much noise can hide the real underlying pattern."}
+   ],
+   model:"Noise is random variation or fluctuation in data that isn't meaningful signal. It differs from outliers in scale and spread: noise is small and everywhere, while outliers are extreme and isolated. Noise is common in sensor data, audio/image data, and survey responses, and too much of it can hide the real underlying pattern."},
+  {ch:'s3',q:"Define data validation, list the four checks, and state when validation should happen.",
+   points:[
+     {text:"<strong>Definition</strong> — checking that data meets defined rules before it is used."},
+     {text:"<strong>Four checks</strong> — type check (is it the expected number/date/text?), range check (e.g., age 0–120, percentage 0–100), format check (email, phone, or date properly formatted), and consistency check (e.g., end date after start date)."},
+     {text:"<strong>When</strong> — as early as possible, ideally right at the point of collection."}
+   ],
+   model:"Data validation means checking that data meets defined rules before it's used. The four checks are a type check (is the value actually the expected number, date, or text?), a range check (is age between 0 and 120, a percentage between 0 and 100?), a format check (is the email, phone, or date properly formatted?), and a consistency check (does the end date come after the start date?). Validation should happen as early as possible — ideally right at the point of collection."},
+  {ch:'s3',q:"Define data integrity and explain the practices that maintain it.",
+   points:[
+     {text:"<strong>Definition</strong> — the overall accuracy, consistency, and reliability of data across its entire lifecycle."},
+     {text:"<strong>Ongoing, not one-time</strong> — it is an ongoing responsibility, not a one-time cleaning step."},
+     {text:"<strong>Practices</strong> — access controls, audit trails, backups, validation pipelines, and clear data governance."}
+   ],
+   model:"Data integrity is the overall accuracy, consistency, and reliability of data across its entire lifecycle. It isn't a one-time cleaning step — it's an ongoing responsibility. It's maintained through practices like access controls, audit trails, backups, validation pipelines, and clear data governance."}
+];
+// ─── DISCUSSION ENGINE ───
+let discFilter='all';
+function filterDisc(ch,btn){
+  activateFilter(btn);discFilter=ch;renderDiscussion();
+}
+function renderDiscussion(){
+  const list=discFilter==='all'?DISC_QUESTIONS:DISC_QUESTIONS.filter(d=>d.ch===discFilter);
+  const c=document.getElementById('disc-container');c.innerHTML='';
+  list.forEach((d,i)=>{
+    const idx=DISC_QUESTIONS.indexOf(d);
+    const div=document.createElement('div');div.className='disc-q';
+    div.innerHTML=`<div class="disc-q-text">${i+1}. ${d.q}</div>
+      <textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Draft your response here..." aria-label="Discussion response ${i+1}"></textarea>
+      <div class="disc-btn-row">
+        <button class="disc-btn primary" onclick="submitDisc(${idx})">Submit &amp; Self-Grade</button>
+        <button class="disc-btn" onclick="toggleModel(${idx})">Show Model Answer</button>
+        <button class="disc-btn" onclick="resetDisc(${idx})">Reset</button>
+      </div>
+      <div class="disc-rubric" id="disc-rubric-${idx}">
+        <strong style="font-size:.82rem;color:var(--text)">Self-Grading Rubric</strong>
+        <div style="margin-top:8px;">${d.points.map((p,pi)=>`<div class="rubric-item"><input type="checkbox" id="rub-${idx}-${pi}" onchange="updateDiscScore(${idx})"><label for="rub-${idx}-${pi}">${p.text}</label></div>`).join('')}</div>
+        <div class="disc-score" id="disc-score-${idx}">Score: 0 / ${d.points.length}</div>
+      </div>
+      <div class="model-answer" id="disc-model-${idx}">${d.model}</div>`;
+    c.appendChild(div);
+  });
+}
+function submitDisc(idx){
+  document.getElementById('disc-ta-'+idx).disabled=true;
+  document.getElementById('disc-rubric-'+idx).classList.add('show');
+}
+function resetDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);ta.disabled=false;ta.value='';
+  document.getElementById('disc-rubric-'+idx).classList.remove('show');
+  document.getElementById('disc-model-'+idx).classList.remove('show');
+  document.querySelectorAll(`[id^="rub-${idx}-"]`).forEach(cb=>cb.checked=false);
+  document.getElementById('disc-score-'+idx).textContent='Score: 0 / '+DISC_QUESTIONS[idx].points.length;
+}
+function updateDiscScore(idx){
+  const total=DISC_QUESTIONS[idx].points.length;
+  const checked=document.querySelectorAll(`[id^="rub-${idx}-"]:checked`).length;
+  document.getElementById('disc-score-'+idx).textContent=`Score: ${checked} / ${total} (${Math.round(checked/total*100)}%)`;
+}
+function toggleModel(idx){document.getElementById('disc-model-'+idx).classList.toggle('show');}
+
+// ─── INIT ───
+window.addEventListener('DOMContentLoaded',()=>{
+  deck=[...allCards];renderCard();renderQuiz();renderDiscussion();updateMasteryBar();
+  document.querySelectorAll('.obj-master-btn').forEach(btn=>{
+    const key=btn.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+    if(key&&localStorage.getItem(key)){btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  });
+  document.querySelectorAll('.obj-card').forEach(card=>{
+    card.addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleObj(card);}
+    });
+  });
+});
+</script>
+</body>
+</html>
