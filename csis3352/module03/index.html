@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CSIS 3352 — Module 3: Hands-on LAB: Data Processing</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#0a0a0f; --surface:#12121a; --surface2:#16161f; --border:#1e1e2e;
+  --text:#e8e8f0; --muted:#6b6b80; --green:#22c55e; --red:#ef4444;
+  --yellow:#eab308; --purple:#a78bfa; --orange:#f97316;
+  --accent:#a855f7; --accent-dim:rgba(168,85,247,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(168,85,247,0.025) 39px,rgba(168,85,247,0.025) 40px),
+  repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(168,85,247,0.025) 39px,rgba(168,85,247,0.025) 40px);}
+body::before{content:'CSIS 3352 · Module 3 · Hands-on LAB — Data Preprocessing (Python / scikit-learn)';position:fixed;top:0;left:0;right:0;
+  background:rgba(10,10,15,0.95);border-bottom:1px solid var(--border);padding:10px 16px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);z-index:100;letter-spacing:.05em;}
+.topnav{display:flex;gap:4px;padding:48px 12px 8px;overflow-x:auto;position:sticky;top:0;
+  background:rgba(10,10,15,0.97);z-index:90;border-bottom:1px solid var(--border);}
+.nav-btn{flex-shrink:0;background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:7px 13px;border-radius:6px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:11px;transition:all .15s;}
+.nav-btn:hover{color:var(--text);border-color:var(--accent);}
+.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.panel{display:none;padding:20px 16px 60px;max-width:860px;margin:0 auto;}
+.panel.active{display:block;}
+h1{font-size:1.4rem;font-weight:600;color:var(--accent);margin-bottom:4px;}
+.back-link{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;margin-bottom:10px;}
+.back-link:hover,.back-link:active{color:var(--accent);}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;display:block;}
+.exam-pill{display:inline-block;background:rgba(234,179,8,0.15);border:1px solid var(--yellow);
+  color:var(--yellow);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;
+  border-radius:20px;margin-bottom:20px;}
+.textbook-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.textbook-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;transition:all .15s;}
+.textbook-links a:hover{color:var(--accent);border-color:var(--accent);}
+
+/* Objectives — section color classes cycle: s1 accent, s2 orange, s3 purple, then repeat */
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:10px;cursor:pointer;transition:border-color .15s;}
+.obj-card:hover{border-color:var(--accent);}
+.obj-header{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.s1 .obj-num{color:var(--accent);background:var(--accent-dim);}
+.s2 .obj-num{color:var(--orange);background:rgba(249,115,22,0.12);}
+.s3 .obj-num{color:var(--purple);background:rgba(167,139,250,0.12);}
+.s4 .obj-num{color:var(--accent);background:var(--accent-dim);}
+.s5 .obj-num{color:var(--orange);background:rgba(249,115,22,0.12);}
+.s6 .obj-num{color:var(--purple);background:rgba(167,139,250,0.12);}
+.s7 .obj-num{color:var(--accent);background:var(--accent-dim);}
+.obj-title{font-size:.88rem;font-weight:500;flex:1;}
+.obj-expand{color:var(--muted);font-size:12px;transition:transform .2s;}
+.obj-body{display:none;padding:0 16px 14px;font-size:.84rem;line-height:1.65;color:#b0b0c8;}
+.obj-body.open{display:block;}
+.obj-body ul{padding-left:18px;margin:6px 0;}
+.obj-body li{margin-bottom:6px;}
+.obj-body strong{color:var(--text);}
+.obj-master-btn{margin-top:10px;background:transparent;border:1px solid var(--border);color:var(--muted);
+  padding:5px 12px;border-radius:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;transition:all .15s;}
+.obj-master-btn.mastered{border-color:var(--green);color:var(--green);background:rgba(34,197,94,0.08);}
+.mastery-bar{background:var(--surface);border:1px solid var(--border);border-radius:20px;height:6px;margin-bottom:20px;overflow:hidden;}
+.mastery-fill{height:100%;background:var(--green);border-radius:20px;transition:width .4s;}
+.reset-mastery-btn{display:block;margin-bottom:20px;background:transparent;border:1px solid var(--border);
+  color:var(--muted);padding:6px 14px;border-radius:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;}
+.reset-mastery-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* Study Guide */
+.chapter-block{margin-bottom:16px;}
+.chapter-header{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;font-weight:500;font-size:.9rem;transition:border-color .15s;}
+.chapter-header:hover{border-color:var(--accent);}
+.chapter-body{display:none;background:var(--surface2);border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;padding:16px;}
+.chapter-body h3{font-size:.82rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px;}
+.chapter-body h3:first-child{margin-top:0;}
+.chapter-body p,.chapter-body li{font-size:.84rem;line-height:1.7;color:#b0b0c8;margin-bottom:6px;}
+.chapter-body ul{padding-left:18px;}
+.chapter-body strong{color:var(--text);}
+.flag-note{background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.3);border-radius:6px;padding:8px 12px;font-size:.78rem;color:var(--yellow);margin:8px 0;}
+.code-block{font-family:'IBM Plex Mono',monospace;background:var(--surface2);border:1px solid var(--border);border-radius:6px;
+  padding:12px;font-size:.8rem;line-height:1.65;white-space:pre;overflow-x:auto;color:var(--text);margin:8px 0;}
+.code-block .cmt{color:var(--muted);}
+
+/* Flashcards */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:5px 12px;border-radius:4px;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;transition:all .15s;}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.fc-wrap{perspective:1000px;margin-bottom:16px;}
+.fc-card{width:100%;min-height:220px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.fc-card.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;background:var(--surface);
+  border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;justify-content:center;padding:24px;}
+.fc-back{transform:rotateY(180deg);border-color:var(--accent);background:var(--accent-dim);}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
+.fc-q,.fc-a{font-size:1rem;line-height:1.6;color:var(--text);}
+.fc-a{color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:.92rem;}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-align:center;margin-bottom:12px;}
+.fc-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+.fc-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82rem;transition:all .15s;}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent);}
+.fc-btn.mastered-btn{border-color:var(--green);color:var(--green);}
+.fc-nav{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+.fc-empty{text-align:center;padding:40px;color:var(--muted);font-size:.9rem;}
+
+/* Quiz */
+.quiz-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:14px;}
+.quiz-q-text{font-size:.9rem;margin-bottom:12px;line-height:1.6;}
+.quiz-q-text code{font-family:'IBM Plex Mono',monospace;background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:.85rem;}
+.quiz-opts label{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;border-radius:5px;cursor:pointer;font-size:.85rem;line-height:1.5;transition:background .1s;}
+.quiz-opts label:hover{background:rgba(255,255,255,0.04);}
+.quiz-opts input{margin-top:3px;flex-shrink:0;accent-color:var(--accent);}
+.fitb-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:5px;font-size:.85rem;margin-top:8px;font-family:'IBM Plex Mono',monospace;}
+.fitb-input:focus{outline:none;border-color:var(--accent);}
+.q-correct{border-color:var(--green)!important;background:rgba(34,197,94,0.06)!important;}
+.q-wrong{border-color:var(--red)!important;background:rgba(239,68,68,0.06)!important;}
+.q-exp{font-size:.8rem;color:#9090b0;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);display:none;}
+.q-exp.show{display:block;}
+#submit-btn,#reset-btn{padding:10px 22px;border-radius:6px;cursor:pointer;font-size:.88rem;font-weight:500;transition:all .15s;border:1px solid;}
+#submit-btn{background:var(--accent);border-color:var(--accent);color:#fff;margin-right:8px;}
+#submit-btn:hover{opacity:.85;}
+#reset-btn{background:transparent;border-color:var(--border);color:var(--muted);}
+#reset-btn:hover{border-color:var(--red);color:var(--red);}
+#quiz-score{margin-top:16px;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:.9rem;display:none;}
+
+/* Discussion */
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:14px;}
+.disc-q-text{font-size:.9rem;line-height:1.6;margin-bottom:12px;font-weight:500;}
+.disc-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:5px;
+  font-size:.84rem;min-height:120px;resize:vertical;font-family:'IBM Plex Sans',sans-serif;line-height:1.6;}
+.disc-textarea:focus{outline:none;border-color:var(--accent);}
+.disc-btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.disc-btn{padding:6px 14px;border-radius:5px;cursor:pointer;font-size:.82rem;border:1px solid var(--border);background:var(--surface2);color:var(--muted);transition:all .15s;}
+.disc-btn:hover{color:var(--text);}
+.disc-btn.primary{border-color:var(--accent);color:var(--accent);}
+.disc-rubric{display:none;margin-top:12px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:12px;}
+.disc-rubric.show{display:block;}
+.rubric-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:.82rem;}
+.rubric-item:last-child{border-bottom:none;}
+.rubric-item input[type=checkbox]{flex-shrink:0;margin-top:2px;accent-color:var(--green);}
+.rubric-item strong{color:var(--text);}
+.disc-score{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--green);margin-top:8px;}
+.model-answer{display:none;margin-top:10px;font-size:.82rem;line-height:1.65;color:#9090b0;background:rgba(167,139,250,0.06);
+  border:1px solid rgba(167,139,250,0.2);border-radius:6px;padding:12px;}
+.model-answer.show{display:block;}
+
+/* Code Lab */
+.codelab-intro{font-size:.84rem;line-height:1.65;color:#b0b0c8;margin-bottom:16px;}
+.codelab-section-title{font-size:.82rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin:22px 0 10px;}
+.seq-row{display:flex;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 12px;margin-bottom:6px;}
+.seq-row select{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:5px;font-family:'IBM Plex Mono',monospace;font-size:.8rem;}
+.seq-name{flex:1;font-size:.86rem;}
+.seq-row.seq-ok{border-color:var(--green);}
+.seq-row.seq-bad{border-color:var(--red);}
+.seq-result{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--muted);margin-top:8px;}
+.code-target-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px;}
+.code-select{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:.82rem;}
+.code-input{width:100%;min-height:300px;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:8px;
+  font-family:'IBM Plex Mono',monospace;font-size:.82rem;line-height:1.6;resize:vertical;white-space:pre;tab-size:4;}
+.code-input:focus{outline:none;border-color:var(--accent);}
+.code-btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.code-btn{padding:9px 18px;border-radius:6px;cursor:pointer;font-size:.85rem;border:1px solid var(--border);background:var(--surface2);color:var(--text);transition:all .15s;}
+.code-btn:hover{border-color:var(--accent);color:var(--accent);}
+.code-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+.code-btn.primary:hover{opacity:.85;color:#fff;}
+.code-result{margin-top:16px;}
+.code-scoreline{font-family:'IBM Plex Mono',monospace;font-size:.9rem;padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--surface);margin-bottom:12px;}
+.code-legend{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--muted);margin-bottom:8px;}
+.diff-line{display:flex;gap:10px;align-items:flex-start;font-family:'IBM Plex Mono',monospace;font-size:.8rem;padding:5px 8px;border-radius:4px;margin-bottom:3px;white-space:pre-wrap;word-break:break-word;}
+.diff-line .ln{color:var(--muted);flex-shrink:0;width:26px;text-align:right;}
+.diff-line .mark{flex-shrink:0;width:14px;}
+.diff-ok{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);}
+.diff-ok .mark{color:var(--green);}
+.diff-miss{background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.25);}
+.diff-miss .mark{color:var(--red);}
+.diff-extra{background:rgba(234,179,8,0.07);border:1px solid rgba(234,179,8,0.25);}
+.diff-extra .mark{color:var(--yellow);}
+.code-answer{display:none;margin-top:12px;}
+.code-answer.show{display:block;}
+
+/* Notes */
+.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.notes-grid{grid-template-columns:1fr;}}
+.note-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.note-card h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.note-lines{display:flex;flex-direction:column;gap:8px;}
+.note-line{border-bottom:1px solid var(--border);min-height:28px;}
+.video-block{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:12px;}
+.video-block h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.video-link{display:flex;align-items:center;gap:8px;padding:7px 0;font-size:.84rem;border-bottom:1px solid var(--border);}
+.video-link:last-child{border-bottom:none;}
+.video-link a{color:var(--text);text-decoration:none;flex:1;}
+.video-link a:hover{color:var(--accent);}
+.video-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);border:1px solid var(--border);padding:2px 6px;border-radius:10px;flex-shrink:0;}
+.source-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.source-list a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;}
+.source-list a:hover{color:var(--accent);border-color:var(--accent);}
+footer{text-align:center;padding:30px 16px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);}
+.footer-back-link{font-size:10px;}
+@media print{
+  body::before,.topnav,.exam-pill,.textbook-links,footer,.fc-controls,.fc-nav,.filter-row,
+  #submit-btn,#quiz-score,.disc-btn-row,.disc-rubric,.obj-master-btn,.reset-mastery-btn,.mastery-bar,
+  .code-target-row,.code-btn-row,.code-input,.seq-row select,.back-link{display:none!important;}
+  .panel{display:none!important;}.panel.active{display:block!important;}
+  *,*::before,*::after{background:white!important;background-color:white!important;background-image:none!important;
+    color:black!important;border-color:#bbb!important;box-shadow:none!important;-webkit-text-fill-color:black!important;}
+  body{font-size:12pt;}.chapter-body{display:block!important;}
+  @page{margin:.75in;}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav" role="tablist" aria-label="Study sections">
+  <button class="nav-btn active" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)" role="tab" aria-selected="false" aria-controls="panel-guide">📖 Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)" role="tab" aria-selected="false" aria-controls="panel-flashcards">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)" role="tab" aria-selected="false" aria-controls="panel-quiz">✏️ Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('discussion',this)" role="tab" aria-selected="false" aria-controls="panel-discussion">💬 Discussion</button>
+  <button class="nav-btn" onclick="showPanel('codelab',this)" role="tab" aria-selected="false" aria-controls="panel-codelab">⌨️ Code Lab</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes Template</button>
+</nav>
+
+<!-- ═══════════════ OBJECTIVES ═══════════════ -->
+<div class="panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+  <a class="back-link" href="../../index.html">← All courses</a>
+  <span class="unit-badge">CSIS 3352 · Module 3</span>
+  <h1>Hands-on LAB: Data Processing</h1>
+  <span class="exam-pill">📅 Assignment 1 (100 pts) — due 9/8 · Reviewed on Midterm (Modules 1–9), Oct 20</span>
+  <div class="textbook-links">
+    <a href="#">pandas · read_csv</a>
+    <a href="#">scikit-learn · preprocessing</a>
+    <a href="#">Dataset: Data.csv (10 rows)</a>
+  </div>
+  <div class="flag-note">📌 The Module 3 lab source is a Python notebook (<code>data_preprocessing_tools.ipynb</code>) with code only — no written learning objectives or prose. The objectives, definitions, and rubric points below are <strong>derived from the script's own structure</strong> and the official pandas / scikit-learn documentation, and are flagged as externally sourced rather than taken from provided course prose.</div>
+  <div class="flag-note">⚠️ Source conflict: the worked notebook uses <code>random_state = 1</code>; the separate template notebook uses <code>random_state = 0</code>. This page treats <strong>1</strong> as canonical because it generated the printed outputs shown in the worked file. Confirm against Dr. Amin's answer key.</div>
+  <div class="mastery-bar"><div class="mastery-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="reset-mastery-btn" onclick="resetAllMastery()">↺ Reset All Mastery</button>
+
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S1 · LO1</span><span class="obj-title">Import the three core libraries with their standard aliases</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>State which three libraries the pipeline imports, their conventional aliases, and what each is used for downstream.</p>
+      <ul>
+        <li><strong>numpy as np</strong> — numerical arrays and math; used later for <code>np.nan</code> (the missing-value marker) and <code>np.array(...)</code>.</li>
+        <li><strong>matplotlib.pyplot as plt</strong> — plotting library, imported by convention as part of the standard template even though this script never plots.</li>
+        <li><strong>pandas as pd</strong> — tabular data loading and manipulation; provides <code>pd.read_csv()</code> and the DataFrame.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module03_1')" aria-label="Mark S1 LO1 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S2 · LO2</span><span class="obj-title">Load the CSV and separate features (X) from the target (y)</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Explain how the dataset is read and how the feature matrix X and dependent vector y are created.</p>
+      <ul>
+        <li><strong>pd.read_csv('Data.csv')</strong> — reads the file into a pandas DataFrame stored in <code>dataset</code>.</li>
+        <li><strong>X = dataset.iloc[:, :-1].values</strong> — every row, every column <em>except the last</em> → the feature matrix (Country, Age, Salary).</li>
+        <li><strong>y = dataset.iloc[:, -1].values</strong> — every row, only the <em>last</em> column → the dependent variable (Purchased).</li>
+        <li><strong>.iloc / .values</strong> — <code>.iloc</code> selects by integer position (not label); <code>.values</code> returns the underlying NumPy array that scikit-learn expects.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module03_2')" aria-label="Mark S2 LO2 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" style="margin-top:20px;">
+    <div class="obj-header"><span class="obj-num">S3 · LO3</span><span class="obj-title">Fill missing numeric values with SimpleImputer (mean strategy)</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Describe how missing Age/Salary values are replaced and why only those columns are touched.</p>
+      <ul>
+        <li><strong>from sklearn.impute import SimpleImputer</strong> — the imputer class lives in <code>sklearn.impute</code>.</li>
+        <li><strong>SimpleImputer(missing_values=np.nan, strategy='mean')</strong> — replaces each <code>NaN</code> with the mean of its column.</li>
+        <li><strong>X[:, 1:3]</strong> — applied only to columns 1–2 (Age, Salary); column 0 (Country) is text and has no mean.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module03_3')" aria-label="Mark S3 LO3 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s4" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S3 · LO4</span><span class="obj-title">Explain fit vs transform (and fit_transform)</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>State the difference between <code>fit</code>, <code>transform</code>, and <code>fit_transform</code> and why order matters.</p>
+      <ul>
+        <li><strong>fit()</strong> — learns parameters from the data (here, the column means) but changes nothing.</li>
+        <li><strong>transform()</strong> — applies those learned parameters to actually replace the values.</li>
+        <li><strong>fit_transform()</strong> — does both in one call; the imputer example separates them (<code>imputer.fit(...)</code> then <code>imputer.transform(...)</code>) to make the two steps explicit.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module03_4')" aria-label="Mark S3 LO4 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s5" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" style="margin-top:20px;">
+    <div class="obj-header"><span class="obj-num">S4 · LO5</span><span class="obj-title">One-hot encode the independent categorical column via ColumnTransformer</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Explain how the Country column is one-hot encoded and what each argument does.</p>
+      <ul>
+        <li><strong>ColumnTransformer</strong> (from <code>sklearn.compose</code>) — applies a transformer to specific columns only.</li>
+        <li><strong>transformers=[('encoder', OneHotEncoder(), [0])]</strong> — one-hot encode column <code>[0]</code> (Country); OneHotEncoder is from <code>sklearn.preprocessing</code>.</li>
+        <li><strong>remainder='passthrough'</strong> — keep all other columns (Age, Salary) unchanged instead of dropping them.</li>
+        <li><strong>X = np.array(ct.fit_transform(X))</strong> — run it and force the result back into a NumPy array.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module03_5')" aria-label="Mark S4 LO5 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s6" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S4 · LO6</span><span class="obj-title">Justify one-hot encoding and locate the new dummy columns</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Say why one-hot encoding is used instead of numeric labels, and where the resulting columns appear.</p>
+      <ul>
+        <li><strong>Why one-hot</strong> — labeling France/Germany/Spain as 0/1/2 would imply a false order/magnitude; one-hot avoids that by making each category its own 0/1 column.</li>
+        <li><strong>Three new columns</strong> — France, Germany, Spain become three binary dummy columns.</li>
+        <li><strong>Position</strong> — the dummy columns are placed at the <em>front</em> (columns 0–2); Age and Salary shift to become columns 3 and 4.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module03_6')" aria-label="Mark S4 LO6 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s7" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" style="margin-top:20px;">
+    <div class="obj-header"><span class="obj-num">S5 · LO7</span><span class="obj-title">Label-encode the dependent variable</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Explain how the Purchased column is encoded and why LabelEncoder is appropriate here.</p>
+      <ul>
+        <li><strong>LabelEncoder</strong> (from <code>sklearn.preprocessing</code>) — converts category labels to integers.</li>
+        <li><strong>y = le.fit_transform(y)</strong> — turns No/Yes into 0/1 (alphabetical: No=0, Yes=1).</li>
+        <li><strong>Why it's fine for y</strong> — the dependent variable is a single target column, so a false ordinal order is not a concern the way it is for feature columns.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module03_7')" aria-label="Mark S5 LO7 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" style="margin-top:20px;">
+    <div class="obj-header"><span class="obj-num">S6 · LO8</span><span class="obj-title">Split the data into training and test sets</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Describe <code>train_test_split</code> and what its key arguments control.</p>
+      <ul>
+        <li><strong>from sklearn.model_selection import train_test_split</strong> — the split function's module.</li>
+        <li><strong>test_size = 0.2</strong> — 20% of rows go to the test set, 80% to training.</li>
+        <li><strong>Four outputs</strong> — <code>X_train, X_test, y_train, y_test</code> in that fixed order.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module03_8')" aria-label="Mark S6 LO8 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S6 · LO9</span><span class="obj-title">Explain random_state and reproducibility</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Say what <code>random_state</code> does and why it is fixed.</p>
+      <ul>
+        <li><strong>What it does</strong> — <code>train_test_split</code> shuffles the rows before splitting (<code>shuffle=True</code> by default); <code>random_state</code> seeds that shuffle so the same split happens every run.</li>
+        <li><strong>Any integer works</strong> — the specific value (0, 1, 42) is arbitrary; what matters is using the same one consistently.</li>
+        <li><strong>This module</strong> — the worked file uses <code>random_state = 1</code>; the template uses <code>0</code>. Different seeds give different rows in each set.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module03_9')" aria-label="Mark S6 LO9 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" style="margin-top:20px;">
+    <div class="obj-header"><span class="obj-num">S7 · LO10</span><span class="obj-title">Apply feature scaling with StandardScaler</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Explain what standardization does and how StandardScaler is applied.</p>
+      <ul>
+        <li><strong>StandardScaler</strong> (from <code>sklearn.preprocessing</code>) — standardizes values to mean 0, unit variance: <code>z = (x − mean) / std</code>.</li>
+        <li><strong>Why</strong> — puts Age and Salary on the same scale so large-magnitude features (Salary) don't dominate models that are distance/gradient based.</li>
+        <li><strong>Applied after the split</strong> — scaling comes last, on the already-split data.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module03_10')" aria-label="Mark S7 LO10 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+
+  <div class="obj-card s4" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S7 · LO11</span><span class="obj-title">Scale only numeric columns, and fit the scaler on training data only</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Explain the two subtle choices in the scaling step.</p>
+      <ul>
+        <li><strong>Only columns [:, 3:]</strong> — scaling is applied to Age/Salary (columns 3+), <em>not</em> the one-hot dummy columns, which are already 0/1 and should stay interpretable.</li>
+        <li><strong>fit_transform on X_train, transform on X_test</strong> — the scaler learns mean/std from the training set only, then re-uses them on the test set.</li>
+        <li><strong>Why</strong> — fitting on the test set too would leak test information into training (data leakage) and give an over-optimistic evaluation.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module03_11')" aria-label="Mark S7 LO11 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STUDY GUIDE ═══════════════ -->
+<div class="panel" id="panel-guide" role="tabpanel" aria-labelledby="tab-guide">
+  <h1>Study Guide</h1>
+  <span class="unit-badge">Module 3 · The 7-stage preprocessing pipeline</span>
+  <div class="flag-note">📌 Definitions below are sourced from the official pandas / scikit-learn documentation (the lab file itself contains no prose). Confidence: high for library behavior; see the Notes tab for source links.</div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false"><span>📦 Stage 1 — Importing the libraries</span><span>▼</span></div>
+    <div class="chapter-body">
+      <div class="code-block">import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd</div>
+      <h3>Terms</h3>
+      <ul>
+        <li><strong>numpy (np)</strong> — numerical computing library; arrays, <code>np.nan</code>, <code>np.array()</code>.</li>
+        <li><strong>matplotlib.pyplot (plt)</strong> — plotting; part of the standard import block by convention even though it is unused in this script.</li>
+        <li><strong>pandas (pd)</strong> — data loading / DataFrames; provides <code>pd.read_csv()</code>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false"><span>📄 Stage 2 — Importing the dataset</span><span>▼</span></div>
+    <div class="chapter-body">
+      <div class="code-block">dataset = pd.read_csv('Data.csv')
+X = dataset.iloc[:, :-1].values
+y = dataset.iloc[:, -1].values
+print(X)
+print(y)</div>
+      <h3>Terms</h3>
+      <ul>
+        <li><strong>read_csv</strong> — loads the CSV into a DataFrame. The dataset has 4 columns: Country, Age, Salary, Purchased (10 rows).</li>
+        <li><strong>iloc[:, :-1]</strong> — integer-location slice: all rows, all columns except the last → features (X).</li>
+        <li><strong>iloc[:, -1]</strong> — all rows, last column only → dependent variable (y).</li>
+        <li><strong>.values</strong> — returns the underlying NumPy array from the pandas object.</li>
+        <li><strong>Missing data present</strong> — one Age and one Salary value are <code>nan</code> in the raw data (handled in Stage 3).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false"><span>🩹 Stage 3 — Taking care of missing data</span><span>▼</span></div>
+    <div class="chapter-body">
+      <div class="code-block">from sklearn.impute import SimpleImputer
+imputer = SimpleImputer(missing_values=np.nan, strategy='mean')
+imputer.fit(X[:, 1:3])
+X[:, 1:3] = imputer.transform(X[:, 1:3])
+print(X)</div>
+      <h3>Terms</h3>
+      <ul>
+        <li><strong>SimpleImputer</strong> — from <code>sklearn.impute</code>; fills missing values.</li>
+        <li><strong>missing_values=np.nan</strong> — which value counts as "missing".</li>
+        <li><strong>strategy='mean'</strong> — replace with the column mean (other options: median, most_frequent, constant).</li>
+        <li><strong>X[:, 1:3]</strong> — Age &amp; Salary columns only (column 0, Country, is text).</li>
+        <li><strong>fit then transform</strong> — <code>fit</code> learns the means; <code>transform</code> writes them back into the array.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false"><span>🔤 Stage 4 — Encoding the independent variable</span><span>▼</span></div>
+    <div class="chapter-body">
+      <div class="code-block">from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [0])], remainder='passthrough')
+X = np.array(ct.fit_transform(X))
+print(X)</div>
+      <h3>Terms</h3>
+      <ul>
+        <li><strong>ColumnTransformer</strong> — from <code>sklearn.compose</code>; applies a transformer to selected columns.</li>
+        <li><strong>OneHotEncoder</strong> — from <code>sklearn.preprocessing</code>; turns a category column into binary dummy columns.</li>
+        <li><strong>transformers=[('encoder', OneHotEncoder(), [0])]</strong> — name, transformer, target column list.</li>
+        <li><strong>remainder='passthrough'</strong> — keep untouched columns; the default 'drop' would delete them.</li>
+        <li><strong>Result</strong> — three dummy columns (France, Germany, Spain) move to the front; Age/Salary become columns 3 &amp; 4.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false"><span>🏷️ Stage 5 — Encoding the dependent variable</span><span>▼</span></div>
+    <div class="chapter-body">
+      <div class="code-block">from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+y = le.fit_transform(y)
+print(y)</div>
+      <h3>Terms</h3>
+      <ul>
+        <li><strong>LabelEncoder</strong> — from <code>sklearn.preprocessing</code>; encodes labels as integers.</li>
+        <li><strong>fit_transform(y)</strong> — learns the label set and converts in one call.</li>
+        <li><strong>Result</strong> — No → 0, Yes → 1 (assigned alphabetically).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false"><span>✂️ Stage 6 — Splitting into Training &amp; Test sets</span><span>▼</span></div>
+    <div class="chapter-body">
+      <div class="code-block">from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 1)
+print(X_train)
+print(X_test)
+print(y_train)
+print(y_test)</div>
+      <div class="flag-note">⚠️ Source conflict — worked file: <code>random_state = 1</code>; template file: <code>random_state = 0</code>. Canonical here = 1 (it produced the notebook's printed splits). Verify against the answer key.</div>
+      <h3>Terms</h3>
+      <ul>
+        <li><strong>train_test_split</strong> — from <code>sklearn.model_selection</code>.</li>
+        <li><strong>test_size = 0.2</strong> — 20% test / 80% train (8 train rows, 2 test rows here).</li>
+        <li><strong>random_state = 1</strong> — seeds the shuffle so the split is reproducible.</li>
+        <li><strong>Return order</strong> — <code>X_train, X_test, y_train, y_test</code>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false"><span>📏 Stage 7 — Feature Scaling</span><span>▼</span></div>
+    <div class="chapter-body">
+      <div class="code-block">from sklearn.preprocessing import StandardScaler
+sc = StandardScaler()
+X_train[:, 3:] = sc.fit_transform(X_train[:, 3:])
+X_test[:, 3:] = sc.transform(X_test[:, 3:])
+print(X_train)
+print(X_test)</div>
+      <h3>Terms</h3>
+      <ul>
+        <li><strong>StandardScaler</strong> — from <code>sklearn.preprocessing</code>; standardizes to mean 0, unit variance.</li>
+        <li><strong>[:, 3:]</strong> — scale Age/Salary only, not the 0/1 dummy columns.</li>
+        <li><strong>fit_transform(X_train) vs transform(X_test)</strong> — fit on train only, then apply to test (avoids data leakage).</li>
+        <li><strong>Order</strong> — scaling is done <em>after</em> the split, not before.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FLASHCARDS ═══════════════ -->
+<div class="panel" id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards">
+  <h1>Flashcards</h1>
+  <div class="filter-row" role="group" aria-label="Filter flashcards by stage">
+    <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('s1',this)">Imports</button>
+    <button class="filter-btn" onclick="filterCards('s2',this)">Load Data</button>
+    <button class="filter-btn" onclick="filterCards('s3',this)">Missing Data</button>
+    <button class="filter-btn" onclick="filterCards('s4',this)">Encode X</button>
+    <button class="filter-btn" onclick="filterCards('s5',this)">Encode y</button>
+    <button class="filter-btn" onclick="filterCards('s6',this)">Split</button>
+    <button class="filter-btn" onclick="filterCards('s7',this)">Scale</button>
+  </div>
+  <div class="fc-counter" id="fc-counter" aria-live="polite"></div>
+  <div class="fc-wrap">
+    <div class="fc-card" id="fc-card" onclick="flipCard()" aria-label="Flashcard — click to flip">
+      <div class="fc-front"><div class="fc-label">Question</div><div class="fc-q" id="fc-q" aria-live="polite"></div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a" id="fc-a" aria-live="polite"></div></div>
+    </div>
+  </div>
+  <div class="fc-controls">
+    <button class="fc-btn" onclick="flipCard()" aria-label="Flip card">↩ Flip</button>
+    <button class="fc-btn mastered-btn" id="fc-master-btn" onclick="toggleMastered(currentIdx)" aria-label="Toggle mastered">☐ Mastered</button>
+    <button class="fc-btn" onclick="shuffleCards()" aria-label="Shuffle deck">🔀 Shuffle</button>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
+    <button class="fc-btn" onclick="nextCard()" aria-label="Next card">Next →</button>
+  </div>
+  <div class="fc-empty" id="fc-empty" style="display:none">No cards in this filter.</div>
+</div>
+
+<!-- ═══════════════ QUIZ ═══════════════ -->
+<div class="panel" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+  <h1>Practice Quiz</h1>
+  <div class="filter-row" role="group" aria-label="Filter quiz by stage">
+    <button class="filter-btn active" onclick="setQuizFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setQuizFilter('s1',this)">Imports</button>
+    <button class="filter-btn" onclick="setQuizFilter('s2',this)">Load Data</button>
+    <button class="filter-btn" onclick="setQuizFilter('s3',this)">Missing Data</button>
+    <button class="filter-btn" onclick="setQuizFilter('s4',this)">Encode X</button>
+    <button class="filter-btn" onclick="setQuizFilter('s5',this)">Encode y</button>
+    <button class="filter-btn" onclick="setQuizFilter('s6',this)">Split</button>
+    <button class="filter-btn" onclick="setQuizFilter('s7',this)">Scale</button>
+  </div>
+  <div id="quiz-container"></div>
+  <div style="margin-top:16px;">
+    <button id="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <button id="reset-btn" onclick="resetQuiz()">Reset</button>
+  </div>
+  <div id="quiz-score"></div>
+</div>
+
+<!-- ═══════════════ DISCUSSION ═══════════════ -->
+<div class="panel" id="panel-discussion" role="tabpanel" aria-labelledby="tab-discussion">
+  <h1>Concept Check</h1>
+  <span class="unit-badge">Explain each step in your own words, then self-grade against the rubric</span>
+  <div class="filter-row" role="group" aria-label="Filter questions by stage">
+    <button class="filter-btn active" onclick="filterDisc('all',this)">All</button>
+    <button class="filter-btn" onclick="filterDisc('s1',this)">Imports</button>
+    <button class="filter-btn" onclick="filterDisc('s2',this)">Load Data</button>
+    <button class="filter-btn" onclick="filterDisc('s3',this)">Missing Data</button>
+    <button class="filter-btn" onclick="filterDisc('s4',this)">Encode X</button>
+    <button class="filter-btn" onclick="filterDisc('s5',this)">Encode y</button>
+    <button class="filter-btn" onclick="filterDisc('s6',this)">Split</button>
+    <button class="filter-btn" onclick="filterDisc('s7',this)">Scale</button>
+  </div>
+  <div id="disc-container"></div>
+</div>
+
+<!-- ═══════════════ CODE LAB ═══════════════ -->
+<div class="panel" id="panel-codelab" role="tabpanel" aria-labelledby="tab-codelab">
+  <h1>Code Lab</h1>
+  <p class="codelab-intro">Reproduce the preprocessing script from memory. Pick a single stage to drill, or <strong>Full Program</strong> for the whole thing. Each non-blank line is scored <strong>pass / fail</strong> against the canonical version — spacing and quote style are ignored, but token content and capitalization must match (Python is case-sensitive). The program does not need to run; the score is simply how many lines you reproduced.</p>
+
+  <div class="codelab-section-title">① Warm-up — put the stages in order</div>
+  <div id="seq-container"></div>
+  <div class="code-btn-row">
+    <button class="code-btn" onclick="checkSeq()">Check Order</button>
+    <button class="code-btn" onclick="renderSeq()">Shuffle</button>
+  </div>
+  <div class="seq-result" id="seq-result" aria-live="polite"></div>
+
+  <div class="codelab-section-title">② Reproduce the code</div>
+  <div class="code-target-row">
+    <label for="code-select" style="font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--muted);">Target:</label>
+    <select class="code-select" id="code-select" onchange="setCodeTarget(this)" aria-label="Choose which part of the program to reproduce">
+      <option value="full">Full Program (34 lines)</option>
+      <option value="s1">Stage 1 — Importing the libraries</option>
+      <option value="s2">Stage 2 — Importing the dataset</option>
+      <option value="s3">Stage 3 — Taking care of missing data</option>
+      <option value="s4">Stage 4 — Encoding the independent variable</option>
+      <option value="s5">Stage 5 — Encoding the dependent variable</option>
+      <option value="s6">Stage 6 — Splitting into Training &amp; Test sets</option>
+      <option value="s7">Stage 7 — Feature Scaling</option>
+    </select>
+  </div>
+  <textarea class="code-input" id="code-input" spellcheck="false" placeholder="Type the code here, one statement per line..." aria-label="Type the program to reproduce"></textarea>
+  <div class="code-btn-row">
+    <button class="code-btn primary" onclick="gradeCode()">Grade</button>
+    <button class="code-btn" onclick="toggleCodeAnswer()">Show / Hide Answer</button>
+    <button class="code-btn" onclick="resetCode()">Reset</button>
+  </div>
+  <div class="code-answer" id="code-answer"></div>
+  <div class="code-result" id="code-result" aria-live="polite"></div>
+</div>
+
+<!-- ═══════════════ NOTES ═══════════════ -->
+<div class="panel" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes">
+  <h1>Notes Template</h1>
+  <span class="unit-badge">Module 3 · Print this tab for handwritten recall practice</span>
+
+  <div class="video-block">
+    <h4>📚 Reference documentation (official)</h4>
+    <div class="video-link"><span class="video-tag">pandas</span><a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html" target="_blank" rel="noopener">pandas.read_csv</a></div>
+    <div class="video-link"><span class="video-tag">sklearn</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html" target="_blank" rel="noopener">SimpleImputer</a></div>
+    <div class="video-link"><span class="video-tag">sklearn</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html" target="_blank" rel="noopener">ColumnTransformer</a></div>
+    <div class="video-link"><span class="video-tag">sklearn</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html" target="_blank" rel="noopener">OneHotEncoder</a></div>
+    <div class="video-link"><span class="video-tag">sklearn</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html" target="_blank" rel="noopener">LabelEncoder</a></div>
+    <div class="video-link"><span class="video-tag">sklearn</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html" target="_blank" rel="noopener">train_test_split</a></div>
+    <div class="video-link"><span class="video-tag">sklearn</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html" target="_blank" rel="noopener">StandardScaler</a></div>
+    <div class="source-list">
+      <a href="https://scikit-learn.org/stable/" target="_blank" rel="noopener">scikit-learn</a>
+      <a href="https://pandas.pydata.org/docs/" target="_blank" rel="noopener">pandas docs</a>
+      <a href="https://numpy.org/doc/" target="_blank" rel="noopener">NumPy docs</a>
+    </div>
+  </div>
+
+  <div class="notes-grid">
+    <div class="note-card"><h4>The 7 stages (in order)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Library → module map</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>fit vs transform vs fit_transform</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>One-hot vs label encoding</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Why scale only [:, 3:]</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Why fit scaler on train only</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+  </div>
+</div>
+
+<footer>CSIS 3352 · Module 3 · study.imichaelv.com · Built from data_preprocessing_tools.ipynb · <a href="../../index.html" class="back-link footer-back-link">← Back to all courses</a></footer>
+
+<script>
+// ─── MASTERY ───
+function getMasteryKey(){return 'mastery_csis3352_module03_';}
+function resetAllMastery(){
+  Object.keys(localStorage).filter(k=>k.startsWith(getMasteryKey())).forEach(k=>localStorage.removeItem(k));
+  Object.keys(localStorage).filter(k=>k.startsWith('obj_csis3352_module03_')).forEach(k=>localStorage.removeItem(k));
+  document.querySelectorAll('.obj-master-btn').forEach(b=>{b.textContent='☐ Mark Mastered';b.classList.remove('mastered');});
+  document.querySelectorAll('.fc-card').forEach((_,i)=>localStorage.removeItem(getMasteryKey()+i));
+  updateMasteryBar();
+}
+function updateMasteryBar(){
+  const total=document.querySelectorAll('.obj-master-btn').length;
+  const done=Object.keys(localStorage).filter(k=>k.startsWith('obj_csis3352_module03_')).length;
+  const pct=total?Math.round(done/total*100):0;
+  const f=document.getElementById('mastery-fill');
+  if(f)f.style.width=pct+'%';
+}
+function toggleObjMastery(btn,key){
+  const is=localStorage.getItem(key);
+  if(is){localStorage.removeItem(key);btn.textContent='☐ Mark Mastered';btn.classList.remove('mastered');}
+  else{localStorage.setItem(key,'1');btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  updateMasteryBar();
+}
+function toggleObj(card){
+  const body=card.querySelector('.obj-body');
+  const arrow=card.querySelector('.obj-expand');
+  const open=body.classList.toggle('open');
+  arrow.style.transform=open?'rotate(180deg)':'';
+  card.setAttribute('aria-expanded',open);
+}
+function toggleChapter(header){
+  const body=header.nextElementSibling;
+  const arrow=header.querySelector('span:last-child');
+  const open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  arrow.style.transform=open?'':'rotate(180deg)';
+  header.setAttribute('aria-expanded',!open);
+}
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+}
+function activateFilter(btn){
+  const row=btn.closest('.filter-row');
+  if(row)row.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ─── FLASHCARD DATA ───  {ch:'s1'..'s7', q, a}
+const allCards=[
+  {ch:'s1',q:"Which library is imported as np?",a:"NumPy — import numpy as np"},
+  {ch:'s1',q:"Which library is imported as pd?",a:"pandas — import pandas as pd"},
+  {ch:'s1',q:"Which library is imported as plt?",a:"matplotlib.pyplot — import matplotlib.pyplot as plt"},
+  {ch:'s1',q:"How many libraries are imported in the first cell, and which?",a:"Three: numpy (np), matplotlib.pyplot (plt), pandas (pd)."},
+  {ch:'s1',q:"Which imported library is never actually used in this script?",a:"matplotlib.pyplot (plt) — imported by template convention only."},
+  {ch:'s2',q:"Function used to load the CSV file?",a:"pd.read_csv('Data.csv')"},
+  {ch:'s2',q:"Line that creates the feature matrix X?",a:"X = dataset.iloc[:, :-1].values"},
+  {ch:'s2',q:"Line that creates the dependent variable y?",a:"y = dataset.iloc[:, -1].values"},
+  {ch:'s2',q:"What does iloc[:, :-1] select?",a:"All rows, all columns except the last (the features)."},
+  {ch:'s2',q:"What does iloc[:, -1] select?",a:"All rows, only the last column (the target)."},
+  {ch:'s2',q:"What does .iloc do?",a:"Selects data by integer position (not by label)."},
+  {ch:'s2',q:"What does .values return?",a:"The underlying NumPy array from the pandas object."},
+  {ch:'s2',q:"Which 4 columns are in Data.csv?",a:"Country, Age, Salary, Purchased (10 rows)."},
+  {ch:'s3',q:"Which module is SimpleImputer imported from?",a:"sklearn.impute → from sklearn.impute import SimpleImputer"},
+  {ch:'s3',q:"SimpleImputer arguments to replace missing values with the column mean?",a:"missing_values=np.nan, strategy='mean'"},
+  {ch:'s3',q:"What does strategy='mean' do?",a:"Replaces each missing value with the mean of its column."},
+  {ch:'s3',q:"Which columns are imputed, and why only those?",a:"X[:, 1:3] — Age & Salary (numeric). Country (col 0) is text with no mean."},
+  {ch:'s3',q:"What does missing_values=np.nan specify?",a:"Which value is treated as 'missing' (NaN)."},
+  {ch:'s3',q:"Two-line pattern used to apply the imputer?",a:"imputer.fit(X[:, 1:3]) then X[:, 1:3] = imputer.transform(X[:, 1:3])"},
+  {ch:'s3',q:"fit() vs transform()?",a:"fit() learns parameters (the column means); transform() applies them to the data."},
+  {ch:'s3',q:"What does fit_transform() do?",a:"Both at once — learns the parameters and applies them in one call."},
+  {ch:'s3',q:"Name three strategy options for SimpleImputer.",a:"mean, median, most_frequent (also: constant)."},
+  {ch:'s4',q:"Which module is ColumnTransformer imported from?",a:"sklearn.compose"},
+  {ch:'s4',q:"Which module is OneHotEncoder imported from?",a:"sklearn.preprocessing"},
+  {ch:'s4',q:"Full ColumnTransformer line used to one-hot encode column 0?",a:"ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [0])], remainder='passthrough')"},
+  {ch:'s4',q:"What does remainder='passthrough' do?",a:"Keeps the non-encoded columns (Age, Salary) instead of dropping them."},
+  {ch:'s4',q:"What is the default remainder value if you omit it?",a:"'drop' — the untouched columns would be discarded."},
+  {ch:'s4',q:"Why wrap ct.fit_transform(X) in np.array(...)?",a:"To force the transformer output into a NumPy array for downstream use."},
+  {ch:'s4',q:"Why one-hot encode Country instead of numbering it 0/1/2?",a:"Numbers imply a false order/magnitude between France/Germany/Spain; one-hot avoids that."},
+  {ch:'s4',q:"After encoding, where do the three dummy columns appear?",a:"At the front (columns 0–2); Age & Salary shift to columns 3 & 4."},
+  {ch:'s4',q:"The three parts inside transformers=[( ... )]?",a:"A name ('encoder'), a transformer (OneHotEncoder()), and the column list ([0])."},
+  {ch:'s5',q:"Which module is LabelEncoder imported from?",a:"sklearn.preprocessing"},
+  {ch:'s5',q:"Line that encodes the dependent variable y?",a:"y = le.fit_transform(y)"},
+  {ch:'s5',q:"LabelEncoder maps 'No'/'Yes' to what?",a:"No → 0, Yes → 1 (alphabetical order)."},
+  {ch:'s5',q:"Why is LabelEncoder acceptable for y but not for the Country feature?",a:"y is the single target column, so an implied order doesn't mislead a model the way it would for input features."},
+  {ch:'s6',q:"Which module is train_test_split imported from?",a:"sklearn.model_selection"},
+  {ch:'s6',q:"Full train_test_split line (worked version)?",a:"X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 1)"},
+  {ch:'s6',q:"What does test_size = 0.2 mean?",a:"20% of rows go to test, 80% to training."},
+  {ch:'s6',q:"The four variables train_test_split returns, in order?",a:"X_train, X_test, y_train, y_test"},
+  {ch:'s6',q:"What does random_state do?",a:"Seeds the shuffle so the split is reproducible (same rows every run)."},
+  {ch:'s6',q:"random_state value in the worked notebook vs the template?",a:"Worked = 1; template = 0. Canonical here is 1."},
+  {ch:'s6',q:"Does the specific random_state number matter for correctness?",a:"No — any integer works; only reproducibility (using the same one) matters."},
+  {ch:'s7',q:"Which module is StandardScaler imported from?",a:"sklearn.preprocessing"},
+  {ch:'s7',q:"StandardScaler standardization formula?",a:"z = (x − mean) / standard deviation → mean 0, unit variance."},
+  {ch:'s7',q:"Which method is used on X_train vs X_test?",a:"fit_transform on X_train; transform (only) on X_test."},
+  {ch:'s7',q:"Which columns are scaled?",a:"[:, 3:] — the numeric Age/Salary columns; the dummy columns are NOT scaled."},
+  {ch:'s7',q:"Why fit the scaler only on the training set?",a:"To avoid data leakage — test statistics must not influence training."},
+  {ch:'s7',q:"Is feature scaling done before or after the train/test split?",a:"After the split."},
+  {ch:'s7',q:"Why aren't the one-hot dummy columns scaled?",a:"They're already 0/1 and meant to stay interpretable; scaling them adds no value."}
+];
+// ─── FLASHCARD ENGINE ───
+let deck=[],currentIdx=0,flipped=false;
+function filterCards(ch,btn){
+  activateFilter(btn);
+  deck=ch==='all'?[...allCards]:allCards.filter(c=>c.ch===ch);
+  currentIdx=0;flipped=false;renderCard();
+}
+function renderCard(){
+  const empty=document.getElementById('fc-empty');
+  if(!deck.length){empty.style.display='block';document.getElementById('fc-counter').textContent='';return;}
+  empty.style.display='none';
+  const c=deck[currentIdx];
+  document.getElementById('fc-q').textContent=c.q;
+  document.getElementById('fc-a').textContent=c.a;
+  document.getElementById('fc-counter').textContent=(currentIdx+1)+' / '+deck.length;
+  const card=document.getElementById('fc-card');
+  card.classList.remove('flipped');flipped=false;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+  else{mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+}
+function flipCard(){document.getElementById('fc-card').classList.toggle('flipped');flipped=!flipped;}
+function nextCard(){if(!deck.length)return;currentIdx=(currentIdx+1)%deck.length;renderCard();}
+function prevCard(){if(!deck.length)return;currentIdx=(currentIdx-1+deck.length)%deck.length;renderCard();}
+function shuffleCards(){for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}currentIdx=0;renderCard();}
+function toggleMastered(idx){
+  const c=deck[idx];const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){localStorage.removeItem(key);mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+  else{localStorage.setItem(key,'1');mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+}
+
+// ─── QUIZ DATA ───
+const allQuizData=[
+  {ch:'s1',type:'fitb',q:"import numpy as ___",ans:['np'],display:'np',exp:"NumPy is aliased np by convention."},
+  {ch:'s1',type:'fitb',q:"import pandas as ___",ans:['pd'],display:'pd',exp:"pandas is aliased pd by convention."},
+  {ch:'s1',type:'fitb',q:"import matplotlib.___ as plt",ans:['pyplot'],display:'pyplot',exp:"The plotting interface is matplotlib.pyplot."},
+  {ch:'s1',type:'mc',q:"Which of the three imported libraries is not actually used in this script?",opts:["numpy","matplotlib.pyplot","pandas","all are used"],ans:1,exp:"plt is imported by template convention but the script never plots."},
+  {ch:'s2',type:'fitb',q:"dataset = pd.___('Data.csv')",ans:['read_csv'],display:'read_csv',exp:"pd.read_csv loads a CSV into a DataFrame."},
+  {ch:'s2',type:'mc',q:"What does dataset.iloc[:, :-1].values return?",opts:["The last column only","All columns except the last, as a NumPy array","The first row","The column labels"],ans:1,exp:"[:, :-1] = all rows, all columns but the last; .values makes it a NumPy array."},
+  {ch:'s2',type:'mc',q:"iloc selects data by...",opts:["Column label","Integer position","Data type","Random order"],ans:1,exp:"iloc is integer-location based indexing."},
+  {ch:'s2',type:'fitb',q:"y = dataset.iloc[:, ___].values   (last column)",ans:['-1'],display:'-1',exp:"-1 is the last column index."},
+  {ch:'s3',type:'fitb',q:"from sklearn.___ import SimpleImputer",ans:['impute'],display:'impute',exp:"SimpleImputer lives in sklearn.impute."},
+  {ch:'s3',type:'fitb',q:"imputer = SimpleImputer(missing_values=np.nan, strategy='___')",ans:['mean'],display:'mean',exp:"The mean strategy replaces NaN with the column mean."},
+  {ch:'s3',type:'mc',q:"Why is the imputer applied to X[:, 1:3] and not column 0?",opts:["Column 0 is the target","Column 0 (Country) is text and has no mean","Columns 1–2 have no missing data","To save memory"],ans:1,exp:"Country is categorical text; mean imputation only makes sense for numeric Age/Salary."},
+  {ch:'s3',type:'mc',q:"What is the difference between fit() and transform()?",opts:["They are identical","fit() learns parameters; transform() applies them","transform() learns; fit() applies","Both only print output"],ans:1,exp:"fit learns (e.g., the means); transform applies them to the data."},
+  {ch:'s4',type:'fitb',q:"from sklearn.___ import ColumnTransformer",ans:['compose'],display:'compose',exp:"ColumnTransformer is in sklearn.compose."},
+  {ch:'s4',type:'fitb',q:"from sklearn.___ import OneHotEncoder",ans:['preprocessing'],display:'preprocessing',exp:"OneHotEncoder is in sklearn.preprocessing."},
+  {ch:'s4',type:'mc',q:"What does remainder='passthrough' do?",opts:["Drops untouched columns","Keeps untouched columns unchanged","One-hot encodes everything","Scales the remaining columns"],ans:1,exp:"passthrough keeps Age/Salary; the default 'drop' would delete them."},
+  {ch:'s4',type:'mc',q:"Why one-hot encode Country instead of numbering it 0/1/2?",opts:["It runs faster","To avoid implying a false order between categories","Numbers aren't allowed","To reduce columns"],ans:1,exp:"0/1/2 would suggest an ordinal ranking that doesn't exist among countries."},
+  {ch:'s4',type:'mc',q:"After one-hot encoding, where do the dummy columns appear?",opts:["At the end","At the front (columns 0–2)","They replace column 1","Randomly"],ans:1,exp:"ColumnTransformer places the encoded columns first; Age/Salary shift to 3 & 4."},
+  {ch:'s4',type:'fitb',q:"X = np.___(ct.fit_transform(X))",ans:['array'],display:'array',exp:"np.array() forces the transformer output into a NumPy array."},
+  {ch:'s5',type:'fitb',q:"from sklearn.preprocessing import ___   (for the dependent variable)",ans:['LabelEncoder'],display:'LabelEncoder',exp:"LabelEncoder encodes the y labels."},
+  {ch:'s5',type:'mc',q:"LabelEncoder converts the Purchased column 'No'/'Yes' into:",opts:["1 / 0","0 / 1","1 / 2","No change"],ans:1,exp:"Alphabetical: No=0, Yes=1."},
+  {ch:'s5',type:'mc',q:"Why is LabelEncoder acceptable for y but risky for a feature like Country?",opts:["y must be text","y is the target, so an implied order doesn't mislead the model's inputs","LabelEncoder only works on y","There is no difference"],ans:1,exp:"For input features an implied numeric order biases the model; the target column doesn't have that problem."},
+  {ch:'s6',type:'fitb',q:"from sklearn.___ import train_test_split",ans:['model_selection'],display:'model_selection',exp:"train_test_split is in sklearn.model_selection."},
+  {ch:'s6',type:'fitb',q:"train_test_split(X, y, test_size = ___, random_state = 1)",ans:['0.2','.2'],display:'0.2',exp:"0.2 = a 20% test set."},
+  {ch:'s6',type:'mc',q:"What does random_state control?",opts:["The model accuracy","The seed for the shuffle before splitting","The number of columns","The test-set size"],ans:1,exp:"It seeds the shuffle so the split is reproducible."},
+  {ch:'s6',type:'mc',q:"The worked notebook and the template disagree on random_state. Which values do they use?",opts:["1 and 2","0 and 1","42 and 0","Both use 1"],ans:1,exp:"Worked = 1, template = 0. Either reproduces if used consistently; this page treats 1 as canonical."},
+  {ch:'s6',type:'mc',q:"train_test_split returns its outputs in which order?",opts:["X_train, y_train, X_test, y_test","X_train, X_test, y_train, y_test","train, test","y_train, y_test, X_train, X_test"],ans:1,exp:"Order is X_train, X_test, y_train, y_test."},
+  {ch:'s7',type:'fitb',q:"from sklearn.preprocessing import ___   (feature scaling)",ans:['StandardScaler'],display:'StandardScaler',exp:"StandardScaler standardizes numeric features."},
+  {ch:'s7',type:'mc',q:"Which call is used on the TEST set for scaling?",opts:["fit_transform","transform","fit","re-fit"],ans:1,exp:"transform only — the scaler was already fit on the training set."},
+  {ch:'s7',type:'mc',q:"Why fit the scaler only on the training set?",opts:["It's faster","To avoid data leakage from the test set","transform doesn't work on train","The test set has no numbers"],ans:1,exp:"Fitting on test data would leak information and inflate the evaluation."},
+  {ch:'s7',type:'mc',q:"Why is scaling applied only to columns [:, 3:]?",opts:["Those are the dummy columns","Those are Age/Salary; the 0/1 dummies are left alone","Column 3 is the target","To drop the first 3 columns"],ans:1,exp:"Columns 0–2 are the one-hot dummies; only the numeric Age/Salary (3+) are standardized."},
+  {ch:'s7',type:'mc',q:"Standardization rescales a value using which formula?",opts:["x / max","(x − mean) / std","x − min","log(x)"],ans:1,exp:"StandardScaler: z = (x − mean) / standard deviation."}
+];
+// ─── QUIZ ENGINE ───
+let quizFilter='all',userAnswers={};
+function setQuizFilter(ch,btn){activateFilter(btn);quizFilter=ch;resetQuiz();}
+function getQuizDeck(){return quizFilter==='all'?allQuizData:allQuizData.filter(q=>q.ch===quizFilter);}
+function renderQuiz(){
+  const deck=getQuizDeck();
+  const c=document.getElementById('quiz-container');c.innerHTML='';userAnswers={};
+  deck.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='quiz-q';div.id='qq'+i;
+    if(q.type==='mc'){
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <div class="quiz-opts">${q.opts.map((o,oi)=>`<label><input type="radio" name="q${i}" onclick="selectMC(${i},${oi})"> ${o}</label>`).join('')}</div>
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    } else {
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <input class="fitb-input" id="fitb${i}" placeholder="Type your answer..." oninput="storeFITB(${i})">
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    }
+    c.appendChild(div);
+  });
+  document.getElementById('quiz-score').style.display='none';
+}
+function selectMC(qi,oi){userAnswers[qi]=oi;}
+function storeFITB(qi){userAnswers[qi]=document.getElementById('fitb'+qi).value.trim().toLowerCase();}
+function submitQuiz(){
+  const deck=getQuizDeck();let correct=0;
+  deck.forEach((q,i)=>{
+    const el=document.getElementById('qq'+i);
+    const exp=document.getElementById('exp'+i);exp.classList.add('show');
+    if(q.type==='mc'){
+      const ua=userAnswers[i];
+      if(ua===q.ans){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    } else {
+      const ua=(userAnswers[i]||'').toLowerCase();
+      const ok=ua!==''&&q.ans.some(a=>ua===a.toLowerCase());
+      if(ok){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    }
+  });
+  const sc=document.getElementById('quiz-score');
+  const pct=Math.round(correct/deck.length*100);
+  sc.style.display='block';
+  sc.style.borderColor=pct>=70?'var(--green)':'var(--red)';
+  sc.innerHTML=`<strong>Score: ${correct}/${deck.length} (${pct}%)</strong> — ${pct>=90?'Excellent! 🎉':pct>=70?'Good work — review flagged questions.':'Keep studying — focus on the red ones.'}`;
+}
+function resetQuiz(){renderQuiz();}
+
+// ─── DISCUSSION DATA ───  {ch, q, points:[{text}], model}  (1:1 with objectives)
+const DISC_QUESTIONS=[
+  {ch:'s1',q:"List the three libraries the script imports, with each one's standard alias and purpose.",
+   points:[
+     {text:"<strong>numpy as np</strong> — numerical arrays; used for np.nan and np.array()."},
+     {text:"<strong>matplotlib.pyplot as plt</strong> — plotting; imported by convention, unused here."},
+     {text:"<strong>pandas as pd</strong> — data loading / DataFrames; pd.read_csv()."}
+   ],
+   model:"The script imports three libraries. numpy as np gives arrays and the np.nan marker plus np.array(). matplotlib.pyplot as plt is the plotting library — it's in the standard import block by habit but this script never actually plots anything. pandas as pd handles loading the CSV and holding it as a DataFrame."},
+  {ch:'s2',q:"Explain how X and y are created from the dataset, what iloc[:, :-1] vs iloc[:, -1] select, and why .values is used.",
+   points:[
+     {text:"<strong>Load</strong> — pd.read_csv('Data.csv') reads the file into a DataFrame."},
+     {text:"<strong>X = iloc[:, :-1]</strong> — all rows, all columns except the last → features."},
+     {text:"<strong>y = iloc[:, -1]</strong> — all rows, last column only → target."},
+     {text:"<strong>.values / .iloc</strong> — .iloc selects by position; .values gives the NumPy array sklearn needs."}
+   ],
+   model:"First pd.read_csv('Data.csv') loads everything into a DataFrame. X takes iloc[:, :-1] — every row and every column except the last — which is Country, Age, Salary. y takes iloc[:, -1], just the last column, Purchased. iloc means we're selecting by integer position rather than column name, and .values converts the result to a plain NumPy array because scikit-learn works on arrays, not DataFrames."},
+  {ch:'s3',q:"How is missing data handled? Which columns are affected, and what does strategy='mean' do?",
+   points:[
+     {text:"<strong>SimpleImputer</strong> — from sklearn.impute, with missing_values=np.nan."},
+     {text:"<strong>strategy='mean'</strong> — replaces each NaN with the column mean."},
+     {text:"<strong>X[:, 1:3] only</strong> — Age & Salary; Country (col 0) is text with no mean."}
+   ],
+   model:"A SimpleImputer from sklearn.impute is set up with missing_values=np.nan and strategy='mean', so every missing value is replaced by the average of its own column. It's applied only to X[:, 1:3] — the Age and Salary columns — because those are numeric. Country in column 0 is text, so a mean makes no sense there."},
+  {ch:'s3',q:"Explain the difference between fit and transform for the imputer, and why fit is called before transform.",
+   points:[
+     {text:"<strong>fit()</strong> — learns the parameters (the column means) but changes nothing."},
+     {text:"<strong>transform()</strong> — applies those learned means to replace the NaNs."},
+     {text:"<strong>fit_transform()</strong> — would do both in one call; here they're split to show the two steps."}
+   ],
+   model:"fit() looks at the data and works out the parameters it needs — here the mean of the Age column and the mean of the Salary column — but doesn't modify anything yet. transform() then uses those means to actually fill in the missing cells. You have to fit first so transform has something to apply. fit_transform() combines the two, but the imputer example does them separately so each step is visible."},
+  {ch:'s4',q:"How is the Country column encoded? Explain what ColumnTransformer and OneHotEncoder do and what remainder='passthrough' means.",
+   points:[
+     {text:"<strong>ColumnTransformer</strong> — from sklearn.compose; targets specific columns."},
+     {text:"<strong>OneHotEncoder on [0]</strong> — turns Country into binary dummy columns."},
+     {text:"<strong>remainder='passthrough'</strong> — keeps Age/Salary instead of dropping them."},
+     {text:"<strong>np.array(ct.fit_transform(X))</strong> — runs it and returns a NumPy array."}
+   ],
+   model:"A ColumnTransformer from sklearn.compose is told to run a OneHotEncoder on column [0], the Country column. One-hot encoding replaces that single text column with three 0/1 columns, one per country. remainder='passthrough' tells it to leave the other columns (Age, Salary) alone rather than dropping them, which is the default. Wrapping ct.fit_transform(X) in np.array() gives back a clean NumPy array."},
+  {ch:'s4',q:"Why use one-hot encoding for Country instead of simple 0/1/2 labels, and where do the new columns end up?",
+   points:[
+     {text:"<strong>Avoid false order</strong> — 0/1/2 implies France < Germany < Spain, which is meaningless."},
+     {text:"<strong>Three dummy columns</strong> — one per country, each 0 or 1."},
+     {text:"<strong>Placed at the front</strong> — columns 0–2; Age/Salary shift to 3 & 4."}
+   ],
+   model:"If you labeled the countries 0, 1, 2, the model would read that as an ordering or magnitude — as if Spain were 'greater than' France — which is nonsense for categories. One-hot encoding gives each country its own 0/1 column instead, so no false ranking is implied. The three new dummy columns are placed at the front of X (columns 0–2), which pushes Age and Salary to columns 3 and 4."},
+  {ch:'s5',q:"How is the Purchased column encoded, and why is LabelEncoder appropriate for the dependent variable?",
+   points:[
+     {text:"<strong>LabelEncoder</strong> — from sklearn.preprocessing; labels → integers."},
+     {text:"<strong>y = le.fit_transform(y)</strong> — No → 0, Yes → 1 (alphabetical)."},
+     {text:"<strong>OK for y</strong> — it's the target, so an implied order doesn't distort the inputs."}
+   ],
+   model:"The Purchased column is run through a LabelEncoder from sklearn.preprocessing with y = le.fit_transform(y), which turns No into 0 and Yes into 1 (alphabetical order). Using a plain integer label is fine here because this is the target column, not an input feature — so there's no risk of the model misreading a fake numeric order among feature values."},
+  {ch:'s6',q:"What does train_test_split do, and what do test_size and random_state control?",
+   points:[
+     {text:"<strong>train_test_split</strong> — from sklearn.model_selection; splits data into train/test."},
+     {text:"<strong>test_size = 0.2</strong> — 20% test, 80% train."},
+     {text:"<strong>Returns</strong> — X_train, X_test, y_train, y_test in that order."}
+   ],
+   model:"train_test_split from sklearn.model_selection divides the data into a training set and a test set. test_size = 0.2 sends 20% of the rows to the test set and keeps 80% for training. It returns four things in a fixed order: X_train, X_test, y_train, y_test. random_state fixes the shuffle so the same split happens every time."},
+  {ch:'s6',q:"What is random_state, why is it fixed, and what would change if you used 0 instead of 1?",
+   points:[
+     {text:"<strong>Seeds the shuffle</strong> — train_test_split shuffles rows first (shuffle=True by default)."},
+     {text:"<strong>Reproducibility</strong> — same seed → same split every run."},
+     {text:"<strong>0 vs 1</strong> — a different seed just reshuffles differently; both are valid, and the value is otherwise arbitrary."}
+   ],
+   model:"Before splitting, train_test_split shuffles the rows, and random_state is the seed for that shuffle. Fixing it means you get the exact same train/test split every time you run the code, which is what makes results reproducible and comparable. The actual number is arbitrary — the worked file uses 1, the template uses 0 — so switching to 0 would just put different rows in each set; neither is 'more correct' as long as you're consistent."},
+  {ch:'s7',q:"What is feature scaling / standardization, and why is StandardScaler applied here?",
+   points:[
+     {text:"<strong>StandardScaler</strong> — from sklearn.preprocessing; z = (x − mean) / std."},
+     {text:"<strong>Result</strong> — features get mean 0 and unit variance."},
+     {text:"<strong>Why</strong> — stops big-magnitude features (Salary) from dominating."}
+   ],
+   model:"Feature scaling puts numeric features on a comparable scale. StandardScaler standardizes each value with z = (x − mean) / standard deviation, so the column ends up with mean 0 and unit variance. Without it, Salary (tens of thousands) would swamp Age (tens) in any model that uses distances or gradients, so scaling keeps them on equal footing."},
+  {ch:'s7',q:"Why are only columns [:, 3:] scaled, and why is the scaler fit only on the training set?",
+   points:[
+     {text:"<strong>Only [:, 3:]</strong> — Age/Salary; the 0/1 dummy columns are left alone."},
+     {text:"<strong>fit_transform on train, transform on test</strong> — learn stats from train only."},
+     {text:"<strong>Avoid leakage</strong> — using test stats to fit would inflate the evaluation."}
+   ],
+   model:"Scaling is applied to X_train[:, 3:] and X_test[:, 3:] — just Age and Salary — because columns 0–2 are the one-hot dummies, which are already 0/1 and should stay that way. The scaler is fit_transformed on the training set but only transformed on the test set, so it learns the mean and standard deviation from training data alone. If it were fit on the test set too, test information would leak into the process and make the model look better than it really is."}
+];
+// ─── DISCUSSION ENGINE ───
+let discFilter='all';
+function filterDisc(ch,btn){activateFilter(btn);discFilter=ch;renderDiscussion();}
+function renderDiscussion(){
+  const list=discFilter==='all'?DISC_QUESTIONS:DISC_QUESTIONS.filter(d=>d.ch===discFilter);
+  const c=document.getElementById('disc-container');c.innerHTML='';
+  list.forEach((d,i)=>{
+    const idx=DISC_QUESTIONS.indexOf(d);
+    const div=document.createElement('div');div.className='disc-q';
+    div.innerHTML=`<div class="disc-q-text">${i+1}. ${d.q}</div>
+      <textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Draft your response here..." aria-label="Discussion response"></textarea>
+      <div class="disc-btn-row">
+        <button class="disc-btn primary" onclick="submitDisc(${idx})">Submit &amp; Self-Grade</button>
+        <button class="disc-btn" onclick="toggleModel(${idx})">Show Model Answer</button>
+        <button class="disc-btn" onclick="resetDisc(${idx})">Reset</button>
+      </div>
+      <div class="disc-rubric" id="disc-rubric-${idx}">
+        <strong style="font-size:.82rem;color:var(--text)">Self-Grading Rubric</strong>
+        <div style="margin-top:8px;">${d.points.map((p,pi)=>`<div class="rubric-item"><input type="checkbox" id="rub-${idx}-${pi}" onchange="updateDiscScore(${idx})"><label for="rub-${idx}-${pi}">${p.text}</label></div>`).join('')}</div>
+        <div class="disc-score" id="disc-score-${idx}">Score: 0 / ${d.points.length}</div>
+      </div>
+      <div class="model-answer" id="disc-model-${idx}">${d.model}</div>`;
+    c.appendChild(div);
+  });
+}
+function submitDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);
+  ta.disabled=true;
+  document.getElementById('disc-rubric-'+idx).classList.add('show');
+}
+function resetDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);ta.disabled=false;ta.value='';
+  document.getElementById('disc-rubric-'+idx).classList.remove('show');
+  document.getElementById('disc-model-'+idx).classList.remove('show');
+  document.querySelectorAll(`[id^="rub-${idx}-"]`).forEach(cb=>cb.checked=false);
+  document.getElementById('disc-score-'+idx).textContent='Score: 0 / '+DISC_QUESTIONS[idx].points.length;
+}
+function updateDiscScore(idx){
+  const total=DISC_QUESTIONS[idx].points.length;
+  const checked=document.querySelectorAll(`[id^="rub-${idx}-"]:checked`).length;
+  document.getElementById('disc-score-'+idx).textContent=`Score: ${checked} / ${total} (${Math.round(checked/total*100)}%)`;
+}
+function toggleModel(idx){document.getElementById('disc-model-'+idx).classList.toggle('show');}
+
+// ─── CODE LAB ───
+const CODE_STAGES=[
+  {key:'s1',name:'Importing the libraries',lines:[
+    "import numpy as np",
+    "import matplotlib.pyplot as plt",
+    "import pandas as pd"
+  ]},
+  {key:'s2',name:'Importing the dataset',lines:[
+    "dataset = pd.read_csv('Data.csv')",
+    "X = dataset.iloc[:, :-1].values",
+    "y = dataset.iloc[:, -1].values",
+    "print(X)",
+    "print(y)"
+  ]},
+  {key:'s3',name:'Taking care of missing data',lines:[
+    "from sklearn.impute import SimpleImputer",
+    "imputer = SimpleImputer(missing_values=np.nan, strategy='mean')",
+    "imputer.fit(X[:, 1:3])",
+    "X[:, 1:3] = imputer.transform(X[:, 1:3])",
+    "print(X)"
+  ]},
+  {key:'s4',name:'Encoding the independent variable',lines:[
+    "from sklearn.compose import ColumnTransformer",
+    "from sklearn.preprocessing import OneHotEncoder",
+    "ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [0])], remainder='passthrough')",
+    "X = np.array(ct.fit_transform(X))",
+    "print(X)"
+  ]},
+  {key:'s5',name:'Encoding the dependent variable',lines:[
+    "from sklearn.preprocessing import LabelEncoder",
+    "le = LabelEncoder()",
+    "y = le.fit_transform(y)",
+    "print(y)"
+  ]},
+  {key:'s6',name:'Splitting into Training & Test sets',lines:[
+    "from sklearn.model_selection import train_test_split",
+    "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 1)",
+    "print(X_train)",
+    "print(X_test)",
+    "print(y_train)",
+    "print(y_test)"
+  ]},
+  {key:'s7',name:'Feature Scaling',lines:[
+    "from sklearn.preprocessing import StandardScaler",
+    "sc = StandardScaler()",
+    "X_train[:, 3:] = sc.fit_transform(X_train[:, 3:])",
+    "X_test[:, 3:] = sc.transform(X_test[:, 3:])",
+    "print(X_train)",
+    "print(X_test)"
+  ]}
+];
+let codeTarget='full';
+function fullProgram(){return CODE_STAGES.reduce((acc,s)=>acc.concat(s.lines),[]);}
+function currentTargetLines(){
+  if(codeTarget==='full')return fullProgram();
+  const s=CODE_STAGES.find(x=>x.key===codeTarget);
+  return s?s.lines:[];
+}
+function setCodeTarget(sel){
+  codeTarget=sel.value;
+  document.getElementById('code-result').innerHTML='';
+  const a=document.getElementById('code-answer');a.classList.remove('show');a.innerHTML='';
+}
+function normLine(s){return s.replace(/["']/g,"'").replace(/\s+/g,'');}
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function lcsDiff(exp,got){
+  const en=exp.map(normLine),gn=got.map(normLine);
+  const m=en.length,n=gn.length;
+  const dp=Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)
+    dp[i][j]=en[i-1]===gn[j-1]?dp[i-1][j-1]+1:Math.max(dp[i-1][j],dp[i][j-1]);
+  const matchedExp=new Array(m).fill(false),matchedGot=new Array(n).fill(false);
+  let i=m,j=n;
+  while(i>0&&j>0){
+    if(en[i-1]===gn[j-1]){matchedExp[i-1]=true;matchedGot[j-1]=true;i--;j--;}
+    else if(dp[i-1][j]>=dp[i][j-1])i--;else j--;
+  }
+  return {matched:dp[m][n],total:m,matchedExp,matchedGot};
+}
+function gradeCode(){
+  const exp=currentTargetLines();
+  const got=document.getElementById('code-input').value.split('\n').filter(l=>l.trim()!=='');
+  const r=lcsDiff(exp,got);
+  const pct=r.total?Math.round(r.matched/r.total*100):0;
+  const bestKey=getMasteryKey()+'code_'+codeTarget+'_best';
+  const best=Math.max(parseInt(localStorage.getItem(bestKey)||'0',10),pct);
+  localStorage.setItem(bestKey,String(best));
+  const pts=r.total?(r.matched*(100/r.total)).toFixed(1):'0';
+  const col=pct>=80?'var(--green)':pct>=50?'var(--yellow)':'var(--red)';
+  let html='<div class="code-scoreline" style="border-color:'+col+'"><strong>'+r.matched+' / '+r.total+' lines reproduced ('+pct+'%)</strong> · Best: '+best+'% · '+pts+' / 100 pts</div>';
+  html+='<div class="code-legend">✓ matched · ✗ not reproduced (correct line shown) · + extra line you typed</div>';
+  exp.forEach((line,idx)=>{
+    const ok=r.matchedExp[idx];
+    html+='<div class="diff-line '+(ok?'diff-ok':'diff-miss')+'"><span class="ln">'+(idx+1)+'</span><span class="mark">'+(ok?'✓':'✗')+'</span><span>'+escHtml(line)+'</span></div>';
+  });
+  const extras=got.filter((_,k)=>!r.matchedGot[k]);
+  if(extras.length){
+    html+='<div class="code-legend" style="margin-top:10px;">Extra / unmatched lines you typed:</div>';
+    extras.forEach(l=>{html+='<div class="diff-line diff-extra"><span class="ln"></span><span class="mark">+</span><span>'+escHtml(l)+'</span></div>';});
+  }
+  document.getElementById('code-result').innerHTML=html;
+}
+function toggleCodeAnswer(){
+  const el=document.getElementById('code-answer');
+  const show=el.classList.toggle('show');
+  el.innerHTML=show?'<div class="code-block">'+escHtml(currentTargetLines().join('\n'))+'</div>':'';
+}
+function resetCode(){
+  document.getElementById('code-input').value='';
+  document.getElementById('code-result').innerHTML='';
+  const a=document.getElementById('code-answer');a.classList.remove('show');a.innerHTML='';
+}
+function renderSeq(){
+  const names=CODE_STAGES.map(s=>s.name);
+  const order=[...Array(names.length).keys()];
+  for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}
+  const c=document.getElementById('seq-container');c.innerHTML='';
+  order.forEach(origIdx=>{
+    const row=document.createElement('div');row.className='seq-row';row.dataset.correct=String(origIdx+1);
+    let opts='';
+    for(let n=1;n<=names.length;n++)opts+='<option value="'+n+'">'+n+'</option>';
+    row.innerHTML='<select aria-label="Step number for '+names[origIdx]+'">'+opts+'</select><span class="seq-name">'+names[origIdx]+'</span>';
+    c.appendChild(row);
+  });
+  document.getElementById('seq-result').textContent='';
+}
+function checkSeq(){
+  const rows=[...document.querySelectorAll('#seq-container .seq-row')];
+  let correct=0;
+  rows.forEach(r=>{
+    const chosen=r.querySelector('select').value;
+    r.classList.remove('seq-ok','seq-bad');
+    if(chosen===r.dataset.correct){correct++;r.classList.add('seq-ok');}else{r.classList.add('seq-bad');}
+  });
+  document.getElementById('seq-result').textContent='Order: '+correct+' / '+rows.length+' stages in the correct position.';
+}
+
+// ─── INIT ───
+window.addEventListener('DOMContentLoaded',()=>{
+  deck=[...allCards];renderCard();renderQuiz();renderDiscussion();renderSeq();updateMasteryBar();
+  document.querySelectorAll('.obj-master-btn').forEach(btn=>{
+    const key=btn.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+    if(key&&localStorage.getItem(key)){btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  });
+  document.querySelectorAll('.obj-card').forEach(card=>{
+    card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleObj(card);}});
+  });
+});
+</script>
+</body>
+</html>
