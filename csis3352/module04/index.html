@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CSIS 3352 — Module 4: Python and Feature Engineering for AI</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#0a0a0f; --surface:#12121a; --surface2:#16161f; --border:#1e1e2e;
+  --text:#e8e8f0; --muted:#6b6b80; --green:#22c55e; --red:#ef4444;
+  --yellow:#eab308; --purple:#a78bfa; --orange:#f97316;
+  --accent:#a855f7; --accent-dim:rgba(168,85,247,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(168,85,247,0.025) 39px,rgba(168,85,247,0.025) 40px),
+  repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(168,85,247,0.025) 39px,rgba(168,85,247,0.025) 40px);}
+body::before{content:'CSIS 3352 · Module 4 · Python & Feature Engineering for AI · Lecture 4';position:fixed;top:0;left:0;right:0;
+  background:rgba(10,10,15,0.95);border-bottom:1px solid var(--border);padding:10px 16px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);z-index:100;letter-spacing:.05em;}
+.topnav{display:flex;gap:4px;padding:48px 12px 8px;overflow-x:auto;position:sticky;top:0;
+  background:rgba(10,10,15,0.97);z-index:90;border-bottom:1px solid var(--border);}
+.nav-btn{flex-shrink:0;background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:7px 13px;border-radius:6px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:11px;transition:all .15s;}
+.nav-btn:hover{color:var(--text);border-color:var(--accent);}
+.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.panel{display:none;padding:20px 16px 60px;max-width:860px;margin:0 auto;}
+.panel.active{display:block;}
+h1{font-size:1.4rem;font-weight:600;color:var(--accent);margin-bottom:4px;}
+.back-link{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;margin-bottom:10px;}
+.back-link:hover,.back-link:active{color:var(--accent);}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;display:block;}
+.exam-pill{display:inline-block;background:rgba(234,179,8,0.15);border:1px solid var(--yellow);
+  color:var(--yellow);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;
+  border-radius:20px;margin-bottom:20px;}
+.textbook-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.textbook-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;transition:all .15s;}
+.textbook-links a:hover{color:var(--accent);border-color:var(--accent);}
+
+/* Objectives — section color classes cycle: s1 accent, s2 orange, s3 purple, then repeat */
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:10px;cursor:pointer;transition:border-color .15s;}
+.obj-card:hover{border-color:var(--accent);}
+.obj-header{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.s1 .obj-num{color:var(--accent);background:var(--accent-dim);}
+.s2 .obj-num{color:var(--orange);background:rgba(249,115,22,0.12);}
+.s3 .obj-num{color:var(--purple);background:rgba(167,139,250,0.12);}
+.s4 .obj-num{color:var(--accent);background:var(--accent-dim);}
+.s5 .obj-num{color:var(--orange);background:rgba(249,115,22,0.12);}
+.s6 .obj-num{color:var(--purple);background:rgba(167,139,250,0.12);}
+.s7 .obj-num{color:var(--accent);background:var(--accent-dim);}
+.obj-title{font-size:.88rem;font-weight:500;flex:1;}
+.obj-expand{color:var(--muted);font-size:12px;transition:transform .2s;}
+.obj-body{display:none;padding:0 16px 14px;font-size:.84rem;line-height:1.65;color:#b0b0c8;}
+.obj-body.open{display:block;}
+.obj-body ul{padding-left:18px;margin:6px 0;}
+.obj-body li{margin-bottom:6px;}
+.obj-body strong{color:var(--text);}
+.obj-master-btn{margin-top:10px;background:transparent;border:1px solid var(--border);color:var(--muted);
+  padding:5px 12px;border-radius:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;transition:all .15s;}
+.obj-master-btn.mastered{border-color:var(--green);color:var(--green);background:rgba(34,197,94,0.08);}
+.mastery-bar{background:var(--surface);border:1px solid var(--border);border-radius:20px;height:6px;margin-bottom:20px;overflow:hidden;}
+.mastery-fill{height:100%;background:var(--green);border-radius:20px;transition:width .4s;}
+.reset-mastery-btn{display:block;margin-bottom:20px;background:transparent;border:1px solid var(--border);
+  color:var(--muted);padding:6px 14px;border-radius:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;}
+.reset-mastery-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* Study Guide */
+.chapter-block{margin-bottom:16px;}
+.chapter-header{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;font-weight:500;font-size:.9rem;transition:border-color .15s;}
+.chapter-header:hover{border-color:var(--accent);}
+.chapter-body{display:none;background:var(--surface2);border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;padding:16px;}
+.chapter-body h3{font-size:.82rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px;}
+.chapter-body h3:first-child{margin-top:0;}
+.chapter-body p,.chapter-body li{font-size:.84rem;line-height:1.7;color:#b0b0c8;margin-bottom:6px;}
+.chapter-body ul{padding-left:18px;}
+.chapter-body strong{color:var(--text);}
+.flag-note{background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.3);border-radius:6px;padding:8px 12px;font-size:.78rem;color:var(--yellow);margin:8px 0;}
+.code-block{font-family:'IBM Plex Mono',monospace;background:var(--surface2);border:1px solid var(--border);border-radius:6px;
+  padding:12px;font-size:.8rem;line-height:1.65;white-space:pre;overflow-x:auto;color:var(--text);margin:8px 0;}
+.code-block .cmt{color:var(--muted);}
+
+/* Flashcards */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:5px 12px;border-radius:4px;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;transition:all .15s;}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.fc-wrap{perspective:1000px;margin-bottom:16px;}
+.fc-card{width:100%;min-height:220px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.fc-card.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;background:var(--surface);
+  border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;justify-content:center;padding:24px;}
+.fc-back{transform:rotateY(180deg);border-color:var(--accent);background:var(--accent-dim);}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
+.fc-q,.fc-a{font-size:1rem;line-height:1.6;color:var(--text);}
+.fc-a{color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:.92rem;}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-align:center;margin-bottom:12px;}
+.fc-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+.fc-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82rem;transition:all .15s;}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent);}
+.fc-btn.mastered-btn{border-color:var(--green);color:var(--green);}
+.fc-nav{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+.fc-empty{text-align:center;padding:40px;color:var(--muted);font-size:.9rem;}
+
+/* Quiz */
+.quiz-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:14px;}
+.quiz-q-text{font-size:.9rem;margin-bottom:12px;line-height:1.6;}
+.quiz-q-text code{font-family:'IBM Plex Mono',monospace;background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:.85rem;}
+.quiz-opts label{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;border-radius:5px;cursor:pointer;font-size:.85rem;line-height:1.5;transition:background .1s;}
+.quiz-opts label:hover{background:rgba(255,255,255,0.04);}
+.quiz-opts input{margin-top:3px;flex-shrink:0;accent-color:var(--accent);}
+.fitb-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:5px;font-size:.85rem;margin-top:8px;font-family:'IBM Plex Mono',monospace;}
+.fitb-input:focus{outline:none;border-color:var(--accent);}
+.q-correct{border-color:var(--green)!important;background:rgba(34,197,94,0.06)!important;}
+.q-wrong{border-color:var(--red)!important;background:rgba(239,68,68,0.06)!important;}
+.q-exp{font-size:.8rem;color:#9090b0;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);display:none;}
+.q-exp.show{display:block;}
+#submit-btn,#reset-btn{padding:10px 22px;border-radius:6px;cursor:pointer;font-size:.88rem;font-weight:500;transition:all .15s;border:1px solid;}
+#submit-btn{background:var(--accent);border-color:var(--accent);color:#fff;margin-right:8px;}
+#submit-btn:hover{opacity:.85;}
+#reset-btn{background:transparent;border-color:var(--border);color:var(--muted);}
+#reset-btn:hover{border-color:var(--red);color:var(--red);}
+#quiz-score{margin-top:16px;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:.9rem;display:none;}
+
+/* Discussion */
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:14px;}
+.disc-q-text{font-size:.9rem;line-height:1.6;margin-bottom:12px;font-weight:500;}
+.disc-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:5px;
+  font-size:.84rem;min-height:120px;resize:vertical;font-family:'IBM Plex Sans',sans-serif;line-height:1.6;}
+.disc-textarea:focus{outline:none;border-color:var(--accent);}
+.disc-btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.disc-btn{padding:6px 14px;border-radius:5px;cursor:pointer;font-size:.82rem;border:1px solid var(--border);background:var(--surface2);color:var(--muted);transition:all .15s;}
+.disc-btn:hover{color:var(--text);}
+.disc-btn.primary{border-color:var(--accent);color:var(--accent);}
+.disc-rubric{display:none;margin-top:12px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:12px;}
+.disc-rubric.show{display:block;}
+.rubric-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:.82rem;}
+.rubric-item:last-child{border-bottom:none;}
+.rubric-item input[type=checkbox]{flex-shrink:0;margin-top:2px;accent-color:var(--green);}
+.rubric-item strong{color:var(--text);}
+.disc-score{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--green);margin-top:8px;}
+.model-answer{display:none;margin-top:10px;font-size:.82rem;line-height:1.65;color:#9090b0;background:rgba(167,139,250,0.06);
+  border:1px solid rgba(167,139,250,0.2);border-radius:6px;padding:12px;}
+.model-answer.show{display:block;}
+
+/* Code Lab */
+.codelab-intro{font-size:.84rem;line-height:1.65;color:#b0b0c8;margin-bottom:16px;}
+.codelab-section-title{font-size:.82rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin:22px 0 10px;}
+.seq-row{display:flex;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 12px;margin-bottom:6px;}
+.seq-row select{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:5px;font-family:'IBM Plex Mono',monospace;font-size:.8rem;}
+.seq-name{flex:1;font-size:.86rem;}
+.seq-row.seq-ok{border-color:var(--green);}
+.seq-row.seq-bad{border-color:var(--red);}
+.seq-result{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--muted);margin-top:8px;}
+.code-target-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px;}
+.code-select{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:.82rem;}
+.code-input{width:100%;min-height:300px;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:8px;
+  font-family:'IBM Plex Mono',monospace;font-size:.82rem;line-height:1.6;resize:vertical;white-space:pre;tab-size:4;}
+.code-input:focus{outline:none;border-color:var(--accent);}
+.code-btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.code-btn{padding:9px 18px;border-radius:6px;cursor:pointer;font-size:.85rem;border:1px solid var(--border);background:var(--surface2);color:var(--text);transition:all .15s;}
+.code-btn:hover{border-color:var(--accent);color:var(--accent);}
+.code-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+.code-btn.primary:hover{opacity:.85;color:#fff;}
+.code-result{margin-top:16px;}
+.code-scoreline{font-family:'IBM Plex Mono',monospace;font-size:.9rem;padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--surface);margin-bottom:12px;}
+.code-legend{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--muted);margin-bottom:8px;}
+.diff-line{display:flex;gap:10px;align-items:flex-start;font-family:'IBM Plex Mono',monospace;font-size:.8rem;padding:5px 8px;border-radius:4px;margin-bottom:3px;white-space:pre-wrap;word-break:break-word;}
+.diff-line .ln{color:var(--muted);flex-shrink:0;width:26px;text-align:right;}
+.diff-line .mark{flex-shrink:0;width:14px;}
+.diff-ok{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);}
+.diff-ok .mark{color:var(--green);}
+.diff-miss{background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.25);}
+.diff-miss .mark{color:var(--red);}
+.diff-extra{background:rgba(234,179,8,0.07);border:1px solid rgba(234,179,8,0.25);}
+.diff-extra .mark{color:var(--yellow);}
+.code-answer{display:none;margin-top:12px;}
+.code-answer.show{display:block;}
+
+/* Notes */
+.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.notes-grid{grid-template-columns:1fr;}}
+.note-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.note-card h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.note-lines{display:flex;flex-direction:column;gap:8px;}
+.note-line{border-bottom:1px solid var(--border);min-height:28px;}
+.video-block{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:12px;}
+.video-block h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.video-link{display:flex;align-items:center;gap:8px;padding:7px 0;font-size:.84rem;border-bottom:1px solid var(--border);}
+.video-link:last-child{border-bottom:none;}
+.video-link a{color:var(--text);text-decoration:none;flex:1;}
+.video-link a:hover{color:var(--accent);}
+.video-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);border:1px solid var(--border);padding:2px 6px;border-radius:10px;flex-shrink:0;}
+.source-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.source-list a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;}
+.source-list a:hover{color:var(--accent);border-color:var(--accent);}
+footer{text-align:center;padding:30px 16px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);}
+.footer-back-link{font-size:10px;}
+@media print{
+  body::before,.topnav,.exam-pill,.textbook-links,footer,.fc-controls,.fc-nav,.filter-row,
+  #submit-btn,#quiz-score,.disc-btn-row,.disc-rubric,.obj-master-btn,.reset-mastery-btn,.mastery-bar,
+  .code-target-row,.code-btn-row,.code-input,.seq-row select,.back-link{display:none!important;}
+  .panel{display:none!important;}.panel.active{display:block!important;}
+  *,*::before,*::after{background:white!important;background-color:white!important;background-image:none!important;
+    color:black!important;border-color:#bbb!important;box-shadow:none!important;-webkit-text-fill-color:black!important;}
+  body{font-size:12pt;}.chapter-body{display:block!important;}
+  @page{margin:.75in;}
+}
+
+/* Module 4 additions */
+.sg-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.8rem;}
+.sg-table th{font-family:'IBM Plex Mono',monospace;font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.05em;color:var(--accent);text-align:left;padding:7px 8px;border-bottom:1px solid var(--border);}
+.sg-table td{padding:7px 8px;border-bottom:1px solid var(--border);color:#b0b0c8;line-height:1.5;vertical-align:top;}
+.sg-table tr:last-child td{border-bottom:none;}
+.tbl-wrap{overflow-x:auto;}
+.chapter-body code,.obj-body code,.rubric-item code,.flag-note code,.oop-note code{font-family:'IBM Plex Mono',monospace;font-size:.92em;}
+.code-block.out{border-left:3px solid var(--accent);color:#b0b0c8;}
+.oop-note{background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.25);border-radius:6px;
+  padding:9px 12px;font-size:.8rem;line-height:1.6;color:#b0b0c8;margin:10px 0;}
+.oop-note strong{color:var(--purple);}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 14px;}
+.flow-step{font-family:'IBM Plex Mono',monospace;font-size:.74rem;border:1px solid var(--border);background:var(--surface);
+  padding:6px 10px;border-radius:6px;color:var(--text);}
+.flow-step.x{border-color:var(--accent);color:var(--accent);}
+.flow-step.y{border-color:var(--orange);color:var(--orange);}
+.flow-arrow{color:var(--muted);font-size:.8rem;}
+.split-bar{display:flex;height:30px;border-radius:6px;overflow:hidden;border:1px solid var(--border);
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;margin:10px 0;}
+.split-train{flex:8;background:var(--accent-dim);color:var(--accent);display:flex;align-items:center;justify-content:center;}
+.split-test{flex:2;background:rgba(249,115,22,0.12);color:var(--orange);display:flex;align-items:center;justify-content:center;border-left:1px solid var(--border);}
+.obj-card:focus-visible,.chapter-header:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+@media print{.oop-note,.flow-step,.split-bar{border-color:#bbb!important;}}
+</style>
+</head>
+<body>
+<nav class="topnav" role="tablist" aria-label="Study sections">
+  <button class="nav-btn active" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
+  <button class="nav-btn" onclick="showPanel('guide',this)" role="tab" aria-selected="false" aria-controls="panel-guide">📖 Study Guide</button>
+  <button class="nav-btn" onclick="showPanel('flashcards',this)" role="tab" aria-selected="false" aria-controls="panel-flashcards">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPanel('quiz',this)" role="tab" aria-selected="false" aria-controls="panel-quiz">✏️ Practice Quiz</button>
+  <button class="nav-btn" onclick="showPanel('discussion',this)" role="tab" aria-selected="false" aria-controls="panel-discussion">💬 Discussion</button>
+  <button class="nav-btn" onclick="showPanel('codelab',this)" role="tab" aria-selected="false" aria-controls="panel-codelab">⌨️ Code Lab</button>
+  <button class="nav-btn" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes Template</button>
+</nav>
+
+<!-- ═══════════════ OBJECTIVES ═══════════════ -->
+<div class="panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+  <a class="back-link" href="../../index.html">← All courses</a>
+  <span class="unit-badge">CSIS 3352 · Module 4</span>
+  <h1>Python and Feature Engineering for Artificial Intelligence</h1>
+  <span class="exam-pill">📅 No graded activity this module · On the Midterm (Modules 1–9) — published Oct 20, not yet posted in Blackboard; confirm with Dr. Al Amin</span>
+  <div class="textbook-links">
+    <a href="#">Lecture 4 slides (22)</a>
+    <a href="#">Lecture 4 notebook (Colab)</a>
+    <a href="#">Dataset: students.csv (10 rows)</a>
+  </div>
+  <div class="flag-note">📌 The Lecture 4 deck states no learning objectives. The 15 objectives below are <strong>derived from the deck's own structure</strong> — 3 parts (Python Basics · NumPy &amp; Pandas · Preparing Features for ML) across 21 numbered slides. Each objective's bullets are also its Concept Check rubric.</div>
+  <div class="flag-note">⚠️ Source labeling conflict: the PDF deck is titled <strong>Lecture 4</strong> (syllabus: Module 4), but the notebook's header says <strong>"Lecture 6"</strong> and tells you to run it alongside the <strong>"Lecture 5 slides."</strong> The code is the same in both files. This page follows the deck and syllabus: Module 4.</div>
+  <div class="flag-note">📌 The deck shows code but no output. Results quoted on this page (e.g., average score 72.6, Train rows: 8) come from running the provided notebook.</div>
+  <div class="mastery-bar"><div class="mastery-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="reset-mastery-btn" onclick="resetAllMastery()">↺ Reset All Mastery</button>
+
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S1 · LO1</span><span class="obj-title">Explain how Python runs code, what print() does, and what a variable is</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Describe the order Python executes code, the job of <code>print()</code>, and what a variable is (slides 2–3).</p>
+      <ul>
+        <li><strong>Top to bottom</strong> — Python code runs top to bottom, one line at a time.</li>
+        <li><strong>print()</strong> — displays output; the deck calls it the very first command every Python programmer learns.</li>
+        <li><strong>Variable</strong> — a name that stores a value so you can reuse it later (<code>name = "Ayesha"</code>, <code>age = 20</code>, <code>gpa = 3.8</code>).</li>
+        <li><strong>No type declaration</strong> — you don't declare a type; Python figures it out automatically.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module04_1')" aria-label="Mark S1 LO1 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S1 · LO2</span><span class="obj-title">Identify the four basic data types and check them with type()</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Name the four types on slide 4, match each to its example value, and explain how to confirm a value's type.</p>
+      <ul>
+        <li><strong>Every value has a type</strong> — the deck lists four: int, float, str, bool.</li>
+        <li><strong>Slide examples</strong> — <code>10</code> → int, <code>3.14</code> → float, <code>"hello"</code> → str, <code>True</code> → bool.</li>
+        <li><strong>type()</strong> — checks what kind of value you're working with; the slide's print line outputs <code>&lt;class 'int'&gt; &lt;class 'float'&gt; &lt;class 'str'&gt; &lt;class 'bool'&gt;</code>.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module04_2')" aria-label="Mark S1 LO2 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S1 · LO3</span><span class="obj-title">Compare lists and dictionaries</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Explain what a list and a dictionary each store, how you get items out of each, and when the deck says each is useful (slides 5–6).</p>
+      <ul>
+        <li><strong>List</strong> — stores an ordered collection of items, and it can change (it's mutable).</li>
+        <li><strong>Index from 0</strong> — <code>fruits[0]</code> is the first item ("apple"); <code>len(fruits)</code> gives how many items — 4 after <code>fruits.append("mango")</code>.</li>
+        <li><strong>Dictionary</strong> — stores key-value pairs; great for labeled data like a student record.</li>
+        <li><strong>Look up by key</strong> — <code>student["name"]</code> returns "Ayesha"; <code>student["gpa"] = 3.8</code> adds a new key-value pair.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module04_3')" aria-label="Mark S1 LO3 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S1 · LO4</span><span class="obj-title">Define and call a function</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Explain what a function is, why the deck says to use one, and what the greet example returns (slide 7).</p>
+      <ul>
+        <li><strong>Function</strong> — a reusable block of code you can call by name.</li>
+        <li><strong>Why</strong> — functions keep code organized and avoid repeating yourself.</li>
+        <li><strong>Slide example</strong> — <code>def greet(name):</code> / <code>return f"Hello, {name}!"</code>; <code>print(greet("Data Science Class"))</code> outputs <code>Hello, Data Science Class!</code>.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module04_4')" aria-label="Mark S1 LO4 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S1 · LO5</span><span class="obj-title">Contrast for loops and while loops</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Explain when each loop repeats and trace the output of both slide-8 loops.</p>
+      <ul>
+        <li><strong>for loop</strong> — repeats an action once for each item in a collection; <code>for fruit in fruits:</code> prints apple, banana, cherry, mango.</li>
+        <li><strong>while loop</strong> — repeats an action as long as a condition stays true; <code>while i &lt; 3:</code> prints count: 0, count: 1, count: 2.</li>
+        <li><strong>i += 1</strong> — the line inside the while loop that changes <code>i</code> on each pass.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module04_5')" aria-label="Mark S1 LO5 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" style="margin-top:20px;">
+    <div class="obj-header"><span class="obj-num">S2 · LO6</span><span class="obj-title">Explain what NumPy arrays are for</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Describe what NumPy arrays do well, NumPy's role under other libraries, and the slide-9 results.</p>
+      <ul>
+        <li><strong>Arrays</strong> — NumPy arrays store numbers efficiently and support fast math operations.</li>
+        <li><strong>Foundation</strong> — the deck calls NumPy the foundation that pandas and most ML libraries are built on.</li>
+        <li><strong>Slide example</strong> — <code>import numpy as np</code>; <code>arr = np.array([1, 2, 3, 4, 5])</code> → <code>arr.mean()</code> = 3.0, <code>arr.sum()</code> = 15.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module04_6')" aria-label="Mark S2 LO6 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S2 · LO7</span><span class="obj-title">Load data into a pandas DataFrame with read_csv()</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Explain what a DataFrame is, what pandas is used for, and how read_csv() and head() start a project (slides 10–11).</p>
+      <ul>
+        <li><strong>DataFrame</strong> — how pandas stores data; think of it as a spreadsheet in Python.</li>
+        <li><strong>pandas' job</strong> — the core tool for loading, exploring, and cleaning real datasets.</li>
+        <li><strong>read_csv()</strong> — loads a CSV file straight into a DataFrame; usually the very first line of code in a real project.</li>
+        <li><strong>df.head()</strong> — shows the first 5 rows; students.csv has 10 rows and 5 columns (name, age, major, score, passed).</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module04_7')" aria-label="Mark S2 LO7 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S2 · LO8</span><span class="obj-title">Filter and sort rows in a DataFrame</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Explain filtering and sorting, write the slide code for each, and state the results (slides 12–13).</p>
+      <ul>
+        <li><strong>Filtering</strong> — keeps only the rows that match a condition; it's how you ask a dataset a question.</li>
+        <li><strong>df[df["score"] &gt; 80]</strong> — returns 4 rows: Ali 88, Sara 92, Noor 95, Emma 82.</li>
+        <li><strong>sort_values()</strong> — reorders rows by a column, ascending or descending; <code>ascending=False</code> puts Noor (95) first and Yuki (45) last.</li>
+        <li><strong>Why sort</strong> — useful for finding the top (or bottom) performers at a glance.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module04_8')" aria-label="Mark S2 LO8 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S2 · LO9</span><span class="obj-title">Summarize a column with aggregation and describe()</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Explain aggregation, list the deck's examples, and state the students.csv results (slide 14).</p>
+      <ul>
+        <li><strong>Aggregation</strong> — summarizes a column into a single number: mean, sum, max, count.</li>
+        <li><strong>Results</strong> — <code>df["score"].mean()</code> → 72.6; <code>df["score"].max()</code> → 95.</li>
+        <li><strong>describe()</strong> — gives a full statistical summary in one line (on the run: count, mean, std, min, 25%, 50%, 75%, max for age, score, passed).</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module04_9')" aria-label="Mark S2 LO9 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S2 · LO10</span><span class="obj-title">Compare groups with groupby()</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Explain what groupby() does and state the average score per major (slide 15).</p>
+      <ul>
+        <li><strong>groupby()</strong> — splits data into groups, then applies a calculation to each group.</li>
+        <li><strong>Question it answers</strong> — "what's the average score, per major?"</li>
+        <li><strong>Result</strong> — <code>df.groupby("major")["score"].mean()</code> → Business 59.67 · CS 72.5 · Math 85.67.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module04_10')" aria-label="Mark S2 LO10 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" style="margin-top:20px;">
+    <div class="obj-header"><span class="obj-num">S3 · LO11</span><span class="obj-title">Separate features (X) from the label / target (y)</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Define features and label, identify both in students.csv, and explain why a supervised model needs both (slides 16–17).</p>
+      <ul>
+        <li><strong>Features (X)</strong> — the input columns a model learns patterns from; here <code>X = df[["age", "score"]]</code>.</li>
+        <li><strong>Choosing features</strong> — the deck calls it one of the most important parts of the job.</li>
+        <li><strong>Label / target (y)</strong> — the target column, what you're trying to predict; here <code>y = df["passed"]</code>.</li>
+        <li><strong>Both required</strong> — every supervised model needs both features and a label to learn from; uppercase X, lowercase y.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module04_11')" aria-label="Mark S3 LO11 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S3 · LO12</span><span class="obj-title">Use correlation as a starting point for feature selection</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Explain why feature selection matters and how the deck starts it, with the slide-18 results.</p>
+      <ul>
+        <li><strong>Feature selection</strong> — not every column helps a model; feature selection keeps the useful ones.</li>
+        <li><strong>Starting point</strong> — check which features correlate with the label.</li>
+        <li><strong>Result</strong> — <code>df[["age", "score", "passed"]].corr()["passed"]</code> → score 0.844 · age 0.611 · passed 1.0 (itself).</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module04_12')" aria-label="Mark S3 LO12 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S3 · LO13</span><span class="obj-title">One-hot encode a categorical column with get_dummies()</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Explain why encoding is needed and how slide 19 encodes "major" and attaches it to X.</p>
+      <ul>
+        <li><strong>Why encode</strong> — models need numbers, not text; encoding converts categories into numeric columns.</li>
+        <li><strong>pd.get_dummies()</strong> — a quick, common way to one-hot encode a column.</li>
+        <li><strong>prefix="major"</strong> — produces the columns major_Business, major_CS, major_Math.</li>
+        <li><strong>pd.concat([X, major_encoded], axis=1)</strong> — attaches the new columns to X → 5 columns: age, score, major_Business, major_CS, major_Math.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module04_13')" aria-label="Mark S3 LO13 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S3 · LO14</span><span class="obj-title">Distinguish scaling (StandardScaler) from normalization (MinMaxScaler)</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Contrast the two techniques, name the tool for each, and identify which columns the slides transform (slides 20–21).</p>
+      <ul>
+        <li><strong>Scaling</strong> — puts features on a comparable range using their mean and standard deviation; tool: <code>StandardScaler</code>.</li>
+        <li><strong>Normalization</strong> — rescales features into a fixed [0, 1] range; tool: <code>MinMaxScaler</code>.</li>
+        <li><strong>Same pattern</strong> — both from <code>sklearn.preprocessing</code>: create the object, then call <code>fit_transform()</code> on <code>X[["age", "score"]]</code>.</li>
+        <li><strong>Only age and score</strong> — the major_ dummy columns are left out of both calls.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module04_14')" aria-label="Mark S3 LO14 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S3 · LO15</span><span class="obj-title">Split the data with train_test_split()</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Explain why data is held back and read every part of the slide-22 split call.</p>
+      <ul>
+        <li><strong>Why split</strong> — hold back some data to fairly test the model after training.</li>
+        <li><strong>train_test_split()</strong> — from <code>sklearn.model_selection</code>; does the split in one line.</li>
+        <li><strong>Four outputs, in order</strong> — <code>X_train, X_test, y_train, y_test</code>.</li>
+        <li><strong>Result</strong> — with <code>test_size=0.2, random_state=42</code> on 10 rows: Train rows: 8 · Test rows: 2.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module04_15')" aria-label="Mark S3 LO15 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STUDY GUIDE ═══════════════ -->
+<div class="panel" id="panel-guide" role="tabpanel" aria-labelledby="tab-guide">
+  <h1>Study Guide</h1>
+  <span class="unit-badge">Module 4 · 3 parts · 21 numbered slides · one running example</span>
+  <div class="flag-note">📌 Code is from the Lecture 4 deck. Lines marked <strong>Output</strong> come from running the provided notebook — the deck shows code only. Purple <strong>OOP reminder</strong> boxes are Java-bridge study aids, not deck content; nothing in them is on the quiz or flashcards.</div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false"><span>🧪 The running example — students.csv</span><span>▼</span></div>
+    <div class="chapter-body">
+      <p>The notebook builds one small class of students and uses it all the way through to a train/test split, "the same way a real project flows."</p>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>name</th><th>age</th><th>major</th><th>score</th><th>passed</th></tr>
+        <tr><td>Ali</td><td>20</td><td>CS</td><td>88</td><td>1</td></tr>
+        <tr><td>Sara</td><td>21</td><td>Math</td><td>92</td><td>1</td></tr>
+        <tr><td>Omar</td><td>19</td><td>CS</td><td>65</td><td>0</td></tr>
+        <tr><td>Priya</td><td>22</td><td>Business</td><td>74</td><td>1</td></tr>
+        <tr><td>Liam</td><td>20</td><td>CS</td><td>55</td><td>0</td></tr>
+        <tr><td>Noor</td><td>23</td><td>Math</td><td>95</td><td>1</td></tr>
+        <tr><td>Diego</td><td>21</td><td>Business</td><td>60</td><td>0</td></tr>
+        <tr><td>Emma</td><td>20</td><td>CS</td><td>82</td><td>1</td></tr>
+        <tr><td>Kwame</td><td>22</td><td>Math</td><td>70</td><td>1</td></tr>
+        <tr><td>Yuki</td><td>19</td><td>Business</td><td>45</td><td>0</td></tr>
+      </table></div>
+      <div class="code-block">df_students["passed"] = (df_students["score"] >= 70).astype(int)  <span class="cmt"># 1 = passed, 0 = did not pass</span></div>
+      <div class="flag-note">⚠️ Source gap: slide 11's comment says students.csv "already has our class data saved," and the deck never shows where <code>passed</code> comes from. Only the notebook defines it: <strong>passed = 1 if score ≥ 70, else 0</strong> (6 of 10 passed). Kwame's 70 counts as a pass because the test is <code>&gt;=</code>.</div>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false"><span>🐍 Part 1 — Python Basics (slides 2–8)</span><span>▼</span></div>
+    <div class="chapter-body">
+      <h3>1–2 · Running code &amp; variables</h3>
+      <div class="code-block">print("Hello, Data Science!")
+name = "Ayesha"
+age = 20
+gpa = 3.8
+print(name, age, gpa)</div>
+      <ul>
+        <li><strong>Execution order</strong> — Python code runs top to bottom, one line at a time.</li>
+        <li><strong>print()</strong> — displays output; "the very first command every Python programmer learns."</li>
+        <li><strong>Variable</strong> — a name that stores a value, so you can reuse it later. No need to declare a type — Python figures it out automatically.</li>
+      </ul>
+
+      <h3>3 · Data types</h3>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Type</th><th>Slide example</th><th>type() prints</th></tr>
+        <tr><td><strong>int</strong></td><td><code>x = 10</code></td><td><code>&lt;class 'int'&gt;</code></td></tr>
+        <tr><td><strong>float</strong></td><td><code>y = 3.14</code></td><td><code>&lt;class 'float'&gt;</code></td></tr>
+        <tr><td><strong>str</strong></td><td><code>z = "hello"</code></td><td><code>&lt;class 'str'&gt;</code></td></tr>
+        <tr><td><strong>bool</strong></td><td><code>is_valid = True</code></td><td><code>&lt;class 'bool'&gt;</code></td></tr>
+      </table></div>
+      <div class="oop-note">🧩 <strong>OOP reminder — x/y here are not X/y.</strong> Slide 4's lowercase <code>x</code> and <code>y</code> are throwaway variable names (10 and 3.14). From slide 16 on, <strong>uppercase X = features</strong> (several input columns) and <strong>lowercase y = target</strong> (one column you predict). Keep that casing exact — Python is case-sensitive, so <code>X</code> and <code>x</code> are different variables.</div>
+
+      <h3>4–5 · Lists vs dictionaries</h3>
+      <div class="code-block">fruits = ["apple", "banana", "cherry"]
+fruits.append("mango")
+print(fruits[0])     <span class="cmt"># first item</span>
+print(len(fruits))   <span class="cmt"># how many items</span>
+
+student = {"name": "Ayesha", "age": 20, "major": "CS"}
+print(student["name"])
+student["gpa"] = 3.8 <span class="cmt"># add a new key-value pair</span>
+print(student)</div>
+      <div class="code-block out"><span class="cmt">Output</span>
+apple
+4
+Ayesha
+{'name': 'Ayesha', 'age': 20, 'major': 'CS', 'gpa': 3.8}</div>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th></th><th>List</th><th>Dictionary</th></tr>
+        <tr><td><strong>Stores</strong></td><td>An ordered collection of items</td><td>Key-value pairs</td></tr>
+        <tr><td><strong>Get a value</strong></td><td>By position, starting at index 0 — <code>fruits[0]</code></td><td>By key — <code>student["name"]</code></td></tr>
+        <tr><td><strong>Change it</strong></td><td>Mutable — <code>fruits.append("mango")</code></td><td><code>student["gpa"] = 3.8</code> adds a pair</td></tr>
+        <tr><td><strong>Deck's use case</strong></td><td>—</td><td>Labeled data like a student record</td></tr>
+      </table></div>
+      <div class="oop-note">🧩 <strong>OOP reminder — methods.</strong> <code>fruits.append("mango")</code> is a <em>method call</em>: <code>fruits</code> is a list <em>object</em> and <code>append</code> is a method that belongs to it. Same <code>object.method()</code> dot syntax as Java's <code>list.add("mango")</code> on an ArrayList. <code>len(fruits)</code> is different — it's a plain function that takes the list as an argument.</div>
+
+      <h3>6 · Functions</h3>
+      <div class="code-block">def greet(name):
+    return f"Hello, {name}!"
+
+print(greet("Data Science Class"))</div>
+      <div class="code-block out"><span class="cmt">Output</span>
+Hello, Data Science Class!</div>
+      <ul>
+        <li><strong>Function</strong> — a reusable block of code you can call by name.</li>
+        <li><strong>Why</strong> — functions keep code organized, and avoid repeating yourself.</li>
+      </ul>
+      <div class="flag-note">⚠️ Not explained in the source: the <code>f"…{name}…"</code> string form on slide 7. The output shows the value of <code>name</code> appears where <code>{name}</code> sits; the deck gives no name or rule for this syntax.</div>
+
+      <h3>7 · Loops</h3>
+      <div class="code-block">for fruit in fruits:
+    print(fruit)
+
+i = 0
+while i &lt; 3:
+    print("count:", i)
+    i += 1</div>
+      <div class="code-block out"><span class="cmt">Output</span>
+apple
+banana
+cherry
+mango
+count: 0
+count: 1
+count: 2</div>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Loop</th><th>Repeats…</th><th>Slide example</th></tr>
+        <tr><td><strong>for</strong></td><td>Once for each item in a collection</td><td><code>for fruit in fruits:</code> → 4 lines</td></tr>
+        <tr><td><strong>while</strong></td><td>As long as a condition stays true</td><td><code>while i &lt; 3:</code> → count 0, 1, 2</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false"><span>🐼 Part 2 — NumPy &amp; Pandas (slides 9–15)</span><span>▼</span></div>
+    <div class="chapter-body">
+      <h3>8 · NumPy</h3>
+      <div class="code-block">import numpy as np
+
+arr = np.array([1, 2, 3, 4, 5])
+print("Mean:", arr.mean())
+print("Sum:", arr.sum())</div>
+      <div class="code-block out"><span class="cmt">Output</span>
+Mean: 3.0
+Sum: 15</div>
+      <ul>
+        <li><strong>NumPy arrays</strong> — store numbers efficiently, and support fast math operations.</li>
+        <li><strong>Role</strong> — the foundation that pandas and most ML libraries are built on.</li>
+      </ul>
+
+      <h3>9–10 · pandas DataFrame &amp; read_csv()</h3>
+      <div class="code-block">import pandas as pd
+
+data = {"name": ["Ali", "Sara"], "score": [88, 92]}
+df_demo = pd.DataFrame(data)
+
+df = pd.read_csv("students.csv")
+df.head()   <span class="cmt"># show the first 5 rows</span></div>
+      <ul>
+        <li><strong>DataFrame</strong> — think of it as a spreadsheet in Python.</li>
+        <li><strong>pandas</strong> — the core tool for loading, exploring, and cleaning real datasets.</li>
+        <li><strong>read_csv()</strong> — loads a CSV file straight into a DataFrame; usually the very first line of code in a real project.</li>
+      </ul>
+      <div class="oop-note">🧩 <strong>OOP reminder — building objects.</strong> <code>np.array(...)</code> and <code>pd.DataFrame(data)</code> each create an object; <code>np</code> and <code>pd</code> are just short names (aliases) for the imported libraries. Everything after a dot on <code>arr</code> or <code>df</code> — <code>.mean()</code>, <code>.head()</code>, <code>.sort_values()</code> — is a method on that object. <code>df["score"]</code> pulls out one column, which is itself an object, so <code>df["score"].mean()</code> calls <code>.mean()</code> on the column.</div>
+
+      <h3>11–15 · Asking the data questions</h3>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Operation</th><th>Slide code</th><th>Question it answers</th><th>Result (run)</th></tr>
+        <tr><td><strong>Filtering</strong></td><td><code>df[df["score"] &gt; 80]</code></td><td>"Who scored above 80?"</td><td>Ali 88, Sara 92, Noor 95, Emma 82</td></tr>
+        <tr><td><strong>Sorting</strong></td><td><code>df.sort_values("score", ascending=False)</code></td><td>Top (or bottom) performers at a glance</td><td>Noor 95 first … Yuki 45 last</td></tr>
+        <tr><td><strong>Aggregation</strong></td><td><code>df["score"].mean()</code> · <code>.max()</code></td><td>One number for a column (mean, sum, max, count)</td><td>72.6 · 95</td></tr>
+        <tr><td><strong>describe()</strong></td><td><code>df.describe()</code></td><td>Full statistical summary in one line</td><td>count, mean, std, min, 25%, 50%, 75%, max</td></tr>
+        <tr><td><strong>GroupBy</strong></td><td><code>df.groupby("major")["score"].mean()</code></td><td>"Average score, per major?"</td><td>Business 59.67 · CS 72.5 · Math 85.67</td></tr>
+      </table></div>
+      <div class="code-block out"><span class="cmt">Output — df.describe()</span>
+             age   score    passed
+count  10.000000  10.000  10.000000
+mean   20.700000  72.600   0.600000
+std     1.337494  16.668   0.516398
+min    19.000000  45.000   0.000000
+25%    20.000000  61.250   0.000000
+50%    20.500000  72.000   1.000000
+75%    21.750000  86.500   1.000000
+max    23.000000  95.000   1.000000</div>
+      <ul>
+        <li><strong>Read the passed column's mean</strong> — 0.6 means 6 of the 10 students have <code>passed = 1</code>.</li>
+        <li><strong>describe() skips text columns</strong> — on the run, name and major don't appear because they aren't numbers.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" onclick="toggleChapter(this)" aria-expanded="false"><span>🧠 Part 3 — Preparing Features for ML (slides 16–22)</span><span>▼</span></div>
+    <div class="chapter-body">
+      <h3>The flow on one line</h3>
+      <div class="flow" aria-label="Pipeline: students.csv to DataFrame, split into features X and target y, encode and scale X, then train_test_split into four outputs">
+        <span class="flow-step">students.csv</span><span class="flow-arrow">→</span>
+        <span class="flow-step">df</span><span class="flow-arrow">→</span>
+        <span class="flow-step x">X = features</span><span class="flow-step y">y = target</span><span class="flow-arrow">→</span>
+        <span class="flow-step x">encode X</span><span class="flow-arrow">→</span>
+        <span class="flow-step">train_test_split</span><span class="flow-arrow">→</span>
+        <span class="flow-step x">X_train</span><span class="flow-step x">X_test</span><span class="flow-step y">y_train</span><span class="flow-step y">y_test</span>
+      </div>
+
+      <h3>15–16 · Features (X) and label / target (y)</h3>
+      <div class="code-block">X = df[["age", "score"]]   <span class="cmt"># features: input columns a model learns from</span>
+y = df["passed"]           <span class="cmt"># label: the target we want to predict</span></div>
+      <ul>
+        <li><strong>Features (X)</strong> — the input columns a model learns patterns from. Choosing good features is one of the most important parts of the job.</li>
+        <li><strong>Label / target (y)</strong> — the target column: what you're trying to predict.</li>
+        <li><strong>Supervised</strong> — every supervised model needs both features and a label to learn from. <em>Cross-reference:</em> Module 1 defines supervised learning as learning from labeled data where the correct answer is already known.</li>
+      </ul>
+
+      <h3>17 · Feature selection</h3>
+      <div class="code-block">df[["age", "score", "passed"]].corr()["passed"]</div>
+      <div class="code-block out"><span class="cmt">Output</span>
+age       0.611315
+score     0.844243
+passed    1.000000</div>
+      <ul>
+        <li><strong>Feature selection</strong> — not every column helps a model; feature selection keeps the useful ones.</li>
+        <li><strong>Starting point</strong> — check which features correlate with the label. Here score correlates more strongly than age.</li>
+      </ul>
+      <div class="flag-note">⚠️ Not defined in the source: "correlate" / <code>.corr()</code>. The deck uses it as a ranking tool but never explains what the numbers mean or their range. Also note from the notebook: <code>passed</code> is computed directly from <code>score</code> (≥ 70), so a strong score correlation is built into this toy data.</div>
+
+      <h3>18 · Encoding</h3>
+      <div class="code-block">major_encoded = pd.get_dummies(df["major"], prefix="major")
+X = pd.concat([X, major_encoded], axis=1)
+X.head()</div>
+      <div class="code-block out"><span class="cmt">Output</span>
+   age  score  major_Business  major_CS  major_Math
+0   20     88           False      True       False
+1   21     92           False     False        True
+2   19     65           False      True       False
+3   22     74            True     False       False
+4   20     55           False      True       False</div>
+      <ul>
+        <li><strong>Why</strong> — models need numbers, not text; encoding converts categories into numeric columns.</li>
+        <li><strong>get_dummies()</strong> — a quick, common way to one-hot encode a column. <code>prefix="major"</code> names the new columns major_Business / major_CS / major_Math.</li>
+        <li><strong>concat</strong> — attaches the encoded columns to X, giving 5 columns.</li>
+      </ul>
+      <div class="flag-note">⚠️ Source vs. run conflict: the deck says encoding makes "numeric columns," but when the notebook runs on current pandas the dummy columns display <strong>True / False</strong> (bool type), not 1 / 0. The deck doesn't address this. For the exam, keep the deck's wording: get_dummies converts categories into numeric columns. Also unexplained in the deck: <code>axis=1</code> in <code>pd.concat</code>.</div>
+
+      <h3>19–20 · Scaling vs normalization</h3>
+      <div class="code-block">from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X[["age", "score"]])
+print(X_scaled[:5])
+
+from sklearn.preprocessing import MinMaxScaler
+normalizer = MinMaxScaler()
+X_norm = normalizer.fit_transform(X[["age", "score"]])
+print(X_norm[:5])</div>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th></th><th>Scaling</th><th>Normalization</th></tr>
+        <tr><td><strong>What it does</strong></td><td>Puts features on a comparable range using their mean and standard deviation</td><td>Rescales features into a fixed [0, 1] range</td></tr>
+        <tr><td><strong>Tool</strong></td><td><code>StandardScaler</code></td><td><code>MinMaxScaler</code></td></tr>
+        <tr><td><strong>Import</strong></td><td colspan="2"><code>sklearn.preprocessing</code> — both</td></tr>
+        <tr><td><strong>Columns used</strong></td><td colspan="2"><code>X[["age", "score"]]</code> only — dummy columns left out</td></tr>
+        <tr><td><strong>First row on the run (Ali: 20, 88)</strong></td><td><code>[-0.55, 0.97]</code></td><td><code>[0.25, 0.86]</code></td></tr>
+      </table></div>
+      <div class="oop-note">🧩 <strong>OOP reminder — object creation.</strong> <code>scaler = StandardScaler()</code> creates an <em>instance</em> of the <code>StandardScaler</code> class. In Java that's <code>StandardScaler scaler = new StandardScaler();</code> — Python has no <code>new</code>; calling the class name builds the object. Then <code>scaler.fit_transform(...)</code> calls a method on that instance. Naming tip: CapitalizedWords = class (<code>StandardScaler</code>, <code>MinMaxScaler</code>); lowercase_with_underscores = function or method (<code>train_test_split</code>, <code>get_dummies</code>, <code>fit_transform</code>).</div>
+      <div class="flag-note">⚠️ Not explained in this deck: <code>fit_transform()</code> (see the Module 3 page, where fit learns the parameters and transform applies them) and the <code>[:5]</code> in <code>print(X_scaled[:5])</code>, which on the run prints the first 5 rows. The deck also gives no formula for either scaler.</div>
+
+      <h3>21 · Train/test split</h3>
+      <div class="code-block">from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+print("Train rows:", len(X_train))
+print("Test rows:", len(X_test))</div>
+      <div class="code-block out"><span class="cmt">Output</span>
+Train rows: 8
+Test rows: 2</div>
+      <div class="split-bar" aria-label="10 rows split into 8 training rows and 2 test rows"><div class="split-train">train · 8 rows</div><div class="split-test">test · 2</div></div>
+      <ul>
+        <li><strong>Why</strong> — we hold back some data to fairly test the model after training.</li>
+        <li><strong>train_test_split()</strong> — does this split for us in one line; returns X_train, X_test, y_train, y_test in that order.</li>
+      </ul>
+      <div class="flag-note">⚠️ Not explained in the source: what <code>test_size=0.2</code> and <code>random_state=42</code> each control. The run shows 10 rows → 8 train / 2 test.</div>
+      <div class="flag-note">⚠️ Course-material conflict: here the scalers are fit on the full X <em>before</em> the split, and the split uses the <strong>unscaled</strong> X (X_scaled / X_norm are only printed). Module 3's lab did scaling <em>after</em> the split — <code>fit_transform</code> on X_train, <code>transform</code> on X_test. This page keeps the Lecture 4 code as written; ask Dr. Al Amin which order he expects on the midterm.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FLASHCARDS ═══════════════ -->
+<div class="panel" id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards">
+  <h1>Flashcards</h1>
+  <div class="filter-row" role="group" aria-label="Filter flashcards by part">
+    <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('s1',this)">Python Basics</button>
+    <button class="filter-btn" onclick="filterCards('s2',this)">NumPy &amp; Pandas</button>
+    <button class="filter-btn" onclick="filterCards('s3',this)">Features for ML</button>
+  </div>
+  <div class="fc-counter" id="fc-counter" aria-live="polite"></div>
+  <div class="fc-wrap">
+    <div class="fc-card" id="fc-card" onclick="flipCard()" aria-label="Flashcard — click to flip">
+      <div class="fc-front"><div class="fc-label">Question</div><div class="fc-q" id="fc-q" aria-live="polite"></div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a" id="fc-a" aria-live="polite"></div></div>
+    </div>
+  </div>
+  <div class="fc-controls">
+    <button class="fc-btn" onclick="flipCard()" aria-label="Flip card">↩ Flip</button>
+    <button class="fc-btn mastered-btn" id="fc-master-btn" onclick="toggleMastered(currentIdx)" aria-label="Toggle mastered">☐ Mastered</button>
+    <button class="fc-btn" onclick="shuffleCards()" aria-label="Shuffle deck">🔀 Shuffle</button>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
+    <button class="fc-btn" onclick="nextCard()" aria-label="Next card">Next →</button>
+  </div>
+  <div class="fc-empty" id="fc-empty" style="display:none">No cards in this filter.</div>
+</div>
+
+<!-- ═══════════════ QUIZ ═══════════════ -->
+<div class="panel" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+  <h1>Practice Quiz</h1>
+  <div class="filter-row" role="group" aria-label="Filter quiz by part">
+    <button class="filter-btn active" onclick="setQuizFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setQuizFilter('s1',this)">Python Basics</button>
+    <button class="filter-btn" onclick="setQuizFilter('s2',this)">NumPy &amp; Pandas</button>
+    <button class="filter-btn" onclick="setQuizFilter('s3',this)">Features for ML</button>
+  </div>
+  <div id="quiz-container"></div>
+  <div style="margin-top:16px;">
+    <button id="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <button id="reset-btn" onclick="resetQuiz()">Reset</button>
+  </div>
+  <div id="quiz-score"></div>
+</div>
+
+<!-- ═══════════════ DISCUSSION ═══════════════ -->
+<div class="panel" id="panel-discussion" role="tabpanel" aria-labelledby="tab-discussion">
+  <h1>Concept Check</h1>
+  <span class="unit-badge">Explain each objective in your own words, then self-grade against the rubric</span>
+  <div class="filter-row" role="group" aria-label="Filter questions by part">
+    <button class="filter-btn active" onclick="filterDisc('all',this)">All</button>
+    <button class="filter-btn" onclick="filterDisc('s1',this)">Python Basics</button>
+    <button class="filter-btn" onclick="filterDisc('s2',this)">NumPy &amp; Pandas</button>
+    <button class="filter-btn" onclick="filterDisc('s3',this)">Features for ML</button>
+  </div>
+  <div id="disc-container"></div>
+</div>
+
+<!-- ═══════════════ CODE LAB ═══════════════ -->
+<div class="panel" id="panel-codelab" role="tabpanel" aria-labelledby="tab-codelab">
+  <h1>Code Lab</h1>
+  <p class="codelab-intro">Reproduce the Lecture 4 code from memory. Drill one slide, one part, or the <strong>Full program</strong>. Each non-blank line is scored pass / fail against the deck's code — spacing, indentation, quote style, and <code>#</code> comments are ignored, but names and capitalization must match (Python is case-sensitive: <code>X</code> ≠ <code>x</code>). Slide 22's multi-line <code>train_test_split(…)</code> call is scored as one line.</p>
+
+  <div class="codelab-section-title">① Warm-up — put Part 3 in the deck's order</div>
+  <div id="seq-container"></div>
+  <div class="code-btn-row">
+    <button class="code-btn" onclick="checkSeq()">Check Order</button>
+    <button class="code-btn" onclick="renderSeq()">Shuffle</button>
+  </div>
+  <div class="seq-result" id="seq-result" aria-live="polite"></div>
+
+  <div class="codelab-section-title">② Reproduce the code</div>
+  <div class="code-target-row">
+    <label for="code-select" style="font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--muted);">Target:</label>
+    <select class="code-select" id="code-select" onchange="setCodeTarget(this)" aria-label="Choose which part of the program to reproduce">
+      <option value="full">Full program — all 21 slides (65 lines)</option>
+      <option value="p1">Part 1 — Python Basics (27 lines)</option>
+      <option value="p2">Part 2 — NumPy &amp; Pandas (18 lines)</option>
+      <option value="p3">Part 3 — Preparing Features for ML (20 lines)</option>
+      <optgroup label="Part 1 — single slides">
+        <option value="t1">1. Python Basics</option>
+        <option value="t2">2. Variables</option>
+        <option value="t3">3. Data Types</option>
+        <option value="t4">4. Lists</option>
+        <option value="t5">5. Dictionaries</option>
+        <option value="t6">6. Functions</option>
+        <option value="t7">7. Loops</option>
+      </optgroup>
+      <optgroup label="Part 2 — single slides">
+        <option value="t8">8. NumPy</option>
+        <option value="t9">9. Pandas</option>
+        <option value="t10">10. Reading CSV</option>
+        <option value="t11">11. Filtering</option>
+        <option value="t12">12. Sorting</option>
+        <option value="t13">13. Aggregation</option>
+        <option value="t14">14. GroupBy</option>
+      </optgroup>
+      <optgroup label="Part 3 — single slides">
+        <option value="t15">15. Features</option>
+        <option value="t16">16. Labels</option>
+        <option value="t17">17. Feature Selection</option>
+        <option value="t18">18. Encoding</option>
+        <option value="t19">19. Scaling</option>
+        <option value="t20">20. Normalization</option>
+        <option value="t21">21. Train/Test Split</option>
+      </optgroup>
+    </select>
+  </div>
+  <textarea class="code-input" id="code-input" spellcheck="false" placeholder="Type the code here, one statement per line..." aria-label="Type the program to reproduce"></textarea>
+  <div class="code-btn-row">
+    <button class="code-btn primary" onclick="gradeCode()">Grade</button>
+    <button class="code-btn" onclick="toggleCodeAnswer()">Show / Hide Answer</button>
+    <button class="code-btn" onclick="resetCode()">Reset</button>
+  </div>
+  <div class="code-answer" id="code-answer"></div>
+  <div class="code-result" id="code-result" aria-live="polite"></div>
+</div>
+
+<!-- ═══════════════ NOTES ═══════════════ -->
+<div class="panel" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes">
+  <h1>Notes Template</h1>
+  <span class="unit-badge">Module 4 · Print this tab for handwritten recall practice</span>
+
+  <div class="video-block">
+    <h4>📚 Reference documentation (official — for lookup, not page content)</h4>
+    <div class="video-link"><span class="video-tag">pandas</span><a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html" target="_blank" rel="noopener">pandas.read_csv</a></div>
+    <div class="video-link"><span class="video-tag">pandas</span><a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.groupby.html" target="_blank" rel="noopener">DataFrame.groupby</a></div>
+    <div class="video-link"><span class="video-tag">pandas</span><a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.corr.html" target="_blank" rel="noopener">DataFrame.corr</a></div>
+    <div class="video-link"><span class="video-tag">pandas</span><a href="https://pandas.pydata.org/docs/reference/api/pandas.get_dummies.html" target="_blank" rel="noopener">pandas.get_dummies</a></div>
+    <div class="video-link"><span class="video-tag">sklearn</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html" target="_blank" rel="noopener">StandardScaler</a></div>
+    <div class="video-link"><span class="video-tag">sklearn</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html" target="_blank" rel="noopener">MinMaxScaler</a></div>
+    <div class="video-link"><span class="video-tag">sklearn</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html" target="_blank" rel="noopener">train_test_split</a></div>
+    <div class="source-list">
+      <a href="https://numpy.org/doc/" target="_blank" rel="noopener">NumPy docs</a>
+      <a href="https://pandas.pydata.org/docs/" target="_blank" rel="noopener">pandas docs</a>
+      <a href="https://scikit-learn.org/stable/" target="_blank" rel="noopener">scikit-learn</a>
+    </div>
+  </div>
+
+  <div class="notes-grid">
+    <div class="note-card"><h4>4 data types + examples</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>List vs dictionary</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>for vs while</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Filter · sort · aggregate · groupby</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Features X vs target y</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>get_dummies + concat</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Scaling vs normalization</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>train_test_split → 4 outputs</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+  </div>
+</div>
+
+<footer>CSIS 3352 · Module 4 · study.imichaelv.com · Built from Lecture 4 slides + notebook · <a href="../../index.html" class="back-link footer-back-link">← Back to all courses</a></footer>
+
+<script>
+// ─── MASTERY ───
+function getMasteryKey(){return 'mastery_csis3352_module04_';}
+function resetAllMastery(){
+  Object.keys(localStorage).filter(k=>k.startsWith(getMasteryKey())).forEach(k=>localStorage.removeItem(k));
+  Object.keys(localStorage).filter(k=>k.startsWith('obj_csis3352_module04_')).forEach(k=>localStorage.removeItem(k));
+  document.querySelectorAll('.obj-master-btn').forEach(b=>{b.textContent='☐ Mark Mastered';b.classList.remove('mastered');});
+  document.querySelectorAll('.fc-card').forEach((_,i)=>localStorage.removeItem(getMasteryKey()+i));
+  updateMasteryBar();
+}
+function updateMasteryBar(){
+  const total=document.querySelectorAll('.obj-master-btn').length;
+  const done=Object.keys(localStorage).filter(k=>k.startsWith('obj_csis3352_module04_')).length;
+  const pct=total?Math.round(done/total*100):0;
+  const f=document.getElementById('mastery-fill');
+  if(f)f.style.width=pct+'%';
+}
+function toggleObjMastery(btn,key){
+  const is=localStorage.getItem(key);
+  if(is){localStorage.removeItem(key);btn.textContent='☐ Mark Mastered';btn.classList.remove('mastered');}
+  else{localStorage.setItem(key,'1');btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  updateMasteryBar();
+}
+function toggleObj(card){
+  const body=card.querySelector('.obj-body');
+  const arrow=card.querySelector('.obj-expand');
+  const open=body.classList.toggle('open');
+  arrow.style.transform=open?'rotate(180deg)':'';
+  card.setAttribute('aria-expanded',open);
+}
+function toggleChapter(header){
+  const body=header.nextElementSibling;
+  const arrow=header.querySelector('span:last-child');
+  const open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  arrow.style.transform=open?'':'rotate(180deg)';
+  header.setAttribute('aria-expanded',!open);
+}
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+}
+function activateFilter(btn){
+  const row=btn.closest('.filter-row');
+  if(row)row.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ─── FLASHCARD DATA ───  {ch:'s1'..'s3', q, a}
+const allCards=[
+  {ch:"s1",q:"In what order does Python run code?",a:"Top to bottom, one line at a time."},
+  {ch:"s1",q:"What does print() do?",a:"Displays output."},
+  {ch:"s1",q:"Per the deck, what is the very first command every Python programmer learns?",a:"print()"},
+  {ch:"s1",q:"What is a variable?",a:"A name that stores a value, so you can reuse it later."},
+  {ch:"s1",q:"Do you have to declare a variable's type in Python?",a:"No — Python figures it out automatically."},
+  {ch:"s1",q:"What four data types does slide 4 list?",a:"int, float, str, bool"},
+  {ch:"s1",q:"What type is 10?",a:"int"},
+  {ch:"s1",q:"What type is 3.14?",a:"float"},
+  {ch:"s1",q:"What type is \"hello\"?",a:"str"},
+  {ch:"s1",q:"What type is True?",a:"bool"},
+  {ch:"s1",q:"Which built-in checks what kind of value you're working with?",a:"type()"},
+  {ch:"s1",q:"What is a list?",a:"An ordered collection of items that can change (mutable)."},
+  {ch:"s1",q:"What does \"mutable\" mean for a list, per the deck?",a:"It can change."},
+  {ch:"s1",q:"What index does the first item in a list have?",a:"0 — fruits[0] is the first item."},
+  {ch:"s1",q:"fruits = [\"apple\", \"banana\", \"cherry\"] — what does print(fruits[0]) print?",a:"apple"},
+  {ch:"s1",q:"After fruits.append(\"mango\"), what does len(fruits) return?",a:"4"},
+  {ch:"s1",q:"What is a dictionary?",a:"A store of key-value pairs — great for labeled data like a student record."},
+  {ch:"s1",q:"How do you get a value out of a dictionary?",a:"Look it up by its key, e.g. student[\"name\"] → \"Ayesha\"."},
+  {ch:"s1",q:"How did slide 6 add a GPA to the student dictionary?",a:"student[\"gpa\"] = 3.8 — assigning to a new key adds a new key-value pair."},
+  {ch:"s1",q:"What is a function?",a:"A reusable block of code you can call by name."},
+  {ch:"s1",q:"Why use functions, per the deck?",a:"They keep code organized and avoid repeating yourself."},
+  {ch:"s1",q:"What does print(greet(\"Data Science Class\")) output?",a:"Hello, Data Science Class!"},
+  {ch:"s1",q:"What does a for loop do?",a:"Repeats an action once for each item in a collection."},
+  {ch:"s1",q:"What does a while loop do?",a:"Repeats an action as long as a condition stays true."},
+  {ch:"s1",q:"What does the slide-8 while loop (i = 0; while i < 3) print?",a:"count: 0, count: 1, count: 2"},
+  {ch:"s1",q:"In the slide-8 while loop, which line changes i on each pass?",a:"i += 1"},
+  {ch:"s2",q:"What are NumPy arrays good at?",a:"Storing numbers efficiently and supporting fast math operations."},
+  {ch:"s2",q:"How does the deck describe NumPy's role?",a:"The foundation that pandas and most ML libraries are built on."},
+  {ch:"s2",q:"Standard import line for NumPy?",a:"import numpy as np"},
+  {ch:"s2",q:"arr = np.array([1, 2, 3, 4, 5]) — what is arr.mean()?",a:"3.0"},
+  {ch:"s2",q:"arr = np.array([1, 2, 3, 4, 5]) — what is arr.sum()?",a:"15"},
+  {ch:"s2",q:"Standard import line for pandas?",a:"import pandas as pd"},
+  {ch:"s2",q:"What structure does pandas store data in?",a:"A DataFrame."},
+  {ch:"s2",q:"How does the deck say to think of a DataFrame?",a:"As a spreadsheet in Python."},
+  {ch:"s2",q:"pandas is the core tool for what three jobs?",a:"Loading, exploring, and cleaning real datasets."},
+  {ch:"s2",q:"How does slide 10 build a DataFrame from a dictionary?",a:"df_demo = pd.DataFrame(data), where data = {\"name\": [\"Ali\", \"Sara\"], \"score\": [88, 92]}"},
+  {ch:"s2",q:"What does read_csv() do?",a:"Loads a CSV file straight into a DataFrame."},
+  {ch:"s2",q:"Per the deck, read_csv() is usually what in a real project?",a:"The very first line of code."},
+  {ch:"s2",q:"What does df.head() show?",a:"The first 5 rows."},
+  {ch:"s2",q:"How big is students.csv and what are its columns?",a:"10 rows; 5 columns — name, age, major, score, passed."},
+  {ch:"s2",q:"What does filtering do?",a:"Keeps only the rows that match a condition — how you ask a dataset a question."},
+  {ch:"s2",q:"Code to keep only students who scored above 80?",a:"df[df[\"score\"] > 80]"},
+  {ch:"s2",q:"Who scored above 80?",a:"Ali (88), Sara (92), Noor (95), Emma (82) — 4 students."},
+  {ch:"s2",q:"What does sort_values() do?",a:"Reorders rows by a column, ascending or descending."},
+  {ch:"s2",q:"Code to sort students highest score first?",a:"df.sort_values(\"score\", ascending=False)"},
+  {ch:"s2",q:"After sorting by score descending, who is first and who is last?",a:"Noor (95) first; Yuki (45) last."},
+  {ch:"s2",q:"What does aggregation do?",a:"Summarizes a column into a single number: mean, sum, max, count."},
+  {ch:"s2",q:"Average score in students.csv?",a:"72.6 — df[\"score\"].mean()"},
+  {ch:"s2",q:"Highest score in students.csv?",a:"95 — df[\"score\"].max()"},
+  {ch:"s2",q:"What does describe() give you?",a:"A full statistical summary in one line."},
+  {ch:"s2",q:"Which stats does df.describe() list when the notebook runs?",a:"count, mean, std, min, 25%, 50%, 75%, max — for age, score, and passed."},
+  {ch:"s2",q:"What does groupby() do?",a:"Splits data into groups, then applies a calculation to each group."},
+  {ch:"s2",q:"Code for the average score per major?",a:"df.groupby(\"major\")[\"score\"].mean()"},
+  {ch:"s2",q:"Average score per major?",a:"Business 59.67 · CS 72.5 · Math 85.67"},
+  {ch:"s3",q:"What are features (X)?",a:"The input columns a model learns patterns from."},
+  {ch:"s3",q:"Which columns are the features on slide 16?",a:"age and score — X = df[[\"age\", \"score\"]]"},
+  {ch:"s3",q:"What does the deck call one of the most important parts of the job?",a:"Choosing good features."},
+  {ch:"s3",q:"What is the label (y)?",a:"The target column — what you're trying to predict."},
+  {ch:"s3",q:"Which column is the label / target in the students example?",a:"passed — y = df[\"passed\"]"},
+  {ch:"s3",q:"How does the notebook define the passed column?",a:"1 if score >= 70, otherwise 0."},
+  {ch:"s3",q:"How many of the 10 students passed?",a:"6"},
+  {ch:"s3",q:"What does every supervised model need to learn from?",a:"Both features (X) and a label (y)."},
+  {ch:"s3",q:"Casing convention for features vs target?",a:"Uppercase X = features · lowercase y = target."},
+  {ch:"s3",q:"What is feature selection?",a:"Keeping the useful columns — not every column helps a model."},
+  {ch:"s3",q:"One simple starting point for feature selection?",a:"Check which features correlate with the label."},
+  {ch:"s3",q:"Code to see each numeric feature's correlation with passed?",a:"df[[\"age\", \"score\", \"passed\"]].corr()[\"passed\"]"},
+  {ch:"s3",q:"Correlation results against passed?",a:"score 0.844 · age 0.611 · passed 1.0"},
+  {ch:"s3",q:"Why encode categorical columns?",a:"Models need numbers, not text — encoding converts categories into numeric columns."},
+  {ch:"s3",q:"Which pandas function one-hot encodes a column?",a:"pd.get_dummies()"},
+  {ch:"s3",q:"Columns made by pd.get_dummies(df[\"major\"], prefix=\"major\")?",a:"major_Business, major_CS, major_Math"},
+  {ch:"s3",q:"How are the dummy columns attached to X?",a:"X = pd.concat([X, major_encoded], axis=1)"},
+  {ch:"s3",q:"How many columns does X have after encoding, and which?",a:"5 — age, score, major_Business, major_CS, major_Math"},
+  {ch:"s3",q:"What does scaling do?",a:"Puts features on a comparable range using their mean and standard deviation."},
+  {ch:"s3",q:"Scikit-learn tool for scaling?",a:"StandardScaler"},
+  {ch:"s3",q:"What does normalization do?",a:"Rescales features into a fixed [0, 1] range."},
+  {ch:"s3",q:"Scikit-learn tool for normalization?",a:"MinMaxScaler"},
+  {ch:"s3",q:"Which module are StandardScaler and MinMaxScaler imported from?",a:"sklearn.preprocessing"},
+  {ch:"s3",q:"Which columns do the slides pass to the scalers?",a:"Only age and score — X[[\"age\", \"score\"]]"},
+  {ch:"s3",q:"After MinMaxScaler, what does the youngest age (19) become?",a:"0.0"},
+  {ch:"s3",q:"Why hold back some data?",a:"To fairly test the model after training."},
+  {ch:"s3",q:"Which module provides train_test_split?",a:"sklearn.model_selection"},
+  {ch:"s3",q:"The four outputs of train_test_split, in order?",a:"X_train, X_test, y_train, y_test"},
+  {ch:"s3",q:"Arguments the slide passes after X and y?",a:"test_size=0.2, random_state=42"},
+  {ch:"s3",q:"How many train and test rows does the slide-22 split produce?",a:"Train rows: 8 · Test rows: 2"}
+];
+// ─── FLASHCARD ENGINE ───
+let deck=[],currentIdx=0,flipped=false;
+function filterCards(ch,btn){
+  activateFilter(btn);
+  deck=ch==='all'?[...allCards]:allCards.filter(c=>c.ch===ch);
+  currentIdx=0;flipped=false;renderCard();
+}
+function renderCard(){
+  const empty=document.getElementById('fc-empty');
+  if(!deck.length){empty.style.display='block';document.getElementById('fc-counter').textContent='';return;}
+  empty.style.display='none';
+  const c=deck[currentIdx];
+  document.getElementById('fc-q').textContent=c.q;
+  document.getElementById('fc-a').textContent=c.a;
+  document.getElementById('fc-counter').textContent=(currentIdx+1)+' / '+deck.length;
+  const card=document.getElementById('fc-card');
+  card.classList.remove('flipped');flipped=false;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+  else{mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+}
+function flipCard(){document.getElementById('fc-card').classList.toggle('flipped');flipped=!flipped;}
+function nextCard(){if(!deck.length)return;currentIdx=(currentIdx+1)%deck.length;renderCard();}
+function prevCard(){if(!deck.length)return;currentIdx=(currentIdx-1+deck.length)%deck.length;renderCard();}
+function shuffleCards(){for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}currentIdx=0;renderCard();}
+function toggleMastered(idx){
+  const c=deck[idx];const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){localStorage.removeItem(key);mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+  else{localStorage.setItem(key,'1');mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+}
+
+// ─── QUIZ DATA ───
+const allQuizData=[
+  {"ch": "s1", "type": "mc", "q": "How does Python run your code?", "opts": ["Top to bottom, one line at a time", "All lines at once", "Bottom to top", "In whatever order the functions are defined"], "ans": 0, "exp": "Slide 2: Python code runs top to bottom, one line at a time."},
+  {"ch": "s1", "type": "mc", "q": "When you create <code>age = 20</code>, what must you do about its type?", "opts": ["Declare it as int first", "Nothing — Python figures out the type automatically", "Wrap it in type()", "Declare it in a dictionary"], "ans": 1, "exp": "Slide 3: no need to declare a type — Python figures it out automatically."},
+  {"ch": "s1", "type": "mc", "q": "What type is <code>3.14</code>?", "opts": ["int", "str", "float", "bool"], "ans": 2, "exp": "Slide 4: y = 3.14 # float."},
+  {"ch": "s1", "type": "mc", "q": "Which value is a <code>bool</code>?", "opts": ["\"True\"", "10", "3.14", "True"], "ans": 3, "exp": "Slide 4: is_valid = True # bool. \"True\" in quotes would be a str."},
+  {"ch": "s1", "type": "fitb", "q": "Use the ___() function to check what kind of value you're working with.", "ans": ["type", "type()"], "display": "type", "exp": "Slide 4: use type() to check what kind of value you're working with."},
+  {"ch": "s1", "type": "mc", "q": "Which statement about lists is correct per the deck?", "opts": ["Lists are ordered and can change (mutable)", "Lists store key-value pairs", "Lists cannot change once created", "List positions start at 1"], "ans": 0, "exp": "Slide 5: a list stores an ordered collection of items — and it can change (it's mutable)."},
+  {"ch": "s1", "type": "fitb", "q": "List items are accessed by position, starting at index ___.", "ans": ["0", "zero"], "display": "0", "exp": "Slide 5: access items by position, starting at index 0."},
+  {"ch": "s1", "type": "mc", "q": "<code>fruits = [\"apple\", \"banana\", \"cherry\"]</code> then <code>fruits.append(\"mango\")</code>. What does <code>print(len(fruits))</code> print?", "opts": ["3", "4", "5", "mango"], "ans": 1, "exp": "append adds \"mango\" as a fourth item; len() returns how many items (run output: 4)."},
+  {"ch": "s1", "type": "mc", "q": "Which structure does the deck recommend for labeled data like a student record?", "opts": ["List", "NumPy array", "Dictionary", "while loop"], "ans": 2, "exp": "Slide 6: a dictionary stores key-value pairs — great for labeled data like a student record."},
+  {"ch": "s1", "type": "fitb", "q": "Complete the slide-6 line that adds a GPA to the record: student[___] = 3.8", "ans": ["\"gpa\"", "'gpa'", "gpa"], "display": "\"gpa\"", "exp": "Slide 6: student[\"gpa\"] = 3.8 adds a new key-value pair."},
+  {"ch": "s1", "type": "mc", "q": "Why use functions, according to slide 7?", "opts": ["They make code run top to bottom", "They are required for print()", "They store key-value pairs", "They keep code organized and avoid repeating yourself"], "ans": 3, "exp": "Slide 7: functions keep code organized and avoid repeating yourself."},
+  {"ch": "s1", "type": "mc", "q": "What does <code>print(greet(\"Data Science Class\"))</code> output?", "opts": ["Hello, Data Science Class!", "greet(\"Data Science Class\")", "Hello, name!", "Data Science Class"], "ans": 0, "exp": "greet returns f\"Hello, {name}!\" with name = \"Data Science Class\"."},
+  {"ch": "s1", "type": "fitb", "q": "A ___ loop repeats an action once for each item in a collection.", "ans": ["for"], "display": "for", "exp": "Slide 8: a for loop repeats an action once for each item in a collection."},
+  {"ch": "s1", "type": "mc", "q": "Which loop repeats as long as a condition stays true?", "opts": ["for", "while", "def", "append"], "ans": 1, "exp": "Slide 8: a while loop repeats an action as long as a condition stays true."},
+  {"ch": "s1", "type": "mc", "q": "<code>i = 0</code> / <code>while i &lt; 3:</code> / <code>print(\"count:\", i)</code> / <code>i += 1</code> — what prints?", "opts": ["count: 1, count: 2, count: 3", "count: 0, count: 1, count: 2, count: 3", "count: 0, count: 1, count: 2", "Nothing — the loop never runs"], "ans": 2, "exp": "i takes 0, 1, 2; when i reaches 3 the condition i < 3 is false (run output: count: 0, 1, 2)."},
+  {"ch": "s2", "type": "mc", "q": "How does the deck describe NumPy?", "opts": ["A plotting library", "A tool only for reading CSV files", "A replacement for Python lists in dictionaries", "The foundation that pandas and most ML libraries are built on"], "ans": 3, "exp": "Slide 9: NumPy is the foundation that pandas and most ML libraries are built on."},
+  {"ch": "s2", "type": "mc", "q": "<code>arr = np.array([1, 2, 3, 4, 5])</code>. What is <code>arr.mean()</code>?", "opts": ["3.0", "5", "15", "2.5"], "ans": 0, "exp": "Run output: Mean: 3.0 (Sum: 15)."},
+  {"ch": "s2", "type": "fitb", "q": "pandas stores data in a ___ — think of it as a spreadsheet in Python.", "ans": ["dataframe", "data frame"], "display": "DataFrame", "exp": "Slide 10: pandas stores data in a DataFrame."},
+  {"ch": "s2", "type": "mc", "q": "Per the deck, what is usually the very first line of code in a real project?", "opts": ["df.describe()", "df = pd.read_csv(\"students.csv\")", "print(\"Hello\")", "X = df[[\"age\", \"score\"]]"], "ans": 1, "exp": "Slide 11: read_csv() is usually the very first line of code in a real project."},
+  {"ch": "s2", "type": "fitb", "q": "df.___() shows the first 5 rows.", "ans": ["head", "head()"], "display": "head", "exp": "Slide 11 comment: df.head() — show the first 5 rows."},
+  {"ch": "s2", "type": "mc", "q": "\"Who scored above 80?\" is an example of which operation?", "opts": ["Sorting", "Aggregation", "Filtering", "Encoding"], "ans": 2, "exp": "Slide 12: filtering is how you ask a dataset a question, like \"who scored above 80?\""},
+  {"ch": "s2", "type": "mc", "q": "How many rows does <code>df[df[\"score\"] &gt; 80]</code> return?", "opts": ["3", "6", "5", "4"], "ans": 3, "exp": "Ali 88, Sara 92, Noor 95, Emma 82 (run output). Kwame's 70 and Priya's 74 are not above 80."},
+  {"ch": "s2", "type": "mc", "q": "Which line sorts students from highest to lowest score?", "opts": ["df.sort_values(\"score\", ascending=False)", "df.sort_values(\"score\")", "df.groupby(\"score\")", "df[df[\"score\"] > 0]"], "ans": 0, "exp": "Slide 13: ascending=False sorts descending."},
+  {"ch": "s2", "type": "mc", "q": "What is <code>df[\"score\"].mean()</code> for students.csv?", "opts": ["70", "72.6", "95", "72.0"], "ans": 1, "exp": "Run output: Average score: 72.6. (72.0 is the median — the 50% row in describe().)"},
+  {"ch": "s2", "type": "mc", "q": "Which method gives a full statistical summary in one line?", "opts": ["head()", "sort_values()", "describe()", "corr()"], "ans": 2, "exp": "Slide 14: describe() gives you a full statistical summary in one line."},
+  {"ch": "s2", "type": "fitb", "q": "___() splits data into groups, then applies a calculation to each group.", "ans": ["groupby", "groupby()", "df.groupby", "df.groupby()"], "display": "groupby", "exp": "Slide 15: groupby() splits data into groups, then applies a calculation to each group."},
+  {"ch": "s2", "type": "mc", "q": "Which major has the highest average score?", "opts": ["CS", "Business", "They are equal", "Math"], "ans": 3, "exp": "Run output: Math 85.67, CS 72.5, Business 59.67."},
+  {"ch": "s2", "type": "mc", "q": "Aggregation summarizes a column into…", "opts": ["A single number, like mean, sum, max, count", "A new DataFrame of dummy columns", "A train and test set", "A sorted list of rows"], "ans": 0, "exp": "Slide 14: aggregation summarizes a column into a single number: mean, sum, max, count."},
+  {"ch": "s3", "type": "mc", "q": "What are features (X)?", "opts": ["The column you're trying to predict", "The input columns a model learns patterns from", "The test rows held back", "The rows that pass a filter"], "ans": 1, "exp": "Slide 16: features (X) are the input columns a model learns patterns from."},
+  {"ch": "s3", "type": "mc", "q": "What is the label (y)?", "opts": ["The first column of the CSV", "Any text column", "The target column — what you're trying to predict", "A column name prefix"], "ans": 2, "exp": "Slide 17: the label (y) is the target column — what you're trying to predict."},
+  {"ch": "s3", "type": "fitb", "q": "By convention the features are stored in uppercase ___ and the target in lowercase y.", "ans": ["x"], "display": "X", "exp": "Slides 16–17: X = df[[\"age\", \"score\"]], y = df[\"passed\"]."},
+  {"ch": "s3", "type": "mc", "q": "Per slide 17, every supervised model needs…", "opts": ["Only features", "Only a label", "A dictionary and a list", "Both features and a label"], "ans": 3, "exp": "Slide 17: every supervised model needs both features and a label to learn from."},
+  {"ch": "s3", "type": "mc", "q": "What is the deck's simple starting point for feature selection?", "opts": ["Check which features correlate with the label", "Drop every text column", "Sort by the label", "Scale every feature to [0, 1]"], "ans": 0, "exp": "Slide 18: one simple starting point is to check which features correlate with the label."},
+  {"ch": "s3", "type": "mc", "q": "Which numeric feature correlates most with <code>passed</code>?", "opts": ["age (0.611)", "score (0.844)", "major", "They're identical"], "ans": 1, "exp": "Run output of .corr()[\"passed\"]: score 0.844, age 0.611."},
+  {"ch": "s3", "type": "mc", "q": "Why encode the <code>major</code> column?", "opts": ["To sort it alphabetically", "To remove missing values", "Models need numbers, not text", "To split it into train and test"], "ans": 2, "exp": "Slide 19: models need numbers, not text — encoding converts categories into numeric columns."},
+  {"ch": "s3", "type": "fitb", "q": "pd.___() is a quick, common way to one-hot encode a column.", "ans": ["get_dummies", "get_dummies()", "pd.get_dummies", "pd.get_dummies()"], "display": "get_dummies", "exp": "Slide 19: get_dummies() is a quick, common way to one-hot encode a column."},
+  {"ch": "s3", "type": "mc", "q": "Which columns does <code>pd.get_dummies(df[\"major\"], prefix=\"major\")</code> create?", "opts": ["major, prefix", "major_0, major_1, major_2", "CS, Math, Business, passed", "major_Business, major_CS, major_Math"], "ans": 3, "exp": "Run output columns: major_Business, major_CS, major_Math."},
+  {"ch": "s3", "type": "mc", "q": "How many columns does X have after <code>pd.concat([X, major_encoded], axis=1)</code>?", "opts": ["5", "3", "2", "6"], "ans": 0, "exp": "age, score + three major_ columns = 5."},
+  {"ch": "s3", "type": "mc", "q": "StandardScaler puts features on a comparable range using…", "opts": ["The minimum and maximum", "Their mean and standard deviation", "The label column", "Correlation"], "ans": 1, "exp": "Slide 20: scaling uses the features' mean and standard deviation."},
+  {"ch": "s3", "type": "mc", "q": "Which tool rescales features into a fixed [0, 1] range?", "opts": ["StandardScaler", "train_test_split", "MinMaxScaler", "get_dummies"], "ans": 2, "exp": "Slide 21: normalization rescales into [0, 1]; MinMaxScaler is the standard tool."},
+  {"ch": "s3", "type": "fitb", "q": "Normalization rescales features into a fixed [0, ___] range.", "ans": ["1"], "display": "1", "exp": "Slide 21: a fixed [0, 1] range."},
+  {"ch": "s3", "type": "mc", "q": "Which import is correct for both scalers?", "opts": ["from sklearn.model_selection import …", "from pandas import …", "import sklearn.scalers", "from sklearn.preprocessing import …"], "ans": 3, "exp": "Slides 20–21: from sklearn.preprocessing import StandardScaler / MinMaxScaler."},
+  {"ch": "s3", "type": "mc", "q": "Which columns do the slides pass to <code>fit_transform()</code> on the scalers?", "opts": ["Only age and score", "Only the major_ dummy columns", "All 5 columns of X", "Only passed"], "ans": 0, "exp": "Slides 20–21: X[[\"age\", \"score\"]]."},
+  {"ch": "s3", "type": "mc", "q": "Why hold back some data?", "opts": ["To speed up training", "To fairly test the model after training", "To remove outliers", "To encode the label"], "ans": 1, "exp": "Slide 22: we hold back some data to fairly test the model after training."},
+  {"ch": "s3", "type": "fitb", "q": "Complete the import: from sklearn.___ import train_test_split", "ans": ["model_selection"], "display": "model_selection", "exp": "Slide 22: from sklearn.model_selection import train_test_split."},
+  {"ch": "s3", "type": "mc", "q": "In what order does <code>train_test_split</code> return its outputs?", "opts": ["X_train, y_train, X_test, y_test", "y_train, y_test, X_train, X_test", "X_train, X_test, y_train, y_test", "X_test, X_train, y_test, y_train"], "ans": 2, "exp": "Slide 22: X_train, X_test, y_train, y_test = train_test_split(…)."},
+  {"ch": "s3", "type": "mc", "q": "With <code>test_size=0.2, random_state=42</code> on students.csv, how many rows land in the test set?", "opts": ["8", "5", "1", "2"], "ans": 3, "exp": "Run output: Train rows: 8, Test rows: 2."},
+  {"ch": "s3", "type": "mc", "q": "In the slide flow, which X is passed into <code>train_test_split</code>?", "opts": ["X — age, score + 3 major_ columns (not scaled)", "X_norm", "X_scaled", "df"], "ans": 0, "exp": "Slide 22 passes X. X_scaled and X_norm are printed on slides 20–21 but never fed into the split."}
+];
+// ─── QUIZ ENGINE ───
+let quizFilter='all',userAnswers={};
+function setQuizFilter(ch,btn){activateFilter(btn);quizFilter=ch;resetQuiz();}
+function getQuizDeck(){return quizFilter==='all'?allQuizData:allQuizData.filter(q=>q.ch===quizFilter);}
+function renderQuiz(){
+  const deck=getQuizDeck();
+  const c=document.getElementById('quiz-container');c.innerHTML='';userAnswers={};
+  deck.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='quiz-q';div.id='qq'+i;
+    if(q.type==='mc'){
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <div class="quiz-opts">${q.opts.map((o,oi)=>`<label><input type="radio" name="q${i}" onclick="selectMC(${i},${oi})"> ${o}</label>`).join('')}</div>
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    } else {
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <input class="fitb-input" id="fitb${i}" placeholder="Type your answer..." oninput="storeFITB(${i})">
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    }
+    c.appendChild(div);
+  });
+  document.getElementById('quiz-score').style.display='none';
+}
+function selectMC(qi,oi){userAnswers[qi]=oi;}
+function storeFITB(qi){userAnswers[qi]=document.getElementById('fitb'+qi).value.trim().toLowerCase();}
+function submitQuiz(){
+  const deck=getQuizDeck();let correct=0;
+  deck.forEach((q,i)=>{
+    const el=document.getElementById('qq'+i);
+    const exp=document.getElementById('exp'+i);exp.classList.add('show');
+    if(q.type==='mc'){
+      const ua=userAnswers[i];
+      if(ua===q.ans){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    } else {
+      const ua=(userAnswers[i]||'').toLowerCase();
+      const ok=ua!==''&&q.ans.some(a=>ua===a.toLowerCase());
+      if(ok){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    }
+  });
+  const sc=document.getElementById('quiz-score');
+  const pct=Math.round(correct/deck.length*100);
+  sc.style.display='block';
+  sc.style.borderColor=pct>=70?'var(--green)':'var(--red)';
+  sc.innerHTML=`<strong>Score: ${correct}/${deck.length} (${pct}%)</strong> — ${pct>=90?'Excellent! 🎉':pct>=70?'Good work — review flagged questions.':'Keep studying — focus on the red ones.'}`;
+}
+function resetQuiz(){renderQuiz();}
+
+// ─── DISCUSSION DATA ───  {ch, q, points:[{text}], model}  (1:1 with objectives)
+const DISC_QUESTIONS=[
+  {"ch": "s1", "q": "Using slides 2–3, explain how Python runs a script, what print() is for, and what a variable is. Use the Ayesha example.", "points": [{"text": "<strong>Top to bottom</strong> — Python code runs top to bottom, one line at a time."}, {"text": "<strong>print()</strong> — displays output; the deck calls it the very first command every Python programmer learns."}, {"text": "<strong>Variable</strong> — a name that stores a value so you can reuse it later (<code>name = \"Ayesha\"</code>, <code>age = 20</code>, <code>gpa = 3.8</code>)."}, {"text": "<strong>No type declaration</strong> — you don't declare a type; Python figures it out automatically."}], "model": "Python reads a script top to bottom and runs one line at a time. print() is how I show output — print(\"Hello, Data Science!\") puts that text on screen, and the deck calls it the first command every Python programmer learns. A variable is just a name that holds a value so I can reuse it, like name = \"Ayesha\", age = 20, gpa = 3.8. I never declare a type; Python figures it out on its own."},
+  {"ch": "s1", "q": "Name the four data types on slide 4, give the slide's example value for each, and explain how you would confirm a value's type in code.", "points": [{"text": "<strong>Every value has a type</strong> — the deck lists four: int, float, str, bool."}, {"text": "<strong>Slide examples</strong> — <code>10</code> → int, <code>3.14</code> → float, <code>\"hello\"</code> → str, <code>True</code> → bool."}, {"text": "<strong>type()</strong> — checks what kind of value you're working with; the slide's print line outputs <code>&lt;class 'int'&gt; &lt;class 'float'&gt; &lt;class 'str'&gt; &lt;class 'bool'&gt;</code>."}], "model": "Every value in Python has a type, and the slide covers four: int (10), float (3.14), str (\"hello\"), and bool (True). To check one, I pass it to type(). The slide prints all four at once and gets class int, class float, class str, and class bool."},
+  {"ch": "s1", "q": "Compare a list and a dictionary using the fruits and student examples. What does each store, how do you get a value out, and how did the slides add something to each?", "points": [{"text": "<strong>List</strong> — stores an ordered collection of items, and it can change (it's mutable)."}, {"text": "<strong>Index from 0</strong> — <code>fruits[0]</code> is the first item (\"apple\"); <code>len(fruits)</code> gives how many items — 4 after <code>fruits.append(\"mango\")</code>."}, {"text": "<strong>Dictionary</strong> — stores key-value pairs; great for labeled data like a student record."}, {"text": "<strong>Look up by key</strong> — <code>student[\"name\"]</code> returns \"Ayesha\"; <code>student[\"gpa\"] = 3.8</code> adds a new key-value pair."}], "model": "A list is an ordered collection that can change. I pull items out by position starting at 0, so fruits[0] is \"apple\", and len(fruits) tells me how many there are — 4 after fruits.append(\"mango\") adds a fourth. A dictionary stores key-value pairs, which fits labeled data like a student record. I look values up by key, so student[\"name\"] gives \"Ayesha\", and assigning a new key like student[\"gpa\"] = 3.8 adds a new pair."},
+  {"ch": "s1", "q": "What is a function, why use one, and what happens when you run print(greet(\"Data Science Class\")) from slide 7?", "points": [{"text": "<strong>Function</strong> — a reusable block of code you can call by name."}, {"text": "<strong>Why</strong> — functions keep code organized and avoid repeating yourself."}, {"text": "<strong>Slide example</strong> — <code>def greet(name):</code> / <code>return f\"Hello, {name}!\"</code>; <code>print(greet(\"Data Science Class\"))</code> outputs <code>Hello, Data Science Class!</code>."}], "model": "A function is a reusable block of code I can call by name. The point is to keep code organized and not repeat myself. On slide 7, greet takes a name and returns a greeting built from it, so print(greet(\"Data Science Class\")) prints \"Hello, Data Science Class!\"."},
+  {"ch": "s1", "q": "Contrast a for loop and a while loop, then trace what each loop on slide 8 prints.", "points": [{"text": "<strong>for loop</strong> — repeats an action once for each item in a collection; <code>for fruit in fruits:</code> prints apple, banana, cherry, mango."}, {"text": "<strong>while loop</strong> — repeats an action as long as a condition stays true; <code>while i &lt; 3:</code> prints count: 0, count: 1, count: 2."}, {"text": "<strong>i += 1</strong> — the line inside the while loop that changes <code>i</code> on each pass."}], "model": "A for loop runs once for each item in a collection, so for fruit in fruits prints apple, banana, cherry, and mango. A while loop keeps going as long as its condition is true. With i starting at 0 and the condition i < 3, it prints count: 0, count: 1, count: 2. The i += 1 line is what changes i on each pass."},
+  {"ch": "s2", "q": "What are NumPy arrays good at, why does the deck call NumPy a foundation, and what do arr.mean() and arr.sum() return on slide 9?", "points": [{"text": "<strong>Arrays</strong> — NumPy arrays store numbers efficiently and support fast math operations."}, {"text": "<strong>Foundation</strong> — the deck calls NumPy the foundation that pandas and most ML libraries are built on."}, {"text": "<strong>Slide example</strong> — <code>import numpy as np</code>; <code>arr = np.array([1, 2, 3, 4, 5])</code> → <code>arr.mean()</code> = 3.0, <code>arr.sum()</code> = 15."}], "model": "NumPy arrays store numbers efficiently and do fast math. The deck says NumPy is the foundation that pandas and most ML libraries are built on. On slide 9, arr = np.array([1, 2, 3, 4, 5]), so arr.mean() is 3.0 and arr.sum() is 15."},
+  {"ch": "s2", "q": "Explain what a pandas DataFrame is and walk through the first two lines of the students.csv project on slide 11.", "points": [{"text": "<strong>DataFrame</strong> — how pandas stores data; think of it as a spreadsheet in Python."}, {"text": "<strong>pandas' job</strong> — the core tool for loading, exploring, and cleaning real datasets."}, {"text": "<strong>read_csv()</strong> — loads a CSV file straight into a DataFrame; usually the very first line of code in a real project."}, {"text": "<strong>df.head()</strong> — shows the first 5 rows; students.csv has 10 rows and 5 columns (name, age, major, score, passed)."}], "model": "pandas stores data in a DataFrame, which the deck says to think of as a spreadsheet in Python. It's the main tool for loading, exploring, and cleaning real data. A real project usually starts with df = pd.read_csv(\"students.csv\"), which loads the CSV straight into a DataFrame. Then df.head() shows the first 5 rows. The file has 10 students and 5 columns: name, age, major, score, passed."},
+  {"ch": "s2", "q": "How would you answer \"who scored above 80?\" and \"who are the top performers?\" with pandas? Give the code and the results.", "points": [{"text": "<strong>Filtering</strong> — keeps only the rows that match a condition; it's how you ask a dataset a question."}, {"text": "<strong>df[df[\"score\"] &gt; 80]</strong> — returns 4 rows: Ali 88, Sara 92, Noor 95, Emma 82."}, {"text": "<strong>sort_values()</strong> — reorders rows by a column, ascending or descending; <code>ascending=False</code> puts Noor (95) first and Yuki (45) last."}, {"text": "<strong>Why sort</strong> — useful for finding the top (or bottom) performers at a glance."}], "model": "\"Who scored above 80?\" is a filter: df[df[\"score\"] > 80] keeps only matching rows, which gives Ali (88), Sara (92), Noor (95), and Emma (82). For top performers I sort: df.sort_values(\"score\", ascending=False) reorders the rows highest first, so Noor (95) is on top and Yuki (45) is last."},
+  {"ch": "s2", "q": "What is aggregation? Give the slide-14 code for the average and highest score, their results, and explain what describe() adds.", "points": [{"text": "<strong>Aggregation</strong> — summarizes a column into a single number: mean, sum, max, count."}, {"text": "<strong>Results</strong> — <code>df[\"score\"].mean()</code> → 72.6; <code>df[\"score\"].max()</code> → 95."}, {"text": "<strong>describe()</strong> — gives a full statistical summary in one line (on the run: count, mean, std, min, 25%, 50%, 75%, max for age, score, passed)."}], "model": "Aggregation boils a whole column down to one number, like mean, sum, max, or count. df[\"score\"].mean() gives 72.6 and df[\"score\"].max() gives 95. describe() does the full statistical summary in one line — count, mean, std, min, the quartiles, and max for each numeric column."},
+  {"ch": "s2", "q": "Explain groupby() with the slide-15 example. What question does it answer, and what are the results per major?", "points": [{"text": "<strong>groupby()</strong> — splits data into groups, then applies a calculation to each group."}, {"text": "<strong>Question it answers</strong> — \"what's the average score, per major?\""}, {"text": "<strong>Result</strong> — <code>df.groupby(\"major\")[\"score\"].mean()</code> → Business 59.67 · CS 72.5 · Math 85.67."}], "model": "groupby() splits the rows into groups and then runs a calculation on each one. df.groupby(\"major\")[\"score\"].mean() answers \"what's the average score per major?\" — Business averages 59.67, CS 72.5, and Math 85.67."},
+  {"ch": "s3", "q": "Define features and the target (label). Identify each in the students example and explain why a supervised model needs both.", "points": [{"text": "<strong>Features (X)</strong> — the input columns a model learns patterns from; here <code>X = df[[\"age\", \"score\"]]</code>."}, {"text": "<strong>Choosing features</strong> — the deck calls it one of the most important parts of the job."}, {"text": "<strong>Label / target (y)</strong> — the target column, what you're trying to predict; here <code>y = df[\"passed\"]</code>."}, {"text": "<strong>Both required</strong> — every supervised model needs both features and a label to learn from; uppercase X, lowercase y."}], "model": "Features, stored in uppercase X, are the input columns the model learns patterns from — here age and score, so X = df[[\"age\", \"score\"]]. The target, or label, stored in lowercase y, is the column I'm trying to predict — y = df[\"passed\"]. A supervised model needs both: it learns the link between the features and the target. The deck stresses that picking good features is one of the most important parts of the job."},
+  {"ch": "s3", "q": "Why do feature selection, and how does slide 18 start it? Interpret the result for age and score.", "points": [{"text": "<strong>Feature selection</strong> — not every column helps a model; feature selection keeps the useful ones."}, {"text": "<strong>Starting point</strong> — check which features correlate with the label."}, {"text": "<strong>Result</strong> — <code>df[[\"age\", \"score\", \"passed\"]].corr()[\"passed\"]</code> → score 0.844 · age 0.611 · passed 1.0 (itself)."}], "model": "Not every column actually helps a model, so feature selection keeps the useful ones. The deck's simple starting point is to check which features correlate with the label. Running df[[\"age\", \"score\", \"passed\"]].corr()[\"passed\"] gives score 0.844 and age 0.611 (passed is 1.0 because it's compared with itself), so score is the feature most tied to passed."},
+  {"ch": "s3", "q": "Why does the \"major\" column need encoding, and how does slide 19 encode it and add it to X? Name the resulting columns.", "points": [{"text": "<strong>Why encode</strong> — models need numbers, not text; encoding converts categories into numeric columns."}, {"text": "<strong>pd.get_dummies()</strong> — a quick, common way to one-hot encode a column."}, {"text": "<strong>prefix=\"major\"</strong> — produces the columns major_Business, major_CS, major_Math."}, {"text": "<strong>pd.concat([X, major_encoded], axis=1)</strong> — attaches the new columns to X → 5 columns: age, score, major_Business, major_CS, major_Math."}], "model": "Models need numbers, not text, and major is text (CS, Math, Business). Encoding turns those categories into numeric columns. pd.get_dummies(df[\"major\"], prefix=\"major\") one-hot encodes it into major_Business, major_CS, and major_Math. Then pd.concat([X, major_encoded], axis=1) attaches those columns to X, so X ends up with five columns: age, score, and the three major columns."},
+  {"ch": "s3", "q": "Contrast scaling and normalization. Name the scikit-learn tool for each, describe the shared code pattern, and say which columns get transformed.", "points": [{"text": "<strong>Scaling</strong> — puts features on a comparable range using their mean and standard deviation; tool: <code>StandardScaler</code>."}, {"text": "<strong>Normalization</strong> — rescales features into a fixed [0, 1] range; tool: <code>MinMaxScaler</code>."}, {"text": "<strong>Same pattern</strong> — both from <code>sklearn.preprocessing</code>: create the object, then call <code>fit_transform()</code> on <code>X[[\"age\", \"score\"]]</code>."}, {"text": "<strong>Only age and score</strong> — the major_ dummy columns are left out of both calls."}], "model": "Scaling uses each feature's mean and standard deviation to put features on a comparable range, and the tool is StandardScaler. Normalization squeezes features into a fixed 0-to-1 range, and the tool is MinMaxScaler. Both come from sklearn.preprocessing and follow the same pattern: create the object, then call fit_transform on X[[\"age\", \"score\"]]. Only age and score are transformed; the major dummy columns aren't passed in."},
+  {"ch": "s3", "q": "Why hold data back, and how does slide 22 do it? Explain the four outputs and the result on students.csv.", "points": [{"text": "<strong>Why split</strong> — hold back some data to fairly test the model after training."}, {"text": "<strong>train_test_split()</strong> — from <code>sklearn.model_selection</code>; does the split in one line."}, {"text": "<strong>Four outputs, in order</strong> — <code>X_train, X_test, y_train, y_test</code>."}, {"text": "<strong>Result</strong> — with <code>test_size=0.2, random_state=42</code> on 10 rows: Train rows: 8 · Test rows: 2."}], "model": "I hold back some data so I can fairly test the model after training on the rest. train_test_split from sklearn.model_selection does it in one line and hands back four pieces in this order: X_train, X_test, y_train, y_test. The slide uses test_size=0.2 and random_state=42, and on the 10-student file that gives 8 training rows and 2 test rows."}
+];
+// ─── DISCUSSION ENGINE ───
+let discFilter='all';
+function filterDisc(ch,btn){activateFilter(btn);discFilter=ch;renderDiscussion();}
+function renderDiscussion(){
+  const list=discFilter==='all'?DISC_QUESTIONS:DISC_QUESTIONS.filter(d=>d.ch===discFilter);
+  const c=document.getElementById('disc-container');c.innerHTML='';
+  list.forEach((d,i)=>{
+    const idx=DISC_QUESTIONS.indexOf(d);
+    const div=document.createElement('div');div.className='disc-q';
+    div.innerHTML=`<div class="disc-q-text">${i+1}. ${d.q}</div>
+      <textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Draft your response here..." aria-label="Discussion response"></textarea>
+      <div class="disc-btn-row">
+        <button class="disc-btn primary" onclick="submitDisc(${idx})">Submit &amp; Self-Grade</button>
+        <button class="disc-btn" onclick="toggleModel(${idx})">Show Model Answer</button>
+        <button class="disc-btn" onclick="resetDisc(${idx})">Reset</button>
+      </div>
+      <div class="disc-rubric" id="disc-rubric-${idx}">
+        <strong style="font-size:.82rem;color:var(--text)">Self-Grading Rubric</strong>
+        <div style="margin-top:8px;">${d.points.map((p,pi)=>`<div class="rubric-item"><input type="checkbox" id="rub-${idx}-${pi}" onchange="updateDiscScore(${idx})"><label for="rub-${idx}-${pi}">${p.text}</label></div>`).join('')}</div>
+        <div class="disc-score" id="disc-score-${idx}">Score: 0 / ${d.points.length}</div>
+      </div>
+      <div class="model-answer" id="disc-model-${idx}">${d.model}</div>`;
+    c.appendChild(div);
+  });
+}
+function submitDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);
+  ta.disabled=true;
+  document.getElementById('disc-rubric-'+idx).classList.add('show');
+}
+function resetDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);ta.disabled=false;ta.value='';
+  document.getElementById('disc-rubric-'+idx).classList.remove('show');
+  document.getElementById('disc-model-'+idx).classList.remove('show');
+  document.querySelectorAll(`[id^="rub-${idx}-"]`).forEach(cb=>cb.checked=false);
+  document.getElementById('disc-score-'+idx).textContent='Score: 0 / '+DISC_QUESTIONS[idx].points.length;
+}
+function updateDiscScore(idx){
+  const total=DISC_QUESTIONS[idx].points.length;
+  const checked=document.querySelectorAll(`[id^="rub-${idx}-"]:checked`).length;
+  document.getElementById('disc-score-'+idx).textContent=`Score: ${checked} / ${total} (${Math.round(checked/total*100)}%)`;
+}
+function toggleModel(idx){document.getElementById('disc-model-'+idx).classList.toggle('show');}
+
+// ─── CODE LAB ───
+const CODE_STAGES=[{"part": "p1", "key": "t1", "name": "1. Python Basics", "lines": ["print(\"Hello, Data Science!\")"]}, {"part": "p1", "key": "t2", "name": "2. Variables", "lines": ["name = \"Ayesha\"", "age = 20", "gpa = 3.8", "print(name, age, gpa)"]}, {"part": "p1", "key": "t3", "name": "3. Data Types", "lines": ["x = 10", "y = 3.14", "z = \"hello\"", "is_valid = True", "print(type(x), type(y), type(z), type(is_valid))"]}, {"part": "p1", "key": "t4", "name": "4. Lists", "lines": ["fruits = [\"apple\", \"banana\", \"cherry\"]", "fruits.append(\"mango\")", "print(fruits[0])", "print(len(fruits))"]}, {"part": "p1", "key": "t5", "name": "5. Dictionaries", "lines": ["student = {\"name\": \"Ayesha\", \"age\": 20, \"major\": \"CS\"}", "print(student[\"name\"])", "student[\"gpa\"] = 3.8", "print(student)"]}, {"part": "p1", "key": "t6", "name": "6. Functions", "lines": ["def greet(name):", "return f\"Hello, {name}!\"", "print(greet(\"Data Science Class\"))"]}, {"part": "p1", "key": "t7", "name": "7. Loops", "lines": ["for fruit in fruits:", "print(fruit)", "i = 0", "while i < 3:", "print(\"count:\", i)", "i += 1"]}, {"part": "p2", "key": "t8", "name": "8. NumPy", "lines": ["import numpy as np", "arr = np.array([1, 2, 3, 4, 5])", "print(\"Mean:\", arr.mean())", "print(\"Sum:\", arr.sum())"]}, {"part": "p2", "key": "t9", "name": "9. Pandas", "lines": ["import pandas as pd", "data = {\"name\": [\"Ali\", \"Sara\"], \"score\": [88, 92]}", "df_demo = pd.DataFrame(data)", "df_demo"]}, {"part": "p2", "key": "t10", "name": "10. Reading CSV", "lines": ["df = pd.read_csv(\"students.csv\")", "df.head()"]}, {"part": "p2", "key": "t11", "name": "11. Filtering", "lines": ["high_scores = df[df[\"score\"] > 80]", "high_scores"]}, {"part": "p2", "key": "t12", "name": "12. Sorting", "lines": ["df_sorted = df.sort_values(\"score\", ascending=False)", "df_sorted"]}, {"part": "p2", "key": "t13", "name": "13. Aggregation", "lines": ["print(\"Average score:\", df[\"score\"].mean())", "print(\"Highest score:\", df[\"score\"].max())", "df.describe()"]}, {"part": "p2", "key": "t14", "name": "14. GroupBy", "lines": ["df.groupby(\"major\")[\"score\"].mean()"]}, {"part": "p3", "key": "t15", "name": "15. Features", "lines": ["X = df[[\"age\", \"score\"]]", "X.head()"]}, {"part": "p3", "key": "t16", "name": "16. Labels", "lines": ["y = df[\"passed\"]", "y.head()"]}, {"part": "p3", "key": "t17", "name": "17. Feature Selection", "lines": ["df[[\"age\", \"score\", \"passed\"]].corr()[\"passed\"]"]}, {"part": "p3", "key": "t18", "name": "18. Encoding", "lines": ["major_encoded = pd.get_dummies(df[\"major\"], prefix=\"major\")", "X = pd.concat([X, major_encoded], axis=1)", "X.head()"]}, {"part": "p3", "key": "t19", "name": "19. Scaling", "lines": ["from sklearn.preprocessing import StandardScaler", "scaler = StandardScaler()", "X_scaled = scaler.fit_transform(X[[\"age\", \"score\"]])", "print(X_scaled[:5])"]}, {"part": "p3", "key": "t20", "name": "20. Normalization", "lines": ["from sklearn.preprocessing import MinMaxScaler", "normalizer = MinMaxScaler()", "X_norm = normalizer.fit_transform(X[[\"age\", \"score\"]])", "print(X_norm[:5])"]}, {"part": "p3", "key": "t21", "name": "21. Train/Test Split", "lines": ["from sklearn.model_selection import train_test_split", "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)", "print(\"Train rows:\", len(X_train))", "print(\"Test rows:\", len(X_test))"]}];
+const SEQ_STEPS=["Features (X)", "Labels (y)", "Feature Selection", "Encoding", "Scaling", "Normalization", "Train/Test Split"];
+let codeTarget='full';
+function fullProgram(){return CODE_STAGES.reduce((acc,s)=>acc.concat(s.lines),[]);}
+function currentTargetLines(){
+  if(codeTarget==='full')return fullProgram();
+  if(/^p\d$/.test(codeTarget))return CODE_STAGES.filter(s=>s.part===codeTarget).reduce((acc,s)=>acc.concat(s.lines),[]);
+  const s=CODE_STAGES.find(x=>x.key===codeTarget);
+  return s?s.lines:[];
+}
+function setCodeTarget(sel){
+  codeTarget=sel.value;
+  document.getElementById('code-result').innerHTML='';
+  const a=document.getElementById('code-answer');a.classList.remove('show');a.innerHTML='';
+}
+function stripComment(s){let q=null;for(let i=0;i<s.length;i++){const c=s[i];if(q){if(c===q)q=null;}else if(c==='"'||c==="'")q=c;else if(c==='#')return s.slice(0,i);}return s;}
+function normLine(s){return stripComment(s).replace(/["']/g,"'").replace(/\s+/g,'');}
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function lcsDiff(exp,got){
+  const en=exp.map(normLine),gn=got.map(normLine);
+  const m=en.length,n=gn.length;
+  const dp=Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)
+    dp[i][j]=en[i-1]===gn[j-1]?dp[i-1][j-1]+1:Math.max(dp[i-1][j],dp[i][j-1]);
+  const matchedExp=new Array(m).fill(false),matchedGot=new Array(n).fill(false);
+  let i=m,j=n;
+  while(i>0&&j>0){
+    if(en[i-1]===gn[j-1]){matchedExp[i-1]=true;matchedGot[j-1]=true;i--;j--;}
+    else if(dp[i-1][j]>=dp[i][j-1])i--;else j--;
+  }
+  return {matched:dp[m][n],total:m,matchedExp,matchedGot};
+}
+function gradeCode(){
+  const exp=currentTargetLines();
+  const got=document.getElementById('code-input').value.split('\n').filter(l=>stripComment(l).trim()!=='');
+  const r=lcsDiff(exp,got);
+  const pct=r.total?Math.round(r.matched/r.total*100):0;
+  const bestKey=getMasteryKey()+'code_'+codeTarget+'_best';
+  const best=Math.max(parseInt(localStorage.getItem(bestKey)||'0',10),pct);
+  localStorage.setItem(bestKey,String(best));
+  const pts=r.total?(r.matched*(100/r.total)).toFixed(1):'0';
+  const col=pct>=80?'var(--green)':pct>=50?'var(--yellow)':'var(--red)';
+  let html='<div class="code-scoreline" style="border-color:'+col+'"><strong>'+r.matched+' / '+r.total+' lines reproduced ('+pct+'%)</strong> · Best: '+best+'% · '+pts+' / 100 pts</div>';
+  html+='<div class="code-legend">✓ matched · ✗ not reproduced (correct line shown) · + extra line you typed</div>';
+  exp.forEach((line,idx)=>{
+    const ok=r.matchedExp[idx];
+    html+='<div class="diff-line '+(ok?'diff-ok':'diff-miss')+'"><span class="ln">'+(idx+1)+'</span><span class="mark">'+(ok?'✓':'✗')+'</span><span>'+escHtml(line)+'</span></div>';
+  });
+  const extras=got.filter((_,k)=>!r.matchedGot[k]);
+  if(extras.length){
+    html+='<div class="code-legend" style="margin-top:10px;">Extra / unmatched lines you typed:</div>';
+    extras.forEach(l=>{html+='<div class="diff-line diff-extra"><span class="ln"></span><span class="mark">+</span><span>'+escHtml(l)+'</span></div>';});
+  }
+  document.getElementById('code-result').innerHTML=html;
+}
+function toggleCodeAnswer(){
+  const el=document.getElementById('code-answer');
+  const show=el.classList.toggle('show');
+  el.innerHTML=show?'<div class="code-block">'+escHtml(currentTargetLines().join('\n'))+'</div>':'';
+}
+function resetCode(){
+  document.getElementById('code-input').value='';
+  document.getElementById('code-result').innerHTML='';
+  const a=document.getElementById('code-answer');a.classList.remove('show');a.innerHTML='';
+}
+function renderSeq(){
+  const names=SEQ_STEPS;
+  const order=[...Array(names.length).keys()];
+  for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}
+  const c=document.getElementById('seq-container');c.innerHTML='';
+  order.forEach(origIdx=>{
+    const row=document.createElement('div');row.className='seq-row';row.dataset.correct=String(origIdx+1);
+    let opts='';
+    for(let n=1;n<=names.length;n++)opts+='<option value="'+n+'">'+n+'</option>';
+    row.innerHTML='<select aria-label="Step number for '+names[origIdx]+'">'+opts+'</select><span class="seq-name">'+names[origIdx]+'</span>';
+    c.appendChild(row);
+  });
+  document.getElementById('seq-result').textContent='';
+}
+function checkSeq(){
+  const rows=[...document.querySelectorAll('#seq-container .seq-row')];
+  let correct=0;
+  rows.forEach(r=>{
+    const chosen=r.querySelector('select').value;
+    r.classList.remove('seq-ok','seq-bad');
+    if(chosen===r.dataset.correct){correct++;r.classList.add('seq-ok');}else{r.classList.add('seq-bad');}
+  });
+  document.getElementById('seq-result').textContent='Order: '+correct+' / '+rows.length+' stages in the correct position.';
+}
+
+// ─── INIT ───
+window.addEventListener('DOMContentLoaded',()=>{
+  deck=[...allCards];renderCard();renderQuiz();renderDiscussion();renderSeq();updateMasteryBar();
+  document.querySelectorAll('.obj-master-btn').forEach(btn=>{
+    const key=btn.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+    if(key&&localStorage.getItem(key)){btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  });
+  document.querySelectorAll('.obj-card').forEach(card=>{
+    card.addEventListener('keydown',e=>{if(e.target!==card)return;if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleObj(card);}});
+  });
+});
+</script>
+</body>
+</html>
