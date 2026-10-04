@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CSIS 3352 — Module 5: Machine Learning Fundamentals and Model Evaluation</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#0a0a0f; --surface:#12121a; --surface2:#16161f; --border:#1e1e2e;
+  --text:#e8e8f0; --muted:#6b6b80; --green:#22c55e; --red:#ef4444;
+  --yellow:#eab308; --purple:#a78bfa; --orange:#f97316;
+  --accent:#a855f7; --accent-dim:rgba(168,85,247,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(168,85,247,0.025) 39px,rgba(168,85,247,0.025) 40px),
+  repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(168,85,247,0.025) 39px,rgba(168,85,247,0.025) 40px);}
+body::before{content:'CSIS 3352 · Module 5 · ML Fundamentals & Model Evaluation · Lecture 5';position:fixed;top:0;left:0;right:0;
+  background:rgba(10,10,15,0.95);border-bottom:1px solid var(--border);padding:10px 16px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);z-index:100;letter-spacing:.05em;}
+.topnav{display:flex;gap:4px;padding:48px 12px 8px;overflow-x:auto;position:sticky;top:0;
+  background:rgba(10,10,15,0.97);z-index:90;border-bottom:1px solid var(--border);}
+.nav-btn{flex-shrink:0;background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:7px 13px;border-radius:6px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:11px;transition:all .15s;}
+.nav-btn:hover{color:var(--text);border-color:var(--accent);}
+.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.panel{display:none;padding:20px 16px 60px;max-width:860px;margin:0 auto;}
+.panel.active{display:block;}
+h1{font-size:1.4rem;font-weight:600;color:var(--accent);margin-bottom:4px;}
+.back-link{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;margin-bottom:10px;}
+.back-link:hover,.back-link:active{color:var(--accent);}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;display:block;}
+.exam-pill{display:inline-block;background:rgba(234,179,8,0.15);border:1px solid var(--yellow);
+  color:var(--yellow);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;
+  border-radius:20px;margin-bottom:20px;}
+.textbook-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.textbook-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;transition:all .15s;}
+.textbook-links a:hover{color:var(--accent);border-color:var(--accent);}
+
+/* Objectives — section color classes cycle: s1 accent, s2 orange, s3 purple, then repeat */
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:10px;cursor:pointer;transition:border-color .15s;}
+.obj-card:hover{border-color:var(--accent);}
+.obj-header{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.s1 .obj-num{color:var(--accent);background:var(--accent-dim);}
+.s2 .obj-num{color:var(--orange);background:rgba(249,115,22,0.12);}
+.s3 .obj-num{color:var(--purple);background:rgba(167,139,250,0.12);}
+.s4 .obj-num{color:var(--accent);background:var(--accent-dim);}
+.s5 .obj-num{color:var(--orange);background:rgba(249,115,22,0.12);}
+.s6 .obj-num{color:var(--purple);background:rgba(167,139,250,0.12);}
+.s7 .obj-num{color:var(--accent);background:var(--accent-dim);}
+.obj-title{font-size:.88rem;font-weight:500;flex:1;}
+.obj-expand{color:var(--muted);font-size:12px;transition:transform .2s;}
+.obj-body{display:none;padding:0 16px 14px;font-size:.84rem;line-height:1.65;color:#b0b0c8;}
+.obj-body.open{display:block;}
+.obj-body ul{padding-left:18px;margin:6px 0;}
+.obj-body li{margin-bottom:6px;}
+.obj-body strong{color:var(--text);}
+.obj-master-btn{margin-top:10px;background:transparent;border:1px solid var(--border);color:var(--muted);
+  padding:5px 12px;border-radius:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;transition:all .15s;}
+.obj-master-btn.mastered{border-color:var(--green);color:var(--green);background:rgba(34,197,94,0.08);}
+.mastery-bar{background:var(--surface);border:1px solid var(--border);border-radius:20px;height:6px;margin-bottom:20px;overflow:hidden;}
+.mastery-fill{height:100%;background:var(--green);border-radius:20px;transition:width .4s;}
+.reset-mastery-btn{display:block;margin-bottom:20px;background:transparent;border:1px solid var(--border);
+  color:var(--muted);padding:6px 14px;border-radius:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;}
+.reset-mastery-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* Study Guide */
+.chapter-block{margin-bottom:16px;}
+.chapter-header{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;font-weight:500;font-size:.9rem;transition:border-color .15s;}
+.chapter-header:hover{border-color:var(--accent);}
+.chapter-body{display:none;background:var(--surface2);border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;padding:16px;}
+.chapter-body h3{font-size:.82rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px;}
+.chapter-body h3:first-child{margin-top:0;}
+.chapter-body p,.chapter-body li{font-size:.84rem;line-height:1.7;color:#b0b0c8;margin-bottom:6px;}
+.chapter-body ul{padding-left:18px;}
+.chapter-body strong{color:var(--text);}
+.flag-note{background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.3);border-radius:6px;padding:8px 12px;font-size:.78rem;color:var(--yellow);margin:8px 0;}
+.code-block{font-family:'IBM Plex Mono',monospace;background:var(--surface2);border:1px solid var(--border);border-radius:6px;
+  padding:12px;font-size:.8rem;line-height:1.65;white-space:pre;overflow-x:auto;color:var(--text);margin:8px 0;}
+.code-block .cmt{color:var(--muted);}
+
+/* Flashcards */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:5px 12px;border-radius:4px;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;transition:all .15s;}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.fc-wrap{perspective:1000px;margin-bottom:16px;}
+.fc-card{width:100%;min-height:220px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;}
+.fc-card.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;background:var(--surface);
+  border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;justify-content:center;padding:24px;}
+.fc-back{transform:rotateY(180deg);border-color:var(--accent);background:var(--accent-dim);}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
+.fc-q,.fc-a{font-size:1rem;line-height:1.6;color:var(--text);}
+.fc-a{color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:.92rem;}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-align:center;margin-bottom:12px;}
+.fc-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+.fc-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82rem;transition:all .15s;}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent);}
+.fc-btn.mastered-btn{border-color:var(--green);color:var(--green);}
+.fc-nav{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+.fc-empty{text-align:center;padding:40px;color:var(--muted);font-size:.9rem;}
+
+/* Quiz */
+.quiz-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:14px;}
+.quiz-q-text{font-size:.9rem;margin-bottom:12px;line-height:1.6;}
+.quiz-q-text code{font-family:'IBM Plex Mono',monospace;background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:.85rem;}
+.quiz-opts label{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;border-radius:5px;cursor:pointer;font-size:.85rem;line-height:1.5;transition:background .1s;}
+.quiz-opts label:hover{background:rgba(255,255,255,0.04);}
+.quiz-opts input{margin-top:3px;flex-shrink:0;accent-color:var(--accent);}
+.fitb-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:5px;font-size:.85rem;margin-top:8px;font-family:'IBM Plex Mono',monospace;}
+.fitb-input:focus{outline:none;border-color:var(--accent);}
+.q-correct{border-color:var(--green)!important;background:rgba(34,197,94,0.06)!important;}
+.q-wrong{border-color:var(--red)!important;background:rgba(239,68,68,0.06)!important;}
+.q-exp{font-size:.8rem;color:#9090b0;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);display:none;}
+.q-exp.show{display:block;}
+#submit-btn,#reset-btn{padding:10px 22px;border-radius:6px;cursor:pointer;font-size:.88rem;font-weight:500;transition:all .15s;border:1px solid;}
+#submit-btn{background:var(--accent);border-color:var(--accent);color:#fff;margin-right:8px;}
+#submit-btn:hover{opacity:.85;}
+#reset-btn{background:transparent;border-color:var(--border);color:var(--muted);}
+#reset-btn:hover{border-color:var(--red);color:var(--red);}
+#quiz-score{margin-top:16px;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:.9rem;display:none;}
+
+/* Discussion */
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:14px;}
+.disc-q-text{font-size:.9rem;line-height:1.6;margin-bottom:12px;font-weight:500;}
+.disc-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:5px;
+  font-size:.84rem;min-height:120px;resize:vertical;font-family:'IBM Plex Sans',sans-serif;line-height:1.6;}
+.disc-textarea:focus{outline:none;border-color:var(--accent);}
+.disc-btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.disc-btn{padding:6px 14px;border-radius:5px;cursor:pointer;font-size:.82rem;border:1px solid var(--border);background:var(--surface2);color:var(--muted);transition:all .15s;}
+.disc-btn:hover{color:var(--text);}
+.disc-btn.primary{border-color:var(--accent);color:var(--accent);}
+.disc-rubric{display:none;margin-top:12px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:12px;}
+.disc-rubric.show{display:block;}
+.rubric-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:.82rem;}
+.rubric-item:last-child{border-bottom:none;}
+.rubric-item input[type=checkbox]{flex-shrink:0;margin-top:2px;accent-color:var(--green);}
+.rubric-item strong{color:var(--text);}
+.disc-score{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--green);margin-top:8px;}
+.model-answer{display:none;margin-top:10px;font-size:.82rem;line-height:1.65;color:#9090b0;background:rgba(167,139,250,0.06);
+  border:1px solid rgba(167,139,250,0.2);border-radius:6px;padding:12px;}
+.model-answer.show{display:block;}
+
+/* Notes */
+.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.notes-grid{grid-template-columns:1fr;}}
+.note-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.note-card h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.note-lines{display:flex;flex-direction:column;gap:8px;}
+.note-line{border-bottom:1px solid var(--border);min-height:28px;}
+.video-block{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:12px;}
+.video-block h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.video-link{display:flex;align-items:center;gap:8px;padding:7px 0;font-size:.84rem;border-bottom:1px solid var(--border);}
+.video-link:last-child{border-bottom:none;}
+.video-link a{color:var(--text);text-decoration:none;flex:1;}
+.video-link a:hover{color:var(--accent);}
+.video-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);border:1px solid var(--border);padding:2px 6px;border-radius:10px;flex-shrink:0;}
+.source-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.source-list a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;}
+.source-list a:hover{color:var(--accent);border-color:var(--accent);}
+footer{text-align:center;padding:30px 16px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);}
+.footer-back-link{font-size:10px;}
+@media print{
+  body::before,.topnav,.exam-pill,.textbook-links,footer,.fc-controls,.fc-nav,.filter-row,
+  #submit-btn,#quiz-score,.disc-btn-row,.disc-rubric,.obj-master-btn,.reset-mastery-btn,.mastery-bar,
+  .back-link{display:none!important;}
+  .panel{display:none!important;}.panel.active{display:block!important;}
+  *,*::before,*::after{background:white!important;background-color:white!important;background-image:none!important;
+    color:black!important;border-color:#bbb!important;box-shadow:none!important;-webkit-text-fill-color:black!important;}
+  body{font-size:12pt;}.chapter-body{display:block!important;}
+  @page{margin:.75in;}
+}
+
+/* Module 4 additions (carried forward) */
+.sg-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.8rem;}
+.sg-table th{font-family:'IBM Plex Mono',monospace;font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.05em;color:var(--accent);text-align:left;padding:7px 8px;border-bottom:1px solid var(--border);}
+.sg-table td{padding:7px 8px;border-bottom:1px solid var(--border);color:#b0b0c8;line-height:1.5;vertical-align:top;}
+.sg-table tr:last-child td{border-bottom:none;}
+.tbl-wrap{overflow-x:auto;}
+.chapter-body code,.obj-body code,.rubric-item code,.flag-note code,.oop-note code{font-family:'IBM Plex Mono',monospace;font-size:.92em;}
+.code-block.out{border-left:3px solid var(--accent);color:#b0b0c8;}
+.oop-note{background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.25);border-radius:6px;
+  padding:9px 12px;font-size:.8rem;line-height:1.6;color:#b0b0c8;margin:10px 0;}
+.oop-note strong{color:var(--purple);}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 14px;}
+.flow-step{font-family:'IBM Plex Mono',monospace;font-size:.74rem;border:1px solid var(--border);background:var(--surface);
+  padding:6px 10px;border-radius:6px;color:var(--text);}
+.flow-step.x{border-color:var(--accent);color:var(--accent);}
+.flow-step.y{border-color:var(--orange);color:var(--orange);}
+.flow-arrow{color:var(--muted);font-size:.8rem;}
+.split-bar{display:flex;height:30px;border-radius:6px;overflow:hidden;border:1px solid var(--border);
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;margin:10px 0;}
+.split-train{flex:8;background:var(--accent-dim);color:var(--accent);display:flex;align-items:center;justify-content:center;}
+.split-test{flex:2;background:rgba(249,115,22,0.12);color:var(--orange);display:flex;align-items:center;justify-content:center;border-left:1px solid var(--border);}
+.obj-card:focus-visible,.chapter-header:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+@media print{.oop-note,.flow-step,.split-bar{border-color:#bbb!important;}}
+/* Module 5 additions */
+.cm-table th,.cm-table td{text-align:center;}
+.cm-table td{font-family:'IBM Plex Mono',monospace;font-size:.78rem;line-height:1.4;}
+.cm-table td.cm-good{background:rgba(34,197,94,0.08);color:var(--green);}
+.cm-table td.cm-bad{background:rgba(239,68,68,0.07);color:var(--red);}
+.cm-table td strong{color:inherit;font-size:.9rem;}
+.cv-table td{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.74rem;}
+.cv-table td:last-child{text-align:left;}
+.cv-table td.cv-test{background:rgba(249,115,22,0.12);color:var(--orange);font-weight:500;}
+.sg-table code{white-space:nowrap;}
+.sg-table.wide{min-width:640px;}
+@media print{.sg-table.wide{min-width:0;}}
+@media print{.cm-table td,.cv-table td{border:1px solid #bbb!important;}}
+</style>
+</head>
+<body>
+<nav class="topnav" role="tablist" aria-label="Study sections">
+  <button class="nav-btn active" id="tab-overview" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
+  <button class="nav-btn" id="tab-guide" onclick="showPanel('guide',this)" role="tab" aria-selected="false" aria-controls="panel-guide">📖 Study Guide</button>
+  <button class="nav-btn" id="tab-flashcards" onclick="showPanel('flashcards',this)" role="tab" aria-selected="false" aria-controls="panel-flashcards">🃏 Flashcards</button>
+  <button class="nav-btn" id="tab-quiz" onclick="showPanel('quiz',this)" role="tab" aria-selected="false" aria-controls="panel-quiz">✏️ Practice Quiz</button>
+  <button class="nav-btn" id="tab-discussion" onclick="showPanel('discussion',this)" role="tab" aria-selected="false" aria-controls="panel-discussion">💬 Discussion</button>
+  <button class="nav-btn" id="tab-notes" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes Template</button>
+</nav>
+
+<!-- ═══════════════ OBJECTIVES ═══════════════ -->
+<div class="panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+  <a class="back-link" href="../../index.html">← All courses</a>
+  <span class="unit-badge">CSIS 3352 · Module 5</span>
+  <h1>Machine Learning Fundamentals and Model Evaluation</h1>
+  <span class="exam-pill">📅 Quiz 3 (10 pts) — expected in class Tue Oct 6 · not yet posted in Blackboard (Oct 4 scan) · Also on the Midterm (Modules 1–9) — published Oct 20, confirm with Dr. Al Amin</span>
+  <div class="textbook-links">
+    <a href="#">Lecture 5 slides (20)</a>
+  </div>
+  <div class="flag-note">📌 The Lecture 5 deck states no learning objectives. The 17 objectives below are <strong>derived from the deck's own summary slide (slide 20)</strong> — 4 groups: ML types · training &amp; prediction · evaluation metrics · cross-validation and fitting. Each objective's bullets are also its Concept Check rubric.</div>
+  <div class="flag-note">📌 Quiz 3 timing: the syllabus published it for Tue Sep 22. Dean's Blackboard scan on Oct 4 shows it not yet posted. Quizzes 1 and 2 were each held in class 14 days after their published dates, which points to Tue Oct 6 — confirm in class.</div>
+  <div class="flag-note">📌 Metrics order: objectives cover the confusion matrix (slide 16) before accuracy, precision, recall, and F1 (slides 12–15), because slide 16 says every metric is calculated from it.</div>
+  <div class="mastery-bar"><div class="mastery-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="reset-mastery-btn" onclick="resetAllMastery()">↺ Reset All Mastery</button>
+
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S1 · LO1</span><span class="obj-title">Define machine learning and name its three types</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Explain what machine learning is, how it differs from hand-written rules, and name its three main types (slide 3).</p>
+      <ul>
+        <li><strong>Definition</strong> — a field of AI where systems learn patterns from data, instead of being explicitly programmed with rules.</li>
+        <li><strong>Improves with data</strong> — the system's performance improves as it sees more data and experience.</li>
+        <li><strong>The flow</strong> — Data → Learning (algorithms) → Patterns &amp; Predictions → Smart Decisions.</li>
+        <li><strong>Three types</strong> — Supervised, Unsupervised, and Reinforcement Learning — slide 3's examples: spam detection, customer segmentation, self-driving cars.</li>
+        <li><strong>Reach</strong> — powers everything from spam filters to self-driving cars.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module05_1')" aria-label="Mark S1 LO1 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S1 · LO2</span><span class="obj-title">Explain supervised learning and its two tasks</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Describe what makes learning supervised, its goal, its workflow, and how classification differs from regression (slide 4).</p>
+      <ul>
+        <li><strong>Labeled data</strong> — the model learns from labeled data — every example already has a known correct answer.</li>
+        <li><strong>Goal</strong> — learn a mapping from inputs (features) to outputs (labels).</li>
+        <li><strong>Classification</strong> — predicts categories — discrete outputs like Yes/No, Spam/Not Spam, Cat/Dog. Example: is this email spam or not spam?</li>
+        <li><strong>Regression</strong> — predicts numbers — continuous values like price, temperature, sales. Example: predicting the price of a house.</li>
+        <li><strong>Workflow</strong> — labeled data → train the model (learns the relationship between features and labels) → predict / inference on new, unseen data → output.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module05_2')" aria-label="Mark S1 LO2 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S1 · LO3</span><span class="obj-title">Explain unsupervised learning and clustering</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Describe what unsupervised learning works with, what it's trying to find, its main task, and its benefits (slide 5).</p>
+      <ul>
+        <li><strong>No labels</strong> — the model finds patterns in data that has no labels or correct answers.</li>
+        <li><strong>Goal</strong> — discover hidden structure, groupings, or relationships.</li>
+        <li><strong>Clustering</strong> — the main task — grouping similar items together into clusters or segments.</li>
+        <li><strong>Examples</strong> — customer segmentation; grouping similar news articles.</li>
+        <li><strong>Benefits</strong> — no labeled data needed; finds hidden patterns; useful for exploration and segmentation.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module05_3')" aria-label="Mark S1 LO3 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S1 · LO4</span><span class="obj-title">Explain reinforcement learning and its loop</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Describe how an agent learns, what a policy is, and walk through the reinforcement learning loop (slide 6).</p>
+      <ul>
+        <li><strong>Agent</strong> — the learner or decision maker; it takes actions in an environment and receives rewards or penalties.</li>
+        <li><strong>Goal / policy</strong> — learn a strategy (a policy) that maximizes long-term reward through trial and error.</li>
+        <li><strong>The loop</strong> — agent takes an action → environment responds → reward or penalty (slide shows +10 / −5) → environment sends the current state back to the agent.</li>
+        <li><strong>Examples</strong> — game-playing AI, robotics (e.g., pick and place), self-driving car decision-making.</li>
+        <li><strong>Benefits</strong> — learns optimal behavior through interaction; handles sequential decision-making problems; effective in complex, dynamic environments.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module05_4')" aria-label="Mark S1 LO4 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" style="margin-top:20px;">
+    <div class="obj-header"><span class="obj-num">S2 · LO5</span><span class="obj-title">Walk through the model training loop</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Explain what training is and walk through the five-step training loop, including the slide's error example (slide 7).</p>
+      <ul>
+        <li><strong>Training</strong> — showing a model many examples so it can adjust itself to fit the patterns in the data.</li>
+        <li><strong>Guess → check → adjust</strong> — the model makes a guess, checks how wrong it was (its error/loss), and adjusts.</li>
+        <li><strong>Five-step loop</strong> — Data (input) → Model prediction → Compare to correct answer → Adjust model (updates its internal parameters to reduce future errors) → Repeat.</li>
+        <li><strong>Slide example</strong> — prediction 4.2 vs. actual 7.0 → error/loss = 2.8.</li>
+        <li><strong>Over time</strong> — the loop repeats until predictions get consistently better — from poor predictions / high error to the best model / low error, giving accurate predictions on new, unseen data.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module05_5')" aria-label="Mark S2 LO5 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S2 · LO6</span><span class="obj-title">Explain prediction with a trained model</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Explain what prediction is, why it matters, and how it works without the correct answer (slide 8).</p>
+      <ul>
+        <li><strong>Prediction</strong> — once trained, a model takes brand-new, unseen input and produces an output.</li>
+        <li><strong>Why it matters</strong> — this is the moment a model actually becomes useful in the real world.</li>
+        <li><strong>Flow</strong> — new, unseen input → trained model analyzes it → predicted label or value.</li>
+        <li><strong>No answer needed</strong> — it recognizes the patterns it learned during training and gives an instant prediction without needing the correct answer.</li>
+        <li><strong>Example</strong> — a trained spam model instantly labels a brand-new incoming email (slide output: Not Spam).</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module05_6')" aria-label="Mark S2 LO6 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S2 · LO7</span><span class="obj-title">Describe spam detection as supervised classification</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Explain spam detection as an ML problem: its type, training data, what it learns, and the five-step flow (slide 9).</p>
+      <ul>
+        <li><strong>Problem type</strong> — a supervised classification problem: is this email "spam" or "not spam"?</li>
+        <li><strong>Training data</strong> — thousands of emails already labeled by humans.</li>
+        <li><strong>What it learns</strong> — patterns in wording, sender behavior, links, and formatting.</li>
+        <li><strong>Five steps</strong> — training data → the model learns → a new email arrives (unseen) → the model predicts Spam or Not Spam → sorted automatically into the Spam folder or the Inbox.</li>
+        <li><strong>Reach</strong> — powers the spam folder in nearly every email inbox today.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module05_7')" aria-label="Mark S2 LO7 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S2 · LO8</span><span class="obj-title">Describe how movie recommendation uses ML</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Explain the data a recommender uses, the mix of techniques, and its five-step flow (slide 10).</p>
+      <ul>
+        <li><strong>Inputs</strong> — your viewing history, ratings, and similar users' behavior — used to predict what you'll enjoy next.</li>
+        <li><strong>Technique mix</strong> — a mix of supervised and unsupervised techniques — clustering similar viewers, predicting ratings.</li>
+        <li><strong>Five steps</strong> — your data → find similar users (clustering) → predict ratings for movies you haven't seen → rank &amp; recommend by predicted rating → you enjoy.</li>
+        <li><strong>"Why these?"</strong> — you watched similar movies; people with similar taste liked these; high predicted rating for you.</li>
+        <li><strong>Reach</strong> — powers Netflix, YouTube, and nearly every streaming platform's homepage.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module05_8')" aria-label="Mark S2 LO8 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" style="margin-top:20px;">
+    <div class="obj-header"><span class="obj-num">S3 · LO9</span><span class="obj-title">Explain why model evaluation matters</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Explain why building a model isn't enough and what evaluation gives you (slide 11).</p>
+      <ul>
+        <li><strong>Not the finish line</strong> — building a model isn't the finish line — you have to know if it's actually good.</li>
+        <li><strong>The trap</strong> — a model can look "smart" on training data but fail badly on new, real-world data.</li>
+        <li><strong>What evaluation gives</strong> — honest, measurable answers about model performance.</li>
+        <li><strong>Core metrics</strong> — accuracy, precision, recall, F1 score — all calculated from the confusion matrix (slides 12–16).</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module05_9')" aria-label="Mark S3 LO9 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S3 · LO10</span><span class="obj-title">Read a confusion matrix (TP, TN, FP, FN)</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Lay out the confusion matrix and define its four outcomes (slide 16). Every other metric is built from this table.</p>
+      <ul>
+        <li><strong>What it is</strong> — a table that breaks predictions into 4 outcomes.</li>
+        <li><strong>Layout</strong> — rows = actual (positive, negative); columns = predicted (positive, negative). Top row: TP | FN. Bottom row: FP | TN.</li>
+        <li><strong>TP / TN</strong> — true positive = correctly predicted positive; true negative = correctly predicted negative.</li>
+        <li><strong>FP / FN</strong> — false positive = wrongly predicted positive; false negative = wrongly predicted negative.</li>
+        <li><strong>Foundation</strong> — every metric — accuracy, precision, recall, F1 — is calculated directly from this table.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module05_10')" aria-label="Mark S3 LO10 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S3 · LO11</span><span class="obj-title">Calculate accuracy and explain its weakness</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Give the accuracy formula, what it measures, and why it can mislead (slide 12).</p>
+      <ul>
+        <li><strong>Formula</strong> — Accuracy = (TP + TN) / (TP + TN + FP + FN).</li>
+        <li><strong>Meaning</strong> — the percentage of predictions the model got completely correct.</li>
+        <li><strong>Strength</strong> — simple and intuitive.</li>
+        <li><strong>Weakness</strong> — can be misleading on imbalanced data.</li>
+        <li><strong>Slide example</strong> — a model that always predicts "not spam" can still be 95% accurate if only 5% of emails are truly spam.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module05_11')" aria-label="Mark S3 LO11 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S3 · LO12</span><span class="obj-title">Calculate precision and know when it matters</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Give the precision formula, the question it answers, and when it matters most (slide 13).</p>
+      <ul>
+        <li><strong>Formula</strong> — Precision = TP / (TP + FP).</li>
+        <li><strong>Question</strong> — of everything predicted positive, how many were actually correct?</li>
+        <li><strong>High precision</strong> — very few false alarms.</li>
+        <li><strong>When it matters</strong> — when false positives are costly — e.g., wrongly flagging a real email as spam.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module05_12')" aria-label="Mark S3 LO12 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S3 · LO13</span><span class="obj-title">Calculate recall and know when it matters</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Give the recall formula, the question it answers, and when it matters most (slide 14).</p>
+      <ul>
+        <li><strong>Formula</strong> — Recall = TP / (TP + FN).</li>
+        <li><strong>Question</strong> — of everything that was actually positive, how many did the model catch?</li>
+        <li><strong>High recall</strong> — very few missed cases.</li>
+        <li><strong>When it matters</strong> — when false negatives are costly — e.g., missing a genuinely fraudulent transaction.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module05_13')" aria-label="Mark S3 LO13 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S3 · LO14</span><span class="obj-title">Calculate F1 and know when to use it</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Give the F1 formula, what it combines, and when it's the right metric (slide 15).</p>
+      <ul>
+        <li><strong>Formula</strong> — F1 = 2 × (Precision × Recall) / (Precision + Recall).</li>
+        <li><strong>What it is</strong> — the harmonic mean of precision and recall — balances both into one number.</li>
+        <li><strong>When to use</strong> — when you care about both false positives and false negatives.</li>
+        <li><strong>Imbalanced data</strong> — especially valuable on imbalanced datasets, where accuracy alone can mislead.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module05_14')" aria-label="Mark S3 LO14 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s4" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)" style="margin-top:20px;">
+    <div class="obj-header"><span class="obj-num">S4 · LO15</span><span class="obj-title">Explain k-fold cross-validation</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Explain why cross-validation beats a single train/test split and walk through k-fold with k = 5 (slide 17).</p>
+      <ul>
+        <li><strong>Purpose</strong> — a technique for testing a model's performance more reliably than a single train/test split.</li>
+        <li><strong>k-fold</strong> — split the data into k parts, train on k−1 parts, test on the remaining part, and repeat k times.</li>
+        <li><strong>k = 5 example</strong> — 5 rounds; each round a different fold is the test set (Round 1 tests Fold 1 and trains on Folds 2–5, and so on).</li>
+        <li><strong>Final estimate</strong> — average the performance (the scores) from all rounds.</li>
+        <li><strong>Why it matters</strong> — reduces the chance of overfitting to a particular split and gives a more stable, trustworthy estimate of performance on new, unseen data.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module05_15')" aria-label="Mark S4 LO15 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s4" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S4 · LO16</span><span class="obj-title">Recognize overfitting and its causes</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Describe overfitting, how it performs on training vs. new data, and its common causes (slide 18).</p>
+      <ul>
+        <li><strong>What it is</strong> — the model memorizes the training data too closely, including its noise and randomness.</li>
+        <li><strong>Performance</strong> — great on training data, but poor on new, unseen data.</li>
+        <li><strong>Causes</strong> — too complex a model, or too little training data.</li>
+        <li><strong>The chart</strong> — the red overfitted curve fits every bump and noise; the green dashed ideal curve captures the true underlying pattern.</li>
+        <li><strong>Takeaway</strong> — overfitting means learning the noise instead of the signal; the goal is to generalize well to new, unseen data.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module05_16')" aria-label="Mark S4 LO16 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s4" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">S4 · LO17</span><span class="obj-title">Recognize underfitting and how to fix it</span><span class="obj-expand" aria-hidden="true">▼</span></div>
+    <div class="obj-body">
+      <p>Describe underfitting, how it performs, its common causes, and the fixes slide 19 lists.</p>
+      <ul>
+        <li><strong>What it is</strong> — the model is too simple to capture the real pattern in the data.</li>
+        <li><strong>Performance</strong> — poor on both training data and new data — high error on both.</li>
+        <li><strong>Causes</strong> — too simple a model, not enough training, or not enough relevant features.</li>
+        <li><strong>The chart</strong> — a straight line through curved data — it misses important structure.</li>
+        <li><strong>What to do</strong> — use a more complex model, train longer, add more relevant features, reduce overly strong regularization.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3352_module05_17')" aria-label="Mark S4 LO17 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STUDY GUIDE ═══════════════ -->
+<div class="panel" id="panel-guide" role="tabpanel" aria-labelledby="tab-guide">
+  <h1>Study Guide</h1>
+  <span class="unit-badge">Module 5 · 4 parts · 20 slides · grouped by the deck's own summary (slide 20)</span>
+  <div class="flag-note">📌 Everything here is from the Lecture 5 deck. Purple <strong>Study aid</strong> boxes are memory tricks and links back to Module 4 — they are not deck content, and nothing in them is on the quiz or flashcards. The two worked metric examples in Part 3 are labeled; one uses invented counts for practice.</div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" role="button" tabindex="0" onclick="toggleChapter(this)" aria-expanded="false"><span>🧭 Part 1 — What ML Is &amp; Its Three Types (slides 3–6)</span><span aria-hidden="true">▼</span></div>
+    <div class="chapter-body">
+      <h3>Slide 3 · What machine learning is</h3>
+      <ul>
+        <li><strong>Machine learning</strong> — a field of AI where systems learn patterns from data, instead of being explicitly programmed with rules.</li>
+        <li><strong>Gets better with data</strong> — performance improves as the system sees more data and experience. "The more data and experience the system gets, the smarter and more accurate it becomes."</li>
+        <li><strong>Reach</strong> — powers everything from spam filters to self-driving cars.</li>
+      </ul>
+      <div class="flow"><span class="flow-step">Data</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">Learning (algorithms)</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">Patterns &amp; predictions</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">Smart decisions</span></div>
+
+      <h3>Slides 3–6 · The three types side by side</h3>
+      <div class="tbl-wrap"><table class="sg-table wide">
+        <tr><th>Type</th><th>Learns from</th><th>Goal</th><th>Main task</th><th>Deck examples</th></tr>
+        <tr><td><strong>Supervised</strong></td><td>Labeled data — every example already has a known correct answer</td><td>Learn a mapping from inputs (features) to outputs (labels)</td><td>Classification (categories) and regression (numbers)</td><td>Spam vs. not spam; a house's price</td></tr>
+        <tr><td><strong>Unsupervised</strong></td><td>Data with no labels or correct answers</td><td>Discover hidden structure, groupings, or relationships</td><td>Clustering — grouping similar items together</td><td>Customer segmentation; grouping similar news articles</td></tr>
+        <tr><td><strong>Reinforcement</strong></td><td>Interacting with an environment — rewards or penalties for its actions</td><td>Learn a strategy (a policy) that maximizes long-term reward through trial and error</td><td>Not named as a single task on slide 6</td><td>Game-playing AI; robotics; self-driving car decision-making</td></tr>
+      </table></div>
+
+      <h3>Slide 4 · Supervised learning</h3>
+      <ul>
+        <li><strong>Labeled data</strong> — the model learns from examples that already have a known correct answer.</li>
+        <li><strong>Goal</strong> — learn a mapping from inputs (features) to outputs (labels).</li>
+        <li><strong>Training</strong> — the algorithm learns the relationship between features and labels.</li>
+        <li><strong>Predict / inference</strong> — the model uses what it learned to make predictions on new, unseen data.</li>
+      </ul>
+      <div class="flow"><span class="flow-step x">1. Labeled data</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">2. Train the model</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">3. Predict / inference</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step y">4. Output</span></div>
+      <p>Slide 4's labeled-data table — the last column is the known answer:</p>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Feature 1</th><th>Feature 2</th><th>…</th><th>Answer (label)</th></tr>
+        <tr><td>2.1</td><td>3.4</td><td>…</td><td>Yes</td></tr>
+        <tr><td>1.5</td><td>2.1</td><td>…</td><td>No</td></tr>
+        <tr><td>3.2</td><td>1.8</td><td>…</td><td>Yes</td></tr>
+        <tr><td>2.7</td><td>3.1</td><td>…</td><td>No</td></tr>
+        <tr><td>1.8</td><td>2.9</td><td>…</td><td>Yes</td></tr>
+      </table></div>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Task</th><th>Predicts</th><th>Output</th><th>Slide 4 example</th></tr>
+        <tr><td><strong>Classification</strong></td><td>Categories</td><td>Discrete — Yes/No, Spam/Not Spam, Cat/Dog</td><td>Is this email spam or not spam?</td></tr>
+        <tr><td><strong>Regression</strong></td><td>Numbers</td><td>Continuous — price, temperature, sales (e.g., 12.5, 98.7)</td><td>Predicting the price of a house</td></tr>
+      </table></div>
+      <div class="oop-note">🧩 <strong>Study aid — X and y.</strong> Slide 4 calls the inputs <em>features</em> and the outputs <em>labels</em>. The charts on slides 18–19 label their axes <em>Feature</em> and <em>Target</em>. Same split you used in Module 4: uppercase <code>X</code> = the features, lowercase <code>y</code> = the target (the label column). Unsupervised data has no labels, so there's no <code>y</code> to learn.</div>
+
+      <h3>Slide 5 · Unsupervised learning</h3>
+      <ul>
+        <li><strong>No labels</strong> — the model finds patterns in data that has no labels or correct answers.</li>
+        <li><strong>Goal</strong> — discover hidden structure, groupings, or relationships.</li>
+        <li><strong>Clustering</strong> — the main task: similar items are grouped together, forming clusters or segments.</li>
+        <li><strong>Benefits</strong> — no labeled data needed; finds hidden patterns; useful for exploration and segmentation.</li>
+        <li><strong>Output</strong> — meaningful groups that help you understand the data better and make decisions.</li>
+      </ul>
+      <div class="flow"><span class="flow-step">1. Unlabeled data</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">2. Find patterns</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">3. Group similar items</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">4. Insights / output</span></div>
+
+      <h3>Slide 6 · Reinforcement learning</h3>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Term</th><th>What slide 6 says</th></tr>
+        <tr><td><strong>Agent</strong></td><td>The learner or decision maker that chooses actions</td></tr>
+        <tr><td><strong>Environment</strong></td><td>The world the agent interacts with; it responds to actions</td></tr>
+        <tr><td><strong>Reward / penalty</strong></td><td>Feedback signal for a good (reward, e.g., +10) or bad (penalty, e.g., −5) outcome</td></tr>
+        <tr><td><strong>State</strong></td><td>The current situation, sent from the environment back to the agent</td></tr>
+        <tr><td><strong>Policy</strong></td><td>The strategy the agent learns to maximize long-term reward</td></tr>
+      </table></div>
+      <p>The loop:</p>
+      <div class="flow"><span class="flow-step x">Agent</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">action</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">Environment</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step y">reward (+10) / penalty (−5)</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">state back to agent</span></div>
+      <p>The learning process:</p>
+      <div class="flow"><span class="flow-step">Try an action (explore)</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">Receive feedback</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">Learn from experience</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">Improve policy</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">Maximize long-term cumulative reward</span></div>
+      <ul>
+        <li><strong>Examples</strong> — game-playing AI (learns winning strategies by playing games and getting rewards); self-driving car (learns safe and efficient driving by maximizing rewards, e.g., reaching the destination safely); robotics (learns tasks like pick and place by receiving rewards for successful actions).</li>
+        <li><strong>Key benefits</strong> — learns optimal behavior through interaction; handles sequential decision-making problems; effective in complex, dynamic environments.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" role="button" tabindex="0" onclick="toggleChapter(this)" aria-expanded="false"><span>🔁 Part 2 — Training, Prediction &amp; Real-World Examples (slides 7–10)</span><span aria-hidden="true">▼</span></div>
+    <div class="chapter-body">
+      <h3>Slide 7 · Model training: how a model learns</h3>
+      <ul>
+        <li><strong>Training</strong> — showing a model many examples so it can adjust itself to fit the patterns in the data.</li>
+        <li><strong>Guess, check, adjust</strong> — the model makes a guess, checks how wrong it was (its error/loss), and adjusts.</li>
+        <li><strong>Repeat</strong> — this repeats many times until predictions get consistently better.</li>
+      </ul>
+      <div class="flow"><span class="flow-step">1. Data (input)</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">2. Model prediction</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step y">3. Compare to correct answer</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step x">4. Adjust model</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">5. Repeat</span></div>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Step</th><th>What happens (slide 7)</th></tr>
+        <tr><td>1. Data (input)</td><td>Many training examples are provided to the model.</td></tr>
+        <tr><td>2. Model prediction</td><td>The model makes a prediction (its guess).</td></tr>
+        <tr><td>3. Compare to correct answer</td><td>Check how wrong the prediction was (calculate error/loss). Slide example: prediction 4.2, actual 7.0 → error/loss = 2.8.</td></tr>
+        <tr><td>4. Adjust model (learn)</td><td>The model updates its internal parameters to reduce future errors.</td></tr>
+        <tr><td>5. Repeat</td><td>The updated model sees the data again and the cycle repeats.</td></tr>
+      </table></div>
+      <p><strong>Over time:</strong> poor predictions / high error → improving / lower error → better / even lower error → best model / low error. Goal achieved: accurate predictions on new, unseen data.</p>
+      <p><strong>Key benefits:</strong> learns automatically from data; improves with more practice; adapts to complex patterns.</p>
+      <div class="flag-note">⚠️ Not explained in the source: how error/loss is calculated in general (the slide only shows 4.2 vs. 7.0 → 2.8, which is the gap between them), and what the model's "internal parameters" are.</div>
+
+      <h3>Slide 8 · Prediction: using a trained model</h3>
+      <div class="flow"><span class="flow-step">1. New, unseen input</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">2. Trained model</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">3. Prediction output</span></div>
+      <ul>
+        <li><strong>Prediction</strong> — once trained, a model can take brand-new, unseen input and produce an output.</li>
+        <li><strong>Why it matters</strong> — this is the moment a model actually becomes useful in the real world.</li>
+        <li><strong>How it works</strong> — trained on lots of labeled data → learned patterns and relationships → recognizes those patterns in new input → produces the best output based on what it learned → instant prediction without needing the correct answer.</li>
+        <li><strong>Example</strong> — a trained spam model instantly labels a brand-new incoming email. Slide output: Not Spam.</li>
+      </ul>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th></th><th>Training (slide 7)</th><th>Prediction (slide 8)</th></tr>
+        <tr><td><strong>Input</strong></td><td>Many training examples</td><td>Brand-new, unseen input</td></tr>
+        <tr><td><strong>Needs the correct answer?</strong></td><td>Yes — compares its guess to it</td><td>No — instant prediction without it</td></tr>
+        <tr><td><strong>Model changes?</strong></td><td>Yes — adjusts internal parameters</td><td>Not described as changing</td></tr>
+        <tr><td><strong>Result</strong></td><td>A model that keeps getting better</td><td>A predicted label or value</td></tr>
+      </table></div>
+
+      <h3>Slide 9 · Real-world example: spam detection</h3>
+      <ul>
+        <li><strong>Problem type</strong> — supervised classification: is this email "spam" or "not spam"?</li>
+        <li><strong>Training data</strong> — thousands of emails already labeled by humans.</li>
+        <li><strong>What it learns</strong> — patterns in wording, sender behavior, links, and formatting.</li>
+        <li><strong>Reach</strong> — powers the spam folder in nearly every email inbox today.</li>
+      </ul>
+      <div class="flow"><span class="flow-step">1. Training data</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">2. The model learns</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">3. New email arrives</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">4. Model predicts</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">5. Sorted automatically</span></div>
+      <p>Slide 9's example inbox:</p>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>From</th><th>Subject</th><th>Status</th></tr>
+        <tr><td>Alice Johnson</td><td>Meeting tomorrow</td><td>Not Spam</td></tr>
+        <tr><td>Bank Alert</td><td>Your account update</td><td>Not Spam</td></tr>
+        <tr><td>Win a FREE iPhone!</td><td>Claim your prize now!!!</td><td>Spam</td></tr>
+        <tr><td>Cheap Meds Online</td><td>Lowest prices guaranteed</td><td>Spam</td></tr>
+        <tr><td>Newsletter</td><td>Weekly update</td><td>Not Spam</td></tr>
+        <tr><td>Earn $$$ Fast</td><td>Work from home today</td><td>Spam</td></tr>
+      </table></div>
+
+      <h3>Slide 10 · Real-world example: movie recommendation</h3>
+      <ul>
+        <li><strong>Inputs</strong> — your viewing history, ratings, and similar users' behavior, used to predict what you'll enjoy next.</li>
+        <li><strong>Technique mix</strong> — a mix of supervised and unsupervised techniques: clustering similar viewers, predicting ratings.</li>
+        <li><strong>"Why these?"</strong> — you watched similar movies; people with similar taste liked these; high predicted rating for you.</li>
+        <li><strong>Reach</strong> — powers Netflix, YouTube, and nearly every streaming platform's homepage.</li>
+      </ul>
+      <div class="flow"><span class="flow-step">1. Your data</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">2. Find similar users (clustering)</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">3. Predict ratings</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">4. Rank &amp; recommend</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">5. You enjoy!</span></div>
+      <div class="flag-note">⚠️ Slide 10 doesn't say which technique is which. Linking the two: slide 5 names clustering as unsupervised learning's main task, so "clustering similar viewers" is the unsupervised part. The deck never labels "predicting ratings" as supervised — that pairing is implied by the word "mix", not stated.</div>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" role="button" tabindex="0" onclick="toggleChapter(this)" aria-expanded="false"><span>📏 Part 3 — Model Evaluation Metrics (slides 11–16)</span><span aria-hidden="true">▼</span></div>
+    <div class="chapter-body">
+      <h3>Slide 11 · Why model evaluation matters</h3>
+      <ul>
+        <li><strong>Not the finish line</strong> — building a model isn't the finish line; you have to know if it's actually good.</li>
+        <li><strong>The trap</strong> — a model can look "smart" on training data but fail badly on new, real-world data.</li>
+        <li><strong>What evaluation gives</strong> — honest, measurable answers about model performance.</li>
+      </ul>
+
+      <h3>Slide 16 · The confusion matrix (learn this first)</h3>
+      <p>The deck puts the matrix last, but slide 16 says every metric on the earlier slides is calculated directly from this table — so start here.</p>
+      <div class="tbl-wrap"><table class="sg-table cm-table">
+        <tr><th></th><th>Predicted: Positive</th><th>Predicted: Negative</th></tr>
+        <tr><th>Actual: Positive</th><td class="cm-good"><strong>TP</strong><br>True Positive</td><td class="cm-bad"><strong>FN</strong><br>False Negative</td></tr>
+        <tr><th>Actual: Negative</th><td class="cm-bad"><strong>FP</strong><br>False Positive</td><td class="cm-good"><strong>TN</strong><br>True Negative</td></tr>
+      </table></div>
+      <ul>
+        <li><strong>True Positive</strong> — correctly predicted positive.</li>
+        <li><strong>True Negative</strong> — correctly predicted negative.</li>
+        <li><strong>False Positive</strong> — wrongly predicted positive.</li>
+        <li><strong>False Negative</strong> — wrongly predicted negative.</li>
+      </ul>
+      <div class="oop-note">🧩 <strong>Study aid — reading the names.</strong> The second word is what the model <em>predicted</em> (Positive / Negative). The first word says whether that prediction was right (True) or wrong (False). So a False Negative = predicted negative, and that was wrong → it was actually positive.</div>
+
+      <h3>Slides 12–15 · The four metrics</h3>
+      <div class="tbl-wrap"><table class="sg-table wide">
+        <tr><th>Metric</th><th>Formula</th><th>Question it answers</th><th>High value means</th><th>Matters most when</th><th>Deck example</th></tr>
+        <tr><td><strong>Accuracy</strong> (12)</td><td><code>(TP + TN) / (TP + TN + FP + FN)</code></td><td>What percentage of predictions were completely correct?</td><td>—</td><td>Simple and intuitive — but can mislead on imbalanced data</td><td>Always predicting "not spam" is 95% accurate if only 5% of emails are spam</td></tr>
+        <tr><td><strong>Precision</strong> (13)</td><td><code>TP / (TP + FP)</code></td><td>Of everything predicted positive, how many were actually correct?</td><td>Very few false alarms</td><td>False positives are costly</td><td>Wrongly flagging a real email as spam</td></tr>
+        <tr><td><strong>Recall</strong> (14)</td><td><code>TP / (TP + FN)</code></td><td>Of everything actually positive, how many did the model catch?</td><td>Very few missed cases</td><td>False negatives are costly</td><td>Missing a genuinely fraudulent transaction</td></tr>
+        <tr><td><strong>F1 score</strong> (15)</td><td><code>2 × (P × R) / (P + R)</code></td><td>The harmonic mean of precision and recall — balances both into one number</td><td>—</td><td>You care about both false positives and false negatives; especially on imbalanced datasets</td><td>—</td></tr>
+      </table></div>
+      <div class="oop-note">🧩 <strong>Study aid — which cells each metric uses.</strong> Precision uses the <em>Predicted: Positive</em> column (TP + FP). Recall uses the <em>Actual: Positive</em> row (TP + FN). Accuracy uses all four cells.</div>
+      <div class="flag-note">⚠️ Not explained in the source: what a "harmonic mean" is beyond the F1 formula itself, and a definition of "imbalanced data" (slide 12 shows it only through the 5%-spam example).</div>
+
+      <h3>Worked example A — slide 12's own scenario</h3>
+      <p>Slide 12 gives percentages only (5% spam, 95% accurate). Using 100 emails so the counts are whole numbers: 5 are spam (positive), 95 are not, and the model always predicts "not spam."</p>
+      <div class="tbl-wrap"><table class="sg-table cm-table">
+        <tr><th></th><th>Predicted: Spam</th><th>Predicted: Not spam</th></tr>
+        <tr><th>Actual: Spam</th><td class="cm-good">TP = 0</td><td class="cm-bad">FN = 5</td></tr>
+        <tr><th>Actual: Not spam</th><td class="cm-bad">FP = 0</td><td class="cm-good">TN = 95</td></tr>
+      </table></div>
+      <ul>
+        <li><strong>Accuracy</strong> — (0 + 95) / 100 = <strong>95%</strong>. Looks great.</li>
+        <li><strong>Recall</strong> — 0 / (0 + 5) = <strong>0</strong>. It catches none of the spam. This is why slide 12 warns that accuracy can mislead on imbalanced data.</li>
+      </ul>
+      <div class="flag-note">⚠️ Precision here would be 0 / (0 + 0), which can't be computed because the model never predicts positive. The deck doesn't cover this case.</div>
+
+      <h3>Worked example B — practice numbers (invented)</h3>
+      <div class="flag-note">📌 These counts are made up for practice. Only the formulas come from slides 12–15.</div>
+      <div class="tbl-wrap"><table class="sg-table cm-table">
+        <tr><th></th><th>Predicted: Positive</th><th>Predicted: Negative</th></tr>
+        <tr><th>Actual: Positive</th><td class="cm-good">TP = 40</td><td class="cm-bad">FN = 20</td></tr>
+        <tr><th>Actual: Negative</th><td class="cm-bad">FP = 10</td><td class="cm-good">TN = 130</td></tr>
+      </table></div>
+      <ul>
+        <li><strong>Accuracy</strong> — (40 + 130) / 200 = 170 / 200 = <strong>0.85</strong> (85%)</li>
+        <li><strong>Precision</strong> — 40 / (40 + 10) = 40 / 50 = <strong>0.80</strong></li>
+        <li><strong>Recall</strong> — 40 / (40 + 20) = 40 / 60 ≈ <strong>0.67</strong></li>
+        <li><strong>F1</strong> — 2 × (0.80 × 0.667) / (0.80 + 0.667) ≈ 1.067 / 1.467 ≈ <strong>0.73</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chapter-block">
+    <div class="chapter-header" role="button" tabindex="0" onclick="toggleChapter(this)" aria-expanded="false"><span>⚖️ Part 4 — Cross-Validation, Overfitting &amp; Underfitting (slides 17–19)</span><span aria-hidden="true">▼</span></div>
+    <div class="chapter-body">
+      <h3>Slide 17 · Cross-validation</h3>
+      <ul>
+        <li><strong>Purpose</strong> — testing a model's performance more reliably than a single train/test split.</li>
+        <li><strong>k-fold cross-validation</strong> — split the data into k parts, train on k−1 parts, test on the remaining part, and repeat k times.</li>
+        <li><strong>Final estimate</strong> — average the performance from all rounds.</li>
+        <li><strong>Why it matters</strong> — reduces the chance of overfitting to a particular split and gives a more stable, trustworthy estimate of performance on new, unseen data.</li>
+      </ul>
+      <p>Slide 17's k = 5 table:</p>
+      <div class="tbl-wrap"><table class="sg-table cv-table wide">
+        <tr><th>Round</th><th>Fold 1</th><th>Fold 2</th><th>Fold 3</th><th>Fold 4</th><th>Fold 5</th><th>Test · Train</th></tr>
+        <tr><td>1</td><td class="cv-test">Test</td><td>Train</td><td>Train</td><td>Train</td><td>Train</td><td>Fold 1 · Folds 2–5 → Score 1</td></tr>
+        <tr><td>2</td><td>Train</td><td class="cv-test">Test</td><td>Train</td><td>Train</td><td>Train</td><td>Fold 2 · Folds 1, 3–5 → Score 2</td></tr>
+        <tr><td>3</td><td>Train</td><td>Train</td><td class="cv-test">Test</td><td>Train</td><td>Train</td><td>Fold 3 · Folds 1, 2, 4–5 → Score 3</td></tr>
+        <tr><td>4</td><td>Train</td><td>Train</td><td>Train</td><td class="cv-test">Test</td><td>Train</td><td>Fold 4 · Folds 1–3, 5 → Score 4</td></tr>
+        <tr><td>5</td><td>Train</td><td>Train</td><td>Train</td><td>Train</td><td class="cv-test">Test</td><td>Fold 5 · Folds 1–4 → Score 5</td></tr>
+      </table></div>
+      <div class="flow"><span class="flow-step">Score 1 … Score 5</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step">Average the 5 scores</span><span class="flow-arrow" aria-hidden="true">→</span><span class="flow-step x">More reliable performance estimate</span></div>
+      <div class="oop-note">🧩 <strong>Study aid — link to Module 4.</strong> Module 4's <code>train_test_split</code> made one split (8 train / 2 test rows). k-fold repeats the split k times so every row gets a turn in the test set.</div>
+
+      <h3>Slides 18–19 · Overfitting vs. underfitting</h3>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th></th><th>Overfitting (slide 18)</th><th>Underfitting (slide 19)</th></tr>
+        <tr><td><strong>What happens</strong></td><td>Memorizes the training data too closely, including its noise and randomness</td><td>Too simple to capture the real pattern in the data</td></tr>
+        <tr><td><strong>Training data</strong></td><td>Performs great</td><td>Performs poorly</td></tr>
+        <tr><td><strong>New, unseen data</strong></td><td>Performs poorly</td><td>Performs poorly</td></tr>
+        <tr><td><strong>Common causes</strong></td><td>Too complex a model, or too little training data</td><td>Too simple a model, not enough training, or not enough relevant features</td></tr>
+        <tr><td><strong>The chart</strong></td><td>Red curve fits every bump and noise; green dashed ideal curve captures the true pattern</td><td>A straight red line through curved data — misses important structure</td></tr>
+        <tr><td><strong>Key takeaway</strong></td><td>Learns the noise instead of the signal; the goal is to generalize well to new, unseen data</td><td>High error on both training and new data</td></tr>
+        <tr><td><strong>What to do</strong></td><td>Not listed on slide 18</td><td>Use a more complex model; train longer; add more relevant features; reduce overly strong regularization</td></tr>
+      </table></div>
+      <p><strong>Why avoiding overfitting matters (slide 18):</strong> it leads to models that make better predictions in the real world and are more reliable and trustworthy.</p>
+      <div class="flag-note">⚠️ Not explained in the source: "regularization" (named in slide 19's fixes but never defined), and "noise" / "signal" beyond "noise and randomness". Slide 18 also lists no fixes for overfitting — the only related tool in the deck is cross-validation, which slide 17 says reduces the chance of overfitting to a particular split.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FLASHCARDS ═══════════════ -->
+<div class="panel" id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards">
+  <h1>Flashcards</h1>
+  <div class="filter-row" role="group" aria-label="Filter flashcards by part">
+    <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('s1',this)">ML Types</button>
+    <button class="filter-btn" onclick="filterCards('s2',this)">Training &amp; Prediction</button>
+    <button class="filter-btn" onclick="filterCards('s3',this)">Metrics</button>
+    <button class="filter-btn" onclick="filterCards('s4',this)">CV &amp; Fitting</button>
+  </div>
+  <div class="fc-counter" id="fc-counter" aria-live="polite"></div>
+  <div class="fc-wrap">
+    <div class="fc-card" id="fc-card" onclick="flipCard()" aria-label="Flashcard — click to flip">
+      <div class="fc-front"><div class="fc-label">Question</div><div class="fc-q" id="fc-q" aria-live="polite"></div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a" id="fc-a" aria-live="polite"></div></div>
+    </div>
+  </div>
+  <div class="fc-controls">
+    <button class="fc-btn" onclick="flipCard()" aria-label="Flip card">↩ Flip</button>
+    <button class="fc-btn mastered-btn" id="fc-master-btn" onclick="toggleMastered(currentIdx)" aria-label="Toggle mastered">☐ Mastered</button>
+    <button class="fc-btn" onclick="shuffleCards()" aria-label="Shuffle deck">🔀 Shuffle</button>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
+    <button class="fc-btn" onclick="nextCard()" aria-label="Next card">Next →</button>
+  </div>
+  <div class="fc-empty" id="fc-empty" style="display:none">No cards in this filter.</div>
+</div>
+
+<!-- ═══════════════ QUIZ ═══════════════ -->
+<div class="panel" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+  <h1>Practice Quiz</h1>
+  <div class="flag-note">📌 Questions marked <strong>Practice calculation</strong> use made-up counts so you can drill the formulas from slides 12–15. Fill-in-the-blank answers must match exactly (case doesn't matter).</div>
+  <div class="filter-row" role="group" aria-label="Filter quiz by part">
+    <button class="filter-btn active" onclick="setQuizFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setQuizFilter('s1',this)">ML Types</button>
+    <button class="filter-btn" onclick="setQuizFilter('s2',this)">Training &amp; Prediction</button>
+    <button class="filter-btn" onclick="setQuizFilter('s3',this)">Metrics</button>
+    <button class="filter-btn" onclick="setQuizFilter('s4',this)">CV &amp; Fitting</button>
+  </div>
+  <div id="quiz-container"></div>
+  <div style="margin-top:16px;">
+    <button id="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <button id="reset-btn" onclick="resetQuiz()">Reset</button>
+  </div>
+  <div id="quiz-score"></div>
+</div>
+
+<!-- ═══════════════ DISCUSSION ═══════════════ -->
+<div class="panel" id="panel-discussion" role="tabpanel" aria-labelledby="tab-discussion">
+  <h1>Concept Check</h1>
+  <span class="unit-badge">Explain each objective in your own words, then self-grade against the rubric</span>
+  <div class="filter-row" role="group" aria-label="Filter questions by part">
+    <button class="filter-btn active" onclick="filterDisc('all',this)">All</button>
+    <button class="filter-btn" onclick="filterDisc('s1',this)">ML Types</button>
+    <button class="filter-btn" onclick="filterDisc('s2',this)">Training &amp; Prediction</button>
+    <button class="filter-btn" onclick="filterDisc('s3',this)">Metrics</button>
+    <button class="filter-btn" onclick="filterDisc('s4',this)">CV &amp; Fitting</button>
+  </div>
+  <div id="disc-container"></div>
+</div>
+
+<!-- ═══════════════ NOTES ═══════════════ -->
+<div class="panel" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes">
+  <h1>Notes Template</h1>
+  <span class="unit-badge">Module 5 · Print this tab for handwritten recall practice</span>
+
+  <div class="video-block">
+    <h4>📚 Reference documentation (official — for lookup, not page content)</h4>
+    <div class="video-link"><span class="video-tag">sklearn</span><a href="https://scikit-learn.org/stable/modules/model_evaluation.html" target="_blank" rel="noopener">Metrics and scoring: quantifying the quality of predictions</a></div>
+    <div class="video-link"><span class="video-tag">sklearn</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html" target="_blank" rel="noopener">confusion_matrix</a></div>
+    <div class="video-link"><span class="video-tag">sklearn</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html" target="_blank" rel="noopener">accuracy_score</a></div>
+    <div class="video-link"><span class="video-tag">sklearn</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_score.html" target="_blank" rel="noopener">precision_score</a></div>
+    <div class="video-link"><span class="video-tag">sklearn</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.recall_score.html" target="_blank" rel="noopener">recall_score</a></div>
+    <div class="video-link"><span class="video-tag">sklearn</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html" target="_blank" rel="noopener">f1_score</a></div>
+    <div class="video-link"><span class="video-tag">sklearn</span><a href="https://scikit-learn.org/stable/modules/cross_validation.html" target="_blank" rel="noopener">Cross-validation: evaluating estimator performance</a></div>
+    <div class="source-list">
+      <a href="https://scikit-learn.org/stable/" target="_blank" rel="noopener">scikit-learn</a>
+    </div>
+  </div>
+
+  <div class="notes-grid">
+    <div class="note-card"><h4>Supervised vs unsupervised vs RL</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Classification vs regression</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>RL loop: agent → … → state</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Training loop — 5 steps</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Draw the confusion matrix</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>4 formulas: Acc · P · R · F1</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Precision vs recall — when?</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>k-fold with k = 5</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Overfitting vs underfitting</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Spam &amp; movie examples — type?</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+  </div>
+</div>
+
+<footer>CSIS 3352 · Module 5 · study.imichaelv.com · Built from Lecture 5 slides · <a href="../../index.html" class="back-link footer-back-link">← Back to all courses</a></footer>
+
+<script>
+// ─── MASTERY ───
+function getMasteryKey(){return 'mastery_csis3352_module05_';}
+function resetAllMastery(){
+  Object.keys(localStorage).filter(k=>k.startsWith(getMasteryKey())).forEach(k=>localStorage.removeItem(k));
+  Object.keys(localStorage).filter(k=>k.startsWith('obj_csis3352_module05_')).forEach(k=>localStorage.removeItem(k));
+  document.querySelectorAll('.obj-master-btn').forEach(b=>{b.textContent='☐ Mark Mastered';b.classList.remove('mastered');});
+  document.querySelectorAll('.fc-card').forEach((_,i)=>localStorage.removeItem(getMasteryKey()+i));
+  updateMasteryBar();
+}
+function updateMasteryBar(){
+  const total=document.querySelectorAll('.obj-master-btn').length;
+  const done=Object.keys(localStorage).filter(k=>k.startsWith('obj_csis3352_module05_')).length;
+  const pct=total?Math.round(done/total*100):0;
+  const f=document.getElementById('mastery-fill');
+  if(f)f.style.width=pct+'%';
+}
+function toggleObjMastery(btn,key){
+  const is=localStorage.getItem(key);
+  if(is){localStorage.removeItem(key);btn.textContent='☐ Mark Mastered';btn.classList.remove('mastered');}
+  else{localStorage.setItem(key,'1');btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  updateMasteryBar();
+}
+function toggleObj(card){
+  const body=card.querySelector('.obj-body');
+  const arrow=card.querySelector('.obj-expand');
+  const open=body.classList.toggle('open');
+  arrow.style.transform=open?'rotate(180deg)':'';
+  card.setAttribute('aria-expanded',open);
+}
+function toggleChapter(header){
+  const body=header.nextElementSibling;
+  const arrow=header.querySelector('span:last-child');
+  const open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  arrow.style.transform=open?'':'rotate(180deg)';
+  header.setAttribute('aria-expanded',!open);
+}
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+}
+function activateFilter(btn){
+  const row=btn.closest('.filter-row');
+  if(row)row.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ─── FLASHCARD DATA ───  {ch:'s1'..'s4', q, a}
+const allCards=[
+  {"ch": "s1", "q": "What is machine learning (slide 3)?", "a": "A field of AI where systems learn patterns from data, instead of being explicitly programmed with rules."},
+  {"ch": "s1", "q": "What happens to an ML system's performance as it sees more data and experience?", "a": "It improves — the more data and experience, the smarter and more accurate it becomes."},
+  {"ch": "s1", "q": "Slide 3's four-step 'How Machine Learning Works' flow?", "a": "Data → Learning (algorithms) → Patterns & Predictions → Smart Decisions"},
+  {"ch": "s1", "q": "The three main types of machine learning?", "a": "Supervised, Unsupervised, and Reinforcement Learning"},
+  {"ch": "s1", "q": "Slide 3's example for supervised learning?", "a": "Spam detection"},
+  {"ch": "s1", "q": "Slide 3's example for unsupervised learning?", "a": "Customer segmentation"},
+  {"ch": "s1", "q": "Slide 3's example for reinforcement learning?", "a": "Self-driving cars"},
+  {"ch": "s1", "q": "Supervised learning learns from what kind of data?", "a": "Labeled data — every example already has a known correct answer."},
+  {"ch": "s1", "q": "Goal of supervised learning?", "a": "Learn a mapping from inputs (features) to outputs (labels)."},
+  {"ch": "s1", "q": "Two main supervised learning tasks?", "a": "Classification (categories) and regression (numbers)."},
+  {"ch": "s1", "q": "What does classification output?", "a": "Discrete categories — e.g., Yes/No, Spam/Not Spam, Cat/Dog."},
+  {"ch": "s1", "q": "What does regression output?", "a": "Continuous values — e.g., price, temperature, sales."},
+  {"ch": "s1", "q": "Slide 4's classification example?", "a": "Is this email spam or not spam?"},
+  {"ch": "s1", "q": "Slide 4's regression example?", "a": "Predicting the price of a house."},
+  {"ch": "s1", "q": "The four steps of the supervised learning workflow (slide 4)?", "a": "1. Labeled data → 2. Train the model → 3. Predict / Inference → 4. Output"},
+  {"ch": "s1", "q": "In the supervised workflow, what does the algorithm learn during training?", "a": "The relationship between features and labels."},
+  {"ch": "s1", "q": "Unsupervised learning works on what kind of data?", "a": "Data that has no labels or correct answers."},
+  {"ch": "s1", "q": "Goal of unsupervised learning?", "a": "Discover hidden structure, groupings, or relationships."},
+  {"ch": "s1", "q": "Main task of unsupervised learning?", "a": "Clustering — grouping similar items together."},
+  {"ch": "s1", "q": "Slide 5's two unsupervised examples?", "a": "Customer segmentation; grouping similar news articles."},
+  {"ch": "s1", "q": "Three benefits of unsupervised learning (slide 5)?", "a": "No labeled data needed; finds hidden patterns; useful for exploration and segmentation."},
+  {"ch": "s1", "q": "The four steps of 'How Unsupervised Learning Works' (slide 5)?", "a": "1. Unlabeled data → 2. Find patterns → 3. Group similar items → 4. Insights / output"},
+  {"ch": "s1", "q": "How does a reinforcement learning agent learn?", "a": "By taking actions in an environment and receiving rewards or penalties."},
+  {"ch": "s1", "q": "Goal of reinforcement learning?", "a": "Learn a strategy (a policy) that maximizes long-term reward through trial and error."},
+  {"ch": "s1", "q": "In reinforcement learning, what is a policy?", "a": "A strategy — the thing the agent learns in order to maximize long-term reward."},
+  {"ch": "s1", "q": "In reinforcement learning, what is the agent?", "a": "The learner or decision maker that chooses actions."},
+  {"ch": "s1", "q": "In reinforcement learning, what is the environment?", "a": "The world the agent interacts with; it responds to actions."},
+  {"ch": "s1", "q": "In the RL loop, what does the environment send back to the agent?", "a": "The state — the current situation."},
+  {"ch": "s1", "q": "Reward and penalty values shown in slide 6's RL loop?", "a": "+10 (reward) and −5 (penalty)"},
+  {"ch": "s1", "q": "Slide 6's three reinforcement learning examples?", "a": "Game-playing AI, robotics, self-driving car decision-making."},
+  {"ch": "s1", "q": "Three key benefits of reinforcement learning (slide 6)?", "a": "Learns optimal behavior through interaction; handles sequential decision-making problems; effective in complex, dynamic environments."},
+  {"ch": "s1", "q": "The five-step RL learning process (slide 6)?", "a": "Try an action (explore) → Receive feedback (reward or penalty) → Learn from experience (update knowledge) → Improve policy (better strategy) → Maximize long-term cumulative reward"},
+  {"ch": "s2", "q": "What is training (slide 7)?", "a": "Showing a model many examples so it can adjust itself to fit the patterns in the data."},
+  {"ch": "s2", "q": "The three-part cycle a model repeats during training?", "a": "Make a guess → check how wrong it was (error/loss) → adjust."},
+  {"ch": "s2", "q": "What is error / loss?", "a": "How wrong the model's prediction was compared with the correct answer."},
+  {"ch": "s2", "q": "The five steps of the training loop (slide 7)?", "a": "1. Data (input) → 2. Model prediction → 3. Compare to correct answer → 4. Adjust model (learn) → 5. Repeat"},
+  {"ch": "s2", "q": "In the 'Adjust model' step, what does the model update?", "a": "Its internal parameters — to reduce future errors."},
+  {"ch": "s2", "q": "Slide 7: prediction 4.2, actual 7.0. What is the error/loss shown?", "a": "2.8"},
+  {"ch": "s2", "q": "How long does the training loop repeat (slide 7)?", "a": "Many times, until predictions get consistently better."},
+  {"ch": "s2", "q": "What happens to error over time during training (slide 7)?", "a": "Poor predictions / high error → improving → even lower error → best model / low error."},
+  {"ch": "s2", "q": "Slide 7's 'Goal achieved'?", "a": "Accurate predictions on new, unseen data."},
+  {"ch": "s2", "q": "Three key benefits of training (slide 7)?", "a": "Learns automatically from data; improves with more practice; adapts to complex patterns."},
+  {"ch": "s2", "q": "What is prediction (slide 8)?", "a": "A trained model taking brand-new, unseen input and producing an output."},
+  {"ch": "s2", "q": "Why is prediction the key moment for a model?", "a": "It's when the model actually becomes useful in the real world."},
+  {"ch": "s2", "q": "Does a trained model need the correct answer to make a prediction?", "a": "No — it gives an instant prediction without needing the correct answer."},
+  {"ch": "s2", "q": "Slide 8's three-box prediction flow?", "a": "1. New, unseen input → 2. Trained model → 3. Prediction output"},
+  {"ch": "s2", "q": "Slide 8's prediction example?", "a": "A trained spam model instantly labels a brand-new incoming email (output: Not Spam)."},
+  {"ch": "s2", "q": "What kind of ML problem is spam detection?", "a": "A supervised classification problem — spam or not spam."},
+  {"ch": "s2", "q": "A spam model is trained on what?", "a": "Thousands of emails already labeled by humans."},
+  {"ch": "s2", "q": "Four things a spam model learns patterns in?", "a": "Wording, sender behavior, links, and formatting."},
+  {"ch": "s2", "q": "The five steps of 'How Spam Detection Works' (slide 9)?", "a": "1. Training data → 2. The model learns → 3. New email arrives → 4. Model predicts → 5. Sorted automatically"},
+  {"ch": "s2", "q": "Where does an email go after the model predicts it (slide 9)?", "a": "Into the Spam folder or the Inbox — sorted automatically."},
+  {"ch": "s2", "q": "What data does a movie recommender use (slide 10)?", "a": "Your viewing history, ratings, and similar users' behavior."},
+  {"ch": "s2", "q": "What mix of ML techniques does movie recommendation use?", "a": "A mix of supervised and unsupervised — clustering similar viewers, predicting ratings."},
+  {"ch": "s2", "q": "The five steps of 'How Movie Recommendation Works' (slide 10)?", "a": "1. Your data → 2. Find similar users (clustering) → 3. Predict ratings → 4. Rank & recommend → 5. You enjoy!"},
+  {"ch": "s2", "q": "How does a recommender rank movies?", "a": "By predicted rating — then recommends them to you."},
+  {"ch": "s2", "q": "Slide 10's three 'Why these?' reasons?", "a": "You watched similar movies; people with similar taste liked these; high predicted rating for you."},
+  {"ch": "s2", "q": "Which platforms does slide 10 say recommendation powers?", "a": "Netflix, YouTube, and nearly every streaming platform's homepage."},
+  {"ch": "s3", "q": "Why isn't building a model the finish line (slide 11)?", "a": "You have to know if it's actually good."},
+  {"ch": "s3", "q": "What failure does model evaluation catch?", "a": "A model that looks 'smart' on training data but fails badly on new, real-world data."},
+  {"ch": "s3", "q": "What does evaluation give us (slide 11)?", "a": "Honest, measurable answers about model performance."},
+  {"ch": "s3", "q": "What is a confusion matrix?", "a": "A table that breaks predictions into 4 outcomes: TP, TN, FP, FN."},
+  {"ch": "s3", "q": "Confusion matrix layout on slide 16: rows and columns?", "a": "Rows = Actual (positive, negative). Columns = Predicted (positive, negative)."},
+  {"ch": "s3", "q": "True Positive (TP)?", "a": "Correctly predicted positive."},
+  {"ch": "s3", "q": "True Negative (TN)?", "a": "Correctly predicted negative."},
+  {"ch": "s3", "q": "False Positive (FP)?", "a": "Wrongly predicted positive."},
+  {"ch": "s3", "q": "False Negative (FN)?", "a": "Wrongly predicted negative."},
+  {"ch": "s3", "q": "Confusion matrix cell: actually positive, predicted negative?", "a": "FN — False Negative"},
+  {"ch": "s3", "q": "Confusion matrix cell: actually negative, predicted positive?", "a": "FP — False Positive"},
+  {"ch": "s3", "q": "How do the metrics relate to the confusion matrix?", "a": "Every metric is calculated directly from the confusion matrix."},
+  {"ch": "s3", "q": "Accuracy formula?", "a": "Accuracy = (TP + TN) / (TP + TN + FP + FN)"},
+  {"ch": "s3", "q": "What does accuracy measure?", "a": "The percentage of predictions the model got completely correct."},
+  {"ch": "s3", "q": "Accuracy's weakness?", "a": "It can be misleading on imbalanced data."},
+  {"ch": "s3", "q": "Slide 12's misleading-accuracy example?", "a": "A model that always predicts 'not spam' can still be 95% accurate if only 5% of emails are truly spam."},
+  {"ch": "s3", "q": "Precision formula?", "a": "Precision = TP / (TP + FP)"},
+  {"ch": "s3", "q": "The question precision answers?", "a": "Of everything predicted positive, how many were actually correct?"},
+  {"ch": "s3", "q": "High precision means…?", "a": "Very few false alarms."},
+  {"ch": "s3", "q": "When is precision most important? Slide 13's example?", "a": "When false positives are costly — e.g., wrongly flagging a real email as spam."},
+  {"ch": "s3", "q": "Recall formula?", "a": "Recall = TP / (TP + FN)"},
+  {"ch": "s3", "q": "The question recall answers?", "a": "Of everything that was actually positive, how many did the model catch?"},
+  {"ch": "s3", "q": "High recall means…?", "a": "Very few missed cases."},
+  {"ch": "s3", "q": "When is recall most important? Slide 14's example?", "a": "When false negatives are costly — e.g., missing a genuinely fraudulent transaction."},
+  {"ch": "s3", "q": "F1 score formula?", "a": "F1 = 2 × (Precision × Recall) / (Precision + Recall)"},
+  {"ch": "s3", "q": "F1 is what kind of mean of precision and recall?", "a": "The harmonic mean — it balances both into one number."},
+  {"ch": "s3", "q": "When is F1 useful (slide 15)?", "a": "When you care about both false positives and false negatives."},
+  {"ch": "s3", "q": "Where is F1 especially valuable?", "a": "On imbalanced datasets, where accuracy alone can mislead."},
+  {"ch": "s3", "q": "Precision vs. recall: what does each one divide TP by?", "a": "Precision: TP + FP (everything predicted positive). Recall: TP + FN (everything actually positive)."},
+  {"ch": "s4", "q": "What is cross-validation (slide 17)?", "a": "A technique for testing a model's performance more reliably than a single train/test split."},
+  {"ch": "s4", "q": "How does k-fold cross-validation work?", "a": "Split the data into k parts, train on k−1 parts, test on the remaining part, and repeat k times."},
+  {"ch": "s4", "q": "With k = 5, how many rounds, and how many folds train in each?", "a": "5 rounds; each round trains on 4 folds and tests on 1."},
+  {"ch": "s4", "q": "Slide 17, k = 5, Round 3: which fold is the test set?", "a": "Fold 3 — training uses Folds 1, 2, 4–5."},
+  {"ch": "s4", "q": "How does cross-validation produce its final estimate?", "a": "Average the performance (scores) from all rounds."},
+  {"ch": "s4", "q": "Why does cross-validation matter (slide 17)?", "a": "It reduces the chance of overfitting to a particular split and gives a more stable, trustworthy estimate on new data."},
+  {"ch": "s4", "q": "What is overfitting?", "a": "The model memorizes the training data too closely, including its noise and randomness."},
+  {"ch": "s4", "q": "How does an overfit model perform?", "a": "Great on training data, but poorly on new, unseen data."},
+  {"ch": "s4", "q": "Common causes of overfitting?", "a": "Too complex a model, or too little training data."},
+  {"ch": "s4", "q": "Slide 18's key takeaway about overfitting?", "a": "It happens when a model learns the noise instead of the signal; the goal is to generalize well to new, unseen data."},
+  {"ch": "s4", "q": "Slide 18's chart: red curve vs. green dashed curve?", "a": "Red = overfitted model (too complex) that fits every bump and noise. Green dashed = ideal model that captures the true underlying pattern."},
+  {"ch": "s4", "q": "What is underfitting?", "a": "The model is too simple to capture the real pattern in the data."},
+  {"ch": "s4", "q": "How does an underfit model perform?", "a": "Poorly on both training data and new data — high error on both."},
+  {"ch": "s4", "q": "Common causes of underfitting?", "a": "Too simple a model, not enough training, or not enough relevant features."},
+  {"ch": "s4", "q": "Slide 19's four fixes for underfitting?", "a": "Use a more complex model; train longer; add more relevant features; reduce overly strong regularization."},
+  {"ch": "s4", "q": "Overfitting vs. underfitting: which one does well on training data?", "a": "Overfitting — it does great on training but poorly on new data. Underfitting does poorly on both."},
+  {"ch": "s4", "q": "Axis labels on the slide 18–19 charts?", "a": "x-axis = Feature, y-axis = Target"}
+];
+// ─── FLASHCARD ENGINE ───
+let deck=[],currentIdx=0,flipped=false;
+function filterCards(ch,btn){
+  activateFilter(btn);
+  deck=ch==='all'?[...allCards]:allCards.filter(c=>c.ch===ch);
+  currentIdx=0;flipped=false;renderCard();
+}
+function renderCard(){
+  const empty=document.getElementById('fc-empty');
+  if(!deck.length){empty.style.display='block';document.getElementById('fc-counter').textContent='';return;}
+  empty.style.display='none';
+  const c=deck[currentIdx];
+  document.getElementById('fc-q').textContent=c.q;
+  document.getElementById('fc-a').textContent=c.a;
+  document.getElementById('fc-counter').textContent=(currentIdx+1)+' / '+deck.length;
+  const card=document.getElementById('fc-card');
+  card.classList.remove('flipped');flipped=false;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+  else{mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+}
+function flipCard(){document.getElementById('fc-card').classList.toggle('flipped');flipped=!flipped;}
+function nextCard(){if(!deck.length)return;currentIdx=(currentIdx+1)%deck.length;renderCard();}
+function prevCard(){if(!deck.length)return;currentIdx=(currentIdx-1+deck.length)%deck.length;renderCard();}
+function shuffleCards(){for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}currentIdx=0;renderCard();}
+function toggleMastered(idx){
+  const c=deck[idx];const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){localStorage.removeItem(key);mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+  else{localStorage.setItem(key,'1');mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+}
+
+// ─── QUIZ DATA ───
+const allQuizData=[
+  {"ch": "s1", "type": "mc", "q": "Which statement best describes machine learning?", "opts": ["Systems that learn patterns from data instead of being explicitly programmed with rules", "Writing explicit if-then rules for every case", "A database that stores every correct answer for lookup", "Software that only works on labeled images"], "ans": 0, "exp": "Slide 3: ML is a field of AI where systems learn patterns from data, instead of being explicitly programmed with rules."},
+  {"ch": "s1", "type": "mc", "q": "Which type of machine learning learns from labeled data, where every example already has a known correct answer?", "opts": ["Unsupervised learning", "Supervised learning", "Reinforcement learning", "Clustering"], "ans": 1, "exp": "Slide 4: supervised learning learns from labeled data."},
+  {"ch": "s1", "type": "mc", "q": "Customer segmentation is slide 3's example of which type of learning?", "opts": ["Supervised — classification", "Supervised — regression", "Unsupervised", "Reinforcement"], "ans": 2, "exp": "Slides 3 and 5: customer segmentation is an unsupervised (clustering) example."},
+  {"ch": "s1", "type": "mc", "q": "Predicting a house's price is which kind of task?", "opts": ["Reinforcement learning", "Supervised classification", "Unsupervised clustering", "Supervised regression"], "ans": 3, "exp": "Slide 4: regression predicts numbers (continuous values); the house-price example is regression."},
+  {"ch": "s1", "type": "mc", "q": "Deciding whether an email is spam or not spam is which kind of task?", "opts": ["Classification", "Regression", "Clustering", "Reinforcement"], "ans": 0, "exp": "Slides 4 and 9: spam vs. not spam is classification — discrete categories."},
+  {"ch": "s1", "type": "mc", "q": "Classification outputs ____, while regression outputs ____.", "opts": ["continuous values; discrete categories", "discrete categories; continuous values", "clusters; rewards", "labels; no output"], "ans": 1, "exp": "Slide 4: classification → discrete categories (Yes/No, Spam/Not Spam, Cat/Dog); regression → continuous values (price, temperature, sales)."},
+  {"ch": "s1", "type": "mc", "q": "What is the main task of unsupervised learning?", "opts": ["Regression", "Classification", "Clustering — grouping similar items together", "Maximizing reward"], "ans": 2, "exp": "Slide 5: the main task is clustering."},
+  {"ch": "s1", "type": "mc", "q": "In reinforcement learning, what is a policy?", "opts": ["The labeled training data", "The table of TP, TN, FP, FN", "The penalty for a bad action", "A strategy that maximizes long-term reward"], "ans": 3, "exp": "Slide 6: the goal is to learn a strategy (a policy) that maximizes long-term reward through trial and error."},
+  {"ch": "s1", "type": "mc", "q": "In the reinforcement learning loop, what does the environment send back to the agent?", "opts": ["The current state", "The labels", "The confusion matrix", "A new policy"], "ans": 0, "exp": "Slide 6: the environment sends the current situation (the state) back to the agent."},
+  {"ch": "s1", "type": "mc", "q": "A robot learns to pick and place objects by receiving rewards for successful actions. Which type of learning is this?", "opts": ["Supervised", "Reinforcement", "Unsupervised", "Regression"], "ans": 1, "exp": "Slide 6: robotics — learns tasks like pick and place by receiving rewards for successful actions."},
+  {"ch": "s1", "type": "mc", "q": "Which is NOT a benefit of unsupervised learning listed on slide 5?", "opts": ["No labeled data needed", "Finds hidden patterns", "Learns from a known correct answer for every example", "Useful for exploration and segmentation"], "ans": 2, "exp": "A known correct answer for every example describes supervised learning (slide 4). Slide 5 lists the other three."},
+  {"ch": "s1", "type": "fitb", "q": "Supervised learning learns a mapping from inputs (features) to outputs (___).", "ans": ["labels", "label"], "display": "labels", "exp": "Slide 4: goal — learn a mapping from inputs (features) to outputs (labels)."},
+  {"ch": "s1", "type": "fitb", "q": "In reinforcement learning, the learner or decision maker that chooses actions is called the ___.", "ans": ["agent", "the agent"], "display": "agent", "exp": "Slide 6: the agent is the learner or decision maker that chooses actions."},
+  {"ch": "s1", "type": "fitb", "q": "Grouping similar items together — unsupervised learning's main task — is called ___.", "ans": ["clustering"], "display": "clustering", "exp": "Slide 5: main task — clustering, grouping similar items together."},
+  {"ch": "s1", "type": "fitb", "q": "A reinforcement learning agent learns a policy through trial and ___.", "ans": ["error"], "display": "error", "exp": "Slide 6: learn a strategy (a policy) that maximizes long-term reward through trial and error."},
+  {"ch": "s2", "type": "mc", "q": "Which is the correct order of slide 7's training loop?", "opts": ["Adjust → Data → Compare → Predict → Repeat", "Predict → Data → Adjust → Compare → Repeat", "Data → Compare → Adjust → Predict → Repeat", "Data → Model prediction → Compare to correct answer → Adjust model → Repeat"], "ans": 3, "exp": "Slide 7: 1 Data (input), 2 Model prediction, 3 Compare to correct answer, 4 Adjust model (learn), 5 Repeat."},
+  {"ch": "s2", "type": "mc", "q": "On slide 7 the model predicts 4.2 and the actual value is 7.0. What error/loss does the slide show?", "opts": ["0.6", "2.8", "7.0", "11.2"], "ans": 1, "exp": "Slide 7 shows Error / Loss = 2.8 — the gap between 7.0 and 4.2."},
+  {"ch": "s2", "type": "mc", "q": "During the 'Adjust model' step, what does the model do?", "opts": ["Updates its internal parameters to reduce future errors", "Deletes the training data", "Asks a human for the correct label", "Splits the data into k folds"], "ans": 0, "exp": "Slide 7: the model updates its internal parameters to reduce future errors."},
+  {"ch": "s2", "type": "mc", "q": "According to slide 8, when does a model 'actually become useful in the real world'?", "opts": ["When it calculates its loss", "When it takes brand-new, unseen input and produces an output", "When the data is labeled", "When training starts"], "ans": 1, "exp": "Slide 8: prediction on brand-new, unseen input is the moment a model becomes useful."},
+  {"ch": "s2", "type": "mc", "q": "Spam detection is an example of:", "opts": ["Unsupervised clustering", "Supervised regression", "Supervised classification", "Reinforcement learning"], "ans": 2, "exp": "Slide 9: a supervised classification problem — spam or not spam."},
+  {"ch": "s2", "type": "mc", "q": "Which is NOT one of the things slide 9 says a spam model learns patterns in?", "opts": ["Wording", "Sender behavior", "Links", "Viewing history"], "ans": 3, "exp": "Slide 9: wording, sender behavior, links, and formatting. Viewing history belongs to the movie recommendation example (slide 10)."},
+  {"ch": "s2", "type": "mc", "q": "Who labels the emails a spam model is trained on (slide 9)?", "opts": ["Humans", "The model itself", "The environment, through rewards", "Nobody — the data is unlabeled"], "ans": 0, "exp": "Slide 9: trained on thousands of emails already labeled by humans."},
+  {"ch": "s2", "type": "mc", "q": "In slide 9's example inbox, which email is labeled Spam?", "opts": ["Alice Johnson — Meeting tomorrow", "Win a FREE iPhone! — Claim your prize now!!!", "Bank Alert — Your account update", "Newsletter — Weekly update"], "ans": 1, "exp": "Slide 9's example inbox marks 'Win a FREE iPhone!', 'Cheap Meds Online', and 'Earn $$$ Fast' as Spam; the others are Not Spam."},
+  {"ch": "s2", "type": "mc", "q": "Movie recommendation uses which kind of ML?", "opts": ["Only supervised", "Only unsupervised", "A mix of supervised and unsupervised", "Only reinforcement"], "ans": 2, "exp": "Slide 10: a mix of supervised and unsupervised techniques — clustering similar viewers, predicting ratings."},
+  {"ch": "s2", "type": "mc", "q": "In slide 10's flow, the 'Find similar users' step uses:", "opts": ["Regression", "A confusion matrix", "Reinforcement", "Clustering"], "ans": 3, "exp": "Slide 10: step 2, Find Similar Users — the system groups users with similar taste (clustering)."},
+  {"ch": "s2", "type": "fitb", "q": "How wrong a model's guess was is called its error, or ___.", "ans": ["loss"], "display": "loss", "exp": "Slide 7: checks how wrong it was (its error/loss)."},
+  {"ch": "s2", "type": "fitb", "q": "Once trained, a model can take brand-new, ___ input and produce an output.", "ans": ["unseen"], "display": "unseen", "exp": "Slide 8: brand-new, unseen input."},
+  {"ch": "s2", "type": "fitb", "q": "A recommender ranks movies by predicted ___, then recommends them.", "ans": ["rating", "ratings"], "display": "rating", "exp": "Slide 10: movies are ranked by predicted rating and recommended to you."},
+  {"ch": "s3", "type": "mc", "q": "Which is the accuracy formula?", "opts": ["(TP + TN) / (TP + TN + FP + FN)", "TP / (TP + FN)", "TP / (TP + FP)", "2 × (P × R) / (P + R)"], "ans": 0, "exp": "Slide 12."},
+  {"ch": "s3", "type": "mc", "q": "Which is the precision formula?", "opts": ["TP / (TP + FN)", "TP / (TP + FP)", "(TP + TN) / (TP + TN + FP + FN)", "TN / (TN + FP)"], "ans": 1, "exp": "Slide 13: Precision = TP / (TP + FP)."},
+  {"ch": "s3", "type": "mc", "q": "Which is the recall formula?", "opts": ["TP / (TP + FP)", "(TP + TN) / (TP + TN + FP + FN)", "TP / (TP + FN)", "FP / (FP + TN)"], "ans": 2, "exp": "Slide 14: Recall = TP / (TP + FN)."},
+  {"ch": "s3", "type": "mc", "q": "The F1 score is:", "opts": ["The arithmetic average of accuracy and precision", "The percentage of correct predictions", "The number of true positives", "The harmonic mean of precision and recall"], "ans": 3, "exp": "Slide 15: the harmonic mean of precision and recall."},
+  {"ch": "s3", "type": "mc", "q": "Why can accuracy be misleading?", "opts": ["On imbalanced data, a model can score high while missing the rare class", "It can't be calculated from the confusion matrix", "It ignores true positives", "It only works for regression"], "ans": 0, "exp": "Slide 12: a model that always predicts 'not spam' is 95% accurate if only 5% of emails are spam."},
+  {"ch": "s3", "type": "mc", "q": "Wrongly flagging a real email as spam is costly. Which metric should you prioritize?", "opts": ["Recall", "Precision", "Accuracy", "Loss"], "ans": 1, "exp": "Slide 13: precision matters when false positives are costly — e.g., wrongly flagging a real email as spam."},
+  {"ch": "s3", "type": "mc", "q": "Missing a genuinely fraudulent transaction is costly. Which metric should you prioritize?", "opts": ["Precision", "Accuracy", "Recall", "Policy"], "ans": 2, "exp": "Slide 14: recall matters when false negatives are costly."},
+  {"ch": "s3", "type": "mc", "q": "The case is actually positive but the model predicted negative. Which outcome is it?", "opts": ["True Positive", "False Positive", "True Negative", "False Negative"], "ans": 3, "exp": "Slide 16: false negative — wrongly predicted negative."},
+  {"ch": "s3", "type": "mc", "q": "The case is actually negative but the model predicted positive. Which outcome is it?", "opts": ["False Positive", "False Negative", "True Negative", "True Positive"], "ans": 0, "exp": "Slide 16: false positive — wrongly predicted positive."},
+  {"ch": "s3", "type": "mc", "q": "Slide 16 says every metric on the previous slides is calculated from:", "opts": ["The training loop", "The confusion matrix", "Cross-validation folds", "The RL reward signal"], "ans": 1, "exp": "Slide 16: every metric is calculated directly from this table."},
+  {"ch": "s3", "type": "mc", "q": "Why does model evaluation matter (slide 11)?", "opts": ["It labels the data for you", "Evaluation replaces training", "A model can look smart on training data but fail on new, real-world data", "It guarantees 100% accuracy"], "ans": 2, "exp": "Slide 11."},
+  {"ch": "s3", "type": "mc", "q": "Practice calculation (made-up counts): TP = 30, TN = 50, FP = 10, FN = 10. What is accuracy?", "opts": ["60%", "75%", "80%", "85%"], "ans": 2, "exp": "(30 + 50) / (30 + 50 + 10 + 10) = 80 / 100 = 80%. Formula from slide 12."},
+  {"ch": "s3", "type": "mc", "q": "Practice calculation (made-up counts): TP = 8, FP = 2. What is precision?", "opts": ["0.2", "0.5", "0.8", "1.0"], "ans": 2, "exp": "8 / (8 + 2) = 0.8. Formula from slide 13."},
+  {"ch": "s3", "type": "mc", "q": "Practice calculation (made-up counts): TP = 8, FN = 8. What is recall?", "opts": ["0.5", "0.8", "1.0", "0.25"], "ans": 0, "exp": "8 / (8 + 8) = 0.5. Formula from slide 14."},
+  {"ch": "s3", "type": "mc", "q": "Practice calculation: precision = 1.0 and recall = 0.5. What is F1 (rounded)?", "opts": ["0.50", "0.67", "0.75", "1.00"], "ans": 1, "exp": "2 × (1.0 × 0.5) / (1.0 + 0.5) = 1.0 / 1.5 ≈ 0.67. Note it's lower than the plain average (0.75). Formula from slide 15."},
+  {"ch": "s3", "type": "mc", "q": "Slide 12's scenario with 100 emails: 5 are spam and the model always predicts 'not spam'. What is its recall for spam?", "opts": ["0", "0.05", "0.95", "1.0"], "ans": 0, "exp": "TP = 0 (it never predicts spam) and FN = 5, so recall = 0 / (0 + 5) = 0 — it catches none of the spam even though accuracy is 95%. The 100-email count is for practice; the slide gives percentages."},
+  {"ch": "s3", "type": "fitb", "q": "High precision means very few false ___.", "ans": ["alarms", "alarm", "positives", "positive"], "display": "alarms", "exp": "Slide 13: high precision means very few false alarms."},
+  {"ch": "s3", "type": "fitb", "q": "High recall means very few ___ cases.", "ans": ["missed"], "display": "missed", "exp": "Slide 14: high recall means very few missed cases."},
+  {"ch": "s3", "type": "fitb", "q": "Precision = TP / (TP + ___). Use the abbreviation.", "ans": ["fp", "false positives", "false positive"], "display": "FP", "exp": "Slide 13."},
+  {"ch": "s3", "type": "fitb", "q": "Recall = TP / (TP + ___). Use the abbreviation.", "ans": ["fn", "false negatives", "false negative"], "display": "FN", "exp": "Slide 14."},
+  {"ch": "s3", "type": "fitb", "q": "A correctly predicted negative is called a true ___.", "ans": ["negative"], "display": "negative", "exp": "Slide 16: true negative — correctly predicted negative."},
+  {"ch": "s3", "type": "fitb", "q": "A model that always predicts 'not spam' can still be ___% accurate if only 5% of emails are truly spam.", "ans": ["95", "95%"], "display": "95", "exp": "Slide 12."},
+  {"ch": "s4", "type": "mc", "q": "Which describes k-fold cross-validation?", "opts": ["Train once on all the data and test on the same data", "Test on k random rows only", "Train k different models on k different datasets", "Split into k parts, train on k−1, test on the remaining part, repeat k times"], "ans": 3, "exp": "Slide 17."},
+  {"ch": "s4", "type": "mc", "q": "In slide 17's k = 5 example, how many folds are used for training in each round?", "opts": ["1", "4", "5", "10"], "ans": 1, "exp": "k − 1 = 4 folds train; the remaining 1 fold tests."},
+  {"ch": "s4", "type": "mc", "q": "Applying slide 17's rule, how many rounds does k = 10 cross-validation run?", "opts": ["1", "5", "9", "10"], "ans": 3, "exp": "Slide 17: repeat k times — k = 10 means 10 rounds."},
+  {"ch": "s4", "type": "mc", "q": "How does cross-validation produce its final performance estimate?", "opts": ["Averages the scores from all rounds", "Uses the last round only", "Uses the best round only", "Uses the training score"], "ans": 0, "exp": "Slide 17: average the performance from all rounds."},
+  {"ch": "s4", "type": "mc", "q": "Why is cross-validation more trustworthy than a single train/test split?", "opts": ["It uses less data", "It reduces the chance of overfitting to a particular split", "It removes the need for a test set", "It always raises accuracy"], "ans": 1, "exp": "Slide 17: reduces the chance of overfitting to a particular split; more stable, trustworthy estimate."},
+  {"ch": "s4", "type": "mc", "q": "A model scores very well on training data but poorly on new, unseen data. This is:", "opts": ["Underfitting", "Clustering", "Overfitting", "Cross-validation"], "ans": 2, "exp": "Slide 18."},
+  {"ch": "s4", "type": "mc", "q": "A model performs poorly on both training data and new data. This is:", "opts": ["Overfitting", "High precision", "Generalizing well", "Underfitting"], "ans": 3, "exp": "Slide 19."},
+  {"ch": "s4", "type": "mc", "q": "Which is a common cause of overfitting (slide 18)?", "opts": ["Too complex a model, or too little training data", "Not enough relevant features", "Too simple a model", "Not enough training"], "ans": 0, "exp": "Slide 18: too complex a model, or too little training data. 'Too simple', 'not enough relevant features', and 'not enough training' are underfitting causes (slide 19)."},
+  {"ch": "s4", "type": "mc", "q": "Which is one of slide 19's fixes for underfitting?", "opts": ["Use a simpler model", "Add more relevant features", "Remove features", "Train for less time"], "ans": 1, "exp": "Slide 19: use a more complex model, train longer, add more relevant features, reduce overly strong regularization."},
+  {"ch": "s4", "type": "mc", "q": "On slide 18's chart, which curve captures the true underlying pattern?", "opts": ["The red curve that fits every bump", "Neither — the chart has one curve", "The green dashed ideal curve", "The straight red line"], "ans": 2, "exp": "Slide 18: the red curve fits every bump and noise; the green dashed curve captures the true pattern. The straight red line is slide 19's underfit model."},
+  {"ch": "s4", "type": "fitb", "q": "Overfitting happens when a model learns the ___ instead of the signal.", "ans": ["noise"], "display": "noise", "exp": "Slide 18 key takeaway."},
+  {"ch": "s4", "type": "fitb", "q": "In k-fold cross-validation you train on k − ___ parts. Enter the number.", "ans": ["1", "one"], "display": "1", "exp": "Slide 17: train on k−1 parts."},
+  {"ch": "s4", "type": "fitb", "q": "The goal is a model that ___ well to new, unseen data.", "ans": ["generalizes", "generalize", "generalises", "generalise"], "display": "generalizes", "exp": "Slide 18: the goal is to generalize well to new, unseen data."}
+];
+// ─── QUIZ ENGINE ───
+let quizFilter='all',userAnswers={};
+function setQuizFilter(ch,btn){activateFilter(btn);quizFilter=ch;resetQuiz();}
+function getQuizDeck(){return quizFilter==='all'?allQuizData:allQuizData.filter(q=>q.ch===quizFilter);}
+function renderQuiz(){
+  const deck=getQuizDeck();
+  const c=document.getElementById('quiz-container');c.innerHTML='';userAnswers={};
+  deck.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='quiz-q';div.id='qq'+i;
+    if(q.type==='mc'){
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <div class="quiz-opts">${q.opts.map((o,oi)=>`<label><input type="radio" name="q${i}" onclick="selectMC(${i},${oi})"> ${o}</label>`).join('')}</div>
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    } else {
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <input class="fitb-input" id="fitb${i}" placeholder="Type your answer..." oninput="storeFITB(${i})">
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    }
+    c.appendChild(div);
+  });
+  document.getElementById('quiz-score').style.display='none';
+}
+function selectMC(qi,oi){userAnswers[qi]=oi;}
+function storeFITB(qi){userAnswers[qi]=document.getElementById('fitb'+qi).value.trim().toLowerCase();}
+function submitQuiz(){
+  const deck=getQuizDeck();let correct=0;
+  deck.forEach((q,i)=>{
+    const el=document.getElementById('qq'+i);
+    const exp=document.getElementById('exp'+i);exp.classList.add('show');
+    if(q.type==='mc'){
+      const ua=userAnswers[i];
+      if(ua===q.ans){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    } else {
+      const ua=(userAnswers[i]||'').toLowerCase();
+      const ok=ua!==''&&q.ans.some(a=>ua===a.toLowerCase());
+      if(ok){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    }
+  });
+  const sc=document.getElementById('quiz-score');
+  const pct=Math.round(correct/deck.length*100);
+  sc.style.display='block';
+  sc.style.borderColor=pct>=70?'var(--green)':'var(--red)';
+  sc.innerHTML=`<strong>Score: ${correct}/${deck.length} (${pct}%)</strong> — ${pct>=90?'Excellent! 🎉':pct>=70?'Good work — review flagged questions.':'Keep studying — focus on the red ones.'}`;
+}
+function resetQuiz(){renderQuiz();}
+
+// ─── DISCUSSION DATA ───  {ch, q, points:[{text}], model}  (1:1 with objectives)
+const DISC_QUESTIONS=[
+  {"ch": "s1", "q": "In your own words, what is machine learning and how is it different from writing explicit rules? Name the three types and give slide 3's example for each.", "points": [{"text": "<strong>Definition</strong> — a field of AI where systems learn patterns from data, instead of being explicitly programmed with rules."}, {"text": "<strong>Improves with data</strong> — the system's performance improves as it sees more data and experience."}, {"text": "<strong>The flow</strong> — Data → Learning (algorithms) → Patterns &amp; Predictions → Smart Decisions."}, {"text": "<strong>Three types</strong> — Supervised, Unsupervised, and Reinforcement Learning — slide 3's examples: spam detection, customer segmentation, self-driving cars."}, {"text": "<strong>Reach</strong> — powers everything from spam filters to self-driving cars."}], "model": "Machine learning is the part of AI where a system learns patterns from data instead of being hand-programmed with rules. The more data and experience it gets, the better it performs. Slide 3 draws the flow as data, then learning algorithms, then patterns and predictions, then smart decisions. There are three main types: supervised learning (example: spam detection), unsupervised learning (customer segmentation), and reinforcement learning (self-driving cars). It powers everything from spam filters to self-driving cars."},
+  {"ch": "s1", "q": "What makes learning 'supervised'? Explain its goal and workflow, then contrast its two main tasks using slide 4's examples.", "points": [{"text": "<strong>Labeled data</strong> — the model learns from labeled data — every example already has a known correct answer."}, {"text": "<strong>Goal</strong> — learn a mapping from inputs (features) to outputs (labels)."}, {"text": "<strong>Classification</strong> — predicts categories — discrete outputs like Yes/No, Spam/Not Spam, Cat/Dog. Example: is this email spam or not spam?"}, {"text": "<strong>Regression</strong> — predicts numbers — continuous values like price, temperature, sales. Example: predicting the price of a house."}, {"text": "<strong>Workflow</strong> — labeled data → train the model (learns the relationship between features and labels) → predict / inference on new, unseen data → output."}], "model": "Supervised learning trains on labeled data, so every example already comes with the right answer. The goal is to learn a mapping from the inputs, the features, to the outputs, the labels. The workflow is: start with labeled data, train the model so it learns how features relate to labels, then use it to predict on new data it hasn't seen, and get an output. There are two main tasks. Classification predicts a category, like spam or not spam, yes or no, cat or dog. Regression predicts a number on a continuous scale, like the price of a house, a temperature, or sales."},
+  {"ch": "s1", "q": "How is unsupervised learning different from supervised learning? Explain its goal, its main task, two examples, and why someone would use it.", "points": [{"text": "<strong>No labels</strong> — the model finds patterns in data that has no labels or correct answers."}, {"text": "<strong>Goal</strong> — discover hidden structure, groupings, or relationships."}, {"text": "<strong>Clustering</strong> — the main task — grouping similar items together into clusters or segments."}, {"text": "<strong>Examples</strong> — customer segmentation; grouping similar news articles."}, {"text": "<strong>Benefits</strong> — no labeled data needed; finds hidden patterns; useful for exploration and segmentation."}], "model": "Unsupervised learning works on data with no labels and no correct answers, so unlike supervised learning there's nothing to check a guess against. Its goal is to discover hidden structure, groupings, or relationships. The main task is clustering, which groups similar items together into clusters or segments. Slide 5's examples are customer segmentation and grouping similar news articles. The benefits are that you don't need labeled data, it finds hidden patterns, and it's useful for exploring data and segmenting it."},
+  {"ch": "s1", "q": "Walk through the reinforcement learning loop on slide 6. Define agent, environment, reward/penalty, state, and policy, and give the slide's examples.", "points": [{"text": "<strong>Agent</strong> — the learner or decision maker; it takes actions in an environment and receives rewards or penalties."}, {"text": "<strong>Goal / policy</strong> — learn a strategy (a policy) that maximizes long-term reward through trial and error."}, {"text": "<strong>The loop</strong> — agent takes an action → environment responds → reward or penalty (slide shows +10 / −5) → environment sends the current state back to the agent."}, {"text": "<strong>Examples</strong> — game-playing AI, robotics (e.g., pick and place), self-driving car decision-making."}, {"text": "<strong>Benefits</strong> — learns optimal behavior through interaction; handles sequential decision-making problems; effective in complex, dynamic environments."}], "model": "In reinforcement learning an agent, the learner or decision maker, takes an action in an environment. The environment is the world it interacts with, and it responds to the action. The agent then gets feedback: a reward for good actions or a penalty for bad ones, shown on the slide as +10 and −5. The environment also sends back the current state so the agent knows the new situation. Over many rounds of trial and error, the agent learns a policy, which is a strategy that maximizes long-term reward. Examples are game-playing AI, robots learning tasks like pick and place, and self-driving car decision-making. It's good at sequential decisions in complex, changing environments."},
+  {"ch": "s2", "q": "Explain how a model learns during training. Walk through all five steps of slide 7's training loop and use the 4.2 vs 7.0 example.", "points": [{"text": "<strong>Training</strong> — showing a model many examples so it can adjust itself to fit the patterns in the data."}, {"text": "<strong>Guess → check → adjust</strong> — the model makes a guess, checks how wrong it was (its error/loss), and adjusts."}, {"text": "<strong>Five-step loop</strong> — Data (input) → Model prediction → Compare to correct answer → Adjust model (updates its internal parameters to reduce future errors) → Repeat."}, {"text": "<strong>Slide example</strong> — prediction 4.2 vs. actual 7.0 → error/loss = 2.8."}, {"text": "<strong>Over time</strong> — the loop repeats until predictions get consistently better — from poor predictions / high error to the best model / low error, giving accurate predictions on new, unseen data."}], "model": "Training means showing a model lots of examples so it can adjust itself to fit the patterns in the data. Each pass works like a loop: the model gets the data, makes a prediction, and compares it to the correct answer to see how wrong it was. That gap is the error or loss. On the slide the model guessed 4.2, the real answer was 7.0, and the loss was 2.8. Next the model adjusts by updating its internal parameters so it makes smaller errors next time, and then the whole cycle repeats. Over many rounds the error drops from high to low, until the model makes accurate predictions on new data it hasn't seen."},
+  {"ch": "s2", "q": "What is prediction, and how is it different from training? Use slide 8's spam example.", "points": [{"text": "<strong>Prediction</strong> — once trained, a model takes brand-new, unseen input and produces an output."}, {"text": "<strong>Why it matters</strong> — this is the moment a model actually becomes useful in the real world."}, {"text": "<strong>Flow</strong> — new, unseen input → trained model analyzes it → predicted label or value."}, {"text": "<strong>No answer needed</strong> — it recognizes the patterns it learned during training and gives an instant prediction without needing the correct answer."}, {"text": "<strong>Example</strong> — a trained spam model instantly labels a brand-new incoming email (slide output: Not Spam)."}], "model": "Prediction is when a trained model gets brand-new input it never saw during training and produces an output. That's the point where the model becomes useful in the real world. During training the model needs the correct answers so it can measure its error and adjust. At prediction time it doesn't — it recognizes the patterns it already learned and gives an instant answer. On slide 8, a brand-new email arrives, the trained spam model analyzes it, and it outputs Not Spam."},
+  {"ch": "s2", "q": "Explain spam detection as a machine learning problem. Which type of ML is it, what is it trained on, what does it learn, and how does a new email get sorted?", "points": [{"text": "<strong>Problem type</strong> — a supervised classification problem: is this email \"spam\" or \"not spam\"?"}, {"text": "<strong>Training data</strong> — thousands of emails already labeled by humans."}, {"text": "<strong>What it learns</strong> — patterns in wording, sender behavior, links, and formatting."}, {"text": "<strong>Five steps</strong> — training data → the model learns → a new email arrives (unseen) → the model predicts Spam or Not Spam → sorted automatically into the Spam folder or the Inbox."}, {"text": "<strong>Reach</strong> — powers the spam folder in nearly every email inbox today."}], "model": "Spam detection is a supervised classification problem — the model decides if an email is spam or not spam. It's supervised because it trains on thousands of emails that people already labeled. From those it learns patterns in the wording, the sender's behavior, the links, and the formatting. When a new email comes in that it never saw in training, the model predicts Spam or Not Spam and the email gets sorted automatically into the Spam folder or the Inbox. That's what runs the spam folder in almost every inbox today."},
+  {"ch": "s2", "q": "How does a streaming app decide what to recommend? Explain the data it uses, the mix of techniques, and the five steps on slide 10.", "points": [{"text": "<strong>Inputs</strong> — your viewing history, ratings, and similar users' behavior — used to predict what you'll enjoy next."}, {"text": "<strong>Technique mix</strong> — a mix of supervised and unsupervised techniques — clustering similar viewers, predicting ratings."}, {"text": "<strong>Five steps</strong> — your data → find similar users (clustering) → predict ratings for movies you haven't seen → rank &amp; recommend by predicted rating → you enjoy."}, {"text": "<strong>\"Why these?\"</strong> — you watched similar movies; people with similar taste liked these; high predicted rating for you."}, {"text": "<strong>Reach</strong> — powers Netflix, YouTube, and nearly every streaming platform's homepage."}], "model": "A recommender uses my viewing history, my ratings, and how similar users behave to predict what I'll enjoy next. It mixes supervised and unsupervised techniques: it clusters viewers with similar taste and it predicts ratings. The flow is: take my data, find similar users by clustering, predict how much I'd like movies I haven't seen, rank them by predicted rating, and recommend the top ones. That's why the app says things like 'people with similar taste liked these.' It runs the homepage on Netflix, YouTube, and nearly every streaming platform."},
+  {"ch": "s3", "q": "Why isn't building a model the finish line? Explain what can go wrong and what evaluation gives you, and name the core metrics.", "points": [{"text": "<strong>Not the finish line</strong> — building a model isn't the finish line — you have to know if it's actually good."}, {"text": "<strong>The trap</strong> — a model can look \"smart\" on training data but fail badly on new, real-world data."}, {"text": "<strong>What evaluation gives</strong> — honest, measurable answers about model performance."}, {"text": "<strong>Core metrics</strong> — accuracy, precision, recall, F1 score — all calculated from the confusion matrix (slides 12–16)."}], "model": "Building a model isn't the end, because I still have to prove it's actually good. A model can look smart on the data it trained on and still fail badly on new, real-world data. Evaluation gives honest, measurable answers about how it performs. The core metrics are accuracy, precision, recall, and the F1 score, and they all come from the confusion matrix."},
+  {"ch": "s3", "q": "Draw (or describe) the confusion matrix from slide 16. Define each of the four outcomes and explain how the matrix relates to the other metrics.", "points": [{"text": "<strong>What it is</strong> — a table that breaks predictions into 4 outcomes."}, {"text": "<strong>Layout</strong> — rows = actual (positive, negative); columns = predicted (positive, negative). Top row: TP | FN. Bottom row: FP | TN."}, {"text": "<strong>TP / TN</strong> — true positive = correctly predicted positive; true negative = correctly predicted negative."}, {"text": "<strong>FP / FN</strong> — false positive = wrongly predicted positive; false negative = wrongly predicted negative."}, {"text": "<strong>Foundation</strong> — every metric — accuracy, precision, recall, F1 — is calculated directly from this table."}], "model": "The confusion matrix is a table that splits a model's predictions into four outcomes. The rows are what's actually true and the columns are what the model predicted. Top row is actual positive: a true positive (TP) if the model predicted positive, or a false negative (FN) if it predicted negative. Bottom row is actual negative: a false positive (FP) if the model predicted positive, or a true negative (TN) if it predicted negative. True means the prediction was right, false means it was wrong. Accuracy, precision, recall, and F1 are all calculated straight from these four numbers."},
+  {"ch": "s3", "q": "Give the accuracy formula and explain what it measures. Then use slide 12's spam example to explain why high accuracy can be misleading.", "points": [{"text": "<strong>Formula</strong> — Accuracy = (TP + TN) / (TP + TN + FP + FN)."}, {"text": "<strong>Meaning</strong> — the percentage of predictions the model got completely correct."}, {"text": "<strong>Strength</strong> — simple and intuitive."}, {"text": "<strong>Weakness</strong> — can be misleading on imbalanced data."}, {"text": "<strong>Slide example</strong> — a model that always predicts \"not spam\" can still be 95% accurate if only 5% of emails are truly spam."}], "model": "Accuracy = (TP + TN) / (TP + TN + FP + FN), which is the percentage of all predictions the model got right. It's simple and easy to understand, but it can mislead when the data is imbalanced. Slide 12's example: if only 5% of emails are really spam, a lazy model that always says 'not spam' is still right 95% of the time. That looks great, but it never catches a single spam email."},
+  {"ch": "s3", "q": "Give the precision formula and the question it answers. When does precision matter most? Use slide 13's example.", "points": [{"text": "<strong>Formula</strong> — Precision = TP / (TP + FP)."}, {"text": "<strong>Question</strong> — of everything predicted positive, how many were actually correct?"}, {"text": "<strong>High precision</strong> — very few false alarms."}, {"text": "<strong>When it matters</strong> — when false positives are costly — e.g., wrongly flagging a real email as spam."}], "model": "Precision = TP / (TP + FP). It answers: of everything the model called positive, how many really were positive? High precision means very few false alarms. It matters most when a false positive is expensive. Slide 13's example is a spam filter wrongly flagging a real email as spam — you could miss an important message, so you want precision high."},
+  {"ch": "s3", "q": "Give the recall formula and the question it answers. When does recall matter most? Use slide 14's example and contrast it with precision.", "points": [{"text": "<strong>Formula</strong> — Recall = TP / (TP + FN)."}, {"text": "<strong>Question</strong> — of everything that was actually positive, how many did the model catch?"}, {"text": "<strong>High recall</strong> — very few missed cases."}, {"text": "<strong>When it matters</strong> — when false negatives are costly — e.g., missing a genuinely fraudulent transaction."}], "model": "Recall = TP / (TP + FN). It answers: of everything that was actually positive, how many did the model catch? High recall means very few missed cases. It matters most when a false negative is expensive, like missing a real fraudulent transaction on slide 14. Precision divides by everything the model predicted positive, so it's about false alarms. Recall divides by everything that was actually positive, so it's about misses."},
+  {"ch": "s3", "q": "Give the F1 formula and explain what it combines. When is F1 a better choice than accuracy?", "points": [{"text": "<strong>Formula</strong> — F1 = 2 × (Precision × Recall) / (Precision + Recall)."}, {"text": "<strong>What it is</strong> — the harmonic mean of precision and recall — balances both into one number."}, {"text": "<strong>When to use</strong> — when you care about both false positives and false negatives."}, {"text": "<strong>Imbalanced data</strong> — especially valuable on imbalanced datasets, where accuracy alone can mislead."}], "model": "F1 = 2 × (Precision × Recall) / (Precision + Recall). It's the harmonic mean of precision and recall, so it rolls both into one number. I'd use it when both kinds of mistakes matter — false positives and false negatives. It's especially useful on imbalanced data, where accuracy alone can make a bad model look good, like the always-'not spam' model that scores 95%."},
+  {"ch": "s4", "q": "Explain k-fold cross-validation using slide 17's k = 5 example. How does it produce a final score, and why is it more trustworthy than one train/test split?", "points": [{"text": "<strong>Purpose</strong> — a technique for testing a model's performance more reliably than a single train/test split."}, {"text": "<strong>k-fold</strong> — split the data into k parts, train on k−1 parts, test on the remaining part, and repeat k times."}, {"text": "<strong>k = 5 example</strong> — 5 rounds; each round a different fold is the test set (Round 1 tests Fold 1 and trains on Folds 2–5, and so on)."}, {"text": "<strong>Final estimate</strong> — average the performance (the scores) from all rounds."}, {"text": "<strong>Why it matters</strong> — reduces the chance of overfitting to a particular split and gives a more stable, trustworthy estimate of performance on new, unseen data."}], "model": "Cross-validation tests a model more reliably than one train/test split. In k-fold, I split the data into k parts, train on k−1 of them, test on the one left over, and repeat k times so every part gets a turn as the test set. With k = 5 there are five rounds: round 1 tests on fold 1 and trains on folds 2–5, round 2 tests on fold 2, and so on. I average the five scores to get the final performance estimate. Because the result doesn't hinge on one lucky or unlucky split, it lowers the chance of overfitting to that split and gives a steadier, more trustworthy estimate on new data."},
+  {"ch": "s4", "q": "What is overfitting? Describe how an overfit model performs, its common causes, and what slide 18's chart shows.", "points": [{"text": "<strong>What it is</strong> — the model memorizes the training data too closely, including its noise and randomness."}, {"text": "<strong>Performance</strong> — great on training data, but poor on new, unseen data."}, {"text": "<strong>Causes</strong> — too complex a model, or too little training data."}, {"text": "<strong>The chart</strong> — the red overfitted curve fits every bump and noise; the green dashed ideal curve captures the true underlying pattern."}, {"text": "<strong>Takeaway</strong> — overfitting means learning the noise instead of the signal; the goal is to generalize well to new, unseen data."}], "model": "Overfitting is when a model memorizes its training data too closely, noise and randomness included. It scores great on the training data but does poorly on new data it hasn't seen. The usual causes are a model that's too complex or too little training data. On slide 18's chart, the red overfit curve chases every bump in the training points, while the green dashed curve follows the real pattern. Basically the model learned the noise instead of the signal, and the goal is a model that generalizes well to new data."},
+  {"ch": "s4", "q": "What is underfitting, and how is it different from overfitting? Give its causes and the four fixes on slide 19.", "points": [{"text": "<strong>What it is</strong> — the model is too simple to capture the real pattern in the data."}, {"text": "<strong>Performance</strong> — poor on both training data and new data — high error on both."}, {"text": "<strong>Causes</strong> — too simple a model, not enough training, or not enough relevant features."}, {"text": "<strong>The chart</strong> — a straight line through curved data — it misses important structure."}, {"text": "<strong>What to do</strong> — use a more complex model, train longer, add more relevant features, reduce overly strong regularization."}], "model": "Underfitting is when a model is too simple to capture the real pattern, so it does poorly on both the training data and new data. Overfitting is the opposite — it does great on training and poorly on new data. Underfitting usually comes from a model that's too simple, not enough training, or not enough relevant features. Slide 19's chart shows a straight line forced through curved data, so it misses the structure. The fixes on the slide are: use a more complex model, train longer, add more relevant features, and reduce overly strong regularization."}
+];
+// ─── DISCUSSION ENGINE ───
+let discFilter='all';
+function filterDisc(ch,btn){activateFilter(btn);discFilter=ch;renderDiscussion();}
+function renderDiscussion(){
+  const list=discFilter==='all'?DISC_QUESTIONS:DISC_QUESTIONS.filter(d=>d.ch===discFilter);
+  const c=document.getElementById('disc-container');c.innerHTML='';
+  list.forEach((d,i)=>{
+    const idx=DISC_QUESTIONS.indexOf(d);
+    const div=document.createElement('div');div.className='disc-q';
+    div.innerHTML=`<div class="disc-q-text">${i+1}. ${d.q}</div>
+      <textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Draft your response here..." aria-label="Discussion response"></textarea>
+      <div class="disc-btn-row">
+        <button class="disc-btn primary" onclick="submitDisc(${idx})">Submit &amp; Self-Grade</button>
+        <button class="disc-btn" onclick="toggleModel(${idx})">Show Model Answer</button>
+        <button class="disc-btn" onclick="resetDisc(${idx})">Reset</button>
+      </div>
+      <div class="disc-rubric" id="disc-rubric-${idx}">
+        <strong style="font-size:.82rem;color:var(--text)">Self-Grading Rubric</strong>
+        <div style="margin-top:8px;">${d.points.map((p,pi)=>`<div class="rubric-item"><input type="checkbox" id="rub-${idx}-${pi}" onchange="updateDiscScore(${idx})"><label for="rub-${idx}-${pi}">${p.text}</label></div>`).join('')}</div>
+        <div class="disc-score" id="disc-score-${idx}">Score: 0 / ${d.points.length}</div>
+      </div>
+      <div class="model-answer" id="disc-model-${idx}">${d.model}</div>`;
+    c.appendChild(div);
+  });
+}
+function submitDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);
+  ta.disabled=true;
+  document.getElementById('disc-rubric-'+idx).classList.add('show');
+}
+function resetDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);ta.disabled=false;ta.value='';
+  document.getElementById('disc-rubric-'+idx).classList.remove('show');
+  document.getElementById('disc-model-'+idx).classList.remove('show');
+  document.querySelectorAll(`[id^="rub-${idx}-"]`).forEach(cb=>cb.checked=false);
+  document.getElementById('disc-score-'+idx).textContent='Score: 0 / '+DISC_QUESTIONS[idx].points.length;
+}
+function updateDiscScore(idx){
+  const total=DISC_QUESTIONS[idx].points.length;
+  const checked=document.querySelectorAll(`[id^="rub-${idx}-"]:checked`).length;
+  document.getElementById('disc-score-'+idx).textContent=`Score: ${checked} / ${total} (${Math.round(checked/total*100)}%)`;
+}
+function toggleModel(idx){document.getElementById('disc-model-'+idx).classList.toggle('show');}
+
+// ─── INIT ───
+window.addEventListener('DOMContentLoaded',()=>{
+  deck=[...allCards];renderCard();renderQuiz();renderDiscussion();updateMasteryBar();
+  document.querySelectorAll('.obj-master-btn').forEach(btn=>{
+    const key=btn.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+    if(key&&localStorage.getItem(key)){btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  });
+  document.querySelectorAll('.chapter-header').forEach(h=>{
+    h.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleChapter(h);}});
+  });
+  document.querySelectorAll('.obj-card').forEach(card=>{
+    card.addEventListener('keydown',e=>{if(e.target!==card)return;if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleObj(card);}});
+  });
+});
+</script>
+</body>
+</html>
