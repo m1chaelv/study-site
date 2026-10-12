@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CSIS 3353 — Module 01: Legal Foundations, Reasoning &amp; Policy Review</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#0a0a0f; --surface:#12121a; --surface2:#16161f; --border:#1e1e2e;
+  --text:#e8e8f0; --muted:#6b6b80; --green:#22c55e; --red:#ef4444;
+  --yellow:#eab308; --purple:#a78bfa; --orange:#f97316;
+  --accent:#06b6d4; --accent-dim:rgba(6,182,212,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(6,182,212,0.025) 39px,rgba(6,182,212,0.025) 40px),
+  repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(6,182,212,0.025) 39px,rgba(6,182,212,0.025) 40px);}
+body::before{content:'CSIS 3353 · Module 01 · Legal Foundations, Reasoning & Policy Review';position:fixed;top:0;left:0;right:0;
+  background:rgba(10,10,15,0.95);border-bottom:1px solid var(--border);padding:10px 16px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);z-index:100;letter-spacing:.05em;}
+.topnav{display:flex;gap:4px;padding:48px 12px 8px;overflow-x:auto;position:sticky;top:0;
+  background:rgba(10,10,15,0.97);z-index:90;border-bottom:1px solid var(--border);}
+.nav-btn{flex-shrink:0;background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:7px 13px;border-radius:6px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:11px;transition:all .15s;}
+.nav-btn:hover{color:var(--text);border-color:var(--accent);}
+.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.panel{display:none;padding:20px 16px 60px;max-width:860px;margin:0 auto;}
+.panel.active{display:block;}
+h1{font-size:1.4rem;font-weight:600;color:var(--accent);margin-bottom:4px;}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;display:block;}
+.exam-pill{display:inline-block;background:rgba(234,179,8,0.15);border:1px solid var(--yellow);
+  color:var(--yellow);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;
+  border-radius:20px;margin-bottom:20px;}
+.back-link{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;margin-bottom:10px;}
+.back-link:hover,.back-link:active{color:var(--accent);}
+.textbook-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.textbook-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;
+  transition:all .15s;}
+.textbook-links a:hover{color:var(--accent);border-color:var(--accent);}
+
+/* Objectives — .s1 Legal system (cyan) · .s2 Law & code (purple) · .s3 Reasoning (orange) · .s4 Policy risk (green) */
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  margin-bottom:10px;cursor:pointer;transition:border-color .15s;}
+.obj-card:hover{border-color:var(--accent);}
+.obj-header{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;
+  padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.s1 .obj-num{color:var(--accent);background:rgba(6,182,212,0.12);}
+.s2 .obj-num{color:var(--purple);background:rgba(167,139,250,0.12);}
+.s3 .obj-num{color:var(--orange);background:rgba(249,115,22,0.12);}
+.s4 .obj-num{color:var(--green);background:rgba(34,197,94,0.12);}
+.obj-title{font-size:.88rem;font-weight:500;flex:1;}
+.obj-expand{color:var(--muted);font-size:12px;transition:transform .2s;}
+.obj-body{display:none;padding:0 16px 14px;font-size:.84rem;line-height:1.65;color:#b0b0c8;}
+.obj-body.open{display:block;}
+.obj-body ul{padding-left:18px;margin:8px 0;}
+.obj-body li{margin-bottom:5px;}
+.obj-master-btn{margin-top:10px;background:transparent;border:1px solid var(--border);
+  color:var(--muted);padding:5px 12px;border-radius:4px;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;transition:all .15s;}
+.obj-master-btn.mastered{border-color:var(--green);color:var(--green);background:rgba(34,197,94,0.08);}
+.mastery-bar{background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  height:6px;margin-bottom:20px;overflow:hidden;}
+.mastery-fill{height:100%;background:var(--green);border-radius:20px;transition:width .4s;}
+.reset-mastery-btn{display:block;margin-bottom:20px;background:transparent;
+  border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:4px;
+  cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;}
+.reset-mastery-btn:hover{border-color:var(--red);color:var(--red);}
+.part-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin:24px 0 10px;display:block;}
+
+/* Study Guide */
+.chapter-block{margin-bottom:16px;}
+.chapter-header{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;
+  align-items:center;font-weight:500;font-size:.9rem;transition:border-color .15s;}
+.chapter-header:hover{border-color:var(--accent);}
+.chapter-body{display:none;background:var(--surface2);border:1px solid var(--border);
+  border-top:none;border-radius:0 0 8px 8px;padding:16px;}
+.chapter-body h3{font-size:.82rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px;}
+.chapter-body h3:first-child{margin-top:0;}
+.chapter-body p,.chapter-body li{font-size:.84rem;line-height:1.7;color:#b0b0c8;margin-bottom:6px;}
+.chapter-body ul{padding-left:18px;}
+.chapter-body strong{color:var(--text);}
+.sg-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.8rem;}
+.sg-table th{font-family:'IBM Plex Mono',monospace;font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.05em;color:var(--accent);text-align:left;padding:7px 8px;border-bottom:1px solid var(--border);}
+.sg-table td{padding:7px 8px;border-bottom:1px solid var(--border);color:#b0b0c8;line-height:1.5;vertical-align:top;}
+.sg-table tr:last-child td{border-bottom:none;}
+.flag-note{background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.3);
+  border-radius:6px;padding:8px 12px;font-size:.78rem;color:var(--yellow);margin:8px 0;line-height:1.6;}
+
+/* Flashcards */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:5px 12px;border-radius:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;transition:all .15s;}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.fc-wrap{perspective:1000px;margin-bottom:16px;}
+.fc-card{width:100%;min-height:220px;position:relative;transform-style:preserve-3d;
+  transition:transform .5s;cursor:pointer;}
+.fc-card.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;flex-direction:column;justify-content:center;padding:24px;border-radius:10px;}
+.fc-back{transform:rotateY(180deg);border-color:var(--accent);background:var(--accent-dim);}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
+.fc-q,.fc-a{font-size:1rem;line-height:1.6;color:var(--text);}
+.fc-a{color:var(--accent);}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);
+  text-align:center;margin-bottom:12px;}
+.fc-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+.fc-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);
+  padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82rem;transition:all .15s;}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent);}
+.fc-btn.mastered-btn{border-color:var(--green);color:var(--green);}
+.fc-nav{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+.fc-empty{text-align:center;padding:40px;color:var(--muted);font-size:.9rem;}
+
+/* Quiz */
+.quiz-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.quiz-q-text{font-size:.9rem;margin-bottom:12px;line-height:1.6;}
+.quiz-opts label{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;
+  border-radius:5px;cursor:pointer;font-size:.85rem;line-height:1.5;transition:background .1s;}
+.quiz-opts label:hover{background:rgba(255,255,255,0.04);}
+.quiz-opts input{margin-top:3px;flex-shrink:0;accent-color:var(--accent);}
+.fitb-input{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:8px 12px;border-radius:5px;font-size:.85rem;margin-top:8px;}
+.fitb-input:focus{outline:none;border-color:var(--accent);}
+.q-correct{border-color:var(--green)!important;background:rgba(34,197,94,0.06)!important;}
+.q-wrong{border-color:var(--red)!important;background:rgba(239,68,68,0.06)!important;}
+.q-exp{font-size:.8rem;color:#9090b0;margin-top:8px;padding-top:8px;
+  border-top:1px solid var(--border);display:none;}
+.q-exp.show{display:block;}
+#submit-btn,#reset-btn{padding:10px 22px;border-radius:6px;cursor:pointer;
+  font-size:.88rem;font-weight:500;transition:all .15s;border:1px solid;}
+#submit-btn{background:var(--accent);border-color:var(--accent);color:#fff;margin-right:8px;}
+#submit-btn:hover{opacity:.85;}
+#reset-btn{background:transparent;border-color:var(--border);color:var(--muted);}
+#reset-btn:hover{border-color:var(--red);color:var(--red);}
+#quiz-score{margin-top:16px;padding:14px;background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;font-size:.9rem;display:none;}
+
+/* Discussion */
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.disc-q-text{font-size:.9rem;line-height:1.6;margin-bottom:12px;font-weight:500;}
+.disc-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:10px 12px;border-radius:5px;font-size:.84rem;
+  min-height:120px;resize:vertical;font-family:'IBM Plex Sans',sans-serif;line-height:1.6;}
+.disc-textarea:focus{outline:none;border-color:var(--accent);}
+.disc-btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.disc-btn{padding:6px 14px;border-radius:5px;cursor:pointer;font-size:.82rem;
+  border:1px solid var(--border);background:var(--surface2);color:var(--muted);transition:all .15s;}
+.disc-btn:hover{color:var(--text);}
+.disc-btn.primary{border-color:var(--accent);color:var(--accent);}
+.disc-rubric{display:none;margin-top:12px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:6px;padding:12px;}
+.disc-rubric.show{display:block;}
+.rubric-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;
+  border-bottom:1px solid var(--border);font-size:.82rem;}
+.rubric-item:last-child{border-bottom:none;}
+.rubric-item input[type=checkbox]{flex-shrink:0;margin-top:2px;accent-color:var(--green);}
+.disc-score{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--green);margin-top:8px;}
+.model-answer{display:none;margin-top:10px;font-size:.82rem;line-height:1.65;
+  color:#9090b0;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.2);
+  border-radius:6px;padding:12px;}
+.model-answer.show{display:block;}
+
+/* Notes */
+.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.notes-grid{grid-template-columns:1fr;}}
+.note-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.note-card h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.note-lines{display:flex;flex-direction:column;gap:8px;}
+.note-line{border-bottom:1px solid var(--border);min-height:28px;}
+.video-block{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:14px 16px;margin-bottom:12px;}
+.video-block h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.source-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.source-list a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;}
+.source-list a:hover{color:var(--accent);border-color:var(--accent);}
+footer{text-align:center;padding:30px 16px;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;color:var(--muted);}
+
+.tbl-wrap{overflow-x:auto;}
+.chapter-body code,.obj-body code,.rubric-item code,.flag-note code,.oop-note code{font-family:'IBM Plex Mono',monospace;font-size:.92em;}
+.oop-note{background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.25);border-radius:6px;
+  padding:9px 12px;font-size:.8rem;line-height:1.6;color:#b0b0c8;margin:10px 0;}
+.oop-note strong{color:var(--purple);}
+.video-note{font-size:.74rem;color:var(--muted);margin-top:8px;line-height:1.5;}
+.video-block p{font-size:.84rem;color:#b0b0c8;line-height:1.7;margin-bottom:6px;}
+.video-block ul{padding-left:18px;}
+.video-block li{font-size:.84rem;color:#b0b0c8;line-height:1.7;margin-bottom:4px;}
+.obj-sub{font-size:.78rem;color:var(--muted);margin:2px 0 10px;line-height:1.5;}
+.stated-los{padding-left:18px;margin:6px 0 0;}
+.stated-los li{margin-bottom:4px;}
+.ns-quote{background:var(--surface);border-left:3px solid var(--accent);border-radius:4px;padding:8px 12px;margin:8px 0;font-size:.82rem;line-height:1.6;color:#b0b0c8;}
+.ns-quote .ns-area{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;}
+@media print{.oop-note{border-color:#bbb!important;}}
+@media print{
+  body::before,.topnav,.exam-pill,.textbook-links,footer,.fc-controls,.fc-nav,.filter-row,
+  #submit-btn,#quiz-score,.disc-btn-row,.disc-rubric,.obj-master-btn,.reset-mastery-btn,
+  .mastery-bar{display:none!important;}
+  .panel{display:none!important;}.panel.active{display:block!important;}
+  *,*::before,*::after{background:white!important;background-color:white!important;
+    background-image:none!important;color:black!important;border-color:#bbb!important;
+    box-shadow:none!important;-webkit-text-fill-color:black!important;}
+  body{font-size:12pt;}.chapter-body{display:block!important;}
+  @page{margin:.75in;}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav" role="tablist" aria-label="Study sections">
+  <button class="nav-btn active" id="tab-overview" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
+  <button class="nav-btn" id="tab-guide" onclick="showPanel('guide',this)" role="tab" aria-selected="false" aria-controls="panel-guide">📖 Study Guide</button>
+  <button class="nav-btn" id="tab-flashcards" onclick="showPanel('flashcards',this)" role="tab" aria-selected="false" aria-controls="panel-flashcards">🃏 Flashcards</button>
+  <button class="nav-btn" id="tab-quiz" onclick="showPanel('quiz',this)" role="tab" aria-selected="false" aria-controls="panel-quiz">✏️ Practice Quiz</button>
+  <button class="nav-btn" id="tab-discussion" onclick="showPanel('discussion',this)" role="tab" aria-selected="false" aria-controls="panel-discussion">💬 Discussion</button>
+  <button class="nav-btn" id="tab-notes" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes Template</button>
+</nav>
+
+<!-- ═══════════════ OBJECTIVES ═══════════════ -->
+<div class="panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+  <a class="back-link" href="../../index.html">← All courses</a>
+  <span class="unit-badge">CSIS 3353 · Module 01 · Orientation, AI &amp; Cybercrime</span>
+  <h1>Legal Foundations, Reasoning &amp; Policy Review</h1>
+  <span class="exam-pill">✅ Module 01 complete · Project 2 awaiting grade · reference for Projects 3–8 and the capstone</span>
+  <div class="textbook-links">
+    <a href="#">S1 · Legal System &amp; Courts</a>
+    <a href="#">S2 · Law, Code &amp; Lawmaking</a>
+    <a href="#">S3 · Legal Reasoning &amp; Research</a>
+    <a href="#">S4 · Policy Risk &amp; Gaps</a>
+  </div>
+  <div class="flag-note">📌 The five objectives below are the module’s own stated learning objectives (“After This Module, You Will Be Able To”), grouped into four topic sets. Facts come from the Module 01 pages, the Northstar policy (Rev. 0.6), the Project 2 rubric, and your Van Buren IRAC summary. Citation and dorking activities support LO 3 though the objectives don’t name them. Purple <strong>Study aid</strong> boxes link topics to later projects — they aren’t lecture content.</div>
+  <div class="mastery-bar"><div class="mastery-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="reset-mastery-btn" onclick="resetAllMastery()">↺ Reset All Mastery</button>
+
+  <span class="part-label">S1 · Legal System &amp; Courts</span>
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 1</span><span class="obj-title">Define the basic structure of the U.S. legal system and its relationship to cybersecurity issues</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Who makes, enforces, and interprets law — and which court a cyber dispute travels through.</p>
+      <ul>
+        <li><strong>Constitutional structure</strong> — Article I: Congress and the power to create federal law; Article II: executive authority and enforcement; Article III: the federal judiciary; Article VI: supremacy of federal law when federal and state rules intersect.</li>
+        <li><strong>Three-tier federal courts</strong> — 94 district courts (trial courts of limited jurisdiction), 12 regional circuit courts of appeals plus the Federal Circuit (three-judge panels, no new evidence), and the Supreme Court (nine justices, discretionary review by writ of certiorari, about 70–80 cases a term).</li>
+        <li><strong>Federal vs. state jurisdiction</strong> — state courts have general jurisdiction; federal courts hear federal-law, constitutional, state-vs-state, and diversity cases above a threshold; patent and bankruptcy are exclusively federal.</li>
+        <li><strong>Texas’s bifurcated top</strong> — the Supreme Court of Texas (civil and juvenile) and the Court of Criminal Appeals (criminal); 15 intermediate courts of appeals including the Fifteenth (created 2024, hears Business Court appeals); district, county, justice, and municipal courts below.</li>
+        <li><strong>Cyber cases in Texas courts</strong> — felony cybercrimes under Texas Penal Code Chapter 33 go to district courts; misdemeanor online offenses may start at county or municipal level, where courts weigh authenticity, chain of custody, and lawful collection.</li>
+        <li><strong>Path to the Supreme Court</strong> — cybercrime cases (e.g., CFAA) usually start in U.S. district court, go to a court of appeals, then a cert petition; the Court takes cases with constitutional questions, conflicting statutory interpretations, circuit splits, or national impact.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3353_module01_1')" aria-label="Mark LO 1 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <span class="part-label">S2 · Law, Code &amp; Lawmaking</span>
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 2</span><span class="obj-title">Explain how cyber law applies traditional legal concepts to technology-related problems</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Old legal authority, new technology: code regulates behavior, automated systems enforce rules, and legislatures respond to incidents.</p>
+      <ul>
+        <li><strong>Cyber law borrows from everything</strong> — constitutional law, criminal law, privacy law, contracts, intellectual property, regulatory authority, and evidence; it is not a single isolated subject.</li>
+        <li><strong>“Code is law” (Lessig)</strong> — software architecture can regulate behavior like legal rules: code, platform design, access controls, automated permissions, protocols, and technical enforcement shape conduct alongside statutes and courts. Blockchain is the course’s guiding example.</li>
+        <li><strong>Automated rule enforcement</strong> — the automated ball-strike system raises questions about accuracy, transparency, appeals, trust, human judgment, and institutional authority, the same questions social-media moderation raises.</li>
+        <li><strong>How a need becomes a law</strong> — trigger event and problem definition → agenda-setting and stakeholder mobilization → research and policy options → drafting and sponsorship → committee hearings and markup → floor debate → second chamber and reconciliation → executive action → rulemaking and implementation → oversight and amendment.</li>
+        <li><strong>The breach-notice example</strong> — the module’s Texas school ransomware story shows a gap (no clear rule for fast disclosure) producing policy options: define “breach” and “personal information,” set notification deadlines, create penalties, and provide safe harbors such as encryption exceptions.</li>
+        <li><strong>Law lags technology</strong> — supplemental readings debate whether cyberlaw needs its own categories (Easterbrook’s “Law of the Horse”) and how technology spreads before lawmakers respond, which is why organizations need strong internal policies.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3353_module01_2')" aria-label="Mark LO 2 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <span class="part-label">S3 · Legal Reasoning &amp; Research</span>
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 3</span><span class="obj-title">Apply IRAC-style legal reasoning to basic cyber law and policy questions</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Turn a messy fact pattern into Issue, Rule, Application, Conclusion — then find and cite the authority.</p>
+      <ul>
+        <li><strong>Fact pattern</strong> — a summary of the key facts (who, what, when, where, how, why) without discussing the legal consequences; it is the foundation for analysis.</li>
+        <li><strong>IRAC</strong> — Issue (the legal question), Rule (the governing law), Application (apply the rule to the specific facts, not just summarize), Conclusion (the supported answer). Avoid jumping to an unsupported conclusion.</li>
+        <li><strong>Nested IRAC</strong> — when a secondary legal issue needs its own question, rule, analysis, and conclusion inside the main analysis; it keeps complex arguments organized so no element is missed.</li>
+        <li><strong>Worked example (negligence)</strong> — the Jane Smith charity 5K: duty, breach, causation, and damages applied to volunteers who ignored a reported banana peel for about five minutes.</li>
+        <li><strong>Citation format</strong> — Case Name, Volume Reporter Page (Court Year), e.g., Katz v. United States, 389 U.S. 347 (1967); statutes as Law Name, Title U.S.C. § Section (Year); regulations as Title C.F.R. § Section; “U.S.” = Supreme Court reporter, “F.3d” = federal appeals reporter.</li>
+        <li><strong>Dorking as legal OSINT</strong> — operators site:, filetype:, intitle:, inurl:, and quotation marks find indexed public sources; searching is not permission — public visibility is not authorization to access, download, test, or reuse.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3353_module01_3')" aria-label="Mark LO 3 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <span class="part-label">S4 · Policy Risk &amp; Gaps</span>
+  <div class="obj-card s4" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 4</span><span class="obj-title">Analyze a broken data policy for control, compliance, and audit gaps</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Read like a reviewer: what does Northstar say, what does it forget, and what would it need to prove later?</p>
+      <ul>
+        <li><strong>A gap</strong> is something important that is missing, weak, unclear, or not supported by evidence.</li>
+        <li><strong>Control gap</strong> — the policy doesn’t clearly explain how Northstar will prevent, detect, or reduce a security or privacy problem (e.g., secure access with no mention of MFA, role-based access, or access reviews).</li>
+        <li><strong>Compliance gap</strong> — the policy doesn’t clearly explain how Northstar will meet a legal, regulatory, contractual, or privacy responsibility (e.g., no plan for EU/Ireland privacy expectations).</li>
+        <li><strong>Audit gap</strong> — the policy makes a promise but doesn’t say what evidence would prove it (e.g., backups “tested” with no frequency, owner, results location, or success criteria).</li>
+        <li><strong>Reviewer questions</strong> — What does Northstar say it will do? Is it clear? Is there a control behind it? Is there a legal or compliance expectation behind it? Could Northstar prove it did it?</li>
+        <li><strong>Sources by gap type</strong> — control: NIST CSF 2.0 and CISA Cybersecurity Performance Goals; compliance: GDPR and the NIS2 Directive; audit: NIST SP 800-53 Rev. 5 and SP 800-53A Rev. 5.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3353_module01_4')" aria-label="Mark LO 4 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s4" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">LO 5</span><span class="obj-title">Evaluate initial organizational risk based on policy weaknesses and missing governance language</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Score it, treat it, and name the proof: the Project 1 method.</p>
+      <ul>
+        <li><strong>Scoring</strong> — likelihood (1 rare – 5 almost certain) × impact (1 minimal – 5 severe) = risk score; ratings: 1–4 Low, 5–9 Medium, 10–16 High, 17–25 Critical.</li>
+        <li><strong>Four treatments</strong> — accept (document who approved, why, and when it will be reviewed), avoid (stop or change the activity), transfer (contracts, insurance, vendor agreements, SLAs, outsourcing), mitigate/reduce (keep the activity but add safeguards such as MFA, encryption, training, access reviews, logging, monitoring).</li>
+        <li><strong>Risk categories</strong> — technical, legal, privacy, operational, governance, vendor, financial, reputational, employee/HR, physical security, or international compliance.</li>
+        <li><strong>Nine-part format</strong> — policy statement, risk explanation, category, likelihood, impact, score and rating, treatment, recommended change, evidence needed.</li>
+        <li><strong>Evidence needed</strong> — proof the change happened: access review records, MFA reports, encryption standards, training records, vendor reviews, incident documentation, backup test results, legal review notes, inventory updates, screenshots, audit reports, signed approvals, or risk-acceptance forms.</li>
+        <li><strong>Not every risk is technical</strong> — leadership decisions, privacy, vendors, legal compliance, employee behavior, incident response, retention, monitoring, public trust, and international operations all count.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3353_module01_5')" aria-label="Mark LO 5 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STUDY GUIDE ═══════════════ -->
+<div class="panel" id="panel-guide" role="tabpanel" aria-labelledby="tab-guide">
+  <h1>Study Guide</h1>
+  <span class="unit-badge">Module 01 · Legal Foundations, Reasoning &amp; Policy Review</span>
+
+  <div class="chapter-block">
+    <div class="chapter-header" role="button" tabindex="0" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>📋 Module 01 at a glance — what was graded</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <div class="flag-note">✅ Every Module 01 item is done. Per Dean’s Blackboard scan (Oct 11, 2026): Project 1 98/100, Assessment #1 96/100, IRAC &amp; Nested IRAC Practice complete (30), Google Dorking Match 10/10, Find and Cite a Case 10/10; Project 2 submitted Oct 5, awaiting a grade. Use this page as reference — Projects 1 and 2 return as capstone appendices.</div>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Item</th><th>Due</th><th>Points</th><th>Format</th></tr>
+        <tr><td>Project #1 — Northstar Policy Risk Assessment</td><td>9/19/26</td><td>100</td><td>Word doc: three 9-part risk items + Appendix A Excel risk matrix</td></tr>
+        <tr><td>Project #2 — Northstar Policy Gap Review</td><td>10/10/26</td><td>100</td><td>Word doc: 3 control + 3 compliance + 3 audit gaps, 7×9 gap table, 5–7 sentence closing</td></tr>
+        <tr><td>Find and Cite a Case</td><td>10/10/26</td><td>10</td><td>One attempt</td></tr>
+        <tr><td>Google Dorking Match Challenge</td><td>10/10/26</td><td>10</td><td>Three attempts; last graded attempt counts</td></tr>
+        <tr><td>IRAC and Nested IRAC Practice</td><td>10/10/26</td><td>30</td><td>Graded on completion</td></tr>
+        <tr><td>Assessment #1</td><td>10/10/26</td><td>100</td><td>50-minute limit, one attempt, automatic submission</td></tr>
+      </table></div>
+      <div class="flag-note">📌 No textbook is assigned yet; the Read It page’s textbook entry is a placeholder (“Until book is assigned”).</div>
+    </div>
+  </div>
+  <div class="chapter-block">
+    <div class="chapter-header" role="button" tabindex="0" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🏛️ S1 · The Legal System &amp; the Courts</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <h3>Constitutional structure (Articles I, II, III, VI)</h3>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Article</th><th>Addresses</th><th>Why it matters for cyber law</th></tr>
+        <tr><td><strong>I</strong></td><td>Congress and the power to create federal law</td><td>Who can pass statutes like the CFAA</td></tr>
+        <tr><td><strong>II</strong></td><td>Executive authority and enforcement</td><td>Who investigates and enforces</td></tr>
+        <tr><td><strong>III</strong></td><td>The federal judiciary</td><td>Who interprets and resolves disputes</td></tr>
+        <tr><td><strong>VI</strong></td><td>Supremacy of federal law</td><td>What happens when federal and state rules intersect</td></tr>
+      </table></div>
+      <p>Guiding question: why does understanding these articles matter before studying cybercrime, privacy, and cybersecurity regulation? Because cyber law questions often turn on <strong>who has authority</strong> to regulate, investigate, enforce, or interpret obligations.</p>
+      <h3>The federal judiciary</h3>
+      <p>One of three coequal branches in a system of checks and balances. Congress establishes federal courts; the President appoints judges; the Senate confirms them. Judges interpret and apply federal, constitutional, and international law.</p>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Tier</th><th>Role</th><th>Key facts</th></tr>
+        <tr><td><strong>U.S. district courts</strong></td><td>General federal trial courts — hearings, evidence, motions, verdicts</td><td>94 districts; civil and criminal; each has a bankruptcy unit (Article I, 14-year judges); magistrate judges serve 8-year (full-time) or 4-year (part-time) renewable terms; district judges have lifetime Article III appointments</td></tr>
+        <tr><td><strong>U.S. courts of appeals</strong></td><td>Review district courts and some agencies for legal and procedural error</td><td>12 regional circuits + the Federal Circuit; three-judge panels; no witnesses or new evidence</td></tr>
+        <tr><td><strong>U.S. Supreme Court</strong></td><td>Final arbiter of federal and constitutional questions</td><td>Nine justices (Chief + 8 Associate), lifetime terms; discretionary review by writ of certiorari; about 1% of petitions, typically 70–80 cases a term; decisions bind all lower federal and state courts</td></tr>
+      </table></div>
+      <ul>
+        <li><strong>Specialized courts</strong> — Court of International Trade (New York; tariffs, import restrictions, duties); Court of Federal Claims (Article I; money claims against the U.S. — contracts, Fifth Amendment takings, tax refunds), reviewed by the Federal Circuit.</li>
+        <li><strong>Federal Circuit</strong> — nationwide, specialized: patents, international trade, claims against the government; uniformity in technical areas.</li>
+        <li><strong>Jurisdiction</strong> — state courts are general jurisdiction; U.S. district courts are limited to cases the Constitution and statutes authorize: federal law, constitutional rights, disputes between states, and diversity cases above a threshold. Patent and bankruptcy are exclusively federal.</li>
+        <li><strong>Support structures</strong> — the Judicial Conference (policymaking), the Administrative Office (budget, personnel, technology), the Federal Judicial Center (est. 1967; education and research), circuit judicial councils, and the U.S. Marshals Service (security).</li>
+        <li><strong>Transparency</strong> — most proceedings are public; records via clerks’ offices and PACER. Texas: the Texas Public Information Act (Gov’t Code § 552) and re:SearchTX, with limits for juvenile, sensitive family, trade-secret, and national-security matters.</li>
+      </ul>
+      <div class="video-block">
+        <h4>📺 Video · Demystifying the US Federal Court System: Structure and Function Explained (Noah Zerbe) (12:48)</h4>
+        <p>Covers the three-tier structure of the federal courts (district, appellate, Supreme Court) and explains their functions.</p>
+        <div class="source-list"><a href="https://www.youtube.com/watch?v=jNcFvMjYFJs" target="_blank" rel="noopener">Watch on YouTube</a></div>
+        <div class="video-note">No transcript was provided for this video; the description is the module page’s own summary.</div>
+      </div>
+      <h3>Texas court structure</h3>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Level</th><th>Courts</th><th>Cyber examples from the module</th></tr>
+        <tr><td><strong>Courts of last resort</strong></td><td>Supreme Court of Texas (civil, juvenile) · Texas Court of Criminal Appeals (criminal)</td><td>Final state review; criminal and civil cyber cases take different paths</td></tr>
+        <tr><td><strong>Intermediate appeals</strong></td><td>15 courts of appeals, including the Fifteenth (2024, statewide; certain civil disputes and exclusive Business Court appeals)</td><td>Review the record; often digital-search and warrant questions</td></tr>
+        <tr><td><strong>District courts</strong></td><td>General jurisdiction trial courts; plus the Texas Business Court for complex commercial and technology cases</td><td>Felony cybercrimes under Penal Code Ch. 33 (hacking, identity theft, ransomware, unauthorized access); civil privacy and data-breach suits</td></tr>
+        <tr><td><strong>County level</strong></td><td>Constitutional county courts, statutory county courts at law, probate courts</td><td>Misdemeanors and mid-level civil matters involving messages or online conduct</td></tr>
+        <tr><td><strong>Local</strong></td><td>Justice and municipal courts</td><td>Small claims, traffic, ordinances, evictions; some online-offense cases begin here</td></tr>
+      </table></div>
+      <p><strong>Digital evidence in every court</strong> — courts decide authenticity, chain of custody, and whether records were lawfully obtained. Screenshots can be edited, accounts shared, timestamps misread. Forensic work (bit-for-bit images, hash values, deleted-file recovery, log correlation) must stay within warrant scope and be explainable in plain language. The module’s repeatable questions: <em>What court? Criminal, civil, regulatory, or contractual? What evidence proves the facts? Who collected it? Was collection lawful? What privacy interests? What remedy?</em></p>
+      <h3>Pathways to the Supreme Court for cyber cases</h3>
+      <p>Cybercrime cases (e.g., CFAA) usually start in U.S. district court → court of appeals → petition for certiorari. The module lists scenarios that could reach the Court:</p>
+      <ul>
+        <li><strong>Constitutional challenges</strong> — e.g., Fourth Amendment limits on accessing encrypted or cloud-stored data without a warrant.</li>
+        <li><strong>Statutory interpretation</strong> — conflicting readings of how far the CFAA reaches.</li>
+        <li><strong>Circuit splits</strong> — appellate courts disagree on the same cyber question.</li>
+        <li><strong>National impact</strong> — sweeping effects on civil liberties or commerce.</li>
+        <li><strong>Free speech</strong> — limits of online expression and platform moderation.</li>
+      </ul>
+      <div class="flag-note">📌 The module lists the justices “as of 2024” (Roberts, Thomas, Alito, Sotomayor, Kagan, Gorsuch, Kavanaugh, Barrett, Jackson). The scenario list is credited in the source to “OpenAI, 2025.”</div>
+      <div class="oop-note">🧩 <strong>Study aid — why this keeps coming back.</strong> Module 02’s cases follow this exact path: Nosal I and II were Ninth Circuit decisions (a regional court of appeals), and Van Buren reached the Supreme Court because circuits disagreed about how broadly the CFAA reads “exceeds authorized access.”</div>
+    </div>
+  </div>
+  <div class="chapter-block">
+    <div class="chapter-header" role="button" tabindex="0" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>⚙️ S2 · Law, Code &amp; How a Need Becomes a Law</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <h3>Cyber law draws on many fields</h3>
+      <p>Constitutional law, criminal law, privacy law, contracts, intellectual property, regulatory authority, and evidence. Focus on legal vocabulary, jurisdictional questions, and the difference between <strong>legal rules</strong> and <strong>policy arguments</strong>.</p>
+      <h3>“Code is Law” — Lawrence Lessig</h3>
+      <p>Software architecture can regulate behavior in ways that resemble legal rules. Conduct is shaped not only by statutes, regulations, contracts, and court decisions, but by code, platform design, access controls, automated permissions, protocols, and technical enforcement. Guiding question: why is <strong>blockchain</strong> such a great example of “code is law”? The module also asks whether you would hire Lessig to advise an organization on cyber law, digital governance, or technology policy — and why.</p>
+      <h3>Automated rule enforcement</h3>
+      <p>The automated ball-strike system (“Inside Baseball”) is an object lesson in technological rule enforcement: accuracy, transparency, appeals, trust, human judgment, and institutional authority. Guiding question: how does it help us think about moderation and rule enforcement on social-media platforms?</p>
+      <h3>How a need becomes a law (cybercrime example)</h3>
+      <p>The module’s Schoolhouse Rock–inspired story: a Texas middle school is hit by ransomware; systems go down, student data may be stolen, staff aren’t sure whether FERPA applies, and families wait weeks for answers. The gap — no clear rule requiring fast disclosure — becomes the trigger for the Texas Data Breach Notification Act.</p>
+      <div class="flag-note">📌 The source presents the school breach as an illustrative story and doesn’t cite a specific real incident.</div>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Stage</th><th>What happens</th><th>Who does the work</th></tr>
+        <tr><td>1 · Trigger &amp; problem definition</td><td>Incident exposes a gap in law</td><td>Parents, staff, journalists, lawmakers</td></tr>
+        <tr><td>2 · Agenda-setting</td><td>Pressure puts the issue on the agenda; staff summarize; agencies gather data</td><td>Parent groups, education agencies, media, legislative staff</td></tr>
+        <tr><td>3 · Research &amp; options</td><td>Federal rules (FERPA, COPPA) don’t cover all cases; options: define “breach” and “personal information,” deadlines, penalties, encryption safe harbors</td><td>Research offices, agencies, universities, stakeholders</td></tr>
+        <tr><td>4 · Drafting &amp; sponsorship</td><td>A legislator sponsors; text covers purpose, scope, timelines, penalties</td><td>Legislative counsel, sponsors, lobbyists</td></tr>
+        <tr><td>5 · Committee &amp; markup</td><td>Hearings and testimony; definitions and timelines clarified; central reporting portal added</td><td>Committee members, witnesses, staff lawyers</td></tr>
+        <tr><td>6 · First-chamber floor</td><td>Debate (vendor liability, penalties, unfunded mandates); passes and is “engrossed”</td><td>Lawmakers, caucuses, journalists</td></tr>
+        <tr><td>7 · Second chamber &amp; reconciliation</td><td>Senate amends; a conference committee produces a conference report</td><td>Senators, conference committees, staff</td></tr>
+        <tr><td>8 · Executive action</td><td>Governor signs (law), ignores (law after a set period), or vetoes (unless overridden)</td><td>Governor, legal staff, interest groups</td></tr>
+        <tr><td>9 · Rulemaking</td><td>Agencies draft rules, take public comment, set compliance deadlines; FAQs, model notices, grants</td><td>Agencies, commenters, schools, businesses</td></tr>
+        <tr><td>10 · Oversight &amp; amendment</td><td>Monitoring, reports, court clarification, amendments</td><td>Agencies, legislators, courts</td></tr>
+      </table></div>
+      <div class="video-block">
+        <h4>📺 Video · I’m Just a Bill — Schoolhouse Rock (about 3 min)</h4>
+        <p>The module pairs the classic Schoolhouse Rock segment with its own cybercrime walk-through of how a bill becomes law.</p>
+        <div class="source-list"><a href="https://www.youtube.com/watch?v=tyeJ55o3El0" target="_blank" rel="noopener">Watch on YouTube</a></div>
+        <div class="video-note">No transcript was provided for this video; the description is the module page’s own summary.</div>
+      </div>
+      <h3>Supplemental readings on law and technology</h3>
+      <ul>
+        <li><strong>Easterbrook, “Cyberspace and the Law of the Horse”</strong> — should cyberlaw be its own field, or understood through broader legal principles?</li>
+        <li><strong>“The Law Can’t Keep Up With Technology… And That’s a Very Good Thing” (Newsweek)</strong> — technology (startups, fantasy sports, drones, Bitcoin, Uber, Airbnb) spreads before lawmakers respond, so organizations need strong internal policies.</li>
+        <li><strong>Miranda v. Arizona</strong> — individuals must be told certain rights before custodial interrogation; constitutional protections and procedure.</li>
+        <li><strong>Huawei Technologies USA, Inc. v. United States</strong> — a challenge to federal restrictions tied to national security and procurement; supply-chain risk and government authority.</li>
+      </ul>
+      <div class="oop-note">🧩 <strong>Study aid — Northstar tie-in.</strong> “Code is law” is the Project 3 lesson in another form: Northstar’s purpose-only access rules live in policy text, while the boundary courts and DOJ recognize is the one enforced in code and configuration.</div>
+    </div>
+  </div>
+  <div class="chapter-block">
+    <div class="chapter-header" role="button" tabindex="0" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🧠 S3 · Legal Reasoning, Citation &amp; Research</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <h3>Fact patterns</h3>
+      <p>A fact pattern summarizes the key facts — who did what, when, where, how, and why — without discussing legal consequences. A good analysis shows a clear presentation of facts, a systematic analysis of legal elements, application of law to facts, and potential outcomes. The module’s examples: John Doe and the armed burglar (self-defense and Texas’s castle doctrine) and Tony Soprano’s disappearance (declaring a missing person legally dead after a continuous absence).</p>
+      <h3>IRAC</h3>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Step</th><th>What it does</th><th>Van Buren (your IRAC)</th></tr>
+        <tr><td><strong>Issue</strong></td><td>The precise legal question</td><td>Does an officer violate the CFAA by accessing a database he’s authorized to use, for personal gain against policy?</td></tr>
+        <tr><td><strong>Rule</strong></td><td>The governing law</td><td>18 U.S.C. § 1030(a)(2) and § 1030(e)(6); exceeding authorized access = obtaining information from areas that are off-limits, not misusing information you may obtain</td></tr>
+        <tr><td><strong>Application</strong></td><td>Connect the rule to these facts — not a summary</td><td>He used valid credentials to retrieve a category of information he was entitled to; his purpose was improper but the access wasn’t</td></tr>
+        <tr><td><strong>Conclusion</strong></td><td>The supported answer</td><td>No CFAA violation (6–3, 2021); the ruling doesn’t excuse the misconduct or bar other charges</td></tr>
+      </table></div>
+      <p><strong>Nested IRAC</strong> — an IRAC sequence inside a broader IRAC when a secondary issue needs its own question, rule, analysis, and conclusion. It organizes complex arguments and reduces the chance of missing an element. A good nested issue is <em>distinct but related</em> — for Van Buren, whether a department purpose restriction can define “authorization.”</p>
+      <h3>Worked example: Jane Smith and the charity 5K</h3>
+      <p>Jane slipped on a banana peel at the 2-mile mark; volunteers about 10 feet away were told but didn’t remove it, and it was visible about five minutes. She fractured her wrist, had a mild concussion, $8,500 in medical bills, and $6,000 in lost wages.</p>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Negligence element</th><th>Applied</th></tr>
+        <tr><td>Duty of care</td><td>The organizer owed participants a reasonably safe course and a response to hazards</td></tr>
+        <tr><td>Breach</td><td>Volunteers ignored a reported, visible hazard for about five minutes</td></tr>
+        <tr><td>Causation</td><td>The peel directly caused the fall; injury foreseeable after notice (proximate cause)</td></tr>
+        <tr><td>Damages</td><td>Medical expenses, lost wages, and lingering pain</td></tr>
+      </table></div>
+      <h3>Citing legal documents (Bluebook)</h3>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Source</th><th>Format</th><th>Example from the module</th></tr>
+        <tr><td>Case</td><td>Case Name, Volume Reporter Page (Court Year)</td><td>Katz v. United States, 389 U.S. 347 (1967)</td></tr>
+        <tr><td>Federal statute</td><td>Law Name, Title U.S.C. § Section (Year)</td><td>Computer Fraud and Abuse Act, 18 U.S.C. § 1030 (2020)</td></tr>
+        <tr><td>State statute</td><td>Law Name, State Code § Section (Year)</td><td>Texas Data Breach Notification Act, Tex. Bus. &amp; Com. Code § 521.053 (2023)</td></tr>
+        <tr><td>Federal regulation</td><td>Law Name, Title C.F.R. § Section (Year)</td><td>HIPAA, 45 C.F.R. § 164.308 (2022)</td></tr>
+        <tr><td>Appeals case</td><td>Include the court</td><td>United States v. Nosal, 676 F.3d 854 (9th Cir. 2012)</td></tr>
+      </table></div>
+      <p><strong>Tips:</strong> v. = versus; U.S. = Supreme Court reporter; F.3d = federal appeals reporter; always include the year; include the court unless it’s the Supreme Court; § = section; italicize case names when formatting allows. <strong>Common mistakes:</strong> missing year, missing section symbol, mixing up U.S.C. and C.F.R., leaving out the court for appeals cases, parts in the wrong order. The module asks you to verify citations with a librarian before final use.</p>
+      <h3>Google Dorking (legal OSINT)</h3>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Operator</th><th>Does</th><th>Module example</th></tr>
+        <tr><td><code>site:</code></td><td>Limits to one site or domain</td><td><code>site:ftc.gov "data security"</code></td></tr>
+        <tr><td><code>filetype:</code></td><td>Specific file type</td><td><code>site:.gov filetype:pdf "incident response"</code></td></tr>
+        <tr><td><code>intitle:</code></td><td>Words in the page title</td><td><code>intitle:"search warrant" "electronic"</code></td></tr>
+        <tr><td><code>inurl:</code></td><td>Words in the URL</td><td><code>inurl:opinions "computer"</code></td></tr>
+        <tr><td><code>"quotes"</code></td><td>Exact phrase</td><td><code>"unauthorized access" statute</code></td></tr>
+        <tr><td><code>-term</code> / <code>OR</code> / <code>2019..2025</code></td><td>Exclude, alternatives, date range</td><td><code>"computer crime" -movie -tv</code></td></tr>
+      </table></div>
+      <p>Dorking is OSINT: it needs no break-in, only careful searching of what search engines have indexed. Defensively it finds accidental exposure — public login pages, old documents, directories, forgotten test pages, configuration references — before attackers do. <strong>Searching is not permission:</strong> public visibility doesn’t authorize opening, downloading, testing, reusing, or sharing results. Stay in scope, follow rules of engagement, and when in doubt, stop and ask.</p>
+      <div class="video-block">
+        <h4>📺 Video · How to Read a Scholarly Article (~7 min)</h4>
+        <p>Assigned before working with academic sources, scholarly articles, or research-based legal analysis.</p>
+        <div class="source-list"><a href="https://www.youtube.com/watch?v=ThCL_3GQZSc" target="_blank" rel="noopener">Watch on YouTube</a></div>
+        <div class="video-note">No transcript was provided; the description is the module page’s.</div>
+      </div>
+      <div class="oop-note">🧩 <strong>Study aid — your own IRAC.</strong> Your graded IRAC assignment used Van Buren v. United States, 593 U.S. 374 (2021). The course’s Bluebook sheet shows it as 593 U.S. ___ (2021) because the page number was assigned after that sheet was written; 374 is the final page.</div>
+    </div>
+  </div>
+  <div class="chapter-block">
+    <div class="chapter-header" role="button" tabindex="0" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>📑 S4 · Policy Risk Assessment &amp; Gap Review (Northstar)</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <h3>The Northstar Digital Trust policy</h3>
+      <p>Policy 0001, <em>Data Protection and Security Readiness Policy</em>, NDT-P0001, Revision 0.6 — a draft for legal and compliance review, not yet approved. Owner: Chief Information Security Officer. Approving authority: Executive Leadership Council. Applies to U.S. operations; related project: Cork Castle Data Center Readiness Planning in Ireland, which the policy treats as a future planning item.</p>
+      <h3>Project 1 — risk scoring</h3>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Score</th><th>Likelihood</th><th>Impact</th></tr>
+        <tr><td>1</td><td>Rare</td><td>Minimal</td></tr>
+        <tr><td>2</td><td>Unlikely</td><td>Minor</td></tr>
+        <tr><td>3</td><td>Possible</td><td>Moderate</td></tr>
+        <tr><td>4</td><td>Likely</td><td>Major</td></tr>
+        <tr><td>5</td><td>Almost certain</td><td>Severe</td></tr>
+      </table></div>
+      <p><strong>Risk score = Likelihood × Impact</strong> (e.g., 4 × 5 = 20). Ratings: <strong>1–4 Low · 5–9 Medium · 10–16 High · 17–25 Critical</strong>.</p>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Treatment</th><th>Meaning</th><th>Examples</th></tr>
+        <tr><td><strong>Accept</strong></td><td>Knowingly keep the risk and document why</td><td>Who approved it, why it’s acceptable, when it will be reviewed</td></tr>
+        <tr><td><strong>Avoid</strong></td><td>Stop or change the activity so the risk no longer exists</td><td>Delay a launch, remove a data-collection practice, disallow a type of access</td></tr>
+        <tr><td><strong>Transfer</strong></td><td>Shift some responsibility or financial impact to another party</td><td>Contracts, insurance, vendor agreements, SLAs, outsourcing</td></tr>
+        <tr><td><strong>Mitigate / reduce</strong></td><td>Keep the activity, add safeguards</td><td>MFA, encryption, training, access reviews, logging, monitoring, vendor reviews, stronger approvals</td></tr>
+      </table></div>
+      <p><strong>Nine-part item:</strong> policy statement · risk explanation · category · likelihood · impact · score and rating · treatment · recommended change · evidence needed. <strong>Appendix A</strong> is an Excel matrix (number, title, category, likelihood, impact, score — e.g., <code>=D2*E2</code> — rating, treatment). Not every risk is technical: leadership, privacy, vendors, legal compliance, employees, incident response, retention, monitoring, public trust, and international operations all count.</p>
+      <h3>Project 2 — gap review</h3>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Gap type</th><th>Asks</th><th>Example from the instructions</th><th>Sources</th></tr>
+        <tr><td><strong>Control</strong></td><td>Does the policy explain how Northstar will prevent, detect, or reduce a problem?</td><td>Secure access with no MFA, role-based access, or access reviews</td><td>NIST CSF 2.0; CISA Cybersecurity Performance Goals</td></tr>
+        <tr><td><strong>Compliance</strong></td><td>Does it explain how Northstar will meet a legal, regulatory, contractual, or privacy duty?</td><td>Customer data with no plan for personal-data protection or EU/Ireland expectations</td><td>GDPR (official EU text); NIS2 Directive</td></tr>
+        <tr><td><strong>Audit</strong></td><td>Does it say what evidence would prove the promise is kept?</td><td>Backups “tested” with no frequency, owner, results location, or success criteria</td><td>NIST SP 800-53 Rev. 5; SP 800-53A Rev. 5</td></tr>
+      </table></div>
+      <p>Deliverable: one Word document with a <strong>7-row × 9-column</strong> gap table (gap number, gap type, policy area, what is missing or weak, why it matters, recommended policy addition, evidence needed later) and a <strong>5–7 sentence</strong> closing paragraph on which gap type is the biggest concern.</p>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Project 2 rubric row</th><th>Weight</th><th>Excellent looks like</th></tr>
+        <tr><td>Control Gap Analysis</td><td>25%</td><td>Three strong, clearly supported gaps; what’s missing, why it matters, how it affects Northstar; research-supported</td></tr>
+        <tr><td>Compliance Gap Analysis</td><td>25%</td><td>Clear links to legal, regulatory, privacy, contractual, or EU/Ireland duties; meaningful risk explained</td></tr>
+        <tr><td>Audit Gap Analysis &amp; Evidence</td><td>25%</td><td>Specific, realistic records — logs, reports, approvals, screenshots, checklists, review documents</td></tr>
+        <tr><td>Recommendations, Gap Table &amp; Closing</td><td>14%</td><td>Complete, consistent table; practical additions; well-supported 5–7 sentence closing</td></tr>
+        <tr><td>APA 7, Sources &amp; Length</td><td>11%</td><td>Consistent APA 7, integrated sources, required length, minimal errors</td></tr>
+      </table></div>
+      <h3>Practice set: real Northstar language</h3>
+      <p>Classify each as a control, compliance, or audit gap (some are more than one), and pick a treatment:</p>
+      <div class="ns-quote"><span class="ns-area">Data Access</span>“Managers may approve access verbally during urgent projects. Written approval should be completed later when practical.”</div>
+      <div class="ns-quote"><span class="ns-area">Data Access</span>“Vendor access may remain active until the project team requests removal.”</div>
+      <div class="ns-quote"><span class="ns-area">Data Access</span>“Shared administrator accounts may be used when individual accounts are not practical.”</div>
+      <div class="ns-quote"><span class="ns-area">Data Security</span>“Multi-factor authentication is required for remote access unless a business unit leader grants an exception.”</div>
+      <div class="ns-quote"><span class="ns-area">Data Security</span>“Security logs should be retained long enough to support investigations and may be deleted when storage costs become unreasonable.”</div>
+      <div class="ns-quote"><span class="ns-area">Data Security</span>“Backups shall be performed for critical systems. Backup restoration testing should occur when time allows.”</div>
+      <div class="ns-quote"><span class="ns-area">Authorization</span>“Contractor accounts may remain active for up to 180 days after contract completion in case follow-up work is needed.”</div>
+      <div class="ns-quote"><span class="ns-area">Authority</span>“Irish and European Union data protection expectations will be reviewed after the Cork Castle Data Center becomes operational.”</div>
+      <div class="ns-quote"><span class="ns-area">Definitions</span>“Data breach means confirmed unauthorized access to sensitive data that creates a likely risk of financial harm.”</div>
+      <div class="ns-quote"><span class="ns-area">Incident Process</span>“Northstar shall not notify affected individuals if … the incident was caused by a vendor.”</div>
+      <div class="oop-note">🧩 <strong>Study aid — your Project 1 and 2 choices.</strong> Project 1 items: (1) EU/Ireland compliance deferred until after Cork go-live, (2) vendor access that stays active until the project team requests removal, (3) security logs deleted when storage costs become unreasonable. Project 2 reused items where they fit; the capstone collects Projects 1–8 as Appendices A–H, so this work comes back.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FLASHCARDS ═══════════════ -->
+<div class="panel" id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards">
+  <h1>Flashcards</h1>
+  <div class="filter-row" role="group" aria-label="Filter flashcards by topic">
+    <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('s1',this)">Legal System &amp; Courts</button>
+    <button class="filter-btn" onclick="filterCards('s2',this)">Law, Code &amp; Lawmaking</button>
+    <button class="filter-btn" onclick="filterCards('s3',this)">Legal Reasoning &amp; Research</button>
+    <button class="filter-btn" onclick="filterCards('s4',this)">Policy Risk &amp; Gaps</button>
+  </div>
+  <div class="fc-counter" id="fc-counter" aria-live="polite"></div>
+  <div class="fc-wrap">
+    <div class="fc-card" id="fc-card" onclick="flipCard()" aria-label="Flashcard — click to flip">
+      <div class="fc-front"><div class="fc-label">Question</div><div class="fc-q" id="fc-q" aria-live="polite"></div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a" id="fc-a" aria-live="polite"></div></div>
+    </div>
+  </div>
+  <div class="fc-controls">
+    <button class="fc-btn" onclick="flipCard()" aria-label="Flip card">↩ Flip</button>
+    <button class="fc-btn mastered-btn" id="fc-master-btn" onclick="toggleMastered(currentIdx)" aria-label="Toggle mastered">☐ Mastered</button>
+    <button class="fc-btn" onclick="shuffleCards()" aria-label="Shuffle deck">🔀 Shuffle</button>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
+    <button class="fc-btn" onclick="nextCard()" aria-label="Next card">Next →</button>
+  </div>
+  <div class="fc-empty" id="fc-empty" style="display:none">No cards in this filter.</div>
+</div>
+
+<!-- ═══════════════ QUIZ ═══════════════ -->
+<div class="panel" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+  <h1>Practice Quiz</h1>
+  <div class="filter-row" role="group" aria-label="Filter quiz by topic">
+    <button class="filter-btn active" onclick="setQuizFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setQuizFilter('s1',this)">Legal System &amp; Courts</button>
+    <button class="filter-btn" onclick="setQuizFilter('s2',this)">Law, Code &amp; Lawmaking</button>
+    <button class="filter-btn" onclick="setQuizFilter('s3',this)">Legal Reasoning &amp; Research</button>
+    <button class="filter-btn" onclick="setQuizFilter('s4',this)">Policy Risk &amp; Gaps</button>
+  </div>
+  <div id="quiz-container"></div>
+  <div style="margin-top:16px;">
+    <button id="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <button id="reset-btn" onclick="resetQuiz()">Reset</button>
+  </div>
+  <div id="quiz-score"></div>
+</div>
+
+<!-- ═══════════════ DISCUSSION ═══════════════ -->
+<div class="panel" id="panel-discussion" role="tabpanel" aria-labelledby="tab-discussion">
+  <h1>Discussion Board Prep</h1>
+  <div class="flag-note">📌 Module 01’s only discussion was the Discussion #1 introductions (graded 160/160). These prompts are written-answer practice, one per learning objective.</div>
+  <div class="filter-row" role="group" aria-label="Filter discussion by topic">
+    <button class="filter-btn active" onclick="filterDisc('all',this)">All</button>
+    <button class="filter-btn" onclick="filterDisc('s1',this)">Legal System &amp; Courts</button>
+    <button class="filter-btn" onclick="filterDisc('s2',this)">Law, Code &amp; Lawmaking</button>
+    <button class="filter-btn" onclick="filterDisc('s3',this)">Legal Reasoning &amp; Research</button>
+    <button class="filter-btn" onclick="filterDisc('s4',this)">Policy Risk &amp; Gaps</button>
+  </div>
+  <div id="disc-container"></div>
+</div>
+
+<!-- ═══════════════ NOTES ═══════════════ -->
+<div class="panel" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes">
+  <h1>Notes Template</h1>
+  <span class="unit-badge">Module 01 · Print this tab for study notes</span>
+
+  <div class="video-block">
+    <h4>📌 Module 01 source material</h4>
+    <p>Built from the Module 01 pages (objectives, Projects 1–2, Read It, legal-systems and fact-pattern lessons, citation, dorking, supplemental resources, Assessment 1), the Northstar policy Rev. 0.6, the Project 2 rubric, and your Van Buren IRAC summary.</p>
+    <div class="source-list">
+      <a href="https://constitutioncenter.org/the-constitution/full-text" target="_blank" rel="noopener">U.S. Constitution (full text)</a>
+      <a href="https://www.annenbergclassroom.org/constitution/" target="_blank" rel="noopener">Annenberg Guide to the Constitution</a>
+      <a href="https://www.quinnemanuel.com/media/u3hbmhhx/client-alert-code-is-law.pdf" target="_blank" rel="noopener">“Code is Law” (Quinn Emanuel)</a>
+      <a href="https://dl.acm.org/doi/epdf/10.1145/3805689.3812385" target="_blank" rel="noopener">Automated ball-strike article (ACM)</a>
+      <a href="https://www.chartwellspeakers.com/speaker/lawrence-lessig/" target="_blank" rel="noopener">Lawrence Lessig profile</a>
+      <a href="https://resources.nu.edu/legalwriting/irac" target="_blank" rel="noopener">IRAC: Writing Effective Legal Analysis</a>
+      <a href="https://kingsleyudofa.com/2023/09/30/mastering-legal-analysis-your-guide-to-irac/" target="_blank" rel="noopener">Mastering Legal Analysis: IRAC</a>
+      <a href="https://www.enjuris.com/students/irac-format-tips/" target="_blank" rel="noopener">Helpful Hints for a Better IRAC</a>
+      <a href="https://mitchellhamline.edu/wp-content/uploads/sites/45/2021/07/3-IRAC-Cheat-Sheet-2021.pdf" target="_blank" rel="noopener">IRAC Cheat Sheet (PDF)</a>
+      <a href="https://www.nist.gov/cyberframework/quick-start-guides" target="_blank" rel="noopener">NIST CSF 2.0 Quick Start Guides</a>
+      <a href="https://csrc.nist.gov/publications/sp800" target="_blank" rel="noopener">NIST SP 800 series</a>
+      <a href="https://www.cisa.gov/cross-sector-cybersecurity-performance-goals" target="_blank" rel="noopener">CISA Performance Goals</a>
+      <a href="https://www.coso.org/guidance-on-ic" target="_blank" rel="noopener">COSO Internal Control</a>
+      <a href="https://chicagounbound.uchicago.edu/uclf/vol1996/iss1/7/" target="_blank" rel="noopener">Law of the Horse (Easterbrook)</a>
+      <a href="https://www.newsweek.com/government-gets-slower-tech-gets-faster-389073" target="_blank" rel="noopener">Law Can’t Keep Up (Newsweek)</a>
+      <a href="https://www.oyez.org/cases/1965/759" target="_blank" rel="noopener">Miranda v. Arizona (Oyez)</a>
+      <a href="https://supreme.justia.com/cases/federal/us/593/19-783/" target="_blank" rel="noopener">Van Buren opinion (Justia)</a>
+    </div>
+  </div>
+
+  <div class="notes-grid">
+    <div class="note-card"><h4>Articles I, II, III, VI</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Federal court tiers &amp; jurisdiction</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Specialized federal courts</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Supreme Court: cert &amp; pathways</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Texas court structure</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Digital evidence in court</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Code is law &amp; automated enforcement</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>How a need becomes a law</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Fact patterns</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>IRAC &amp; nested IRAC</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Bluebook citation formats</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Dorking operators &amp; ethics</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Risk scoring &amp; ratings</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Four risk treatments</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Control / compliance / audit gaps</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>My Northstar items (Projects 1–2)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+  </div>
+</div>
+
+<footer>CSIS 3353 · Module 01 · study.imichaelv.com · Built from Module 01 pages, the Northstar policy &amp; course materials · <a href="../../index.html" class="back-link footer-back-link">← Back to all courses</a></footer>
+
+
+<script>
+// ─── MASTERY ───
+function getMasteryKey(){return 'mastery_csis3353_module01_';}
+function resetAllMastery(){
+  Object.keys(localStorage).filter(k=>k.startsWith(getMasteryKey())).forEach(k=>localStorage.removeItem(k));
+  Object.keys(localStorage).filter(k=>k.startsWith('obj_csis3353_module01_')).forEach(k=>localStorage.removeItem(k));
+  document.querySelectorAll('.obj-master-btn').forEach(b=>{b.textContent='☐ Mark Mastered';b.classList.remove('mastered');});
+  document.querySelectorAll('.fc-card').forEach((_,i)=>localStorage.removeItem(getMasteryKey()+i));
+  renderCard();updateMasteryBar();
+}
+function updateMasteryBar(){
+  const total=document.querySelectorAll('.obj-master-btn').length;
+  const done=Object.keys(localStorage).filter(k=>k.startsWith('obj_csis3353_module01_')).length;
+  const pct=total?Math.round(done/total*100):0;
+  const f=document.getElementById('mastery-fill');
+  if(f)f.style.width=pct+'%';
+}
+function toggleObjMastery(btn,key){
+  const is=localStorage.getItem(key);
+  if(is){localStorage.removeItem(key);btn.textContent='☐ Mark Mastered';btn.classList.remove('mastered');}
+  else{localStorage.setItem(key,'1');btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  updateMasteryBar();
+}
+function toggleObj(card){
+  const body=card.querySelector('.obj-body');
+  const arrow=card.querySelector('.obj-expand');
+  const open=body.classList.toggle('open');
+  arrow.style.transform=open?'rotate(180deg)':'';
+  card.setAttribute('aria-expanded',open);
+}
+function toggleChapter(header){
+  const body=header.nextElementSibling;
+  const arrow=header.querySelector('span:last-child');
+  const open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  arrow.style.transform=open?'':'rotate(180deg)';
+  header.setAttribute('aria-expanded',!open);
+}
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+}
+// scope filter highlighting to the row that was clicked, so the three panels do not clear each other
+function activateFilter(btn){
+  const row=btn.closest('.filter-row');
+  if(row)row.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ─── FLASHCARD DATA ───  {ch:'s1'..'s4', q, a}
+const allCards=[
+  {"ch": "s1", "q": "Which article of the Constitution addresses Congress and the power to create federal law?", "a": "Article I."},
+  {"ch": "s1", "q": "Which article addresses executive authority and enforcement?", "a": "Article II."},
+  {"ch": "s1", "q": "Which article establishes the federal judiciary?", "a": "Article III."},
+  {"ch": "s1", "q": "Which article explains the supremacy of federal law, and why does it matter for cyber law?", "a": "Article VI; it matters when federal and state rules intersect."},
+  {"ch": "s1", "q": "Who establishes federal courts, appoints judges, and confirms them?", "a": "Congress establishes them, the President appoints judges, and the Senate confirms them."},
+  {"ch": "s1", "q": "Name the three tiers of the federal judiciary.", "a": "U.S. district courts (trial), U.S. courts of appeals (review), and the U.S. Supreme Court."},
+  {"ch": "s1", "q": "How many federal judicial districts are there?", "a": "94."},
+  {"ch": "s1", "q": "How long is a bankruptcy judge’s term, and under which article are bankruptcy courts established?", "a": "14 years; Article I."},
+  {"ch": "s1", "q": "How long do magistrate judges serve?", "a": "Renewable eight-year terms full-time, or four years part-time."},
+  {"ch": "s1", "q": "What does the U.S. Court of International Trade handle?", "a": "Disputes involving international trade and customs law, such as tariff classifications and duties."},
+  {"ch": "s1", "q": "What does the U.S. Court of Federal Claims hear?", "a": "Monetary claims against the federal government, such as contracts, Fifth Amendment takings, and tax refunds."},
+  {"ch": "s1", "q": "How many regional federal circuits are there, plus which nationwide circuit?", "a": "12 regional circuits, plus the Federal Circuit."},
+  {"ch": "s1", "q": "How do courts of appeals decide cases?", "a": "Panels of three judges review questions of law and procedure; no witnesses or new evidence."},
+  {"ch": "s1", "q": "What kinds of appeals does the Federal Circuit hear?", "a": "Patents, international trade disputes, and monetary claims against the federal government, including appeals from the Court of International Trade and Court of Federal Claims."},
+  {"ch": "s1", "q": "How does a case reach the Supreme Court?", "a": "By petition for a writ of certiorari; the Court has discretionary jurisdiction."},
+  {"ch": "s1", "q": "About how many cases does the Supreme Court accept each term?", "a": "About 1% of petitions, typically 70–80 cases (fewer than 100)."},
+  {"ch": "s1", "q": "How many justices sit on the Supreme Court?", "a": "Nine: one Chief Justice and eight Associate Justices, with lifetime appointments."},
+  {"ch": "s1", "q": "State courts vs. U.S. district courts: general or limited jurisdiction?", "a": "State courts have general jurisdiction; U.S. district courts have limited jurisdiction."},
+  {"ch": "s1", "q": "Name two areas of exclusive federal jurisdiction.", "a": "Patent law and bankruptcy."},
+  {"ch": "s1", "q": "What body is the federal judiciary’s principal policymaking body?", "a": "The Judicial Conference of the United States."},
+  {"ch": "s1", "q": "What provides security for federal judges and courthouses?", "a": "The U.S. Marshals Service."},
+  {"ch": "s1", "q": "What online portal gives access to federal court records?", "a": "PACER (Public Access to Court Electronic Records)."},
+  {"ch": "s1", "q": "What is Texas’s online court records portal, and what law makes Texas court records public?", "a": "re:SearchTX; the Texas Public Information Act (Texas Government Code § 552)."},
+  {"ch": "s1", "q": "What makes Texas’s highest courts “bifurcated”?", "a": "The Supreme Court of Texas handles civil and juvenile cases; the Texas Court of Criminal Appeals handles criminal cases."},
+  {"ch": "s1", "q": "What court did Texas create in 2024 for Business Court appeals?", "a": "The Fifteenth Court of Appeals, a statewide appellate court."},
+  {"ch": "s1", "q": "How many intermediate courts of appeals does Texas have?", "a": "Fifteen, including the Fifteenth Court of Appeals."},
+  {"ch": "s1", "q": "Which Texas courts hear felony cybercrimes, and under what code chapter?", "a": "District courts, under Texas Penal Code Chapter 33."},
+  {"ch": "s1", "q": "Where might misdemeanor online impersonation or harassment cases begin in Texas?", "a": "At the county or municipal court level."},
+  {"ch": "s1", "q": "Why does the trial record matter so much in cyber appeals?", "a": "Appellate courts don’t retry the case; the record must show how digital evidence was collected, authenticated, admitted, or challenged."},
+  {"ch": "s1", "q": "Name three pathways that bring cybercrime cases to the Supreme Court.", "a": "Constitutional challenges (e.g., Fourth Amendment), conflicting interpretations of statutes like the CFAA, and circuit splits; also cases with major national impact or free-speech questions."},
+  {"ch": "s2", "q": "What does “code is law” mean?", "a": "Software architecture can regulate behavior in ways that resemble legal rules, through code, platform design, access controls, permissions, and protocols."},
+  {"ch": "s2", "q": "Who is associated with the idea that behavior online is shaped by multiple forces, including code?", "a": "Lawrence Lessig."},
+  {"ch": "s2", "q": "What is the course’s guiding example of “code is law”?", "a": "Blockchain."},
+  {"ch": "s2", "q": "What questions does the automated ball-strike system raise?", "a": "Accuracy, transparency, appeals, trust, human judgment, and institutional authority."},
+  {"ch": "s2", "q": "What does the automated ball-strike reading help you think about?", "a": "Moderation and rule enforcement on social-media platforms."},
+  {"ch": "s2", "q": "List the first three stages in how a need becomes a law.", "a": "Trigger event and problem definition; agenda-setting and stakeholder mobilization; research and policy options."},
+  {"ch": "s2", "q": "What happens at committee hearings and markup?", "a": "Public testimony, questions about costs, definitions, and timelines, and amendments; the committee votes to advance the bill."},
+  {"ch": "s2", "q": "What is an “engrossed” bill?", "a": "A bill that passed the first chamber after revisions and is sent to the other chamber."},
+  {"ch": "s2", "q": "What resolves differences between House and Senate versions?", "a": "A conference committee, which produces a compromise conference report."},
+  {"ch": "s2", "q": "What are the governor’s three choices on a bill?", "a": "Sign (becomes law), ignore (becomes law after a set period), or veto (rejected unless overridden)."},
+  {"ch": "s2", "q": "What do agencies do after a law passes?", "a": "Draft detailed rules, take public comment, and issue final rules with compliance deadlines."},
+  {"ch": "s2", "q": "In the module’s school-ransomware story, what gap did lawmakers find?", "a": "No clear law required fast disclosure of breaches, so families were left uninformed for weeks."},
+  {"ch": "s2", "q": "Name four breach-law policy options from the module’s example.", "a": "Define “breach” and “personal information,” set notification deadlines, create penalties, and provide safe harbors such as encryption exceptions."},
+  {"ch": "s2", "q": "Which law does the module’s story say was born from the school breach?", "a": "The Texas Data Breach Notification Act."},
+  {"ch": "s2", "q": "What debate does Easterbrook’s “Cyberspace and the Law of the Horse” raise?", "a": "Whether cyberlaw should be a separate field or understood through broader legal principles."},
+  {"ch": "s3", "q": "What is a fact pattern?", "a": "A summary of the key facts of a case, without any discussion of the legal consequences."},
+  {"ch": "s3", "q": "What does IRAC stand for?", "a": "Issue, Rule, Application, Conclusion."},
+  {"ch": "s3", "q": "What is the most common mistake IRAC helps you avoid?", "a": "Jumping straight to an unsupported conclusion."},
+  {"ch": "s3", "q": "What makes a strong Application section?", "a": "It connects the rule to the specific facts instead of summarizing the case."},
+  {"ch": "s3", "q": "What is a nested IRAC?", "a": "An IRAC sequence inside a broader IRAC, used when a secondary legal issue needs its own question, rule, analysis, and conclusion."},
+  {"ch": "s3", "q": "Name the four elements of negligence from the Jane Smith fact pattern.", "a": "Duty of care, breach of duty, causation, and damages."},
+  {"ch": "s3", "q": "In the Jane Smith 5K case, what facts support breach?", "a": "Volunteers about 10 feet away were notified and failed to remove the banana peel, which was visible about five minutes."},
+  {"ch": "s3", "q": "What is the case citation format?", "a": "Case Name, Volume Reporter Page (Court Year)."},
+  {"ch": "s3", "q": "In Katz v. United States, 389 U.S. 347 (1967), what do 389, U.S., and 347 mean?", "a": "389 = volume, U.S. = reporter (Supreme Court), 347 = page."},
+  {"ch": "s3", "q": "What does “F.3d” signal in a citation?", "a": "A federal appeals court reporter."},
+  {"ch": "s3", "q": "How is a federal statute cited?", "a": "Law Name, Title U.S.C. § Section (Year), e.g., Computer Fraud and Abuse Act, 18 U.S.C. § 1030 (2020)."},
+  {"ch": "s3", "q": "What does “v.” mean in a case name?", "a": "Versus."},
+  {"ch": "s3", "q": "When must you include the court in a case citation?", "a": "When it is not the U.S. Supreme Court."},
+  {"ch": "s3", "q": "What is Google Dorking?", "a": "Using advanced search operators to find specific indexed information; a form of open-source intelligence (OSINT)."},
+  {"ch": "s3", "q": "What does the site: operator do?", "a": "Limits a search to a specific website or domain."},
+  {"ch": "s3", "q": "What does the filetype: operator do?", "a": "Searches for a specific file type, such as PDF, DOCX, XLSX, or TXT."},
+  {"ch": "s3", "q": "What do intitle: and inurl: do?", "a": "Search for words in the page title or in the URL."},
+  {"ch": "s3", "q": "What is the boundary check for dorking?", "a": "Searching is not permission: finding information doesn’t authorize opening, downloading, testing, reusing, or sharing it."},
+  {"ch": "s3", "q": "What is the defensive use of dorking?", "a": "Helping an organization find and fix accidental exposure before attackers find it."},
+  {"ch": "s3", "q": "In Van Buren, what made his access “authorized” despite his improper purpose?", "a": "He was entitled to retrieve that category of information with his department credentials; the CFAA turns on off-limits areas, not purpose."},
+  {"ch": "s4", "q": "What is a gap, in Project 2’s terms?", "a": "Something important that is missing, weak, unclear, or not supported by evidence."},
+  {"ch": "s4", "q": "What is a control gap?", "a": "The policy doesn’t clearly explain how Northstar will prevent, detect, or reduce a security or privacy problem."},
+  {"ch": "s4", "q": "What is a compliance gap?", "a": "The policy doesn’t clearly explain how Northstar will meet a legal, regulatory, contractual, or privacy responsibility."},
+  {"ch": "s4", "q": "What is an audit gap?", "a": "The policy makes a promise but doesn’t explain what evidence would prove Northstar is doing it."},
+  {"ch": "s4", "q": "Which sources does Project 2 point to for control gaps?", "a": "NIST Cybersecurity Framework 2.0 and CISA Cybersecurity Performance Goals."},
+  {"ch": "s4", "q": "Which sources does Project 2 point to for compliance gaps?", "a": "The GDPR (official EU text) and the NIS2 Directive."},
+  {"ch": "s4", "q": "Which sources does Project 2 point to for audit gaps?", "a": "NIST SP 800-53 Rev. 5 and NIST SP 800-53A Rev. 5."},
+  {"ch": "s4", "q": "How is a risk score calculated?", "a": "Likelihood × Impact, each scored 1–5."},
+  {"ch": "s4", "q": "What are the risk rating bands?", "a": "1–4 Low, 5–9 Medium, 10–16 High, 17–25 Critical."},
+  {"ch": "s4", "q": "What does risk acceptance require?", "a": "Documenting that the risk is acceptable, including who approved it, why, and when it will be reviewed."},
+  {"ch": "s4", "q": "What is risk avoidance?", "a": "Stopping the risky activity or changing the plan so the risk no longer exists."},
+  {"ch": "s4", "q": "What is risk transfer?", "a": "Shifting some responsibility or financial impact to another party through contracts, insurance, vendor agreements, SLAs, or outsourcing."},
+  {"ch": "s4", "q": "What is risk mitigation/reduction?", "a": "Keeping the activity but adding safeguards that reduce likelihood or impact, such as MFA, encryption, training, access reviews, logging."},
+  {"ch": "s4", "q": "What are the nine parts of each Project 1 risk item?", "a": "Policy statement, risk explanation, category, likelihood, impact, score and rating, treatment type, recommended change, evidence needed."},
+  {"ch": "s4", "q": "What goes in Project 1’s Appendix A?", "a": "An Excel risk matrix: number, short risk title, category, likelihood, impact, risk score, rating, treatment type."},
+  {"ch": "s4", "q": "What does the Project 2 gap table contain?", "a": "Seven information rows (gap number, type, policy area, what is missing, why it matters, recommended addition, evidence needed) across nine gap columns."},
+  {"ch": "s4", "q": "How many sentences is the Project 2 closing paragraph?", "a": "5–7 sentences on which gap type is the biggest concern."},
+  {"ch": "s4", "q": "Which two Project 2 rubric rows are worth 25% each, besides audit?", "a": "Control Gap Analysis and Compliance Gap Analysis (Audit is also 25%)."},
+  {"ch": "s4", "q": "Who owns the Northstar policy, and who approves it?", "a": "Owner: the Chief Information Security Officer; approving authority: the Executive Leadership Council."},
+  {"ch": "s4", "q": "What revision and status is the Northstar policy?", "a": "Revision 0.6, a draft for legal and compliance review, not yet approved."}
+];
+// ─── FLASHCARD ENGINE ───
+let deck=[],currentIdx=0,flipped=false;
+function filterCards(ch,btn){
+  activateFilter(btn);
+  deck=ch==='all'?[...allCards]:allCards.filter(c=>c.ch===ch);
+  currentIdx=0;flipped=false;renderCard();
+}
+function renderCard(){
+  const empty=document.getElementById('fc-empty');
+  if(!deck.length){empty.style.display='block';document.getElementById('fc-counter').textContent='';return;}
+  empty.style.display='none';
+  const c=deck[currentIdx];
+  document.getElementById('fc-q').textContent=c.q;
+  document.getElementById('fc-a').textContent=c.a;
+  document.getElementById('fc-counter').textContent=(currentIdx+1)+' / '+deck.length;
+  const card=document.getElementById('fc-card');
+  card.classList.remove('flipped');flipped=false;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+  else{mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+}
+function flipCard(){document.getElementById('fc-card').classList.toggle('flipped');flipped=!flipped;}
+function nextCard(){if(!deck.length)return;currentIdx=(currentIdx+1)%deck.length;renderCard();}
+function prevCard(){if(!deck.length)return;currentIdx=(currentIdx-1+deck.length)%deck.length;renderCard();}
+function shuffleCards(){for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}currentIdx=0;renderCard();}
+function toggleMastered(idx){
+  const c=deck[idx];if(!c)return;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){localStorage.removeItem(key);mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+  else{localStorage.setItem(key,'1');mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+}
+
+// ─── QUIZ DATA ───
+const allQuizData=[
+  {"ch": "s1", "type": "mc", "q": "Which article of the Constitution establishes the federal judiciary?", "opts": ["Article I", "Article III", "Article II", "Article VI"], "ans": 1, "exp": "Article III creates the federal courts."},
+  {"ch": "s1", "type": "mc", "q": "Why does Article VI matter to cyber law?", "opts": ["It creates the CFAA", "It establishes Texas courts", "It defines privacy", "It makes federal law supreme when federal and state rules intersect"], "ans": 3, "exp": "Supremacy matters when federal and state cyber rules overlap."},
+  {"ch": "s1", "type": "fitb", "q": "There are ___ federal judicial districts.", "ans": ["94", "ninety-four", "ninety four"], "display": "94", "exp": "District courts are the federal trial courts."},
+  {"ch": "s1", "type": "mc", "q": "What do U.S. courts of appeals NOT do?", "opts": ["Hear witnesses and new evidence", "Review district court decisions", "Sit in three-judge panels", "Focus on law and procedure"], "ans": 0, "exp": "Appellate courts review the record; they don’t retry cases."},
+  {"ch": "s1", "type": "mc", "q": "Which court hears patent appeals and appeals from the Court of Federal Claims?", "opts": ["The Fifth Circuit", "The Court of International Trade", "The Federal Circuit", "The Supreme Court of Texas"], "ans": 2, "exp": "The Federal Circuit has nationwide, specialized jurisdiction."},
+  {"ch": "s1", "type": "mc", "q": "How does the Supreme Court usually select its cases?", "opts": ["By hearing every appeal", "By granting writs of certiorari", "By random assignment", "By congressional referral"], "ans": 1, "exp": "Its jurisdiction is discretionary; it accepts about 1% of petitions."},
+  {"ch": "s1", "type": "fitb", "q": "Bankruptcy judges serve fixed terms of ___ years.", "ans": ["14", "fourteen"], "display": "14", "exp": "Unlike Article III judges, they don’t have lifetime appointments."},
+  {"ch": "s1", "type": "mc", "q": "Which statement about jurisdiction is correct?", "opts": ["Both have general jurisdiction", "Federal courts hear all family-law cases", "State courts can’t hear criminal cases", "State courts have general jurisdiction; U.S. district courts have limited jurisdiction"], "ans": 3, "exp": "Federal courts hear only cases authorized by the Constitution and statutes."},
+  {"ch": "s1", "type": "mc", "q": "In Texas, which court is the court of last resort for criminal cases?", "opts": ["The Texas Court of Criminal Appeals", "The Supreme Court of Texas", "The Fifteenth Court of Appeals", "The Texas Business Court"], "ans": 0, "exp": "Texas splits its top courts: civil/juvenile vs. criminal."},
+  {"ch": "s1", "type": "mc", "q": "What did Texas create in 2024 to hear Business Court appeals?", "opts": ["A second Supreme Court", "The Court of Criminal Appeals", "The Fifteenth Court of Appeals", "A federal circuit"], "ans": 2, "exp": "It is a statewide appellate court."},
+  {"ch": "s1", "type": "mc", "q": "A felony hacking case under Texas Penal Code Chapter 33 would be prosecuted in:", "opts": ["A municipal court", "A Texas district court", "A justice court", "The Fifteenth Court of Appeals"], "ans": 1, "exp": "District courts handle felonies."},
+  {"ch": "s1", "type": "mc", "q": "Why does the trial record matter in a cyber appeal?", "opts": ["Appellate courts gather new forensic evidence", "The record is sealed", "Appeals ignore evidence", "Appellate courts review the record rather than retrying the case"], "ans": 3, "exp": "A weak record about how digital evidence was handled makes appeals hard."},
+  {"ch": "s1", "type": "fitb", "q": "The federal online portal for court records is called ___.", "ans": ["pacer"], "display": "PACER", "exp": "Public Access to Court Electronic Records."},
+  {"ch": "s1", "type": "mc", "q": "Which scenario is a typical pathway for a cybercrime case to reach the Supreme Court?", "opts": ["A circuit split over how broadly the CFAA defines unauthorized access", "A municipal traffic ticket", "A dispute decided by agreement", "A case with no federal question"], "ans": 0, "exp": "Conflicts among appellate courts invite review."},
+  {"ch": "s2", "type": "mc", "q": "Lessig’s “code is law” means:", "opts": ["Only programmers can write laws", "Statutes must be written as code", "Software architecture can regulate behavior like legal rules", "Courts cannot regulate software"], "ans": 2, "exp": "Code, design, and access controls shape conduct alongside statutes."},
+  {"ch": "s2", "type": "mc", "q": "What is the course’s guiding example of “code is law”?", "opts": ["Email", "Blockchain", "Spreadsheets", "Printers"], "ans": 1, "exp": "Blockchain enforces rules through code."},
+  {"ch": "s2", "type": "mc", "q": "The automated ball-strike system reading is meant to help you think about:", "opts": ["Baseball statistics", "Stadium security cameras", "Ticket pricing", "Moderation and rule enforcement on social-media platforms"], "ans": 3, "exp": "It raises accuracy, transparency, appeals, and trust questions."},
+  {"ch": "s2", "type": "mc", "q": "In the lawmaking walk-through, what is an “engrossed” bill?", "opts": ["A bill passed by the first chamber and sent to the second", "A vetoed bill", "A bill in committee", "An agency rule"], "ans": 0, "exp": "The House passes it after revisions and sends it on."},
+  {"ch": "s2", "type": "mc", "q": "What negotiates differences between House and Senate versions?", "opts": ["The governor", "A state agency", "A conference committee", "A court"], "ans": 2, "exp": "It produces a compromise conference report."},
+  {"ch": "s2", "type": "mc", "q": "If the governor neither signs nor vetoes a bill, what happens in the module’s model?", "opts": ["It dies automatically", "It becomes law after a set period", "It returns to committee", "It goes to the Supreme Court"], "ans": 1, "exp": "Ignore → becomes law after a set period."},
+  {"ch": "s2", "type": "fitb", "q": "After a law passes, agencies turn it into workable requirements through ___ and implementation.", "ans": ["rulemaking"], "display": "rulemaking", "exp": "Agencies draft rules, take comment, and set deadlines."},
+  {"ch": "s2", "type": "mc", "q": "Which was NOT a policy option in the module’s breach-notification example?", "opts": ["Setting notification deadlines", "Defining “breach” and “personal information”", "Encryption safe harbors", "Banning schools from using computers"], "ans": 3, "exp": "The options were definitions, deadlines, penalties, and safe harbors."},
+  {"ch": "s2", "type": "mc", "q": "In the module’s story, why were families left uninformed for weeks?", "opts": ["No clear law required fast disclosure", "The school had no email", "Federal law banned notice", "Parents opted out"], "ans": 0, "exp": "Staff weren’t sure whether FERPA covered it, so they stayed silent."},
+  {"ch": "s2", "type": "mc", "q": "Cyber law draws from which set of legal areas, according to the module?", "opts": ["Only criminal law", "Only privacy law", "Constitutional, criminal, privacy, contract, IP, regulatory, and evidence law", "Only international law"], "ans": 2, "exp": "It is not a single isolated subject."},
+  {"ch": "s3", "type": "mc", "q": "A fact pattern is best described as:", "opts": ["The court’s holding", "A summary of key facts without discussing legal consequences", "A citation", "A legal rule"], "ans": 1, "exp": "It is the foundation for analysis."},
+  {"ch": "s3", "type": "mc", "q": "In IRAC, the Application step should:", "opts": ["Restate the case summary", "State the legal question", "Cite only the statute", "Connect the rule to the specific facts"], "ans": 3, "exp": "Application is where facts meet law."},
+  {"ch": "s3", "type": "fitb", "q": "IRAC stands for Issue, Rule, ___, Conclusion.", "ans": ["application", "analysis"], "display": "Application", "exp": "Some sources call it Analysis."},
+  {"ch": "s3", "type": "mc", "q": "When should you use a nested IRAC?", "opts": ["When a secondary legal issue needs its own question, rule, analysis, and conclusion", "Whenever there are two parties", "Only for criminal cases", "To replace the conclusion"], "ans": 0, "exp": "It organizes complex arguments so nothing is missed."},
+  {"ch": "s3", "type": "mc", "q": "Which is NOT one of the four negligence elements in the Jane Smith fact pattern?", "opts": ["Duty of care", "Causation", "Intent to harm", "Damages"], "ans": 2, "exp": "Negligence needs duty, breach, causation, and damages — not intent."},
+  {"ch": "s3", "type": "mc", "q": "In Katz v. United States, 389 U.S. 347 (1967), what is 347?", "opts": ["The volume number", "The page number", "The year", "The docket number"], "ans": 1, "exp": "Format: Volume Reporter Page (Year)."},
+  {"ch": "s3", "type": "mc", "q": "What does “U.S.” usually signal in a case citation?", "opts": ["A federal appeals reporter", "A U.S. statute", "A Texas court", "The U.S. Supreme Court reporter"], "ans": 3, "exp": "F.3d signals federal appeals courts."},
+  {"ch": "s3", "type": "fitb", "q": "A federal statute is cited as Law Name, Title ___ § Section (Year).", "ans": ["u.s.c.", "usc", "u.s.c"], "display": "U.S.C.", "exp": "Regulations use C.F.R. instead."},
+  {"ch": "s3", "type": "mc", "q": "Which operator limits a search to one website or domain?", "opts": ["site:", "filetype:", "intitle:", "inurl:"], "ans": 0, "exp": "site:cisa.gov, for example."},
+  {"ch": "s3", "type": "mc", "q": "Which search would most likely find FTC guidance on reasonable security?", "opts": ["filetype:mp3 security", "intitle:movie hacking", "site:ftc.gov \"data security\"", "inurl:game"], "ans": 2, "exp": "The walkthrough uses this exact Level 1 example."},
+  {"ch": "s3", "type": "mc", "q": "What is the dorking module’s boundary check?", "opts": ["Anything indexed is free to use", "Searching is not permission", "Dorking always requires a warrant", "Only .gov sites are legal"], "ans": 1, "exp": "Public visibility doesn’t equal authorization."},
+  {"ch": "s3", "type": "mc", "q": "In Van Buren, why did the Court hold he did not exceed authorized access?", "opts": ["He never used a password", "Department policy allowed personal use", "The database was public", "He retrieved a category of information his credentials entitled him to obtain"], "ans": 3, "exp": "Improper purpose alone doesn’t make access unauthorized under the CFAA."},
+  {"ch": "s4", "type": "mc", "q": "Northstar’s policy allows shared administrator accounts “when individual accounts are not practical.” What gap type is this most directly?", "opts": ["Control gap", "Audit gap", "Compliance gap only", "Not a gap"], "ans": 0, "exp": "It weakens a safeguard that prevents and detects misuse."},
+  {"ch": "s4", "type": "mc", "q": "“Backup restoration testing should occur when time allows” is a classic example of:", "opts": ["A risk transfer", "A compliance safe harbor", "An audit gap", "A transmission control"], "ans": 2, "exp": "No frequency, owner, or results location — nothing to prove it happened."},
+  {"ch": "s4", "type": "mc", "q": "Northstar says Irish and EU data protection expectations will be reviewed after Cork Castle is operational. This is primarily a:", "opts": ["Control gap", "Compliance gap", "Audit gap", "Risk acceptance"], "ans": 1, "exp": "It fails to explain how Northstar will meet legal and regulatory duties."},
+  {"ch": "s4", "type": "mc", "q": "Which source does Project 2 recommend for audit gaps?", "opts": ["CISA Cybersecurity Performance Goals", "The NIS2 Directive", "The GDPR", "NIST SP 800-53A Rev. 5"], "ans": 3, "exp": "800-53A covers how controls are assessed."},
+  {"ch": "s4", "type": "mc", "q": "Likelihood 4 and impact 4 gives which rating?", "opts": ["High (16)", "Critical (16)", "Medium (16)", "Low (8)"], "ans": 0, "exp": "10–16 is High."},
+  {"ch": "s4", "type": "mc", "q": "A risk score of 20 is rated:", "opts": ["High", "Medium", "Critical", "Low"], "ans": 2, "exp": "17–25 is Critical."},
+  {"ch": "s4", "type": "mc", "q": "Northstar buys cyber insurance and adds vendor indemnity clauses. Which treatment is this?", "opts": ["Avoid", "Transfer", "Accept", "Mitigate"], "ans": 1, "exp": "Risk shifts to another party through contracts or insurance."},
+  {"ch": "s4", "type": "mc", "q": "Northstar cancels a planned data-collection practice so the risk no longer exists. Which treatment is this?", "opts": ["Transfer", "Accept", "Mitigate", "Avoid"], "ans": 3, "exp": "Avoidance stops or changes the activity."},
+  {"ch": "s4", "type": "mc", "q": "Which is required for a proper risk acceptance?", "opts": ["Documenting who approved it, why it is acceptable, and when it will be reviewed", "Buying insurance", "Deleting the data", "Adding MFA"], "ans": 0, "exp": "Acceptance is a documented decision."},
+  {"ch": "s4", "type": "fitb", "q": "Project 2 requires three control, three compliance, and three ___ gaps.", "ans": ["audit"], "display": "audit", "exp": "Nine gaps in total."},
+  {"ch": "s4", "type": "mc", "q": "How many information rows does the Project 2 gap table need?", "opts": ["Nine", "Three", "Seven", "Five"], "ans": 2, "exp": "Seven rows across nine gap columns."},
+  {"ch": "s4", "type": "mc", "q": "What evidence would best prove Northstar fixed open-ended vendor access?", "opts": ["A press release", "Access reviews mapping vendor accounts to active contracts, plus deprovisioning tickets", "A vendor’s sales brochure", "A verbal manager approval"], "ans": 1, "exp": "Evidence must show the change was actually made."},
+  {"ch": "s4", "type": "mc", "q": "Who is the Northstar policy’s approving authority?", "opts": ["The Chief Information Security Officer", "General Counsel", "The Privacy Officer", "The Executive Leadership Council"], "ans": 3, "exp": "The CISO owns the policy; the Executive Leadership Council approves it."},
+  {"ch": "s4", "type": "fitb", "q": "Under the Project 1 matrix, Risk Score = Likelihood × ___.", "ans": ["impact"], "display": "Impact", "exp": "Each is scored 1–5."}
+];
+// ─── QUIZ ENGINE ───
+let quizFilter='all',userAnswers={};
+function setQuizFilter(ch,btn){
+  activateFilter(btn);quizFilter=ch;resetQuiz();
+}
+function getQuizDeck(){return quizFilter==='all'?allQuizData:allQuizData.filter(q=>q.ch===quizFilter);}
+function renderQuiz(){
+  const deck=getQuizDeck();
+  const c=document.getElementById('quiz-container');c.innerHTML='';userAnswers={};
+  deck.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='quiz-q';div.id='qq'+i;
+    if(q.type==='mc'){
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <div class="quiz-opts">${q.opts.map((o,oi)=>`<label><input type="radio" name="q${i}" onclick="selectMC(${i},${oi})"> ${o}</label>`).join('')}</div>
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    } else {
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <input class="fitb-input" id="fitb${i}" placeholder="Type your answer..." aria-label="Answer for question ${i+1}" oninput="storeFITB(${i})">
+        <div class="q-exp" id="exp${i}"><strong>Answer: ${q.display}</strong> — ${q.exp}</div>`;
+    }
+    c.appendChild(div);
+  });
+  document.getElementById('quiz-score').style.display='none';
+}
+function selectMC(qi,oi){userAnswers[qi]=oi;}
+function storeFITB(qi){userAnswers[qi]=document.getElementById('fitb'+qi).value.trim().toLowerCase();}
+function submitQuiz(){
+  const deck=getQuizDeck();let correct=0;
+  deck.forEach((q,i)=>{
+    const el=document.getElementById('qq'+i);
+    const exp=document.getElementById('exp'+i);exp.classList.add('show');
+    el.classList.remove('q-correct','q-wrong');
+    if(q.type==='mc'){
+      const ua=userAnswers[i];
+      if(ua===q.ans){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    } else {
+      const ua=(userAnswers[i]||'').toLowerCase();
+      const ok=ua!==''&&q.ans.some(a=>ua.includes(a.toLowerCase()));
+      if(ok){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    }
+  });
+  const sc=document.getElementById('quiz-score');
+  const pct=Math.round(correct/deck.length*100);
+  sc.style.display='block';
+  sc.style.borderColor=pct>=70?'var(--green)':'var(--red)';
+  sc.innerHTML=`<strong>Score: ${correct}/${deck.length} (${pct}%)</strong> — ${pct>=90?'Excellent! 🎉':pct>=70?'Good work — review flagged questions.':'Keep studying — focus on the red ones.'}`;
+}
+function resetQuiz(){renderQuiz();}
+
+// ─── DISCUSSION DATA ───  one entry per learning objective, in the same order
+const DISC_QUESTIONS=[
+  {"ch": "s1", "q": "Describe the structure of the U.S. legal system — the constitutional articles, the federal court tiers, and the Texas court structure — and explain why a cybersecurity professional needs to know which court a cyber incident would travel through.", "points": [{"text": "<strong>Constitutional structure</strong> — Article I: Congress and the power to create federal law; Article II: executive authority and enforcement; Article III: the federal judiciary; Article VI: supremacy of federal law when federal and state rules intersect."}, {"text": "<strong>Three-tier federal courts</strong> — 94 district courts (trial courts of limited jurisdiction), 12 regional circuit courts of appeals plus the Federal Circuit (three-judge panels, no new evidence), and the Supreme Court (nine justices, discretionary review by writ of certiorari, about 70–80 cases a term)."}, {"text": "<strong>Federal vs. state jurisdiction</strong> — state courts have general jurisdiction; federal courts hear federal-law, constitutional, state-vs-state, and diversity cases above a threshold; patent and bankruptcy are exclusively federal."}, {"text": "<strong>Texas’s bifurcated top</strong> — the Supreme Court of Texas (civil and juvenile) and the Court of Criminal Appeals (criminal); 15 intermediate courts of appeals including the Fifteenth (created 2024, hears Business Court appeals); district, county, justice, and municipal courts below."}, {"text": "<strong>Cyber cases in Texas courts</strong> — felony cybercrimes under Texas Penal Code Chapter 33 go to district courts; misdemeanor online offenses may start at county or municipal level, where courts weigh authenticity, chain of custody, and lawful collection."}, {"text": "<strong>Path to the Supreme Court</strong> — cybercrime cases (e.g., CFAA) usually start in U.S. district court, go to a court of appeals, then a cert petition; the Court takes cases with constitutional questions, conflicting statutory interpretations, circuit splits, or national impact."}], "model": "The U.S. legal system starts with the Constitution’s division of power. Article I gives Congress the power to make federal law, Article II gives the executive branch enforcement authority, Article III creates the federal judiciary, and Article VI makes federal law supreme when it conflicts with state law, which matters whenever federal and state cyber rules overlap. The federal courts have three tiers: 94 district courts that hold trials, 12 regional courts of appeals plus the Federal Circuit that review the record for legal error with three-judge panels, and a nine-justice Supreme Court that chooses its cases by writ of certiorari and hears roughly 70 to 80 a term. Federal courts have limited jurisdiction, while state courts hear most everyday disputes. Texas adds its own map: two courts of last resort (the Supreme Court of Texas for civil and juvenile matters and the Court of Criminal Appeals for criminal ones), fifteen intermediate appellate courts including the new Fifteenth Court of Appeals, and district, county, justice, and municipal trial courts. A felony hacking case under Penal Code Chapter 33 lands in district court, while online harassment might start at the county level. Knowing the path matters because the court determines the claims available, the evidence rules, and the appeal options, and because appellate courts only review the record, so the logs and incident notes security staff create can decide whether technical evidence survives."},
+  {"ch": "s2", "q": "How does cyber law apply traditional legal concepts to technology? Use Lessig’s “code is law,” automated rule enforcement, and the module’s walk-through of how a ransomware incident becomes a breach-notification law.", "points": [{"text": "<strong>Cyber law borrows from everything</strong> — constitutional law, criminal law, privacy law, contracts, intellectual property, regulatory authority, and evidence; it is not a single isolated subject."}, {"text": "<strong>“Code is law” (Lessig)</strong> — software architecture can regulate behavior like legal rules: code, platform design, access controls, automated permissions, protocols, and technical enforcement shape conduct alongside statutes and courts. Blockchain is the course’s guiding example."}, {"text": "<strong>Automated rule enforcement</strong> — the automated ball-strike system raises questions about accuracy, transparency, appeals, trust, human judgment, and institutional authority, the same questions social-media moderation raises."}, {"text": "<strong>How a need becomes a law</strong> — trigger event and problem definition → agenda-setting and stakeholder mobilization → research and policy options → drafting and sponsorship → committee hearings and markup → floor debate → second chamber and reconciliation → executive action → rulemaking and implementation → oversight and amendment."}, {"text": "<strong>The breach-notice example</strong> — the module’s Texas school ransomware story shows a gap (no clear rule for fast disclosure) producing policy options: define “breach” and “personal information,” set notification deadlines, create penalties, and provide safe harbors such as encryption exceptions."}, {"text": "<strong>Law lags technology</strong> — supplemental readings debate whether cyberlaw needs its own categories (Easterbrook’s “Law of the Horse”) and how technology spreads before lawmakers respond, which is why organizations need strong internal policies."}], "model": "Cyber law is not a separate island of rules; it applies constitutional, criminal, privacy, contract, intellectual property, regulatory, and evidence law to technology. Lawrence Lessig adds that law is not the only regulator: software architecture, platform design, access controls, default settings, and automated permissions shape behavior the way statutes do, which is why blockchain is the course’s example of “code is law.” The automated ball-strike reading pushes the point further, asking what happens to accuracy, transparency, appeals, and trust when a machine enforces the rules, the same questions that arise with social-media moderation. Legislatures still matter, and the module shows how they respond. In its story, a ransomware attack on a Texas middle school left families uninformed for weeks because no clear rule required fast disclosure. Public pressure put the issue on the agenda, researchers compared models, and lawmakers drafted options: defining “breach” and “personal information,” setting deadlines, creating penalties, and offering safe harbors like encryption exceptions. The bill then moved through committee, both chambers, the governor, and agency rulemaking, and it keeps evolving through oversight. Because law often lags technology, organizations cannot wait for statutes; their own policies and controls have to fill the gap."},
+  {"ch": "s3", "q": "Explain how to analyze a cyber-law question with IRAC and nested IRAC, using the Van Buren case as your example. Then explain how you would find and cite the authority you rely on, and the ethical limit on dorking.", "points": [{"text": "<strong>Fact pattern</strong> — a summary of the key facts (who, what, when, where, how, why) without discussing the legal consequences; it is the foundation for analysis."}, {"text": "<strong>IRAC</strong> — Issue (the legal question), Rule (the governing law), Application (apply the rule to the specific facts, not just summarize), Conclusion (the supported answer). Avoid jumping to an unsupported conclusion."}, {"text": "<strong>Nested IRAC</strong> — when a secondary legal issue needs its own question, rule, analysis, and conclusion inside the main analysis; it keeps complex arguments organized so no element is missed."}, {"text": "<strong>Worked example (negligence)</strong> — the Jane Smith charity 5K: duty, breach, causation, and damages applied to volunteers who ignored a reported banana peel for about five minutes."}, {"text": "<strong>Citation format</strong> — Case Name, Volume Reporter Page (Court Year), e.g., Katz v. United States, 389 U.S. 347 (1967); statutes as Law Name, Title U.S.C. § Section (Year); regulations as Title C.F.R. § Section; “U.S.” = Supreme Court reporter, “F.3d” = federal appeals reporter."}, {"text": "<strong>Dorking as legal OSINT</strong> — operators site:, filetype:, intitle:, inurl:, and quotation marks find indexed public sources; searching is not permission — public visibility is not authorization to access, download, test, or reuse."}], "model": "IRAC turns a messy fact pattern into a legal answer someone else can follow. A fact pattern lays out who did what, when, where, and how, without legal conclusions. The Issue states the precise legal question; the Rule states the governing law; the Application connects the rule to the specific facts rather than summarizing the case; and the Conclusion answers the question with support. In Van Buren, the issue was whether a police sergeant who used his valid database credentials to run a license plate for $5,000, against department policy, exceeded authorized access under the CFAA. The rule, from 18 U.S.C. § 1030 and the Supreme Court’s reading, is that a person exceeds authorized access only by obtaining information from areas of a computer that are off-limits to them. Applied here, he retrieved a category of information his access allowed, so his improper purpose did not make the access unauthorized, and the conviction was reversed, without excusing the misconduct. A nested IRAC would run a smaller IRAC inside that analysis, such as whether a department purpose restriction can define authorization. Supporting authority must be cited correctly: a case appears as Case Name, Volume Reporter Page (Court Year), and statutes as Title U.S.C. § Section (Year). Dorking with operators like site:, filetype:, and intitle: helps find statutes, opinions, and agency actions, but searching is not permission; finding something does not authorize accessing, downloading, or using it."},
+  {"ch": "s4", "q": "Define control, compliance, and audit gaps, and give one example of each from the Northstar Digital Trust policy. Explain which sources help you identify each type and what evidence would close an audit gap.", "points": [{"text": "<strong>A gap</strong> is something important that is missing, weak, unclear, or not supported by evidence."}, {"text": "<strong>Control gap</strong> — the policy doesn’t clearly explain how Northstar will prevent, detect, or reduce a security or privacy problem (e.g., secure access with no mention of MFA, role-based access, or access reviews)."}, {"text": "<strong>Compliance gap</strong> — the policy doesn’t clearly explain how Northstar will meet a legal, regulatory, contractual, or privacy responsibility (e.g., no plan for EU/Ireland privacy expectations)."}, {"text": "<strong>Audit gap</strong> — the policy makes a promise but doesn’t say what evidence would prove it (e.g., backups “tested” with no frequency, owner, results location, or success criteria)."}, {"text": "<strong>Reviewer questions</strong> — What does Northstar say it will do? Is it clear? Is there a control behind it? Is there a legal or compliance expectation behind it? Could Northstar prove it did it?"}, {"text": "<strong>Sources by gap type</strong> — control: NIST CSF 2.0 and CISA Cybersecurity Performance Goals; compliance: GDPR and the NIS2 Directive; audit: NIST SP 800-53 Rev. 5 and SP 800-53A Rev. 5."}], "model": "A gap is something important that is missing, weak, unclear, or unsupported by evidence. A control gap means the policy doesn’t explain how Northstar will prevent, detect, or reduce a security or privacy problem; Northstar’s permission for shared administrator accounts “when individual accounts are not practical” is an example, and NIST CSF 2.0 and CISA’s Cybersecurity Performance Goals help show what baseline controls should exist. A compliance gap means the policy doesn’t explain how Northstar will meet a legal, regulatory, contractual, or privacy duty; Northstar defers Irish and EU data protection review until after the Cork Castle Data Center is operational, even though its inventory lists an EU-Ireland CorkCloud dataset, and the GDPR and NIS2 Directive show what EU expectations look like. An audit gap means the policy makes a promise but says nothing about the evidence that would prove it; “backup restoration testing should occur when time allows” names no frequency, owner, results location, or success criteria. NIST SP 800-53 and 800-53A help here because they show how controls are assessed. Closing an audit gap means naming records Northstar should keep, such as test results, logs, approvals, review checklists, or screenshots, so a reviewer could verify the promise was kept."},
+  {"ch": "s4", "q": "Using the Project 1 method, evaluate one Northstar policy statement: score its likelihood and impact, assign a rating, choose a treatment, and name the evidence that would prove Northstar managed the risk.", "points": [{"text": "<strong>Scoring</strong> — likelihood (1 rare – 5 almost certain) × impact (1 minimal – 5 severe) = risk score; ratings: 1–4 Low, 5–9 Medium, 10–16 High, 17–25 Critical."}, {"text": "<strong>Four treatments</strong> — accept (document who approved, why, and when it will be reviewed), avoid (stop or change the activity), transfer (contracts, insurance, vendor agreements, SLAs, outsourcing), mitigate/reduce (keep the activity but add safeguards such as MFA, encryption, training, access reviews, logging, monitoring)."}, {"text": "<strong>Risk categories</strong> — technical, legal, privacy, operational, governance, vendor, financial, reputational, employee/HR, physical security, or international compliance."}, {"text": "<strong>Nine-part format</strong> — policy statement, risk explanation, category, likelihood, impact, score and rating, treatment, recommended change, evidence needed."}, {"text": "<strong>Evidence needed</strong> — proof the change happened: access review records, MFA reports, encryption standards, training records, vendor reviews, incident documentation, backup test results, legal review notes, inventory updates, screenshots, audit reports, signed approvals, or risk-acceptance forms."}, {"text": "<strong>Not every risk is technical</strong> — leadership decisions, privacy, vendors, legal compliance, employee behavior, incident response, retention, monitoring, public trust, and international operations all count."}], "model": "Project 1’s method treats risk as likelihood times impact, each scored from 1 to 5, so scores run from 1 to 25 and map to Low (1–4), Medium (5–9), High (10–16), or Critical (17–25). Take Northstar’s statement that “Vendor access may remain active until the project team requests removal.” The risk is that a finished vendor keeps working credentials no one is watching, so a stolen or misused account could reach Northstar systems long after the work ended; the main category is vendor risk, with a security dimension. The likelihood is plausibly 4 because removal depends on someone remembering to ask, and the impact plausibly 4 because vendors can reach production systems, for a score of 16, High; each number should be justified in writing. Avoidance would mean no vendor access at all, which isn’t realistic, and transfer wouldn’t remove the open account, so mitigate/reduce fits: require access to expire on the contract end date, with extensions approved in writing. Evidence that the change happened would include the revised policy approval, an access review showing vendor accounts mapped to active contracts, and deprovisioning tickets. The lesson is that a risk assessment ends in a decision and proof, not just a concern."}
+];
+// ─── DISCUSSION ENGINE ───
+let discFilter='all';
+function filterDisc(ch,btn){
+  activateFilter(btn);discFilter=ch;renderDiscussion();
+}
+function renderDiscussion(){
+  const list=discFilter==='all'?DISC_QUESTIONS:DISC_QUESTIONS.filter(d=>d.ch===discFilter);
+  const c=document.getElementById('disc-container');c.innerHTML='';
+  list.forEach((d,i)=>{
+    const idx=DISC_QUESTIONS.indexOf(d);
+    const div=document.createElement('div');div.className='disc-q';
+    div.innerHTML=`<div class="disc-q-text">${i+1}. ${d.q}</div>
+      <textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Draft your response here..." aria-label="Discussion response ${i+1}"></textarea>
+      <div class="disc-btn-row">
+        <button class="disc-btn primary" onclick="submitDisc(${idx})">Submit &amp; Self-Grade</button>
+        <button class="disc-btn" onclick="toggleModel(${idx})">Show Model Answer</button>
+        <button class="disc-btn" onclick="resetDisc(${idx})">Reset</button>
+      </div>
+      <div class="disc-rubric" id="disc-rubric-${idx}">
+        <strong style="font-size:.82rem;color:var(--text)">Self-Grading Rubric</strong>
+        <div style="margin-top:8px;">${d.points.map((p,pi)=>`<div class="rubric-item"><input type="checkbox" id="rub-${idx}-${pi}" onchange="updateDiscScore(${idx})"><label for="rub-${idx}-${pi}">${p.text}</label></div>`).join('')}</div>
+        <div class="disc-score" id="disc-score-${idx}">Score: 0 / ${d.points.length}</div>
+      </div>
+      <div class="model-answer" id="disc-model-${idx}">${d.model}</div>`;
+    c.appendChild(div);
+  });
+}
+function submitDisc(idx){
+  document.getElementById('disc-ta-'+idx).disabled=true;
+  document.getElementById('disc-rubric-'+idx).classList.add('show');
+}
+function resetDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);ta.disabled=false;ta.value='';
+  document.getElementById('disc-rubric-'+idx).classList.remove('show');
+  document.getElementById('disc-model-'+idx).classList.remove('show');
+  document.querySelectorAll(`[id^="rub-${idx}-"]`).forEach(cb=>cb.checked=false);
+  document.getElementById('disc-score-'+idx).textContent='Score: 0 / '+DISC_QUESTIONS[idx].points.length;
+}
+function updateDiscScore(idx){
+  const total=DISC_QUESTIONS[idx].points.length;
+  const checked=document.querySelectorAll(`[id^="rub-${idx}-"]:checked`).length;
+  document.getElementById('disc-score-'+idx).textContent=`Score: ${checked} / ${total} (${Math.round(checked/total*100)}%)`;
+}
+function toggleModel(idx){document.getElementById('disc-model-'+idx).classList.toggle('show');}
+
+// ─── INIT ───
+window.addEventListener('DOMContentLoaded',()=>{
+  deck=[...allCards];renderCard();renderQuiz();renderDiscussion();updateMasteryBar();
+  document.querySelectorAll('.obj-master-btn').forEach(btn=>{
+    const key=btn.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+    if(key&&localStorage.getItem(key)){btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  });
+  document.querySelectorAll('.chapter-header').forEach(h=>{
+    h.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleChapter(h);}});
+  });
+  document.querySelectorAll('.obj-card').forEach(card=>{
+    card.addEventListener('keydown',e=>{if(e.target!==card)return;if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleObj(card);}});
+  });
+});
+</script>
+</body>
+</html>
