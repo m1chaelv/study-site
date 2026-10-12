@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CSIS 3353 — Module 02: Cybercrime, Privacy &amp; Digital Evidence</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#0a0a0f; --surface:#12121a; --surface2:#16161f; --border:#1e1e2e;
+  --text:#e8e8f0; --muted:#6b6b80; --green:#22c55e; --red:#ef4444;
+  --yellow:#eab308; --purple:#a78bfa; --orange:#f97316;
+  --accent:#06b6d4; --accent-dim:rgba(6,182,212,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(6,182,212,0.025) 39px,rgba(6,182,212,0.025) 40px),
+  repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(6,182,212,0.025) 39px,rgba(6,182,212,0.025) 40px);}
+body::before{content:'CSIS 3353 · Module 02 · Cybercrime, Privacy & Digital Evidence';position:fixed;top:0;left:0;right:0;
+  background:rgba(10,10,15,0.95);border-bottom:1px solid var(--border);padding:10px 16px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);z-index:100;letter-spacing:.05em;}
+.topnav{display:flex;gap:4px;padding:48px 12px 8px;overflow-x:auto;position:sticky;top:0;
+  background:rgba(10,10,15,0.97);z-index:90;border-bottom:1px solid var(--border);}
+.nav-btn{flex-shrink:0;background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:7px 13px;border-radius:6px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:11px;transition:all .15s;}
+.nav-btn:hover{color:var(--text);border-color:var(--accent);}
+.nav-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+.panel{display:none;padding:20px 16px 60px;max-width:860px;margin:0 auto;}
+.panel.active{display:block;}
+h1{font-size:1.4rem;font-weight:600;color:var(--accent);margin-bottom:4px;}
+.unit-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;display:block;}
+.exam-pill{display:inline-block;background:rgba(234,179,8,0.15);border:1px solid var(--yellow);
+  color:var(--yellow);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;
+  border-radius:20px;margin-bottom:20px;}
+.back-link{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;margin-bottom:10px;}
+.back-link:hover,.back-link:active{color:var(--accent);}
+.textbook-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.textbook-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;
+  transition:all .15s;}
+.textbook-links a:hover{color:var(--accent);border-color:var(--accent);}
+
+/* Objectives — .s1 Access (cyan) · .s2 Privacy/FTC (purple) · .s3 Breach (orange) · .s4 Forensics (green) · .s5 Ransomware (rose) */
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  margin-bottom:10px;cursor:pointer;transition:border-color .15s;}
+.obj-card:hover{border-color:var(--accent);}
+.obj-header{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.obj-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;
+  padding:3px 8px;border-radius:4px;flex-shrink:0;}
+.s1 .obj-num{color:var(--accent);background:rgba(6,182,212,0.12);}
+.s2 .obj-num{color:var(--purple);background:rgba(167,139,250,0.12);}
+.s3 .obj-num{color:var(--orange);background:rgba(249,115,22,0.12);}
+.s4 .obj-num{color:var(--green);background:rgba(34,197,94,0.12);}
+.s5 .obj-num{color:#f43f5e;background:rgba(244,63,94,0.12);}
+.obj-title{font-size:.88rem;font-weight:500;flex:1;}
+.obj-expand{color:var(--muted);font-size:12px;transition:transform .2s;}
+.obj-body{display:none;padding:0 16px 14px;font-size:.84rem;line-height:1.65;color:#b0b0c8;}
+.obj-body.open{display:block;}
+.obj-body ul{padding-left:18px;margin:8px 0;}
+.obj-body li{margin-bottom:5px;}
+.obj-master-btn{margin-top:10px;background:transparent;border:1px solid var(--border);
+  color:var(--muted);padding:5px 12px;border-radius:4px;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;transition:all .15s;}
+.obj-master-btn.mastered{border-color:var(--green);color:var(--green);background:rgba(34,197,94,0.08);}
+.mastery-bar{background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  height:6px;margin-bottom:20px;overflow:hidden;}
+.mastery-fill{height:100%;background:var(--green);border-radius:20px;transition:width .4s;}
+.reset-mastery-btn{display:block;margin-bottom:20px;background:transparent;
+  border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:4px;
+  cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;}
+.reset-mastery-btn:hover{border-color:var(--red);color:var(--red);}
+.part-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin:24px 0 10px;display:block;}
+
+/* Study Guide */
+.chapter-block{margin-bottom:16px;}
+.chapter-header{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;
+  align-items:center;font-weight:500;font-size:.9rem;transition:border-color .15s;}
+.chapter-header:hover{border-color:var(--accent);}
+.chapter-body{display:none;background:var(--surface2);border:1px solid var(--border);
+  border-top:none;border-radius:0 0 8px 8px;padding:16px;}
+.chapter-body h3{font-size:.82rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px;}
+.chapter-body h3:first-child{margin-top:0;}
+.chapter-body p,.chapter-body li{font-size:.84rem;line-height:1.7;color:#b0b0c8;margin-bottom:6px;}
+.chapter-body ul{padding-left:18px;}
+.chapter-body strong{color:var(--text);}
+.sg-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.8rem;}
+.sg-table th{font-family:'IBM Plex Mono',monospace;font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.05em;color:var(--accent);text-align:left;padding:7px 8px;border-bottom:1px solid var(--border);}
+.sg-table td{padding:7px 8px;border-bottom:1px solid var(--border);color:#b0b0c8;line-height:1.5;vertical-align:top;}
+.sg-table tr:last-child td{border-bottom:none;}
+.flag-note{background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.3);
+  border-radius:6px;padding:8px 12px;font-size:.78rem;color:var(--yellow);margin:8px 0;line-height:1.6;}
+
+/* Flashcards */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:5px 12px;border-radius:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;transition:all .15s;}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.fc-wrap{perspective:1000px;margin-bottom:16px;}
+.fc-card{width:100%;min-height:220px;position:relative;transform-style:preserve-3d;
+  transition:transform .5s;cursor:pointer;}
+.fc-card.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;flex-direction:column;justify-content:center;padding:24px;border-radius:10px;}
+.fc-back{transform:rotateY(180deg);border-color:var(--accent);background:var(--accent-dim);}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
+.fc-q,.fc-a{font-size:1rem;line-height:1.6;color:var(--text);}
+.fc-a{color:var(--accent);}
+.fc-counter{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);
+  text-align:center;margin-bottom:12px;}
+.fc-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+.fc-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);
+  padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.82rem;transition:all .15s;}
+.fc-btn:hover{border-color:var(--accent);color:var(--accent);}
+.fc-btn.mastered-btn{border-color:var(--green);color:var(--green);}
+.fc-nav{display:flex;gap:8px;justify-content:center;margin-top:8px;}
+.fc-empty{text-align:center;padding:40px;color:var(--muted);font-size:.9rem;}
+
+/* Quiz */
+.quiz-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.quiz-q-text{font-size:.9rem;margin-bottom:12px;line-height:1.6;}
+.quiz-opts label{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;
+  border-radius:5px;cursor:pointer;font-size:.85rem;line-height:1.5;transition:background .1s;}
+.quiz-opts label:hover{background:rgba(255,255,255,0.04);}
+.quiz-opts input{margin-top:3px;flex-shrink:0;accent-color:var(--accent);}
+.fitb-input{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:8px 12px;border-radius:5px;font-size:.85rem;margin-top:8px;}
+.fitb-input:focus{outline:none;border-color:var(--accent);}
+.q-correct{border-color:var(--green)!important;background:rgba(34,197,94,0.06)!important;}
+.q-wrong{border-color:var(--red)!important;background:rgba(239,68,68,0.06)!important;}
+.q-exp{font-size:.8rem;color:#9090b0;margin-top:8px;padding-top:8px;
+  border-top:1px solid var(--border);display:none;}
+.q-exp.show{display:block;}
+#submit-btn,#reset-btn{padding:10px 22px;border-radius:6px;cursor:pointer;
+  font-size:.88rem;font-weight:500;transition:all .15s;border:1px solid;}
+#submit-btn{background:var(--accent);border-color:var(--accent);color:#fff;margin-right:8px;}
+#submit-btn:hover{opacity:.85;}
+#reset-btn{background:transparent;border-color:var(--border);color:var(--muted);}
+#reset-btn:hover{border-color:var(--red);color:var(--red);}
+#quiz-score{margin-top:16px;padding:14px;background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;font-size:.9rem;display:none;}
+
+/* Discussion */
+.disc-q{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:16px;margin-bottom:14px;}
+.disc-q-text{font-size:.9rem;line-height:1.6;margin-bottom:12px;font-weight:500;}
+.disc-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:10px 12px;border-radius:5px;font-size:.84rem;
+  min-height:120px;resize:vertical;font-family:'IBM Plex Sans',sans-serif;line-height:1.6;}
+.disc-textarea:focus{outline:none;border-color:var(--accent);}
+.disc-btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.disc-btn{padding:6px 14px;border-radius:5px;cursor:pointer;font-size:.82rem;
+  border:1px solid var(--border);background:var(--surface2);color:var(--muted);transition:all .15s;}
+.disc-btn:hover{color:var(--text);}
+.disc-btn.primary{border-color:var(--accent);color:var(--accent);}
+.disc-rubric{display:none;margin-top:12px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:6px;padding:12px;}
+.disc-rubric.show{display:block;}
+.rubric-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;
+  border-bottom:1px solid var(--border);font-size:.82rem;}
+.rubric-item:last-child{border-bottom:none;}
+.rubric-item input[type=checkbox]{flex-shrink:0;margin-top:2px;accent-color:var(--green);}
+.disc-score{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--green);margin-top:8px;}
+.model-answer{display:none;margin-top:10px;font-size:.82rem;line-height:1.65;
+  color:#9090b0;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.2);
+  border-radius:6px;padding:12px;}
+.model-answer.show{display:block;}
+
+/* Notes */
+.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.notes-grid{grid-template-columns:1fr;}}
+.note-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.note-card h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.note-lines{display:flex;flex-direction:column;gap:8px;}
+.note-line{border-bottom:1px solid var(--border);min-height:28px;}
+.video-block{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:14px 16px;margin-bottom:12px;}
+.video-block h4{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.source-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.source-list a{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);
+  border:1px solid var(--border);padding:4px 10px;border-radius:4px;text-decoration:none;}
+.source-list a:hover{color:var(--accent);border-color:var(--accent);}
+footer{text-align:center;padding:30px 16px;font-family:'IBM Plex Mono',monospace;
+  font-size:10px;color:var(--muted);}
+
+.tbl-wrap{overflow-x:auto;}
+.chapter-body code,.obj-body code,.rubric-item code,.flag-note code,.oop-note code{font-family:'IBM Plex Mono',monospace;font-size:.92em;}
+.oop-note{background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.25);border-radius:6px;
+  padding:9px 12px;font-size:.8rem;line-height:1.6;color:#b0b0c8;margin:10px 0;}
+.oop-note strong{color:var(--purple);}
+.video-note{font-size:.74rem;color:var(--muted);margin-top:8px;line-height:1.5;}
+.video-block p{font-size:.84rem;color:#b0b0c8;line-height:1.7;margin-bottom:6px;}
+.video-block ul{padding-left:18px;}
+.video-block li{font-size:.84rem;color:#b0b0c8;line-height:1.7;margin-bottom:4px;}
+.obj-sub{font-size:.78rem;color:var(--muted);margin:2px 0 10px;line-height:1.5;}
+.stated-los{padding-left:18px;margin:6px 0 0;}
+.stated-los li{margin-bottom:4px;}
+@media print{.oop-note{border-color:#bbb!important;}}
+@media print{
+  body::before,.topnav,.exam-pill,.textbook-links,footer,.fc-controls,.fc-nav,.filter-row,
+  #submit-btn,#quiz-score,.disc-btn-row,.disc-rubric,.obj-master-btn,.reset-mastery-btn,
+  .mastery-bar{display:none!important;}
+  .panel{display:none!important;}.panel.active{display:block!important;}
+  *,*::before,*::after{background:white!important;background-color:white!important;
+    background-image:none!important;color:black!important;border-color:#bbb!important;
+    box-shadow:none!important;-webkit-text-fill-color:black!important;}
+  body{font-size:12pt;}.chapter-body{display:block!important;}
+  @page{margin:.75in;}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav" role="tablist" aria-label="Study sections">
+  <button class="nav-btn active" id="tab-overview" onclick="showPanel('overview',this)" role="tab" aria-selected="true" aria-controls="panel-overview">📋 Objectives</button>
+  <button class="nav-btn" id="tab-guide" onclick="showPanel('guide',this)" role="tab" aria-selected="false" aria-controls="panel-guide">📖 Study Guide</button>
+  <button class="nav-btn" id="tab-flashcards" onclick="showPanel('flashcards',this)" role="tab" aria-selected="false" aria-controls="panel-flashcards">🃏 Flashcards</button>
+  <button class="nav-btn" id="tab-quiz" onclick="showPanel('quiz',this)" role="tab" aria-selected="false" aria-controls="panel-quiz">✏️ Practice Quiz</button>
+  <button class="nav-btn" id="tab-discussion" onclick="showPanel('discussion',this)" role="tab" aria-selected="false" aria-controls="panel-discussion">💬 Discussion</button>
+  <button class="nav-btn" id="tab-notes" onclick="showPanel('notes',this)" role="tab" aria-selected="false" aria-controls="panel-notes">📝 Notes Template</button>
+</nav>
+
+<!-- ═══════════════ OBJECTIVES ═══════════════ -->
+<div class="panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+  <a class="back-link" href="../../index.html">← All courses</a>
+  <span class="unit-badge">CSIS 3353 · Module 02</span>
+  <h1>Cybercrime, Privacy &amp; Digital Evidence</h1>
+  <span class="exam-pill">📅 Project 3 due Sat 10/24 · Project 4 + Assessment 2 (120 min, one attempt) due Sat 11/7</span>
+  <div class="textbook-links">
+    <a href="#">S1 · Unauthorized Access</a>
+    <a href="#">S2 · Privacy &amp; FTC</a>
+    <a href="#">S3 · Breach &amp; Compliance</a>
+    <a href="#">S4 · Forensics &amp; Evidence</a>
+    <a href="#">S5 · Ransomware</a>
+  </div>
+  <div class="flag-note">📌 The module states five broad learning objectives (below). The ten objectives on this page are <strong>derived</strong> from the module’s readings and videos and grouped into five topic sets (S1–S5); together they cover all five stated objectives. Facts come from the module pages, the five video transcripts, and the assigned readings. Purple <strong>Study aid</strong> boxes in the Study Guide connect topics to Projects 3 and 4 — they are not lecture content.
+    <ol class="stated-los"><li>Identify major cybercrime, unauthorized access, privacy, and cybersecurity regulation issues.</li><li>Describe how privacy, security, and digital evidence concerns overlap during a cyber incident.</li><li>Apply cybercrime and privacy concepts to data policy scenarios.</li><li>Analyze unauthorized access, incident response, and evidence preservation risks.</li><li>Evaluate whether Northstar Digital Trust's data policy adequately supports legal, privacy, and security responsibilities.</li></ol>
+  </div>
+  <div class="mastery-bar"><div class="mastery-fill" id="mastery-fill" style="width:0%"></div></div>
+  <button class="reset-mastery-btn" onclick="resetAllMastery()">↺ Reset All Mastery</button>
+
+  <span class="part-label">S1 · Unauthorized Access</span>
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">Obj 1</span><span class="obj-title">Explain the CFAA’s two access offenses and how Van Buren defines “exceeds authorized access”</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Separate the outsider prong from the insider prong, and know why purpose no longer decides an insider case.</p>
+      <ul>
+        <li><strong>The statute</strong> — the Computer Fraud and Abuse Act (CFAA) is the main federal law used in hacking and unauthorized-access cases; it was enacted in 1986 in response to concerns about hackers breaking into computer systems.</li>
+        <li><strong>Two ways to violate it</strong> — intentionally accessing a computer <em>without authorization</em> (outsiders breaking in) or <em>exceeding authorized access</em> (insiders entering parts of a system they were not given).</li>
+        <li><strong>Van Buren’s facts</strong> — a Georgia police sergeant with a valid password to a license-plate database, trained not to use it for personal purposes, ran a plate search for a promised $5,000 in an FBI sting.</li>
+        <li><strong>The holding (6–3, June 3, 2021)</strong> — a person exceeds authorized access only by obtaining information from areas of a computer (files, folders, databases) that are off-limits to them; using permitted access for a forbidden purpose is not enough. Van Buren’s conviction was thrown out.</li>
+        <li><strong>House-key analogy</strong> — using the key you were given to go inside is not breaking in; forcing your way into a room locked with a different key is.</li>
+        <li><strong>Limits of the ruling</strong> — Van Buren’s conduct was still unethical and not free of consequences; and state anti-hacking laws do not always mirror the CFAA, so the same act can be legal federally and illegal under state law.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3353_module02_1')" aria-label="Mark objective 1 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s1" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">Obj 2</span><span class="obj-title">Compare Nosal I and Nosal II and explain what the comparison means for writing access policy</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>The comparison, not either case alone, is the lesson: misuse of access you have versus coming back after access was revoked.</p>
+      <ul>
+        <li><strong>Shared facts</strong> — David Nosal left the executive search firm Korn/Ferry to start a competitor; the firm kept a confidential candidate database for company business.</li>
+        <li><strong>Nosal I (9th Cir. en banc, 2012)</strong> — current employees used their own valid logins to download data for Nosal in violation of a business-use policy; the court held “exceeds authorized access” covers getting at information you are not permitted to reach, not misusing information you are permitted to reach.</li>
+        <li><strong>Why the court drew that line</strong> — it refused to turn ordinary workplace policy violations into federal crimes; computer-use policies are often long, unclear, changeable, and rarely read.</li>
+        <li><strong>Nosal II (9th Cir., 2016)</strong> — after Korn/Ferry revoked their credentials, Nosal’s group got back in with a current employee’s shared login; the court held that using a computer after the owner has rescinded permission is access <em>without authorization</em>, and affirmed the conviction.</li>
+        <li><strong>Policy lesson</strong> — the outcome turned on permission, revocation, and credentials, not motive; clear access boundaries, documented revocation, and controls on credential sharing make the line provable before a dispute.</li>
+        <li><strong>DOJ’s charging policy agrees</strong> — the Justice Manual says a case cannot rest only on terms-of-service or personal-use policy violations, expects the insider boundary to be enforced technically (code or configuration), and treats a received cease-and-desist notice as revoking authorization.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3353_module02_2')" aria-label="Mark objective 2 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <span class="part-label">S2 · Privacy &amp; FTC</span>
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">Obj 3</span><span class="obj-title">Distinguish data protection, security, and privacy, and explain why U.S. privacy law is a patchwork</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Know the three functions, why privacy duties depend on the data and the promises made, and where privacy rights come from.</p>
+      <ul>
+        <li><strong>Three functions</strong> — data protection keeps data available (data inventory, backup and recovery, life-cycle management); data security safeguards data against unauthorized access, theft, and corruption (physical security, identity and access management, encryption); data privacy concerns the ethics and transparency of why data is collected, how it is used, and how it is stored and protected.</li>
+        <li><strong>Strong security is not privacy</strong> — a company can have strong security tools and still create privacy problems if it collects too much, shares carelessly, or breaks its promises.</li>
+        <li><strong>A patchwork</strong> — U.S. privacy law mixes federal law, state law, constitutional ideas, consumer protection, health, education, and financial data rules, and international pressure such as the GDPR; duties depend on the type of data, who holds it, how it is used, and what was promised.</li>
+        <li><strong>Constitutional roots</strong> — the First Amendment protects speech, religion, press, assembly, and petition; the Third protects the home from forced quartering of soldiers; Griswold v. Connecticut recognized a right to privacy drawn from the First, Third, Fourth, and Ninth Amendments even though the word “privacy” is not in the Constitution.</li>
+        <li><strong>Feeling private vs. being private</strong> — a Nevada federal court found no reasonable expectation of privacy in public Twitter posts; public posts can be searched, copied, preserved, subpoenaed, or used as evidence.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3353_module02_3')" aria-label="Mark objective 3 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">Obj 4</span><span class="obj-title">Explain FTC Section 5 deception and unfairness, and apply Wyndham and LabMD</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>The FTC is the de facto U.S. privacy regulator; know both prongs and what each case added.</p>
+      <ul>
+        <li><strong>Section 5</strong> — prohibits unfair or deceptive acts or practices in or affecting commerce; with no comprehensive federal privacy law, it has made the FTC the nation’s de facto privacy regulator.</li>
+        <li><strong>Deception</strong> — a representation, omission, or practice likely to mislead consumers that is material to their choices; privacy notices, marketing claims, and support scripts are all treated as promises.</li>
+        <li><strong>Unfairness</strong> — a practice causing (or likely to cause) substantial injury that consumers cannot reasonably avoid and that is not outweighed by benefits; it reaches harm even when no promise was broken, and weak data security is its leading application.</li>
+        <li><strong>Reasonable security</strong> — “reasonable does not mean perfect, but it does mean defensible”: safeguards proportionate to the data’s sensitivity and the likelihood of harm.</li>
+        <li><strong>FTC v. Wyndham (3d Cir. 2015)</strong> — after three breaches in 2008–2009 (more than 619,000 payment cards allegedly compromised), the court held the FTC may regulate data security under unfairness and that Wyndham had fair notice its practices could be found inadequate; the FTC pointed to weak passwords, poor network controls, inadequate incident response, and overstated security statements.</li>
+        <li><strong>LabMD v. FTC (11th Cir. 2018)</strong> — patient data was exposed through file-sharing software an employee installed; the court assumed unfairness but held the FTC’s order unenforceable because it lacked specific prohibitions and demanded an indeterminate “reasonableness” standard.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3353_module02_4')" aria-label="Mark objective 4 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s2" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">Obj 5</span><span class="obj-title">Explain how business models, dark patterns, vendors, and third-party scripts create privacy risk</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Privacy risk often comes from how a company makes money and whose code runs on its pages.</p>
+      <ul>
+        <li><strong>You are the product</strong> — when a service is free, advertisers may be the paying customers and the user’s attention, behavior, and relationships part of what is sold; read privacy promises with the business model in mind.</li>
+        <li><strong>Dark patterns</strong> — interface designs that nudge users toward less privacy-protective choices (pre-ticked boxes, confusing toggles, button colors that make declining harder); they can be deceptive or unfair even with no explicit misstatement.</li>
+        <li><strong>Amazon (FTC, Sept. 2025)</strong> — a $2.5 billion settlement ($1 billion civil penalty, $1.5 billion in refunds) over allegations under the FTC Act and ROSCA that Amazon enrolled consumers in Prime without proper consent and made cancellation difficult.</li>
+        <li><strong>Third-party scripts</strong> — analytics, ads, session-replay tools, and embedded services can collect or expose user data in ways the site operator does not understand; responsibility does not disappear because a vendor’s code did it.</li>
+        <li><strong>Vendors under Section 5</strong> — a company that makes promises about its ecosystem implicitly vouches for its third parties, so due diligence, ongoing monitoring, and clear contractual controls are compliance duties.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3353_module02_5')" aria-label="Mark objective 5 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <span class="part-label">S3 · Breach &amp; Compliance</span>
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">Obj 6</span><span class="obj-title">Explain why breach notification is a state-by-state patchwork and what those laws define</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>A breach creates legal duties beyond the technical fix, and the duties change with every state involved.</p>
+      <ul>
+        <li><strong>No single national rule</strong> — states have their own laws requiring notice to individuals when certain personal information is compromised.</li>
+        <li><strong>Coverage</strong> — all 50 states plus the District of Columbia, Guam, Puerto Rico, and the U.S. Virgin Islands have breach-notification laws.</li>
+        <li><strong>What the laws define</strong> — who must comply (businesses, data brokers, often government entities), what counts as personal information (commonly a name plus a Social Security, driver’s license, or account number), what counts as a breach (generally unauthorized acquisition), notice timing and method, and exemptions such as encrypted data.</li>
+        <li><strong>Multi-state reality</strong> — an organization that collects data across states must build an incident response plan that accounts for each state’s different duties.</li>
+        <li><strong>Beyond the fix</strong> — after a breach the organization may need to think about notification, law enforcement, insurance, customer communication, contract duties, and evidence preservation.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3353_module02_6')" aria-label="Mark objective 6 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s3" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">Obj 7</span><span class="obj-title">Describe how the HIPAA Security Rule turns privacy and security into required safeguards</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>HIPAA is the module’s example of security duties written into law.</p>
+      <ul>
+        <li><strong>Who it covers</strong> — covered entities and business associates that handle electronic protected health information (ePHI); found at 45 C.F.R. Part 164, Subpart C.</li>
+        <li><strong>Three safeguard families</strong> — administrative, physical, and technical safeguards.</li>
+        <li><strong>Structure to recognize</strong> — risk analysis, risk management, access controls, audit controls, integrity protections, and transmission security.</li>
+        <li><strong>Why it matters</strong> — it shows what happens when privacy and cybersecurity duties become formal compliance obligations with specific controls, unlike a general “reasonable security” standard.</li>
+        <li><strong>Risk analysis first</strong> — risk analysis and risk management are treated as required parts of protecting health information, not optional extras.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3353_module02_7')" aria-label="Mark objective 7 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <span class="part-label">S4 · Forensics &amp; Evidence</span>
+  <div class="obj-card s4" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">Obj 8</span><span class="obj-title">Apply the digital forensics process and evidence-handling basics</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Evidence only helps if you can explain where it came from, how it was collected, who handled it, and that the process was reliable.</p>
+      <ul>
+        <li><strong>NIST SP 800-86’s four phases</strong> — collection (identify, label, record, and acquire data while preserving integrity), examination (extract the relevant data), analysis (draw conclusions), and reporting (present results, describe actions, recommend improvements).</li>
+        <li><strong>Decide early, with counsel</strong> — determine with management and legal advisors whether evidence must be preserved for legal or disciplinary proceedings; when unclear, preserve by default. Acquire volatile data (memory) before non-volatile data.</li>
+        <li><strong>Legal hold</strong> — usually initiated by a lawyer, sent to the data custodian, who acquires the described data into a separate repository of electronically stored information (ESI) and keeps it producible for the court.</li>
+        <li><strong>Integrity and chain of custody</strong> — data must stay unmodified; hashes and digital signatures prove copies match the original and record who accessed the evidence and when.</li>
+        <li><strong>Document and preserve</strong> — data collected today may be used in legal proceedings years later, so record every acquisition step (RFC 3227 is the industry guideline), work from copies, and consider live acquisition on encrypted or remotely wipeable devices.</li>
+        <li><strong>E-discovery</strong> — collecting, preparing, reviewing, interpreting, and producing electronic documents; it is about acquisition, not analysis, and often hands images to a forensics team.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3353_module02_8')" aria-label="Mark objective 8 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <div class="obj-card s4" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">Obj 9</span><span class="obj-title">Explain what makes digital evidence trustworthy and admissible</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Finding a record is not the same as being able to use it; DOJ Chapter 5 explains the hurdles.</p>
+      <ul>
+        <li><strong>Authentication</strong> — the party offering a record must show it is what it claims to be; challenges argue the record was altered, the program that produced it was unreliable, or the author cannot be identified.</li>
+        <li><strong>Computer-generated records</strong> — produced by a machine process with no human statement (for example, automatic logs); the hearsay rules generally do not apply, and the question becomes whether the process is reliable.</li>
+        <li><strong>Computer-stored records</strong> — store what a person wrote (for example, emails or documents); the hearsay rules can apply.</li>
+        <li><strong>Other issues</strong> — the best evidence rule and the use of computer printouts as “summaries.”</li>
+        <li><strong>Why it matters</strong> — logs, files, emails, metadata, and forensic reports all need a reliable path from collection to courtroom; poor evidence handling can weaken an otherwise strong investigation.</li>
+        <li><strong>Expert witnesses</strong> — a technical expert may need to show not only what happened, but how they know.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3353_module02_9')" aria-label="Mark objective 9 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+  <span class="part-label">S5 · Ransomware</span>
+  <div class="obj-card s5" role="button" tabindex="0" aria-expanded="false" onclick="toggleObj(this)">
+    <div class="obj-header"><span class="obj-num">Obj 10</span><span class="obj-title">Describe ransomware response and the legal and policy debate around paying ransoms</span><span class="obj-expand">▼</span></div>
+    <div class="obj-body">
+      <p>Ransomware is both a technical incident and a legal crisis.</p>
+      <ul>
+        <li><strong>How it starts</strong> — an urgent email that seems to come from HR or the CEO; one click downloads software that holds business data hostage and locks the company out while criminals demand money.</li>
+        <li><strong>Prepare first</strong> — back up business data outside the network, train everyone to spot ransomware, and install the latest patches and security updates.</li>
+        <li><strong>If attacked</strong> — disconnect infected devices from the network right away to limit damage, then contact authorities such as the local FBI office (or report at ic3.gov).</li>
+        <li><strong>Paying</strong> — the FBI does not support paying: payment does not guarantee data recovery, encourages more attacks, and funds future crime.</li>
+        <li><strong>Evolution</strong> — ransomware grew from early malware and extortion into a criminal business model that adds data theft, breach notification, cryptocurrency tracing, sanctions, insurance, critical-infrastructure risk, and international law-enforcement problems.</li>
+        <li><strong>Ban debate</strong> — one side says payments fuel the ransomware economy; the other warns a ban could hurt hospitals, schools, small businesses, and critical services that cannot recover quickly.</li>
+      </ul>
+      <button class="obj-master-btn" onclick="event.stopPropagation();toggleObjMastery(this,'obj_csis3353_module02_10')" aria-label="Mark objective 10 as mastered">☐ Mark Mastered</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STUDY GUIDE ═══════════════ -->
+<div class="panel" id="panel-guide" role="tabpanel" aria-labelledby="tab-guide">
+  <h1>Study Guide</h1>
+  <span class="unit-badge">Module 02 · Cybercrime, Privacy &amp; Digital Evidence</span>
+
+  <div class="chapter-block">
+    <div class="chapter-header" role="button" tabindex="0" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>📋 Module deliverables — Projects 3 &amp; 4 and Assessment 2</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <div class="flag-note">📅 Due dates come from Dean’s Blackboard scan in the Academic Progress Hub (Oct 11, 2026), which outranks the syllabus. Project 3’s due <em>time</em> is not yet confirmed there.</div>
+      <h3>Project 3 — Unauthorized Access and Policy · due Sat 10/24</h3>
+      <p>Review the Northstar Data Protection and Security Readiness Policy and identify <strong>at least 5 potential access issues</strong>. Look at data access, authorization, authentication, vendors, monitoring, acceptable use, incident response, and roles and responsibilities. For each issue:</p>
+      <ul>
+        <li><strong>What the policy says</strong> — name the issue and quote the actual policy language.</li>
+        <li><strong>Why it is a problem</strong> — unclear, weak, too broad, too flexible, or hard to enforce.</li>
+        <li><strong>What could go wrong</strong> — the possible unauthorized-access risk.</li>
+        <li><strong>Why it matters legally</strong> — connect it specifically to the CFAA and Nosal.</li>
+        <li><strong>How to fix it</strong> — stronger policy language or a clearer rule.</li>
+      </ul>
+      <p>Deliverable: one short memo, APA 7, Word document, <strong>750–1,000 words</strong>. The submission stays open three days after the due date.</p>
+      <h3>Project 4 — Incident Response and Evidence Preservation Update · due Sat 11/7</h3>
+      <p>Identify <strong>at least 5</strong> incident response or evidence-preservation issues (the instructions say there are at least 15). Look at incident response, reporting, security logs, monitoring, evidence, investigations, data breaches, legal review, vendors, law enforcement, and record retention. Use <strong>at least two</strong> of: the digital forensics methodology, DOJ’s <em>Searching and Seizing Computers</em> Chapter 5, and the state privacy/breach-notification materials. For each issue, the five parts above (legal tie: incident response, digital evidence, legal holds, breach review, chain of custody, or preservation) <strong>plus</strong> one law that could be violated, in one or two sentences.</p>
+      <p>Deliverable: one short memo, APA 7, Word document, <strong>750–1,000 words not including References</strong>.</p>
+      <h3>Assessment 2 · due Sat 11/7, 11:59 PM CST</h3>
+      <p>100 points · 120-minute time limit · one attempt · automatic submission · no attempts or submissions after the due date.</p>
+      <h3>Technical weakness vs. policy weakness vs. legal problem</h3>
+      <p>The module asks you to keep three related ideas separate: a <strong>technical weakness</strong> (a gap in a system), a <strong>policy weakness</strong> (a gap in what the organization commits to), and a <strong>legal problem</strong> (a gap between what it did and what the law requires). They often overlap but are not the same thing.</p>
+      <div class="flag-note">📌 No textbook is assigned yet; the module’s textbook entry is a placeholder (“Until book is assigned”). Everything on this page comes from the module pages, the five video transcripts, and the assigned readings.</div>
+    </div>
+  </div>
+  <div class="chapter-block">
+    <div class="chapter-header" role="button" tabindex="0" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🔐 S1 · Unauthorized Access — CFAA, Van Buren, Nosal</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <h3>The Computer Fraud and Abuse Act</h3>
+      <p>The CFAA is one of the main federal laws used in computer misuse and unauthorized-access cases. It was enacted in 1986 in response to concerns about hackers breaking into computer systems, and it makes it a crime to intentionally access a computer <strong>without authorization</strong> or to <strong>exceed authorized access</strong>. The hard question is usually not whether someone touched a computer, but whether they crossed a legal boundary when they did it. The phrases sound simple until applied to employees, contractors, researchers, former workers, shared credentials, scraping, or testing.</p>
+      <div class="video-block">
+        <h4>📺 Video · The Computer Fraud and Abuse Act EXPLAINED! (7:28)</h4>
+        <p><strong>Facts.</strong> Georgia police sergeant Nathan Van Buren had a department-issued password to a state license-plate database and was trained not to use it for personal purposes. In an FBI sting, Andrew Albo offered $5,000 to run a plate; Van Buren ran it and was charged under the CFAA.</p>
+        <ul>
+          <li>Everyone agreed he did <strong>not</strong> access the database without authorization: the department gave him the password, and he didn’t steal or circumvent anything.</li>
+          <li>The government argued he <strong>exceeded</strong> authorized access by violating the no-personal-use policy; he argued he only accessed what his password allowed.</li>
+          <li><strong>Holding (6–3, June 3, 2021):</strong> exceeding authorized access means obtaining information from areas of a computer — files, folders, databases — that are off-limits to you. His conviction was tossed out.</li>
+          <li><strong>Analogy:</strong> using the house key you were given isn’t breaking in; forcing open a room locked with a different key is. Outsiders break into the system; insiders break into parts of it.</li>
+          <li><strong>Cautions:</strong> his conduct was still unethical and not without consequences, and state anti-hacking laws don’t always mirror the CFAA.</li>
+        </ul>
+        <div class="video-note">Link: <em>Open Video Source</em> on the module’s Watch It page in Blackboard. Summary written from the transcript.</div>
+      </div>
+      <h3>Nosal I and Nosal II — the comparison is the lesson</h3>
+      <p>Both cases involve David Nosal, who left the search firm Korn/Ferry to start a competitor; the firm’s confidential candidate database was for company business.</p>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Case</th><th>Access situation</th><th>Holding</th><th>CFAA prong</th></tr>
+        <tr><td><strong>Nosal I</strong> (9th Cir. en banc, 2012)</td><td>Current employees used <em>their own</em> valid logins to download data for Nosal, violating a business-use policy</td><td>Misusing information you are permitted to reach is not exceeding authorized access; the court would not turn ordinary policy violations into federal crimes</td><td>Exceeds authorized access — rejected</td></tr>
+        <tr><td><strong>Nosal II</strong> (9th Cir., 2016)</td><td>The group’s access had been <em>revoked</em>; they got back in with a current employee’s shared login</td><td>Using a computer after the owner rescinds permission is access without authorization; conviction affirmed</td><td>Without authorization — upheld</td></tr>
+        <tr><td><strong>Van Buren</strong> (U.S. Supreme Court, 2021)</td><td>Officer used <em>his own</em> valid password for a forbidden purpose</td><td>Purpose doesn’t matter; only off-limits areas count</td><td>Exceeds authorized access — rejected</td></tr>
+      </table></div>
+      <p>Cyber law often turns on small details about <strong>permission, revocation, and credentials</strong>, and whether a technical action crossed a legal line.</p>
+      <h3>Justice Manual 9-48.000 — how DOJ charges the CFAA</h3>
+      <ul>
+        <li>Prosecutors should <strong>decline</strong> good-faith security research: testing or fixing a flaw in a way designed to avoid harm, with findings used mainly to improve security.</li>
+        <li>A case cannot rest solely on violating a public service’s <strong>terms of service</strong>; employer rules on personal computer use are not a basis for prosecution.</li>
+        <li>To charge <strong>exceeding authorized access</strong>, the computer must be divided into areas, the division enforced <strong>technically</strong> (code or configuration, not just contracts or policies), and the person must knowingly enter an area they are unconditionally barred from.</li>
+        <li>A written <strong>cease-and-desist</strong> notice the recipient receives and understands can revoke authorization going forward.</li>
+        <li>Guiding question from the module: why might prosecutors need to be careful before treating every computer policy violation as a federal crime?</li>
+      </ul>
+      <div class="oop-note">🧩 <strong>Study aid — Northstar tie-in (Project 3).</strong> Your Project 2 gap review already flagged access language worth a CFAA/Nosal lens: shared administrator accounts allowed “when individual accounts are not practical,” credential sharing “with approved teammates during emergency response,” contractor accounts active up to 180 days after contract completion, and vendor access active until the project team requests removal. Ask of each: is this a purpose rule (a Nosal I/Van Buren problem) or a missing revocation (a Nosal II problem)? Re-verify every quote against the current policy before using it.</div>
+    </div>
+  </div>
+  <div class="chapter-block">
+    <div class="chapter-header" role="button" tabindex="0" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🛡️ S2 · Privacy &amp; the FTC — foundations, Section 5, Wyndham, LabMD</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <div class="video-block">
+        <h4>📺 Video · Data Protection vs. Security vs. Privacy: What’s the Difference? (1:07)</h4>
+        
+        <div class="video-note">Link: <em>Open Video Source</em> on the module’s Watch It page in Blackboard. Summary written from the transcript.</div>
+      </div>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Function</th><th>Concern</th><th>Practices</th></tr>
+        <tr><td><strong>Data protection</strong></td><td>Availability — having relevant data to use</td><td>Data inventory, backup and recovery, data life-cycle management</td></tr>
+        <tr><td><strong>Data security</strong></td><td>Keeping data away from bad actors — unauthorized access, theft, corruption</td><td>Physical device security, identity and access management, encryption</td></tr>
+        <tr><td><strong>Data privacy</strong></td><td>Ethics and transparency — why data is collected, how it is used, stored, and protected</td><td>Notice to users; laws such as the GDPR, California Consumer Privacy Act, Australian Privacy Act</td></tr>
+      </table></div>
+      <p>The video adds that businesses are typically required to present clear data security plans when pursuing partnerships or capital investment. The module adds the cyber-law point: a company can have strong security and still create privacy problems if it collects too much, shares carelessly, or breaks its promises.</p>
+      <h3>A patchwork of privacy law</h3>
+      <p>U.S. privacy law includes federal law, state law, constitutional ideas, consumer protection, health, education, and financial data rules, and international pressure such as the GDPR. Duties depend on the <strong>type of data</strong>, <strong>who holds it</strong>, <strong>how it is used</strong>, and <strong>what promises</strong> the organization made — so a vague data policy cannot cover everything.</p>
+      <h3>Constitutional roots</h3>
+      <ul>
+        <li><strong>First Amendment</strong> — speech, religion, press, assembly, petition. <strong>Third Amendment</strong> — protects the home from forced quartering of soldiers.</li>
+        <li><strong>Griswold v. Connecticut</strong> — recognized a constitutional right to privacy, though the word isn’t in the Constitution, drawing on the First, Third, Fourth, and Ninth Amendments. Courts still decide whether older protections reach new technologies.</li>
+        <li><strong>Public tweets</strong> — a Nevada federal district court found no reasonable expectation of privacy in public Twitter posts. Feeling private differs from being legally private: public posts can be searched, copied, preserved, subpoenaed, or used as evidence.</li>
+      </ul>
+      <div class="video-block">
+        <h4>📺 Video · Episode 33 — FTC Authority: Section 5 and Consumer Protection in Privacy (14:37 listed)</h4>
+        <ul>
+          <li><strong>Section 5</strong> prohibits unfair or deceptive acts or practices in or affecting commerce, making the FTC the nation’s de facto privacy regulator without a comprehensive federal privacy law.</li>
+          <li><strong>Notices are promises</strong> — privacy notices, marketing claims, and support scripts are treated as enforceable representations; vague or overly complex statements that obscure material details count too.</li>
+          <li><strong>Consent and choice</strong> — honoring opt-outs; hiding options or making opt-out cumbersome can be unfair. Offering options isn’t enough; companies must honor them.</li>
+          <li><strong>Dark patterns</strong> — pre-ticked boxes, confusing toggles, misleading button colors; design itself can be a violation.</li>
+          <li><strong>COPPA</strong> — requires verifiable parental consent before collecting personal information from children under 13; enforced alongside Section 5.</li>
+          <li><strong>Sensitive data</strong> — health, financial, geolocation, biometric data raise expectations; sensitivity is not codified in Section 5 but calibrates enforcement.</li>
+          <li><strong>Vendors</strong> — promises about the ecosystem vouch for third parties; due diligence, monitoring, and contract controls are compliance necessities.</li>
+          <li><strong>Remedies</strong> — injunctions, restitution, disgorgement, reporting duties, and often <strong>20-year</strong> orders with independent assessments and officer certifications.</li>
+          <li><strong>Investigative tools</strong> — civil investigative demands, subpoenas, compulsory process for documents, logs, and internal communications.</li>
+          <li><strong>Coordination</strong> — DOJ, state attorneys general, the FCC, and international networks such as the Global Privacy Enforcement Network.</li>
+        </ul>
+        <div class="video-note">Link: <em>Open Video Source</em> on the module’s Watch It page in Blackboard. Summary written from the transcript.</div>
+      </div>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Prong</th><th>Test</th><th>Typical privacy/security example</th></tr>
+        <tr><td><strong>Deception</strong></td><td>A representation, omission, or practice likely to mislead consumers, material to their choice or conduct</td><td>Promising data is never shared with advertisers, then sharing it; overstating encryption</td></tr>
+        <tr><td><strong>Unfairness</strong></td><td>Substantial injury, not reasonably avoidable, not outweighed by countervailing benefits</td><td>Unencrypted Social Security numbers on an unsecured server — reasonable means defensible, not perfect</td></tr>
+      </table></div>
+      <h3>FTC v. Wyndham (3d Cir. 2015)</h3>
+      <p>Hackers breached Wyndham three times in 2008–2009, allegedly compromising more than 619,000 payment cards. The FTC pointed to weak passwords, poor network controls, inadequate incident response, and statements that gave customers a stronger sense of protection than the company provided. The Third Circuit held the FTC can regulate data security under the <strong>unfairness</strong> prong and that Wyndham had <strong>fair notice</strong> its practices could be found inadequate. Lesson: security controls, privacy statements, and customer harm can collide in an enforcement action.</p>
+      <h3>LabMD v. FTC (11th Cir. 2018)</h3>
+      <p>Patient information was exposed through file-sharing software an employee installed on a work computer. The court assumed the practices were unfair but held the FTC’s order <strong>unenforceable</strong>: it contained no specific prohibitions and demanded an indeterminate reasonableness standard. Lesson: regulators can push for better security, but orders must be specific enough to follow — the tension between “reasonable security” as a goal and specific controls as legal requirements.</p>
+      <h3>FTC Start with Security</h3>
+      <p>Turns enforcement lessons into practical advice: problems often start with ordinary choices — collecting too much, keeping it too long, failing to limit access, not building security in early. A policy should explain how data is actually protected, not just promise it. Collecting less reduces both risk and legal exposure.</p>
+      <h3>Business models, dark patterns, and other people’s code</h3>
+      <ul>
+        <li><strong>“You are Facebook’s product”</strong> (Rushkoff) — on free services, advertisers may be the paying customers; users’ attention, behavior, and relationships are part of what is sold.</li>
+        <li><strong>Amazon (FTC, Sept. 2025)</strong> — $2.5 billion settlement ($1 billion civil penalty, $1.5 billion refunds) under the FTC Act and ROSCA over Prime enrollment without proper consent and a hard cancellation path.</li>
+        <li><strong>Third-party scripts</strong> (Princeton) — analytics, ads, session replay, and embedded services can collect or expose data the operator doesn’t understand; responsibility doesn’t disappear because a vendor’s script did it.</li>
+      </ul>
+      <div class="oop-note">🧩 <strong>Study aid — Northstar tie-in.</strong> Wyndham and LabMD cut in opposite directions for a policy reviewer: public security promises that internal practice doesn’t match invite a deception claim, while vague “reasonable” language is exactly what LabMD found too indefinite to enforce. Both support rewriting soft Northstar language (“when practical,” “should”) into specific, mandatory rules.</div>
+    </div>
+  </div>
+  <div class="chapter-block">
+    <div class="chapter-header" role="button" tabindex="0" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>📣 S3 · Breach Notification &amp; Required Safeguards</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <h3>State breach-notification laws (NCSL)</h3>
+      <p>Breach notification is not controlled by one national rule. All 50 states, the District of Columbia, Guam, Puerto Rico, and the U.S. Virgin Islands have laws requiring notice when certain personal information is compromised.</p>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>What the laws define</th><th>Typical content</th></tr>
+        <tr><td>Who must comply</td><td>Businesses, data or information brokers, and in most states government entities</td></tr>
+        <tr><td>Personal information</td><td>Commonly a name combined with a Social Security number, driver’s license or state ID number, or account number</td></tr>
+        <tr><td>Breach</td><td>Generally, unauthorized acquisition of data</td></tr>
+        <tr><td>Notice</td><td>Timing, method, and who must be notified</td></tr>
+        <tr><td>Exemptions</td><td>For example, encrypted information</td></tr>
+      </table></div>
+      <p>If an organization collects data across states, its incident response plan must account for different legal duties after a breach. Guiding questions: why does a breach create legal duties beyond fixing the technical problem, and which kinds of information should trigger stronger response procedures?</p>
+      <div class="oop-note">🧩 <strong>Study aid — a worked state example (not module content).</strong> Texas Business &amp; Commerce Code § 521.053 requires notice to affected individuals no later than 60 days after determining a breach occurred, and to the Texas attorney general no later than 30 days after that determination when at least 250 Texans are affected. Verify the current text before citing it in Project 4.</div>
+      <h3>HIPAA Security Rule — 45 C.F.R. Part 164, Subpart C</h3>
+      <p>A concrete example of legally required security safeguards. Covered entities and business associates must protect electronic protected health information through <strong>administrative, physical, and technical</strong> safeguards. Recognize the structure: <strong>risk analysis, risk management, access controls, audit controls, integrity protections, transmission security</strong>. HIPAA shows what it looks like when privacy and cybersecurity duties become formal compliance obligations.</p>
+      <div class="oop-note">🧩 <strong>Study aid — Northstar tie-in (Project 4).</strong> Your Project 2 Compliance Gap 3 found notification language that waits until harm is likely, may delay notice until the investigation is complete, and skips notice when a vendor caused the incident. Project 4 asks you to name one law such language could violate. The state laws on the NCSL page are the module’s source for that.</div>
+    </div>
+  </div>
+  <div class="chapter-block">
+    <div class="chapter-header" role="button" tabindex="0" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>🔎 S4 · Forensics &amp; Digital Evidence</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <h3>NIST SP 800-86 — Integrating forensic techniques into incident response</h3>
+      <p>Logs, files, emails, disk images, cloud records, and device data may become evidence — but only if the organization can explain where it came from, how it was collected, who handled it, and whether the process was reliable. NIST SP 800-86 (2006) takes an IT perspective rather than a law-enforcement one and says to consult management and legal counsel.</p>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Phase</th><th>What happens</th></tr>
+        <tr><td><strong>1 · Collection</strong></td><td>Identify, label, record, and acquire data from possible sources while preserving its integrity</td></tr>
+        <tr><td><strong>2 · Examination</strong></td><td>Process collected data with automated and manual methods to extract the data of interest</td></tr>
+        <tr><td><strong>3 · Analysis</strong></td><td>Study the examination results to draw conclusions that answer the investigation’s questions</td></tr>
+        <tr><td><strong>4 · Reporting</strong></td><td>Present results, describe actions taken, recommend improvements to policies, procedures, and tools</td></tr>
+      </table></div>
+      <ul>
+        <li><strong>Decide early</strong> with management and legal advisors whether evidence must be preserved for legal or disciplinary proceedings; when unclear, preserve by default.</li>
+        <li><strong>Order of volatility</strong> — acquire volatile data (memory) before non-volatile data.</li>
+        <li><strong>Chain of custody</strong> — log everyone who handled evidence, their actions and times; store securely; work from copies; verify integrity by comparing message digests (hashes) of the original and the copy.</li>
+      </ul>
+      <div class="video-block">
+        <h4>📺 Video · Digital Forensics — CompTIA Security+ SY0-701 — 4.8 (9:54)</h4>
+        <ul>
+          <li>Data you collect today may be used in legal proceedings <strong>years</strong> from now — take extensive notes on how it was obtained. <strong>RFC 3227</strong> documents best practices for evidence collection and archiving.</li>
+          <li><strong>Legal hold</strong> — usually initiated by a lawyer; tells the <strong>data custodian</strong> what data to store and how much. The custodian acquires it into a separate repository of <strong>ESI</strong> (electronically stored information), sometimes converting proprietary formats, and keeps it safe and producible for the court.</li>
+          <li><strong>Integrity</strong> — data stays pristine. Physical evidence goes in a sealed bag that logs every access; digital evidence uses <strong>hashes and digital signatures</strong> to prove nothing changed and track who accessed it.</li>
+          <li><strong>Acquisition sources</strong> — disk, memory, firmware, file systems, servers, network devices, firewall logs, VM snapshots, log files, recycle bins, temp files, bookmarks, saved logins.</li>
+          <li><strong>Reporting</strong> — summary of the event, detailed steps from source to acquired copy (so a third party can check integrity), analysis, and conclusions.</li>
+          <li><strong>Preservation</strong> — work from copies; mobile devices can be wiped remotely; some encrypted systems lock when powered off, so live acquisition matters.</li>
+          <li><strong>E-discovery</strong> — collecting, preparing, reviewing, interpreting, and producing electronic documents; it is about acquisition, not analysis, and often feeds a forensics team.</li>
+        </ul>
+        <div class="video-note">Link: <em>Open Video Source</em> on the module’s Watch It page in Blackboard. Summary written from the transcript.</div>
+      </div>
+      <h3>DOJ, Searching and Seizing Computers — Chapter 5 (Evidence)</h3>
+      <p>Digital evidence doesn’t become useful just because someone found it. Prosecutors and organizations must show records are authentic, address hearsay, and satisfy evidence rules — a reliable path from collection to courtroom.</p>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>Record type</th><th>Example</th><th>Hearsay?</th><th>Key question</th></tr>
+        <tr><td><strong>Computer-generated</strong></td><td>Automatic logs produced by a machine process</td><td>Generally not — no person made a statement</td><td>Is the process reliable?</td></tr>
+        <tr><td><strong>Computer-stored</strong></td><td>Emails, documents — what a person wrote, kept on a computer</td><td>Hearsay rules can apply</td><td>Does an exception apply?</td></tr>
+      </table></div>
+      <ul>
+        <li><strong>Authentication</strong> — show the record is what it claims to be. Challenges: the record was <strong>altered</strong>, the <strong>program</strong> was unreliable, or the <strong>author</strong> can’t be identified.</li>
+        <li><strong>Other issues</strong> — the best evidence rule, and computer printouts as “summaries.”</li>
+        <li><strong>Expert witnesses</strong> may need to show not only what happened, but how they know.</li>
+      </ul>
+      <div class="oop-note">🧩 <strong>Study aid — Northstar tie-in (Project 4).</strong> Policy patterns that become evidence problems: logs retained only until storage costs become unreasonable (your Project 1 Item 3), no preservation trigger or legal-hold step, no chain-of-custody or hashing requirement, and shared administrator accounts that make authorship impossible to prove. Project 4 requires at least two of: the forensics methodology (NIST SP 800-86), DOJ Chapter 5, and the state breach materials.</div>
+    </div>
+  </div>
+  <div class="chapter-block">
+    <div class="chapter-header" role="button" tabindex="0" onclick="toggleChapter(this)" aria-expanded="false">
+      <span>💀 S5 · Ransomware — technical incident and legal crisis</span><span>▼</span>
+    </div>
+    <div class="chapter-body">
+      <div class="video-block">
+        <h4>📺 Video · Ransomware — Cybersecurity for Small Business (FTC) (1:25)</h4>
+        <ul>
+          <li><strong>The attack</strong> — an urgent email that seems to be from HR or the CEO; clicking the link downloads software that holds business data hostage and locks out the whole company while criminals demand money.</li>
+          <li><strong>Start with a plan</strong> — back up business data <em>outside</em> your network, teach everyone to spot ransomware, and install the latest patches and security updates.</li>
+          <li><strong>If attacked</strong> — first disconnect infected devices from the network to limit damage; then contact authorities such as your local FBI office.</li>
+          <li><strong>Paying</strong> — up to you, but law enforcement doesn’t recommend it, and you might not get your data back. The best defense is an informed workforce.</li>
+        </ul>
+        <div class="video-note">Link: <em>Open Video Source</em> on the module’s Watch It page in Blackboard. Summary written from the transcript.</div>
+      </div>
+      <p>The module’s follow-up questions are the legal ones: <strong>What did the company do before the attack? What did it promise? What records prove the response was reasonable?</strong> Once files are encrypted or stolen, an organization may need to think about breach notification, law enforcement, insurance, customer communication, contract duties, and whether evidence was preserved.</p>
+      <h3>FBI on ransomware</h3>
+      <ul>
+        <li>The FBI <strong>does not support paying</strong>: payment doesn’t guarantee recovery, encourages attackers to target more victims, and gives others an incentive to join in.</li>
+        <li>Report to your local FBI field office or the Internet Crime Complaint Center at <strong>ic3.gov</strong>.</li>
+        <li>Prevention: keep systems updated, run anti-malware, back up regularly, keep backups disconnected from the networks they back up, and have a continuity plan.</li>
+        <li>The module adds that a response may involve reporting, preserving evidence, notifying people, considering sanctions risk, and working with law enforcement.</li>
+      </ul>
+      <h3>How ransomware evolved (Arctic Wolf)</h3>
+      <p>From early malware and extortion into a criminal business model. Modern attacks add data theft and public-leak threats, which bring breach notification, cryptocurrency tracing, sanctions, insurance, critical-infrastructure risk, and international law-enforcement problems.</p>
+      <h3>Should paying ransoms be illegal? (BBC)</h3>
+      <div class="tbl-wrap"><table class="sg-table">
+        <tr><th>For a ban</th><th>Against a ban</th></tr>
+        <tr><td>Payments fuel the ransomware economy and encourage more attacks</td><td>Hospitals, schools, small businesses, and critical services may be unable to recover quickly without paying</td></tr>
+      </table></div>
+      <p>A rule that sounds strong on paper can put real pressure on victims — think like a policy analyst, not just a technician.</p>
+      <div class="oop-note">🧩 <strong>Study aid — Northstar tie-in.</strong> The FTC video’s “disconnect” step is containment, not erasure. A Northstar instruction to restore or rebuild systems before imaging them would destroy the evidence Lesson s4 says to preserve, and “backup restoration testing should occur when time allows” leaves recovery unproven.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FLASHCARDS ═══════════════ -->
+<div class="panel" id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards">
+  <h1>Flashcards</h1>
+  <div class="filter-row" role="group" aria-label="Filter flashcards by topic">
+    <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+    <button class="filter-btn" onclick="filterCards('s1',this)">Unauthorized Access</button>
+    <button class="filter-btn" onclick="filterCards('s2',this)">Privacy &amp; FTC</button>
+    <button class="filter-btn" onclick="filterCards('s3',this)">Breach &amp; Compliance</button>
+    <button class="filter-btn" onclick="filterCards('s4',this)">Forensics &amp; Evidence</button>
+    <button class="filter-btn" onclick="filterCards('s5',this)">Ransomware</button>
+  </div>
+  <div class="fc-counter" id="fc-counter" aria-live="polite"></div>
+  <div class="fc-wrap">
+    <div class="fc-card" id="fc-card" onclick="flipCard()" aria-label="Flashcard — click to flip">
+      <div class="fc-front"><div class="fc-label">Question</div><div class="fc-q" id="fc-q" aria-live="polite"></div></div>
+      <div class="fc-back"><div class="fc-label">Answer</div><div class="fc-a" id="fc-a" aria-live="polite"></div></div>
+    </div>
+  </div>
+  <div class="fc-controls">
+    <button class="fc-btn" onclick="flipCard()" aria-label="Flip card">↩ Flip</button>
+    <button class="fc-btn mastered-btn" id="fc-master-btn" onclick="toggleMastered(currentIdx)" aria-label="Toggle mastered">☐ Mastered</button>
+    <button class="fc-btn" onclick="shuffleCards()" aria-label="Shuffle deck">🔀 Shuffle</button>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-btn" onclick="prevCard()" aria-label="Previous card">← Prev</button>
+    <button class="fc-btn" onclick="nextCard()" aria-label="Next card">Next →</button>
+  </div>
+  <div class="fc-empty" id="fc-empty" style="display:none">No cards in this filter.</div>
+</div>
+
+<!-- ═══════════════ QUIZ ═══════════════ -->
+<div class="panel" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+  <h1>Practice Quiz</h1>
+  <div class="filter-row" role="group" aria-label="Filter quiz by topic">
+    <button class="filter-btn active" onclick="setQuizFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setQuizFilter('s1',this)">Unauthorized Access</button>
+    <button class="filter-btn" onclick="setQuizFilter('s2',this)">Privacy &amp; FTC</button>
+    <button class="filter-btn" onclick="setQuizFilter('s3',this)">Breach &amp; Compliance</button>
+    <button class="filter-btn" onclick="setQuizFilter('s4',this)">Forensics &amp; Evidence</button>
+    <button class="filter-btn" onclick="setQuizFilter('s5',this)">Ransomware</button>
+  </div>
+  <div id="quiz-container"></div>
+  <div style="margin-top:16px;">
+    <button id="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <button id="reset-btn" onclick="resetQuiz()">Reset</button>
+  </div>
+  <div id="quiz-score"></div>
+</div>
+
+<!-- ═══════════════ DISCUSSION ═══════════════ -->
+<div class="panel" id="panel-discussion" role="tabpanel" aria-labelledby="tab-discussion">
+  <h1>Discussion Board Prep</h1>
+  <div class="flag-note">📌 Module 02 has no discussion board. These prompts are written-answer practice for Assessment 2 and the Project 3–4 memos, one per objective.</div>
+  <div class="filter-row" role="group" aria-label="Filter discussion by topic">
+    <button class="filter-btn active" onclick="filterDisc('all',this)">All</button>
+    <button class="filter-btn" onclick="filterDisc('s1',this)">Unauthorized Access</button>
+    <button class="filter-btn" onclick="filterDisc('s2',this)">Privacy &amp; FTC</button>
+    <button class="filter-btn" onclick="filterDisc('s3',this)">Breach &amp; Compliance</button>
+    <button class="filter-btn" onclick="filterDisc('s4',this)">Forensics &amp; Evidence</button>
+    <button class="filter-btn" onclick="filterDisc('s5',this)">Ransomware</button>
+  </div>
+  <div id="disc-container"></div>
+</div>
+
+<!-- ═══════════════ NOTES ═══════════════ -->
+<div class="panel" id="panel-notes" role="tabpanel" aria-labelledby="tab-notes">
+  <h1>Notes Template</h1>
+  <span class="unit-badge">Module 02 · Print this tab for study notes</span>
+
+  <div class="video-block">
+    <h4>📌 Module 02 source material</h4>
+    <p>Built from the Module 02 pages (overview, objectives, Apply It, Read It, Watch It, Supplemental Materials, Assessment 2), the transcripts of the five Watch It videos, and the assigned readings below. Video links are on the Watch It page in Blackboard.</p>
+    <div class="source-list">
+      <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4072205" target="_blank" rel="noopener">Privacy Law in 2022 (SSRN)</a>
+      <a href="https://law.justia.com/cases/federal/appellate-courts/ca3/14-3514/14-3514-2015-08-24.html" target="_blank" rel="noopener">FTC v. Wyndham</a>
+      <a href="https://www.justice.gov/jm/jm-9-48000-computer-fraud" target="_blank" rel="noopener">Justice Manual 9-48.000</a>
+      <a href="https://csrc.nist.gov/pubs/sp/800/86/final" target="_blank" rel="noopener">NIST SP 800-86</a>
+      <a href="https://www.wired.com/story/doug-rushkoff-hello-etsy/" target="_blank" rel="noopener">Rushkoff (Wired)</a>
+      <a href="https://constitution.congress.gov/constitution/amendment-1/" target="_blank" rel="noopener">1st Amendment</a>
+      <a href="https://www.oyez.org/cases/1964/496" target="_blank" rel="noopener">Griswold (Oyez)</a>
+      <a href="https://www.tradesecretslaw.com/2013/09/articles/privacy-2/nevada-district-court-finds-no-reasonable-expectation-of-privacy-in-public-twitter-posts/" target="_blank" rel="noopener">Public tweets (Seyfarth)</a>
+      <a href="https://law.justia.com/cases/federal/appellate-courts/ca11/16-16270/16-16270-2018-06-06.html" target="_blank" rel="noopener">LabMD v. FTC</a>
+      <a href="https://www.ftc.gov/system/files/documents/plain-language/pdf0205-startwithsecurity.pdf" target="_blank" rel="noopener">FTC Start with Security</a>
+      <a href="https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-secures-historic-25-billion-settlement-against-amazon" target="_blank" rel="noopener">FTC Amazon settlement</a>
+      <a href="https://www.ncsl.org/technology-and-communication/security-breach-notification-laws" target="_blank" rel="noopener">NCSL breach laws</a>
+      <a href="https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/part-164/subpart-C" target="_blank" rel="noopener">HIPAA Security Rule</a>
+      <a href="https://blog.citp.princeton.edu/2018/01/12/website-operators-are-in-the-dark-about-privacy-violations-by-third-party-scripts/" target="_blank" rel="noopener">Third-party scripts (Princeton)</a>
+      <a href="https://www.justice.gov/d9/criminal-ccips/legacy/2015/01/14/ssmanual2009_002.pdf" target="_blank" rel="noopener">DOJ Search &amp; Seizure manual</a>
+      <a href="https://www.fbi.gov/how-we-can-help-you/scams-and-safety/common-frauds-and-scams/ransomware" target="_blank" rel="noopener">FBI Ransomware</a>
+      <a href="https://arcticwolf.com/resources/blog/the-history-of-ransomware/" target="_blank" rel="noopener">History of ransomware (Arctic Wolf)</a>
+      <a href="https://www.bbc.com/news/technology-57173096" target="_blank" rel="noopener">BBC: ban ransom payments?</a>
+    </div>
+  </div>
+
+  <div class="notes-grid">
+    <div class="note-card"><h4>CFAA: two prongs</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Van Buren (2021) holding &amp; analogy</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Nosal I vs. Nosal II</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Justice Manual 9-48.000</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Data protection / security / privacy</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Privacy patchwork &amp; Griswold</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Section 5: deception vs. unfairness</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Wyndham &amp; LabMD</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Dark patterns, Amazon, third-party scripts</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>State breach-notification laws</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>HIPAA Security Rule safeguards</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>NIST SP 800-86 four phases</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Legal hold, ESI, chain of custody</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>DOJ Ch. 5: authentication &amp; hearsay</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Ransomware response (FTC/FBI)</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Ransom-payment ban debate</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Project 3 — my 5 access issues</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+    <div class="note-card"><h4>Project 4 — my 5 IR/evidence issues</h4><div class="note-lines"><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div></div></div>
+  </div>
+</div>
+
+<footer>CSIS 3353 · Module 02 · study.imichaelv.com · Built from Module 02 pages, video transcripts &amp; assigned readings · <a href="../../index.html" class="back-link footer-back-link">← Back to all courses</a></footer>
+
+
+<script>
+// ─── MASTERY ───
+function getMasteryKey(){return 'mastery_csis3353_module02_';}
+function resetAllMastery(){
+  Object.keys(localStorage).filter(k=>k.startsWith(getMasteryKey())).forEach(k=>localStorage.removeItem(k));
+  Object.keys(localStorage).filter(k=>k.startsWith('obj_csis3353_module02_')).forEach(k=>localStorage.removeItem(k));
+  document.querySelectorAll('.obj-master-btn').forEach(b=>{b.textContent='☐ Mark Mastered';b.classList.remove('mastered');});
+  document.querySelectorAll('.fc-card').forEach((_,i)=>localStorage.removeItem(getMasteryKey()+i));
+  renderCard();updateMasteryBar();
+}
+function updateMasteryBar(){
+  const total=document.querySelectorAll('.obj-master-btn').length;
+  const done=Object.keys(localStorage).filter(k=>k.startsWith('obj_csis3353_module02_')).length;
+  const pct=total?Math.round(done/total*100):0;
+  const f=document.getElementById('mastery-fill');
+  if(f)f.style.width=pct+'%';
+}
+function toggleObjMastery(btn,key){
+  const is=localStorage.getItem(key);
+  if(is){localStorage.removeItem(key);btn.textContent='☐ Mark Mastered';btn.classList.remove('mastered');}
+  else{localStorage.setItem(key,'1');btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  updateMasteryBar();
+}
+function toggleObj(card){
+  const body=card.querySelector('.obj-body');
+  const arrow=card.querySelector('.obj-expand');
+  const open=body.classList.toggle('open');
+  arrow.style.transform=open?'rotate(180deg)':'';
+  card.setAttribute('aria-expanded',open);
+}
+function toggleChapter(header){
+  const body=header.nextElementSibling;
+  const arrow=header.querySelector('span:last-child');
+  const open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  arrow.style.transform=open?'':'rotate(180deg)';
+  header.setAttribute('aria-expanded',!open);
+}
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+}
+// scope filter highlighting to the row that was clicked, so the three panels do not clear each other
+function activateFilter(btn){
+  const row=btn.closest('.filter-row');
+  if(row)row.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ─── FLASHCARD DATA ───  {ch:'s1'..'s5', q, a}
+const allCards=[
+  {"ch": "s1", "q": "What does CFAA stand for, and when was it enacted?", "a": "The Computer Fraud and Abuse Act, a federal law enacted in 1986 in response to concerns about hackers breaking into computer systems."},
+  {"ch": "s1", "q": "What are the two ways to violate the CFAA’s access provisions?", "a": "Intentionally accessing a computer without authorization, or exceeding authorized access."},
+  {"ch": "s1", "q": "Which CFAA prong targets outsiders, and which targets insiders?", "a": "“Without authorization” targets outsiders breaking in; “exceeds authorized access” targets insiders entering parts of a system they were not given."},
+  {"ch": "s1", "q": "In Van Buren, what did the police sergeant do?", "a": "He used his valid password to search a state license-plate database for a promised $5,000 in an FBI sting, despite training not to use it for personal purposes."},
+  {"ch": "s1", "q": "Why did everyone agree Van Buren did not access the database “without authorization”?", "a": "The department had voluntarily given him a password for that database; he did not steal a password or circumvent the system."},
+  {"ch": "s1", "q": "What did the Supreme Court hold in Van Buren (2021)?", "a": "A person exceeds authorized access when they obtain information from areas of a computer (files, folders, databases) that are off-limits to them, not by misusing access they have."},
+  {"ch": "s1", "q": "What was the vote in Van Buren, and when was it decided?", "a": "6–3, decided June 3, 2021."},
+  {"ch": "s1", "q": "Explain Van Buren using the house-key analogy.", "a": "Using the key you were given to go inside is not breaking in; it is breaking in only if you force your way into a room locked with a different key."},
+  {"ch": "s1", "q": "Does the Van Buren ruling mean his conduct was legal everywhere?", "a": "No. It was not federal hacking, but it was not ethical, and state anti-hacking laws do not always mirror the CFAA."},
+  {"ch": "s1", "q": "Nosal I (2012): what was the access situation?", "a": "Current Korn/Ferry employees used their own valid logins to download data for Nosal, violating a policy limiting the database to company business."},
+  {"ch": "s1", "q": "Nosal I: what did the en banc Ninth Circuit hold?", "a": "“Exceeds authorized access” covers getting at information you are not permitted to reach, not misusing information you are permitted to reach."},
+  {"ch": "s1", "q": "Why did Nosal I refuse to make use-policy violations federal crimes?", "a": "Workplace computer-use policies are often long, unclear, changeable, and rarely read; the court would not turn ordinary policy violations into crimes."},
+  {"ch": "s1", "q": "Nosal II (2016): what changed from Nosal I?", "a": "Korn/Ferry had revoked the group’s credentials, and they got back in using a current employee’s shared login."},
+  {"ch": "s1", "q": "Nosal II: what did the Ninth Circuit hold?", "a": "Using a computer after the owner has rescinded permission is access without authorization; the conviction was affirmed."},
+  {"ch": "s1", "q": "What is the “real lesson” of comparing Nosal I and Nosal II?", "a": "The difference between misusing access you still have and using access after permission has been revoked: permission, revocation, and credentials decide the case."},
+  {"ch": "s1", "q": "What section of the Justice Manual covers the CFAA?", "a": "Justice Manual 9-48.000 (Computer Fraud and Abuse Act), DOJ’s charging policy, updated May 2022."},
+  {"ch": "s1", "q": "When should prosecutors decline a CFAA case for research, under the Justice Manual?", "a": "When the evidence shows good-faith security research: testing or fixing a flaw in a way designed to avoid harm, with findings used mainly to improve security."},
+  {"ch": "s1", "q": "Can a CFAA case rest only on violating a website’s terms of service?", "a": "No. The Justice Manual says a prosecution cannot rest solely on violating a public service’s terms of service."},
+  {"ch": "s1", "q": "Under the Justice Manual, how must an insider boundary be enforced to charge “exceeds authorized access”?", "a": "Technically, through code or configuration, not only through contracts or policies."},
+  {"ch": "s1", "q": "According to the Justice Manual, what can revoke authorization going forward?", "a": "A written cease-and-desist notice that the recipient receives and understands."},
+  {"ch": "s2", "q": "What three functions make up a sound data management plan?", "a": "Data protection, data security, and data privacy."},
+  {"ch": "s2", "q": "What three procedures make up data protection?", "a": "Data inventory, backup and recovery, and data life-cycle management."},
+  {"ch": "s2", "q": "What does data security focus on?", "a": "Safeguarding data against unauthorized access, theft, and corruption: physical device security, identity and access management, encryption."},
+  {"ch": "s2", "q": "What does data privacy focus on?", "a": "The ethics and transparency of data handling: informing people why data is collected, how it is used, and how it is stored and protected."},
+  {"ch": "s2", "q": "Name three privacy laws the data-protection video lists as standardizing transparency.", "a": "The GDPR, the California Consumer Privacy Act, and the Australian Privacy Act."},
+  {"ch": "s2", "q": "Can a company with strong security tools still create privacy problems?", "a": "Yes: by collecting too much data, sharing it carelessly, or making promises it does not follow."},
+  {"ch": "s2", "q": "Why is U.S. privacy law called a patchwork?", "a": "It mixes federal law, state law, constitutional ideas, consumer protection, health, education, and financial data rules, plus international pressure like the GDPR."},
+  {"ch": "s2", "q": "Which amendments did Griswold v. Connecticut draw on for a right to privacy?", "a": "The First, Third, Fourth, and Ninth Amendments."},
+  {"ch": "s2", "q": "What does the Third Amendment protect?", "a": "The home from government intrusion through forced quartering of soldiers."},
+  {"ch": "s2", "q": "What did a Nevada federal court decide about public Twitter posts?", "a": "They carry no reasonable expectation of privacy because anyone can view them."},
+  {"ch": "s2", "q": "What does Section 5 of the FTC Act prohibit?", "a": "Unfair or deceptive acts or practices in or affecting commerce."},
+  {"ch": "s2", "q": "Why is the FTC called the nation’s de facto privacy regulator?", "a": "Section 5’s broad mandate lets it police privacy even though the U.S. has no comprehensive federal privacy law."},
+  {"ch": "s2", "q": "What makes a practice deceptive under Section 5?", "a": "A representation, omission, or practice likely to mislead consumers that is material to their choice or conduct."},
+  {"ch": "s2", "q": "What makes a practice unfair under Section 5?", "a": "It causes or is likely to cause substantial injury that consumers cannot reasonably avoid and that is not outweighed by countervailing benefits."},
+  {"ch": "s2", "q": "What is the FTC podcast’s one-line test for “reasonable” security?", "a": "Reasonable does not mean perfect, but it does mean defensible."},
+  {"ch": "s2", "q": "How does the FTC treat a published privacy notice?", "a": "As a binding set of promises; deviating from it can be deception."},
+  {"ch": "s2", "q": "What are dark patterns?", "a": "Interface designs that subtly manipulate users toward less privacy-protective choices, such as pre-ticked boxes or confusing toggles."},
+  {"ch": "s2", "q": "How long do FTC compliance orders often last?", "a": "Often 20 years, with regular assessments, audits, and reporting."},
+  {"ch": "s2", "q": "What did FTC v. Wyndham decide about FTC authority?", "a": "The FTC can regulate data security under Section 5’s unfairness prong, and Wyndham had fair notice its practices could be found inadequate."},
+  {"ch": "s2", "q": "Name problems the FTC pointed to in Wyndham.", "a": "Weak passwords, poor network controls, inadequate incident response, and statements giving customers a stronger sense of protection than provided."},
+  {"ch": "s2", "q": "Why did the Eleventh Circuit refuse to enforce the FTC’s LabMD order?", "a": "It lacked specific prohibitions and demanded an indeterminate “reasonableness” standard, so it was too vague to follow."},
+  {"ch": "s2", "q": "What tension does LabMD highlight?", "a": "Flexible “reasonable security” standards versus the legal need for specific, followable requirements."},
+  {"ch": "s2", "q": "What did the FTC’s 2025 Amazon settlement total, and how was it split?", "a": "$2.5 billion: a $1 billion civil penalty and $1.5 billion in consumer refunds."},
+  {"ch": "s2", "q": "What did the FTC allege Amazon did with Prime?", "a": "Enrolled consumers without proper consent using confusing interfaces and made cancellation difficult."},
+  {"ch": "s2", "q": "Rushkoff’s point about free platforms?", "a": "The user may be the product, not the customer: advertisers pay, and users’ attention, behavior, and data are part of what is sold."},
+  {"ch": "s2", "q": "Why can a website owner be responsible for a third-party script it did not write?", "a": "Responsibility does not disappear because a vendor’s code collected or exposed the data; the owner must review it and describe it accurately."},
+  {"ch": "s2", "q": "Under Section 5, why is vendor management a compliance duty?", "a": "A company that makes promises about its ecosystem implicitly vouches for its third parties’ practices."},
+  {"ch": "s3", "q": "Is breach notification controlled by one national rule?", "a": "No. States have their own breach-notification laws."},
+  {"ch": "s3", "q": "Which jurisdictions have security breach-notification laws (NCSL)?", "a": "All 50 states plus the District of Columbia, Guam, Puerto Rico, and the U.S. Virgin Islands."},
+  {"ch": "s3", "q": "What do state breach-notification laws typically define?", "a": "Who must comply, what counts as personal information, what counts as a breach, notice timing and method, and exemptions."},
+  {"ch": "s3", "q": "What exemption is common in breach-notification laws?", "a": "Encrypted information."},
+  {"ch": "s3", "q": "Which entities does the HIPAA Security Rule cover?", "a": "Covered entities and business associates handling electronic protected health information (ePHI)."},
+  {"ch": "s3", "q": "Where is the HIPAA Security Rule codified?", "a": "45 C.F.R. Part 164, Subpart C."},
+  {"ch": "s3", "q": "What are the HIPAA Security Rule’s three safeguard families?", "a": "Administrative, physical, and technical."},
+  {"ch": "s3", "q": "Name the HIPAA Security Rule structure the module asks you to recognize.", "a": "Risk analysis, risk management, access controls, audit controls, integrity protections, and transmission security."},
+  {"ch": "s4", "q": "What are NIST SP 800-86’s four forensic phases, in order?", "a": "Collection, examination, analysis, reporting."},
+  {"ch": "s4", "q": "What happens in NIST’s collection phase?", "a": "Data is identified, labeled, recorded, and acquired from possible sources while preserving its integrity."},
+  {"ch": "s4", "q": "Which data should generally be acquired first?", "a": "Volatile data (such as memory) before non-volatile data."},
+  {"ch": "s4", "q": "What does NIST say to do when it is unclear whether evidence must be preserved?", "a": "Preserve it by default."},
+  {"ch": "s4", "q": "What is a legal hold?", "a": "A request, usually from a lawyer, describing what data must be preserved; the data custodian acquires and preserves it."},
+  {"ch": "s4", "q": "What does ESI stand for?", "a": "Electronically stored information."},
+  {"ch": "s4", "q": "How do you prove a digital copy has not changed?", "a": "Compare hashes (message digests) of the original and the copy; digital signatures also support integrity."},
+  {"ch": "s4", "q": "What is chain of custody?", "a": "A record of everyone who accessed the evidence and when, so you can confirm it is the same data originally collected."},
+  {"ch": "s4", "q": "What RFC gives guidelines for evidence collection and archiving?", "a": "RFC 3227."},
+  {"ch": "s4", "q": "Why work from copies of mobile devices quickly?", "a": "Mobile devices can be erased remotely, and copies prevent changes to the original."},
+  {"ch": "s4", "q": "Why might investigators acquire data from a running system?", "a": "Some systems with encryption lock themselves down when powered off."},
+  {"ch": "s4", "q": "What is e-discovery?", "a": "Collecting, preparing, reviewing, interpreting, and producing electronic documents; it is about acquisition, not analysis."},
+  {"ch": "s4", "q": "What must the party offering a digital record show to authenticate it?", "a": "That the record is what it claims to be."},
+  {"ch": "s4", "q": "Name the three common challenges to the authenticity of computer records.", "a": "The record was altered, the computer program was unreliable, or the author cannot be identified."},
+  {"ch": "s4", "q": "Are computer-generated records (like automatic logs) usually hearsay?", "a": "No. No person made a statement; the question is whether the process is reliable."},
+  {"ch": "s4", "q": "When do hearsay rules apply to computer records?", "a": "For computer-stored records that contain what a person wrote, such as emails or documents."},
+  {"ch": "s5", "q": "How does the FTC video’s ransomware scenario begin?", "a": "An urgent email that appears to come from HR or the CEO; clicking the link downloads software that locks the company out."},
+  {"ch": "s5", "q": "What three preparation steps does the FTC video recommend?", "a": "Back up data outside your network, teach everyone to spot ransomware, and install the latest patches and security updates."},
+  {"ch": "s5", "q": "What is the first step after a ransomware attack, per the FTC video?", "a": "Disconnect the infected devices from the network right away to limit damage."},
+  {"ch": "s5", "q": "Who should a ransomware victim contact?", "a": "Authorities such as the local FBI field office, or the Internet Crime Complaint Center at ic3.gov."},
+  {"ch": "s5", "q": "Why does the FBI not support paying a ransom?", "a": "Payment does not guarantee recovery, encourages more attacks, and gives others an incentive to join the activity."},
+  {"ch": "s5", "q": "What does modern ransomware add to the legal picture?", "a": "Data theft, breach notification, cryptocurrency tracing, sanctions, insurance, critical-infrastructure risk, and international law-enforcement problems."},
+  {"ch": "s5", "q": "Main argument for banning ransom payments?", "a": "Payments fuel the ransomware economy and encourage more attacks."},
+  {"ch": "s5", "q": "Main argument against banning ransom payments?", "a": "A ban could harm hospitals, schools, small businesses, and critical services that cannot recover quickly."},
+  {"ch": "s5", "q": "After the panic settles, what three questions does the module say matter?", "a": "What did the company do before the attack, what did it promise, and what records prove the response was reasonable?"}
+];
+// ─── FLASHCARD ENGINE ───
+let deck=[],currentIdx=0,flipped=false;
+function filterCards(ch,btn){
+  activateFilter(btn);
+  deck=ch==='all'?[...allCards]:allCards.filter(c=>c.ch===ch);
+  currentIdx=0;flipped=false;renderCard();
+}
+function renderCard(){
+  const empty=document.getElementById('fc-empty');
+  if(!deck.length){empty.style.display='block';document.getElementById('fc-counter').textContent='';return;}
+  empty.style.display='none';
+  const c=deck[currentIdx];
+  document.getElementById('fc-q').textContent=c.q;
+  document.getElementById('fc-a').textContent=c.a;
+  document.getElementById('fc-counter').textContent=(currentIdx+1)+' / '+deck.length;
+  const card=document.getElementById('fc-card');
+  card.classList.remove('flipped');flipped=false;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+  else{mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+}
+function flipCard(){document.getElementById('fc-card').classList.toggle('flipped');flipped=!flipped;}
+function nextCard(){if(!deck.length)return;currentIdx=(currentIdx+1)%deck.length;renderCard();}
+function prevCard(){if(!deck.length)return;currentIdx=(currentIdx-1+deck.length)%deck.length;renderCard();}
+function shuffleCards(){for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}currentIdx=0;renderCard();}
+function toggleMastered(idx){
+  const c=deck[idx];if(!c)return;
+  const key=getMasteryKey()+allCards.indexOf(c);
+  const mb=document.getElementById('fc-master-btn');
+  if(localStorage.getItem(key)){localStorage.removeItem(key);mb.textContent='☐ Mastered';mb.classList.remove('mastered-btn');}
+  else{localStorage.setItem(key,'1');mb.textContent='✓ Mastered';mb.classList.add('mastered-btn');}
+}
+
+// ─── QUIZ DATA ───
+const allQuizData=[
+  {"ch": "s1", "type": "mc", "q": "A city employee with a valid login to a records database looks up a neighbor out of curiosity, which policy forbids. Under Van Buren, has she exceeded authorized access?", "opts": ["Yes: she violated a written use policy", "Yes: her purpose was personal", "No: the database was an area her credentials already opened to her", "No: databases are not computers under the CFAA"], "ans": 2, "exp": "Van Buren asks whether the area was off-limits, not why the person went there."},
+  {"ch": "s1", "type": "fitb", "q": "The CFAA makes it a crime to access a computer without authorization or to ___ authorized access.", "ans": ["exceed"], "display": "exceed", "exp": "The two prongs: without authorization (outsiders) and exceeding authorized access (insiders)."},
+  {"ch": "s1", "type": "mc", "q": "The CFAA was enacted in which year?", "opts": ["1986", "1996", "2001", "2021"], "ans": 0, "exp": "It was enacted in 1986 in response to concerns about hackers."},
+  {"ch": "s1", "type": "mc", "q": "Which statement best captures the Van Buren analogy?", "opts": ["Anyone with a key can enter any room", "Entering with a key for a bad reason is burglary", "Keys are irrelevant; only intent matters", "Using the key you were given is not breaking in; forcing open a room locked with another key is"], "ans": 3, "exp": "Boundaries matter, not motive."},
+  {"ch": "s1", "type": "mc", "q": "What was the Supreme Court’s vote in Van Buren?", "opts": ["9–0", "6–3", "5–4", "7–2"], "ans": 1, "exp": "Decided 6–3 on June 3, 2021."},
+  {"ch": "s1", "type": "mc", "q": "What happened to Van Buren’s conviction?", "opts": ["It was affirmed", "It was sent to a state court", "It was reversed", "It was reduced to a misdemeanor"], "ans": 2, "exp": "He only accessed areas his password opened, so he did not violate the CFAA."},
+  {"ch": "s1", "type": "mc", "q": "What caution does the CFAA video give about state law?", "opts": ["State anti-hacking laws do not always mirror the CFAA", "States cannot regulate hacking", "State law always follows Van Buren", "State law only covers outsiders"], "ans": 0, "exp": "The same act can be legal under the CFAA and illegal under state law."},
+  {"ch": "s1", "type": "mc", "q": "In Nosal I, current employees used their own logins to download data for Nosal in violation of a business-use policy. What did the en banc court hold?", "opts": ["Any policy violation is a CFAA crime", "The employees acted without authorization", "Business-use policies define the CFAA boundary", "Misusing information you may access is not exceeding authorized access"], "ans": 3, "exp": "Nosal I separated access from misuse."},
+  {"ch": "s1", "type": "mc", "q": "In Nosal II, what fact made the difference?", "opts": ["They used malware", "The group’s own access had been revoked before they used a current employee’s login", "They worked for a vendor", "They printed records instead of downloading them"], "ans": 1, "exp": "Using a computer after permission is rescinded is access without authorization."},
+  {"ch": "s1", "type": "fitb", "q": "Nosal II held that using a borrowed password after your own access was revoked is access ___ authorization.", "ans": ["without"], "display": "without", "exp": "The court affirmed the conviction under the “without authorization” prong."},
+  {"ch": "s1", "type": "mc", "q": "Why did the Nosal I court worry about using company policies to define CFAA crimes?", "opts": ["Policies are always confidential", "Courts cannot read policies", "Policies are often long, unclear, changeable, and rarely read", "Policies only apply to outsiders"], "ans": 2, "exp": "It refused to turn ordinary workplace violations into federal crimes."},
+  {"ch": "s1", "type": "mc", "q": "Under DOJ’s Justice Manual, which situation is LEAST likely to support a CFAA charge?", "opts": ["Breaking a free social media site’s rule against pseudonyms", "Logging in after receiving and understanding a cease-and-desist letter", "Using stolen credentials to reach a payroll server", "Bypassing a technical control to open a restricted folder"], "ans": 0, "exp": "A case cannot rest solely on terms-of-service violations."},
+  {"ch": "s1", "type": "mc", "q": "For an “exceeds authorized access” charge, DOJ expects the boundary to be enforced how?", "opts": ["Only in the employee handbook", "In a non-disclosure agreement", "By verbal instruction", "Technically, through code or configuration"], "ans": 3, "exp": "Contracts and policies alone are not enough under the Justice Manual."},
+  {"ch": "s1", "type": "mc", "q": "When does the Justice Manual direct prosecutors to decline a case?", "opts": ["Whenever the defendant is an employee", "When the conduct was good-faith security research", "Whenever no money was taken", "When the system had no password"], "ans": 1, "exp": "Good-faith research is testing or fixing a flaw while avoiding harm, mainly to improve security."},
+  {"ch": "s1", "type": "fitb", "q": "A written ___-and-desist notice that the recipient receives and understands can revoke authorization going forward.", "ans": ["cease"], "display": "cease", "exp": "The Justice Manual treats it as revocation."},
+  {"ch": "s2", "type": "mc", "q": "A company encrypts everything and has never been breached, but secretly sells customers’ browsing history. Which function has failed?", "opts": ["Data security", "Data protection", "Data privacy", "Data inventory"], "ans": 2, "exp": "Privacy is about how data is used and what people are told."},
+  {"ch": "s2", "type": "mc", "q": "Which is part of data protection rather than data security?", "opts": ["Backup and recovery", "Encryption", "Identity and access management", "Physical device security"], "ans": 0, "exp": "Data protection = inventory, backup and recovery, life-cycle management."},
+  {"ch": "s2", "type": "mc", "q": "Why is U.S. privacy law described as a patchwork?", "opts": ["There is one comprehensive federal privacy act", "Only states regulate privacy", "Only the GDPR applies", "It combines federal, state, constitutional, consumer-protection, and sector rules"], "ans": 3, "exp": "Duties depend on data type, holder, use, and promises."},
+  {"ch": "s2", "type": "mc", "q": "Griswold v. Connecticut is important to cyber law because it:", "opts": ["Created the CFAA", "Recognized a constitutional right to privacy not stated in the text", "Defined personal information for breach laws", "Upheld the FTC’s authority over data security"], "ans": 1, "exp": "It drew privacy from several amendments."},
+  {"ch": "s2", "type": "fitb", "q": "The ___ Amendment protects the home from forced quartering of soldiers.", "ans": ["third", "3rd"], "display": "Third", "exp": "The module uses it as an early protection against government intrusion."},
+  {"ch": "s2", "type": "mc", "q": "Why might public tweets have no reasonable expectation of privacy?", "opts": ["Twitter owns all tweets", "Tweets are encrypted", "Anyone can view them, so they can be searched, copied, preserved, and subpoenaed", "Only private messages are speech"], "ans": 2, "exp": "Public visibility, not the poster’s feeling, drives the legal argument."},
+  {"ch": "s2", "type": "mc", "q": "A company promises it never shares data with advertisers, then does. Which Section 5 theory fits most directly?", "opts": ["Deception", "Unfairness", "Fair notice", "Rule of lenity"], "ans": 0, "exp": "A broken, material promise is the classic deception case."},
+  {"ch": "s2", "type": "mc", "q": "Which element belongs to unfairness but not deception?", "opts": ["A misleading representation", "Materiality to consumers", "A privacy notice", "Substantial injury consumers cannot reasonably avoid"], "ans": 3, "exp": "Unfairness can apply even when no promise was broken."},
+  {"ch": "s2", "type": "fitb", "q": "Per the FTC podcast, reasonable security does not mean perfect, but it does mean ___.", "ans": ["defensible"], "display": "defensible", "exp": "Safeguards must be proportionate to the data and the risk."},
+  {"ch": "s2", "type": "mc", "q": "What did the Third Circuit decide in FTC v. Wyndham?", "opts": ["The FTC lacks authority over data security", "The FTC may regulate data security under unfairness, and Wyndham had fair notice", "Wyndham’s notice was a contract", "The FTC must issue rules first"], "ans": 1, "exp": "The court upheld FTC authority."},
+  {"ch": "s2", "type": "mc", "q": "Which problem did the FTC NOT list against Wyndham in the module summary?", "opts": ["Weak passwords", "Poor network controls", "Selling customer data to advertisers", "Inadequate incident response"], "ans": 2, "exp": "The FTC pointed to passwords, network controls, incident response, and overstated protection."},
+  {"ch": "s2", "type": "mc", "q": "Why did the Eleventh Circuit refuse to enforce the FTC’s LabMD order?", "opts": ["It lacked specific prohibitions and demanded an indeterminate reasonableness standard", "LabMD’s data was not sensitive", "The FTC lacked jurisdiction over labs", "No data was exposed"], "ans": 0, "exp": "Enforcement orders must be specific enough to follow."},
+  {"ch": "s2", "type": "mc", "q": "A sign-up page uses a pre-checked box and hides cancellation several menus deep. This is best described as:", "opts": ["A legal hold", "A computer-generated record", "Least privilege", "A dark pattern"], "ans": 3, "exp": "Interface design can itself violate Section 5."},
+  {"ch": "s2", "type": "mc", "q": "How was the FTC’s 2025 Amazon settlement split?", "opts": ["$2.5 billion civil penalty only", "$1 billion civil penalty and $1.5 billion in refunds", "$500 million penalty and $2 billion refunds", "$1.5 billion penalty and $1 billion refunds"], "ans": 1, "exp": "Total $2.5 billion."},
+  {"ch": "s2", "type": "fitb", "q": "Besides the FTC Act, the Amazon Prime case alleged violations of the Restore Online Shoppers’ Confidence Act, abbreviated ___.", "ans": ["rosca"], "display": "ROSCA", "exp": "ROSCA governs online negative-option subscriptions."},
+  {"ch": "s2", "type": "mc", "q": "According to the Princeton reading, why do third-party scripts create legal risk for site owners?", "opts": ["They slow pages down", "They are always illegal", "They can collect or expose user data the owner doesn’t understand, and responsibility stays with the owner", "Only the script provider can be liable"], "ans": 2, "exp": "Owners must review code and describe it accurately."},
+  {"ch": "s2", "type": "mc", "q": "Rushkoff’s main point about free platforms is that:", "opts": ["The user may be the product, not the customer", "Free platforms collect no data", "Advertisers never pay", "Privacy policies are always accurate"], "ans": 0, "exp": "Read privacy promises with the revenue model in mind."},
+  {"ch": "s2", "type": "mc", "q": "Under Section 5, why must companies oversee vendors?", "opts": ["Vendors are exempt from the FTC Act", "The CFAA requires it", "HIPAA covers all vendors", "Promises about the ecosystem implicitly vouch for third parties"], "ans": 3, "exp": "Due diligence, monitoring, and contract controls become compliance duties."},
+  {"ch": "s3", "type": "mc", "q": "Which jurisdictions have breach-notification laws according to NCSL?", "opts": ["Only the 50 states", "All 50 states plus D.C., Guam, Puerto Rico, and the U.S. Virgin Islands", "Fewer than half the states", "None; notice is purely federal"], "ans": 1, "exp": "Breach notification is a state patchwork."},
+  {"ch": "s3", "type": "mc", "q": "What do breach laws commonly treat as personal information?", "opts": ["Any public social media post", "Only medical records", "A name combined with a Social Security, driver’s license, or account number", "Only passwords"], "ans": 2, "exp": "Definitions vary, but this combination is common."},
+  {"ch": "s3", "type": "mc", "q": "Which is a common exemption in breach-notification laws?", "opts": ["Encrypted data", "Data held by small businesses", "Data older than one year", "Data stored in the cloud"], "ans": 0, "exp": "Encryption often removes or reduces notice duties."},
+  {"ch": "s3", "type": "mc", "q": "Why does breach notification complicate incident response for a company with customers in many states?", "opts": ["Federal law overrides states", "Only the home state’s law applies", "States share one deadline", "Each state may have different definitions, timing, and notice duties"], "ans": 3, "exp": "The plan must account for each state’s duties."},
+  {"ch": "s3", "type": "mc", "q": "The HIPAA Security Rule organizes required safeguards into which three families?", "opts": ["Preventive, detective, corrective", "Administrative, physical, technical", "People, process, technology", "Confidentiality, integrity, availability"], "ans": 1, "exp": "Remember A-P-T."},
+  {"ch": "s3", "type": "fitb", "q": "The HIPAA Security Rule protects ___ protected health information (ePHI).", "ans": ["electronic"], "display": "electronic", "exp": "ePHI = electronic protected health information."},
+  {"ch": "s3", "type": "mc", "q": "Which item is part of the HIPAA Security Rule structure the module highlights?", "opts": ["Dark patterns", "Cease-and-desist letters", "Audit controls", "Legal holds"], "ans": 2, "exp": "Risk analysis, risk management, access controls, audit controls, integrity, transmission security."},
+  {"ch": "s3", "type": "mc", "q": "Who must comply with the HIPAA Security Rule?", "opts": ["Covered entities and business associates", "All websites", "Only hospitals", "Only federal agencies"], "ans": 0, "exp": "Business associates are included."},
+  {"ch": "s4", "type": "mc", "q": "What are NIST SP 800-86’s four forensic phases, in order?", "opts": ["Identify, protect, detect, respond", "Preparation, detection, containment, recovery", "Acquisition, hashing, imaging, testimony", "Collection, examination, analysis, reporting"], "ans": 3, "exp": "Collection → examination → analysis → reporting."},
+  {"ch": "s4", "type": "mc", "q": "Which data should generally be acquired first?", "opts": ["Archived backups", "System memory and other volatile data", "Printed reports", "The hard drive after shutdown"], "ans": 1, "exp": "Volatile data disappears when power is lost."},
+  {"ch": "s4", "type": "mc", "q": "Investigators hash the original drive and the copy, and the values match. What does this show?", "opts": ["The copy is encrypted", "The record is not hearsay", "The copy is identical to the original", "The chain of custody is complete"], "ans": 2, "exp": "Matching hashes prove integrity; custody records are still needed."},
+  {"ch": "s4", "type": "mc", "q": "Who typically initiates a legal hold, and who carries it out?", "opts": ["A lawyer initiates; the data custodian preserves the data", "The CEO initiates; IT deletes duplicates", "Law enforcement initiates; the vendor complies", "The court clerk initiates; employees self-report"], "ans": 0, "exp": "The custodian places the ESI in a separate repository."},
+  {"ch": "s4", "type": "fitb", "q": "Under NIST SP 800-86, if it is unclear whether evidence must be preserved, it should generally be preserved by ___.", "ans": ["default"], "display": "default", "exp": "Decide early with management and legal advisors."},
+  {"ch": "s4", "type": "fitb", "q": "RFC ___ is the industry guideline for evidence collection and archiving.", "ans": ["3227"], "display": "3227", "exp": "Mentioned in the Security+ video."},
+  {"ch": "s4", "type": "mc", "q": "What is e-discovery mainly about?", "opts": ["Analyzing malware", "Writing incident reports", "Restoring backups", "Acquiring and producing electronic documents for a legal matter"], "ans": 3, "exp": "Analysis may follow from a forensics team."},
+  {"ch": "s4", "type": "mc", "q": "Why might investigators acquire data while a system is still running?", "opts": ["Running systems cannot be hashed", "Some encrypted systems lock down when powered off", "Law requires it in every case", "Memory is never useful"], "ans": 1, "exp": "Live acquisition can preserve access to encrypted data."},
+  {"ch": "s4", "type": "mc", "q": "Under DOJ Chapter 5, why is an automatically generated firewall log generally not hearsay?", "opts": ["It is short", "It is encrypted", "No person made a statement; it comes from a machine process", "The company owns the firewall"], "ans": 2, "exp": "The question becomes whether the process is reliable."},
+  {"ch": "s4", "type": "mc", "q": "Which record is most likely to raise hearsay issues?", "opts": ["An employee’s email", "An automatic system log", "A router’s connection record", "A timestamp generated by a server"], "ans": 0, "exp": "Computer-stored records of what a person said can be hearsay."},
+  {"ch": "s4", "type": "mc", "q": "Which is NOT one of the common challenges to authenticity of computer records?", "opts": ["The record was altered", "The program was unreliable", "The author cannot be identified", "The record is too long"], "ans": 3, "exp": "Alteration, program reliability, and author identity."},
+  {"ch": "s4", "type": "fitb", "q": "The documented record of who accessed evidence and when, proving it was not changed, is the chain of ___.", "ans": ["custody"], "display": "custody", "exp": "Digital chain of custody relies on hashes and logs."},
+  {"ch": "s5", "type": "mc", "q": "According to the FTC video, what should a company do first after discovering ransomware?", "opts": ["Pay quickly to limit downtime", "Disconnect infected devices from the network", "Wipe and reinstall every server", "Post a public statement"], "ans": 1, "exp": "Then contact authorities such as the FBI."},
+  {"ch": "s5", "type": "mc", "q": "Which preparation step does the FTC video recommend?", "opts": ["Keep backups on the same network for speed", "Delay patches until after audits", "Back up business data outside the network", "Disable email"], "ans": 2, "exp": "Also train staff and install updates."},
+  {"ch": "s5", "type": "mc", "q": "What is the FBI’s position on ransom payments?", "opts": ["It does not support paying", "It requires paying to preserve evidence", "It supports paying if insured", "Paying is illegal in every state"], "ans": 0, "exp": "Payment doesn’t guarantee recovery and encourages more attacks."},
+  {"ch": "s5", "type": "fitb", "q": "The FBI’s Internet Crime Complaint Center accepts reports at ___.gov.", "ans": ["ic3"], "display": "ic3", "exp": "Victims can also contact their local field office."},
+  {"ch": "s5", "type": "mc", "q": "Why does data theft make modern ransomware more legally complicated?", "opts": ["It makes backups unnecessary", "It removes law-enforcement involvement", "It only affects large companies", "It adds breach notification and public leak threats on top of encryption"], "ans": 3, "exp": "It also adds cryptocurrency, sanctions, and insurance issues."},
+  {"ch": "s5", "type": "mc", "q": "What is the main argument AGAINST banning ransom payments?", "opts": ["Payments always restore data", "Hospitals, schools, small businesses, and critical services may be unable to recover quickly", "Ransomware is rare", "Bans are unconstitutional"], "ans": 1, "exp": "Rules that sound strong on paper can pressure victims."}
+];
+// ─── QUIZ ENGINE ───
+let quizFilter='all',userAnswers={};
+function setQuizFilter(ch,btn){
+  activateFilter(btn);quizFilter=ch;resetQuiz();
+}
+function getQuizDeck(){return quizFilter==='all'?allQuizData:allQuizData.filter(q=>q.ch===quizFilter);}
+function renderQuiz(){
+  const deck=getQuizDeck();
+  const c=document.getElementById('quiz-container');c.innerHTML='';userAnswers={};
+  deck.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='quiz-q';div.id='qq'+i;
+    if(q.type==='mc'){
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <div class="quiz-opts">${q.opts.map((o,oi)=>`<label><input type="radio" name="q${i}" onclick="selectMC(${i},${oi})"> ${o}</label>`).join('')}</div>
+        <div class="q-exp" id="exp${i}">${q.exp}</div>`;
+    } else {
+      div.innerHTML=`<div class="quiz-q-text">${i+1}. ${q.q}</div>
+        <input class="fitb-input" id="fitb${i}" placeholder="Type your answer..." aria-label="Answer for question ${i+1}" oninput="storeFITB(${i})">
+        <div class="q-exp" id="exp${i}"><strong>Answer: ${q.display}</strong> — ${q.exp}</div>`;
+    }
+    c.appendChild(div);
+  });
+  document.getElementById('quiz-score').style.display='none';
+}
+function selectMC(qi,oi){userAnswers[qi]=oi;}
+function storeFITB(qi){userAnswers[qi]=document.getElementById('fitb'+qi).value.trim().toLowerCase();}
+function submitQuiz(){
+  const deck=getQuizDeck();let correct=0;
+  deck.forEach((q,i)=>{
+    const el=document.getElementById('qq'+i);
+    const exp=document.getElementById('exp'+i);exp.classList.add('show');
+    el.classList.remove('q-correct','q-wrong');
+    if(q.type==='mc'){
+      const ua=userAnswers[i];
+      if(ua===q.ans){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    } else {
+      const ua=(userAnswers[i]||'').toLowerCase();
+      const ok=ua!==''&&q.ans.some(a=>ua.includes(a.toLowerCase()));
+      if(ok){correct++;el.classList.add('q-correct');}else{el.classList.add('q-wrong');}
+    }
+  });
+  const sc=document.getElementById('quiz-score');
+  const pct=Math.round(correct/deck.length*100);
+  sc.style.display='block';
+  sc.style.borderColor=pct>=70?'var(--green)':'var(--red)';
+  sc.innerHTML=`<strong>Score: ${correct}/${deck.length} (${pct}%)</strong> — ${pct>=90?'Excellent! 🎉':pct>=70?'Good work — review flagged questions.':'Keep studying — focus on the red ones.'}`;
+}
+function resetQuiz(){renderQuiz();}
+
+// ─── DISCUSSION DATA ───  one entry per objective, in the same order
+const DISC_QUESTIONS=[
+  {"ch": "s1", "q": "Explain the two ways a person can violate the CFAA, then use Van Buren v. United States to explain what “exceeds authorized access” means today and why the purpose of the access does not decide the case.", "points": [{"text": "<strong>The statute</strong> — the Computer Fraud and Abuse Act (CFAA) is the main federal law used in hacking and unauthorized-access cases; it was enacted in 1986 in response to concerns about hackers breaking into computer systems."}, {"text": "<strong>Two ways to violate it</strong> — intentionally accessing a computer <em>without authorization</em> (outsiders breaking in) or <em>exceeding authorized access</em> (insiders entering parts of a system they were not given)."}, {"text": "<strong>Van Buren’s facts</strong> — a Georgia police sergeant with a valid password to a license-plate database, trained not to use it for personal purposes, ran a plate search for a promised $5,000 in an FBI sting."}, {"text": "<strong>The holding (6–3, June 3, 2021)</strong> — a person exceeds authorized access only by obtaining information from areas of a computer (files, folders, databases) that are off-limits to them; using permitted access for a forbidden purpose is not enough. Van Buren’s conviction was thrown out."}, {"text": "<strong>House-key analogy</strong> — using the key you were given to go inside is not breaking in; forcing your way into a room locked with a different key is."}, {"text": "<strong>Limits of the ruling</strong> — Van Buren’s conduct was still unethical and not free of consequences; and state anti-hacking laws do not always mirror the CFAA, so the same act can be legal federally and illegal under state law."}], "model": "The Computer Fraud and Abuse Act, enacted in 1986 after concerns about hackers breaking into computer systems, is the main federal statute used in unauthorized-access cases. It creates two paths to liability: intentionally accessing a computer without authorization, which targets outsiders who break in, and exceeding authorized access, which targets insiders who enter parts of a system they were never given. Van Buren tested the second path. A Georgia police sergeant had a valid password to a state license-plate database and had been trained not to use it for personal reasons, yet he ran a plate for a promised $5,000 in an FBI sting. Everyone agreed he had authorization to access the database, so the question was whether misusing that access exceeded it. In a 6–3 decision on June 3, 2021, the Supreme Court said no: a person exceeds authorized access only by obtaining information from files, folders, or databases that are off-limits to them. Like a guest who uses the house key they were given, he never forced open a locked room, so his conviction was reversed. That does not make the conduct ethical, and state anti-hacking laws may still reach it, but under the federal statute boundaries matter and purpose does not."},
+  {"ch": "s1", "q": "Compare United States v. Nosal (2012) and United States v. Nosal (2016). How does the legal analysis change when someone misuses access they still have versus uses access after permission was revoked, and what policy language would make access boundaries clearer before a dispute?", "points": [{"text": "<strong>Shared facts</strong> — David Nosal left the executive search firm Korn/Ferry to start a competitor; the firm kept a confidential candidate database for company business."}, {"text": "<strong>Nosal I (9th Cir. en banc, 2012)</strong> — current employees used their own valid logins to download data for Nosal in violation of a business-use policy; the court held “exceeds authorized access” covers getting at information you are not permitted to reach, not misusing information you are permitted to reach."}, {"text": "<strong>Why the court drew that line</strong> — it refused to turn ordinary workplace policy violations into federal crimes; computer-use policies are often long, unclear, changeable, and rarely read."}, {"text": "<strong>Nosal II (9th Cir., 2016)</strong> — after Korn/Ferry revoked their credentials, Nosal’s group got back in with a current employee’s shared login; the court held that using a computer after the owner has rescinded permission is access <em>without authorization</em>, and affirmed the conviction."}, {"text": "<strong>Policy lesson</strong> — the outcome turned on permission, revocation, and credentials, not motive; clear access boundaries, documented revocation, and controls on credential sharing make the line provable before a dispute."}, {"text": "<strong>DOJ’s charging policy agrees</strong> — the Justice Manual says a case cannot rest only on terms-of-service or personal-use policy violations, expects the insider boundary to be enforced technically (code or configuration), and treats a received cease-and-desist notice as revoking authorization."}], "model": "Both Nosal cases grow out of the same story: David Nosal left the search firm Korn/Ferry to start a competing business, and the firm kept a confidential candidate database meant for company business. In Nosal I (2012), current employees used their own valid logins to pull data for him in violation of a business-use policy. The en banc Ninth Circuit held that exceeding authorized access covers getting at information you are not permitted to reach, not misusing information you are permitted to reach, because otherwise long, unclear, rarely read workplace policies would turn ordinary employees into federal criminals. Nosal II (2016) changed the key fact: Korn/Ferry had revoked the group’s credentials, and they got back in with a current employee’s shared login. That was access without authorization, and the conviction stood. The difference was not motive but permission: whether the gate was open, and whether the company could prove it had closed it. DOJ’s own charging policy points the same way, declining cases built only on terms-of-service or personal-use rules, expecting insider boundaries to be enforced in code or configuration, and recognizing a received cease-and-desist notice as revocation. Good policy therefore defines who may reach which systems, requires access to be technically removed when a role ends, documents revocation, and prohibits credential sharing."},
+  {"ch": "s2", "q": "Explain the difference between data protection, data security, and data privacy, then explain why U.S. privacy law is a patchwork and how older constitutional ideas and the public-tweets case shape modern privacy arguments.", "points": [{"text": "<strong>Three functions</strong> — data protection keeps data available (data inventory, backup and recovery, life-cycle management); data security safeguards data against unauthorized access, theft, and corruption (physical security, identity and access management, encryption); data privacy concerns the ethics and transparency of why data is collected, how it is used, and how it is stored and protected."}, {"text": "<strong>Strong security is not privacy</strong> — a company can have strong security tools and still create privacy problems if it collects too much, shares carelessly, or breaks its promises."}, {"text": "<strong>A patchwork</strong> — U.S. privacy law mixes federal law, state law, constitutional ideas, consumer protection, health, education, and financial data rules, and international pressure such as the GDPR; duties depend on the type of data, who holds it, how it is used, and what was promised."}, {"text": "<strong>Constitutional roots</strong> — the First Amendment protects speech, religion, press, assembly, and petition; the Third protects the home from forced quartering of soldiers; Griswold v. Connecticut recognized a right to privacy drawn from the First, Third, Fourth, and Ninth Amendments even though the word “privacy” is not in the Constitution."}, {"text": "<strong>Feeling private vs. being private</strong> — a Nevada federal court found no reasonable expectation of privacy in public Twitter posts; public posts can be searched, copied, preserved, subpoenaed, or used as evidence."}], "model": "Data protection, data security, and data privacy are often used as synonyms, but they do different jobs. Data protection keeps data available through a data inventory, backup and recovery, and life-cycle management. Data security keeps data away from bad actors through physical device security, identity and access management, and encryption. Data privacy is about the ethics and transparency of handling data: telling people why it is collected, how it is used, and how it is stored and protected. The distinction matters because a company can have strong security and still violate privacy by over-collecting, sharing carelessly, or breaking its promises. U.S. privacy law makes this harder because it is a patchwork of federal and state statutes, constitutional principles, consumer-protection enforcement, sector rules for health, education, and financial data, and international pressure from laws like the GDPR, so an organization’s duties depend on the data, who holds it, how it is used, and what it promised. Privacy also has deep roots: the First and Third Amendments protect expression and the home, and Griswold v. Connecticut recognized a privacy right drawn from several amendments even though the word never appears. Courts still separate feeling private from being legally private; a Nevada federal court held that public tweets carry no reasonable expectation of privacy, which means they can be preserved, subpoenaed, and used as evidence."},
+  {"ch": "s2", "q": "Explain the two prongs of FTC Act Section 5 and how they apply to privacy and security. Then use Wyndham and LabMD to show both the reach and the limits of FTC cybersecurity enforcement.", "points": [{"text": "<strong>Section 5</strong> — prohibits unfair or deceptive acts or practices in or affecting commerce; with no comprehensive federal privacy law, it has made the FTC the nation’s de facto privacy regulator."}, {"text": "<strong>Deception</strong> — a representation, omission, or practice likely to mislead consumers that is material to their choices; privacy notices, marketing claims, and support scripts are all treated as promises."}, {"text": "<strong>Unfairness</strong> — a practice causing (or likely to cause) substantial injury that consumers cannot reasonably avoid and that is not outweighed by benefits; it reaches harm even when no promise was broken, and weak data security is its leading application."}, {"text": "<strong>Reasonable security</strong> — “reasonable does not mean perfect, but it does mean defensible”: safeguards proportionate to the data’s sensitivity and the likelihood of harm."}, {"text": "<strong>FTC v. Wyndham (3d Cir. 2015)</strong> — after three breaches in 2008–2009 (more than 619,000 payment cards allegedly compromised), the court held the FTC may regulate data security under unfairness and that Wyndham had fair notice its practices could be found inadequate; the FTC pointed to weak passwords, poor network controls, inadequate incident response, and overstated security statements."}, {"text": "<strong>LabMD v. FTC (11th Cir. 2018)</strong> — patient data was exposed through file-sharing software an employee installed; the court assumed unfairness but held the FTC’s order unenforceable because it lacked specific prohibitions and demanded an indeterminate “reasonableness” standard."}], "model": "Section 5 of the FTC Act prohibits unfair or deceptive acts or practices in or affecting commerce, and because the United States has no comprehensive federal privacy law, it has made the FTC the de facto privacy regulator. Deception covers representations, omissions, or practices likely to mislead consumers about something material; if a privacy notice or marketing claim promises protection the company does not deliver, that promise becomes enforceable. Unfairness covers practices that cause substantial injury consumers cannot reasonably avoid and that benefits do not outweigh, so it reaches poor security even when no promise was broken. The FTC’s test for security is that reasonable does not mean perfect, but it must be defensible and proportionate to the data and the risk. Wyndham shows the reach: after three breaches in 2008 and 2009 compromised more than 619,000 payment cards, the Third Circuit held that the FTC can police data security under unfairness and that Wyndham had fair notice its weak passwords, poor network controls, inadequate incident response, and overstated security claims could be found inadequate. LabMD shows the limit: the Eleventh Circuit assumed unfairness but refused to enforce an order that lacked specific prohibitions and demanded an indeterminate reasonableness standard. Together they teach that security promises create legal risk, but legal requirements must be specific enough to follow."},
+  {"ch": "s2", "q": "How can a company’s business model, interface design, vendors, and third-party code create privacy and legal risk even when the company itself never “hacks” anyone? Use the Rushkoff reading, the Amazon settlement, and the third-party scripts reading.", "points": [{"text": "<strong>You are the product</strong> — when a service is free, advertisers may be the paying customers and the user’s attention, behavior, and relationships part of what is sold; read privacy promises with the business model in mind."}, {"text": "<strong>Dark patterns</strong> — interface designs that nudge users toward less privacy-protective choices (pre-ticked boxes, confusing toggles, button colors that make declining harder); they can be deceptive or unfair even with no explicit misstatement."}, {"text": "<strong>Amazon (FTC, Sept. 2025)</strong> — a $2.5 billion settlement ($1 billion civil penalty, $1.5 billion in refunds) over allegations under the FTC Act and ROSCA that Amazon enrolled consumers in Prime without proper consent and made cancellation difficult."}, {"text": "<strong>Third-party scripts</strong> — analytics, ads, session-replay tools, and embedded services can collect or expose user data in ways the site operator does not understand; responsibility does not disappear because a vendor’s code did it."}, {"text": "<strong>Vendors under Section 5</strong> — a company that makes promises about its ecosystem implicitly vouches for its third parties, so due diligence, ongoing monitoring, and clear contractual controls are compliance duties."}], "model": "Privacy risk often begins with ordinary business choices rather than attacks. Rushkoff’s point is that when a service is free, the user may not be the customer at all: advertisers pay, and the user’s attention, behavior, and relationships become part of what is sold, so privacy promises should be read with the revenue model in mind. Design can be the violation. Dark patterns such as pre-ticked consent boxes, confusing toggles, or buttons that make declining harder steer users away from privacy-protective choices, and the FTC treats them as potentially deceptive or unfair even when nothing false is said. The September 2025 Amazon settlement, $2.5 billion made up of a $1 billion civil penalty and $1.5 billion in refunds, followed allegations under the FTC Act and ROSCA that Amazon enrolled consumers in Prime without proper consent and made cancellation difficult. Risk also arrives through other people’s code: the Princeton researchers showed that third-party analytics, ad, and session-replay scripts can collect data the site owner does not understand, yet responsibility stays with the owner. Under Section 5 a company vouches for its ecosystem, so vendor due diligence, monitoring, contractual controls, and a privacy policy that matches what really happens on the site are compliance duties, not business preferences."},
+  {"ch": "s3", "q": "Why does a data breach create legal duties beyond fixing the technical problem? Explain the state breach-notification patchwork, what these laws typically define, and what that means for an organization’s incident response plan.", "points": [{"text": "<strong>No single national rule</strong> — states have their own laws requiring notice to individuals when certain personal information is compromised."}, {"text": "<strong>Coverage</strong> — all 50 states plus the District of Columbia, Guam, Puerto Rico, and the U.S. Virgin Islands have breach-notification laws."}, {"text": "<strong>What the laws define</strong> — who must comply (businesses, data brokers, often government entities), what counts as personal information (commonly a name plus a Social Security, driver’s license, or account number), what counts as a breach (generally unauthorized acquisition), notice timing and method, and exemptions such as encrypted data."}, {"text": "<strong>Multi-state reality</strong> — an organization that collects data across states must build an incident response plan that accounts for each state’s different duties."}, {"text": "<strong>Beyond the fix</strong> — after a breach the organization may need to think about notification, law enforcement, insurance, customer communication, contract duties, and evidence preservation."}], "model": "Fixing the vulnerability is only the technical half of a breach; the legal half begins when personal information is compromised. There is no single national notification rule. Instead, all 50 states, the District of Columbia, Guam, Puerto Rico, and the U.S. Virgin Islands each have their own law. These laws typically define who must comply, such as businesses, data brokers, and often government entities; what counts as personal information, commonly a name combined with a Social Security, driver’s license, or account number; what counts as a breach, generally unauthorized acquisition; how and when notice must be given; and exemptions, such as encrypted data. An organization that collects data from customers in many states inherits many sets of deadlines and definitions at once, so its incident response plan has to identify which laws apply and who decides when notice goes out. The module also stresses the surrounding duties: contacting law enforcement, notifying insurers, communicating with customers, meeting contract obligations, and preserving evidence that shows the response was reasonable."},
+  {"ch": "s3", "q": "How does the HIPAA Security Rule connect legal compliance to specific cybersecurity safeguards, and why are risk analysis and risk management treated as required parts of protecting health information?", "points": [{"text": "<strong>Who it covers</strong> — covered entities and business associates that handle electronic protected health information (ePHI); found at 45 C.F.R. Part 164, Subpart C."}, {"text": "<strong>Three safeguard families</strong> — administrative, physical, and technical safeguards."}, {"text": "<strong>Structure to recognize</strong> — risk analysis, risk management, access controls, audit controls, integrity protections, and transmission security."}, {"text": "<strong>Why it matters</strong> — it shows what happens when privacy and cybersecurity duties become formal compliance obligations with specific controls, unlike a general “reasonable security” standard."}, {"text": "<strong>Risk analysis first</strong> — risk analysis and risk management are treated as required parts of protecting health information, not optional extras."}], "model": "The HIPAA Security Rule, at 45 C.F.R. Part 164, Subpart C, is the module’s clearest example of security duties written directly into law. It applies to covered entities and business associates that handle electronic protected health information and requires them to protect it through three families of safeguards: administrative, physical, and technical. Its structure is worth recognizing even without memorizing every section: risk analysis and risk management come first, followed by access controls, audit controls, integrity protections, and transmission security. That structure is the contrast to the FTC’s flexible “reasonable security” approach: instead of asking afterward whether practices were defensible, HIPAA names the categories of control an organization must have. Risk analysis and risk management are required because the right controls depend on knowing what ePHI exists, where it lives, and what threatens it; without that analysis, an organization cannot show its safeguards fit its risks."},
+  {"ch": "s4", "q": "Walk through how an organization should collect and preserve digital evidence during an incident. Use NIST SP 800-86’s four phases and the Security+ video’s concepts of legal hold, chain of custody, hashing, and e-discovery.", "points": [{"text": "<strong>NIST SP 800-86’s four phases</strong> — collection (identify, label, record, and acquire data while preserving integrity), examination (extract the relevant data), analysis (draw conclusions), and reporting (present results, describe actions, recommend improvements)."}, {"text": "<strong>Decide early, with counsel</strong> — determine with management and legal advisors whether evidence must be preserved for legal or disciplinary proceedings; when unclear, preserve by default. Acquire volatile data (memory) before non-volatile data."}, {"text": "<strong>Legal hold</strong> — usually initiated by a lawyer, sent to the data custodian, who acquires the described data into a separate repository of electronically stored information (ESI) and keeps it producible for the court."}, {"text": "<strong>Integrity and chain of custody</strong> — data must stay unmodified; hashes and digital signatures prove copies match the original and record who accessed the evidence and when."}, {"text": "<strong>Document and preserve</strong> — data collected today may be used in legal proceedings years later, so record every acquisition step (RFC 3227 is the industry guideline), work from copies, and consider live acquisition on encrypted or remotely wipeable devices."}, {"text": "<strong>E-discovery</strong> — collecting, preparing, reviewing, interpreting, and producing electronic documents; it is about acquisition, not analysis, and often hands images to a forensics team."}], "model": "Digital evidence is only useful if the organization can show where it came from, how it was collected, who handled it, and that the process was reliable. NIST SP 800-86 frames the work as four phases: collection, where data is identified, labeled, recorded, and acquired while preserving its integrity; examination, where the relevant data is extracted; analysis, where conclusions are drawn; and reporting, where results and actions are presented along with recommended improvements. NIST also says to decide early, with management and legal advisors, whether evidence must be preserved, to preserve by default when in doubt, and to capture volatile data such as memory before it disappears. The Security+ video adds the legal machinery. A legal hold, usually issued by a lawyer, goes to the data custodian, who places the described electronically stored information in a separate repository and keeps it ready for the court. Evidence must stay in its original form, so investigators work from copies and use hashes and digital signatures to prove the copy matches and to record every access, which is the digital version of a sealed evidence bag and chain of custody. Because the data may be used years later, every acquisition step is documented, following guidance such as RFC 3227. E-discovery then collects and produces the electronic documents, often handing drive images to forensic analysts."},
+  {"ch": "s4", "q": "Why is authentication important when digital records are used as evidence, and how could poor evidence handling weaken an otherwise strong cyber investigation? Use the computer-generated versus computer-stored distinction.", "points": [{"text": "<strong>Authentication</strong> — the party offering a record must show it is what it claims to be; challenges argue the record was altered, the program that produced it was unreliable, or the author cannot be identified."}, {"text": "<strong>Computer-generated records</strong> — produced by a machine process with no human statement (for example, automatic logs); the hearsay rules generally do not apply, and the question becomes whether the process is reliable."}, {"text": "<strong>Computer-stored records</strong> — store what a person wrote (for example, emails or documents); the hearsay rules can apply."}, {"text": "<strong>Other issues</strong> — the best evidence rule and the use of computer printouts as “summaries.”"}, {"text": "<strong>Why it matters</strong> — logs, files, emails, metadata, and forensic reports all need a reliable path from collection to courtroom; poor evidence handling can weaken an otherwise strong investigation."}, {"text": "<strong>Expert witnesses</strong> — a technical expert may need to show not only what happened, but how they know."}], "model": "Digital evidence does not become useful just because someone found it. Under DOJ’s Chapter 5 analysis, the party offering a record must first authenticate it, showing it is what it claims to be. Opponents attack authenticity in three predictable ways: arguing the record was altered after it was created, that the program that produced it was unreliable, or that no one can identify who wrote it. Hearsay is the second hurdle, and it depends on how the record was made. Computer-generated records, such as automatic log entries, contain no human statement, so the hearsay rules generally do not apply and the question becomes whether the process is reliable. Computer-stored records, such as emails or documents, preserve what a person said, so the hearsay rules can apply. Chapter 5 also covers the best evidence rule and printouts used as summaries. Poor handling undermines all of this: a log that many people could edit, an image made without a hash, or a missing chain of custody gives the other side an easy authenticity challenge, and an expert witness may be unable to explain not just what happened but how they know."},
+  {"ch": "s5", "q": "Explain why ransomware is both a technical incident and a legal crisis. Cover the FTC’s response steps, the FBI’s position on payment, how ransomware evolved, and the arguments for and against banning ransom payments.", "points": [{"text": "<strong>How it starts</strong> — an urgent email that seems to come from HR or the CEO; one click downloads software that holds business data hostage and locks the company out while criminals demand money."}, {"text": "<strong>Prepare first</strong> — back up business data outside the network, train everyone to spot ransomware, and install the latest patches and security updates."}, {"text": "<strong>If attacked</strong> — disconnect infected devices from the network right away to limit damage, then contact authorities such as the local FBI office (or report at ic3.gov)."}, {"text": "<strong>Paying</strong> — the FBI does not support paying: payment does not guarantee data recovery, encourages more attacks, and funds future crime."}, {"text": "<strong>Evolution</strong> — ransomware grew from early malware and extortion into a criminal business model that adds data theft, breach notification, cryptocurrency tracing, sanctions, insurance, critical-infrastructure risk, and international law-enforcement problems."}, {"text": "<strong>Ban debate</strong> — one side says payments fuel the ransomware economy; the other warns a ban could hurt hospitals, schools, small businesses, and critical services that cannot recover quickly."}], "model": "Ransomware often starts with something ordinary: an urgent email that appears to come from HR or the CEO, a click, and software that locks the whole company out while criminals demand payment. The FTC’s advice is to plan first by backing up data outside the network, training everyone to spot ransomware, and keeping patches current, then, if attacked, to disconnect infected devices immediately and contact authorities such as the local FBI office. The FBI does not support paying because payment does not guarantee recovery, encourages more attacks, and funds future crime. The legal stakes have grown as the threat evolved from early malware and extortion into a criminal business model that steals data before encrypting it, which adds breach notification, cryptocurrency tracing, sanctions, insurance, and cross-border law-enforcement problems. Policymakers now debate banning payments: supporters say payments fuel the ransomware economy, while opponents warn that hospitals, schools, small businesses, and critical services may have no other way to recover quickly. After the panic settles, the legal questions are what the company did before the attack, what it promised, and what records prove its response was reasonable."}
+];
+// ─── DISCUSSION ENGINE ───
+let discFilter='all';
+function filterDisc(ch,btn){
+  activateFilter(btn);discFilter=ch;renderDiscussion();
+}
+function renderDiscussion(){
+  const list=discFilter==='all'?DISC_QUESTIONS:DISC_QUESTIONS.filter(d=>d.ch===discFilter);
+  const c=document.getElementById('disc-container');c.innerHTML='';
+  list.forEach((d,i)=>{
+    const idx=DISC_QUESTIONS.indexOf(d);
+    const div=document.createElement('div');div.className='disc-q';
+    div.innerHTML=`<div class="disc-q-text">${i+1}. ${d.q}</div>
+      <textarea class="disc-textarea" id="disc-ta-${idx}" placeholder="Draft your response here..." aria-label="Discussion response ${i+1}"></textarea>
+      <div class="disc-btn-row">
+        <button class="disc-btn primary" onclick="submitDisc(${idx})">Submit &amp; Self-Grade</button>
+        <button class="disc-btn" onclick="toggleModel(${idx})">Show Model Answer</button>
+        <button class="disc-btn" onclick="resetDisc(${idx})">Reset</button>
+      </div>
+      <div class="disc-rubric" id="disc-rubric-${idx}">
+        <strong style="font-size:.82rem;color:var(--text)">Self-Grading Rubric</strong>
+        <div style="margin-top:8px;">${d.points.map((p,pi)=>`<div class="rubric-item"><input type="checkbox" id="rub-${idx}-${pi}" onchange="updateDiscScore(${idx})"><label for="rub-${idx}-${pi}">${p.text}</label></div>`).join('')}</div>
+        <div class="disc-score" id="disc-score-${idx}">Score: 0 / ${d.points.length}</div>
+      </div>
+      <div class="model-answer" id="disc-model-${idx}">${d.model}</div>`;
+    c.appendChild(div);
+  });
+}
+function submitDisc(idx){
+  document.getElementById('disc-ta-'+idx).disabled=true;
+  document.getElementById('disc-rubric-'+idx).classList.add('show');
+}
+function resetDisc(idx){
+  const ta=document.getElementById('disc-ta-'+idx);ta.disabled=false;ta.value='';
+  document.getElementById('disc-rubric-'+idx).classList.remove('show');
+  document.getElementById('disc-model-'+idx).classList.remove('show');
+  document.querySelectorAll(`[id^="rub-${idx}-"]`).forEach(cb=>cb.checked=false);
+  document.getElementById('disc-score-'+idx).textContent='Score: 0 / '+DISC_QUESTIONS[idx].points.length;
+}
+function updateDiscScore(idx){
+  const total=DISC_QUESTIONS[idx].points.length;
+  const checked=document.querySelectorAll(`[id^="rub-${idx}-"]:checked`).length;
+  document.getElementById('disc-score-'+idx).textContent=`Score: ${checked} / ${total} (${Math.round(checked/total*100)}%)`;
+}
+function toggleModel(idx){document.getElementById('disc-model-'+idx).classList.toggle('show');}
+
+// ─── INIT ───
+window.addEventListener('DOMContentLoaded',()=>{
+  deck=[...allCards];renderCard();renderQuiz();renderDiscussion();updateMasteryBar();
+  document.querySelectorAll('.obj-master-btn').forEach(btn=>{
+    const key=btn.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+    if(key&&localStorage.getItem(key)){btn.textContent='✓ Mastered';btn.classList.add('mastered');}
+  });
+  document.querySelectorAll('.chapter-header').forEach(h=>{
+    h.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleChapter(h);}});
+  });
+  document.querySelectorAll('.obj-card').forEach(card=>{
+    card.addEventListener('keydown',e=>{if(e.target!==card)return;if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleObj(card);}});
+  });
+});
+</script>
+</body>
+</html>
